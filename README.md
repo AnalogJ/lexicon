@@ -41,7 +41,7 @@ Using lexicon as a pip package is not yet supported.
 	Create, Update, Delete, List DNS entries
 	
 	positional arguments:
-	  {base,cloudflare,__init__}
+	  {cloudflare}
 							specify the DNS provider to use
 	  {create,list,update,delete}
 							specify the action to take
