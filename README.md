@@ -75,7 +75,13 @@ Using the lexicon CLI is pretty simple:
 	# list all TXT records on cloudflare
 	python lexicon/cli.py cloudflare list example.com TXT
 	
-The following actions are supported
+	# create a new TXT record on cloudflare
+	python cli.py cloudflare create www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
+
+	# delete a  TXT record on cloudflare
+	python cli.py cloudflare delete www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
+	python cli.py cloudflare delete www.example.com TXT --identifier "cloudflare record id"
+
 	
 
 ### Letsencrypt Instructions
