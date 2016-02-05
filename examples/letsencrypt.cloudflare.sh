@@ -15,6 +15,7 @@ if [[ "$1" = "deploy_challenge" ]]; then
 	echo "deploy_challenge called: ${1}, ${2}, ${3}, ${4}"
     /srv/lexicon/cli.py $PROVIDER create ${2} TXT --name "_acme-challenge.${2}." --content "${4}"
     done="yes"
+    sleep 30
 fi
 
 if [[ "$1" = "clean_challenge" ]]; then
@@ -33,5 +34,4 @@ if [[ ! "${done}" = "yes" ]]; then
     exit 1
 fi
 
-sleep 30
 exit 0
