@@ -12,7 +12,8 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
--  cloudflare
+- cloudflare ([docs](https://api.cloudflare.com/#endpoints))
+- pointhq ([docs](https://pointhq.com/api/docs))
 
 The next planned providers are:
 
