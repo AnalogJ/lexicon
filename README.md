@@ -31,7 +31,7 @@ Using lexicon as a pip package is not yet supported.
 	
 ## Usage
 
-	$ python cli.py -h
+	$ lexicon -h
 	usage: cli.py [-h] [--name NAME] [--content CONTENT] [--ttl TTL]
 				  [--priority PRIORITY] [--identifier IDENTIFIER]
 				  [--auth-username AUTH_USERNAME] [--auth-password AUTH_PASSWORD]
@@ -74,14 +74,14 @@ Using the lexicon CLI is pretty simple:
 	LEXICON_CLOUDFLARE_TOKEN="cloudflare-api-token"
 	
 	# list all TXT records on cloudflare
-	python lexicon/cli.py cloudflare list example.com TXT
+	lexicon cloudflare list example.com TXT
 	
 	# create a new TXT record on cloudflare
-	python cli.py cloudflare create www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
+	lexicon cloudflare create www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
 
 	# delete a  TXT record on cloudflare
-	python cli.py cloudflare delete www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
-	python cli.py cloudflare delete www.example.com TXT --identifier "cloudflare record id"
+	lexicon cloudflare delete www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
+	lexicon cloudflare delete www.example.com TXT --identifier "cloudflare record id"
 
 	
 

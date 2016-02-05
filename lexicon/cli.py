@@ -6,7 +6,7 @@ from client import Client
 
 #dynamically determine all the providers available.
 
-current_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'providers')
+current_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'providers')
 providers = [os.path.splitext(f)[0] for f in os.listdir(current_filepath) if os.path.isfile(os.path.join(current_filepath, f))]
 providers = list(set(providers))
 providers.remove('base')
