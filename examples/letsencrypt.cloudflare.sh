@@ -13,14 +13,14 @@ done="no"
 
 if [[ "$1" = "deploy_challenge" ]]; then
 	echo "deploy_challenge called: ${1}, ${2}, ${3}, ${4}"
-    /srv/lexicon/cli.py $PROVIDER create ${2} TXT --name "_acme-challenge.${2}." --content "${4}"
+    lexicon $PROVIDER create ${2} TXT --name "_acme-challenge.${2}." --content "${4}"
     done="yes"
     sleep 30
 fi
 
 if [[ "$1" = "clean_challenge" ]]; then
 	echo "clean_challenge called: ${1}, ${2}, ${3}, ${4}"
-	/srv/lexicon/cli.py $PROVIDER delete ${2} TXT --name "_acme-challenge.${2}." --content "${4}"
+	lexicon $PROVIDER delete ${2} TXT --name "_acme-challenge.${2}." --content "${4}"
     done="yes"
 fi
 
