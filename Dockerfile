@@ -15,15 +15,15 @@ RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | 
 RUN cd /srv && git clone --depth 1 https://github.com/lukas2511/letsencrypt.sh.git letsencrypt
 RUN chmod +x /srv/letsencrypt/letsencrypt.sh
 
-# Create lexicon folder
-COPY ./lexicon /srv/lexicon
-COPY ./requirements.txt  /srv/lexicon
-RUN chmod +x /srv/lexicon/cli.py
-RUN pip install -r /srv/lexicon/requirements.txt
+
 
 # Copy hooks
 COPY ./examples/letsencrypt.cloudflare.sh /srv/letsencrypt/letsencrypt.cloudflare.sh
 RUN chmod +x /srv/letsencrypt/letsencrypt.cloudflare.sh
+
+# Install dns-lexicon
+RUN pip install requests[security]
+RUN pip install dns-lexicon
 
 # Create letsencrypt domains.txt file.
 RUN echo "test.example.com" > /srv/letsencrypt/domains.txt
