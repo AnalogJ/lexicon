@@ -24,11 +24,13 @@ The next planned providers are:
 
 ## Setup
 To use lexicon as a CLI application, do the following:
- 
-	git clone --depth 1 https://github.com/AnalogJ/lexicon.git
-			
-Using lexicon as a pip package is not yet supported.  	
 	
+	pip install dns-lexicon
+
+You can also install the latest version from the repository directly. 
+ 
+	pip install git+https://github.com/AnalogJ/lexicon.git
+			
 ## Usage
 
 	$ lexicon -h
@@ -96,7 +98,10 @@ All you need to do is change the PROVIDER parameter.
 There is an included example Dockerfile that can be used to automatically generate certificates for your website.
 
 ## ToDo list
-- Create and Register a lexicon pip package. 
+
+- [x] Create and Register a lexicon pip package. 
+- [ ] Write documentation on supported environmental variables. 
+- [ ] Wire up automated release packaging on PRs.
 
 ## Contributing Changes.
 If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
