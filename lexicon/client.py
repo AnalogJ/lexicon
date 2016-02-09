@@ -20,9 +20,10 @@ class Client:
         self.options.auth_password = self.options.auth_password or os.environ.get('LEXICON_{0}_PASSWORD'.format(self.provider_name.upper()))
         self.options.auth_token = self.options.auth_token or os.environ.get('LEXICON_{0}_TOKEN'.format(self.provider_name.upper()))
 
-        #TODO: once testing is over, use an actual provider, instead of the example one specified here.
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
-        #provider_module = importlib.import_module('providers.' + 'example')
+        # TODO: this should not be enabled in production
+        #provider_module = importlib.import_module('providers.' + self.provider_name)
+
         provider_class = getattr(provider_module, 'Provider')
         self.provider = provider_class(self.options)
 
