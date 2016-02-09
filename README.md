@@ -14,10 +14,10 @@ The current supported providers are:
 
 - cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - pointhq ([docs](https://pointhq.com/api/docs))
+- dnsimple ([docs](https://developer.dnsimple.com/))
 
 The next planned providers are:
 
-- dnsimple
 - pointhq
 - namecheap
 - route 53
