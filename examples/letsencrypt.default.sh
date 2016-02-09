@@ -8,7 +8,8 @@ set -e
 set -u
 set -o pipefail
 
-PROVIDER="cloudflare"
+export PROVIDER=${PROVIDER:-"cloudflare"}
+
 done="no"
 
 if [[ "$1" = "deploy_challenge" ]]; then

@@ -18,16 +18,16 @@ RUN chmod +x /srv/letsencrypt/letsencrypt.sh
 
 
 # Copy hooks
-COPY ./examples/letsencrypt.cloudflare.sh /srv/letsencrypt/letsencrypt.cloudflare.sh
-RUN chmod +x /srv/letsencrypt/letsencrypt.cloudflare.sh
+COPY ./examples/letsencrypt.default.sh /srv/letsencrypt/letsencrypt.default.sh
+RUN chmod +x /srv/letsencrypt/letsencrypt.default.sh
 
 # Install dns-lexicon
 RUN pip install requests[security]
 RUN pip install dns-lexicon
 
 # Create letsencrypt domains.txt file.
-RUN echo "test.example.com" > /srv/letsencrypt/domains.txt
+RUN echo "test.intranet.example.com" > /srv/letsencrypt/domains.txt
 
 
-CMD ["bash"]
-#CMD /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.cloudflare.sh --challenge dns-01
+CMD ["/srv/letsencrypt/letsencrypt.sh", "--cron", "--hook", "/srv/letsencrypt/letsencrypt.default.sh", "--challenge", "dns-01"]
+#CMD /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01
