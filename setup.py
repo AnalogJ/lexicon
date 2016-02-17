@@ -10,18 +10,10 @@ from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path, listdir
-import re
 
-VERSIONFILE="lexicon/_version.py"
-verstrline = open(VERSIONFILE, "rt").read()
-VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
-mo = re.search(VSRE, verstrline, re.M)
-verstr = "unknown"
-if mo:
-    verstr = mo.group(1)
-else:
-    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
-
+version = 'unknown'
+with open(path.join(path.dirname(path.abspath(__file__)), 'VERSION')) as version_file:
+    version = version_file.read().strip()
 
 here = path.abspath(path.dirname(__file__))
 
@@ -42,7 +34,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version=verstr,
+    version=version,
 
     description='Manipulate DNS records on various DNS providers in a standardized/agnostic way',
     long_description=long_description,
