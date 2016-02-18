@@ -27,8 +27,12 @@ class Provider(BaseProvider):
                         'content': content
                     }
                 }
-        payload = self._post('/domains/{0}/records'.format(self.domain_name), record)
-
+        try:
+            payload = self._post('/domains/{0}/records'.format(self.domain_name), record)
+        except requests.exceptions.HTTPError, e:
+            if e.response.status_code == 400:
+                payload = {'record': {}}
+            # http 400 is ok here, because the record probably already exists
         print 'create_record: {0}'.format('record' in payload)
         return 'record' in payload
 
