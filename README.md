@@ -1,4 +1,5 @@
 # lexicon
+[![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=svg)](https://circleci.com/gh/AnalogJ/lexicon)
 Manipulate DNS records on various DNS providers in a standardized/agnostic way. 
 
 ## Introduction
