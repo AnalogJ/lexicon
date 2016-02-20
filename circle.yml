@@ -1,0 +1,22 @@
+machine:
+  services:
+    - docker
+  environment:
+    CAPSULE_PYPI_USERNAME: analogj
+
+dependencies:
+  override:
+    - docker info
+    - docker pull analogj/capsulecd:python
+
+test:
+  override:
+    - >
+      docker run -e CIRCLECI
+      -e CI_PULL_REQUEST
+      -e CIRCLE_PROJECT_USERNAME
+      -e CIRCLE_PROJECT_REPONAME
+      -e CAPSULE_SOURCE_GITHUB_ACCESS_TOKEN
+      -e CAPSULE_PYPI_USERNAME
+      -e CAPSULE_PYPI_PASSWORD
+      analogj/capsulecd:node
