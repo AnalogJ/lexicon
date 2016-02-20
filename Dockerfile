@@ -15,8 +15,6 @@ RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | 
 RUN cd /srv && git clone --depth 1 https://github.com/lukas2511/letsencrypt.sh.git letsencrypt
 RUN chmod +x /srv/letsencrypt/letsencrypt.sh
 
-
-
 # Copy hooks
 COPY ./examples/letsencrypt.default.sh /srv/letsencrypt/letsencrypt.default.sh
 RUN chmod +x /srv/letsencrypt/letsencrypt.default.sh
