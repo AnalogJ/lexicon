@@ -111,4 +111,5 @@ setup(
             'lexicon=lexicon.__main__:main',
         ],
     },
+    test_suite='tests'
 )
