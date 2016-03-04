@@ -20,10 +20,12 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
+        name =  name.rstrip(self.domain_name) + '.' + self.options.subdomain.rstrip('.')
+
         record = {'record':
                     {
                         'record_type': type,
-                        'name': name.rstrip('.'),
+                        'name': name,
                         'content': content
                     }
                 }
@@ -65,10 +67,11 @@ class Provider(BaseProvider):
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
 
+        name =  name.rstrip(self.domain_name) + '.' + self.options.subdomain.rstrip('.')
         data = {'record': {}}
 
         if name:
-            data['record']['name'] = name.rstrip('.')
+            data['record']['name'] = name
         if content:
             data['record']['content'] = content
 
@@ -80,6 +83,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        name =  name.rstrip(self.domain_name) + '.' + self.options.subdomain.rstrip('.')
         if not identifier:
             records = self.list_records(type, name, content)
             print records

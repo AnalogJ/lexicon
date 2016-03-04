@@ -7,6 +7,7 @@ class Client:
         #process domain, strip subdomain
         domain_parts = tldextract.extract(options.domain)
         options.domain = '{0}.{1}'.format(domain_parts.domain, domain_parts.suffix)
+        options.subdomain = domain_parts.subdomain
 
         self.action = options.action
         self.provider_name = options.provider_name
