@@ -1,4 +1,4 @@
-from base import BaseProvider
+from base import Provider as BaseProvider
 import requests
 import json
 class Provider(BaseProvider):
@@ -10,12 +10,12 @@ class Provider(BaseProvider):
 
     def authenticate(self):
 
-        payload = self._get('/domains/{0}'.format(self.options.domain))
+        payload = self._get('/domains/{0}'.format(self.options['domain']))
 
         if not payload['domain']:
             raise StandardError('No domain found')
 
-        self.domain_name = self.options.domain
+        self.domain_name = self.options['domain']
 
 
     # Create record. If record already exists with the same content, do nothing'
@@ -114,11 +114,11 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
         default_auth = None
-        if self.options.auth_username and self.options.auth_token:
-            default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options.auth_username,self.options.auth_token)
+        if self.options['auth_username'] and self.options['auth_token']:
+            default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options['auth_username'],self.options['auth_token'])
 
-        if self.options.auth_username and self.options.auth_password:
-            default_auth=(self.options.auth_username, self.options.auth_password)
+        if self.options['auth_username'] and self.options['auth_password']:
+            default_auth=(self.options['auth_username'], self.options['auth_password'])
 
 
 

@@ -1,4 +1,4 @@
-from base import BaseProvider
+from base import Provider as BaseProvider
 import requests
 import json
 class Provider(BaseProvider):
@@ -11,7 +11,7 @@ class Provider(BaseProvider):
     def authenticate(self):
 
         payload = self._get('/zones', {
-            'name': self.options.domain,
+            'name': self.options['domain'],
             'status': 'active'
         })
 
@@ -107,8 +107,8 @@ class Provider(BaseProvider):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              headers={
-                                 'X-Auth-Email': self.options.auth_username,
-                                 'X-Auth-Key': self.options.auth_password or self.options.auth_token,
+                                 'X-Auth-Email': self.options['auth_username'],
+                                 'X-Auth-Key': self.options['auth_password'] or self.options['auth_token'],
                                  'Content-Type': 'application/json'
                              })
         r.raise_for_status()  # if the request fails for any reason, throw an error.

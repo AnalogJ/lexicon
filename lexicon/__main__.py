@@ -34,7 +34,7 @@ def main():
 
     parsed_args = parser.parse_args()
     print parsed_args
-    client = Client(parsed_args)
+    client = Client(parsed_args.__dict__)
     client.execute()
 
 

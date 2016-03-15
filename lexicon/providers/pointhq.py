@@ -1,4 +1,4 @@
-from base import BaseProvider
+from base import Provider as BaseProvider
 import requests
 import json
 class Provider(BaseProvider):
@@ -12,7 +12,7 @@ class Provider(BaseProvider):
 
         payload = self._get('/zones', {
             'zone': {
-                'name': self.options.domain
+                'name': self.options['domain']
             }
         })
 
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
     def _request(self, action='GET',  url='/', data={}, query_params={}):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self.options.auth_username, self.options.auth_password or self.options.auth_token),
+                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options['auth_password'] or self.options['auth_token']),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'
