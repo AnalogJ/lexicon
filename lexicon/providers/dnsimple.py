@@ -5,7 +5,7 @@ class Provider(BaseProvider):
 
     def __init__(self, options):
         super(Provider, self).__init__(options)
-        self.domain_name = None
+        self.domain_id = None
         self.api_endpoint = 'https://api.dnsimple.com/v1'
 
     def authenticate(self):
@@ -15,7 +15,7 @@ class Provider(BaseProvider):
         if not payload['domain']:
             raise StandardError('No domain found')
 
-        self.domain_name = self.options['domain']
+        self.domain_id = self.options['domain']
 
 
     # Create record. If record already exists with the same content, do nothing'
@@ -28,7 +28,7 @@ class Provider(BaseProvider):
                     }
                 }
         try:
-            payload = self._post('/domains/{0}/records'.format(self.domain_name), record)
+            payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
         except requests.exceptions.HTTPError, e:
             if e.response.status_code == 400:
                 payload = {'record': {}}
@@ -46,7 +46,7 @@ class Provider(BaseProvider):
         if name:
             filter['name'] = name.rstrip('.') # strip trailing period
 
-        payload = self._get('/domains/{0}/records'.format(self.domain_name), filter)
+        payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
 
         records = []
         for record in payload:
@@ -72,7 +72,7 @@ class Provider(BaseProvider):
         if content:
             data['record']['content'] = content
 
-        payload = self._put('/domains/{0}/records/{1}'.format(self.domain_name, identifier), data)
+        payload = self._put('/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         print 'update_record: {0}'.format('record' in payload)
         return 'record' in payload
@@ -87,7 +87,7 @@ class Provider(BaseProvider):
                 identifier = records[0]['id']
             else:
                 raise StandardError('Record identifier could not be found.')
-        payload = self._delete('/domains/{0}/records/{1}'.format(self.domain_name, identifier))
+        payload = self._delete('/domains/{0}/records/{1}'.format(self.domain_id, identifier))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         print 'delete_record: {0}'.format(True)
@@ -114,10 +114,10 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
         default_auth = None
-        if self.options['auth_username'] and self.options['auth_token']:
+        if self.options.get('auth_username') and self.options.get('auth_token'):
             default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options['auth_username'],self.options['auth_token'])
 
-        if self.options['auth_username'] and self.options['auth_password']:
+        if self.options.get('auth_username') and self.options.get('auth_password'):
             default_auth=(self.options['auth_username'], self.options['auth_password'])
 
 

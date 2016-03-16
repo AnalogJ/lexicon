@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"result":[],"result_info":{"page":1,"per_page":20,"total_pages":0,"count":0,"total_count":0},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-railgun: [b3f55b1fe2 2.96 0.033681 0030 84cd]
+      cf-ray: [28456bc432811bd3-SEA]
+      connection: [keep-alive]
+      content-length: ['135']
+      content-type: [application/json]
+      date: ['Wed, 16 Mar 2016 04:21:54 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d6092d2f892fc414e5645fd44a6e0ee6c1458102113; expires=Thu,
+          16-Mar-17 04:21:53 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

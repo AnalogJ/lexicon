@@ -5,7 +5,7 @@ import tldextract
 class Client:
     def __init__(self, options):
         #validate options
-        self.validate(options)
+        self._validate(options)
 
         #process domain, strip subdomain
         domain_parts = tldextract.extract(options.get('domain'))
@@ -15,13 +15,10 @@ class Client:
         self.provider_name = options.get('provider_name')
         self.options = options
 
-        # validate options
-
-
         # make sure that auth parameters can be specified via environmental variables as well.
-        self.options['auth_username'] = self.options['auth_username'] or os.environ.get('LEXICON_{0}_USERNAME'.format(self.provider_name.upper()))
-        self.options['auth_password'] = self.options['auth_password'] or os.environ.get('LEXICON_{0}_PASSWORD'.format(self.provider_name.upper()))
-        self.options['auth_token'] = self.options['auth_token'] or os.environ.get('LEXICON_{0}_TOKEN'.format(self.provider_name.upper()))
+        self.options['auth_username'] = self.options.get('auth_username') or os.environ.get('LEXICON_{0}_USERNAME'.format(self.provider_name.upper()))
+        self.options['auth_password'] = self.options.get('auth_password') or os.environ.get('LEXICON_{0}_PASSWORD'.format(self.provider_name.upper()))
+        self.options['auth_token'] = self.options.get('auth_token') or os.environ.get('LEXICON_{0}_TOKEN'.format(self.provider_name.upper()))
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         # TODO: this should not be enabled in production
@@ -34,18 +31,18 @@ class Client:
         self.provider.authenticate()
 
         if self.action == 'create':
-            return self.provider.create_record(self.options['type'], self.options['name'], self.options['content'])
+            return self.provider.create_record(self.options.get('type'), self.options.get('name'), self.options.get('content'))
 
         elif self.action == 'list':
-            return self.provider.list_records(self.options['type'], self.options['name'], self.options['content'])
+            return self.provider.list_records(self.options.get('type'), self.options.get('name'), self.options.get('content'))
 
         elif self.action == 'update':
-            return self.provider.update_record(self.options['identifier'], self.options['type'], self.options['name'], self.options['content'])
+            return self.provider.update_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
 
         elif self.action == 'delete':
-            return self.provider.delete_record(self.options['identifier'], self.options['type'], self.options['name'], self.options['content'])
+            return self.provider.delete_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
 
-    def validate(self, options):
+    def _validate(self, options):
         if not options.get('provider_name'):
             raise AttributeError('provider_name')
         if not options.get('action'):

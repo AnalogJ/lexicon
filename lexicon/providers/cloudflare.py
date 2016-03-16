@@ -5,7 +5,7 @@ class Provider(BaseProvider):
 
     def __init__(self, options):
         super(Provider, self).__init__(options)
-        self.zone_id = None
+        self.domain_id = None
         self.api_endpoint = 'https://api.cloudflare.com/client/v4'
 
     def authenticate(self):
@@ -18,14 +18,14 @@ class Provider(BaseProvider):
         if not payload['result']:
             raise StandardError('No domain found')
         if len(payload['result']) > 1:
-            raise StandardError('Too many domains found. This shouldnt happen')
+            raise StandardError('Too many domains found. This should not happen')
 
-        self.zone_id = payload['result'][0]['id']
+        self.domain_id = payload['result'][0]['id']
 
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        payload = self._post('/zones/{0}/dns_records'.format(self.zone_id), {'type': type, 'name': name, 'content': content})
+        payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), {'type': type, 'name': name, 'content': content})
 
         print 'create_record: {0}'.format(payload['success'])
         return payload['success']
@@ -38,11 +38,15 @@ class Provider(BaseProvider):
         if type:
             filter['type'] = type
         if name:
-            filter['name'] = name.rstrip('.') # strip trailing period
+            name = name.rstrip('.')  # strip trailing period
+            #check if the name is fully qualified
+            if not name.endswith(self.options['domain']):
+                name = '{0}.{1}'.format(name, self.options['domain'])
+            filter['name'] = name
         if content:
             filter['content'] = content
 
-        payload = self._get('/zones/{0}/dns_records'.format(self.zone_id), filter)
+        payload = self._get('/zones/{0}/dns_records'.format(self.domain_id), filter)
 
         records = []
         for record in payload['result']:
@@ -69,7 +73,7 @@ class Provider(BaseProvider):
         if content:
             data['content'] = content
 
-        payload = self._put('/zones/{0}/dns_records/{1}'.format(self.zone_id, identifier), data)
+        payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
         print 'update_record: {0}'.format(payload['success'])
         return payload['success']
@@ -84,7 +88,7 @@ class Provider(BaseProvider):
                 identifier = records[0]['id']
             else:
                 raise StandardError('Record identifier could not be found.')
-        payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.zone_id, identifier))
+        payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier))
 
         print 'delete_record: {0}'.format(payload['success'])
         return payload['success']
@@ -108,7 +112,7 @@ class Provider(BaseProvider):
                              data=json.dumps(data),
                              headers={
                                  'X-Auth-Email': self.options['auth_username'],
-                                 'X-Auth-Key': self.options['auth_password'] or self.options['auth_token'],
+                                 'X-Auth-Key': self.options.get('auth_password') or self.options.get('auth_token'),
                                  'Content-Type': 'application/json'
                              })
         r.raise_for_status()  # if the request fails for any reason, throw an error.
