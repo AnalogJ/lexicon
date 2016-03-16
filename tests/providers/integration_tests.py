@@ -35,7 +35,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.domain_id is not None
 
@@ -45,7 +45,7 @@ class IntegrationTests():
                 'domain': 'thisisadomainidonotown.com',
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             with pytest.raises(StandardError):
                 provider.authenticate()
 
@@ -58,7 +58,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('A','localhost','127.0.0.1')
 
@@ -68,7 +68,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('CNAME','docs','docs.example.com')
 
@@ -78,7 +78,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('TXT','_acme-challenge.test','challengetoken')
 
@@ -88,7 +88,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.www.{0}.".format(self.domain),'challengetoken')
 
@@ -101,7 +101,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
@@ -111,10 +111,10 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             provider.create_record('TXT','random.test','challengetoken')
-            records = provider.list_records('TXT','random.test.capsulecd.com.')
+            records = provider.list_records('TXT','random.test')
             assert len(records) == 1
             assert records[0]['content'] == 'challengetoken'
             assert records[0]['type'] == 'TXT'
@@ -126,7 +126,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             provider.create_record('TXT','random.test','challengetoken')
             records = provider.list_records('TXT','random.test.{0}.'.format(self.domain))
@@ -142,7 +142,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
@@ -153,7 +153,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
@@ -166,7 +166,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('TXT','orig.test','challengetoken')
             records = provider.list_records('TXT','orig.test')
@@ -181,7 +181,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('TXT','delete.test','challengetoken')
             records = provider.list_records('TXT','delete.test')
@@ -195,7 +195,7 @@ class IntegrationTests():
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
-            })
+            }, self.provider_opts)
             provider.authenticate()
             assert provider.create_record('TXT','delete.test','challengetoken')
             assert provider.delete_record(None, 'TXT','delete.test','challengetoken')
@@ -219,3 +219,5 @@ class IntegrationTests():
         return []
     def _filter_query_parameters(self):
         return []
+
+    provider_opts = {}

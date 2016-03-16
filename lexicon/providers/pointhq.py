@@ -3,10 +3,10 @@ import requests
 import json
 class Provider(BaseProvider):
 
-    def __init__(self, options):
+    def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
         self.domain_id = None
-        self.api_endpoint = 'https://pointhq.com'
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://pointhq.com'
 
     def authenticate(self):
 

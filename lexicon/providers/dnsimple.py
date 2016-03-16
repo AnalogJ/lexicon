@@ -3,10 +3,10 @@ import requests
 import json
 class Provider(BaseProvider):
 
-    def __init__(self, options):
+    def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
         self.domain_id = None
-        self.api_endpoint = 'https://api.dnsimple.com/v1'
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.dnsimple.com/v1'
 
     def authenticate(self):
 
@@ -27,11 +27,13 @@ class Provider(BaseProvider):
                         'content': content
                     }
                 }
+        payload = {}
         try:
             payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
         except requests.exceptions.HTTPError, e:
             if e.response.status_code == 400:
                 payload = {'record': {}}
+
             # http 400 is ok here, because the record probably already exists
         print 'create_record: {0}'.format('record' in payload)
         return 'record' in payload
@@ -44,15 +46,20 @@ class Provider(BaseProvider):
         if type:
             filter['type'] = type
         if name:
-            filter['name'] = name.rstrip('.') # strip trailing period
-
+            name = name.rstrip('.') # strip trailing period
+            #check if the name is fully qualified
+            if name.endswith(self.options['domain']):
+                #dnsimple requires short form when querying, cannot use FQDN
+                name = name[:-len(self.options['domain'])]
+                name = name.rstrip('.')
+            filter['name'] = name
         payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
 
         records = []
         for record in payload:
             processed_record = {
                 'type': record['record']['record_type'],
-                'name': record['record']['name'],
+                'name': '{0}.{1}'.format(record['record']['name'],self.options['domain']),
                 'ttl': record['record']['ttl'],
                 'content': record['record']['content'],
                 'id': record['record']['id']
@@ -114,10 +121,14 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
         default_auth = None
-        if self.options.get('auth_username') and self.options.get('auth_token'):
+
+        if not self.options.get('auth_username') and self.options.get('auth_token'):
+            default_headers['X-DNSimple-Domain-Token'] = self.options.get('auth_token')
+
+        elif self.options.get('auth_username') and self.options.get('auth_token'):
             default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options['auth_username'],self.options['auth_token'])
 
-        if self.options.get('auth_username') and self.options.get('auth_password'):
+        elif self.options.get('auth_username') and self.options.get('auth_password'):
             default_auth=(self.options['auth_username'], self.options['auth_password'])
 
 

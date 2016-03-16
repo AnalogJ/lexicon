@@ -1,0 +1,36 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v1/domains/thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"message":"Domain `thisisadomainidonotown.com`
+        not found"}'}
+    headers:
+      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
+      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
+      access-control-allow-origin: ['*']
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['59']
+      content-type: [application/json; charset=utf-8]
+      date: ['Wed, 16 Mar 2016 07:05:14 GMT']
+      server: [nginx]
+      status: [404 Not Found]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-request-id: [2c16f779-b794-4a64-b240-f4fabf7b1a7a]
+      x-runtime: ['0.046510']
+      x-xss-protection: ['1']
+    status: {code: 404, message: Not Found}
+version: 1
