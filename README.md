@@ -19,9 +19,12 @@ The current supported providers are:
 
 The next planned providers are:
 
-- pointhq
-- namecheap
-- route 53
+- NS1 ([docs](https://ns1.com/api/))
+- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
+- ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
+- Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
+- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
+- route 53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 
 ## Setup
 To use lexicon as a CLI application, do the following:
