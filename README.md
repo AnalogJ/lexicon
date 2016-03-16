@@ -24,7 +24,8 @@ The next planned providers are:
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
-- route 53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
+- AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
+- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
 
 ## Setup
 To use lexicon as a CLI application, do the following:
