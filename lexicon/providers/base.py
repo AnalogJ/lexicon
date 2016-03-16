@@ -1,4 +1,4 @@
-class BaseProvider(object):
+class Provider(object):
     def __init__(self, options):
         self.provider_name = 'example',
         self.options = options

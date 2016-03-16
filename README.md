@@ -111,3 +111,5 @@ If the DNS provider you use is not already available, please consider contributi
 MIT
 
 ## References
+
+    py.test --ignore=src/

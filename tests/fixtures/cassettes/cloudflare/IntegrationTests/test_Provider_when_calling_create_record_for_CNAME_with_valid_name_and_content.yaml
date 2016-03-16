@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3yU247jNgyGX6Xg3noDOc5ho6teFH2BblGgg0CgJdoRKkteUppsZpB3L+wcZ7FY
+        X4kff1G2f1LvwCQlZNAv7+AdaOjQruuN3awVrXHbbFtnG6qpcbZWq23XQAURBwINFkcpgaxb2DRA
+        BZIxFwENaLN/JahgxCLkQHcYhCrIp3Ha15UQoAJHrxTSOFDMZkiOQKtLaSPEr8QC+gUcHuMiysKG
+        VFwXkOl6WDrSzxL7ChL73kcM5sdaUeo+8GLC1yJRlm2Qj6SJ/PaRrA7x9CDPJzD1XjIjg44lhKeM
+        i3JIkm98SM53npxJETQsVb35rJrP9earWumm0erLYqnUdr35FyqwTJh/lKrdV7XVzU6v1GK13awa
+        NUkHygj6HSTTCHpVwdEHZ5GdGTl999gGuv98WySnwVji7DtvMZP5VtK0X01G9WS4hDuDyefx4OXg
+        Y28cZbL5ycmhhOzHQIbRh75EMRhCOt4V58mgSDy93NX1IsRQXXpsvaxxt6mVqt2uaRr7pd7V3brB
+        XbdV1DY1VEAD+gAaHPJ/A+VDcm+/9xObTThXMBIPXsSnOJv7CSOGU/ZWNBM6qOBT60PwsdfkfH6O
+        b3mL9kBmLNzTXeOiGCab2MlP2W1vaO/p0D5o6h+SxD1G/4bZp3gXf4A3pUi4C6b1jR+xu/NpfeNv
+        KT7eeA6eM0YoZx97+SB50Fm7r2AMGCd/ZkdUR798HlP/JxP99g+14vM84uztZXRtYaZoT6Dh77/+
+        gAo6pm/lSqCCQD3ak7lcMjyX9GKktGLZt1PrZC5To2J80Buk75k4YggnM2DE/tFp5311vcOMj12a
+        vmjqZtD13CPmEixVBTllDHMsc9amEvO8umRu8bkCKdaSyP105jTfIftp5kQuJV725/8BAAD//wMA
+        HNjg6T8FAAA=
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-railgun: [550f4303e9 99.99 0.037359 0030 84cd]
+      cf-ray: [28457c3bbf4f0c35-SEA]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Wed, 16 Mar 2016 04:33:08 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d337df45e21eec4613009823356b5f8891458102788; expires=Thu,
+          16-Mar-17 04:33:08 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"content": "docs.example.com", "type": "CNAME", "name": "docs"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['64']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4yQTU/DMAyG/4vP3ZSQNN1yQ4gjnDiBUOXZ7lSRNlWSSoNp/x116hDixPH9sPS8
+        PkOSPIcC/gw9gwfNSIqp03Xt9taJco6tRacN72VnLFRQPicBDw/P90+PUMGIwyI5Ut4STnkOQryl
+        OEAFFMciY7nFcsJhCrKGU4qnHg9BwJc0y2oIg+8wZKmglABeVxAiffyyv+Io7RW2Q6q1I1crqbEx
+        zYHJiBbDpJVtOgNreUX8SzdE7rteuI0jeLhT2m2U2Wj3oqw3xqvdtnHK2t3rsiQJlv9VBym4/BPn
+        Eltk/kG/XCrIM5HkfJssKcWUwb+9L3c541Gu6vINAAD//wMAbcvMGZkBAAA=
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-railgun: [33fdb11493 99.99 0.069019 0030 84cd]
+      cf-ray: [28457c3d7d211bd3-SEA]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Wed, 16 Mar 2016 04:33:08 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d04a651796f835d3eff89f396ebf2a1761458102788; expires=Thu,
+          16-Mar-17 04:33:08 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

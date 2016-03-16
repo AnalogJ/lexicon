@@ -1,30 +1,30 @@
-from base import BaseProvider
+from base import Provider as BaseProvider
 import requests
 import json
 class Provider(BaseProvider):
 
-    def __init__(self, options):
+    def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
-        self.zone_id = None
-        self.api_endpoint = 'https://pointhq.com'
+        self.domain_id = None
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://pointhq.com'
 
     def authenticate(self):
 
         payload = self._get('/zones', {
             'zone': {
-                'name': self.options.domain
+                'name': self.options['domain']
             }
         })
 
         if not payload['zone']:
             raise StandardError('No domain found')
 
-        self.zone_id = payload['zone']['id']
+        self.domain_id = payload['zone']['id']
 
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        payload = self._post('/zones/{0}/records'.format(self.zone_id), {'zone_record': {'record_type': type, 'name': name, 'data': content}})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': name, 'data': content}})
 
         print 'create_record: {0}'.format(payload['zone_record'])
         return bool(payload['zone_record'])
@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         if content:
             filter['data'] = content
 
-        payload = self._get('/zones/{0}/records'.format(self.zone_id), filter)
+        payload = self._get('/zones/{0}/records'.format(self.domain_id), filter)
 
         records = []
         for record in payload:
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
         if content:
             data['data'] = content
 
-        payload = self._put('/zones/{0}/records/{1}'.format(self.zone_id, identifier), {'zone_record': data})
+        payload = self._put('/zones/{0}/records/{1}'.format(self.domain_id, identifier), {'zone_record': data})
 
         print 'update_record: {0}'.format(payload)
         return bool(payload['zone_record'])
@@ -83,7 +83,7 @@ class Provider(BaseProvider):
                 identifier = records[0]['id']
             else:
                 raise StandardError('Record identifier could not be found.')
-        payload = self._delete('/zones/{0}/records/{1}'.format(self.zone_id, identifier))
+        payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, identifier))
 
         print 'delete_record: {0}'.format(payload['zone_record']['status'])
         return payload['zone_record']['status'] == 'OK'
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
     def _request(self, action='GET',  url='/', data={}, query_params={}):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self.options.auth_username, self.options.auth_password or self.options.auth_token),
+                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options.get('auth_password') or self.options.get('auth_token')),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'
