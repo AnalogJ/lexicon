@@ -39,10 +39,10 @@ You can also install the latest version from the repository directly.
 ## Usage
 
 	$ lexicon -h
-	usage: cli.py [-h] [--name NAME] [--content CONTENT] [--ttl TTL]
-				  [--priority PRIORITY] [--identifier IDENTIFIER]
-				  [--auth-username AUTH_USERNAME] [--auth-password AUTH_PASSWORD]
-				  [--auth-token AUTH_TOKEN] [--auth-otp-token AUTH_OTP_TOKEN]
+	usage: cli.py [-h] [--name NAME] [--content=CONTENT] [--ttl=TTL]
+				  [--priority=PRIORITY] [--identifier=IDENTIFIER]
+				  [--auth-username=AUTH_USERNAME] [--auth-password=AUTH_PASSWORD]
+				  [--auth-token=AUTH_TOKEN] [--auth-otp-token=AUTH_OTP_TOKEN]
 				  {base,cloudflare,__init__} {create,list,update,delete} domain
 				  {A,CNAME,MX,SOA,TXT}
 	
@@ -58,19 +58,19 @@ You can also install the latest version from the repository directly.
 	
 	optional arguments:
 	  -h, --help            show this help message and exit
-	  --name NAME           specify the record name
-	  --content CONTENT     specify the record content
-	  --ttl TTL             specify the record time-to-live
-	  --priority PRIORITY   specify the record priority
-	  --identifier IDENTIFIER
+	  --name=NAME           specify the record name
+	  --content=CONTENT     specify the record content
+	  --ttl=TTL             specify the record time-to-live
+	  --priority=PRIORITY   specify the record priority
+	  --identifier=IDENTIFIER
 							specify the record for update or delete actions
-	  --auth-username AUTH_USERNAME
+	  --auth-username=AUTH_USERNAME
 							specify username used to authenticate to DNS provider
-	  --auth-password AUTH_PASSWORD
+	  --auth-password=AUTH_PASSWORD
 							specify password used to authenticate to DNS provider
-	  --auth-token AUTH_TOKEN
+	  --auth-token=AUTH_TOKEN
 							specify token used authenticate to DNS provider
-	  --auth-otp-token AUTH_OTP_TOKEN
+	  --auth-otp-token=AUTH_OTP_TOKEN
 							specify OTP/2FA token used authenticate to DNS
 							provider
 
@@ -84,11 +84,11 @@ Using the lexicon CLI is pretty simple:
 	lexicon cloudflare list example.com TXT
 	
 	# create a new TXT record on cloudflare
-	lexicon cloudflare create www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
+	lexicon cloudflare create www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
 
 	# delete a  TXT record on cloudflare
-	lexicon cloudflare delete www.example.com TXT --name "_acme-challenge.www.example.com." --content "challenge token"
-	lexicon cloudflare delete www.example.com TXT --identifier "cloudflare record id"
+	lexicon cloudflare delete www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
+	lexicon cloudflare delete www.example.com TXT --identifier="cloudflare record id"
 
 	
 
