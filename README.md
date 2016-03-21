@@ -116,4 +116,5 @@ MIT
 
 ## References
 
-    py.test --ignore=src/
+    tox
+
