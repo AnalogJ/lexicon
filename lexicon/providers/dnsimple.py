@@ -23,7 +23,7 @@ class Provider(BaseProvider):
         record = {'record':
                     {
                         'record_type': type,
-                        'name': name.rstrip('.'),
+                        'name': self._clean_name(name),
                         'content': content
                     }
                 }
@@ -46,13 +46,7 @@ class Provider(BaseProvider):
         if type:
             filter['type'] = type
         if name:
-            name = name.rstrip('.') # strip trailing period
-            #check if the name is fully qualified
-            if name.endswith(self.options['domain']):
-                #dnsimple requires short form when querying, cannot use FQDN
-                name = name[:-len(self.options['domain'])]
-                name = name.rstrip('.')
-            filter['name'] = name
+            filter['name'] = self._clean_name(name)
         payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
 
         records = []
@@ -75,7 +69,7 @@ class Provider(BaseProvider):
         data = {'record': {}}
 
         if name:
-            data['record']['name'] = name.rstrip('.')
+            data['record']['name'] = self._clean_name(name)
         if content:
             data['record']['content'] = content
 
@@ -102,6 +96,18 @@ class Provider(BaseProvider):
 
 
     # Helpers
+
+    # record names can be in a variety of formats: relative (sub), full (sub.example.com), and fqdn (sub.example.com.)
+    # DNSimple only handles relative record names, so we need to make sure we clean up all user specified record_names before
+    # submitting them to DNSimple
+    def _clean_name(self, record_name):
+        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
+        #check if the record_name is fully specified
+        if record_name.endswith(self.options['domain']):
+            record_name = record_name[:-len(self.options['domain'])]
+            record_name = record_name.rstrip('.')
+        return record_name
+
     def _get(self, url='/', query_params={}):
         return self._request('GET', url, query_params=query_params)
 

@@ -82,8 +82,18 @@ class IntegrationTests():
             provider.authenticate()
             assert provider.create_record('TXT','_acme-challenge.test','challengetoken')
 
-    def test_Provider_when_calling_create_record_for_TXT_with_fully_qualified_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fully_qualified_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+    def test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.subdomain.{0}".format(self.domain),'challengetoken')
+
+    def test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -120,15 +130,30 @@ class IntegrationTests():
             assert records[0]['type'] == 'TXT'
             assert records[0]['name'] == 'random.test.{0}'.format(self.domain)
 
-    def test_Provider_when_calling_list_records_with_fully_qualified_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_fully_qualified_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+    def test_Provider_when_calling_list_records_with_full_name_filter_should_return_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_full_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            provider.create_record('TXT','random.test','challengetoken')
+            provider.create_record('TXT','random.fulltest.{0}'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT','random.fulltest.{0}'.format(self.domain))
+            assert len(records) == 1
+            assert records[0]['content'] == 'challengetoken'
+            assert records[0]['type'] == 'TXT'
+            assert records[0]['name'] == 'random.fulltest.{0}'.format(self.domain)
+
+    def test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            provider.create_record('TXT','random.test.{0}.'.format(self.domain),'challengetoken')
             records = provider.list_records('TXT','random.test.{0}.'.format(self.domain))
             assert len(records) == 1
             assert records[0]['content'] == 'challengetoken'
@@ -172,6 +197,30 @@ class IntegrationTests():
             records = provider.list_records('TXT','orig.test')
             assert provider.update_record(records[0]['id'],'TXT','updated.test','challengetoken')
 
+    def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_full_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT','orig.test.{0}'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT','orig.test.{0}'.format(self.domain))
+            assert provider.update_record(records[0]['id'],'TXT','updated.test.{0}'.format(self.domain),'challengetoken')
+
+    def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT','orig.testfqdn.{0}.'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT','orig.testfqdn.{0}.'.format(self.domain))
+            assert provider.update_record(records[0]['id'],'TXT','updated.testfqdn.{0}.'.format(self.domain),'challengetoken')
+
     ###########################################################################
     # Provider.delete_record()
     ###########################################################################
@@ -200,6 +249,32 @@ class IntegrationTests():
             assert provider.create_record('TXT','delete.test','challengetoken')
             assert provider.delete_record(None, 'TXT','delete.test','challengetoken')
             records = provider.list_records('TXT','delete.test')
+            assert len(records) == 0
+
+    def test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT', 'delete.testfull.{0}'.format(self.domain),'challengetoken')
+            assert provider.delete_record(None, 'TXT', 'delete.testfull.{0}'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT', 'delete.testfull.{0}'.format(self.domain))
+            assert len(records) == 0
+
+    def test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token()
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT', 'delete.testfqdn.{0}.'.format(self.domain),'challengetoken')
+            assert provider.delete_record(None, 'TXT', 'delete.testfqdn.{0}.'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT', 'delete.testfqdn.{0}.'.format(self.domain))
             assert len(records) == 0
 
 # Private helpers, mimicing the auth_* options provided by the Client

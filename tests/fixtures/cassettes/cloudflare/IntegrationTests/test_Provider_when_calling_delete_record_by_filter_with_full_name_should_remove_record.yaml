@@ -1,0 +1,149 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-03-22T01:17:44.127822Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":"3","phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","legacy_id":"free","is_subscribed":true,"can_subscribe":true,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [288bb0ab2604070d-SJC]
+      connection: [keep-alive]
+      content-length: ['1343']
+      content-type: [application/json]
+      date: ['Thu, 24 Mar 2016 17:02:20 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d86aded1ce0f1ec1d0c319348c8c551031458838939; expires=Fri,
+          24-Mar-17 17:02:19 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"content": "challengetoken", "type": "TXT", "name": "delete.testfull.capsulecd.com"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"9b6d6d414870a9f68d049644bf9f983a","type":"TXT","name":"delete.testfull.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-24T17:03:18.482203Z","created_on":"2016-03-24T17:03:18.482203Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [288bb21c3baa0657-SJC]
+      connection: [keep-alive]
+      content-length: ['417']
+      content-type: [application/json]
+      date: ['Thu, 24 Mar 2016 17:03:18 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d8292d4854c20c2e13f7a1a06083b66611458838998; expires=Fri,
+          24-Mar-17 17:03:18 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?content=challengetoken&per_page=100&type=TXT&name=delete.testfull.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"9b6d6d414870a9f68d049644bf9f983a","type":"TXT","name":"delete.testfull.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-24T17:03:18.482203Z","created_on":"2016-03-24T17:03:18.482203Z","meta":{"auto_added":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [288bb22f914211dd-SJC]
+      connection: [keep-alive]
+      content-length: ['501']
+      content-type: [application/json]
+      date: ['Thu, 24 Mar 2016 17:03:21 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d519eea4f64d46edd7880db3e619f74af1458839001; expires=Fri,
+          24-Mar-17 17:03:21 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: DELETE
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records/9b6d6d414870a9f68d049644bf9f983a
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"9b6d6d414870a9f68d049644bf9f983a"},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [288bb240ded51e9b-SJC]
+      connection: [keep-alive]
+      content-length: ['93']
+      content-type: [application/json]
+      date: ['Thu, 24 Mar 2016 17:03:24 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dc7d248011ab8beb01d63a22d84851db51458839004; expires=Fri,
+          24-Mar-17 17:03:24 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?per_page=100&type=TXT&name=delete.testfull.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[],"result_info":{"page":1,"per_page":100,"total_pages":0,"count":0,"total_count":0},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [288bb250cd280da9-SJC]
+      connection: [keep-alive]
+      content-length: ['136']
+      content-type: [application/json]
+      date: ['Thu, 24 Mar 2016 17:03:26 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dd99b14b06166319484197b20e75b94f01458839006; expires=Fri,
+          24-Mar-17 17:03:26 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
