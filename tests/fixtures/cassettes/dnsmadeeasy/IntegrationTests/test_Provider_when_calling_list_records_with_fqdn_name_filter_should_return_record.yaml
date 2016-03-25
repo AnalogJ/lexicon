@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:18:32 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1458926283629,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:18:32 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=CA8C8EC4D156C32984F0B3B8FB64CDF4; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [31fe8065-8297-42ab-b40f-28849ce8754d]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['146']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "random.test", "value": "challengetoken", "ttl":
+      86400}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['79']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:18:32 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/
+  response:
+    body: {string: !!python/unicode '{"error":["Record with this type (TXT), name
+        (random.test), and value (\"challengetoken\") already exists."]}'}
+    headers:
+      connection: [close]
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:18:32 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=EE598EA54606809C9987BE39F4987A9F; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [b719a2df-eb1c-4b8d-8f9c-6411061196bd]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['145']
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:18:32 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records?recordName=random.test&type=TXT
+  response:
+    body: {string: !!python/unicode '{"data":[{"name":"random.test","value":"\"challengetoken\"","id":10098486,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}],"page":0,"totalRecords":1,"totalPages":1}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:18:32 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=795338B8BE6250D228510B191280DDA1; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [9d14bf2f-e6dd-4dc5-a27a-9037f39821da]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['144']
+    status: {code: 200, message: OK}
+version: 1

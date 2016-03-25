@@ -1,0 +1,48 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 16:58:01 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1458924509715,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 16:58:02 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=F745EC4A7A71C91F03FC2F13BCE50D19; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [afa8ed49-1d32-4da5-8e71-33bae7d0d6c6]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['149']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 16:58:02 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records
+  response:
+    body: {string: !!python/unicode '{"data":[],"page":0,"totalRecords":0,"totalPages":1}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 16:58:02 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=33EF2FBF6E08BCDD6226EDDD46E17278; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [5b0550b0-813d-446d-bc70-f95638122be0]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['148']
+    status: {code: 200, message: OK}
+version: 1

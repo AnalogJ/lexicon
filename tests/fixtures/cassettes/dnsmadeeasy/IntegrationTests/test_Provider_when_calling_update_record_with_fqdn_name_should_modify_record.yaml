@@ -1,0 +1,192 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:33:46 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1458927142798,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:33:47 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=B2B8AA22FA4EA66EBC3E139928842BEC; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [7c5d2a80-0257-4172-9bd1-47026853e57d]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['138']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "orig.testfqdn", "value": "challengetoken", "ttl":
+      86400}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['81']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:33:46 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/
+  response:
+    body: {string: !!python/unicode '{"name":"orig.testfqdn","value":"\"challengetoken\"","id":10098494,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:33:47 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/10098494']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=E79CA719781D78CE93A8458ECD44991F; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [f13122f8-2ae0-4d60-a0f9-96395ee3d7c5]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['137']
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:33:47 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records?recordName=orig.testfqdn&type=TXT
+  response:
+    body: {string: !!python/unicode '{"data":[{"name":"orig.testfqdn","value":"\"challengetoken\"","id":10098494,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}],"page":0,"totalRecords":1,"totalPages":1}'}
+    headers:
+      content-type: [application/json]
+      date: ['Fri, 25 Mar 2016 17:33:47 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=EAA4261CC7D7EDBB99823B072517C106; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [23a50f35-7ccd-45a6-a3bb-62d0498665ab]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['136']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "updated.testfqdn", "value": "challengetoken"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['70']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+      x-dnsme-requestDate: ['Fri, 25 Mar 2016 17:33:47 GMT']
+    method: PUT
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/10098494/
+  response:
+    body: {string: !!python/unicode "\r\n\r\n\r\n\r\n\r\n\r\n\r\n<!DOCTYPE html>\r\
+        \n<html>\r\n<head>\r\n\t<title>Management Console</title>\r\n\t\r\n\r\n\r\n\
+        \    <meta charset=\"utf-8\" />\r\n\r\n\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/ui.jqgrid.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/jquery.multiselect.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/jquery.multiselect.filter.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/jquery.jqplot.min.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/jquery.dataTables.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\t\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/console.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" />\r\n\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/dnsme.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" title=\"dnsme\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/custom-theme/jquery-ui-1.8.14.custom.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" title=\"dnsme\" />\r\n\t<link rel=\"stylesheet\" href='/V2.0/css/jquery.fancybox-1.3.4.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" media=\"screen\" />\r\n    <link rel=\"stylesheet\" href='/V2.0/css/realtime-stats/realtime-stats-chart.css;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ type=\"text/css\" media=\"screen\" />\r\n\r\n\t<script type=\"text/javascript\"\
+        \ src='/V2.0/js/jquery-1.6.2.min.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery-ui-1.8.16.custom.min.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.cookie.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/i18n/grid.locale-en.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.jqGrid.min.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.validate.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.populate.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.dropdownPlain.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.metadata.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.multiselect.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.multiselect.filter.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.diff.min.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.tinysort.min.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.fancybox-1.3.4.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.dataTables.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\t\r\n\t\r\n\t<script type=\"text/javascript\" src='/V2.0/js/date.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n    <script>Date.now = function() { return +new Date; };</script>\r\
+        \n\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.pagination.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\r\n\t<script type=\"text/javascript\" src='/V2.0/js/jquery.blockUI.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\r\n\t<script type=\"text/javascript\" src='/V2.0/js/highcharts.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\r\n    <script type=\"text/javascript\" src='/V2.0/js/console.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n\r\n    <script>\r\n        var require = {\r\n          \
+        \  config: {\r\n                'DataStore' : {\r\n                    baseUrl:\
+        \ '/V2.0/realtimestats;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\r\n  \
+        \              }\r\n            }\r\n        }\r\n    </script>\r\n    \r\n\
+        <script type=\"text/javascript\" src='/V2.0/js/realtimestats/libs/requirejs/require.js;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\
+        \ ></script>\r\n<script>\r\n    require.config({\r\n        baseUrl: '/V2.0/js/realtimestats;jsessionid=7E20AB26049B26DDE2F16B4144B7D621'\r\
+        \n    });\r\n</script>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t\r\n\t<script>\r\
+        \n\t\t$(function() {\r\n\t\t\t$('.tabs').tabs();\r\n\t\t\t$('input:submit').button();\r\
+        \n\t\t\t$('.ui-icon').hover(\r\n\t\t\t\t\tfunction() { $(this).addClass('ui-state-hover');\
+        \ },\r\n\t\t\t\t\tfunction() { $(this).removeClass('ui-state-hover'); }\r\n\
+        \t\t\t\t);\r\n\r\n\t\t\t$('html').ajaxError(function(event, jqXHR, ajaxSettings,\
+        \ error) {\r\n\t\t\t\tif (jqXHR.status == 500) {\r\n\t\t\t\t\twindow.location.reload();\r\
+        \n\t\t\t\t}\r\n\t\t\t\tif (jqXHR.status == 403) {\r\n\t\t\t\t\twindow.location.href\
+        \ = LOGIN_URL;\r\n\t\t\t\t}\r\n\t\t\t\tif (jqXHR.status == 415) {\r\n\t\t\t\
+        \t\twindow.location.reload();\r\n\t\t\t\t}\r\n\t\t\t\tif (jqXHR.status ==\
+        \ 405) {\r\n\t\t\t\t\twindow.location.reload();\r\n\t\t\t\t}\r\n\r\n\t\t\t\
+        });\t\t\t\r\n\t\t\t\r\n\t\t});\r\n\t</script>\r\n\t\r\n</head>\r\n<body style=\"\
+        background: #FFF\">\r\n\r\n\r\n\r\n\r\n\r\n<div id=\"submitTicket\" title=\"\
+        Submit a support ticket\" style=\"margins: 0 auto;\">\r\n\t<p>\r\n\t\tEnter\
+        \ a title and description of your issue and a support ticket will be created\
+        \ for you.\r\n\t</p>\r\n\t<div id=\"submitTicketErrors\"></div>\r\n\r\n\t\
+        <form id=\"submitTicketForm\" autocomplete=\"off\" >\r\n\t\t<fieldset class=\"\
+        aligned\">\r\n\t\t\t<label for=\"ticketSubject\"><span class=\"required\"\
+        \ style=\"margin: 0 .25em; vertical-align: top\" title=\"Required field\"\
+        >*</span>Subject</label>\r\n\t\t\t<input type=\"text\" name=\"subject\" id=\"\
+        ticketSubject\" class=\"{validate:{required:true, messages:{required:'Subject\
+        \ is required'}}}\" /><br />\r\n\t\t\t<label for=\"ticketContent\"><span class=\"\
+        required\" style=\"margin: 0 .25em; vertical-align: top\" title=\"Required\
+        \ field\">*</span>Issue Description</label>\r\n\t\t\t<textarea rows=\"10\"\
+        \ cols=\"68\" style=\"width: auto\" name=\"contents\" id=\"ticketContent\"\
+        \ class=\"{validate:{required:true, messages:{required:'Issue Description\
+        \ is required'}}}\"></textarea>\r\n\t\t</fieldset>\r\n\t</form>\r\n\t<p>\r\
+        \n\t\tTo view the status of an existing ticket, visit the <a style=\"text-decoration:\
+        \ underline\" href=\"http://support.dnsmadeeasy.com\">support site</a>.\r\n\
+        \t</p>\r\n</div>\r\n\r\n<script>\r\n\r\n\tfunction showSubmitTicket() {\r\n\
+        \t\t$('#submitTicket').dialog('open');\r\n\t}\r\n\t\r\n\tajaxForm('/V2.0/support;jsessionid=7E20AB26049B26DDE2F16B4144B7D621',\
+        \ 'POST', '#submitTicketForm', '#submitTicketErrors', function(data, responseText,\
+        \ jqXHR) {\r\n\t\t\r\n\t\t$('#dialog').dialog(\"destroy\");\r\n\t\t$(\"#dialog\"\
+        )\r\n\t\t\t.html(\r\n\t\t\t\t'Your support request was successfully submitted.\
+        \  You should receive a confirmation email regarding this request.  For reference,\
+        \ your ticket ID for this issue is:<p style=\"text-align: center\"> ' + data.responseText\
+        \ + '</p>'\r\n\t\t\t)\r\n\t\t\t.dialog(\r\n\t\t\t\t{\r\n\t\t\t\t\twidth :\
+        \ 350,\r\n\t\t\t\t\tmodal : true,\r\n\t\t\t\t\tresizable : false,\r\n\t\t\t\
+        \t\ttitle : 'Success',\r\n\t\t\t\t\tbuttons : {\r\n\t\t\t\t\t\tOk : function()\
+        \ {\r\n\t\t\t\t\t\t\t$('#dialog').dialog(\"close\");\r\n\t\t\t\t\t\t}\r\n\t\
+        \t\t\t\t},\r\n\t\t\t\t\tclose: function() {\r\n\t\t\t\t\t\t$('#submitTicketForm').populate({},\
+        \ {resetForm:true});\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\r\n\t}, '#submitTicket',\
+        \ {\r\n\t\twidth: 600,\r\n\t\tblock: true\r\n\t});\t\r\n\t\r\n</script>\r\n\
+        <div style=\"width: 400px;margin: 0 auto;position: relative;top: 200px; text-align:\
+        \ center\">\r\n\t<a href=\"/console\">\r\n\t\t<img src=\"/V2.0/img/logo_dns.png;jsessionid=7E20AB26049B26DDE2F16B4144B7D621\"\
+        />\r\n\t</a>\r\n\t<h3>A system error has occurred.</h3>\r\n\t<p style=\"margin:\
+        \ 3em auto\">\r\n\t\tHave no fear - our team of emergency response nerds have\
+        \ already been alerted and are on the case.\r\n\t</p> \r\n\r\n\t<a href=\"\
+        /V2.0/;jsessionid=7E20AB26049B26DDE2F16B4144B7D621\">Return to console</a>\t\
+        <br class=\"clear\"/>\r\n\t\r\n\t\t<a id=\"submitTicketLink\" onclick=\"showSubmitTicket();\"\
+        \ >Submit a support ticket</a>\r\n\t\r\n\t<a target=\"_blank\" href=\"http://support.dnsmadeeasy.com\"\
+        >Support Center</a>\r\n\t<br class=\"clear\"/>\r\n\t<div style=\"margin-top:\
+        \ 2em\">\r\n\t\t<small>Current IP address:   <br />\r\n\t\tLast logged in\
+        \ on Fri Mar 25 00:00:00 UTC 2016 from 208.72.142.184</small><br />\r\n\t\
+        </div>\r\n\t<div style=\"margin-top: 2em\">\r\n\t\t<small>Current Date and\
+        \ Time: 2016-03-25 17:33:48:326</small><br />\r\n\t</div>\r\n\t\r\n</div>\r\
+        \n\r\n</body>\r\n</html>"}
+    headers:
+      connection: [close]
+      content-type: [text/html;charset=ISO-8859-1]
+      date: ['Fri, 25 Mar 2016 17:33:48 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=7E20AB26049B26DDE2F16B4144B7D621; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [915383c3-96c4-46b0-8519-953bb29238b0]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['135']
+    status: {code: 500, message: Internal Server Error}
+version: 1
