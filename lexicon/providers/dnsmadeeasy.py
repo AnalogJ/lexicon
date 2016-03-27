@@ -75,7 +75,10 @@ class Provider(BaseProvider):
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
 
-        data = {}
+        data = {
+            'id': identifier,
+            'ttl': 86400
+        }
 
         if name:
             data['name'] = self._clean_name(name)
@@ -84,7 +87,7 @@ class Provider(BaseProvider):
         if type:
             data['type'] = type
 
-        payload = self._put('/dns/managed/{0}/records/{1}/'.format(self.domain_id, identifier), data)
+        payload = self._put('/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         print 'update_record: {0}'.format(True)
         return True
