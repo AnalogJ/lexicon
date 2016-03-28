@@ -1,0 +1,181 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['588']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:38 GMT']
+      etag: [W/"8c4cce560a475eca3ef1ca2ba80888595d8b9f6c"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"domain": "orig.test.capsulecd.com", "type": "TXT", "answers": [{"answer":
+      ["challengetoken"]}], "zone": "capsulecd.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['122']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: PUT
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/orig.test.capsulecd.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"orig.test.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f87a7d1c372700067a8290"}],"id":"56f87a7d1c372700067a8291","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['287']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:41 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['100']
+      x-ratelimit-period: ['200']
+      x-ratelimit-remaining: ['99']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"orig.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87a7d1c372700067a8291"},{"domain":"orig.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87a7e1c372700067a8295"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['890']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:44 GMT']
+      etag: [W/"737794c5081d4f496e9a3fe466da6bf8061beda8"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/orig.test.capsulecd.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"orig.test.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f87a7d1c372700067a8290"}],"id":"56f87a7d1c372700067a8291","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['287']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:47 GMT']
+      etag: [W/"5ee966fa9a1680f80c052914a07e431240ec1d93"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"domain": "updated.test.capsulecd.com", "type": "TXT", "answers": [{"answer":
+      ["challengetoken"]}], "zone": "capsulecd.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['125']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: PUT
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/updated.test.capsulecd.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"updated.test.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f87a8659272400060f8ac3"}],"id":"56f87a8659272400060f8ac4","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['290']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:50 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['100']
+      x-ratelimit-period: ['200']
+      x-ratelimit-remaining: ['99']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: DELETE
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/orig.test.capsulecd.com/TXT
+  response:
+    body: {string: !!python/unicode '{}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['3']
+      content-type: [application/json]
+      date: ['Mon, 28 Mar 2016 00:27:53 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['100']
+      x-ratelimit-period: ['200']
+      x-ratelimit-remaining: ['99']
+    status: {code: 200, message: OK}
+version: 1

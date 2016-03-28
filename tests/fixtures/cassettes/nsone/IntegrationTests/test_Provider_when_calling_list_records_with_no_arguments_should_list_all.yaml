@@ -1,0 +1,63 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.subdomain.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655759272400060f7f9b"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655759272400060f7f9f"},{"domain":"_acme-challenge.www.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655659272400060f7f97"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56f8655659272400060f7f91"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['1220']
+      content-type: [application/json]
+      date: ['Sun, 27 Mar 2016 23:38:53 GMT']
+      etag: [W/"72bcab413bb553ab72bbb913c29349f6223383fa"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.subdomain.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655759272400060f7f9b"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655759272400060f7f9f"},{"domain":"_acme-challenge.www.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f8655659272400060f7f97"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56f8655659272400060f7f91"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['1220']
+      content-type: [application/json]
+      date: ['Sun, 27 Mar 2016 23:38:55 GMT']
+      etag: [W/"72bcab413bb553ab72bbb913c29349f6223383fa"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      transfer-encoding: [chunked]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+version: 1
