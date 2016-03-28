@@ -1,0 +1,51 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://rage4.com/rapi/getdomainbyname/?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"id":57039,"name":"capsulecd.com","owner_email":"lexicon@mailinator.com","type":0,"subnet_mask":0,"default_ns1":"ns1.r4ns.com","default_ns2":"ns2.r4ns.net"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      content-length: ['157']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Mon, 28 Mar 2016 02:16:39 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
+      x-powered-by: [Rage4]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://rage4.com/rapi/createrecord/?content=127.0.0.1&type=A&id=57039&name=localhost.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":true,"id":1952199,"error":""}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      content-length: ['39']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Mon, 28 Mar 2016 02:15:49 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      transfer-encoding: [chunked]
+      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
+      x-powered-by: [Rage4]
+    status: {code: 200, message: OK}
+version: 1
