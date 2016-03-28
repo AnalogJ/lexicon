@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"message":"zone not found"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['29']
+      content-type: [application/json]
+      date: ['Sun, 27 Mar 2016 22:43:02 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 404, message: Not Found}
+version: 1

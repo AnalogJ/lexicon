@@ -1,0 +1,63 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['588']
+      content-type: [application/json]
+      date: ['Sun, 27 Mar 2016 22:57:23 GMT']
+      etag: [W/"8c4cce560a475eca3ef1ca2ba80888595d8b9f6c"]
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"domain": "_acme-challenge.subdomain.capsulecd.com", "type": "TXT", "answers":
+      [{"answer": ["challengetoken"]}], "zone": "capsulecd.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['138']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: PUT
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/_acme-challenge.subdomain.capsulecd.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.subdomain.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f8655759272400060f7f9a"}],"id":"56f8655759272400060f7f9b","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+        '}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['303']
+      content-type: [application/json]
+      date: ['Sun, 27 Mar 2016 22:57:27 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [NSONE API v1]
+      transfer-encoding: [chunked]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['100']
+      x-ratelimit-period: ['200']
+      x-ratelimit-remaining: ['97']
+    status: {code: 200, message: OK}
+version: 1
