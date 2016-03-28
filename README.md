@@ -13,19 +13,27 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
-- cloudflare ([docs](https://api.cloudflare.com/#endpoints))
-- pointhq ([docs](https://pointhq.com/api/docs))
-- dnsimple ([docs](https://developer.dnsimple.com/))
+- Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
+- PointHQ ([docs](https://pointhq.com/api/docs))
+- DNSimple ([docs](https://developer.dnsimple.com/))
+- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
+- NS1 ([docs](https://ns1.com/api/))
 
 The next planned providers are:
 
-- NS1 ([docs](https://ns1.com/api/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
-- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
+- Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
+- PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
+- Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
+- Linode ([docs](https://www.linode.com/api/dns))
+- Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
+- EntryDNS ([docs](https://entrydns.net/help))
 
 ## Setup
 To use lexicon as a CLI application, do the following:
@@ -43,13 +51,13 @@ You can also install the latest version from the repository directly.
 				  [--priority=PRIORITY] [--identifier=IDENTIFIER]
 				  [--auth-username=AUTH_USERNAME] [--auth-password=AUTH_PASSWORD]
 				  [--auth-token=AUTH_TOKEN] [--auth-otp-token=AUTH_OTP_TOKEN]
-				  {base,cloudflare,__init__} {create,list,update,delete} domain
+				  {cloudflare, dnsimple, dnsmadeeasy, nsone, pointhq} {create,list,update,delete} domain
 				  {A,CNAME,MX,SOA,TXT}
 	
 	Create, Update, Delete, List DNS entries
 	
 	positional arguments:
-	  {cloudflare}
+	  {cloudflare, dnsimple, dnsmadeeasy, nsone, pointhq}
 							specify the DNS provider to use
 	  {create,list,update,delete}
 							specify the action to take
@@ -107,6 +115,7 @@ There is an included example Dockerfile that can be used to automatically genera
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
 - [ ] Wire up automated release packaging on PRs.
+- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html))
 
 ## Contributing Changes.
 If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
