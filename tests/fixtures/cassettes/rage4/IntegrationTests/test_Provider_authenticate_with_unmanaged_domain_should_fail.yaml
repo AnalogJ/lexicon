@@ -1,0 +1,28 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://rage4.com/rapi/getdomainbyname/?name=thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"status":false,"id":0,"error":"Unable to fetch
+        the item or API access not allowed"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      content-length: ['84']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Wed, 30 Mar 2016 06:39:16 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      transfer-encoding: [chunked]
+      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
+      x-powered-by: [Rage4]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,52 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://rage4.com/rapi/getdomainbyname/?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"id":57039,"name":"capsulecd.com","owner_email":"lexicon@mailinator.com","type":0,"subnet_mask":0,"default_ns1":"ns1.r4ns.com","default_ns2":"ns2.r4ns.net"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      content-length: ['157']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Wed, 30 Mar 2016 06:39:26 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
+      x-powered-by: [Rage4]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://rage4.com/rapi/getrecords/?id=57039
+  response:
+    body: {string: !!python/unicode '[{"id":1952177,"name":"capsulecd.com","content":"ns1.r4ns.com","type":"NS","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1952179,"name":"capsulecd.com","content":"ns2.r4ns.net","type":"NS","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1952181,"name":"capsulecd.com","content":"ns1.r4ns.com
+        lexicon.mailinator.com 1459319994 10800 3600 604800 3600","type":"SOA","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954621,"name":"localhost.capsulecd.com","content":"127.0.0.1","type":"A","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954623,"name":"docs.capsulecd.com","content":"docs.example.com","type":"CNAME","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954625,"name":"_acme-challenge.fqdn.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954627,"name":"_acme-challenge.full.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954629,"name":"_acme-challenge.test.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954631,"name":"delete.testfilt.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954633,"name":"delete.testfqdn.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954635,"name":"delete.testfull.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954637,"name":"delete.testid.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954639,"name":"random.fqdntest.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954641,"name":"random.fulltest.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null},{"id":1954643,"name":"random.test.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      content-length: ['5271']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Wed, 30 Mar 2016 06:39:48 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      transfer-encoding: [chunked]
+      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
+      x-powered-by: [Rage4]
+    status: {code: 200, message: OK}
+version: 1

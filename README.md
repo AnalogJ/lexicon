@@ -20,6 +20,8 @@ The current supported providers are:
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - NS1 ([docs](https://ns1.com/api/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
+- Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
+
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
@@ -38,7 +40,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
-- Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
