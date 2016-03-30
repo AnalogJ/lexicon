@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.dnspark.com/v2/dns/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":200,"message":"OK","records":[{"record_id":"14527504","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns1.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527506","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns2.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527508","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"SOA","rdata":"fns1.dnspark.net
+        hostmaster.dnspark.com 1459315350 14400 7200 1209600 3600","readonly":"N","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T05:22:30Z"},{"record_id":"14527784","domain_id":"481510","rname":"docs.capsulecd.com","ttl":"3600","rtype":"CNAME","rdata":"docs.example.com","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:28Z"},{"record_id":"14527782","domain_id":"481510","rname":"localhost.capsulecd.com","ttl":"3600","rtype":"A","rdata":"127.0.0.1","dynamic":"N","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:27Z"},{"record_id":"14527786","domain_id":"481510","rname":"_acme-challenge.fqdn.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:29Z"},{"record_id":"14527788","domain_id":"481510","rname":"_acme-challenge.full.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:30Z"},{"record_id":"14527790","domain_id":"481510","rname":"_acme-challenge.test.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:30Z"}],"additional":{"domain_id":"481510","date_added":"2016-03-30T04:55:35Z","notified_serial":"1459313735","dns_type":"MASTER","tsig_on":"Y","tsig_key_name":"testtesttest-capsulecd.com-dnspark","tsig_key_value":"NEfgx\/WTMyRVUg0\/ROKWZkyoeKdiLXkQGd6FsnnI27Y=","tsig_key_algorithm":"HMAC-MD5"}}'}
+    headers:
+      connection: [close]
+      content-length: ['2190']
+      content-type: [application/json]
+      date: ['Wed, 30 Mar 2016 05:25:46 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=11d8040db6fc42349e7a6365c0deb2b0; expires=Wed,
+          30-Mar-2016 07:25:46 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      strict-transport-security: [max-age=63072000]
+      vary: [Accept-Encoding]
+      x-frame-options: [DENY]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 200, message: ''}
+- request:
+    body: '{"rname": "random.test", "rdata": "challengetoken", "rtype": "TXT"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['67']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.dnspark.com/v2/dns/481510
+  response:
+    body: {string: !!python/unicode '{"status":200,"message":"OK. Record created.","records":[{"record_id":"14527796","domain_id":"481510","rname":"random.test.capsulecd.com","ttl":"3600","rtype":"TXT","prio":"0","rdata":"challengetoken","dynamic":"N","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:25:50Z"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['308']
+      content-type: [application/json]
+      date: ['Wed, 30 Mar 2016 05:25:50 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=4900234e804fe6d9d5b028755317e9c5; expires=Wed,
+          30-Mar-2016 07:25:50 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      strict-transport-security: [max-age=63072000]
+      vary: [Accept-Encoding]
+      x-frame-options: [DENY]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 200, message: ''}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.dnspark.com/v2/dns/481510
+  response:
+    body: {string: !!python/unicode '{"status":200,"message":"OK","records":[{"record_id":"14527504","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns1.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527506","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns2.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527508","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"SOA","rdata":"fns1.dnspark.net
+        hostmaster.dnspark.com 1459315550 14400 7200 1209600 3600","readonly":"N","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T05:25:50Z"},{"record_id":"14527784","domain_id":"481510","rname":"docs.capsulecd.com","ttl":"3600","rtype":"CNAME","rdata":"docs.example.com","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:28Z"},{"record_id":"14527782","domain_id":"481510","rname":"localhost.capsulecd.com","ttl":"3600","rtype":"A","rdata":"127.0.0.1","dynamic":"N","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:27Z"},{"record_id":"14527792","domain_id":"481510","rname":"random.fqdntest.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:25:49Z"},{"record_id":"14527794","domain_id":"481510","rname":"random.fulltest.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:25:50Z"},{"record_id":"14527796","domain_id":"481510","rname":"random.test.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:25:50Z"},{"record_id":"14527786","domain_id":"481510","rname":"_acme-challenge.fqdn.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:29Z"},{"record_id":"14527788","domain_id":"481510","rname":"_acme-challenge.full.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:30Z"},{"record_id":"14527790","domain_id":"481510","rname":"_acme-challenge.test.capsulecd.com","ttl":"3600","rtype":"TXT","rdata":"challengetoken","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:30Z"}],"additional":{"domain_id":"481510","date_added":"2016-03-30T04:55:35Z","notified_serial":"1459313735","dns_type":"MASTER","tsig_on":"Y","tsig_key_name":"testtesttest-capsulecd.com-dnspark","tsig_key_value":"NEfgx\/WTMyRVUg0\/ROKWZkyoeKdiLXkQGd6FsnnI27Y=","tsig_key_algorithm":"HMAC-MD5"}}'}
+    headers:
+      connection: [close]
+      content-length: ['2873']
+      content-type: [application/json]
+      date: ['Wed, 30 Mar 2016 05:25:53 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=7530407981d7ec9fe6153f2579e5e70a; expires=Wed,
+          30-Mar-2016 07:25:53 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      strict-transport-security: [max-age=63072000]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-frame-options: [DENY]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 200, message: ''}
+version: 1
