@@ -10,7 +10,7 @@ import pytest
 class EasyDnsProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
-    provider_name = 'nsone'
+    provider_name = 'easydns'
     domain = 'capsulecd.com'
     provider_opts = {'api_endpoint': 'http://sandbox.rest.easydns.net'}
     def _filter_headers(self):
