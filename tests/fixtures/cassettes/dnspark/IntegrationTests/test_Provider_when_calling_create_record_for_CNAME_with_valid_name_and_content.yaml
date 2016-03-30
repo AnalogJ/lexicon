@@ -1,0 +1,56 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.dnspark.com/v2/dns/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":200,"message":"OK","records":[{"record_id":"14527504","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns1.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527506","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"NS","rdata":"fns2.dnspark.net","readonly":"Y","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"},{"record_id":"14527508","domain_id":"481510","rname":"capsulecd.com","ttl":"3600","rtype":"SOA","rdata":"fns1.dnspark.net
+        hostmaster.dnspark.com 1459313735 14400 7200 1209600 3600","readonly":"N","active":"Y","ordername":null,"auth":"1","last_update":"2016-03-30T04:55:35Z"}],"additional":{"domain_id":"481510","date_added":"2016-03-30T04:55:35Z","notified_serial":"1459313735","dns_type":"MASTER","tsig_on":"Y","tsig_key_name":"testtesttest-capsulecd.com-dnspark","tsig_key_value":"NEfgx\/WTMyRVUg0\/ROKWZkyoeKdiLXkQGd6FsnnI27Y=","tsig_key_algorithm":"HMAC-MD5"}}'}
+    headers:
+      connection: [close]
+      content-length: ['1036']
+      content-type: [application/json]
+      date: ['Wed, 30 Mar 2016 05:19:41 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=d2aa45ff8d9a18560bc83abf27d2de4f; expires=Wed,
+          30-Mar-2016 07:19:41 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      strict-transport-security: [max-age=63072000]
+      vary: [Accept-Encoding]
+      x-frame-options: [DENY]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 200, message: ''}
+- request:
+    body: '{"rname": "docs", "rdata": "docs.example.com", "rtype": "CNAME"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['64']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.dnspark.com/v2/dns/481510
+  response:
+    body: {string: !!python/unicode '{"status":200,"message":"OK. Record created.","records":[{"record_id":"14527784","domain_id":"481510","rname":"docs.capsulecd.com","ttl":"3600","rtype":"CNAME","prio":"0","rdata":"docs.example.com","dynamic":"N","readonly":"N","active":"Y","ordername":"","auth":"0","last_update":"2016-03-30T05:22:28Z"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['305']
+      content-type: [application/json]
+      date: ['Wed, 30 Mar 2016 05:22:29 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=472569c302652f148cfcee016beacc5e; expires=Wed,
+          30-Mar-2016 07:22:28 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      strict-transport-security: [max-age=63072000]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-frame-options: [DENY]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 200, message: ''}
+version: 1
