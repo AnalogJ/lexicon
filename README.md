@@ -125,7 +125,7 @@ There is an included example Dockerfile that can be used to automatically genera
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
 - [ ] Wire up automated release packaging on PRs.
-- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html))
+- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
 
 ## Contributing Changes.
 If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
