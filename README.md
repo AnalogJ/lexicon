@@ -14,26 +14,36 @@ Only DNS providers who have an API can be supported by `lexicon`.
 The current supported providers are:
 
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
-- PointHQ ([docs](https://pointhq.com/api/docs))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
+- EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - NS1 ([docs](https://ns1.com/api/))
+- PointHQ ([docs](https://pointhq.com/api/docs))
 
-The next planned providers are:
+Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
-- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
-- ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
-- Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
-- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
-- AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
-- Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
-- PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
-- Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
-- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
-- Linode ([docs](https://www.linode.com/api/dns))
-- Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
+- AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
+- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
+- ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
+- DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
+- DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - EntryDNS ([docs](https://entrydns.net/help))
+- Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))
+- Linode ([docs](https://www.linode.com/api/dns))
+- Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
+- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
+- Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))
+- PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
+- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
+- Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
+- Transip ([docs](https://www.transip.nl/transip/api/))
+- UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))
+- Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
+- Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))
+- Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 ## Setup
 To use lexicon as a CLI application, do the following:
@@ -115,7 +125,7 @@ There is an included example Dockerfile that can be used to automatically genera
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
 - [ ] Wire up automated release packaging on PRs.
-- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html))
+- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
 
 ## Contributing Changes.
 If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
