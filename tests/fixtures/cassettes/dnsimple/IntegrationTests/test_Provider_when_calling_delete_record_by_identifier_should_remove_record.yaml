@@ -20,7 +20,8 @@ interactions:
       connection: [keep-alive]
       content-length: ['392']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 16 Mar 2016 07:32:29 GMT']
+      date: ['Wed, 30 Mar 2016 01:58:52 GMT']
+      etag: [W/"16f41476ceeeede092cdcffc3c091f5f"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -28,24 +29,24 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [303f977c-5b0b-41a3-8a18-dcc2cbf1408c]
-      x-runtime: ['0.462336']
+      x-request-id: [5f5c4659-b747-405a-9083-2dfa9b3fa032]
+      x-runtime: ['0.025711']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
     body: '{"record": {"content": "challengetoken", "record_type": "TXT", "name":
-      "delete.test"}}'
+      "delete.testid"}}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['86']
+      Content-Length: ['88']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
     uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records
   response:
-    body: {string: !!python/unicode '{"record":{"id":68026,"domain_id":6259,"parent_id":null,"name":"delete.test","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-16T07:32:32.413Z","updated_at":"2016-03-16T07:32:32.413Z"}}'}
+    body: {string: !!python/unicode '{"record":{"id":97311,"domain_id":6259,"parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:49.229Z","updated_at":"2016-03-30T01:59:49.229Z"}}'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
@@ -53,8 +54,8 @@ interactions:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 16 Mar 2016 07:32:32 GMT']
-      etag: [W/"73fd3a3366f77593ca988dd73647eae9"]
+      date: ['Wed, 30 Mar 2016 01:59:49 GMT']
+      etag: [W/"c7dc727ba6e1dc5f517aefbc19b46c66"]
       server: [nginx]
       status: [201 Created]
       strict-transport-security: [max-age=31536000]
@@ -62,8 +63,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [0344149c-c6dc-4307-b587-f15aa8f15d55]
-      x-runtime: ['0.139203']
+      x-request-id: [aee6fb68-c48e-498c-9866-3a6bbc8c0e6b]
+      x-runtime: ['0.160509']
       x-xss-protection: ['1']
     status: {code: 201, message: Created}
 - request:
@@ -76,18 +77,19 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.test
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.testid
   response:
-    body: {string: !!python/unicode '[{"record":{"id":68026,"domain_id":6259,"parent_id":null,"name":"delete.test","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-16T07:32:32.413Z","updated_at":"2016-03-16T07:32:32.413Z"}}]'}
+    body: {string: !!python/unicode '[{"record":{"id":97311,"domain_id":6259,"parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:49.229Z","updated_at":"2016-03-30T01:59:49.229Z"}}]'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
       access-control-allow-origin: ['*']
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
-      content-length: ['252']
+      content-length: ['254']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 16 Mar 2016 07:32:33 GMT']
+      date: ['Wed, 30 Mar 2016 01:59:49 GMT']
+      etag: [W/"65fa37982f690a3292782f63fe328bac"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -95,8 +97,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [2bfe5899-ad33-4184-8f80-0c35a2f49ca6]
-      x-runtime: ['0.037154']
+      x-request-id: [aa693b8e-f556-4b2d-a642-436d6d2e0d25]
+      x-runtime: ['0.067576']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
@@ -109,7 +111,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: DELETE
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records/68026
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records/97311
   response:
     body: {string: !!python/unicode '{}'}
     headers:
@@ -120,7 +122,8 @@ interactions:
       connection: [keep-alive]
       content-length: ['2']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 16 Mar 2016 07:32:37 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:13 GMT']
+      etag: [W/"99914b932bd37a50b983c5e7c90ae93b"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -128,8 +131,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [10ae1a1b-1dd4-426f-a73e-91b8e4e5d3f9]
-      x-runtime: ['0.084501']
+      x-request-id: [67f3824c-49fa-4694-80b0-89e01023aeeb]
+      x-runtime: ['0.083095']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
@@ -142,7 +145,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.test
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.testid
   response:
     body: {string: !!python/unicode '[]'}
     headers:
@@ -153,7 +156,8 @@ interactions:
       connection: [keep-alive]
       content-length: ['2']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 16 Mar 2016 07:32:40 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:28 GMT']
+      etag: [W/"d751713988987e9331980363e24189ce"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -162,8 +166,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [cac1c954-c2dc-4de2-a6dd-48ef2e850706]
-      x-runtime: ['0.812607']
+      x-request-id: [d0604a0b-cb92-46c7-a0a0-c2567aecee30]
+      x-runtime: ['0.068091']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 version: 1

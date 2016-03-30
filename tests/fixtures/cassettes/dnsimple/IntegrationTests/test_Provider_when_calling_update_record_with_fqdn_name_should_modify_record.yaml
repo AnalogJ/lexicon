@@ -20,7 +20,7 @@ interactions:
       connection: [keep-alive]
       content-length: ['392']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:25:13 GMT']
+      date: ['Wed, 30 Mar 2016 01:58:55 GMT']
       etag: [W/"16f41476ceeeede092cdcffc3c091f5f"]
       server: [nginx]
       status: [200 OK]
@@ -29,8 +29,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [0e90d8ca-b989-4d3e-8301-c6b5ab324492]
-      x-runtime: ['0.115481']
+      x-request-id: [219766c2-689b-4b5f-8746-b1670c12cb49]
+      x-runtime: ['0.017184']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
@@ -46,7 +46,7 @@ interactions:
     method: POST
     uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records
   response:
-    body: {string: !!python/unicode '{"record":{"id":71920,"domain_id":6259,"parent_id":null,"name":"orig.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-24T17:25:15.556Z","updated_at":"2016-03-24T17:25:15.556Z"}}'}
+    body: {string: !!python/unicode '{"record":{"id":97316,"domain_id":6259,"parent_id":null,"name":"orig.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:54.613Z","updated_at":"2016-03-30T01:59:54.613Z"}}'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
@@ -54,8 +54,8 @@ interactions:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:25:15 GMT']
-      etag: [W/"4d4a3947f1d53d920de805f88d64e9a0"]
+      date: ['Wed, 30 Mar 2016 01:59:54 GMT']
+      etag: [W/"e5de5ca5b52fc30ff07fc0a8ce9378be"]
       server: [nginx]
       status: [201 Created]
       strict-transport-security: [max-age=31536000]
@@ -63,8 +63,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [0248d7f8-7fd6-4a2b-8976-637293d2a07a]
-      x-runtime: ['0.169663']
+      x-request-id: [fbc24615-1873-4d9d-bbc6-67d4fee8fd7d]
+      x-runtime: ['0.094218']
       x-xss-protection: ['1']
     status: {code: 201, message: Created}
 - request:
@@ -79,7 +79,7 @@ interactions:
     method: GET
     uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=orig.testfqdn
   response:
-    body: {string: !!python/unicode '[{"record":{"id":71920,"domain_id":6259,"parent_id":null,"name":"orig.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-24T17:25:15.556Z","updated_at":"2016-03-24T17:25:15.556Z"}}]'}
+    body: {string: !!python/unicode '[{"record":{"id":97316,"domain_id":6259,"parent_id":null,"name":"orig.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:54.613Z","updated_at":"2016-03-30T01:59:54.613Z"}}]'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
@@ -88,8 +88,8 @@ interactions:
       connection: [keep-alive]
       content-length: ['254']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:25:16 GMT']
-      etag: [W/"9aec935173a37f09cdea88cbaf19529d"]
+      date: ['Wed, 30 Mar 2016 01:59:55 GMT']
+      etag: [W/"af5731ab2bbfe3d58d26c0542dc495b7"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -97,8 +97,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [0813778d-7ec1-4d25-accf-14508af14aca]
-      x-runtime: ['0.067701']
+      x-request-id: [0e9a6c3b-6481-4a92-b80e-358b1fe20817]
+      x-runtime: ['0.028853']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
@@ -111,9 +111,9 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: PUT
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records/71920
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records/97316
   response:
-    body: {string: !!python/unicode '{"record":{"id":71920,"domain_id":6259,"parent_id":null,"name":"updated.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-24T17:25:15.556Z","updated_at":"2016-03-24T17:25:18.115Z"}}'}
+    body: {string: !!python/unicode '{"record":{"id":97316,"domain_id":6259,"parent_id":null,"name":"updated.testfqdn","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:54.613Z","updated_at":"2016-03-30T02:00:15.240Z"}}'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
@@ -122,8 +122,8 @@ interactions:
       connection: [keep-alive]
       content-length: ['255']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:25:18 GMT']
-      etag: [W/"a3a6f872ff1fb1fdb756dd31139f644f"]
+      date: ['Wed, 30 Mar 2016 02:00:15 GMT']
+      etag: [W/"8ec881ed84876a4e6b7fd6bc3f8a6f83"]
       server: [nginx]
       status: [200 OK]
       strict-transport-security: [max-age=31536000]
@@ -132,8 +132,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [2fc2531f-a5b8-4f57-8a25-a57355c03681]
-      x-runtime: ['0.103362']
+      x-request-id: [fa0a0523-f4c9-4c6b-a8e0-f946d49d4e21]
+      x-runtime: ['0.096208']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 version: 1

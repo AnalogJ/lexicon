@@ -20,7 +20,7 @@ interactions:
       connection: [keep-alive]
       content-length: ['392']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:22:33 GMT']
+      date: ['Wed, 30 Mar 2016 01:58:50 GMT']
       etag: [W/"16f41476ceeeede092cdcffc3c091f5f"]
       server: [nginx]
       status: [200 OK]
@@ -29,24 +29,24 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [6d329e34-1935-4294-9d80-51231240bb1c]
-      x-runtime: ['0.690292']
+      x-request-id: [4f627b9a-fe71-40af-a8f2-49b7ccde97dd]
+      x-runtime: ['0.031195']
       x-xss-protection: ['1']
     status: {code: 200, message: OK}
 - request:
     body: '{"record": {"content": "challengetoken", "record_type": "TXT", "name":
-      "_acme-challenge.subdomain"}}'
+      "_acme-challenge.full"}}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['100']
+      Content-Length: ['95']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
     uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records
   response:
-    body: {string: !!python/unicode '{"record":{"id":71917,"domain_id":6259,"parent_id":null,"name":"_acme-challenge.subdomain","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-24T17:22:35.573Z","updated_at":"2016-03-24T17:22:35.573Z"}}'}
+    body: {string: !!python/unicode '{"record":{"id":97306,"domain_id":6259,"parent_id":null,"name":"_acme-challenge.full","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:44.563Z","updated_at":"2016-03-30T01:59:44.563Z"}}'}
     headers:
       access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
       access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
@@ -54,8 +54,8 @@ interactions:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 24 Mar 2016 17:22:35 GMT']
-      etag: [W/"eaaddedda8f52fbb901e00a1a201eaaa"]
+      date: ['Wed, 30 Mar 2016 01:59:44 GMT']
+      etag: [W/"e1c6d1f97da1df6e6c8f67989c9d5599"]
       server: [nginx]
       status: [201 Created]
       strict-transport-security: [max-age=31536000]
@@ -63,8 +63,8 @@ interactions:
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [09d90c27-f21f-48aa-82d3-29b32c35e063]
-      x-runtime: ['0.121327']
+      x-request-id: [09aedc28-3ce4-483f-97b9-a16ffb46577d]
+      x-runtime: ['0.115694']
       x-xss-protection: ['1']
     status: {code: 201, message: Created}
 version: 1

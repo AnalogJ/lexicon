@@ -11,49 +11,49 @@ interactions:
     method: GET
     uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-03-22T01:17:44.127822Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":"3","phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-03-24T17:04:38.265363Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":"3","phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
         Website","price":0,"currency":"USD","frequency":"","legacy_id":"free","is_subscribed":true,"can_subscribe":true,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
     headers:
       cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [288bb09923061e71-SJC]
+      cf-ray: [28b7f5446e720657-SJC]
       connection: [keep-alive]
       content-length: ['1343']
       content-type: [application/json]
-      date: ['Thu, 24 Mar 2016 17:02:17 GMT']
+      date: ['Wed, 30 Mar 2016 01:58:42 GMT']
       expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
       pragma: [no-cache]
       server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d6c52bf387ee23336c0574d9e8282cd7b1458838936; expires=Fri,
-          24-Mar-17 17:02:16 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      set-cookie: ['__cfduid=d0c7001f17db84ee1fdfc4154f73b840d1459303122; expires=Thu,
+          30-Mar-17 01:58:42 GMT; path=/; domain=.cloudflare.com; HttpOnly']
       strict-transport-security: [max-age=31536000]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}
 - request:
-    body: '{"content": "challengetoken", "type": "TXT", "name": "_acme-challenge.subdomain.capsulecd.com"}'
+    body: '{"content": "challengetoken", "type": "TXT", "name": "_acme-challenge.full.capsulecd.com"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['95']
+      Content-Length: ['90']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
     uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
   response:
-    body: {string: !!python/unicode '{"result":{"id":"a2b01789449448a60ee6c1ab038244a6","type":"TXT","name":"_acme-challenge.subdomain.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-24T17:03:17.891126Z","created_on":"2016-03-24T17:03:17.891126Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
+    body: {string: !!python/unicode '{"result":{"id":"ef6f6f0e70b6242a65d9c58cb96b979a","type":"TXT","name":"_acme-challenge.full.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-30T01:59:37.817718Z","created_on":"2016-03-30T01:59:37.817718Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
     headers:
       cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [288bb20f3fa90657-SJC]
+      cf-ray: [28b7f69d11e10296-SJC]
       connection: [keep-alive]
-      content-length: ['427']
+      content-length: ['422']
       content-type: [application/json]
-      date: ['Thu, 24 Mar 2016 17:03:17 GMT']
+      date: ['Wed, 30 Mar 2016 01:59:37 GMT']
       expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
       pragma: [no-cache]
       server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=df589b913befb3fbfb8d036a881968dad1458838996; expires=Fri,
-          24-Mar-17 17:03:16 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      set-cookie: ['__cfduid=db112b990e6dc477ab57213342f4d9dc11459303177; expires=Thu,
+          30-Mar-17 01:59:37 GMT; path=/; domain=.cloudflare.com; HttpOnly']
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
