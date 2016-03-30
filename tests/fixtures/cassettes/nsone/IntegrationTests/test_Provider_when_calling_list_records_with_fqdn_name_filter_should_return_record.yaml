@@ -11,16 +11,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f870f29f939b000662429c"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f86f9e1c372700067a7c5f"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['894']
+      content-length: ['740']
       content-type: [application/json]
-      date: ['Sun, 27 Mar 2016 23:47:14 GMT']
-      etag: [W/"f4fd8ffe677af81541e668529ab180acec19281a"]
+      date: ['Wed, 30 Mar 2016 01:59:31 GMT']
+      etag: [W/"c56cf31101dcd3e7eb1f2486be864e51226e9ce1"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -30,35 +30,35 @@ interactions:
       x-ratelimit-remaining: ['899']
     status: {code: 200, message: OK}
 - request:
-    body: '{"domain": "random.test.capsulecd.com", "type": "TXT", "answers": [{"answer":
+    body: '{"domain": "random.fqdntest.capsulecd.com", "type": "TXT", "answers": [{"answer":
       ["challengetoken"]}], "zone": "capsulecd.com"}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['124']
+      Content-Length: ['128']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: PUT
-    uri: https://api.nsone.net/v1/zones/capsulecd.com/random.test.capsulecd.com/TXT
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/random.fqdntest.capsulecd.com/TXT
   response:
-    body: {string: !!python/unicode '{"message":"record already exists"}
+    body: {string: !!python/unicode '{"domain":"random.fqdntest.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56fb33235927240006115bd9"}],"id":"56fb33235927240006115bda","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['36']
+      content-length: ['293']
       content-type: [application/json]
-      date: ['Sun, 27 Mar 2016 23:47:16 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:03 GMT']
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['100']
       x-ratelimit-period: ['200']
-      x-ratelimit-remaining: ['99']
-    status: {code: 400, message: Bad Request}
+      x-ratelimit-remaining: ['92']
+    status: {code: 200, message: OK}
 - request:
     body: '{}'
     headers:
@@ -71,16 +71,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f870f29f939b000662429c"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f86f9e1c372700067a7c5f"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.fqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bb8"},{"domain":"_acme-challenge.full.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bbe"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bc4"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"delete.testfilt.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bca"},{"domain":"delete.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bce"},{"domain":"delete.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd2"},{"domain":"delete.testid.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd6"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56fb331f5927240006115bb4"},{"domain":"localhost.capsulecd.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"56fb331f5927240006115bae"},{"domain":"orig.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be6"},{"domain":"orig.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bea"},{"domain":"orig.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bf0"},{"domain":"random.fqdntest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bda"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bde"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be2"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['894']
+      content-length: ['3044']
       content-type: [application/json]
-      date: ['Sun, 27 Mar 2016 23:47:17 GMT']
-      etag: [W/"f4fd8ffe677af81541e668529ab180acec19281a"]
+      date: ['Wed, 30 Mar 2016 02:00:19 GMT']
+      etag: [W/"2c90c1b21209f6c73ed71a421540ef32f59ed470"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -88,6 +88,6 @@ interactions:
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['900']
       x-ratelimit-period: ['300']
-      x-ratelimit-remaining: ['898']
+      x-ratelimit-remaining: ['899']
     status: {code: 200, message: OK}
 version: 1

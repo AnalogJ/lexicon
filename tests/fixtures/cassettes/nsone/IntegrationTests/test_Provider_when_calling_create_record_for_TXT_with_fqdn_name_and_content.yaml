@@ -11,16 +11,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['588']
+      content-length: ['740']
       content-type: [application/json]
-      date: ['Sun, 27 Mar 2016 22:57:23 GMT']
-      etag: [W/"8c4cce560a475eca3ef1ca2ba80888595d8b9f6c"]
+      date: ['Wed, 30 Mar 2016 01:59:28 GMT']
+      etag: [W/"c56cf31101dcd3e7eb1f2486be864e51226e9ce1"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -30,27 +30,27 @@ interactions:
       x-ratelimit-remaining: ['899']
     status: {code: 200, message: OK}
 - request:
-    body: '{"domain": "_acme-challenge.www.capsulecd.com", "type": "TXT", "answers":
+    body: '{"domain": "_acme-challenge.fqdn.capsulecd.com", "type": "TXT", "answers":
       [{"answer": ["challengetoken"]}], "zone": "capsulecd.com"}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['132']
+      Content-Length: ['133']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: PUT
-    uri: https://api.nsone.net/v1/zones/capsulecd.com/_acme-challenge.www.capsulecd.com/TXT
+    uri: https://api.nsone.net/v1/zones/capsulecd.com/_acme-challenge.fqdn.capsulecd.com/TXT
   response:
-    body: {string: !!python/unicode '{"domain":"_acme-challenge.www.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f8655659272400060f7f96"}],"id":"56f8655659272400060f7f97","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.fqdn.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56fb33205927240006115bb7"}],"id":"56fb33205927240006115bb8","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['297']
+      content-length: ['298']
       content-type: [application/json]
-      date: ['Sun, 27 Mar 2016 22:57:26 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:00 GMT']
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -58,6 +58,6 @@ interactions:
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['100']
       x-ratelimit-period: ['200']
-      x-ratelimit-remaining: ['98']
+      x-ratelimit-remaining: ['97']
     status: {code: 200, message: OK}
 version: 1

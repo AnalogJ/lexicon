@@ -90,7 +90,7 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            assert provider.create_record('TXT',"_acme-challenge.subdomain.{0}".format(self.domain),'challengetoken')
+            assert provider.create_record('TXT',"_acme-challenge.full.{0}".format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
@@ -100,7 +100,7 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            assert provider.create_record('TXT',"_acme-challenge.www.{0}.".format(self.domain),'challengetoken')
+            assert provider.create_record('TXT',"_acme-challenge.fqdn.{0}.".format(self.domain),'challengetoken')
 
     ###########################################################################
     # Provider.list_records()
@@ -153,12 +153,12 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            provider.create_record('TXT','random.test.{0}.'.format(self.domain),'challengetoken')
-            records = provider.list_records('TXT','random.test.{0}.'.format(self.domain))
+            provider.create_record('TXT','random.fqdntest.{0}.'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT','random.fqdntest.{0}.'.format(self.domain))
             assert len(records) == 1
             assert records[0]['content'] == 'challengetoken'
             assert records[0]['type'] == 'TXT'
-            assert records[0]['name'] == 'random.test.{0}'.format(self.domain)
+            assert records[0]['name'] == 'random.fqdntest.{0}'.format(self.domain)
 
     @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
     def test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
@@ -205,9 +205,9 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            assert provider.create_record('TXT','orig.test.{0}'.format(self.domain),'challengetoken')
-            records = provider.list_records('TXT','orig.test.{0}'.format(self.domain))
-            assert provider.update_record(records[0]['id'],'TXT','updated.test.{0}'.format(self.domain),'challengetoken')
+            assert provider.create_record('TXT','orig.testfull.{0}'.format(self.domain),'challengetoken')
+            records = provider.list_records('TXT','orig.testfull.{0}'.format(self.domain))
+            assert provider.update_record(records[0]['id'],'TXT','updated.testfull.{0}'.format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
@@ -232,10 +232,10 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            assert provider.create_record('TXT','delete.test','challengetoken')
-            records = provider.list_records('TXT','delete.test')
+            assert provider.create_record('TXT','delete.testid','challengetoken')
+            records = provider.list_records('TXT','delete.testid')
             assert provider.delete_record(records[0]['id'])
-            records = provider.list_records('TXT','delete.test')
+            records = provider.list_records('TXT','delete.testid')
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_should_remove_record(self):
@@ -246,9 +246,9 @@ class IntegrationTests():
                 'auth_token': self._auth_token()
             }, self.provider_opts)
             provider.authenticate()
-            assert provider.create_record('TXT','delete.test','challengetoken')
-            assert provider.delete_record(None, 'TXT','delete.test','challengetoken')
-            records = provider.list_records('TXT','delete.test')
+            assert provider.create_record('TXT','delete.testfilt','challengetoken')
+            assert provider.delete_record(None, 'TXT','delete.testfilt','challengetoken')
+            records = provider.list_records('TXT','delete.testfilt')
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):

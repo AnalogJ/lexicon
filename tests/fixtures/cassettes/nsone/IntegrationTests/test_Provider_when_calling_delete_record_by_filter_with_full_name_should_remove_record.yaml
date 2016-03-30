@@ -11,16 +11,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['588']
+      content-length: ['740']
       content-type: [application/json]
-      date: ['Mon, 28 Mar 2016 00:26:28 GMT']
-      etag: [W/"8c4cce560a475eca3ef1ca2ba80888595d8b9f6c"]
+      date: ['Wed, 30 Mar 2016 01:59:30 GMT']
+      etag: [W/"c56cf31101dcd3e7eb1f2486be864e51226e9ce1"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -42,7 +42,7 @@ interactions:
     method: PUT
     uri: https://api.nsone.net/v1/zones/capsulecd.com/delete.testfull.capsulecd.com/TXT
   response:
-    body: {string: !!python/unicode '{"domain":"delete.testfull.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56f87a3759272400060f8aa4"}],"id":"56f87a3759272400060f8aa5","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+    body: {string: !!python/unicode '{"domain":"delete.testfull.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56fb33225927240006115bd1"}],"id":"56fb33225927240006115bd2","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
 
         '}
     headers:
@@ -50,14 +50,14 @@ interactions:
       connection: [keep-alive]
       content-length: ['293']
       content-type: [application/json]
-      date: ['Mon, 28 Mar 2016 00:26:31 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:02 GMT']
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['100']
       x-ratelimit-period: ['200']
-      x-ratelimit-remaining: ['97']
+      x-ratelimit-remaining: ['93']
     status: {code: 200, message: OK}
 - request:
     body: '{}'
@@ -71,16 +71,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"delete.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87a3659272400060f8a9d"},{"domain":"delete.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87a3759272400060f8aa1"},{"domain":"delete.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87a3759272400060f8aa5"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.fqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bb8"},{"domain":"_acme-challenge.full.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bbe"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bc4"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"delete.testfilt.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bca"},{"domain":"delete.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bce"},{"domain":"delete.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd2"},{"domain":"delete.testid.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd6"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56fb331f5927240006115bb4"},{"domain":"localhost.capsulecd.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"56fb331f5927240006115bae"},{"domain":"orig.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be6"},{"domain":"orig.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bea"},{"domain":"orig.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bf0"},{"domain":"random.fqdntest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bda"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bde"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be2"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['1049']
+      content-length: ['3044']
       content-type: [application/json]
-      date: ['Mon, 28 Mar 2016 00:26:34 GMT']
-      etag: [W/"69347ea12bf30a384d72bd550032e02ccbc33a20"]
+      date: ['Wed, 30 Mar 2016 02:00:18 GMT']
+      etag: [W/"2c90c1b21209f6c73ed71a421540ef32f59ed470"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
@@ -109,14 +109,14 @@ interactions:
       connection: [keep-alive]
       content-length: ['3']
       content-type: [application/json]
-      date: ['Mon, 28 Mar 2016 00:26:38 GMT']
+      date: ['Wed, 30 Mar 2016 02:00:39 GMT']
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['100']
       x-ratelimit-period: ['200']
-      x-ratelimit-remaining: ['98']
+      x-ratelimit-remaining: ['97']
     status: {code: 200, message: OK}
 - request:
     body: '{}'
@@ -130,16 +130,16 @@ interactions:
     method: GET
     uri: https://api.nsone.net/v1/zones/capsulecd.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.fqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bb8"},{"domain":"_acme-challenge.full.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bbe"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bc4"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"delete.testid.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd6"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56fb331f5927240006115bb4"},{"domain":"localhost.capsulecd.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"56fb331f5927240006115bae"},{"domain":"orig.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be6"},{"domain":"orig.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bea"},{"domain":"orig.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bf0"},{"domain":"random.fqdntest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bda"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bde"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be2"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
 
         '}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      content-length: ['588']
+      content-length: ['2579']
       content-type: [application/json]
-      date: ['Mon, 28 Mar 2016 00:26:39 GMT']
-      etag: [W/"8c4cce560a475eca3ef1ca2ba80888595d8b9f6c"]
+      date: ['Wed, 30 Mar 2016 02:00:39 GMT']
+      etag: [W/"d06b6ae1d04e8775b48c5b68370f6f33f476e47a"]
       expires: ['0']
       pragma: [no-cache]
       server: [NSONE API v1]

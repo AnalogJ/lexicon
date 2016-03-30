@@ -8,19 +8,19 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Fri, 25 Mar 2016 16:45:13 GMT']
+      x-dnsme-requestDate: ['Wed, 30 Mar 2016 01:59:08 GMT']
     method: GET
     uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1458924191521,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
+    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1459303138386,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
     headers:
       content-type: [application/json]
-      date: ['Fri, 25 Mar 2016 16:45:14 GMT']
+      date: ['Wed, 30 Mar 2016 01:59:10 GMT']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=6D436346779179A8D426EA2FD5C20ADF; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [59e30cfa-3cc8-4696-bd3f-0c466ce1cccf]
+      set-cookie: [JSESSIONID=DFD44A796FCF1281A9E0DD55EDF4B15C; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [25bf437c-fa46-4428-b63f-46657089c45a]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['144']
+      x-dnsme-requestsremaining: ['145']
     status: {code: 200, message: OK}
 - request:
     body: '{"type": "CNAME", "name": "docs", "value": "docs.example.com", "ttl": 86400}'
@@ -31,19 +31,19 @@ interactions:
       Content-Length: ['76']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Fri, 25 Mar 2016 16:45:13 GMT']
+      x-dnsme-requestDate: ['Wed, 30 Mar 2016 01:59:09 GMT']
     method: POST
     uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/
   response:
-    body: {string: !!python/unicode '{"name":"docs","value":"docs.example.com","id":10098481,"type":"CNAME","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}'}
+    body: {string: !!python/unicode '{"name":"docs","value":"docs.example.com","id":10098821,"type":"CNAME","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}'}
     headers:
       content-type: [application/json]
-      date: ['Fri, 25 Mar 2016 16:45:14 GMT']
-      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/10098481']
+      date: ['Wed, 30 Mar 2016 01:59:10 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/10098821']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=46ADE89C5BE4D29F4E15C2BE81679F9D; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [5078520e-8342-4bac-9c7f-a2971aca3402]
+      set-cookie: [JSESSIONID=451CBC6026978077E1DEF5E93D6B2029; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [85b18ac9-a7f2-4d1e-907e-3823b67e531f]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['143']
+      x-dnsme-requestsremaining: ['144']
     status: {code: 201, message: Created}
 version: 1

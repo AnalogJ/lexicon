@@ -11,34 +11,20 @@ interactions:
     method: GET
     uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3yU247jNgyGX6Xg3noDOc5ho6teFH2BblGgg0CgJdoRKkteUppsZpB3L+wcZ7FY
-        X4kff1G2f1LvwCQlZNAv7+AdaOjQruuN3awVrXHbbFtnG6qpcbZWq23XQAURBwINFkcpgaxb2DRA
-        BZIxFwENaLN/JahgxCLkQHcYhCrIp3Ha15UQoAJHrxTSOFDMZkiOQKtLaSPEr8QC+gUcHuMiysKG
-        VFwXkOl6WDrSzxL7ChL73kcM5sdaUeo+8GLC1yJRlm2Qj6SJ/PaRrA7x9CDPJzD1XjIjg44lhKeM
-        i3JIkm98SM53npxJETQsVb35rJrP9earWumm0erLYqnUdr35FyqwTJh/lKrdV7XVzU6v1GK13awa
-        NUkHygj6HSTTCHpVwdEHZ5GdGTl999gGuv98WySnwVji7DtvMZP5VtK0X01G9WS4hDuDyefx4OXg
-        Y28cZbL5ycmhhOzHQIbRh75EMRhCOt4V58mgSDy93NX1IsRQXXpsvaxxt6mVqt2uaRr7pd7V3brB
-        XbdV1DY1VEAD+gAaHPJ/A+VDcm+/9xObTThXMBIPXsSnOJv7CSOGU/ZWNBM6qOBT60PwsdfkfH6O
-        b3mL9kBmLNzTXeOiGCab2MlP2W1vaO/p0D5o6h+SxD1G/4bZp3gXf4A3pUi4C6b1jR+xu/NpfeNv
-        KT7eeA6eM0YoZx97+SB50Fm7r2AMGCd/ZkdUR798HlP/JxP99g+14vM84uztZXRtYaZoT6Dh77/+
-        gAo6pm/lSqCCQD3ak7lcMjyX9GKktGLZt1PrZC5To2J80Buk75k4YggnM2DE/tFp5311vcOMj12a
-        vmjqZtD13CPmEixVBTllDHMsc9amEvO8umRu8bkCKdaSyP105jTfIftp5kQuJV725/8BAAD//wMA
-        HNjg6T8FAAA=
+    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-03-24T17:04:38.265363Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":"3","phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","legacy_id":"free","is_subscribed":true,"can_subscribe":true,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
     headers:
       cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-railgun: [550f4303e9 99.99 0.037359 0030 84cd]
-      cf-ray: [28457c3bbf4f0c35-SEA]
+      cf-ray: [28b7f5420197070d-SJC]
       connection: [keep-alive]
-      content-encoding: [gzip]
+      content-length: ['1343']
       content-type: [application/json]
-      date: ['Wed, 16 Mar 2016 04:33:08 GMT']
+      date: ['Wed, 30 Mar 2016 01:58:42 GMT']
       expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
       pragma: [no-cache]
       server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d337df45e21eec4613009823356b5f8891458102788; expires=Thu,
-          16-Mar-17 04:33:08 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      set-cookie: ['__cfduid=d781a4e1235d6fd32ad8148e72e5e5e9d1459303122; expires=Thu,
+          30-Mar-17 01:58:42 GMT; path=/; domain=.cloudflare.com; HttpOnly']
       strict-transport-security: [max-age=31536000]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
@@ -55,27 +41,21 @@ interactions:
     method: POST
     uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA4yQTU/DMAyG/4vP3ZSQNN1yQ4gjnDiBUOXZ7lSRNlWSSoNp/x116hDixPH9sPS8
-        PkOSPIcC/gw9gwfNSIqp03Xt9taJco6tRacN72VnLFRQPicBDw/P90+PUMGIwyI5Ut4STnkOQryl
-        OEAFFMciY7nFcsJhCrKGU4qnHg9BwJc0y2oIg+8wZKmglABeVxAiffyyv+Io7RW2Q6q1I1crqbEx
-        zYHJiBbDpJVtOgNreUX8SzdE7rteuI0jeLhT2m2U2Wj3oqw3xqvdtnHK2t3rsiQJlv9VBym4/BPn
-        Eltk/kG/XCrIM5HkfJssKcWUwb+9L3c541Gu6vINAAD//wMAbcvMGZkBAAA=
+    body: {string: !!python/unicode '{"result":{"id":"7cf4de6393936fcc56a93a2b78245fb2","type":"CNAME","name":"docs.capsulecd.com","content":"docs.example.com","proxiable":true,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-30T01:59:37.365516Z","created_on":"2016-03-30T01:59:37.365516Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
     headers:
       cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-railgun: [33fdb11493 99.99 0.069019 0030 84cd]
-      cf-ray: [28457c3d7d211bd3-SEA]
+      cf-ray: [28b7f69a403011dd-SJC]
       connection: [keep-alive]
-      content-encoding: [gzip]
+      content-length: ['409']
       content-type: [application/json]
-      date: ['Wed, 16 Mar 2016 04:33:08 GMT']
+      date: ['Wed, 30 Mar 2016 01:59:37 GMT']
       expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
       pragma: [no-cache]
       server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d04a651796f835d3eff89f396ebf2a1761458102788; expires=Thu,
-          16-Mar-17 04:33:08 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      set-cookie: ['__cfduid=d8b472a2d10de14604328eb705fb1aedd1459303177; expires=Thu,
+          30-Mar-17 01:59:37 GMT; path=/; domain=.cloudflare.com; HttpOnly']
       strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}
