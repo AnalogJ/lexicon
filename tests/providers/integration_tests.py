@@ -30,7 +30,7 @@ class IntegrationTests():
     # Provider.authenticate()
     ###########################################################################
     def test_Provider_authenticate(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -40,7 +40,7 @@ class IntegrationTests():
             assert provider.domain_id is not None
 
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate_with_unmanaged_domain_should_fail.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate_with_unmanaged_domain_should_fail.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': 'thisisadomainidonotown.com',
                 'auth_username': self._auth_username(),
@@ -53,7 +53,7 @@ class IntegrationTests():
     # Provider.create_record()
     ###########################################################################
     def test_Provider_when_calling_create_record_for_A_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_A_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_A_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -63,7 +63,7 @@ class IntegrationTests():
             assert provider.create_record('A','localhost','127.0.0.1')
 
     def test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -73,7 +73,7 @@ class IntegrationTests():
             assert provider.create_record('CNAME','docs','docs.example.com')
 
     def test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -83,7 +83,7 @@ class IntegrationTests():
             assert provider.create_record('TXT','_acme-challenge.test','challengetoken')
 
     def test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -93,7 +93,7 @@ class IntegrationTests():
             assert provider.create_record('TXT',"_acme-challenge.full.{0}".format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -106,7 +106,7 @@ class IntegrationTests():
     # Provider.list_records()
     ###########################################################################
     def test_Provider_when_calling_list_records_with_no_arguments_should_list_all(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_no_arguments_should_list_all.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_no_arguments_should_list_all.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -116,7 +116,7 @@ class IntegrationTests():
             assert isinstance(provider.list_records(), list)
 
     def test_Provider_when_calling_list_records_with_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -131,7 +131,7 @@ class IntegrationTests():
             assert records[0]['name'] == 'random.test.{0}'.format(self.domain)
 
     def test_Provider_when_calling_list_records_with_full_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_full_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_full_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -146,7 +146,7 @@ class IntegrationTests():
             assert records[0]['name'] == 'random.fulltest.{0}'.format(self.domain)
 
     def test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -162,7 +162,7 @@ class IntegrationTests():
 
     @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
     def test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -173,7 +173,7 @@ class IntegrationTests():
 
     @pytest.mark.skip(reason="not sure how to test filtering across multiple providers")
     def test_Provider_when_calling_list_records_with_arguments_should_filter_list(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_arguments_should_filter_list.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_arguments_should_filter_list.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -186,7 +186,7 @@ class IntegrationTests():
     # Provider.update_record()
     ###########################################################################
     def test_Provider_when_calling_update_record_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -198,7 +198,7 @@ class IntegrationTests():
             assert provider.update_record(records[0]['id'],'TXT','updated.test','challengetoken')
 
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_full_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_full_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -210,7 +210,7 @@ class IntegrationTests():
             assert provider.update_record(records[0]['id'],'TXT','updated.testfull.{0}'.format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -225,7 +225,7 @@ class IntegrationTests():
     # Provider.delete_record()
     ###########################################################################
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_identifier_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_identifier_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -239,7 +239,7 @@ class IntegrationTests():
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -252,7 +252,7 @@ class IntegrationTests():
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),
@@ -265,7 +265,7 @@ class IntegrationTests():
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_params=self._filter_query_parameters()):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
                 'auth_username': self._auth_username(),

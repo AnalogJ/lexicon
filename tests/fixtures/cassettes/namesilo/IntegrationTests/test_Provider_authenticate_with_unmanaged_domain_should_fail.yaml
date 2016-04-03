@@ -1,0 +1,32 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=thisisadomainidonotown.com&version=1&type=xml
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>getDomainInfo</operation><ip>208.72.142.184</ip></request><reply><code>200</code><detail>Domain
+        is not active, or does not belong to this user</detail></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['223']
+      content-type: [text/xml]
+      date: ['Sun, 03 Apr 2016 02:35:28 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=65e1ce568b1e4c4f96e2f90a519edc49; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+version: 1
