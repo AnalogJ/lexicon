@@ -112,10 +112,10 @@ Using the lexicon CLI is pretty simple:
 	
 
 ### Letsencrypt Instructions
-Lexicon has an example [letsencrypt.sh hook file](examples/letsencrypt.cloudflare.sh) that you can use for any supported provider. 
-All you need to do is change the PROVIDER parameter. 
+Lexicon has an example [letsencrypt.sh hook file](examples/letsencrypt.default.sh) that you can use for any supported provider. 
+All you need to do is set the PROVIDER env variable. 
 
-	letsencrypt.sh --cron --hook letsencrypt.cloudflare.sh --challenge dns-01
+	PROVIDER=cloudflare letsencrypt.sh --cron --hook letsencrypt.default.sh --challenge dns-01
 	
 
 ## TroubleShooting & Useful Tools

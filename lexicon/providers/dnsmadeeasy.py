@@ -28,7 +28,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         record = {
             'type': type,
-            'name': self._clean_name(name),
+            'name': self._relative_name(name),
             'value': content,
             'ttl': 86400
         }
@@ -51,7 +51,7 @@ class Provider(BaseProvider):
         if type:
             filter['type'] = type
         if name:
-            filter['recordName'] = self._clean_name(name)
+            filter['recordName'] = self._relative_name(name)
         payload = self._get('/dns/managed/{0}/records'.format(self.domain_id), filter)
 
         records = []
@@ -81,7 +81,7 @@ class Provider(BaseProvider):
         }
 
         if name:
-            data['name'] = self._clean_name(name)
+            data['name'] = self._relative_name(name)
         if content:
             data['value'] = content
         if type:
@@ -119,17 +119,6 @@ class Provider(BaseProvider):
         #yield locale.setlocale(*args, **kw)
         yield locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
         locale.setlocale(locale.LC_ALL, saved)
-
-    # record names can be in a variety of formats: relative (sub), full (sub.example.com), and fqdn (sub.example.com.)
-    # DNSMadeEasy only handles relative record names, so we need to make sure we clean up all user specified record_names before
-    # submitting them to DNSMadeEasy
-    def _clean_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
-        if record_name.endswith(self.options['domain']):
-            record_name = record_name[:-len(self.options['domain'])]
-            record_name = record_name.rstrip('.')
-        return record_name
 
     def _get(self, url='/', query_params={}):
         return self._request('GET', url, query_params=query_params)

@@ -22,7 +22,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         record = {
             'id': self.domain_id,
-            'name': self._clean_name(name),
+            'name': self._full_name(name),
             'content': content,
             'type': type
         }
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
             'id': self.domain_id
         }
         if name:
-            filter['name'] = self._clean_name(name)
+            filter['name'] = self._full_name(name)
         payload = self._get('/getrecords/', filter)
 
         records = []
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
         }
 
         if name:
-            data['name'] = self._clean_name(name)
+            data['name'] = self._full_name(name)
         if content:
             data['content'] = content
         # if type:
@@ -100,16 +100,6 @@ class Provider(BaseProvider):
 
 
     # Helpers
-
-    # record names can be in a variety of formats: relative (sub), full (sub.example.com), and fqdn (sub.example.com.)
-    # Rage4 handles full record names, so we need to make sure we clean up all user specified record_names before
-    # submitting them
-    def _clean_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
-        if not record_name.endswith(self.options['domain']):
-            record_name = "{0}.{1}".format(record_name, self.options['domain'])
-        return record_name
 
     def _get(self, url='/', query_params={}):
         return self._request('GET', url, query_params=query_params)

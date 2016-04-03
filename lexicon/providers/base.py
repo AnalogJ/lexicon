@@ -28,3 +28,18 @@ class Provider(object):
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
+
+    def _full_name(self, record_name):
+        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
+        #check if the record_name is fully specified
+        if not record_name.endswith(self.options['domain']):
+            record_name = "{0}.{1}".format(record_name, self.options['domain'])
+        return record_name
+
+    def _relative_name(self, record_name):
+        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
+        #check if the record_name is fully specified
+        if record_name.endswith(self.options['domain']):
+            record_name = record_name[:-len(self.options['domain'])]
+            record_name = record_name.rstrip('.')
+        return record_name

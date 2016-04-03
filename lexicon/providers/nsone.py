@@ -23,7 +23,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         record = {
             'type': type,
-            'domain': self._clean_name(name),
+            'domain': self._full_name(name),
             'zone': self.domain_id,
             'answers':[
                 {"answer": [content]}
@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         }
         payload = {}
         try:
-            payload = self._put('/zones/{0}/{1}/{2}'.format(self.domain_id, self._clean_name(name),type), record)
+            payload = self._put('/zones/{0}/{1}/{2}'.format(self.domain_id, self._full_name(name),type), record)
         except requests.exceptions.HTTPError, e:
             if e.response.status_code == 400:
                 payload = {}
@@ -62,7 +62,7 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._clean_name(name)]
+            records = [record for record in records if record['name'] == self._full_name(name)]
         if content:
             records = [record for record in records if record['content'] == content]
 
@@ -74,7 +74,7 @@ class Provider(BaseProvider):
 
         data = {}
         payload = None
-        new_identifier = "{0}/{1}/{2}".format(self.domain_id, self._clean_name(name),type)
+        new_identifier = "{0}/{1}/{2}".format(self.domain_id, self._full_name(name),type)
 
         if(new_identifier == identifier or (type is None and name is None)):
             # the identifier hasnt changed, or type and name are both unspecified, only update the content.
@@ -111,16 +111,6 @@ class Provider(BaseProvider):
 
 
     # Helpers
-
-    # record names can be in a variety of formats: relative (sub), full (sub.example.com), and fqdn (sub.example.com.)
-    # NS1 only handles full record names, so we need to make sure we clean up all user specified record_names before
-    # submitting them to NS1
-    def _clean_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
-        if not record_name.endswith(self.options['domain']):
-            record_name = "{0}.{1}".format(record_name, self.options['domain'])
-        return record_name
 
     def _get(self, url='/', query_params={}):
         return self._request('GET', url, query_params=query_params)

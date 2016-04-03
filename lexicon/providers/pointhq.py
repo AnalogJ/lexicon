@@ -24,7 +24,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': name, 'data': content}})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': self._relative_name(name), 'data': content}})
 
         print 'create_record: {0}'.format(payload['zone_record'])
         return bool(payload['zone_record'])
@@ -37,7 +37,7 @@ class Provider(BaseProvider):
         if type:
             filter['record_type'] = type
         if name:
-            filter['name'] = name.rstrip('.') # strip trailing period
+            filter['name'] = self._relative_name(name)
         if content:
             filter['data'] = content
 
@@ -64,7 +64,7 @@ class Provider(BaseProvider):
         if type:
             data['record_type'] = type
         if name:
-            data['name'] = name
+            data['name'] = self._relative_name(name)
         if content:
             data['data'] = content
 
