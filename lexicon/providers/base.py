@@ -29,6 +29,20 @@ class Provider(object):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
 
+
+    #Helpers
+    def _get(self, url='/', query_params={}):
+        return self._request('GET', url, query_params=query_params)
+
+    def _post(self, url='/', data={}, query_params={}):
+        return self._request('POST', url, data=data, query_params=query_params)
+
+    def _put(self, url='/', data={}, query_params={}):
+        return self._request('PUT', url, data=data, query_params=query_params)
+
+    def _delete(self, url='/', query_params={}):
+        return self._request('DELETE', url, query_params=query_params)
+
     def _full_name(self, record_name):
         record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
         #check if the record_name is fully specified

@@ -91,18 +91,6 @@ class Provider(BaseProvider):
 
 
     # Helpers
-    def _get(self, url='/', query_params={}):
-        return self._request('GET', url, query_params=query_params)
-
-    def _post(self, url='/', data={}, query_params={}):
-        return self._request('POST', url, data=data, query_params=query_params)
-
-    def _put(self, url='/', data={}, query_params={}):
-        return self._request('PUT', url, data=data, query_params=query_params)
-
-    def _delete(self, url='/', query_params={}):
-        return self._request('DELETE', url, query_params=query_params)
-
     def _request(self, action='GET',  url='/', data={}, query_params={}):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),

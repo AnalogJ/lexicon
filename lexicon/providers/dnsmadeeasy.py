@@ -120,18 +120,6 @@ class Provider(BaseProvider):
         yield locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
         locale.setlocale(locale.LC_ALL, saved)
 
-    def _get(self, url='/', query_params={}):
-        return self._request('GET', url, query_params=query_params)
-
-    def _post(self, url='/', data={}, query_params={}):
-        return self._request('POST', url, data=data, query_params=query_params)
-
-    def _put(self, url='/', data={}, query_params={}):
-        return self._request('PUT', url, data=data, query_params=query_params)
-
-    def _delete(self, url='/', query_params={}):
-        return self._request('DELETE', url, query_params=query_params)
-
     def _request(self, action='GET',  url='/', data={}, query_params={}):
 
         default_headers = {
