@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&version=1&type=xml
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>getDomainInfo</operation><ip>208.72.142.184</ip></request><reply><code>300</code><detail>success</detail><created>2016-04-02</created><expires>2018-04-02</expires><status>Active</status><locked>Yes</locked><private>Yes</private><auto_renew>Yes</auto_renew><traffic_type>Parked</traffic_type><forward_url>N/A</forward_url><forward_type>N/A</forward_type><nameservers><nameserver
+        position="1">NS1.NAMESILO.COM</nameserver><nameserver position="2">NS2.NAMESILO.COM</nameserver></nameservers><contact_ids><registrant>1321</registrant><administrative>1321</administrative><technical>1321</technical><billing>1321</billing></contact_ids></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['703']
+      content-type: [text/xml]
+      date: ['Sun, 03 Apr 2016 02:47:33 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=bf2cf2bceaa9b7dee5ac5e981b7b6a44; path=/; domain=dev.namesilo.com]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?rrvalue=docs.example.com&domain=capsulecdfake.com&rrhost=docs&rrtype=CNAME&version=1&type=xml
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsAddRecord</operation><ip>208.72.142.184</ip></request><reply><code>300</code><detail>success</detail><record_id>f8bcfa159c3386ea456bb083036a10f5</record_id></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['231']
+      content-type: [text/xml]
+      date: ['Sun, 03 Apr 2016 02:55:43 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=198c99d7f61eaf7dc854e175521c5c12; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+version: 1
