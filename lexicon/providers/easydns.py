@@ -7,13 +7,13 @@ class Provider(BaseProvider):
     def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
         self.domain_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'http://sandbox.rest.easydns.net'
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://rest.easydns.net'
 
     def authenticate(self):
 
         payload = self._get('/domain/{0}'.format(self.options['domain']))
 
-        if not payload['data']['id']:
+        if payload['data']['exists'] == 'N':
             raise StandardError('No domain found')
 
         self.domain_id = payload['data']['id']
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
         if type:
             data['type'] = type
         if name:
-            data['host'] = self._relative_name(name),
+            data['host'] = self._relative_name(name)
         if content:
             data['rdata'] = content
 
@@ -107,15 +107,15 @@ class Provider(BaseProvider):
     def _request(self, action='GET',  url='/', data={}, query_params={}):
 
         query_params['format'] = 'json'
+        query_params['_user'] = self.options['auth_username']
+        query_params['_key'] = self.options.get('auth_password') or self.options.get('auth_token')
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        default_auth = (self.options['auth_username'], self.options.get('auth_password') or self.options.get('auth_token'))
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+                             headers=default_headers)
         r.raise_for_status()  # if the request fails for any reason, throw an error.
         return r.json()

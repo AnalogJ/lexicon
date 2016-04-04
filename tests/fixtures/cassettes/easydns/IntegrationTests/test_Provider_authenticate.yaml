@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.rest.easydns.net/domain/easydnstemp.com?format=json
+  response:
+    body: {string: !!python/unicode '
+
+
+        {"msg":"OK","tm":1459791538,"data":{"id":"easydnstemp.com","domain":"easydnstemp.com","exists":"Y","onsystem":"Y","expiry":"2017-04-04","next_due":"2017-04-04","cloned_to":"NONE","service":"19","sub_block":"NONE"},"status":200}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['x-requested-with, Content-Type, origin, authorization,
+          accept, client-security-token, HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED,
+          X-AUTHTOKEN']
+      access-control-allow-methods: ['POST, GET, OPTIONS, DELETE, PUT']
+      access-control-allow-origin: ['"*"']
+      cache-control: ['no-cache, must-revalidate']
+      connection: [close]
+      content-length: ['229']
+      content-type: [application/json]
+      date: ['Mon, 04 Apr 2016 17:38:58 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [Apache/2.2.16 (Debian)]
+      set-cookie: [easyAPI=4ksqevd0qqf1f2rt3m5l018mr4; path=/, 'api_token=api_5702a6b22b1029.06483939;
+          expires=Mon, 04-Apr-2016 17:53:58 GMT; path=/; domain=sandbox.rest.easydns.net']
+      vary: [Accept-Encoding]
+      x-powered-by: [PHP/5.3.3-7+squeeze28]
+    status: {code: 200, message: OK}
+version: 1
