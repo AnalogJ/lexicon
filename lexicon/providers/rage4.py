@@ -100,7 +100,11 @@ class Provider(BaseProvider):
 
 
     # Helpers
-    def _request(self, action='GET',  url='/', data={}, query_params={}):
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        if data is None:
+            data = {}
+        if query_params is None:
+            query_params = {}
 
         default_headers = {
             'Accept': 'application/json',

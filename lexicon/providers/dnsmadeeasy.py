@@ -120,8 +120,11 @@ class Provider(BaseProvider):
         yield locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
         locale.setlocale(locale.LC_ALL, saved)
 
-    def _request(self, action='GET',  url='/', data={}, query_params={}):
-
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        if data is None:
+            data = {}
+        if query_params is None:
+            query_params = {}
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

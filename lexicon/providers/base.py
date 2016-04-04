@@ -31,16 +31,16 @@ class Provider(object):
 
 
     #Helpers
-    def _get(self, url='/', query_params={}):
+    def _get(self, url='/', query_params=None):
         return self._request('GET', url, query_params=query_params)
 
-    def _post(self, url='/', data={}, query_params={}):
+    def _post(self, url='/', data=None, query_params=None):
         return self._request('POST', url, data=data, query_params=query_params)
 
-    def _put(self, url='/', data={}, query_params={}):
+    def _put(self, url='/', data=None, query_params=None):
         return self._request('PUT', url, data=data, query_params=query_params)
 
-    def _delete(self, url='/', query_params={}):
+    def _delete(self, url='/', query_params=None):
         return self._request('DELETE', url, query_params=query_params)
 
     def _full_name(self, record_name):

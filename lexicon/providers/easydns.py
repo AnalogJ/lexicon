@@ -104,8 +104,11 @@ class Provider(BaseProvider):
 
 
     # Helpers
-    def _request(self, action='GET',  url='/', data={}, query_params={}):
-
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        if data is None:
+            data = {}
+        if query_params is None:
+            query_params = {}
         query_params['format'] = 'json'
         query_params['_user'] = self.options['auth_username']
         query_params['_key'] = self.options.get('auth_password') or self.options.get('auth_token')
