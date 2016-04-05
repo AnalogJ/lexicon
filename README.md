@@ -1,6 +1,6 @@
 # lexicon
 [![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=svg)](https://circleci.com/gh/AnalogJ/lexicon)
-[![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg?branch=master)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 Manipulate DNS records on various DNS providers in a standardized/agnostic way. 
 
 ## Introduction
