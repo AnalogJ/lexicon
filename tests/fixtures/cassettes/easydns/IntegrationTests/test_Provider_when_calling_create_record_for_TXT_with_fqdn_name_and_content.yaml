@@ -1,0 +1,75 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.rest.easydns.net/domain/easydnstemp.com?format=json
+  response:
+    body: {string: !!python/unicode '
+
+
+        {"msg":"OK","tm":1459791712,"data":{"id":"easydnstemp.com","domain":"easydnstemp.com","exists":"Y","onsystem":"Y","expiry":"2017-04-04","next_due":"2017-04-04","cloned_to":"NONE","service":"19","sub_block":"NONE"},"status":200}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['x-requested-with, Content-Type, origin, authorization,
+          accept, client-security-token, HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED,
+          X-AUTHTOKEN']
+      access-control-allow-methods: ['POST, GET, OPTIONS, DELETE, PUT']
+      access-control-allow-origin: ['"*"']
+      cache-control: ['no-cache, must-revalidate']
+      connection: [close]
+      content-length: ['229']
+      content-type: [application/json]
+      date: ['Mon, 04 Apr 2016 17:41:52 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [Apache/2.2.16 (Debian)]
+      set-cookie: [easyAPI=pj8qrf7oaotflokrj6mk8gdv13; path=/, 'api_token=api_5702a7607341a7.90076655;
+          expires=Mon, 04-Apr-2016 17:56:52 GMT; path=/; domain=sandbox.rest.easydns.net']
+      vary: [Accept-Encoding]
+      x-powered-by: [PHP/5.3.3-7+squeeze28]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"domain": "easydnstemp.com", "prio": 0, "ttl": 300, "host": "_acme-challenge.fqdn",
+      "rdata": "challengetoken", "type": "TXT"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['126']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: PUT
+    uri: http://sandbox.rest.easydns.net/zones/records/add/easydnstemp.com/TXT?format=json
+  response:
+    body: {string: !!python/unicode '
+
+
+        '}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['x-requested-with, Content-Type, origin, authorization,
+          accept, client-security-token, HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED,
+          X-AUTHTOKEN']
+      access-control-allow-methods: ['POST, GET, OPTIONS, DELETE, PUT']
+      access-control-allow-origin: ['"*"']
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['2']
+      content-type: [text/html]
+      date: ['Mon, 04 Apr 2016 17:41:57 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache/2.2.16 (Debian)]
+      set-cookie: [easyAPI=lqvqik43kqaljljg102ca6mm01; path=/, 'api_token=api_5702a7651fbbe8.07648627;
+          expires=Mon, 04-Apr-2016 17:56:57 GMT; path=/; domain=sandbox.rest.easydns.net']
+      vary: [Accept-Encoding]
+      x-powered-by: [PHP/5.3.3-7+squeeze28]
+    status: {code: 500, message: Internal Server Error}
+version: 1

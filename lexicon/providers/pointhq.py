@@ -90,7 +90,11 @@ class Provider(BaseProvider):
 
 
     # Helpers
-    def _request(self, action='GET',  url='/', data={}, query_params={}):
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        if data is None:
+            data = {}
+        if query_params is None:
+            query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options.get('auth_password') or self.options.get('auth_token')),

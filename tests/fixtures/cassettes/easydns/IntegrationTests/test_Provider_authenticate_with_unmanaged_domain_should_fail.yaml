@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: http://sandbox.rest.easydns.net/domain/thisisadomainidonotown.com?format=json
+  response:
+    body: {string: !!python/unicode '
+
+
+        {"msg":"OK","tm":1459791538,"data":{"id":"thisisadomainidonotown.com","domain":"thisisadomainidonotown.com","exists":"N","onsystem":"N","expiry":null,"next_due":null,"cloned_to":"NONE","service":null,"sub_block":"NONE"},"status":200}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['x-requested-with, Content-Type, origin, authorization,
+          accept, client-security-token, HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED,
+          X-AUTHTOKEN']
+      access-control-allow-methods: ['POST, GET, OPTIONS, DELETE, PUT']
+      access-control-allow-origin: ['"*"']
+      cache-control: ['no-cache, must-revalidate']
+      connection: [close]
+      content-length: ['235']
+      content-type: [application/json]
+      date: ['Mon, 04 Apr 2016 17:38:58 GMT']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [Apache/2.2.16 (Debian)]
+      set-cookie: [easyAPI=cn24jkbq4nog2ak3t4aa7oahu7; path=/, 'api_token=api_5702a6b2b43d51.12617687;
+          expires=Mon, 04-Apr-2016 17:53:58 GMT; path=/; domain=sandbox.rest.easydns.net']
+      vary: [Accept-Encoding]
+      x-powered-by: [PHP/5.3.3-7+squeeze28]
+    status: {code: 200, message: OK}
+version: 1
