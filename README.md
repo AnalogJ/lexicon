@@ -1,5 +1,10 @@
-[![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=svg)](https://circleci.com/gh/AnalogJ/lexicon)
+[![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
+[![PyPI](https://img.shields.io/pypi/dm/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
+[![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
+[![PyPI](https://img.shields.io/pypi/pyversions/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
+[![GitHub license](https://img.shields.io/github/license/AnalogJ/lexicon.svg)](https://github.com/AnalogJ/lexicon/blob/master/LICENSE)
+[![Gratipay User](https://img.shields.io/gratipay/user/analogj.svg)](https://gratipay.com/~AnalogJ/)
 
 # lexicon
 Manipulate DNS records on various DNS providers in a standardized/agnostic way. 
