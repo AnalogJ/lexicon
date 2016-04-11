@@ -65,7 +65,7 @@ You can also install the latest version from the repository directly.
 ## Usage
 
 	$ lexicon -h
-	usage: cli.py [-h] [--name NAME] [--content=CONTENT] [--ttl=TTL]
+	usage: cli.py [-h] [--name=NAME] [--content=CONTENT] [--ttl=TTL]
 				  [--priority=PRIORITY] [--identifier=IDENTIFIER]
 				  [--auth-username=AUTH_USERNAME] [--auth-password=AUTH_PASSWORD]
 				  [--auth-token=AUTH_TOKEN] [--auth-otp-token=AUTH_OTP_TOKEN]
