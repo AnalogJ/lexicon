@@ -1,0 +1,37 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.digitalocean.com/v2/domains/thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"id":"not_found","message":"The resource you
+        were accessing could not be found."}'}
+    headers:
+      cache-control: [no-cache]
+      cf-ray: [293a42d260ac1baf-SEA]
+      connection: [keep-alive]
+      content-length: ['82']
+      content-type: [application/json; charset=utf-8]
+      date: ['Thu, 14 Apr 2016 21:30:48 GMT']
+      ratelimit-limit: ['5000']
+      ratelimit-remaining: ['4998']
+      ratelimit-reset: ['1460673047']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dfaf290930f859ef11037afc55e5e6e931460669448; expires=Fri,
+          14-Apr-17 21:30:48 GMT; path=/; domain=.digitalocean.com; HttpOnly']
+      status: [404 Not Found]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-request-id: [3e66e708-8a71-4e86-9e4d-cc793e809f49]
+      x-runtime: ['0.029061']
+      x-xss-protection: [1; mode=block]
+    status: {code: 404, message: Not Found}
+version: 1

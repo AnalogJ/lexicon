@@ -21,6 +21,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 The current supported providers are:
 
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
+- DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
@@ -37,7 +38,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
-- DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))
 - EntryDNS ([docs](https://entrydns.net/help))
 - Gandi ([docs](http://doc.rpc.gandi.net/))
@@ -80,7 +80,7 @@ You can also install the latest version from the repository directly.
 	Create, Update, Delete, List DNS entries
 	
 	positional arguments:
-      {nsone,pointhq,easydns,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
+      {nsone,pointhq,easydns,digitalocean,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
 							specify the DNS provider to use
 	  {create,list,update,delete}
 							specify the action to take
