@@ -13,6 +13,5 @@ class VultrProviderTests(TestCase, IntegrationTests):
     provider_name = 'vultr'
     domain = 'capsulecd.com'
     def _filter_headers(self):
-        return ['Authorization']
-    def _filter_query_parameters(self):
-        return ['_key', '_user']
+        return ['API-Key']
+
