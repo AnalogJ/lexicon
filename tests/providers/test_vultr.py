@@ -1,0 +1,18 @@
+# Test for one implementation of the interface
+from lexicon.providers.vultr import Provider
+from integration_tests import IntegrationTests
+from unittest import TestCase
+import pytest
+
+# Hook into testing framework by inheriting unittest.TestCase and reuse
+# the tests which *each and every* implementation of the interface must
+# pass, by inheritance from define_tests.TheTests
+class VultrProviderTests(TestCase, IntegrationTests):
+
+    Provider = Provider
+    provider_name = 'vultr'
+    domain = 'capsulecd.com'
+    def _filter_headers(self):
+        return ['Authorization']
+    def _filter_query_parameters(self):
+        return ['_key', '_user']

@@ -57,3 +57,9 @@ class Provider(object):
             record_name = record_name[:-len(self.options['domain'])]
             record_name = record_name.rstrip('.')
         return record_name
+
+    def _clean_TXT_record(self, record):
+        if record['type'] == 'TXT':
+            # some providers have quotes around the TXT records, so we're going to remove those extra quotes
+            record['content'] = record['content'][1:-1]
+        return record

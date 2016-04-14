@@ -29,7 +29,7 @@ The current supported providers are:
 - NS1 ([docs](https://ns1.com/api/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
-
+- Vultr ([docs](https://www.vultr.com/api/))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
@@ -38,7 +38,9 @@ Potential providers are as follows. If you would like to contribute one, please 
 - BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
+- Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))
 - EntryDNS ([docs](https://entrydns.net/help))
+- Gandi ([docs](http://doc.rpc.gandi.net/))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))
 - Linode ([docs](https://www.linode.com/api/dns))
@@ -47,6 +49,7 @@ Potential providers are as follows. If you would like to contribute one, please 
 - OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
+- RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
@@ -69,13 +72,15 @@ You can also install the latest version from the repository directly.
 				  [--priority=PRIORITY] [--identifier=IDENTIFIER]
 				  [--auth-username=AUTH_USERNAME] [--auth-password=AUTH_PASSWORD]
 				  [--auth-token=AUTH_TOKEN] [--auth-otp-token=AUTH_OTP_TOKEN]
-				  {cloudflare, dnsimple, dnsmadeeasy, nsone, pointhq} {create,list,update,delete} domain
-				  {A,CNAME,MX,SOA,TXT}
+				  {nsone,pointhq,easydns,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
+				  {create,list,update,delete} domain
+				  {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
+
 	
 	Create, Update, Delete, List DNS entries
 	
 	positional arguments:
-	  {cloudflare, dnsimple, dnsmadeeasy, nsone, pointhq}
+      {nsone,pointhq,easydns,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
 							specify the DNS provider to use
 	  {create,list,update,delete}
 							specify the action to take
@@ -133,7 +138,8 @@ There is an included example Dockerfile that can be used to automatically genera
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
 - [ ] Wire up automated release packaging on PRs.
-- [ ] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
+- [x] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
+- [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
 ## Contributing Changes.
 If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
