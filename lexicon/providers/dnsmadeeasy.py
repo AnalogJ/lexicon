@@ -64,9 +64,7 @@ class Provider(BaseProvider):
                 'id': record['id']
             }
 
-            if record['type'] == 'TXT':
-                # for some reason dnsmadeeasy quotes the TXT records, so we're going to remove those extra quotes
-                processed_record['content'] = record['value'][1:-1]
+            processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
         print 'list_records: {0}'.format(records)
