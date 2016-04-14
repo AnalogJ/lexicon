@@ -1,0 +1,29 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.vultr.com/v1/dns/list
+  response:
+    body: {string: !!python/unicode '[{"domain":"capsulecd.com","date_created":"2016-04-13
+        19:03:44"}]'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['65']
+      content-type: [application/json]
+      date: ['Wed, 13 Apr 2016 23:22:33 GMT']
+      expires: ['Wed, 13 Apr 2016 23:22:32 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+version: 1

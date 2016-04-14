@@ -1,0 +1,100 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.vultr.com/v1/dns/list
+  response:
+    body: {string: !!python/unicode '[{"domain":"capsulecd.com","date_created":"2016-04-13
+        19:03:44"}]'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['65']
+      content-type: [application/json]
+      date: ['Thu, 14 Apr 2016 00:26:06 GMT']
+      expires: ['Thu, 14 Apr 2016 00:26:05 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: priority=0&data=%22challengetoken%22&domain=capsulecd.com&type=TXT&name=orig.testfull
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.vultr.com/v1/dns/create_record
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [text/html; charset=UTF-8]
+      date: ['Thu, 14 Apr 2016 00:26:11 GMT']
+      expires: ['Thu, 14 Apr 2016 00:26:10 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.vultr.com/v1/dns/records?domain=capsulecd.com
+  response:
+    body: {string: !!python/unicode '[{"type":"A","name":"localhost","data":"127.0.0.1","priority":0,"RECORDID":2051670},{"type":"CNAME","name":"docs","data":"docs.example.com","priority":0,"RECORDID":2051671},{"type":"TXT","name":"orig.test","data":"\"challengetoken\"","priority":0,"RECORDID":2051716},{"type":"TXT","name":"orig.testfqdn","data":"\"challengetoken\"","priority":0,"RECORDID":2051717},{"type":"TXT","name":"orig.testfull","data":"\"challengetoken\"","priority":0,"RECORDID":2051718},{"type":"TXT","name":"random.fqdntest","data":"\"challengetoken\"","priority":0,"RECORDID":2051680},{"type":"TXT","name":"random.fulltest","data":"\"challengetoken\"","priority":0,"RECORDID":2051681},{"type":"TXT","name":"random.test","data":"\"challengetoken\"","priority":0,"RECORDID":2051682},{"type":"TXT","name":"_acme-challenge.full","data":"\"challengetoken\"","priority":0,"RECORDID":2051668}]'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['864']
+      content-type: [application/json]
+      date: ['Thu, 14 Apr 2016 00:26:12 GMT']
+      expires: ['Thu, 14 Apr 2016 00:26:11 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: RECORDID=2051718&domain=capsulecd.com&data=%22challengetoken%22&name=updated.testfull&ttl=300
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['93']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.vultr.com/v1/dns/update_record
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [text/html; charset=UTF-8]
+      date: ['Thu, 14 Apr 2016 00:26:16 GMT']
+      expires: ['Thu, 14 Apr 2016 00:26:15 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+version: 1
