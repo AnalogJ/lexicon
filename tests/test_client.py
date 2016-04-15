@@ -1,6 +1,6 @@
 import lexicon.client
 import pytest
-
+import os
 def test_Client_init():
     options = {
         'provider_name':'base',
@@ -67,8 +67,10 @@ def test_Client_init_when_missing_type_should_fail():
         lexicon.client.Client(options)
 
 def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
-    monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
-    monkeypatch.delenv('LEXICON_CLOUDFLARE_USERNAME')
+    if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
+        monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
+    if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
+        monkeypatch.delenv('LEXICON_CLOUDFLARE_USERNAME')
     options = {
         'provider_name':'cloudflare',
         'action': 'list',
