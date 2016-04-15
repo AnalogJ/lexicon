@@ -16,14 +16,17 @@ class Client:
         self.options = options
 
         # make sure that auth parameters can be specified via environmental variables as well.
-        self.options['auth_username'] = self.options.get('auth_username') or os.environ.get('LEXICON_{0}_USERNAME'.format(self.provider_name.upper()))
-        self.options['auth_password'] = self.options.get('auth_password') or os.environ.get('LEXICON_{0}_PASSWORD'.format(self.provider_name.upper()))
-        self.options['auth_token'] = self.options.get('auth_token') or os.environ.get('LEXICON_{0}_TOKEN'.format(self.provider_name.upper()))
+        # basically we map env variables for the chosen provider to the options dictionary (if a value isnt already provided)
+        # LEXICON_CLOUDFLARE_TOKEN => options['auth_token']
+        # LEXICON_CLOUDFLARE_USERNAME => options['auth_username']
+        # LEXICON_CLOUDFLARE_PASSWORD => options['auth_password']
+        env_prefix = 'LEXICON_{0}_'.format(self.provider_name.upper())
+        for key in os.environ.keys():
+            if key.startswith(env_prefix):
+                auth_type = key[len(env_prefix):].lower()
+                self.options['auth_{0}'.format(auth_type)] = self.options['auth_{0}'.format(auth_type)] or os.environ[key]
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
-        # TODO: this should not be enabled in production
-        #provider_module = importlib.import_module('providers.' + self.provider_name)
-
         provider_class = getattr(provider_module, 'Provider')
         self.provider = provider_class(self.options)
 
