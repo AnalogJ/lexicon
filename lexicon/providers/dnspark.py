@@ -2,6 +2,11 @@ from base import Provider as BaseProvider
 import requests
 import json
 
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-username", help="specify api key used to authenticate")
+    subparser.add_argument("--auth-token", help="specify token used authenticate")
+
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -110,7 +115,7 @@ class Provider(BaseProvider):
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        default_auth = (self.options['auth_username'], self.options.get('auth_password') or self.options.get('auth_token'))
+        default_auth = (self.options['auth_username'], self.options['auth_token'])
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),

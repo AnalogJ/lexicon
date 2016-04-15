@@ -1,6 +1,11 @@
 from base import Provider as BaseProvider
 import requests
 import json
+
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
+    subparser.add_argument("--auth-token", help="specify token used authenticate")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -100,7 +105,7 @@ class Provider(BaseProvider):
                              data=json.dumps(data),
                              headers={
                                  'X-Auth-Email': self.options['auth_username'],
-                                 'X-Auth-Key': self.options.get('auth_password') or self.options.get('auth_token'),
+                                 'X-Auth-Key': self.options.get('auth_token'),
                                  'Content-Type': 'application/json'
                              })
         r.raise_for_status()  # if the request fails for any reason, throw an error.

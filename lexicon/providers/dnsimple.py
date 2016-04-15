@@ -1,6 +1,13 @@
 from base import Provider as BaseProvider
 import requests
 import json
+
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-domaintoken", help="specify domain token to authenticate")
+    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
+    subparser.add_argument("--auth-password", help="specify password used to authenticate")
+    subparser.add_argument("--auth-token", help="specify simple api token used authenticate")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -107,8 +114,8 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        if not self.options.get('auth_username') and self.options.get('auth_token'):
-            default_headers['X-DNSimple-Domain-Token'] = self.options.get('auth_token')
+        if self.options.get('auth_domaintoken'):
+            default_headers['X-DNSimple-Domain-Token'] = self.options.get('auth_domaintoken')
 
         elif self.options.get('auth_username') and self.options.get('auth_token'):
             default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options['auth_username'],self.options['auth_token'])

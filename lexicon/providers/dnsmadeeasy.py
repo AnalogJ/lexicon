@@ -7,6 +7,10 @@ import contextlib
 from hashlib import sha1
 import hmac
 
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-username", help="specify username used to authenticate")
+    subparser.add_argument("--auth-token", help="specify token used authenticate=")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -135,7 +139,7 @@ class Provider(BaseProvider):
         # required format: Sat, 12 Feb 2011 20:59:04 GMT
         with self.setlocale(locale.LC_TIME, 'en_US.utf8'):
             request_date = now.strftime('%a, %d %b %Y %H:%M:%S GMT')
-            hashed = hmac.new(self.options.get('auth_password') or self.options.get('auth_token'), request_date, sha1)
+            hashed = hmac.new(self.options['auth_token'], request_date, sha1)
 
             default_headers['x-dnsme-requestDate'] = request_date
             default_headers['x-dnsme-hmac'] = hashed.hexdigest()

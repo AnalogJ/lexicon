@@ -2,6 +2,10 @@ from base import Provider as BaseProvider
 import requests
 import json
 
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
+    subparser.add_argument("--auth-token", help="specify token used authenticate")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):

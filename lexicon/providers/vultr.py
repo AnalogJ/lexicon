@@ -2,6 +2,9 @@ from base import Provider as BaseProvider
 import requests
 import json
 
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-token", help="specify token used authenticate to DNS provider")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -120,7 +123,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             # 'Content-Type': 'application/json',
-            'API-Key': self.options.get('auth_password') or self.options.get('auth_token')
+            'API-Key': self.options['auth_token']
         }
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,

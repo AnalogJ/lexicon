@@ -1,6 +1,11 @@
 from base import Provider as BaseProvider
 import requests
 import json
+
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
+    subparser.add_argument("--auth-token", help="specify token used authenticate")
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -10,17 +15,12 @@ class Provider(BaseProvider):
 
     def authenticate(self):
 
-        payload = self._get('/zones', {
-            'zone': {
-                'name': self.options['domain']
-            }
-        })
+        payload = self._get('/zones/{0}'.format(self.options['domain']))
 
         if not payload['zone']:
             raise StandardError('No domain found')
 
         self.domain_id = payload['zone']['id']
-
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -47,11 +47,12 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 'type': record['zone_record']['record_type'],
-                'name': record['zone_record']['name'],
+                'name': self._full_name(record['zone_record']['name']),
                 'ttl': record['zone_record']['ttl'],
                 'content': record['zone_record']['data'],
                 'id': record['zone_record']['id']
             }
+            processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
         print 'list_records: {0}'.format(records)
@@ -97,7 +98,7 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options.get('auth_password') or self.options.get('auth_token')),
+                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options['auth_token']),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'

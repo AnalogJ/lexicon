@@ -2,6 +2,10 @@ from base import Provider as BaseProvider
 import requests
 from xml.etree import ElementTree
 
+def ProviderParser(subparser):
+    subparser.add_argument("--auth-token", help="specify key used authenticate")
+
+
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
@@ -103,7 +107,7 @@ class Provider(BaseProvider):
             query_params = {}
         query_params['version'] = 1
         query_params['type'] = 'xml'
-        query_params['key'] = self.options.get('auth_password') or self.options.get('auth_token')
+        query_params['key'] = self.options['auth_token']
         r = requests.request(action, self.api_endpoint + url, params=query_params)
                              #data=json.dumps(data))
         r.raise_for_status()  # if the request fails for any reason, throw an error.
