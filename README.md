@@ -68,42 +68,53 @@ You can also install the latest version from the repository directly.
 ## Usage
 
 	$ lexicon -h
-	usage: cli.py [-h] [--name=NAME] [--content=CONTENT] [--ttl=TTL]
-				  [--priority=PRIORITY] [--identifier=IDENTIFIER]
-				  [--auth-username=AUTH_USERNAME] [--auth-password=AUTH_PASSWORD]
-				  [--auth-token=AUTH_TOKEN] [--auth-otp-token=AUTH_OTP_TOKEN]
-				  {nsone,pointhq,easydns,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
-				  {create,list,update,delete} domain
-				  {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
-
-	
-	Create, Update, Delete, List DNS entries
-	
-	positional arguments:
-      {nsone,pointhq,easydns,digitalocean,dnspark,dnsmadeeasy,namesilo,rage4,vultr,cloudflare,dnsimple}
-							specify the DNS provider to use
-	  {create,list,update,delete}
-							specify the action to take
-	  domain                specify the domain, supports subdomains as well
-	  {A,CNAME,MX,SOA,TXT}  specify the entry type
-	
-	optional arguments:
-	  -h, --help            show this help message and exit
-	  --name=NAME           specify the record name
-	  --content=CONTENT     specify the record content
-	  --ttl=TTL             specify the record time-to-live
-	  --priority=PRIORITY   specify the record priority
-	  --identifier=IDENTIFIER
-							specify the record for update or delete actions
-	  --auth-username=AUTH_USERNAME
-							specify username used to authenticate to DNS provider
-	  --auth-password=AUTH_PASSWORD
-							specify password used to authenticate to DNS provider
-	  --auth-token=AUTH_TOKEN
-							specify token used authenticate to DNS provider
-	  --auth-otp-token=AUTH_OTP_TOKEN
-							specify OTP/2FA token used authenticate to DNS
-							provider
+      usage: lexicon [-h] [--version]
+                     {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
+                     ...
+    
+      Create, Update, Delete, List DNS entries
+    
+      positional arguments:
+        {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
+                              specify the DNS provider to use
+          cloudflare          cloudflare provider
+          digitalocean        digitalocean provider
+      ...
+          rage4               rage4 provider
+          vultr               vultr provider
+    
+      optional arguments:
+        -h, --help            show this help message and exit
+        --version             show the current version of lexicon
+    
+    
+      $ lexicon cloudflare -h
+      usage: lexicon cloudflare [-h] [--name NAME] [--content CONTENT] [--ttl TTL]
+                                [--priority PRIORITY] [--identifier IDENTIFIER]
+                                [--auth-username AUTH_USERNAME]
+                                [--auth-token AUTH_TOKEN]
+                                {create,list,update,delete} domain
+                                {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
+    
+      positional arguments:
+        {create,list,update,delete}
+                              specify the action to take
+        domain                specify the domain, supports subdomains as well
+        {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
+                              specify the entry type
+    
+      optional arguments:
+        -h, --help            show this help message and exit
+        --name NAME           specify the record name
+        --content CONTENT     specify the record content
+        --ttl TTL             specify the record time-to-live
+        --priority PRIORITY   specify the record priority
+        --identifier IDENTIFIER
+                              specify the record for update or delete actions
+        --auth-username AUTH_USERNAME
+                              specify email address used to authenticate
+        --auth-token AUTH_TOKEN
+                              specify token used authenticate
 
 Using the lexicon CLI is pretty simple:
 
@@ -121,7 +132,22 @@ Using the lexicon CLI is pretty simple:
 	lexicon cloudflare delete www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
 	lexicon cloudflare delete www.example.com TXT --identifier="cloudflare record id"
 
-	
+## Authentication
+Most supported DNS services provide an API token, however each service implements authentication differently.
+Lexicon attempts to standardize authentication around the following CLI flags:
+ 
+- `--auth-username` - For DNS services that require it, this is usually the account id or email address
+- `--auth-password` - For DNS services that do not provide an API token, this is usually the account password
+- `--auth-token` - This is the most common auth method, the API token provided by the DNS service
+ 
+You can see all the `--auth-*` flags for a specific service by reading the DNS service specific help: `lexicon cloudflare -h`
+
+### Environmental Variables
+Instead of providing Authentication information via the CLI, you can also specify them via Environmental Variables.
+Every DNS service and auth flag maps to an Environmental Variable as follows: `LEXICON_{DNS Provider Name}_{Auth Type}`
+
+So instead of specifying `--auth-username` and `--auth-token` flags when calling `lexicon cloudflare ...`, 
+you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_TOKEN` environmental variables.
 
 ### Letsencrypt Instructions
 Lexicon has an example [letsencrypt.sh hook file](examples/letsencrypt.default.sh) that you can use for any supported provider. 
