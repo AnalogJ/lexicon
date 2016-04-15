@@ -66,4 +66,44 @@ def test_Client_init_when_missing_type_should_fail():
     with pytest.raises(AttributeError):
         lexicon.client.Client(options)
 
+def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
+    monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
+    monkeypatch.delenv('LEXICON_CLOUDFLARE_USERNAME')
+    options = {
+        'provider_name':'cloudflare',
+        'action': 'list',
+        'domain': 'www.example.com',
+        'type': 'TXT'
+    }
+    client = lexicon.client.Client(options)
+
+
+    assert client.provider_name == options['provider_name']
+    assert client.action == options['action']
+    assert client.options['domain'] == 'example.com'
+    assert client.options['type'] == options['type']
+    assert client.options.get('auth_token') == None
+    assert client.options.get('auth_username') == None
+
+def test_Client_parse_env_with_auth_keys(monkeypatch):
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN','test-token')
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_USERNAME','test-username@example.com')
+    options = {
+        'provider_name':'cloudflare',
+        'action': 'list',
+        'domain': 'www.example.com',
+        'type': 'TXT'
+    }
+    client = lexicon.client.Client(options)
+
+
+    assert client.provider_name == options['provider_name']
+    assert client.action == options['action']
+    assert client.options['domain'] == 'example.com'
+    assert client.options['type'] == options['type']
+    assert client.options.get('auth_token') == 'test-token'
+    assert client.options.get('auth_username') == 'test-username@example.com'
+
+
+
 #TODO: add tests for Provider loading?
