@@ -15,17 +15,12 @@ class Provider(BaseProvider):
 
     def authenticate(self):
 
-        payload = self._get('/zones', {
-            'zone': {
-                'name': self.options['domain']
-            }
-        })
+        payload = self._get('/zones/{0}'.format(self.options['domain']))
 
         if not payload['zone']:
             raise StandardError('No domain found')
 
         self.domain_id = payload['zone']['id']
-
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -52,11 +47,12 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 'type': record['zone_record']['record_type'],
-                'name': record['zone_record']['name'],
+                'name': self._full_name(record['zone_record']['name']),
                 'ttl': record['zone_record']['ttl'],
                 'content': record['zone_record']['data'],
                 'id': record['zone_record']['id']
             }
+            processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
         print 'list_records: {0}'.format(records)

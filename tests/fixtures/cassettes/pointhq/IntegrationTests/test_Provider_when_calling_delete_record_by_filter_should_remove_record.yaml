@@ -1,0 +1,154 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://pointhq.com/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"zone":{"id":170389,"name":"capsulecd.com","group":"Default
+        Group","user-id":26963,"ttl":3600}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600]
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 15 Apr 2016 03:24:55 GMT']
+      etag: ['"64759825f5fbcfb9ee3f1ac1c0819f88"']
+      server: [nginx]
+      set-cookie: [_passenger_route=283609999; Path=/]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [5dcde2cf1487f812bebcfbd42409de99]
+      x-runtime: ['0.006760']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"zone_record": {"record_type": "TXT", "data": "challengetoken", "name":
+      "delete.testfilt"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['92']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://pointhq.com/zones/170389/records
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"name":"delete.testfilt.capsulecd.com.","data":"\"challengetoken\"","id":104417910,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate', max-age=3600]
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 15 Apr 2016 03:24:56 GMT']
+      etag: ['"d920b03206a2e93b3716d4652e5becd0"']
+      server: [nginx]
+      set-cookie: [_passenger_route=283609999; Path=/]
+      status: [201 Created]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [607ae847a6c5a37317ac5662c8a32f20]
+      x-runtime: ['0.033938']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&data=challengetoken&name=delete.testfilt
+  response:
+    body: {string: !!python/unicode '[{"zone_record":{"name":"delete.testfilt.capsulecd.com.","data":"\"challengetoken\"","id":104417910,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600]
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 15 Apr 2016 03:24:57 GMT']
+      etag: ['"df7a1d1c5df3d53e72ebced8799f3b4c"']
+      server: [nginx]
+      set-cookie: [_passenger_route=516608123; Path=/]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [4715d8dfa1469df8bf1ae4b53e41bc36]
+      x-runtime: ['0.005614']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: DELETE
+    uri: https://pointhq.com/zones/170389/records/104417910
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"status":"OK"}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 15 Apr 2016 03:24:58 GMT']
+      server: [nginx]
+      set-cookie: [_passenger_route=1937058272; Path=/]
+      status: [202 Accepted]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [6a311a7e04f256d2203d29b2104d3dbe]
+      x-runtime: ['0.028228']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=delete.testfilt
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600]
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 15 Apr 2016 03:24:59 GMT']
+      etag: ['"d751713988987e9331980363e24189ce"']
+      server: [nginx]
+      set-cookie: [_passenger_route=283609999; Path=/]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [98c6334734d4d01753c6e82ff19e4566]
+      x-runtime: ['0.005342']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

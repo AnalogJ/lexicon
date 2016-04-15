@@ -69,7 +69,7 @@ def test_Client_init_when_missing_type_should_fail():
 def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
     if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
         monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
-    if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
+    if os.environ.get('LEXICON_CLOUDFLARE_USERNAME'):
         monkeypatch.delenv('LEXICON_CLOUDFLARE_USERNAME')
     options = {
         'provider_name':'cloudflare',
