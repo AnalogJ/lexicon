@@ -102,7 +102,7 @@ class Provider(BaseProvider):
                 identifier = records[0]['id']
             else:
                 raise StandardError('Record identifier could not be found.')
-        payload = self._delete('/Record.Remove', {'domain_id': self.domain_id, 'record_id': identifier})
+        payload = self._post('/Record.Remove', {'domain_id': self.domain_id, 'record_id': identifier})
 
         if payload['status']['code'] != '1':
             raise StandardError(payload['status']['message'])
