@@ -12,7 +12,7 @@ def BaseProviderParser():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("action", help="specify the action to take", default='list', choices=['create', 'list', 'update', 'delete'])
     parser.add_argument("domain", help="specify the domain, supports subdomains as well")
-    parser.add_argument("type", help="specify the entry type", default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SPF', 'SOA', 'TXT', 'SRV', 'LOC'])
+    parser.add_argument("type", help="specify the entry type", default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
 
     parser.add_argument("--name", help="specify the record name")
     parser.add_argument("--content", help="specify the record content")

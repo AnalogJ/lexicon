@@ -46,7 +46,9 @@ class Client:
         for key in os.environ.keys():
             if key.startswith(env_prefix):
                 auth_type = key[len(env_prefix):].lower()
-                self.options['auth_{0}'.format(auth_type)] = self.options.get('auth_{0}'.format(auth_type), os.environ[key])
+                # only assign auth_username/token/etc if its not already provided by CLI.
+                if self.options.get('auth_{0}'.format(auth_type)) is None:
+                    self.options['auth_{0}'.format(auth_type)] = os.environ[key]
 
     def _validate(self, options):
         if not options.get('provider_name'):
