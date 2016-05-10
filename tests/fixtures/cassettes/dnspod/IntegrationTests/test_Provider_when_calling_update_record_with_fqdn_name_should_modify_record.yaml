@@ -1,0 +1,133 @@
+interactions:
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Domain.Info
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:00:17"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","grade_title":"\u65b0\u514d\u8d39\u5957\u9910","status":"enable","ext_status":"dnserror","records":"10","group_id":"1","is_mark":"no","remark":false,"is_vip":"no","searchengine_push":"yes","user_id":"1446297","created_on":"2016-05-11
+        02:35:23","updated_on":"2016-05-11 02:35:23","ttl":"600","cname_speedup":"disable","owner":"lexicon@mailinator.com"}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['543']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:00:17 GMT']
+      etag: [W/"882c4373c5151ca79afbf6ee4ec6fcb0"]
+      expires: ['Tue, 10 May 2016 21:00:17 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=uib3b135fgivvfv9mphh8cont2; path=/; secure; HttpOnly,
+        '_xsrf=d2945eb74bbfc1221d624837ae398c04%7C1462906817; expires=Tue, 17-May-2016
+          19:00:17 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: record_line=%E9%BB%98%E8%AE%A4&format=json&value=challengetoken&record_type=TXT&sub_domain=orig.testfqdn&domain_id=38280687
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['176']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.Create
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:00:33"},"record":{"id":"189593267","name":"orig.testfqdn","status":"enabled","weight":null}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['182']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:00:34 GMT']
+      etag: [W/"db108b30ef5008f3e1269628411b02e7"]
+      expires: ['Tue, 10 May 2016 21:00:34 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=l2ot7d2ulcsd3kqk4vniujtcg3; path=/; secure; HttpOnly,
+        '_xsrf=6e2638ab173d2d424426ff72bac7f663%7C1462906833; expires=Tue, 17-May-2016
+          19:00:33 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.List
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:01:34"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","owner":"lexicon@mailinator.com"},"info":{"sub_domains":"13","record_total":"13"},"records":[{"id":"189590584","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns1.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"},{"id":"189590585","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns2.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"},{"id":"189592932","name":"docs","line":"\u9ed8\u8ba4","type":"CNAME","ttl":"600","value":"docs.example.com.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:57:21","use_aqb":"no"},{"id":"189592919","name":"localhost","line":"\u9ed8\u8ba4","type":"A","ttl":"600","value":"127.0.0.1","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:57:15","use_aqb":"no"},{"id":"189593259","name":"orig.test","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        03:00:30","use_aqb":"no"},{"id":"189593267","name":"orig.testfqdn","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        03:00:33","use_aqb":"no"},{"id":"189593272","name":"orig.testfull","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        03:00:37","use_aqb":"no"},{"id":"189593133","name":"random.fqdntest","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:59:24","use_aqb":"no"},{"id":"189593136","name":"random.fulltest","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:59:26","use_aqb":"no"},{"id":"189593143","name":"random.test","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:59:27","use_aqb":"no"},{"id":"189592939","name":"_acme-challenge.fqdn","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:57:22","use_aqb":"no"},{"id":"189592942","name":"_acme-challenge.full","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:57:23","use_aqb":"no"},{"id":"189592945","name":"_acme-challenge.test","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:57:26","use_aqb":"no"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['3582']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:01:34 GMT']
+      etag: [W/"f50f078349b09d779178b26e5cf84d49"]
+      expires: ['Tue, 10 May 2016 21:01:34 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=gv58r61dm4k1bchihv1qp88lb6; path=/; secure; HttpOnly,
+        '_xsrf=15fd7415960a6001220e60f1a13fab23%7C1462906894; expires=Tue, 17-May-2016
+          19:01:34 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: record_line=%E9%BB%98%E8%AE%A4&format=json&value=challengetoken&record_type=TXT&sub_domain=updated.testfqdn&record_id=189593267&domain_id=38280687
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['199']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.Modify
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:01:44"},"record":{"id":189593267,"name":"updated.testfqdn","value":"challengetoken","status":"enable","weight":null}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['207']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:01:44 GMT']
+      etag: [W/"ea6412eb2d4c4d791609b36dd278353c"]
+      expires: ['Tue, 10 May 2016 21:01:44 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=ddj2jhp564ju6qhdnipiid3tk4; path=/; secure; HttpOnly,
+        '_xsrf=73036891ff00d76540a1c735ea82989e%7C1462906904; expires=Tue, 17-May-2016
+          19:01:44 GMT; Max-Age=604800; path=/']
+      transfer-encoding: [chunked]
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1

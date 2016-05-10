@@ -1,0 +1,154 @@
+interactions:
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Domain.Info
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:30:12"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","grade_title":"\u65b0\u514d\u8d39\u5957\u9910","status":"enable","ext_status":"dnserror","records":"2","group_id":"1","is_mark":"no","remark":false,"is_vip":"no","searchengine_push":"yes","user_id":"1446297","created_on":"2016-05-11
+        02:35:23","updated_on":"2016-05-11 02:35:23","ttl":"600","cname_speedup":"disable","owner":"lexicon@mailinator.com"}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['542']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:30:12 GMT']
+      etag: [W/"0525d02a6e6a817266886ac8945c3526"]
+      expires: ['Tue, 10 May 2016 21:30:12 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=45rp592poeds9844londm2g9o0; path=/; secure; HttpOnly,
+        '_xsrf=532b32b81c0d037052d6c09e1e779321%7C1462908612; expires=Tue, 17-May-2016
+          19:30:12 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: record_line=%E9%BB%98%E8%AE%A4&format=json&value=challengetoken&record_type=TXT&sub_domain=delete.testfilt&domain_id=38280687
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['178']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.Create
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:30:19"},"record":{"id":"189596266","name":"delete.testfilt","status":"enabled","weight":null}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['184']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:30:19 GMT']
+      etag: [W/"a24f0be2b86161948ddc26f5b38a866c"]
+      expires: ['Tue, 10 May 2016 21:30:19 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=vdjfru32arav95rtfn4bi0hud7; path=/; secure; HttpOnly,
+        '_xsrf=587a19663652193d78df0741b5b26243%7C1462908619; expires=Tue, 17-May-2016
+          19:30:19 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.List
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:30:22"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","owner":"lexicon@mailinator.com"},"info":{"sub_domains":"3","record_total":"3"},"records":[{"id":"189590584","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns1.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"},{"id":"189590585","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns2.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"},{"id":"189596266","name":"delete.testfilt","line":"\u9ed8\u8ba4","type":"TXT","ttl":"600","value":"challengetoken","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        03:30:19","use_aqb":"no"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['1058']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:30:22 GMT']
+      etag: [W/"4932d4589dfaa3abfaceb91257e4098c"]
+      expires: ['Tue, 10 May 2016 21:30:22 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=t5f6m35pcfmtvoa5k3hhljbsh3; path=/; secure; HttpOnly,
+        '_xsrf=f05e68b98cb5b8467d98cb1ea9b91da7%7C1462908622; expires=Tue, 17-May-2016
+          19:30:22 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: record_id=189596266&domain_id=38280687&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['103']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.Remove
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:30:26"}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['98']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:30:26 GMT']
+      etag: [W/"ffa0d881fd623df76f0e82cc9b2dcee2"]
+      expires: ['Tue, 10 May 2016 21:30:26 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=c0k055f57e8hscdv2402fd28h6; path=/; secure; HttpOnly,
+        '_xsrf=efc721d8a7e325f4ff55372e49037990%7C1462908626; expires=Tue, 17-May-2016
+          19:30:26 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.List
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 03:30:29"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","owner":"lexicon@mailinator.com"},"info":{"sub_domains":"2","record_total":"2"},"records":[{"id":"189590584","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns1.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"},{"id":"189590585","name":"@","line":"\u9ed8\u8ba4","type":"NS","ttl":"86400","value":"f1g1ns2.dnspod.net.","weight":null,"mx":"0","enabled":"1","status":"enabled","monitor_status":"","remark":"","updated_on":"2016-05-11
+        02:35:23","use_aqb":"no","hold":"hold"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['804']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 19:30:29 GMT']
+      etag: [W/"7d6777f3c246d69c5ff6e51274f17079"]
+      expires: ['Tue, 10 May 2016 21:30:29 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=e1qbg0jbemj55j07ih11a2kk94; path=/; secure; HttpOnly,
+        '_xsrf=7d90bb1c55225f94f31ea9922686e8dc%7C1462908629; expires=Tue, 17-May-2016
+          19:30:29 GMT; Max-Age=604800; path=/']
+      transfer-encoding: [chunked]
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1

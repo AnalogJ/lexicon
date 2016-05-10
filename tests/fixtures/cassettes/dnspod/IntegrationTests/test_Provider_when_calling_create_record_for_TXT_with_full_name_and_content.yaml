@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['85']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Domain.Info
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 02:57:03"},"domain":{"id":"38280687","name":"capsulecd.com","punycode":"capsulecd.com","grade":"DP_Free","grade_title":"\u65b0\u514d\u8d39\u5957\u9910","status":"enable","ext_status":"dnserror","records":"2","group_id":"1","is_mark":"no","remark":false,"is_vip":"no","searchengine_push":"yes","user_id":"1446297","created_on":"2016-05-11
+        02:35:23","updated_on":"2016-05-11 02:35:23","ttl":"600","cname_speedup":"disable","owner":"lexicon@mailinator.com"}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['542']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 18:57:03 GMT']
+      etag: [W/"28c8e085fe9542907818a4e2e500be5c"]
+      expires: ['Tue, 10 May 2016 20:57:03 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=86ldetq8h0av0po3h19c7p3dh0; path=/; secure; HttpOnly,
+        '_xsrf=ae052c94232c037d34de214e8fb1ec77%7C1462906623; expires=Tue, 17-May-2016
+          18:57:03 GMT; Max-Age=604800; path=/']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: record_line=%E9%BB%98%E8%AE%A4&format=json&value=challengetoken&record_type=TXT&sub_domain=_acme-challenge.full&domain_id=38280687
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['183']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://dnsapi.cn/Record.Create
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"1","message":"Action completed
+        successful","created_at":"2016-05-11 02:57:23"},"record":{"id":"189592942","name":"_acme-challenge.full","status":"enabled","weight":null}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['189']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 10 May 2016 18:57:24 GMT']
+      etag: [W/"f233525200dd7c84022d2dcd2f33e5b1"]
+      expires: ['Tue, 10 May 2016 20:57:24 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=q825mvgq6suu66k1uldmn1hcb4; path=/; secure; HttpOnly,
+        '_xsrf=8d8c091b6b116bc3e39fd09826d000b4%7C1462906643; expires=Tue, 17-May-2016
+          18:57:23 GMT; Max-Age=604800; path=/']
+      transfer-encoding: [chunked]
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1
