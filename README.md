@@ -25,6 +25,7 @@ The current supported providers are:
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
+- DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
