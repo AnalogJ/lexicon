@@ -1,4 +1,6 @@
-from base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 import requests
 from xml.etree import ElementTree
 
@@ -28,7 +30,7 @@ class Provider(BaseProvider):
             'rrvalue': content
         }
         payload = self._get('/dnsAddRecord', record)
-        print 'create_record: {0}'.format(True)
+        print('create_record: {0}'.format(True))
         return True
 
     # List all records. Return an empty list if no records found
@@ -56,7 +58,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Create or update a record.
@@ -75,7 +77,7 @@ class Provider(BaseProvider):
 
         payload = self._get('/dnsUpdateRecord', data)
 
-        print 'update_record: {0}'.format(True)
+        print('update_record: {0}'.format(True))
         return True
 
     # Delete an existing record.
@@ -86,16 +88,16 @@ class Provider(BaseProvider):
         }
         if not identifier:
             records = self.list_records(type, name, content)
-            print records
+            print(records)
             if len(records) == 1:
                 data['rrid'] = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
         else:
             data['rrid'] = identifier
         payload = self._get('/dnsDeleteRecord', data)
 
-        print 'delete_record: {0}'.format(True)
+        print('delete_record: {0}'.format(True))
         return True
 
 
@@ -115,7 +117,7 @@ class Provider(BaseProvider):
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
         if root.find('reply').find('code').text != '300':
-            raise StandardError('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
+            raise Exception('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
 
 
         return root

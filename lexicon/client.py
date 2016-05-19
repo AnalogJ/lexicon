@@ -1,8 +1,9 @@
+from builtins import object
 import importlib
 import os
 import tldextract
 #from providers import Example
-class Client:
+class Client(object):
     def __init__(self, options):
         #validate options
         self._validate(options)
@@ -43,7 +44,7 @@ class Client:
         # LEXICON_CLOUDFLARE_USERNAME => options['auth_username']
         # LEXICON_CLOUDFLARE_PASSWORD => options['auth_password']
         env_prefix = 'LEXICON_{0}_'.format(self.provider_name.upper())
-        for key in os.environ.keys():
+        for key in list(os.environ.keys()):
             if key.startswith(env_prefix):
                 auth_type = key[len(env_prefix):].lower()
                 # only assign auth_username/token/etc if its not already provided by CLI.
