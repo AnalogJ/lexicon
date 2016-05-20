@@ -12,7 +12,7 @@ from codecs import open
 from os import path, listdir
 
 version = 'unknown'
-with open(path.join(path.dirname(path.abspath(__file__)), 'VERSION')) as version_file:
+with open(path.join(path.dirname(path.abspath(__file__)), 'VERSION'), encoding='utf-8') as version_file:
     version = version_file.read().strip()
 
 here = path.abspath(path.dirname(__file__))
@@ -74,7 +74,6 @@ setup(
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
@@ -95,7 +94,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['requests', 'tldextract'],
+    install_requires=['requests', 'tldextract', 'future'],
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
