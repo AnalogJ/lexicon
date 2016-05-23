@@ -55,7 +55,7 @@ class Provider(BaseProvider):
         if name:
             records = [record for record in records if record['name'] == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [record for record in records if record['content'].lower() == content.lower()]
 
         print 'list_records: {0}'.format(records)
         return records
