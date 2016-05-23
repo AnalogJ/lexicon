@@ -61,6 +61,9 @@ class Provider(BaseProvider):
                 #this id is useless unless your doing record linking. Lets return the original record identifier.
                 'id': record['record_id'] #
             }
+            if processed_record['type'] == 'TXT':
+                processed_record['content'] = processed_record['content'].replace('"', '')
+                # CloudXNS will add quotes automaticly for TXT records, https://www.cloudxns.net/Support/detail/id/114.html
             records.append(processed_record)
 
         if type:
