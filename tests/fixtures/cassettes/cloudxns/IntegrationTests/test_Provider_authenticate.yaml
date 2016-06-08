@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53", "format":
+      "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [7fee70b55288dc6459877a326685e691]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:13:22 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://www.cloudxns.net/api2/domain
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"1","data":[{"id":"89415","domain":"capsulecd.com.","status":"ok","level":"3","take_over_status":"no","create_time":"2016-06-08
+        14:49:10","update_time":"2016-06-08 14:57:48","ttl":"600"}]}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['226']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:13:26 GMT']
+      server: [Tengine]
+      set-cookie: ['CloudXNS_TOKEN=9cacdde29b33acbacc1663967b582747; expires=Wed,
+          08-Jun-2016 17:13:26 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

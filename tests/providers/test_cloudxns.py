@@ -1,5 +1,5 @@
 # Test for one implementation of the interface
-from lexicon.providers.dnspod import Provider
+from lexicon.providers.cloudxns import Provider
 from integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
