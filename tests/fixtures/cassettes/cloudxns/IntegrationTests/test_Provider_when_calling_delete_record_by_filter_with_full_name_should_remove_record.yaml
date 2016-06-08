@@ -1,0 +1,160 @@
+interactions:
+- request:
+    body: '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53", "format":
+      "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [65fc7df5cd95d9b48c8df9f82a114864]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:14:33 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://www.cloudxns.net/api2/domain
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"1","data":[{"id":"89415","domain":"capsulecd.com.","status":"ok","level":"3","take_over_status":"no","create_time":"2016-06-08
+        14:49:10","update_time":"2016-06-08 14:57:48","ttl":"600"}]}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['226']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:14:34 GMT']
+      server: [Tengine]
+      set-cookie: ['CloudXNS_TOKEN=7db11ec08467f4475e63a6c4e7f8c9b2; expires=Wed,
+          08-Jun-2016 17:14:34 GMT; path=/']
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"format": "json", "login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "value": "challengetoken", "line_id": 1, "host": "delete.testfull", "type":
+      "TXT", "domain_id": "89415"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [a02958c3def71a280c11bdfc74bda107]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:15:11 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['191']
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://www.cloudxns.net/api2/record
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","record_id":[1373557]}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['52']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:15:12 GMT']
+      server: [Tengine]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53", "format":
+      "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [8d089d26f6588d5b7995a3ba65dbefad]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:15:50 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://www.cloudxns.net/api2/record/89415?host_id=0&row_num=2000&offset=0
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"15","offset":0,"row_num":2000,"data":[{"record_id":"1373553","host_id":"1155561","host":"delete.testfilt","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:09","update_time":"2016-06-08 15:15:09"},{"record_id":"1373555","host_id":"1155563","host":"delete.testfqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:11","update_time":"2016-06-08 15:15:11"},{"record_id":"1373557","host_id":"1155565","host":"delete.testfull","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:12","update_time":"2016-06-08 15:15:12"},{"record_id":"1373559","host_id":"1155567","host":"delete.testid","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:13","update_time":"2016-06-08 15:15:14"},{"record_id":"1373545","host_id":"1155553","host":"docs","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"docs.example.com.","ttl":"600","type":"CNAME","status":"ok","create_time":"2016-06-08
+        15:15:00","update_time":"2016-06-08 15:15:00"},{"record_id":"1373543","host_id":"1155551","host":"localhost","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"127.0.0.1","ttl":"600","type":"A","status":"ok","create_time":"2016-06-08
+        15:14:58","update_time":"2016-06-08 15:14:58"},{"record_id":"1373567","host_id":"1155575","host":"orig.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:23","update_time":"2016-06-08 15:15:23"},{"record_id":"1373569","host_id":"1155577","host":"orig.testfqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:26","update_time":"2016-06-08 15:15:26"},{"record_id":"1373571","host_id":"1155579","host":"orig.testfull","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:27","update_time":"2016-06-08 15:15:27"},{"record_id":"1373561","host_id":"1155569","host":"random.fqdntest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:15","update_time":"2016-06-08 15:15:15"},{"record_id":"1373563","host_id":"1155571","host":"random.fulltest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:17","update_time":"2016-06-08 15:15:17"},{"record_id":"1373565","host_id":"1155573","host":"random.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:19","update_time":"2016-06-08 15:15:19"},{"record_id":"1373547","host_id":"1155555","host":"_acme-challenge.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:02","update_time":"2016-06-08 15:15:02"},{"record_id":"1373549","host_id":"1155557","host":"_acme-challenge.full","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:04","update_time":"2016-06-08 15:15:04"},{"record_id":"1373551","host_id":"1155559","host":"_acme-challenge.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:07","update_time":"2016-06-08 15:15:07"}]}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['4400']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:15:51 GMT']
+      server: [Tengine]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53", "format":
+      "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [5864fd0de79b1c2536d2b6791f5c01ae]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:16:17 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.9.1]
+    method: DELETE
+    uri: https://www.cloudxns.net/api2/record/1373557/89415
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success"}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['30']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:16:18 GMT']
+      server: [Tengine]
+      set-cookie: ['CloudXNS_TOKEN=e19576060db2f3926da7fc82eaf59743; expires=Wed,
+          08-Jun-2016 17:16:18 GMT; path=/']
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53", "format":
+      "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [ae3ae36d8401591214d34791351ef66a]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Wed Jun 08 00:16:35 2016']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://www.cloudxns.net/api2/record/89415?host_id=0&row_num=2000&offset=0
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"11","offset":0,"row_num":2000,"data":[{"record_id":"1373545","host_id":"1155553","host":"docs","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"docs.example.com.","ttl":"600","type":"CNAME","status":"ok","create_time":"2016-06-08
+        15:15:00","update_time":"2016-06-08 15:15:00"},{"record_id":"1373543","host_id":"1155551","host":"localhost","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"127.0.0.1","ttl":"600","type":"A","status":"ok","create_time":"2016-06-08
+        15:14:58","update_time":"2016-06-08 15:14:58"},{"record_id":"1373561","host_id":"1155569","host":"random.fqdntest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:15","update_time":"2016-06-08 15:15:15"},{"record_id":"1373563","host_id":"1155571","host":"random.fulltest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:17","update_time":"2016-06-08 15:15:17"},{"record_id":"1373565","host_id":"1155573","host":"random.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:19","update_time":"2016-06-08 15:15:19"},{"record_id":"1373567","host_id":"1155583","host":"updated.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:23","update_time":"2016-06-08 15:16:23"},{"record_id":"1373569","host_id":"1155585","host":"updated.testfqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:25","update_time":"2016-06-08 15:16:25"},{"record_id":"1373571","host_id":"1155587","host":"updated.testfull","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:28","update_time":"2016-06-08 15:16:28"},{"record_id":"1373547","host_id":"1155555","host":"_acme-challenge.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:02","update_time":"2016-06-08 15:15:02"},{"record_id":"1373549","host_id":"1155557","host":"_acme-challenge.full","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:04","update_time":"2016-06-08 15:15:04"},{"record_id":"1373551","host_id":"1155559","host":"_acme-challenge.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:07","update_time":"2016-06-08 15:15:07"}]}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['3251']
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 08 Jun 2016 07:16:37 GMT']
+      server: [Tengine]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

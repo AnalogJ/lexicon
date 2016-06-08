@@ -21,6 +21,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 The current supported providers are:
 
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
+- CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
