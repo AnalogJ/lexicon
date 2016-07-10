@@ -54,6 +54,9 @@ class Provider(BaseProvider):
 
         self.apikey = self.options['auth_token']
         self.api = xmlrpclib.ServerProxy(api_endpoint)
+
+        # self.domain_id is required by test suite
+        self.domain_id = None
         self.zone_id = None
 
         self.domain = self.options['domain'].lower()
