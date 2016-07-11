@@ -67,7 +67,7 @@ class Provider(BaseProvider):
         """Determine the current domain and zone IDs for the domain."""
 
         payload = self.api.domain.info(self.apikey, self.options['domain'])
-        self.domain_id = payload['domain_id']
+        self.domain_id = payload['id']
         self.zone_id = payload['zone_id']
 
     # Create record. If record already exists with the same content, do nothing'
