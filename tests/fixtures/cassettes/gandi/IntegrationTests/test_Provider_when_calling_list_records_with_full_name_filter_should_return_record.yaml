@@ -1,0 +1,784 @@
+interactions:
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><string>xtestingx.com</string></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['242']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><struct>
+
+        <member>
+
+        <name>entity_id</name>
+
+        <value><nil/></value></member>
+
+        <member>
+
+        <name>date_updated</name>
+
+        <value><dateTime.iso8601>20160713T03:38:42</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>date_delete</name>
+
+        <value><dateTime.iso8601>20260826T15:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>is_premium</name>
+
+        <value><boolean>0</boolean></value>
+
+        </member>
+
+        <member>
+
+        <name>date_hold_begin</name>
+
+        <value><dateTime.iso8601>20260713T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>date_registry_end</name>
+
+        <value><dateTime.iso8601>20260713T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>authinfo_expiration_date</name>
+
+        <value><dateTime.iso8601>20170713T03:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>contacts</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>owner</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PM50-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>95450</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>admin</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PM50-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>95450</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>bill</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PM50-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>95450</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>tech</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PM50-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>95450</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>reseller</name>
+
+        <value><nil/></value></member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>nameservers</name>
+
+        <value><array><data>
+
+        <value><string>a.dns.gandi-ote.net</string></value>
+
+        <value><string>b.dns.gandi-ote.net</string></value>
+
+        <value><string>c.dns.gandi-ote.net</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_restore_end</name>
+
+        <value><dateTime.iso8601>20260926T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>26481</int></value>
+
+        </member>
+
+        <member>
+
+        <name>authinfo</name>
+
+        <value><string>tfwu1lj?dH</string></value>
+
+        </member>
+
+        <member>
+
+        <name>status</name>
+
+        <value><array><data>
+
+        <value><string>clientTransferProhibited</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>tags</name>
+
+        <value><array><data>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_hold_end</name>
+
+        <value><dateTime.iso8601>20260827T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>services</name>
+
+        <value><array><data>
+
+        <value><string>gandidns</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_pending_delete_end</name>
+
+        <value><dateTime.iso8601>20261001T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>zone_id</name>
+
+        <value><int>684261</int></value>
+
+        </member>
+
+        <member>
+
+        <name>date_renew_begin</name>
+
+        <value><dateTime.iso8601>20120101T00:00:00</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>fqdn</name>
+
+        <value><string>xtestingx.com</string></value>
+
+        </member>
+
+        <member>
+
+        <name>autorenew</name>
+
+        <value><nil/></value></member>
+
+        <member>
+
+        <name>date_registry_creation</name>
+
+        <value><dateTime.iso8601>20160713T01:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>tld</name>
+
+        <value><string>com</string></value>
+
+        </member>
+
+        <member>
+
+        <name>date_created</name>
+
+        <value><dateTime.iso8601>20160713T03:37:15</dateTime.iso8601></value>
+
+        </member>
+
+        </struct></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['3639']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:41:36 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.version.new</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>684261</int></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['241']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><int>16</int></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['122']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:41:37 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.record.add</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>684261</int></value>
+
+      </param>
+
+      <param>
+
+      <value><int>16</int></value>
+
+      </param>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>TXT</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>random.fulltest</string></value>
+
+      </member>
+
+      <member>
+
+      <name>value</name>
+
+      <value><string>challengetoken</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['580']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><struct>
+
+        <member>
+
+        <name>name</name>
+
+        <value><string>random.fulltest</string></value>
+
+        </member>
+
+        <member>
+
+        <name>type</name>
+
+        <value><string>TXT</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>3659968</int></value>
+
+        </member>
+
+        <member>
+
+        <name>value</name>
+
+        <value><string>"challengetoken"</string></value>
+
+        </member>
+
+        <member>
+
+        <name>ttl</name>
+
+        <value><int>10800</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['509']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:41:38 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.version.set</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>684261</int></value>
+
+      </param>
+
+      <param>
+
+      <value><int>16</int></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['287']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><boolean>1</boolean></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['129']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:41:39 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.record.list</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>684261</int></value>
+
+      </param>
+
+      <param>
+
+      <value><int>0</int></value>
+
+      </param>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>TXT</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>random.fulltest</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['495']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><array><data>
+
+        <value><struct>
+
+        <member>
+
+        <name>name</name>
+
+        <value><string>random.fulltest</string></value>
+
+        </member>
+
+        <member>
+
+        <name>type</name>
+
+        <value><string>TXT</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>3659968</int></value>
+
+        </member>
+
+        <member>
+
+        <name>value</name>
+
+        <value><string>"challengetoken"</string></value>
+
+        </member>
+
+        <member>
+
+        <name>ttl</name>
+
+        <value><int>10800</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </data></array></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['554']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:41:39 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

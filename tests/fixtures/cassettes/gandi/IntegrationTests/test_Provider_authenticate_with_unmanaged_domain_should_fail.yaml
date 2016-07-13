@@ -1,0 +1,77 @@
+interactions:
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+
+      </param>
+
+      <param>
+
+      <value><string>thisisadomainidonotown.com</string></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['255']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://rpc.ote.gandi.net/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <fault>
+
+        <value><struct>
+
+        <member>
+
+        <name>faultCode</name>
+
+        <value><int>510042</int></value>
+
+        </member>
+
+        <member>
+
+        <name>faultString</name>
+
+        <value><string>Error on object : OBJECT_DOMAIN (CAUSE_NOTFOUND) [Domain ''thisisadomainidonotown.com''
+        doesn''t exist.]</string></value>
+
+        </member>
+
+        </struct></value>
+
+        </fault>
+
+        </methodResponse>
+
+'}
+    headers:
+      connection: [close]
+      content-length: ['361']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 13 Jul 2016 01:40:47 GMT']
+      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
+          mod_wsgi/3.3 Python/2.6.6]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
