@@ -165,7 +165,7 @@ There is an included example Dockerfile that can be used to automatically genera
 
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
-- [ ] Wire up automated release packaging on PRs.
+- [x] Wire up automated release packaging on PRs.
 - [x] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
 - [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
