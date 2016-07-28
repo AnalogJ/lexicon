@@ -9,7 +9,7 @@ RUN \
 
 
 # Install pip
-RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
+RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python2.7
 
 # Clone letsencrypt.sh repo
 RUN cd /srv && git clone --depth 1 https://github.com/lukas2511/letsencrypt.sh.git letsencrypt
