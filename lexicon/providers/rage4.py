@@ -30,8 +30,8 @@ class Provider(BaseProvider):
             'content': content,
             'type': type
         }
-        if self.options['ttl']:
-            record['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            record['ttl'] = self.options.get('ttl')
 
         payload = {}
         try:
@@ -81,8 +81,8 @@ class Provider(BaseProvider):
             data['name'] = self._full_name(name)
         if content:
             data['content'] = content
-        if self.options['ttl']:
-            data['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            data['ttl'] = self.options.get('ttl')
         # if type:
         #     raise 'Type updating is not supported by this provider.'
 

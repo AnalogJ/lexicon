@@ -30,7 +30,7 @@ class Provider(BaseProvider):
             'type': type,
             'domain': self.domain_id,
             'host': self._relative_name(name),
-            'ttl': self.options.get('ttl',300),
+            'ttl': self.options.get('ttl',self.default_ttl),
             'prio': 0,
             'rdata': content
         }
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
-            'ttl': self.options.get('ttl',300)
+            'ttl': self.options.get('ttl',self.default_ttl)
         }
         if type:
             data['type'] = type

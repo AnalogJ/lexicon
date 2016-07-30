@@ -1,0 +1,76 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.vultr.com/v1/dns/list
+  response:
+    body: {string: !!python/unicode '[{"domain":"capsulecd.com","date_created":"2016-04-13
+        19:03:44"}]'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['65']
+      content-type: [application/json]
+      date: ['Sat, 30 Jul 2016 21:23:16 GMT']
+      expires: ['Sat, 30 Jul 2016 21:23:15 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: domain=capsulecd.com&name=ttl.fqdn&type=TXT&priority=0&ttl=3600&data=%22ttlshouldbe3600%22
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['90']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.vultr.com/v1/dns/create_record
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [text/html; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 21:23:18 GMT']
+      expires: ['Sat, 30 Jul 2016 21:23:17 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.vultr.com/v1/dns/records?domain=capsulecd.com
+  response:
+    body: {string: !!python/unicode '[{"type":"A","name":"localhost","data":"127.0.0.1","priority":0,"RECORDID":2051670,"ttl":300},{"type":"CNAME","name":"docs","data":"docs.example.com","priority":0,"RECORDID":2051671,"ttl":300},{"type":"TXT","name":"random.fqdntest","data":"\"challengetoken\"","priority":0,"RECORDID":2051680,"ttl":300},{"type":"TXT","name":"random.fulltest","data":"\"challengetoken\"","priority":0,"RECORDID":2051681,"ttl":300},{"type":"TXT","name":"random.test","data":"\"challengetoken\"","priority":0,"RECORDID":2051682,"ttl":300},{"type":"TXT","name":"ttl.fqdn","data":"\"ttlshouldbe3600\"","priority":0,"RECORDID":2452603,"ttl":3600},{"type":"TXT","name":"updated.test","data":"\"challengetoken\"","priority":0,"RECORDID":2051716,"ttl":300},{"type":"TXT","name":"updated.testfqdn","data":"\"challengetoken\"","priority":0,"RECORDID":2051717,"ttl":300},{"type":"TXT","name":"updated.testfull","data":"\"challengetoken\"","priority":0,"RECORDID":2051718,"ttl":300},{"type":"TXT","name":"_acme-challenge.full","data":"\"challengetoken\"","priority":0,"RECORDID":2051668,"ttl":300}]'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-length: ['1068']
+      content-type: [application/json]
+      date: ['Sat, 30 Jul 2016 21:23:19 GMT']
+      expires: ['Sat, 30 Jul 2016 21:23:18 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+    status: {code: 200, message: OK}
+version: 1

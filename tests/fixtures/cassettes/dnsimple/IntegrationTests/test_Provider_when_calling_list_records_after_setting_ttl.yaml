@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"domain":{"id":6259,"user_id":null,"registrant_id":603,"account_id":241,"name":"capsulecd.com","unicode_name":"capsulecd.com","token":"yyMtxjkT67RPyEvy6t9UT6CgIYOSzj8u","state":"registered","lockable":true,"auto_renew":false,"whois_protected":false,"record_count":17,"service_count":0,"expires_on":"2017-03-16","created_at":"2016-03-16T06:14:11.347Z","updated_at":"2016-07-28T13:25:33.167Z"}}'}
+    headers:
+      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
+      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['393']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 30 Jul 2016 21:17:55 GMT']
+      etag: [W/"2b7e5f861f5a9611caaf3f8314223e03"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-request-id: [92809576-2150-43bf-90e9-5d28c3fc09c5]
+      x-runtime: ['0.086946']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"record": {"content": "ttlshouldbe3600", "record_type": "TXT", "name":
+      "ttl.fqdn", "ttl": 3600}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['97']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records
+  response:
+    body: {string: !!python/unicode '{"record":{"id":231859,"domain_id":6259,"parent_id":null,"name":"ttl.fqdn","content":"ttlshouldbe3600","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-07-30T21:18:39.228Z","updated_at":"2016-07-30T21:18:39.228Z"}}'}
+    headers:
+      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
+      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 30 Jul 2016 21:18:39 GMT']
+      etag: [W/"ec91b5f66cdc15a087c7e4f4e31e50a9"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-request-id: [8e41d750-74ba-4704-84d2-7b8ac545e098]
+      x-runtime: ['0.320641']
+      x-xss-protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=ttl.fqdn
+  response:
+    body: {string: !!python/unicode '[{"record":{"id":231859,"domain_id":6259,"parent_id":null,"name":"ttl.fqdn","content":"ttlshouldbe3600","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-07-30T21:18:39.228Z","updated_at":"2016-07-30T21:18:39.228Z"}}]'}
+    headers:
+      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
+      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['251']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 30 Jul 2016 21:18:39 GMT']
+      etag: [W/"46b59f4c682d9bd80f0ce66bf36ca229"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-request-id: [b3b9c81d-a2b3-4757-90c5-fe2c25244f07]
+      x-runtime: ['0.038856']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

@@ -38,8 +38,8 @@ class Provider(BaseProvider):
             'type': type,
             'line_id': 1,
         }
-        if self.options['ttl']:
-            record['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            record['ttl'] = self.options.get('ttl')
 
         payload = self._post('/record', record)
 
@@ -94,8 +94,8 @@ class Provider(BaseProvider):
             'value': content,
             'type': type
         }
-        if self.options['ttl']:
-            data['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            data['ttl'] = self.options.get('ttl')
 
         payload = self._put('/record/' + identifier, data)
 

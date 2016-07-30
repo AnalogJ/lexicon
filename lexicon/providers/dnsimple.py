@@ -34,8 +34,8 @@ class Provider(BaseProvider):
                         'content': content
                     }
                 }
-        if self.options['ttl']:
-            record['record']['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            record['record']['ttl'] = self.options.get('ttl')
         payload = {}
         try:
             payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
@@ -81,8 +81,8 @@ class Provider(BaseProvider):
             data['record']['name'] = self._relative_name(name)
         if content:
             data['record']['content'] = content
-        if self.options['ttl']:
-            data['record']['ttl'] = self.options['ttl']
+        if self.options.get('ttl'):
+            data['record']['ttl'] = self.options.get('ttl')
 
         payload = self._put('/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
