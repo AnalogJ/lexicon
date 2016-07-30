@@ -1,0 +1,51 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.luadns.com/v1/zones
+  response:
+    body: {string: !!python/unicode '[{"id":39105,"name":"capsulecd.com","template_id":0,"synced":true,"queries_count":0,"records_count":7,"aliases_count":0,"redirects_count":0,"forwards_count":0}]'}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['160']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 19:15:01 GMT']
+      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"content": "challengetoken", "type": "TXT", "name": "_acme-challenge.fqdn.capsulecd.com.",
+      "ttl": 300}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['103']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '{"id":23373157,"name":"_acme-challenge.fqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:02.185879546Z","updated_at":"2016-07-30T19:15:02.185880301Z"}'}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['236']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 19:15:02 GMT']
+      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+version: 1
