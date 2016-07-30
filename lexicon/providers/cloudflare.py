@@ -1,4 +1,6 @@
-from base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 import requests
 import json
 
@@ -21,9 +23,9 @@ class Provider(BaseProvider):
         })
 
         if not payload['result']:
-            raise StandardError('No domain found')
+            raise Exception('No domain found')
         if len(payload['result']) > 1:
-            raise StandardError('Too many domains found. This should not happen')
+            raise Exception('Too many domains found. This should not happen')
 
         self.domain_id = payload['result'][0]['id']
 
@@ -32,7 +34,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), {'type': type, 'name': self._full_name(name), 'content': content})
 
-        print 'create_record: {0}'.format(payload['success'])
+        print('create_record: {0}'.format(payload['success']))
         return payload['success']
 
     # List all records. Return an empty list if no records found
@@ -60,7 +62,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Create or update a record.
@@ -76,7 +78,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
-        print 'update_record: {0}'.format(payload['success'])
+        print('update_record: {0}'.format(payload['success']))
         return payload['success']
 
     # Delete an existing record.
@@ -84,14 +86,14 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print records
+            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
         payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier))
 
-        print 'delete_record: {0}'.format(payload['success'])
+        print('delete_record: {0}'.format(payload['success']))
         return payload['success']
 
 
