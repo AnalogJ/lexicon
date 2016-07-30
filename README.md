@@ -37,23 +37,32 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
+- AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
+- DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))
 - EntryDNS ([docs](https://entrydns.net/help))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- GoDaddy DNS ([docs](https://developer.godaddy.com/getstarted#access))
+- Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))
 - Linode ([docs](https://www.linode.com/api/dns))
+- Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))
+- LuaDNS ([docs](http://www.luadns.com/api.html))
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
+- NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))
 - OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
+- SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))
+- WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
@@ -166,7 +175,7 @@ There is an included example Dockerfile that can be used to automatically genera
 - [x] Create and Register a lexicon pip package. 
 - [ ] Write documentation on supported environmental variables. 
 - [x] Wire up automated release packaging on PRs.
-- [x] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/))
+- [x] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/), [libcloud](https://libcloud.readthedocs.io/en/latest/dns/supported_providers.html))
 - [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
 ## Contributing Changes.
