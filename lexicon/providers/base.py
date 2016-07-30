@@ -43,6 +43,13 @@ class Provider(object):
     def _delete(self, url='/', query_params=None):
         return self._request('DELETE', url, query_params=query_params)
 
+    def _fqdn_name(self, record_name):
+        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
+        #check if the record_name is fully specified
+        if not record_name.endswith(self.options['domain']):
+            record_name = "{0}.{1}".format(record_name, self.options['domain'])
+        return "{0}.".format(record_name) #return the fqdn name
+
     def _full_name(self, record_name):
         record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
         #check if the record_name is fully specified

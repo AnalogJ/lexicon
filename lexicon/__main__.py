@@ -27,6 +27,7 @@ def MainParser():
     providers = list(set(providers))
     providers.remove('base')
     providers.remove('__init__')
+    providers = [x for x in providers if not x.startswith('.')]
 
     providers = sorted(providers)
 

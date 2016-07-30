@@ -1,0 +1,78 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.luadns.com/v1/zones
+  response:
+    body: {string: !!python/unicode '[{"id":39105,"name":"capsulecd.com","template_id":0,"synced":true,"queries_count":0,"records_count":10,"aliases_count":0,"redirects_count":0,"forwards_count":0}]'}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['161']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 19:15:15 GMT']
+      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"content": "challengetoken", "type": "TXT", "name": "random.fqdntest.capsulecd.com.",
+      "ttl": 300}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['98']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '{"id":23373163,"name":"random.fqdntest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:15.831438332Z","updated_at":"2016-07-30T19:15:15.831439424Z"}'}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['231']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 19:15:15 GMT']
+      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '[{"id":23373163,"name":"random.fqdntest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:15.831438Z","updated_at":"2016-07-30T19:15:15.831439Z"},{"id":23373159,"name":"_acme-challenge.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:04.022172Z","updated_at":"2016-07-30T19:15:04.022173Z"},{"id":23373158,"name":"_acme-challenge.full.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:03.146476Z","updated_at":"2016-07-30T19:15:03.146476Z"},{"id":23373157,"name":"_acme-challenge.fqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:02.18588Z","updated_at":"2016-07-30T19:15:02.18588Z"},{"id":23373156,"name":"localhost.capsulecd.com.","type":"A","content":"127.0.0.1","ttl":300,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:15:01.232355Z","updated_at":"2016-07-30T19:15:01.232355Z"},{"id":23373137,"name":"capsulecd.com.","type":"NS","content":"ns5.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463466Z","updated_at":"2016-07-30T19:13:48.463467Z"},{"id":23373136,"name":"capsulecd.com.","type":"NS","content":"ns4.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463465Z","updated_at":"2016-07-30T19:13:48.463465Z"},{"id":23373135,"name":"capsulecd.com.","type":"NS","content":"ns3.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463463Z","updated_at":"2016-07-30T19:13:48.463464Z"},{"id":23373134,"name":"capsulecd.com.","type":"NS","content":"ns2.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463462Z","updated_at":"2016-07-30T19:13:48.463462Z"},{"id":23373133,"name":"capsulecd.com.","type":"NS","content":"ns1.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.46346Z","updated_at":"2016-07-30T19:13:48.46346Z"},{"id":23373132,"name":"capsulecd.com.","type":"SOA","content":"ns1.luadns.net.
+        hostmaster.luadns.com. 1469906116 1200 120 604800 3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463456Z","updated_at":"2016-07-30T19:13:48.463456Z"}]'}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['2456']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sat, 30 Jul 2016 19:15:16 GMT']
+      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
