@@ -30,7 +30,10 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), {'type': type, 'name': self._full_name(name), 'content': content})
+        data = {'type': type, 'name': self._full_name(name), 'content': content}
+        if self.options['ttl']:
+            data['ttl'] = self.options['ttl']
+        payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
 
         print 'create_record: {0}'.format(payload['success'])
         return payload['success']
@@ -73,6 +76,8 @@ class Provider(BaseProvider):
             data['name'] = self._full_name(name)
         if content:
             data['content'] = content
+        if self.options['ttl']:
+            data['ttl'] = self.options['ttl']
 
         payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 

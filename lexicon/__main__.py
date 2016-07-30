@@ -16,7 +16,7 @@ def BaseProviderParser():
 
     parser.add_argument("--name", help="specify the record name")
     parser.add_argument("--content", help="specify the record content")
-    parser.add_argument("--ttl", help="specify the record time-to-live")
+    parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
     parser.add_argument("--priority", help="specify the record priority")
     parser.add_argument("--identifier", help="specify the record for update or delete actions")
     return parser

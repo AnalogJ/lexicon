@@ -33,6 +33,8 @@ class Provider(BaseProvider):
             'record_line': '默认',
             'value': content
         }
+        if self.options['ttl']:
+            record['ttl'] = self.options['ttl']
 
         payload = self._post('/Record.Create', record)
 
@@ -83,6 +85,8 @@ class Provider(BaseProvider):
             'record_line': '默认',
             'value': content
         }
+        if self.options['ttl']:
+            data['ttl'] = self.options['ttl']
         print data
         payload = self._post('/Record.Modify', data)
         print payload

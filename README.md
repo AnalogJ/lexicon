@@ -41,9 +41,9 @@ Potential providers are as follows. If you would like to contribute one, please 
 - AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
-- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
-- ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
-- DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))
+- ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~ 
+- ~~ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))~~ Requires paid account
+- ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ Can't set TXT records
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))
 - EntryDNS ([docs](https://entrydns.net/help))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))

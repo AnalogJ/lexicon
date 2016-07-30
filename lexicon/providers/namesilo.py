@@ -27,6 +27,8 @@ class Provider(BaseProvider):
             'rrtype': type,
             'rrvalue': content
         }
+        if self.options['ttl']:
+            record['rrttl'] = self.options['ttl']
         payload = self._get('/dnsAddRecord', record)
         print 'create_record: {0}'.format(True)
         return True
@@ -72,6 +74,8 @@ class Provider(BaseProvider):
             data['rrhost'] = self._relative_name(name)
         if content:
             data['rdata'] = content
+        if self.options['ttl']:
+            data['rrttl'] = self.options['ttl']
 
         payload = self._get('/dnsUpdateRecord', data)
 
