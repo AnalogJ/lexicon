@@ -2,6 +2,7 @@ class Provider(object):
     def __init__(self, options):
         self.provider_name = 'example',
         self.options = options
+        self.default_ttl = 3600
 
     # Authenicate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
@@ -70,3 +71,4 @@ class Provider(object):
             # some providers have quotes around the TXT records, so we're going to remove those extra quotes
             record['content'] = record['content'][1:-1]
         return record
+

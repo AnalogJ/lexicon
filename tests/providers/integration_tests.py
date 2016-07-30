@@ -160,6 +160,20 @@ class IntegrationTests():
             assert records[0]['type'] == 'TXT'
             assert records[0]['name'] == 'random.fqdntest.{0}'.format(self.domain)
 
+    def test_Provider_when_calling_list_records_after_setting_ttl(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_after_setting_ttl.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider({
+                'domain': self.domain,
+                'auth_username': self._auth_username(),
+                'auth_token': self._auth_token(),
+                'ttl': 3600
+            }, self.provider_opts)
+            provider.authenticate()
+            assert provider.create_record('TXT',"ttl.fqdn.{0}.".format(self.domain),'ttlshouldbe3600')
+            records = provider.list_records('TXT','ttl.fqdn.{0}'.format(self.domain))
+            assert len(records) == 1
+            assert str(records[0]['ttl']) == str(3600)
+
     @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
     def test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):

@@ -14,3 +14,8 @@ class DnsParkProviderTests(TestCase, IntegrationTests):
     domain = 'capsulecd.com'
     def _filter_post_data_parameters(self):
         return ['login_token']
+
+    # TODO:
+    @pytest.mark.skip(reason="domain no longer exists")
+    def test_Provider_when_calling_list_records_after_setting_ttl(self):
+        return

@@ -34,6 +34,8 @@ class Provider(BaseProvider):
             record['data'] = "\"{0}\"".format(content)
         else:
             record['data'] = content
+        if self.options.get('ttl'):
+            record['ttl'] = self.options.get('ttl')
         payload = self._post('/dns/create_record', record)
 
         print 'create_record: {0}'.format(True)
@@ -51,7 +53,7 @@ class Provider(BaseProvider):
             processed_record = {
                 'type': record['type'],
                 'name': "{0}.{1}".format(record['name'], self.domain_id),
-                'ttl': record.get('ttl', 300),
+                'ttl': record.get('ttl', self.options.get('ttl',self.default_ttl)),
                 'content': record['data'],
                 'id': record['RECORDID']
             }
@@ -74,7 +76,7 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id,
             'RECORDID': identifier,
-            'ttl': 300
+            'ttl': self.options.get('ttl',self.default_ttl)
         }
         # if type:
         #     data['type'] = type

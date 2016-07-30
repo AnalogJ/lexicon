@@ -34,7 +34,7 @@ class Provider(BaseProvider):
             'type': type,
             'name': self._relative_name(name),
             'value': content,
-            'ttl': 86400
+            'ttl': self.options.get('ttl',self.default_ttl)
         }
         payload = {}
         try:
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
 
         data = {
             'id': identifier,
-            'ttl': 86400
+            'ttl': self.options.get('ttl',self.default_ttl)
         }
 
         if name:

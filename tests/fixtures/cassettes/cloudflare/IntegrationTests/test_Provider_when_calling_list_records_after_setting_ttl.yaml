@@ -1,0 +1,92 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-07-30T20:59:34.628808Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","legacy_id":"free","legacy_discount":false,"is_subscribed":null,"can_subscribe":null,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [2cabd520f7ad2840-SJC]
+      connection: [keep-alive]
+      content-length: ['1365']
+      content-type: [application/json]
+      date: ['Sat, 30 Jul 2016 21:16:35 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dd9d24e707e22b025cd9a50565acc2e7b1469913395; expires=Sun,
+          30-Jul-17 21:16:35 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"content": "ttlshouldbe3600", "type": "TXT", "name": "ttl.fqdn.capsulecd.com",
+      "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['92']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: POST
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"d8228669d592e95dae643af3f02b3121","type":"TXT","name":"ttl.fqdn.capsulecd.com","content":"ttlshouldbe3600","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-07-30T21:16:37.708905Z","created_on":"2016-07-30T21:16:37.708905Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [2cabd52f886e2840-SJC]
+      connection: [keep-alive]
+      content-length: ['414']
+      content-type: [application/json]
+      date: ['Sat, 30 Jul 2016 21:16:37 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dc4936330fb57b49d96db3db72b9c73471469913397; expires=Sun,
+          30-Jul-17 21:16:37 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?per_page=100&type=TXT&name=ttl.fqdn.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"d8228669d592e95dae643af3f02b3121","type":"TXT","name":"ttl.fqdn.capsulecd.com","content":"ttlshouldbe3600","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-07-30T21:16:37.708905Z","created_on":"2016-07-30T21:16:37.708905Z","meta":{"auto_added":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [2cabd53e19080669-SJC]
+      connection: [keep-alive]
+      content-length: ['498']
+      content-type: [application/json]
+      date: ['Sat, 30 Jul 2016 21:16:40 GMT']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dc94c57a150fef3b606be0709cb6fed481469913400; expires=Sun,
+          30-Jul-17 21:16:40 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
