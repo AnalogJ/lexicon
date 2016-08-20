@@ -1,3 +1,2 @@
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-@reboot /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1 
-@monthly /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1
+@reboot . /etc/profile; /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1 
+@monthly . /etc/profile; /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1
