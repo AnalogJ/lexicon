@@ -72,8 +72,26 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+    def update_record(self, identifier=None, type=None, name=None, content=None):
+        all_records = self.list_records(show_output=False)
+        filtered_records = self._filter_records(all_records, type, name)
+
+        for record in filtered_records:
+            all_records.remove(record)
+        for record in all_records:
+            record['expire'] = record['ttl']
+            del record['ttl']
+        all_records.append({
+            "name": self._relative_name(name),
+            "type": type,
+            "content": content,
+            "expire": self.options.get('ttl') or 86400
+        })
+
+        self.client.setDnsEntries(self.options.get('domain'), all_records)
+        status = len(self.list_records(type, name, content, show_output=False)) >= 1
+        print "update_record: {0}".format(status)
+        return status
 
     # Delete an existing record.
     # If record does not exist, do nothing.
