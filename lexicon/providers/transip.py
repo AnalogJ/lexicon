@@ -37,12 +37,28 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        raise NotImplementedError("Providers should implement this!")
+        records = self.client.getInfo(self.options.get('domain')).dnsEntries
+        if self._filter_records(records, type, name, content):
+            # Nothing to do, record already exists
+            print 'create_record: already exists'
+            return True
+
+        records.append({
+            "name": self._relative_name(name),
+            "type": type,
+            "content": content,
+            "expire": self.options.get('ttl') or 86400
+        })
+
+        self.client.setDnsEntries(self.options.get('domain'), records)
+        status = len(self.list_records(type, name, content, show_output=False)) >= 1
+        print "create_record: {0}".format(status)
+        return status
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, type=None, name=None, content=None, show_output=True):
         records = self._filter_records(
             records=self.client.getInfo(self.options.get('domain')).dnsEntries,
             type=type,
@@ -50,7 +66,8 @@ class Provider(BaseProvider):
             content=content
         )
 
-        print 'list_records: {0}'.format(records)
+        if show_output:
+            print 'list_records: {0}'.format(records)
         return records
 
     # Update a record. Identifier must be specified.
