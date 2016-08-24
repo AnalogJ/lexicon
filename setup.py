@@ -111,5 +111,9 @@ setup(
             'lexicon=lexicon.__main__:main',
         ],
     },
+
+    extras_require={
+        'transip': ['transip']
+    },
     test_suite='tests'
 )
