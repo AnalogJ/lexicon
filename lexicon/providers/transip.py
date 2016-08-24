@@ -23,7 +23,7 @@ class Provider(BaseProvider):
         self.client = DomainClient(
             username=username,
             key_file=key_file,
-            mode="readonly",
+            mode="readwrite",
             cacert=self.options.get('auth_ca_bundle', False)
         )
 
