@@ -4,7 +4,7 @@ class Provider(object):
         self.options = options
         self.default_ttl = 3600
 
-    # Authenicate against provider,
+    # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
@@ -71,4 +71,3 @@ class Provider(object):
             # some providers have quotes around the TXT records, so we're going to remove those extra quotes
             record['content'] = record['content'][1:-1]
         return record
-
