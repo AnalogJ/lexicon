@@ -79,7 +79,19 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        all_records = self.list_records(show_output=False)
+        filtered_records = self._filter_records(all_records, type, name, content)
+
+        for record in filtered_records:
+            all_records.remove(record)
+        for record in all_records:
+            record['expire'] = record['ttl']
+            del record['ttl']
+
+        self.client.setDnsEntries(self.options.get('domain'), all_records)
+        status = len(self.list_records(type, name, content, show_output=False)) == 0
+        print "delete_record: {0}".format(status)
+        return status
 
     def _relative_name(self, record_name):
         name = super(Provider, self)._relative_name(record_name)
