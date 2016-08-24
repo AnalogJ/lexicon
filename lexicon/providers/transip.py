@@ -63,6 +63,12 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
 
+    def _relative_name(self, record_name):
+        name = super(Provider, self)._relative_name(record_name)
+        if not name:
+            name = "@"
+        return name
+
     def _filter_records(self, records, type=None, name=None, content=None):
         _records = []
         for record in records:
