@@ -73,6 +73,9 @@ class Provider(BaseProvider):
 
     # Update a record. Identifier must be specified.
     def update_record(self, identifier=None, type=None, name=None, content=None):
+        if not (type or name or content):
+            raise StandardError("At least one of type, name or content must be specified.")
+
         all_records = self.list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name)
 
@@ -97,6 +100,9 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        if not (type or name or content):
+            raise StandardError("At least one of type, name or content must be specified.")
+
         all_records = self.list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name, content)
 
