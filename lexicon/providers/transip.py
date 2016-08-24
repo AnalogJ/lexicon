@@ -59,8 +59,9 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None, show_output=True):
+        all_records = self._convert_records(self.client.getInfo(self.options.get('domain')).dnsEntries)
         records = self._filter_records(
-            records=self.client.getInfo(self.options.get('domain')).dnsEntries,
+            records=all_records,
             type=type,
             name=name,
             content=content
@@ -86,16 +87,24 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
+    # Convert the objects from transip to dicts, for easier processing
+    def _convert_records(self, records):
+        _records = []
+        for record in records:
+            _records.append({
+                "name": record.name,
+                "type": record.type,
+                "content": record.content,
+                "ttl": record.expire
+            })
+        return _records
+
+    # Filter a list of records based on criteria
     def _filter_records(self, records, type=None, name=None, content=None):
         _records = []
         for record in records:
-            if (not type or record.type == type) and \
-               (not name or record.name == self._relative_name(name)) and \
-               (not content or record.content == content):
-                _records.append({
-                    "name": record.name,
-                    "type": record.type,
-                    "content": record.content,
-                    "ttl": record.expire
-                })
+            if (not type or record['type'] == type) and \
+               (not name or record['name'] == self._relative_name(name)) and \
+               (not content or record['content'] == content):
+                _records.append(record)
         return _records
