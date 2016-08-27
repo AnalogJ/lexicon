@@ -3,13 +3,13 @@ MAINTAINER Jason Kulatunga <jason@thesparktree.com>
 
 # Setup dependencies
 RUN apt-get update && \
-	apt-get -y install cron rsyslog && \
+	apt-get -y install cron rsyslog git --no-install-recommends && \
+	rm -rf /var/lib/apt/lists/* && \
 	sed -i 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/' /etc/pam.d/cron
 
 # Install letsencrypt.sh & dns-lexicon
 RUN git clone --depth 1 https://github.com/lukas2511/letsencrypt.sh.git /srv/letsencrypt && \
 	pip install requests[security] dns-lexicon
-
 
 # Copy over letsencrypt and & cron files
 COPY ./examples/letsencrypt.default.sh /srv/letsencrypt/letsencrypt.default.sh
