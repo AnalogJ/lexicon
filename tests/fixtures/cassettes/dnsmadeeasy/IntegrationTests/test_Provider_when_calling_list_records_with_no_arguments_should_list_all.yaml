@@ -8,19 +8,19 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Wed, 30 Mar 2016 01:59:21 GMT']
+      x-dnsme-requestDate: ['Sat, 27 Aug 2016 19:30:30 GMT']
     method: GET
     uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"nameServers":[{"fqdn":"ns0.dnsmadeeasy.com","ipv4":"208.94.148.2","ipv6":"2600:1800:0::1"},{"fqdn":"ns1.dnsmadeeasy.com","ipv4":"208.80.124.2","ipv6":"2600:1801:1::1"},{"fqdn":"ns2.dnsmadeeasy.com","ipv4":"208.80.126.2","ipv6":"2600:1802:2::1"},{"fqdn":"ns3.dnsmadeeasy.com","ipv4":"208.80.125.2","ipv6":"2600:1801:3::1"},{"fqdn":"ns4.dnsmadeeasy.com","ipv4":"208.80.127.2","ipv6":"2600:1802:4::1"}],"pendingActionId":0,"updated":1459303138386,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false}'}
+    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false,"nameServers":[{"ipv4":"208.94.147.112","ipv6":"2600:1800:0::1","fqdn":"ns1.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.113","ipv6":"2600:1801:1::1","fqdn":"ns2.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.114","ipv6":"2600:1802:2::1","fqdn":"ns3.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.116","ipv6":"2600:1801:3::1","fqdn":"ns4.sandbox.dnsmadeeasy.com"}],"pendingActionId":0,"updated":1472326176934}'}
     headers:
       content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:59:22 GMT']
+      date: ['Sat, 27 Aug 2016 19:30:31 GMT']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=BB01A71C13D4C90D855BA74B01E5A867; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [1b4889a7-4862-40b8-9b27-d5de8bbc8489]
+      set-cookie: [JSESSIONID=6DE027ECB9AC13E88153A20448A7953D; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [e3de1aa5-185d-4db0-aa0b-4775aa5be7b5]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['108']
+      x-dnsme-requestsremaining: ['47']
     status: {code: 200, message: OK}
 - request:
     body: '{}'
@@ -31,18 +31,18 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Wed, 30 Mar 2016 01:59:21 GMT']
+      x-dnsme-requestDate: ['Sat, 27 Aug 2016 19:30:30 GMT']
     method: GET
     uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records
   response:
-    body: {string: !!python/unicode '{"data":[{"name":"_acme-challenge.fqdn","value":"\"challengetoken\"","id":10098822,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"_acme-challenge.full","value":"\"challengetoken\"","id":10098823,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"_acme-challenge.test","value":"\"challengetoken\"","id":10098824,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"docs","value":"docs.example.com","id":10098821,"type":"CNAME","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"localhost","value":"127.0.0.1","id":10098820,"type":"A","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"random.fqdntest","value":"\"challengetoken\"","id":10098829,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"random.fulltest","value":"\"challengetoken\"","id":10098830,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"random.test","value":"\"challengetoken\"","id":10098831,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984},{"name":"updated.test","value":"\"challengetoken\"","id":10098508,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":86400,"failover":false,"monitor":false,"sourceId":874984}],"page":0,"totalRecords":9,"totalPages":1}'}
+    body: {string: !!python/unicode '{"data":[{"name":"_acme-challenge.fqdn","value":"\"challengetoken\"","id":10124246,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"_acme-challenge.full","value":"\"challengetoken\"","id":10124247,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"_acme-challenge.test","value":"\"challengetoken\"","id":10124248,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"docs","value":"docs.example.com","id":10124245,"type":"CNAME","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"localhost","value":"127.0.0.1","id":10124244,"type":"A","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"random.fqdntest","value":"\"challengetoken\"","id":10124254,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"random.fulltest","value":"\"challengetoken\"","id":10124255,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"random.test","value":"\"challengetoken\"","id":10124256,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false},{"name":"ttl.fqdn","value":"\"ttlshouldbe3600\"","id":10124253,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false}],"page":0,"totalPages":1,"totalRecords":9}'}
     headers:
       content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:59:22 GMT']
+      date: ['Sat, 27 Aug 2016 19:30:31 GMT']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=D8D6049A8986D6140518ABE406BDF3E5; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [039cb598-e894-48d3-ac87-dd0f38a5d363]
+      set-cookie: [JSESSIONID=6D96BF1705BB0A0A3F4DEB5782425264; Path=/V2.0/; HttpOnly]
+      x-dnsme-requestid: [d0bddde5-69e5-4903-a4aa-20e0c510a0e2]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['107']
+      x-dnsme-requestsremaining: ['46']
     status: {code: 200, message: OK}
 version: 1
