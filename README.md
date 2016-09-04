@@ -42,30 +42,30 @@ Potential providers are as follows. If you would like to contribute one, please 
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~ 
-- ~~ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))~~ Unable to test, requires paid account
-- ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ Can't set TXT records
-- ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ Unable to test, requires paid account
-- ~~EntryDNS ([docs](https://entrydns.net/help))~~ Unable to test, requires paid account
+- ~~ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))~~ <sub>Unable to test, requires paid account</sub>
+- ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
+- ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
+- ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - GoDaddy DNS ([docs](https://developer.godaddy.com/getstarted#access))
-- ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ Unable to test, requires paid account
-- ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ Unable to test, requires paid account
-- ~~Linode ([docs](https://www.linode.com/api/dns))~~ Unable to test, requires paid account
-- ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ Unable to test, requires paid account
+- ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
+- ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ <sub>Unable to test, requires paid account</sub>
+- ~~Linode ([docs](https://www.linode.com/api/dns))~~ <sub>Unable to test, requires paid account</sub>
+- ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
-- ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ Unable to test, requires paid account
-- ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ Unable to test, requires paid account
+- ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
+- ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ <sub>Unable to test, requires paid account</sub>
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
-- ~~Transip ([docs](https://www.transip.nl/transip/api/))~~ Unable to test, requires paid account
-- ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ Unable to test, requires paid account
-- ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ Unable to test, requires paid account
+- ~~Transip ([docs](https://www.transip.nl/transip/api/))~~ <sub>Unable to test, requires paid account</sub>
+- ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
+- ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
-- ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ Unable to test, requires paid account
-- ~~Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))~~ Unable to test, requires paid account
+- ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
+- ~~Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))~~ <sub>Unable to test, requires paid account</sub>
 
 ## Setup
 To use lexicon as a CLI application, do the following:
