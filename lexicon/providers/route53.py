@@ -65,7 +65,16 @@ class Provider(BaseProvider):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(options)
         self.domain_id = None
-        self.r53_client = boto3.client('route53')
+        try:
+            self.r53_client = boto3.client('route53')
+        except botocore.exceptions.NoCredentialsError:
+            # instantiate the client anyway for tests
+            print 'no credentials found - using dummy credentials for tests'
+            self.r53_client = boto3.client(
+                'route53',
+                aws_access_key_id='DUMMY',
+                aws_secret_access_key='DUMMY'
+            )
 
     def authenticate(self):
         """Determine the hosted zone id for the domain."""
