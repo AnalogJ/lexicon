@@ -34,7 +34,11 @@ def MainParser():
     providers = sorted(providers)
 
     parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
-    parser.add_argument('--version', help="show the current version of lexicon", action='version', version='%(prog)s {0}'.format(pkg_resources.get_distribution("dns-lexicon").version))
+    try:
+        version = pkg_resources.get_distribution("dns-lexicon").version
+    except pkg_resources.DistributionNotFound:
+        version = 'unknown'
+    parser.add_argument('--version', help="show the current version of lexicon", action='version', version='%(prog)s {0}'.format(version))
     parser.add_argument('--delegated', help="specify the delegated domain")
     subparsers = parser.add_subparsers(dest='provider_name', help='specify the DNS provider to use')
     subparsers.required = True
