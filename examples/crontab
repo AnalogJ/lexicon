@@ -1,2 +1,2 @@
-@reboot root env - `cat /etc/environment` /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1
-@monthly root env - `cat /etc/environment` /srv/letsencrypt/letsencrypt.sh --cron --hook /srv/letsencrypt/letsencrypt.default.sh --challenge dns-01 >> /var/log/cron 2>&1
+@reboot root env - `cat /etc/environment` /srv/dehydrated/dehydrated --cron --hook /srv/dehydrated/dehydrated.default.sh --challenge dns-01 >> /var/log/cron 2>&1
+@monthly root env - `cat /etc/environment` /srv/dehydrated/dehydrated --cron --hook /srv/dehydrated/dehydrated.default.sh --challenge dns-01 >> /var/log/cron 2>&1

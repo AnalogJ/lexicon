@@ -161,10 +161,10 @@ So instead of specifying `--auth-username` and `--auth-token` flags when calling
 you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_TOKEN` environmental variables.
 
 ### Letsencrypt Instructions
-Lexicon has an example [letsencrypt.sh hook file](examples/letsencrypt.default.sh) that you can use for any supported provider. 
+Lexicon has an example [dehydrated hook file](examples/dehydrated.default.sh) that you can use for any supported provider.
 All you need to do is set the PROVIDER env variable. 
 
-	PROVIDER=cloudflare letsencrypt.sh --cron --hook letsencrypt.default.sh --challenge dns-01
+	PROVIDER=cloudflare dehydrated --cron --hook dehydrated.default.sh --challenge dns-01
 	
 
 ## TroubleShooting & Useful Tools
