@@ -7,20 +7,20 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/* && \
 	sed -i 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/' /etc/pam.d/cron
 
-# Install letsencrypt.sh & dns-lexicon
-RUN git clone --depth 1 https://github.com/lukas2511/letsencrypt.sh.git /srv/letsencrypt && \
+# Install dehydrated (letsencrypt client) & dns-lexicon
+RUN git clone --depth 1 https://github.com/lukas2511/dehydrated.git /srv/dehydrated && \
 	pip install requests[security] dns-lexicon
 
-# Copy over letsencrypt and & cron files
-COPY ./examples/letsencrypt.default.sh /srv/letsencrypt/letsencrypt.default.sh
+# Copy over dehydrated and & cron files
+COPY ./examples/dehydrated.default.sh /srv/dehydrated/dehydrated.default.sh
 COPY ./examples/crontab /etc/crontab
-COPY ./examples/cron.sh /srv/letsencrypt/cron.sh
+COPY ./examples/cron.sh /srv/dehydrated/cron.sh
 
-# Configure Letsencrypt and Cron
+# Configure dehydrated and Cron
 # FIXME: This should be replaced with *your* domain name using a volume mount
-RUN echo "test.intranet.example.com" > /srv/letsencrypt/domains.txt && \
-	chmod +x /srv/letsencrypt/cron.sh && \
+RUN echo "test.intranet.example.com" > /srv/dehydrated/domains.txt && \
+	chmod +x /srv/dehydrated/cron.sh && \
 	crontab /etc/crontab && \
 	touch /var/log/cron
 
-CMD [ "/srv/letsencrypt/cron.sh" ]
+CMD [ "/srv/dehydrated/cron.sh" ]

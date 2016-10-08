@@ -81,7 +81,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='dns lexicon dns-lexicon letsencrypt ' + ' '.join(providers),
+    keywords='dns lexicon dns-lexicon dehydrated letsencrypt ' + ' '.join(providers),
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
