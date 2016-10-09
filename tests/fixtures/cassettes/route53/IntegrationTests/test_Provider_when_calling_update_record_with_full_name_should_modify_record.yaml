@@ -2,85 +2,77 @@ interactions:
 - request:
     body: null
     headers:
-      Authorization: ['AWS4-HMAC-SHA256 Credential=AKIAJLWTLTJSBKSBCRTA/20161007/us-east-1/route53/aws4_request,
-          SignedHeaders=host;x-amz-date, Signature=c371cc1cbb498aae666071d478d26e5e5c7844c12eacf143b4adc4a27935b533']
-      User-Agent: [Boto3/1.4.0 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.59]
-      X-Amz-Date: [20161007T001104Z]
+      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
+      X-Amz-Date: [20161009T013247Z]
     method: !!python/unicode GET
     uri: https://route53.amazonaws.com/2013-04-01/hostedzonesbyname
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
-        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/Z26VK10YTMHFYG</Id><Name>capsulecd.com.</Name><CallerReference>D3154B90-A6B5-C702-9EC1-F2C63DCCF274</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>15</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'}
+        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/ZBEJSHF5L79VI</Id><Name>capsulecd.com.</Name><CallerReference>CD167CD7-84D9-E9B6-A9CA-368CF9590C4F</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>15</ResourceRecordSetCount></HostedZone><HostedZone><Id>/hostedzone/Z26VK10YTMHFYG</Id><Name>eadmundo.com.</Name><CallerReference>D3154B90-A6B5-C702-9EC1-F2C63DCCF274</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>17</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'}
     headers:
-      content-length: ['479']
+      content-length: ['736']
       content-type: [text/xml]
-      date: ['Fri, 07 Oct 2016 00:11:04 GMT']
-      x-amzn-requestid: [8983037d-8c22-11e6-9e93-d77675f8b77a]
+      date: ['Sun, 09 Oct 2016 01:32:48 GMT']
+      x-amzn-requestid: [497af165-8dc0-11e6-86bb-25110d14e1d9]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>CREATE
-      using lexicon Route 53 provider</Comment><Changes><Change><Action>CREATE</Action><ResourceRecordSet><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Type>TXT</Type><Name>orig.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
+      using lexicon Route 53 provider</Comment><Changes><Change><ResourceRecordSet><Type>TXT</Type><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Name>orig.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet><Action>CREATE</Action></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
     headers:
-      Authorization: ['AWS4-HMAC-SHA256 Credential=AKIAJLWTLTJSBKSBCRTA/20161007/us-east-1/route53/aws4_request,
-          SignedHeaders=host;x-amz-date, Signature=d2ef85588fae3c8a3865db9a17ad7cfaadda9dcd3753e06a3167770000a93114']
-      Content-Length: ['472']
-      User-Agent: [Boto3/1.4.0 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.59]
-      X-Amz-Date: [20161007T001104Z]
+      Content-Length: ['473']
+      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
+      X-Amz-Date: [20161009T013247Z]
     method: !!python/unicode POST
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z26VK10YTMHFYG/rrset/
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset/
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
-        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C396M3LZPGAN73</Id><Status>PENDING</Status><SubmittedAt>2016-10-07T00:11:04.647Z</SubmittedAt><Comment>CREATE
-        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'}
-    headers:
-      content-length: ['333']
-      content-type: [text/xml]
-      date: ['Fri, 07 Oct 2016 00:11:04 GMT']
-      x-amzn-requestid: [8991d092-8c22-11e6-9e93-d77675f8b77a]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Authorization: ['AWS4-HMAC-SHA256 Credential=AKIAJLWTLTJSBKSBCRTA/20161007/us-east-1/route53/aws4_request,
-          SignedHeaders=host;x-amz-date, Signature=9b850c1ee045c7aa351bf629291b6ec848441c4aee5835ad2cc8a65536b60592']
-      User-Agent: [Boto3/1.4.0 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.59]
-      X-Amz-Date: [20161007T001104Z]
-    method: !!python/unicode GET
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z26VK10YTMHFYG/rrset
-  response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
-
-        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>capsulecd.com.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-1637.awsdns-12.co.uk.</Value></ResourceRecord><ResourceRecord><Value>ns-648.awsdns-17.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1378.awsdns-44.org.</Value></ResourceRecord><ResourceRecord><Value>ns-198.awsdns-24.com.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>capsulecd.com.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-1637.awsdns-12.co.uk.
-        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.capsulecd.com.</Name><Type>CNAME</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>ttl.fqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;ttlshouldbe3600&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.fqdntest.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.fulltest.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.capsulecd.com.</Name><Type>A</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>updated.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.testfqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>updated.testfqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.testfull.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'}
-    headers:
-      content-length: ['3937']
-      content-type: [text/xml]
-      date: ['Fri, 07 Oct 2016 00:11:04 GMT']
-      vary: [Accept-Encoding]
-      x-amzn-requestid: [89a3d1fa-8c22-11e6-9e93-d77675f8b77a]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>UPSERT
-      using lexicon Route 53 provider</Comment><Changes><Change><Action>UPSERT</Action><ResourceRecordSet><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Type>TXT</Type><Name>updated.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
-    headers:
-      Authorization: ['AWS4-HMAC-SHA256 Credential=AKIAJLWTLTJSBKSBCRTA/20161007/us-east-1/route53/aws4_request,
-          SignedHeaders=host;x-amz-date, Signature=2a151fbd8a5fa417c260fd4cf4f2da4c74652468591100e757387047386c2baf']
-      Content-Length: ['475']
-      User-Agent: [Boto3/1.4.0 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.59]
-      X-Amz-Date: [20161007T001104Z]
-    method: !!python/unicode POST
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z26VK10YTMHFYG/rrset/
-  response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
-
-        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/CA7MN42GZGHBX</Id><Status>PENDING</Status><SubmittedAt>2016-10-07T00:11:04.884Z</SubmittedAt><Comment>UPSERT
+        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/CT324RA3S2BTA</Id><Status>PENDING</Status><SubmittedAt>2016-10-09T01:32:48.906Z</SubmittedAt><Comment>CREATE
         using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'}
     headers:
       content-length: ['332']
       content-type: [text/xml]
-      date: ['Fri, 07 Oct 2016 00:11:04 GMT']
-      x-amzn-requestid: [89b4c1fa-8c22-11e6-9e93-d77675f8b77a]
+      date: ['Sun, 09 Oct 2016 01:32:48 GMT']
+      x-amzn-requestid: [498f63d5-8dc0-11e6-86bb-25110d14e1d9]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
+      X-Amz-Date: [20161009T013248Z]
+    method: !!python/unicode GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>capsulecd.com.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-157.awsdns-19.com.</Value></ResourceRecord><ResourceRecord><Value>ns-581.awsdns-08.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1197.awsdns-21.org.</Value></ResourceRecord><ResourceRecord><Value>ns-1858.awsdns-40.co.uk.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>capsulecd.com.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-157.awsdns-19.com.
+        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.capsulecd.com.</Name><Type>CNAME</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>ttl.fqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;ttlshouldbe3600&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.fqdntest.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.fulltest.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.capsulecd.com.</Name><Type>A</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>random.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>updated.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.testfqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>updated.testfqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>orig.testfull.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'}
+    headers:
+      content-length: ['3950']
+      content-type: [text/xml]
+      date: ['Sun, 09 Oct 2016 01:32:48 GMT']
+      vary: [Accept-Encoding]
+      x-amzn-requestid: [49a62033-8dc0-11e6-86bb-25110d14e1d9]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>UPSERT
+      using lexicon Route 53 provider</Comment><Changes><Change><ResourceRecordSet><Type>TXT</Type><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Name>updated.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet><Action>UPSERT</Action></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
+    headers:
+      Content-Length: ['476']
+      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
+      X-Amz-Date: [20161009T013248Z]
+    method: !!python/unicode POST
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C1SXJPGKTS19GL</Id><Status>PENDING</Status><SubmittedAt>2016-10-09T01:32:49.191Z</SubmittedAt><Comment>UPSERT
+        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'}
+    headers:
+      content-length: ['333']
+      content-type: [text/xml]
+      date: ['Sun, 09 Oct 2016 01:32:49 GMT']
+      x-amzn-requestid: [49bb7cf9-8dc0-11e6-86bb-25110d14e1d9]
     status: {code: 200, message: OK}
 version: 1

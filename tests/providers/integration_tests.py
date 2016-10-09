@@ -49,9 +49,9 @@ class IntegrationTests():
             with pytest.raises(StandardError):
                 provider.authenticate()
 
-    # ###########################################################################
-    # # Provider.create_record()
-    # ###########################################################################
+    ###########################################################################
+    # Provider.create_record()
+    ###########################################################################
     def test_Provider_when_calling_create_record_for_A_with_valid_name_and_content(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_A_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
             provider = self.Provider({
@@ -102,9 +102,9 @@ class IntegrationTests():
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.fqdn.{0}.".format(self.domain),'challengetoken')
 
-    # ###########################################################################
-    # # Provider.list_records()
-    # ###########################################################################
+    ###########################################################################
+    # Provider.list_records()
+    ###########################################################################
     def test_Provider_when_calling_list_records_with_no_arguments_should_list_all(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_no_arguments_should_list_all.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
             provider = self.Provider({
@@ -196,9 +196,9 @@ class IntegrationTests():
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
-    # ###########################################################################
-    # # Provider.update_record()
-    # ###########################################################################
+    ###########################################################################
+    # Provider.update_record()
+    ###########################################################################
     def test_Provider_when_calling_update_record_should_modify_record(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
             provider = self.Provider({
@@ -209,7 +209,6 @@ class IntegrationTests():
             provider.authenticate()
             assert provider.create_record('TXT','orig.test','challengetoken')
             records = provider.list_records('TXT','orig.test')
-            print records[0]
             assert provider.update_record(records[0].get('id', None),'TXT','updated.test','challengetoken')
 
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
@@ -236,12 +235,10 @@ class IntegrationTests():
             records = provider.list_records('TXT','orig.testfqdn.{0}.'.format(self.domain))
             assert provider.update_record(records[0].get('id', None),'TXT','updated.testfqdn.{0}.'.format(self.domain),'challengetoken')
 
-    # ###########################################################################
-    # # Provider.delete_record()
-    # ###########################################################################
+    ###########################################################################
+    # Provider.delete_record()
+    ###########################################################################
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
-        if self.provider_name in ['route53']:
-            self.skipTest('{} dns records don\'t have ids'.format(self.provider_name))
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_identifier_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
             provider = self.Provider({
                 'domain': self.domain,
