@@ -20,6 +20,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
+- AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
@@ -34,14 +35,14 @@ The current supported providers are:
 - NS1 ([docs](https://ns1.com/api/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
+- Transip ([docs](https://www.transip.nl/transip/api/))
 - Vultr ([docs](https://www.vultr.com/api/))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
 - AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
-- AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
-- ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~ 
+- ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~
 - ~~ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
@@ -60,7 +61,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
-- ~~Transip ([docs](https://www.transip.nl/transip/api/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
 - ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
@@ -72,7 +72,7 @@ To use lexicon as a CLI application, do the following:
 	
 	pip install dns-lexicon
 
-If you need the AWS Route 53 provider, do the following:
+Some providers (like Route53 and TransIP) require additional depdencies. You can install provider specific dependencies seperately:
 
   pip install dns-lexicon[route53]
 
@@ -80,7 +80,7 @@ You can also install the latest version from the repository directly.
  
 	pip install git+https://github.com/AnalogJ/lexicon.git
 
-or with Route 53 support:
+and with Route 53 provider depedencies:
 
   pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
 			
