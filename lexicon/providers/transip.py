@@ -1,6 +1,10 @@
 from __future__ import absolute_import
 from .base import Provider as BaseProvider
-from transip.client import DomainClient
+try:
+    from transip.client import DomainClient #optional dep
+except ImportError:
+    pass
+
 
 
 def ProviderParser(subparser):

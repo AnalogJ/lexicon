@@ -1,7 +1,12 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from base import Provider as BaseProvider
-import boto3
-import botocore
+try:
+    import boto3 #optional dep
+    import botocore #optional dep
+except ImportError:
+    pass
+
+
 
 
 def ProviderParser(subparser):
