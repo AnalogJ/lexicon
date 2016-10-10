@@ -6,7 +6,13 @@ import botocore
 
 def ProviderParser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
-    pass
+    subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY used to authenticate")
+    subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET used authenticate")
+
+    #TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
+    # to dynamically populate the auth credentials that are required.
+    subparser.add_argument("--auth-username", help="alternative way to specify ACCESS_KEY used to authenticate")
+    subparser.add_argument("--auth-token", help="alternative way to specify ACCESS_SECRET used authenticate")
 
 
 class RecordSetPaginator(object):
@@ -65,16 +71,12 @@ class Provider(BaseProvider):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(options)
         self.domain_id = None
-        try:
-            self.r53_client = boto3.client('route53')
-        except botocore.exceptions.NoCredentialsError:
-            # instantiate the client anyway for tests
-            print 'no credentials found - using dummy credentials for tests'
-            self.r53_client = boto3.client(
-                'route53',
-                aws_access_key_id='DUMMY',
-                aws_secret_access_key='DUMMY'
-            )
+        # instantiate the client
+        self.r53_client = boto3.client(
+            'route53',
+            aws_access_key_id=self.options.get('auth_access_key', self.options.get('auth_username')),
+            aws_secret_access_key=self.options.get('auth_access_secret', self.options.get('auth_token'))
+        )
 
     def authenticate(self):
         """Determine the hosted zone id for the domain."""
