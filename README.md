@@ -72,9 +72,17 @@ To use lexicon as a CLI application, do the following:
 	
 	pip install dns-lexicon
 
+If you need the AWS Route 53 provider, do the following:
+
+  pip install dns-lexicon[route53]
+
 You can also install the latest version from the repository directly. 
  
 	pip install git+https://github.com/AnalogJ/lexicon.git
+
+or with Route 53 support:
+
+  pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
 			
 ## Usage
 
