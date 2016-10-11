@@ -39,7 +39,13 @@ class Provider(BaseProvider):
     def authenticate(self):
         ## This request will fail when the domain does not exist,
         ## allowing us to check for existence
-        self.client.getInfo(self.options.get('domain'))
+        domain = self.options.get('domain')
+        try:
+            self.client.getInfo(domain)
+        except:
+            raise StandardError("Could not retrieve information about {0}, "
+                                "is this domain yours?".format(domain))
+        self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
