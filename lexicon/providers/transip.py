@@ -14,10 +14,12 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options):
+    def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
+        self.options.update(provider_options)
         self.provider_name = 'transip'
         self.domain_id = None
+
         username = self.options.get('auth_username')
         key_file = self.options.get('auth_api_key')
 
