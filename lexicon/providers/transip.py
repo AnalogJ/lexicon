@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         records.append({
             "name": self._relative_name(name),
             "type": type,
-            "content": content,
+            "content": self._bind_format_target(type, content),
             "expire": self.options.get('ttl') or 86400
         })
 
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
         all_records.append({
             "name": self._relative_name(name),
             "type": type,
-            "content": content,
+            "content": self._bind_format_target(type, content),
             "expire": self.options.get('ttl') or 86400
         })
 
@@ -142,6 +142,11 @@ class Provider(BaseProvider):
         if not name:
             name = "@"
         return name
+
+    def _bind_format_target(self, type, target):
+        if type == "CNAME" and not target.endswith("."):
+            target += "."
+        return target
 
     # Convert the objects from transip to dicts, for easier processing
     def _convert_records(self, records):
