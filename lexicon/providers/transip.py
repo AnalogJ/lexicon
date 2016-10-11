@@ -14,10 +14,12 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options):
+    def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
+        self.options.update(provider_options)
         self.provider_name = 'transip'
         self.domain_id = None
+
         username = self.options.get('auth_username')
         key_file = self.options.get('auth_api_key')
 
@@ -37,7 +39,13 @@ class Provider(BaseProvider):
     def authenticate(self):
         ## This request will fail when the domain does not exist,
         ## allowing us to check for existence
-        self.client.getInfo(self.options.get('domain'))
+        domain = self.options.get('domain')
+        try:
+            self.client.getInfo(domain)
+        except:
+            raise StandardError("Could not retrieve information about {0}, "
+                                "is this domain yours?".format(domain))
+        self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -50,7 +58,7 @@ class Provider(BaseProvider):
         records.append({
             "name": self._relative_name(name),
             "type": type,
-            "content": content,
+            "content": self._bind_format_target(type, content),
             "expire": self.options.get('ttl') or 86400
         })
 
@@ -86,12 +94,13 @@ class Provider(BaseProvider):
         for record in filtered_records:
             all_records.remove(record)
         for record in all_records:
+            record['name'] = self._relative_name(record['name'])
             record['expire'] = record['ttl']
             del record['ttl']
         all_records.append({
             "name": self._relative_name(name),
             "type": type,
-            "content": content,
+            "content": self._bind_format_target(type, content),
             "expire": self.options.get('ttl') or 86400
         })
 
@@ -113,6 +122,7 @@ class Provider(BaseProvider):
         for record in filtered_records:
             all_records.remove(record)
         for record in all_records:
+            record['name'] = self._relative_name(record['name'])
             record['expire'] = record['ttl']
             del record['ttl']
 
@@ -121,18 +131,29 @@ class Provider(BaseProvider):
         print "delete_record: {0}".format(status)
         return status
 
+    def _full_name(self, record_name):
+        if record_name == "@":
+            record_name = self.options['domain']
+        return super(Provider, self)._full_name(record_name)
+
     def _relative_name(self, record_name):
         name = super(Provider, self)._relative_name(record_name)
         if not name:
             name = "@"
         return name
 
+    def _bind_format_target(self, type, target):
+        if type == "CNAME" and not target.endswith("."):
+            target += "."
+        return target
+
     # Convert the objects from transip to dicts, for easier processing
     def _convert_records(self, records):
         _records = []
         for record in records:
             _records.append({
-                "name": record.name,
+                "id": "{0}-{1}".format(self._full_name(record.name), record.type),
+                "name": self._full_name(record.name),
                 "type": record.type,
                 "content": record.content,
                 "ttl": record.expire
@@ -144,7 +165,7 @@ class Provider(BaseProvider):
         _records = []
         for record in records:
             if (not type or record['type'] == type) and \
-               (not name or record['name'] == self._relative_name(name)) and \
+               (not name or record['name'] == self._full_name(name)) and \
                (not content or record['content'] == content):
                 _records.append(record)
         return _records
