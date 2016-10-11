@@ -72,6 +72,8 @@ class Provider(BaseProvider):
             name=name,
             content=content
         )
+        for record in records:
+            record['id'] = "{name}-{type}".format(**record)
 
         if show_output:
             print 'list_records: {0}'.format(records)
