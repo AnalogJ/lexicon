@@ -78,9 +78,6 @@ class Provider(BaseProvider):
             name=name,
             content=content
         )
-        for record in records:
-            record['id'] = "{name}-{type}".format(**record)
-            record['name'] = self._full_name(record['name'])
 
         if show_output:
             print 'list_records: {0}'.format(records)
@@ -97,6 +94,7 @@ class Provider(BaseProvider):
         for record in filtered_records:
             all_records.remove(record)
         for record in all_records:
+            record['name'] = self._relative_name(record['name'])
             record['expire'] = record['ttl']
             del record['ttl']
         all_records.append({
@@ -124,6 +122,7 @@ class Provider(BaseProvider):
         for record in filtered_records:
             all_records.remove(record)
         for record in all_records:
+            record['name'] = self._relative_name(record['name'])
             record['expire'] = record['ttl']
             del record['ttl']
 
@@ -134,7 +133,7 @@ class Provider(BaseProvider):
 
     def _full_name(self, record_name):
         if record_name == "@":
-            record_name = self.domain_id
+            record_name = self.options['domain']
         return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):
@@ -153,7 +152,8 @@ class Provider(BaseProvider):
         _records = []
         for record in records:
             _records.append({
-                "name": record.name,
+                "id": "{0}-{1}".format(self._full_name(record.name), record.type),
+                "name": self._full_name(record.name),
                 "type": record.type,
                 "content": record.content,
                 "ttl": record.expire
@@ -165,7 +165,7 @@ class Provider(BaseProvider):
         _records = []
         for record in records:
             if (not type or record['type'] == type) and \
-               (not name or record['name'] == self._relative_name(name)) and \
+               (not name or record['name'] == self._full_name(name)) and \
                (not content or record['content'] == content):
                 _records.append(record)
         return _records
