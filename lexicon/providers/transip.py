@@ -80,6 +80,7 @@ class Provider(BaseProvider):
         )
         for record in records:
             record['id'] = "{name}-{type}".format(**record)
+            record['name'] = self._full_name(record['name'])
 
         if show_output:
             print 'list_records: {0}'.format(records)
@@ -130,6 +131,11 @@ class Provider(BaseProvider):
         status = len(self.list_records(type, name, content, show_output=False)) == 0
         print "delete_record: {0}".format(status)
         return status
+
+    def _full_name(self, record_name):
+        if record_name == "@":
+            record_name = self.domain_id
+        return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):
         name = super(Provider, self)._relative_name(record_name)
