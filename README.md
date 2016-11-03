@@ -7,16 +7,16 @@
 [![Gratipay User](https://img.shields.io/gratipay/user/analogj.svg)](https://gratipay.com/~AnalogJ/)
 
 # lexicon
-Manipulate DNS records on various DNS providers in a standardized/agnostic way. 
+Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 ## Introduction
-Lexicon provides a way to manipulate DNS records on multiple DNS providers in a standardized way. 
-Lexicon has a CLI but it can also be used as a python library. 
+Lexicon provides a way to manipulate DNS records on multiple DNS providers in a standardized way.
+Lexicon has a CLI but it can also be used as a python library.
 
 Lexicon was designed to be used in automation, specifically letsencrypt.
 
 ## Providers
-Only DNS providers who have an API can be supported by `lexicon`. 
+Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
@@ -69,30 +69,30 @@ Potential providers are as follows. If you would like to contribute one, please 
 
 ## Setup
 To use lexicon as a CLI application, do the following:
-	
-	pip install dns-lexicon
+
+    pip install dns-lexicon
 
 Some providers (like Route53 and TransIP) require additional depdencies. You can install provider specific dependencies seperately:
 
-  pip install dns-lexicon[route53]
+    pip install dns-lexicon[route53]
 
-You can also install the latest version from the repository directly. 
- 
-	pip install git+https://github.com/AnalogJ/lexicon.git
+You can also install the latest version from the repository directly.
+
+    pip install git+https://github.com/AnalogJ/lexicon.git
 
 and with Route 53 provider depedencies:
 
-  pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
-			
+    pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
+
 ## Usage
 
-	$ lexicon -h
+    $ lexicon -h
       usage: lexicon [-h] [--version]
                      {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
                      ...
-    
+
       Create, Update, Delete, List DNS entries
-    
+
       positional arguments:
         {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
                               specify the DNS provider to use
@@ -101,12 +101,12 @@ and with Route 53 provider depedencies:
       ...
           rage4               rage4 provider
           vultr               vultr provider
-    
+
       optional arguments:
         -h, --help            show this help message and exit
         --version             show the current version of lexicon
-    
-    
+
+
       $ lexicon cloudflare -h
       usage: lexicon cloudflare [-h] [--name NAME] [--content CONTENT] [--ttl TTL]
                                 [--priority PRIORITY] [--identifier IDENTIFIER]
@@ -114,14 +114,14 @@ and with Route 53 provider depedencies:
                                 [--auth-token AUTH_TOKEN]
                                 {create,list,update,delete} domain
                                 {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
-    
+
       positional arguments:
         {create,list,update,delete}
                               specify the action to take
         domain                specify the domain, supports subdomains as well
         {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
                               specify the entry type
-    
+
       optional arguments:
         -h, --help            show this help message and exit
         --name NAME           specify the record name
@@ -137,57 +137,57 @@ and with Route 53 provider depedencies:
 
 Using the lexicon CLI is pretty simple:
 
-	# setup provider environmental variables:
-	LEXICON_CLOUDFLARE_USERNAME="myusername@example.com"
-	LEXICON_CLOUDFLARE_TOKEN="cloudflare-api-token"
-	
-	# list all TXT records on cloudflare
-	lexicon cloudflare list example.com TXT
-	
-	# create a new TXT record on cloudflare
-	lexicon cloudflare create www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
+    # setup provider environmental variables:
+    LEXICON_CLOUDFLARE_USERNAME="myusername@example.com"
+    LEXICON_CLOUDFLARE_TOKEN="cloudflare-api-token"
 
-	# delete a  TXT record on cloudflare
-	lexicon cloudflare delete www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
-	lexicon cloudflare delete www.example.com TXT --identifier="cloudflare record id"
+    # list all TXT records on cloudflare
+    lexicon cloudflare list example.com TXT
+
+    # create a new TXT record on cloudflare
+    lexicon cloudflare create www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
+
+    # delete a  TXT record on cloudflare
+    lexicon cloudflare delete www.example.com TXT --name="_acme-challenge.www.example.com." --content="challenge token"
+    lexicon cloudflare delete www.example.com TXT --identifier="cloudflare record id"
 
 ## Authentication
 Most supported DNS services provide an API token, however each service implements authentication differently.
 Lexicon attempts to standardize authentication around the following CLI flags:
- 
+
 - `--auth-username` - For DNS services that require it, this is usually the account id or email address
 - `--auth-password` - For DNS services that do not provide an API token, this is usually the account password
 - `--auth-token` - This is the most common auth method, the API token provided by the DNS service
- 
+
 You can see all the `--auth-*` flags for a specific service by reading the DNS service specific help: `lexicon cloudflare -h`
 
 ### Environmental Variables
 Instead of providing Authentication information via the CLI, you can also specify them via Environmental Variables.
 Every DNS service and auth flag maps to an Environmental Variable as follows: `LEXICON_{DNS Provider Name}_{Auth Type}`
 
-So instead of specifying `--auth-username` and `--auth-token` flags when calling `lexicon cloudflare ...`, 
+So instead of specifying `--auth-username` and `--auth-token` flags when calling `lexicon cloudflare ...`,
 you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_TOKEN` environmental variables.
 
 ### Letsencrypt Instructions
 Lexicon has an example [dehydrated hook file](examples/dehydrated.default.sh) that you can use for any supported provider.
-All you need to do is set the PROVIDER env variable. 
+All you need to do is set the PROVIDER env variable.
 
-	PROVIDER=cloudflare dehydrated --cron --hook dehydrated.default.sh --challenge dns-01
-	
+    PROVIDER=cloudflare dehydrated --cron --hook dehydrated.default.sh --challenge dns-01
+
 
 ## TroubleShooting & Useful Tools
 There is an included example Dockerfile that can be used to automatically generate certificates for your website.
 
 ## ToDo list
 
-- [x] Create and Register a lexicon pip package. 
-- [ ] Write documentation on supported environmental variables. 
+- [x] Create and Register a lexicon pip package.
+- [ ] Write documentation on supported environmental variables.
 - [x] Wire up automated release packaging on PRs.
 - [x] Check for additional dns hosts with apis (from [fog](http://fog.io/about/provider_documentation.html), [dnsperf](http://www.dnsperf.com/), [libcloud](https://libcloud.readthedocs.io/en/latest/dns/supported_providers.html))
 - [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
 ## Contributing Changes.
-If the DNS provider you use is not already available, please consider contributing by opening a pull request. 
+If the DNS provider you use is not already available, please consider contributing by opening a pull request.
 
 ## License
 MIT
