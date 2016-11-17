@@ -36,19 +36,29 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        filter = {}
-
-        payload = self._get('/domains/{0}/records'.format(self.domain_id))
+        url = '/domains/{0}/records'.format(self.domain_id)
         records = []
-        for record in payload['domain_records']:
-            processed_record = {
-                'type': record['type'],
-                'name': "{0}.{1}".format(record['name'], self.domain_id),
-                'ttl': '',
-                'content': record['data'],
-                'id': record['id']
-            }
-            records.append(processed_record)
+        payload = {}
+
+        next = url
+        while next is not None:
+            payload = self._get(next)
+            if 'links' in payload \
+                    and 'pages' in payload['links'] \
+                    and 'next' in payload['links']['pages']:
+                next = payload['links']['pages']['next']
+            else:
+                next = None
+
+            for record in payload['domain_records']:
+                processed_record = {
+                    'type': record['type'],
+                    'name': "{0}.{1}".format(record['name'], self.domain_id),
+                    'ttl': '',
+                    'content': record['data'],
+                    'id': record['id']
+                }
+                records.append(processed_record)
 
         if type:
             records = [record for record in records if record['type'] == type]
@@ -104,8 +114,10 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json',
             'Authorization': 'Bearer {0}'.format(self.options.get('auth_token'))
         }
+        if not url.startswith(self.api_endpoint):
+            url = self.api_endpoint + url
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
+        r = requests.request(action, url, params=query_params,
                              data=json.dumps(data),
                              headers=default_headers)
         r.raise_for_status()  # if the request fails for any reason, throw an error.
