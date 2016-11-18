@@ -16,6 +16,8 @@ Lexicon has a CLI but it can also be used as a python library.
 
 Lexicon was designed to be used in automation, specifically letsencrypt.
 
+- [Generating Intranet & Private Network SSL Certificates using Lets Encrypt & Lexicon](https://blog.thesparktree.com/post/138999997429/generating-intranet-and-private-network-ssl)
+
 ## Providers
 Only DNS providers who have an API can be supported by `lexicon`.
 
