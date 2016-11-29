@@ -93,7 +93,9 @@ class Provider(BaseProvider):
             self.api.domain.zone.record.add(self.apikey, self.zone_id, version,
                                             {'type': type.upper(),
                                              'name': name,
-                                             'value': content})
+                                             'value': content,
+                                             'ttl': self.options.get('ttl',self.default_ttl)
+                                            })
             self.api.domain.zone.version.set(self.apikey, self.zone_id, version)
             ret = True
 
