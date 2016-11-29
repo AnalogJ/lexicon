@@ -94,7 +94,7 @@ class Provider(BaseProvider):
                                             {'type': type.upper(),
                                              'name': name,
                                              'value': content,
-                                             'ttl': self.options.get('ttl',self.default_ttl)
+                                             'ttl': self.options.get('ttl') or self.default_ttl
                                             })
             self.api.domain.zone.version.set(self.apikey, self.zone_id, version)
             ret = True
