@@ -86,12 +86,17 @@ class Provider(BaseProvider):
     def authenticate(self):
         """Determine the hosted zone id for the domain."""
         try:
+            subdomain = self.options['subdomain'].split('.')
+            fulldomain = ''
+            if len(subdomain) > 1:
+                del subdomain[0]
+                fulldomain = '{0}.{1}'.format(".".join(subdomain), self.options['domain'])
             hosted_zones = self.r53_client.list_hosted_zones_by_name()[
                 'HostedZones'
             ]
             hosted_zone = next(
                 hz for hz in hosted_zones
-                if hz['Name'] == '{}.'.format(self.options['domain'])
+                if hz['Name'] == '{}.'.format(self.options['domain']) or hz['Name'] == '{}.'.format(fulldomain)
             )
             self.domain_id = hosted_zone['Id']
         except StopIteration:
