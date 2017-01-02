@@ -7,7 +7,7 @@ import requests
 import json
 
 def ProviderParser(subparser):
-    subparser.add_argument("--pdd-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
+    subparser.add_argument("--auth-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
 
 class Provider(BaseProvider):
 
@@ -108,7 +108,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'PddToken': self.options.get('pdd_token')
+            'PddToken': self.options.get('auth_token')
         }
 
         if not url.startswith(self.api_endpoint):
