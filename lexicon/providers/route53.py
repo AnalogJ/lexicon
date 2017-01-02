@@ -93,7 +93,7 @@ class Provider(BaseProvider):
             ]
             hosted_zone = next(
                 hz for hz in hosted_zones
-                if hz['Name'] == '{}.'.format(self.options['domain'])
+                if hz['Name'] == '{0}.'.format(self.options['domain'])
             )
             self.domain_id = hosted_zone['Id']
         except StopIteration:
@@ -101,12 +101,12 @@ class Provider(BaseProvider):
 
     def _change_record_sets(self, action, type, name, content):
         ttl = self.options.get('ttl')
-        value = '"{}"'.format(content) if type in ['TXT', 'SPF'] else content
+        value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
         try:
             self.r53_client.change_resource_record_sets(
                 HostedZoneId=self.domain_id,
                 ChangeBatch={
-                    'Comment': '{} using lexicon Route 53 provider'.format(
+                    'Comment': '{0} using lexicon Route 53 provider'.format(
                         action
                     ),
                     'Changes': [
