@@ -22,7 +22,9 @@ attempt to detect and account for that.
 """
 
 import xmlrpclib
-from lexicon.providers.base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 
 
 def ProviderParser(subparser):
@@ -74,7 +76,7 @@ class Provider(BaseProvider):
             self.zone_id = payload['zone_id']
 
         except xmlrpclib.Fault as err:
-            raise StandardError("Failed to authenticate: '{0}'".format(err))
+            raise Exception("Failed to authenticate: '{0}'".format(err))
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -103,7 +105,7 @@ class Provider(BaseProvider):
             if not ret and version is not None:
                 self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print "create_record: {0}".format(ret)
+        print("create_record: {0}".format(ret))
         return ret
 
     # List all records. Return an empty list if no records found
@@ -137,7 +139,7 @@ class Provider(BaseProvider):
 
             records.append(processed_record)
 
-        print "list_records: {0}".format(records)
+        print("list_records: {0}".format(records))
         return records
 
     # Update a record. Identifier must be specified.
@@ -189,7 +191,7 @@ class Provider(BaseProvider):
                 if not ret and version is not None:
                     self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print "update_record: {0}".format(ret)
+        print("update_record: {0}".format(ret))
         return ret
 
     # Delete an existing record.
@@ -230,7 +232,7 @@ class Provider(BaseProvider):
                 if not ret and version is not None:
                     self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print "delete_record: {0}".format(ret)
+        print("delete_record: {0}".format(ret))
         return ret
 
     def _fqdn(self, name):

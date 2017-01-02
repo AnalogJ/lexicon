@@ -1,3 +1,4 @@
+from __future__ import print_function
 from __future__ import absolute_import
 from .base import Provider as BaseProvider
 try:
@@ -24,7 +25,7 @@ class Provider(BaseProvider):
         key_file = self.options.get('auth_api_key')
 
         if not username or not key_file:
-            raise StandardError("No username and/or keyfile was specified")
+            raise Exception("No username and/or keyfile was specified")
 
         self.client = DomainClient(
             username=username,
@@ -43,7 +44,7 @@ class Provider(BaseProvider):
         try:
             self.client.getInfo(domain)
         except:
-            raise StandardError("Could not retrieve information about {0}, "
+            raise Exception("Could not retrieve information about {0}, "
                                 "is this domain yours?".format(domain))
         self.domain_id = domain
 
@@ -52,7 +53,7 @@ class Provider(BaseProvider):
         records = self.client.getInfo(self.options.get('domain')).dnsEntries
         if self._filter_records(records, type, name, content):
             # Nothing to do, record already exists
-            print 'create_record: already exists'
+            print('create_record: already exists')
             return True
 
         records.append({
@@ -64,7 +65,7 @@ class Provider(BaseProvider):
 
         self.client.setDnsEntries(self.options.get('domain'), records)
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
-        print "create_record: {0}".format(status)
+        print("create_record: {0}".format(status))
         return status
 
     # List all records. Return an empty list if no records found
@@ -80,13 +81,13 @@ class Provider(BaseProvider):
         )
 
         if show_output:
-            print 'list_records: {0}'.format(records)
+            print('list_records: {0}'.format(records))
         return records
 
     # Update a record. Identifier must be specified.
     def update_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
-            raise StandardError("At least one of type, name or content must be specified.")
+            raise Exception("At least one of type, name or content must be specified.")
 
         all_records = self.list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name)
@@ -106,7 +107,7 @@ class Provider(BaseProvider):
 
         self.client.setDnsEntries(self.options.get('domain'), all_records)
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
-        print "update_record: {0}".format(status)
+        print("update_record: {0}".format(status))
         return status
 
     # Delete an existing record.
@@ -114,7 +115,7 @@ class Provider(BaseProvider):
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
-            raise StandardError("At least one of type, name or content must be specified.")
+            raise Exception("At least one of type, name or content must be specified.")
 
         all_records = self.list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name, content)
@@ -128,7 +129,7 @@ class Provider(BaseProvider):
 
         self.client.setDnsEntries(self.options.get('domain'), all_records)
         status = len(self.list_records(type, name, content, show_output=False)) == 0
-        print "delete_record: {0}".format(status)
+        print("delete_record: {0}".format(status))
         return status
 
     def _full_name(self, record_name):

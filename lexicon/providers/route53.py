@@ -1,6 +1,7 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
-from base import Provider as BaseProvider
-try:
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvidertry:
     import boto3 #optional dep
     import botocore #optional dep
 except ImportError:
@@ -95,7 +96,7 @@ class Provider(BaseProvider):
             )
             self.domain_id = hosted_zone['Id']
         except StopIteration:
-            raise StandardError('No domain found')
+            raise Exception('No domain found')
 
     def _change_record_sets(self, action, type, name, content):
         ttl = self.options.get('ttl')
@@ -126,7 +127,7 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as e:
-            print e.message
+            print(e.message)
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
@@ -159,12 +160,12 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
-            print record
+            print(record)
             records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
             })
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
