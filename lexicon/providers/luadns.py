@@ -1,6 +1,7 @@
 from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProviderimport requests
+from .base import Provider as BaseProvider
+import requests
 import json
 
 def ProviderParser(subparser):
