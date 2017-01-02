@@ -1,7 +1,8 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvidertry:
+from .base import Provider as BaseProvider
+try:
     import boto3 #optional dep
     import botocore #optional dep
 except ImportError:
