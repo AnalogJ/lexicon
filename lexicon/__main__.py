@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+from __future__ import print_function
+from __future__ import absolute_import
 import argparse
 import os
 import importlib
 import sys
-from client import Client
+from .client import Client
 import pkg_resources
 #based off https://docs.python.org/2/howto/argparse.html
 
@@ -34,6 +36,7 @@ def MainParser():
     parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
     parser.add_argument('--version', help="show the current version of lexicon", action='version', version='%(prog)s {0}'.format(pkg_resources.get_distribution("dns-lexicon").version))
     subparsers = parser.add_subparsers(dest='provider_name', help='specify the DNS provider to use')
+    subparsers.required = True
 
     for provider in providers:
         provider_module = importlib.import_module('lexicon.providers.' + provider)
@@ -47,7 +50,7 @@ def MainParser():
 #dynamically determine all the providers available.
 def main():
     parsed_args = MainParser().parse_args()
-    print parsed_args
+    print(parsed_args)
     client = Client(parsed_args.__dict__)
     client.execute()
 

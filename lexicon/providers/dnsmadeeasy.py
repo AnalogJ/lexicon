@@ -1,4 +1,7 @@
-from base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
+from builtins import bytes
 import requests
 import json
 import datetime
@@ -23,7 +26,7 @@ class Provider(BaseProvider):
         payload = self._get('/dns/managed/name', {'domainname': self.options['domain']})
 
         if not payload['id']:
-            raise StandardError('No domain found')
+            raise Exception('No domain found')
 
         self.domain_id = payload['id']
 
@@ -39,12 +42,12 @@ class Provider(BaseProvider):
         payload = {}
         try:
             payload = self._post('/dns/managed/{0}/records/'.format(self.domain_id), record)
-        except requests.exceptions.HTTPError, e:
+        except requests.exceptions.HTTPError as e:
             if e.response.status_code == 400:
                 payload = {}
 
                 # http 400 is ok here, because the record probably already exists
-        print 'create_record: {0}'.format('name' in payload)
+        print('create_record: {0}'.format('name' in payload))
         return 'name' in payload
 
     # List all records. Return an empty list if no records found
@@ -71,7 +74,7 @@ class Provider(BaseProvider):
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Create or update a record.
@@ -91,7 +94,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
-        print 'update_record: {0}'.format(True)
+        print('update_record: {0}'.format(True))
         return True
 
     # Delete an existing record.
@@ -99,15 +102,15 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print records
+            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
         payload = self._delete('/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        print 'delete_record: {0}'.format(True)
+        print('delete_record: {0}'.format(True))
         return True
 
 
@@ -139,7 +142,8 @@ class Provider(BaseProvider):
         # required format: Sat, 12 Feb 2011 20:59:04 GMT
         with self.setlocale(locale.LC_TIME, 'en_US.utf8'):
             request_date = now.strftime('%a, %d %b %Y %H:%M:%S GMT')
-            hashed = hmac.new(self.options['auth_token'], request_date, sha1)
+            hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'), 
+                              bytes(request_date, 'ascii'), sha1)
 
             default_headers['x-dnsme-requestDate'] = request_date
             default_headers['x-dnsme-hmac'] = hashed.hexdigest()
