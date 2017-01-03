@@ -97,8 +97,7 @@ setup(
     install_requires=['requests', 'tldextract', 'future'],
 
     extras_require={
-        'route53': ['boto3'],
-        'transip': ['transip']
+        'route53': ['boto3']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
