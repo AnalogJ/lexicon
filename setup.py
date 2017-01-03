@@ -95,11 +95,9 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['requests', 'tldextract'],
+    install_requires=['requests', 'tldextract', 'apache-libcloud'],
 
     extras_require={
-        'route53': ['boto3'],
-        'transip': ['transip']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

@@ -26,6 +26,7 @@ def MainParser():
     providers = [os.path.splitext(f)[0] for f in os.listdir(current_filepath) if os.path.isfile(os.path.join(current_filepath, f))]
     providers = list(set(providers))
     providers.remove('base')
+    providers.remove('base_libcloud')
     providers.remove('__init__')
     providers = [x for x in providers if not x.startswith('.')]
 
