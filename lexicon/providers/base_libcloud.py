@@ -136,3 +136,6 @@ class Provider(BaseProvider):
 
     def _get_type(self, type):
         getattr(RecordType, type.upper())
+
+    def _get_driver_cls(self, provider_name):
+        return get_driver( getattr(LibcloudDrivers, provider_name.upper()))

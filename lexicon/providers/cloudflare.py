@@ -11,4 +11,5 @@ class Provider(BaseLibcloudProvider):
     def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
         self.provider_name = 'cloudflare'
+        self.driver_cls = self._get_driver_cls(self.provider_name)
         self.driver = self.driver_cls(self.options['auth_username'], self.options.get('auth_token'))
