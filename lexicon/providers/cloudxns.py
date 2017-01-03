@@ -141,7 +141,7 @@ class Provider(BaseProvider):
         default_headers = {
             'API-KEY': self.options['auth_username'],
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5(self.options['auth_username'] + self.api_endpoint + url + query_string + data + date + self.options['auth_token']).hexdigest(),
+            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self.options['auth_username'],self.api_endpoint, url, query_string, data, date, self.options['auth_token']).encode('utf-8')).hexdigest(),
             'API-FORMAT':'json'
         }
         default_auth = None
