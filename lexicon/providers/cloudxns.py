@@ -6,7 +6,10 @@ import requests
 import json
 import time
 import hashlib
-import urllib
+from future.standard_library import install_aliases
+install_aliases()
+from urllib.parse import urlencode
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify API-KEY used authenticate to DNS provider")
@@ -129,7 +132,7 @@ class Provider(BaseProvider):
         data['login_token'] = self.options['auth_username'] + ',' + self.options['auth_token']
         data['format'] = 'json'
         if query_params:
-            query_string = '?' + urllib.urlencode(query_params)
+            query_string = '?' + urlencode(query_params)
         else:
             query_string = ''
             query_params = {}
