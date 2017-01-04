@@ -1,0 +1,13 @@
+---
+  test_step:
+    pre: |
+      # this is my multiline ruby script
+      # the pre hook script runs before the actual step (test_step) executes
+      # check the documentation for more information.
+      puts "install additional python versions"
+      `pyenv install 2.6.9`
+      # 2.7.12 is installed by default
+      `pyenv install 3.3.6`
+      `pyenv install 3.4.4`
+      `pyenv install 3.5.1`
+      `pyenv local 2.6.9 2.7.12 3.3.6 3.4.4 3.5.1`
