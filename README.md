@@ -16,7 +16,7 @@ Lexicon has a CLI but it can also be used as a python library.
 
 Lexicon was designed to be used in automation, specifically letsencrypt.
 
-- [Generating Intranet & Private Network SSL Certificates using Lets Encrypt & Lexicon](https://blog.thesparktree.com/post/138999997429/generating-intranet-and-private-network-ssl)
+- [Generating Intranet & Private Network SSL Certificates using Lets Encrypt & Lexicon](http://blog.thesparktree.com/post/138999997429/generating-intranet-and-private-network-ssl)
 
 ## Providers
 Only DNS providers who have an API can be supported by `lexicon`.
@@ -28,7 +28,7 @@ The current supported providers are:
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
-- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/integration/pdf/API-Docv2.pdf))
+- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
