@@ -1,12 +1,10 @@
 ---
+  engine_cmd_test: 'tox -e py27'
   test_step:
     pre: |
       # this is my multiline ruby script
       # the pre hook script runs before the actual step (test_step) executes
       # check the documentation for more information.
       puts "install additional python versions"
-      `pyenv install 2.7.10`      # 2.7.12 is installed by default
-      `pyenv install 3.3.6`
-      `pyenv install 3.4.5`
-      `pyenv install 3.5.2`
-      `pyenv global 2.7.10 3.3.6 3.4.5 3.5.2`
+      # `pyenv install 2.7.10`      # 2.7.10 is installed by default
+      `pyenv global 2.7.10 `
