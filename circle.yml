@@ -1,6 +1,12 @@
-machine:
-  python:
-    version: 2.7.10
+dependencies:
+  override:
+    #pyenv install 2.7.10 already exists.
+    - pyenv install 3.3.6
+    - pyenv install 3.4.4
+    - pyenv install 3.5.1
+    - pip install tox tox-pyenv
+    - pyenv local 2.7.10 3.3.6 3.4.4 3.5.1
+
 test:
   override:
-    - tox
+    - tox --tox-pyenv-no-fallback

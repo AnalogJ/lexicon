@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
-from base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 import requests
 import json
 import time
 import hashlib
-import urllib
+from future.standard_library import install_aliases
+install_aliases()
+from urllib.parse import urlencode
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify API-KEY used authenticate to DNS provider")
@@ -26,7 +31,7 @@ class Provider(BaseProvider):
                 break
 
         if self.domain_id == None:
-            raise StandardError('No domain found')
+            raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -43,7 +48,7 @@ class Provider(BaseProvider):
 
         payload = self._post('/record', record)
 
-        print 'create_record: {0}'.format(True) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
+        print('create_record: {0}'.format(True)) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
         return True
 
     # List all records. Return an empty list if no records found
@@ -75,7 +80,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Create or update a record.
@@ -86,7 +91,7 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
 
         data = {
             'domain_id': self.domain_id,
@@ -99,7 +104,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/record/' + identifier, data)
 
-        print 'update_record: {0}'.format(True)
+        print('update_record: {0}'.format(True))
         return True
 
     # Delete an existing record.
@@ -111,12 +116,12 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
 
         payload = self._delete('/record/' + identifier + '/' + self.domain_id)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        print 'delete_record: {0}'.format(True)
+        print('delete_record: {0}'.format(True))
         return True
 
 
@@ -127,7 +132,7 @@ class Provider(BaseProvider):
         data['login_token'] = self.options['auth_username'] + ',' + self.options['auth_token']
         data['format'] = 'json'
         if query_params:
-            query_string = '?' + urllib.urlencode(query_params)
+            query_string = '?' + urlencode(query_params)
         else:
             query_string = ''
             query_params = {}
@@ -139,7 +144,7 @@ class Provider(BaseProvider):
         default_headers = {
             'API-KEY': self.options['auth_username'],
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5(self.options['auth_username'] + self.api_endpoint + url + query_string + data + date + self.options['auth_token']).hexdigest(),
+            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self.options['auth_username'],self.api_endpoint, url, query_string, data, date, self.options['auth_token']).encode('utf-8')).hexdigest(),
             'API-FORMAT':'json'
         }
         default_auth = None

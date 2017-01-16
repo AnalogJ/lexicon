@@ -1,3 +1,4 @@
+from builtins import object
 import lexicon.client
 import pytest
 import vcr
@@ -24,7 +25,7 @@ provider_vcr = vcr.VCR(
 # self.domain must be set
 # self._filter_headers can be defined to provide a list of sensitive headers
 # self._filter_query_parameters can be defined to provide a list of sensitive parameter
-class IntegrationTests():
+class IntegrationTests(object):
 
     ###########################################################################
     # Provider.authenticate()
@@ -46,7 +47,7 @@ class IntegrationTests():
                 'auth_username': self._auth_username(),
                 'auth_token': self._auth_token()
             }, self.provider_opts)
-            with pytest.raises(StandardError):
+            with pytest.raises(Exception):
                 provider.authenticate()
 
     ###########################################################################

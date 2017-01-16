@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from base import Provider as BaseProvider
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 import requests
 import json
 
@@ -19,7 +21,7 @@ class Provider(BaseProvider):
         payload = self._post('/Domain.Info', {'domain':self.options['domain']})
 
         if payload['status']['code'] != '1':
-            raise StandardError(payload['status']['message'])
+            raise Exception(payload['status']['message'])
 
         self.domain_id = payload['domain']['id']
 
@@ -39,9 +41,9 @@ class Provider(BaseProvider):
         payload = self._post('/Record.Create', record)
 
         if payload['status']['code'] not in ['1', '31']:
-            raise StandardError(payload['status']['message'])
+            raise Exception(payload['status']['message'])
 
-        print 'create_record: {0}'.format(payload['status']['code'] == '1')
+        print('create_record: {0}'.format(payload['status']['code'] == '1'))
         return payload['status']['code'] == '1'
 
     # List all records. Return an empty list if no records found
@@ -51,7 +53,7 @@ class Provider(BaseProvider):
         filter = {}
 
         payload = self._post('/Record.List', {'domain':self.options['domain']})
-        print payload
+        print(payload)
         records = []
         for record in payload['records']:
             processed_record = {
@@ -71,7 +73,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Create or update a record.
@@ -87,13 +89,13 @@ class Provider(BaseProvider):
         }
         if self.options.get('ttl'):
             data['ttl'] = self.options.get('ttl')
-        print data
+        print(data)
         payload = self._post('/Record.Modify', data)
-        print payload
+        print(payload)
         if payload['status']['code'] != '1':
-            raise StandardError(payload['status']['message'])
+            raise Exception(payload['status']['message'])
 
-        print 'update_record: {0}'.format(True)
+        print('update_record: {0}'.format(True))
         return True
 
     # Delete an existing record.
@@ -101,18 +103,18 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print records
+            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
         payload = self._post('/Record.Remove', {'domain_id': self.domain_id, 'record_id': identifier})
 
         if payload['status']['code'] != '1':
-            raise StandardError(payload['status']['message'])
+            raise Exception(payload['status']['message'])
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        print 'delete_record: {0}'.format(True)
+        print('delete_record: {0}'.format(True))
         return True
 
 
