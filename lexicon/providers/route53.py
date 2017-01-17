@@ -100,7 +100,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
     def _change_record_sets(self, action, type, name, content):
-        ttl = self.options.get('ttl')
+        ttl = self.options.get('ttl') or self.default_ttl
         value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
         try:
             self.r53_client.change_resource_record_sets(

@@ -55,7 +55,7 @@ class Provider(BaseProvider):
             processed_record = {
                 'type': record['type'],
                 'name': "{0}.{1}".format(record['name'], self.domain_id),
-                'ttl': record.get('ttl', self.options.get('ttl',self.default_ttl)),
+                'ttl': record.get('ttl', self.options.get('ttl') or self.default_ttl),
                 'content': record['data'],
                 'id': record['RECORDID']
             }
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id,
             'RECORDID': identifier,
-            'ttl': self.options.get('ttl',self.default_ttl)
+            'ttl': self.options.get('ttl') or self.default_ttl
         }
         # if type:
         #     data['type'] = type
