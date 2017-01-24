@@ -31,8 +31,10 @@ class Provider(object):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
 
-
     #Helpers
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        raise NotImplementedError("Providers should implement this!")
+
     def _get(self, url='/', query_params=None):
         return self._request('GET', url, query_params=query_params)
 
