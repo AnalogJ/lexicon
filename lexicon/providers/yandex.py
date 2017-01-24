@@ -2,8 +2,9 @@ __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'
 __contact__ = 'https://github.com/kharkevich'
 
-from base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+from __future__ import absolute_import
+from .base import Provider as BaseProvider
 import json
 
 def ProviderParser(subparser):
@@ -18,13 +19,19 @@ class Provider(BaseProvider):
 
     def authenticate(self):
         payload = self._get('/list?domain={0}'.format(self.options['domain']))
+        if payload['success'] != "ok":
+            raise Exception('No domain found')
         self.domain_id = self.options['domain']
 
     def create_record(self, type, name, content):
         if (type == 'CNAME') or (type == 'MX') or (type == 'NS'):
             content = content.rstrip('.') + '.' # make sure a the data is always a FQDN for CNAMe.
 
-        payload = self._post('/add', {},'domain={0}&type={1}&subdomain={2}&content={3}'.format(self.domain_id, type, self._relative_name(name), content))
+        querystring = 'domain={0}&type={1}&subdomain={2}&content={3}'.format(self.domain_id, type, self._relative_name(name), content)
+        if self.options.get('ttl'):
+            querystring += "&ttl={0}".format(self.options.get('ttl'))
+
+        payload = self._post('/add', {},querystring)
 
         return self._check_exitcode(payload, 'create_record')
 
@@ -63,14 +70,14 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'].lower() == content.lower()]
 
-        print 'list_records: {0}'.format(records)
+        print('list_records: {0}'.format(records))
         return records
 
     # Just update existing record. Domain ID (domain) and Identifier (record_id) is mandatory
     def update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
-            print ('Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
+            print('Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
             return False
         
         data = ''
@@ -90,11 +97,11 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print records
+            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
-                raise StandardError('Record identifier could not be found.')
+                raise Exception('Record identifier could not be found.')
         payload = self._post('/del', {}, 'domain={0}&record_id={1}'.format(self.domain_id, identifier))
 
         return self._check_exitcode(payload, 'delete_record')
@@ -126,8 +133,8 @@ class Provider(BaseProvider):
 
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
-            print '{0}: {1}'.format(title, payload['success'])
+            print('{0}: {1}'.format(title, payload['success']))
             return True
         else:
-            print '{0}: {1}'.format(title, payload['error'])
+            print('{0}: {1}'.format(title, payload['error']))
             return False
