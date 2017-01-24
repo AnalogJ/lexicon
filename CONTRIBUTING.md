@@ -112,6 +112,10 @@ class FooProviderTests(TestCase, IntegrationTests):
 
 	def _filter_query_parameters(self):
 		return ['secret_key']
+
+	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
+	def test_Provider_when_calling_list_records_after_setting_ttl(self):
+		return
 ```
 
 Make sure to replace any instance of `foo` or `Foo` with your provider name.
@@ -121,6 +125,9 @@ providers don't require you to validate ownership).
 The `_filter_*` methods ensure that your credentials are not included in the
 `vcrpy` recordings that are created. You can take a look at recordings for other
  providers, they are stored in the [`tests/fixtures/cassettes/`](https://github.com/AnalogJ/lexicon/tree/master/tests/fixtures/cassettes) sub-folders.
+
+You can use `@pytest.mark.skip` to skip any individual test that will never pass with
+your provider.
 
 Then you'll need to setup your environment variables for testing. Unlike running
 `lexicon` via the CLI, the test suite cannot take user input, so we'll need to provide
