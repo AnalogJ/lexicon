@@ -1,11 +1,11 @@
-__author__ = 'Aliaksandr Kharkevich'
-__license__ = 'MIT'
-__contact__ = 'https://github.com/kharkevich'
-
 from __future__ import print_function
 from __future__ import absolute_import
 from .base import Provider as BaseProvider
+import requests
 import json
+__author__ = 'Aliaksandr Kharkevich'
+__license__ = 'MIT'
+__contact__ = 'https://github.com/kharkevich'
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
