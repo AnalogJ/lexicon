@@ -101,11 +101,11 @@ import pytest
 # pass, by inheritance from define_tests.TheTests
 class FooProviderTests(TestCase, IntegrationTests):
 
-Provider = Provider
-provider_name = 'foo'
-domain = 'example.com'
-def _filter_post_data_parameters(self):
-    return ['login_token']
+	Provider = Provider
+	provider_name = 'foo'
+	domain = 'example.com'
+	def _filter_post_data_parameters(self):
+		return ['login_token']
 
 	def _filter_headers(self):
 		return ['Authorization']
