@@ -8,40 +8,24 @@ your app. There are a few guidelines that we
 need contributors to follow so that we can have a chance of keeping on
 top of things.
 
-## Things you should know
-
-Before you jump in and write a provider, please keep in mind the following:
-
-- `lexicon` is designed to work with multiple versions of python. That means
-your code will be tested against python 2.7, 3.4, 3.5
-- your provider should run (and pass) the integration test suite (we'll show
-you how to set it up below)
-- any provider specific dependenices should be added to the `setup.py` file,
- under the `extra_requires` heading. The group name should be the name of the
- provider. eg:
-
- 	    extras_require={
-            'route53': ['boto3']
-        }
-
 ## Getting Started
 
 Fork, then clone the repo:
 
-    git clone git@github.com:your-username/lexicon.git
+    $ git clone git@github.com:your-username/lexicon.git
 
 Install all `lexicon` requirements:
 
-	pip install -r optional-requirements.txt
-	pip install -r test-requirements.txt
+    $ pip install -r optional-requirements.txt
+    $ pip install -r test-requirements.txt
 
 Install `lexicon` in development mode
 
-	python setup.py develop
+    $ python setup.py develop
 
 Make sure the tests pass:
 
-    py.test tests
+    $ py.test tests
 
 
 ## Adding a new DNS provider
@@ -66,7 +50,7 @@ eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
 The [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py)
 defines the following functions, which must be overridden in your provider implementation:
 
-	- `authenticate`
+    - `authenticate`
     - `create_record`
     - `list_records`
     - `update_record`
@@ -78,15 +62,11 @@ defines the following functions, which must be overridden in your provider imple
 	 file, or any provider in the [`lexicon/providers/`](https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers) folder for examples
 
 
-	from __future__ import print_function
-    from __future__ import absolute_import
-    from .base import Provider as BaseProvider
-
 ## Testing your provider
 
 First let's validate that your provider shows up in the CLI
 
-	lexicon foo --help
+	$ lexicon foo --help
 
 If everything worked correctly, you should get a help page that's specific
 to your provider, including your custom optional arguments.
@@ -94,8 +74,8 @@ to your provider, including your custom optional arguments.
 Now you can run some manual commands against your provider to verify that
 everything works as you expect.
 
-	lexicon foo list example.com TXT
-	lexicon foo create example.com TXT --name demo --content "fake content"
+	$ lexicon foo list example.com TXT
+	$ lexicon foo create example.com TXT --name demo --content "fake content"
 
 Once you're satisfied that your provider is working correctly, we'll run the
 integration test suite against it, and verify that your provider responds the
@@ -109,28 +89,30 @@ The only thing you need to do is create the following file:
 
 Then you'll need to populate it with the following template:
 
-	# Test for one implementation of the interface
-    from lexicon.providers.foo import Provider
-    from integration_tests import IntegrationTests
-    from unittest import TestCase
-    import pytest
+```python
+# Test for one implementation of the interface
+from lexicon.providers.foo import Provider
+from integration_tests import IntegrationTests
+from unittest import TestCase
+import pytest
 
-    # Hook into testing framework by inheriting unittest.TestCase and reuse
-    # the tests which *each and every* implementation of the interface must
-    # pass, by inheritance from define_tests.TheTests
-    class FooProviderTests(TestCase, IntegrationTests):
+# Hook into testing framework by inheriting unittest.TestCase and reuse
+# the tests which *each and every* implementation of the interface must
+# pass, by inheritance from define_tests.TheTests
+class FooProviderTests(TestCase, IntegrationTests):
 
-        Provider = Provider
-        provider_name = 'foo'
-        domain = 'example.com'
-        def _filter_post_data_parameters(self):
-            return ['login_token']
+Provider = Provider
+provider_name = 'foo'
+domain = 'example.com'
+def _filter_post_data_parameters(self):
+    return ['login_token']
 
-		def _filter_headers(self):
-			return ['Authorization']
+	def _filter_headers(self):
+		return ['Authorization']
 
-		def _filter_query_parameters(self):
-			return ['secret_key']
+	def _filter_query_parameters(self):
+		return ['secret_key']
+```
 
 Make sure to replace any instance of `foo` or `Foo` with your provider name.
 `domain` should be a real domain registered with your provider (some
@@ -165,3 +147,17 @@ Once all your tests pass, you'll want to double check that there is no sensitive
 Finally, push your changes to your Github fork, and open a PR.
 
 :)
+
+## Additional Notes
+
+Please keep in mind the following:
+
+- `lexicon` is designed to work with multiple versions of python. That means
+your code will be tested against python 2.7, 3.4, 3.5
+- any provider specific dependenices should be added to the `setup.py` file,
+ under the `extra_requires` heading. The group name should be the name of the
+ provider. eg:
+
+ 	    extras_require={
+            'route53': ['boto3']
+        }
