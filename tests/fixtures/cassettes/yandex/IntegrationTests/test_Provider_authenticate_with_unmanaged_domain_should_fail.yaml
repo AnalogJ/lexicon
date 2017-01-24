@@ -1,0 +1,30 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.9.1]
+    method: GET
+    uri: https://pddimp.yandex.ru/api2/admin/dns/list?domain=thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"domain": "thisisadomainidonotown.com", "success":
+        "error", "error": "not_allowed"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['85']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 24 Jan 2017 05:41:04 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
