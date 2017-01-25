@@ -3,10 +3,9 @@
 Thanks! There are tons of different DNS services, and unfortunately a large
 portion of them require paid accounts, which makes it hard for us to develop
 `lexicon` providers on our own. We want to keep it as easy as possible to
-contribute to `lexicon`, so that you can use your favorite DNS service with
-your app. There are a few guidelines that we
-need contributors to follow so that we can have a chance of keeping on
-top of things.
+contribute to `lexicon`, so that you can automate your favorite DNS service.
+There are a few guidelines that we need contributors to follow so that 
+we can keep on top of things.
 
 ## Getting Started
 
