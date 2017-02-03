@@ -3,9 +3,10 @@ from lexicon.providers.transip import Provider
 from integration_tests import IntegrationTests, provider_vcr
 from unittest import TestCase
 import pytest
-from tempfile import TemporaryFile
+from tempfile import mkstemp
+import os
 
-FAKE_KEY = """
+FAKE_KEY = b"""
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAxV08IlJRwNq9WyyGO2xRyT0F6XIBD2R5CrwJoP7gIHVU/Mhk
 KeK8//+MbUZtKFoeJi9lI8Cbkqe7GVk9yab6R2/vVzV21XRh+57R79nEh+QTf/vZ
@@ -71,14 +72,15 @@ class TransipProviderTests(TestCase, IntegrationTests):
         provider_vcr.serializer = cls.old_serializer
 
     def setUp(self):
-        _fake_key = TemporaryFile()
-        _fake_key.write(FAKE_KEY)
-        _fake_key.seek(0)
+        (_fake_fd, _fake_key) = mkstemp()
+        _fake_file = os.fdopen(_fake_fd, 'wb', 1024)
+        _fake_file.write(FAKE_KEY)
+        _fake_file.close()
         self._fake_key = _fake_key
         self.provider_opts['auth_api_key'] = _fake_key
 
     def tearDown(self):
-        self._fake_key.close()
+        os.unlink(self._fake_key)
 
     def _filter_headers(self):
         return ['Cookie']

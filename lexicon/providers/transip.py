@@ -2,7 +2,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from .base import Provider as BaseProvider
 try:
-    from transip.client import DomainClient #optional dep
+    from transip.service.dns import DnsEntry
+    from transip.service.domain import DomainService
 except ImportError:
     pass
 
@@ -11,7 +12,6 @@ except ImportError:
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username used to authenticate")
     subparser.add_argument("--auth-api-key", help="specify API private key to authenticate")
-    subparser.add_argument("--auth-ca-bundle", help="specify CA bundle to use to verify API SSL certificate")
 
 
 class Provider(BaseProvider):
@@ -27,11 +27,9 @@ class Provider(BaseProvider):
         if not username or not key_file:
             raise Exception("No username and/or keyfile was specified")
 
-        self.client = DomainClient(
-            username=username,
-            key_file=key_file,
-            mode="readwrite",
-            cacert=self.options.get('auth_ca_bundle', False)
+        self.client = DomainService(
+            login=username,
+            private_key_file=key_file
         )
 
     # Authenticate against provider,
@@ -42,28 +40,29 @@ class Provider(BaseProvider):
         ## allowing us to check for existence
         domain = self.options.get('domain')
         try:
-            self.client.getInfo(domain)
+            self.client.get_info(domain)
         except:
+            raise
             raise Exception("Could not retrieve information about {0}, "
                                 "is this domain yours?".format(domain))
         self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        records = self.client.getInfo(self.options.get('domain')).dnsEntries
+        records = self.client.get_info(self.options.get('domain')).dnsEntries
         if self._filter_records(records, type, name, content):
             # Nothing to do, record already exists
             print('create_record: already exists')
             return True
 
-        records.append({
+        records.append(DnsEntry(**{
             "name": self._relative_name(name),
-            "type": type,
+            "record_type": type,
             "content": self._bind_format_target(type, content),
             "expire": self.options.get('ttl') or 86400
-        })
+        }))
 
-        self.client.setDnsEntries(self.options.get('domain'), records)
+        self.client.set_dns_entries(self.options.get('domain'), records)
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
         print("create_record: {0}".format(status))
         return status
@@ -72,7 +71,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None, show_output=True):
-        all_records = self._convert_records(self.client.getInfo(self.options.get('domain')).dnsEntries)
+        all_records = self._convert_records(self.client.get_info(self.options.get('domain')).dnsEntries)
         records = self._filter_records(
             records=all_records,
             type=type,
@@ -94,18 +93,15 @@ class Provider(BaseProvider):
 
         for record in filtered_records:
             all_records.remove(record)
-        for record in all_records:
-            record['name'] = self._relative_name(record['name'])
-            record['expire'] = record['ttl']
-            del record['ttl']
         all_records.append({
-            "name": self._relative_name(name),
+            "name": name,
             "type": type,
             "content": self._bind_format_target(type, content),
-            "expire": self.options.get('ttl') or 86400
+            "ttl": self.options.get('ttl') or 86400
         })
 
-        self.client.setDnsEntries(self.options.get('domain'), all_records)
+
+        self.client.set_dns_entries(self.options.get('domain'), self._convert_records_back(all_records))
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
         print("update_record: {0}".format(status))
         return status
@@ -122,12 +118,8 @@ class Provider(BaseProvider):
 
         for record in filtered_records:
             all_records.remove(record)
-        for record in all_records:
-            record['name'] = self._relative_name(record['name'])
-            record['expire'] = record['ttl']
-            del record['ttl']
 
-        self.client.setDnsEntries(self.options.get('domain'), all_records)
+        self.client.set_dns_entries(self.options.get('domain'), self._convert_records_back(all_records))
         status = len(self.list_records(type, name, content, show_output=False)) == 0
         print("delete_record: {0}".format(status))
         return status
@@ -160,6 +152,11 @@ class Provider(BaseProvider):
                 "ttl": record.expire
             })
         return _records
+
+    def _to_dns_entry(self, _entry):
+        return DnsEntry(self._relative_name(_entry['name']), _entry['ttl'], _entry['type'], _entry['content'])
+    def _convert_records_back(self, _records):
+        return [self._to_dns_entry(record) for record in _records]
 
     # Filter a list of records based on criteria
     def _filter_records(self, records, type=None, name=None, content=None):
