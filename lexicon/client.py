@@ -12,6 +12,16 @@ class Client(object):
         domain_parts = tldextract.extract(options.get('domain'))
         options['domain'] = '{0}.{1}'.format(domain_parts.domain, domain_parts.suffix)
 
+        if options.get('delegated'):
+            # handle delegated domain
+            delegated = options.get('delegated').rstrip('.')
+            # convert to relative name
+            if delegated.endswith(options.get('domain')):
+                delegated = delegated[:-len(options.get('domain'))]
+                delegated = delegated.rstrip('.')
+            # update domain
+            options['domain'] = '{0}.{1}'.format(delegated, options.get('domain'))
+
         self.action = options.get('action')
         self.provider_name = options.get('provider_name')
         self.options = options
