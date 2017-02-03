@@ -94,4 +94,11 @@ function unchanged_cert {
     #   The path of the file containing the intermediate certificate(s).
 }
 
+exit_hook() {
+  # This hook is called at the end of a dehydrated command and can be used
+  # to do some final (cleanup or other) tasks.
+
+  :
+}
+
 HANDLER=$1; shift; $HANDLER "$@"
