@@ -97,7 +97,7 @@ setup(
 
     extras_require={
         'route53': ['boto3'],
-        'transip': ['transip']
+        'transip': ['transip==0.1.0-dev']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -115,7 +115,7 @@ setup(
         ],
     },
 
-    dependency_links = ['https://github.com/benkonrath/transip-api.git#egg=transip'],
+    dependency_links = ['git+https://github.com/benkonrath/transip-api.git#egg=transip-0.1.0-dev'],
 
     test_suite='tests'
 )
