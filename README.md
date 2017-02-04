@@ -89,24 +89,30 @@ and with Route 53 provider depedencies:
 ## Usage
 
     $ lexicon -h
-      usage: lexicon [-h] [--version]
-                     {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
+      usage: lexicon [-h] [--version] [--delegated DELEGATED]
+                     {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,zonomi}
                      ...
 
       Create, Update, Delete, List DNS entries
 
       positional arguments:
-        {cloudflare,digitalocean,dnsimple,dnsmadeeasy,dnspark,easydns,namesilo,nsone,pointhq,rage4,vultr}
+        {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,zonomi}
                               specify the DNS provider to use
           cloudflare          cloudflare provider
+          cloudxns            cloudxns provider
           digitalocean        digitalocean provider
-      ...
+        ...
           rage4               rage4 provider
+          route53             route53 provider
           vultr               vultr provider
+          yandex              yandex provider
+          zonomi              zonomi provider
 
       optional arguments:
         -h, --help            show this help message and exit
         --version             show the current version of lexicon
+        --delegated DELEGATED
+                              specify the delegated domain
 
 
       $ lexicon cloudflare -h
