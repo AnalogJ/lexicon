@@ -167,3 +167,5 @@ your code will be tested against python 2.7, 3.4, 3.5
  	    extras_require={
             'route53': ['boto3']
         }
+
+ when adding a new group, make sure it has been added to the `optional-requirements.txt` file as well.
