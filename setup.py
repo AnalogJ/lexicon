@@ -96,7 +96,8 @@ setup(
     install_requires=['requests', 'tldextract', 'future'],
 
     extras_require={
-        'route53': ['boto3']
+        'route53': ['boto3'],
+        'transip': ['transip']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -113,6 +114,8 @@ setup(
             'lexicon=lexicon.__main__:main',
         ],
     },
+
+    dependency_links = ['https://github.com/benkonrath/transip-api.git#egg=transip'],
 
     test_suite='tests'
 )
