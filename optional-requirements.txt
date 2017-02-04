@@ -1,1 +1,19 @@
+###############################################################################
+# Optional Dependencies
+#
+# 	This file specifies all dependency groups that are defined in the
+#	extras_require section of setup.py. Each dependency group should match
+# 	the name of the the provider who requires additional libraries to work.
+#
+#   eg. The route53 provider requires the boto library, which is specified
+#	in setup.py as follows:
+#
+#	extras_require={
+#		'route53': ['boto3']
+#	}
+#
+###############################################################################
+
+--process-dependency-links
 .[route53]
+.[transip]
