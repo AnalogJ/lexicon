@@ -115,5 +115,7 @@ setup(
         ],
     },
 
+    dependency_links = ['https://github.com/benkonrath/transip-api.git#egg=transip'],
+
     test_suite='tests'
 )
