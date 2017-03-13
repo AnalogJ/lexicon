@@ -13,7 +13,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(options)
         self.domain_id = None
         self.account_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.sandbox.dnsimple.com/v2'
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.dnsimple.com/v2'
 
     def authenticate(self):
 
