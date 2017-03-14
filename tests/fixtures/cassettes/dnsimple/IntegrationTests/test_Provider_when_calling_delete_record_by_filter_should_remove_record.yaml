@@ -1,173 +1,235 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.13.0]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com
+    uri: https://api.sandbox.dnsimple.com/v2/accounts
   response:
-    body: {string: !!python/unicode '{"domain":{"id":6259,"user_id":null,"registrant_id":603,"account_id":241,"name":"capsulecd.com","unicode_name":"capsulecd.com","token":"yyMtxjkT67RPyEvy6t9UT6CgIYOSzj8u","state":"registered","lockable":true,"auto_renew":false,"whois_protected":false,"record_count":5,"service_count":0,"expires_on":"2017-03-16","created_at":"2016-03-16T06:14:11.347Z","updated_at":"2016-03-16T06:14:17.541Z"}}'}
+    body: {string: !!python/unicode '{"data":[{"id":475,"plan_identifier":"dnsimple-personal","created_at":"2017-03-11T04:50:42Z","updated_at":"2017-03-12T08:06:55Z"}]}'}
     headers:
-      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
-      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
-      access-control-allow-origin: ['*']
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
-      content-length: ['392']
+      content-length: ['156']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 01:58:51 GMT']
-      etag: [W/"16f41476ceeeede092cdcffc3c091f5f"]
+      date: ['Sun, 12 Mar 2017 23:53:55 GMT']
+      etag: [W/"72b5baad57ee66be3c25031e6dd757be"]
       server: [nginx]
-      status: [200 OK]
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-request-id: [26c69c6b-fc08-4a07-85e3-8c1e573f409a]
-      x-runtime: ['0.071131']
-      x-xss-protection: ['1']
-    status: {code: 200, message: OK}
-- request:
-    body: '{"record": {"content": "challengetoken", "record_type": "TXT", "name":
-      "delete.testfilt"}}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['90']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: POST
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records
-  response:
-    body: {string: !!python/unicode '{"record":{"id":97308,"domain_id":6259,"parent_id":null,"name":"delete.testfilt","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:45.490Z","updated_at":"2016-03-30T01:59:45.490Z"}}'}
-    headers:
-      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
-      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
-      access-control-allow-origin: ['*']
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-type: [application/json; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 01:59:45 GMT']
-      etag: [W/"fffe33cdc6275c1a4909ed0a8b7a48f5"]
-      server: [nginx]
-      status: [201 Created]
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-request-id: [24bcdd48-d12b-4fb5-9928-f5e1989629b0]
-      x-runtime: ['0.097038']
-      x-xss-protection: ['1']
-    status: {code: 201, message: Created}
-- request:
-    body: '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: GET
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.testfilt
-  response:
-    body: {string: !!python/unicode '[{"record":{"id":97308,"domain_id":6259,"parent_id":null,"name":"delete.testfilt","content":"challengetoken","ttl":3600,"prio":null,"record_type":"TXT","system_record":false,"created_at":"2016-03-30T01:59:45.490Z","updated_at":"2016-03-30T01:59:45.490Z"}}]'}
-    headers:
-      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
-      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
-      access-control-allow-origin: ['*']
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['256']
-      content-type: [application/json; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 01:59:45 GMT']
-      etag: [W/"253353c2976e084302a2a0468a9d7720"]
-      server: [nginx]
-      status: [200 OK]
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-request-id: [681189ac-1dc1-49cd-a47b-e1fc646e40b6]
-      x-runtime: ['0.036208']
-      x-xss-protection: ['1']
-    status: {code: 200, message: OK}
-- request:
-    body: '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: DELETE
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records/97308
-  response:
-    body: {string: !!python/unicode '{}'}
-    headers:
-      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
-      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
-      access-control-allow-origin: ['*']
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['2']
-      content-type: [application/json; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 02:00:11 GMT']
-      etag: [W/"99914b932bd37a50b983c5e7c90ae93b"]
-      server: [nginx]
-      status: [200 OK]
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-request-id: [57adb48a-55ed-44bf-b511-3877e9f2d30b]
-      x-runtime: ['0.135465']
-      x-xss-protection: ['1']
-    status: {code: 200, message: OK}
-- request:
-    body: '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: GET
-    uri: https://api.sandbox.dnsimple.com/v1/domains/capsulecd.com/records?type=TXT&name=delete.testfilt
-  response:
-    body: {string: !!python/unicode '[]'}
-    headers:
-      access-control-allow-headers: ['Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with']
-      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
-      access-control-allow-origin: ['*']
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['2']
-      content-type: [application/json; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 02:00:26 GMT']
-      etag: [W/"d751713988987e9331980363e24189ce"]
-      server: [nginx]
-      status: [200 OK]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-download-options: [noopen]
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
-      x-request-id: [e1ea44bf-c394-4355-8b64-435832bdcfc1]
-      x-runtime: ['0.453518']
-      x-xss-protection: ['1']
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2387']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [2ece8016-bdfa-4865-9e1f-86f562d3f9d5]
+      x-runtime: ['0.025483']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v2/475/domains?name_like=wopr.tech
+  response:
+    body: {string: !!python/unicode '{"data":[{"id":32240,"account_id":475,"registrant_id":null,"name":"wopr.tech","unicode_name":"wopr.tech","state":"hosted","auto_renew":false,"private_whois":false,"expires_on":null,"created_at":"2017-03-12T23:53:34Z","updated_at":"2017-03-12T23:53:34Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    headers:
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['378']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sun, 12 Mar 2017 23:53:55 GMT']
+      etag: [W/"f8acd1dd7c5dc59b6f1af98347e840ee"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2374']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [3e09b6de-9641-426b-9875-cd554ff9f757]
+      x-runtime: ['0.037415']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testfilt
+  response:
+    body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
+    headers:
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['91']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sun, 12 Mar 2017 23:53:55 GMT']
+      etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2373']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [52345684-c07f-443f-a266-33cea1e0389d]
+      x-runtime: ['0.043684']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"content": "challengetoken", "type": "TXT", "name": "delete.testfilt"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['71']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: POST
+    uri: https://api.sandbox.dnsimple.com/v2475/zones/wopr.tech/records
+  response:
+    body: {string: !!python/unicode '{"data":{"id":311249,"zone_id":"wopr.tech","parent_id":null,"name":"delete.testfilt","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2017-03-12T23:53:56Z","updated_at":"2017-03-12T23:53:56Z"}}'}
+    headers:
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-type: [application/json; charset=utf-8]
+      date: ['Sun, 12 Mar 2017 23:53:56 GMT']
+      etag: [W/"fae683f3928a8c9570e6ef2a6293560a"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2372']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [b72190ed-24bf-4852-9513-4977ea10d28c]
+      x-runtime: ['0.113494']
+      x-xss-protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testfilt
+  response:
+    body: {string: !!python/unicode '{"data":[{"id":311249,"zone_id":"wopr.tech","parent_id":null,"name":"delete.testfilt","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2017-03-12T23:53:56Z","updated_at":"2017-03-12T23:53:56Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    headers:
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['350']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sun, 12 Mar 2017 23:53:56 GMT']
+      etag: [W/"fc5da20270016f9d002cc9da04b1ff0f"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2371']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [86216600-41e8-4e5f-800b-7f9d84067335]
+      x-runtime: ['0.044568']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: DELETE
+    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records/311249
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      date: ['Sun, 12 Mar 2017 23:53:57 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2370']
+      x-ratelimit-reset: ['1489366393']
+      x-request-id: [3daf4090-c95d-4a4d-9d3a-af0f7725ed3f]
+      x-runtime: ['0.114536']
+      x-xss-protection: [1; mode=block]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testfilt
+  response:
+    body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
+    headers:
+      cache-control: ['max-age=0, private, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['91']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sun, 12 Mar 2017 23:53:57 GMT']
+      etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['2400']
+      x-ratelimit-remaining: ['2369']
+      x-ratelimit-reset: ['1489366392']
+      x-request-id: [badd3b95-6693-47f3-ad4c-4424ac70c798]
+      x-runtime: ['0.036953']
+      x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

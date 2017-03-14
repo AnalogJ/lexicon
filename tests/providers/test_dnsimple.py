@@ -10,7 +10,7 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'dnsimple'
-    domain = 'capsulecd.com'
-    provider_opts = {'api_endpoint': 'https://api.sandbox.dnsimple.com/v1'}
+    domain = 'wopr.tech'
+    provider_opts = {'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'}
     def _filter_headers(self):
-        return ['X-DNSimple-Domain-Token', 'X-DNSimple-Token','Authorization','set-cookie']
+        return ['Authorization','set-cookie','X-Dnsimple-OTP']
