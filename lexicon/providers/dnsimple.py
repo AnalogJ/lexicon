@@ -5,49 +5,63 @@ import requests
 import json
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-domaintoken", help="specify domain token to authenticate")
+    subparser.add_argument("--auth-token", help="specify api token used to authenticate")
     subparser.add_argument("--auth-username", help="specify email address used to authenticate")
     subparser.add_argument("--auth-password", help="specify password used to authenticate")
-    subparser.add_argument("--auth-token", help="specify simple api token used authenticate")
+    subparser.add_argument("--auth-2fa", help="specify two-factor auth token (OTP) to use with email/password authentication")
 
 class Provider(BaseProvider):
 
     def __init__(self, options, provider_options={}):
         super(Provider, self).__init__(options)
         self.domain_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.dnsimple.com/v1'
+        self.account_id = None
+        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.dnsimple.com/v2'
 
     def authenticate(self):
 
-        payload = self._get('/domains/{0}'.format(self.options['domain']))
+        payload = self._get('/accounts')
 
-        if not payload['domain']:
-            raise Exception('No domain found')
+        if not payload[0]['id']:
+            raise Exception('No account id found')
 
-        self.domain_id = self.options['domain']
+        for account in payload:
+            dompayload = self._get('/{0}/domains'.format(account['id']), query_params={'name_like': self.options.get('domain')})
+            if len(dompayload) > 0 and dompayload[0]['id']:
+                self.account_id = account['id']
+                self.domain_id = dompayload[0]['id']
+
+        if not self.account_id:
+            raise Exception('No domain found like {}'.format(self.options.get('domain')))
 
 
-    # Create record. If record already exists with the same content, do nothing'
+    # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):
-        record = {'record':
-                    {
-                        'record_type': type,
-                        'name': self._relative_name(name),
-                        'content': content
-                    }
+        record = {
+                    'type': type,
+                    'name': self._relative_name(name),
+                    'content': content
                 }
         if self.options.get('ttl'):
-            record['record']['ttl'] = self.options.get('ttl')
-        payload = {}
-        try:
-            payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {'record': {}}
+            record['ttl'] = self.options.get('ttl')
+        if self.options.get('priority'):
+            record['priority'] = self.options.get('priority')
+        if self.options.get('regions'):
+            record['regions'] = self.options.get('regions')
 
-            # http 400 is ok here, because the record probably already exists
-        print('create_record: {0}'.format('record' in payload))
-        return 'record' in payload
+        payload = {}
+        records = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params={
+            'name': record['name'], 
+            'type': type}
+        )
+        for cur_record in records:
+            if cur_record['content'] == content:
+                break
+        else:
+            payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
+
+        print('create_record: {0}'.format('id' in payload))
+        return 'id' in payload
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -58,17 +72,19 @@ class Provider(BaseProvider):
             filter['type'] = type
         if name:
             filter['name'] = self._relative_name(name)
-        payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
+        payload = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params=filter)
 
         records = []
         for record in payload:
             processed_record = {
-                'type': record['record']['record_type'],
-                'name': '{0}.{1}'.format(record['record']['name'],self.options['domain']),
-                'ttl': record['record']['ttl'],
-                'content': record['record']['content'],
-                'id': record['record']['id']
+                'type': record['type'],
+                'name': '{}'.format(self.options.get('domain')) if record['name'] == "" else '{0}.{1}'.format(record['name'],self.options.get('domain')),
+                'ttl': record['ttl'],
+                'content': record['content'],
+                'id': record['id']
             }
+            if record['priority']:
+                processed_record['priority'] = record['priority']
             records.append(processed_record)
 
         print('list_records: {0}'.format(records))
@@ -77,33 +93,36 @@ class Provider(BaseProvider):
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
 
-        data = {'record': {}}
+        data = {}
 
         if name:
-            data['record']['name'] = self._relative_name(name)
+            data['name'] = self._relative_name(name)
         if content:
-            data['record']['content'] = content
+            data['content'] = content
         if self.options.get('ttl'):
-            data['record']['ttl'] = self.options.get('ttl')
+            data['ttl'] = self.options.get('ttl')
+        if self.options.get('priority'):
+            data['priority'] = self.options.get('priority')
+        if self.options.get('regions'):
+            data['regions'] = self.options.get('regions')
 
-        payload = self._put('/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
+        payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier), data)
 
-        print('update_record: {0}'.format('record' in payload))
-        return 'record' in payload
+        print('update_record: {0}'.format('id' in payload))
+        return 'id' in payload
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
                 raise Exception('Record identifier could not be found.')
-        payload = self._delete('/domains/{0}/records/{1}'.format(self.domain_id, identifier))
+        payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
 
-        # is always True at this point, if a non 200 response is returned an error is raised.
+        # is always True at this point; if a non 2xx response is returned, an error is raised.
         print('delete_record: {0}'.format(True))
         return True
 
@@ -120,20 +139,24 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        if self.options.get('auth_domaintoken'):
-            default_headers['X-DNSimple-Domain-Token'] = self.options.get('auth_domaintoken')
-
-        elif self.options.get('auth_username') and self.options.get('auth_token'):
-            default_headers['X-DNSimple-Token'] = "{0}:{1}".format(self.options['auth_username'],self.options['auth_token'])
-
+        if self.options.get('auth_token'):
+            default_headers['Authorization'] = "Bearer {0}".format(self.options.get('auth_token'))
         elif self.options.get('auth_username') and self.options.get('auth_password'):
-            default_auth=(self.options['auth_username'], self.options['auth_password'])
-
-
+            default_auth = (self.options.get('auth_username'),self.options.get('auth_password'))
+            if self.options.get('auth_2fa'):
+                default_headers['X-Dnsimple-OTP'] = self.options.get('auth_2fa')
+        else:
+            raise Exception('No valid authentication mechanism found')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              headers=default_headers,
                              auth=default_auth)
         r.raise_for_status()  # if the request fails for any reason, throw an error.
-        return r.json()
+        if r.text and r.json()['data'] == None:
+            raise Exception('No data returned')
+        
+        return r.json()['data'] if r.text else None
+
+    def _patch(self, url='/', data=None, query_params=None):
+        return self._request('PATCH', url, data=data, query_params=query_params)
