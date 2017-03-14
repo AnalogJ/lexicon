@@ -14,5 +14,3 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
     provider_opts = {'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'}
     def _filter_headers(self):
         return ['Authorization','set-cookie']
-    def _filter_post_data_parameters(self):
-        return ['email']
