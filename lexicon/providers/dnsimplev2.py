@@ -75,9 +75,10 @@ class Provider(BaseProvider):
                 'name': '{}'.format(self.options.get('domain')) if record['name'] == "" else '{0}.{1}'.format(record['name'],self.options.get('domain')),
                 'ttl': record['ttl'],
                 'content': record['content'],
-                'priority': record['priority'],
                 'id': record['id']
             }
+            if record['priority']:
+                processed_record['priority'] = record['priority']
             records.append(processed_record)
 
         print('list_records: {0}'.format(records))
@@ -109,7 +110,6 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
