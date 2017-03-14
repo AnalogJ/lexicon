@@ -13,4 +13,4 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
     domain = 'wopr.tech'
     provider_opts = {'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'}
     def _filter_headers(self):
-        return ['Authorization','set-cookie']
+        return ['Authorization','set-cookie','X-Dnsimple-OTP']
