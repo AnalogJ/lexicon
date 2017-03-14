@@ -6,6 +6,9 @@ import json
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify api token used to authenticate")
+    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
+    subparser.add_argument("--auth-password", help="specify password used to authenticate")
+    subparser.add_argument("--auth-2fa", help="specify two-factor auth token (OTP) to use with email/password authentication")
 
 class Provider(BaseProvider):
 
@@ -32,7 +35,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found like {}'.format(self.options.get('domain')))
 
 
-    # Create record. If record already exists with the same content, do nothing'
+    # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):
         record = {
                     'type': type,
@@ -47,7 +50,10 @@ class Provider(BaseProvider):
             record['regions'] = self.options.get('regions')
 
         payload = {}
-        records = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params={'name': record['name'], 'type': type})
+        records = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params={
+            'name': record['name'], 
+            'type': type}
+        )
         for cur_record in records:
             if cur_record['content'] == content:
                 break
@@ -116,7 +122,7 @@ class Provider(BaseProvider):
                 raise Exception('Record identifier could not be found.')
         payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
 
-        # is always True at this point, if a non 200 response is returned an error is raised.
+        # is always True at this point; if a non 2xx response is returned, an error is raised.
         print('delete_record: {0}'.format(True))
         return True
 
@@ -135,6 +141,12 @@ class Provider(BaseProvider):
 
         if self.options.get('auth_token'):
             default_headers['Authorization'] = "Bearer {0}".format(self.options.get('auth_token'))
+        elif self.options.get('auth_username') and self.options.get('auth_password'):
+            default_auth = (self.options.get('auth_username'),self.options.get('auth_password'))
+            if self.options.get('auth_2fa'):
+                default_headers['X-Dnsimple-OTP'] = self.options.get('auth_2fa')
+        else:
+            raise Exception('No valid authentication mechanism found')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
