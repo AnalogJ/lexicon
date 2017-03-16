@@ -97,7 +97,7 @@ import pytest
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
-# pass, by inheritance from define_tests.TheTests
+# pass, by inheritance from integration_tests.IntegrationTests
 class FooProviderTests(TestCase, IntegrationTests):
 
 	Provider = Provider
@@ -119,7 +119,7 @@ class FooProviderTests(TestCase, IntegrationTests):
 
 Make sure to replace any instance of `foo` or `Foo` with your provider name.
 `domain` should be a real domain registered with your provider (some
-providers don't require you to validate ownership).
+providers have a sandbox/test environment which doesn't require you to validate ownership).
 
 The `_filter_*` methods ensure that your credentials are not included in the
 `vcrpy` recordings that are created. You can take a look at recordings for other
