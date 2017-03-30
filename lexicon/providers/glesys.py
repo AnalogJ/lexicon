@@ -15,9 +15,18 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.glesys.com'
 
-    # Provider does not support this. Uses basic auth.
     def authenticate(self):
-        pass
+        payload = self._get('/domain/list')
+        domains = payload['response']['domains']
+        for record in domains:
+            if record['domainname'] == self.options['domain']:
+                # Domain records do not have any id.
+                # Since domain_id cannot be None, use domain name as id instead.
+                self.domain_id = record['domainname']
+                break
+
+        if self.domain_id == None:
+            raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, type, name, content):

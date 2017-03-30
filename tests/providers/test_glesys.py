@@ -15,11 +15,3 @@ class GlesysProviderTests(TestCase, IntegrationTests):
 
     def _filter_headers(self):
         return ['Authorization']
-
-    @pytest.mark.skip(reason="basic auth is used instead")
-    def test_Provider_authenticate(self):
-        return
-
-    @pytest.mark.skip(reason="basic auth is used instead")
-    def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
-        return
