@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.glesys.com/domain/list?format=json
+  response:
+    body: {string: !!python/unicode '{"response":{"status":{"code":200,"timestamp":"2017-03-30T15:44:08+02:00","text":"OK","transactionid":null},"domains":[{"domainname":"capsulecd.com","createtime":"2016-07-27T14:57:07+02:00","recordcount":6,"registrarinfo":{"state":"OK","statedescription":"","expire":"2017-07-27","autorenew":"yes","tld":"se","invoicenumber":null}}],"debug":{"input":{}}}}'}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['349']
+      content-type: [application/json]
+      date: ['Thu, 30 Mar 2017 13:44:08 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.2.22 (Debian)]
+      status: ['200']
+      x-powered-by: [PHP/5.4.35-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"domainname": "capsulecd.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['25']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: POST
+    uri: https://api.glesys.com/domain/listrecords?format=json
+  response:
+    body: {string: !!python/unicode '{"response":{"status":{"code":200,"timestamp":"2017-03-30T15:44:08+02:00","text":"OK","transactionid":null},"records":[{"recordid":909871,"domainname":"capsulecd.com","host":"@","type":"NS","data":"ns1.namesystem.se.","ttl":3600},{"recordid":909872,"domainname":"capsulecd.com","host":"@","type":"NS","data":"ns2.namesystem.se.","ttl":3600},{"recordid":909873,"domainname":"capsulecd.com","host":"@","type":"NS","data":"ns3.namesystem.se.","ttl":3600},{"recordid":909876,"domainname":"capsulecd.com","host":"@","type":"TXT","data":"v=spf1
+        include:spf.glesys.se -all","ttl":3600},{"recordid":1045776,"domainname":"capsulecd.com","host":"docs.capsulecd.com","type":"CNAME","data":"docs.example.com","ttl":3600},{"recordid":1045775,"domainname":"capsulecd.com","host":"localhost.capsulecd.com","type":"A","data":"127.0.0.1","ttl":3600}],"debug":{"input":{"domainname":"capsulecd.com"}}}}'}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['830']
+      content-type: [application/json]
+      date: ['Thu, 30 Mar 2017 13:44:08 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.2.22 (Debian)]
+      status: ['200']
+      x-powered-by: [PHP/5.4.35-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"data": "challengetoken", "host": "_acme-challenge.fqdn.capsulecd.com",
+      "type": "TXT", "domainname": "capsulecd.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['106']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: POST
+    uri: https://api.glesys.com/domain/addrecord?format=json
+  response:
+    body: {string: !!python/unicode '{"response":{"status":{"code":200,"timestamp":"2017-03-30T15:44:08+02:00","text":"Record
+        added.","transactionid":null},"record":{"recordid":1045777,"domainname":"capsulecd.com","host":"_acme-challenge.fqdn.capsulecd.com","type":"TXT","data":"challengetoken","ttl":3600},"debug":{"input":{"data":"challengetoken","host":"_acme-challenge.fqdn.capsulecd.com","type":"TXT","domainname":"capsulecd.com"}}}}'}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['377']
+      content-type: [application/json]
+      date: ['Thu, 30 Mar 2017 13:44:08 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.2.22 (Debian)]
+      status: ['200']
+      x-powered-by: [PHP/5.4.35-0+deb7u2]
+    status: {code: 200, message: OK}
+version: 1

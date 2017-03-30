@@ -1,0 +1,25 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: https://api.glesys.com/domain/list?format=json
+  response:
+    body: {string: !!python/unicode '{"response":{"status":{"code":200,"timestamp":"2017-03-30T15:44:07+02:00","text":"OK","transactionid":null},"domains":[{"domainname":"capsulecd.com","createtime":"2016-07-27T14:57:07+02:00","recordcount":4,"registrarinfo":{"state":"OK","statedescription":"","expire":"2017-07-27","autorenew":"yes","tld":"se","invoicenumber":null}}],"debug":{"input":{}}}}'}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['349']
+      content-type: [application/json]
+      date: ['Thu, 30 Mar 2017 13:44:07 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.2.22 (Debian)]
+      status: ['200']
+      x-powered-by: [PHP/5.4.35-0+deb7u2]
+    status: {code: 200, message: OK}
+version: 1
