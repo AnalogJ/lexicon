@@ -86,9 +86,8 @@ setup(
     # added to optional-requirements.txt as well.
     extras_require={
         'route53': ['boto3'],
-        'transip': ['transip==0.1.0-dev']
+        'transip': ['transip>=0.3.0']
     },
-    dependency_links = ['git+https://github.com/benkonrath/transip-api.git#egg=transip-0.1.0-dev'],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
