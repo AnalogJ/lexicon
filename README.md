@@ -34,6 +34,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/functions_domain))
 - Gandi ([docs](http://doc.rpc.gandi.net/))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
+- Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
