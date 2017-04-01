@@ -75,7 +75,7 @@ class Provider(BaseProvider):
         if name:
             data['rrhost'] = self._relative_name(name)
         if content:
-            data['rdata'] = content
+            data['rrvalue'] = content
         if self.options.get('ttl'):
             data['rrttl'] = self.options.get('ttl')
 

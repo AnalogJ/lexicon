@@ -7,7 +7,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&version=1&type=xml
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&type=xml&version=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
@@ -36,7 +36,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/dnsAddRecord?rrvalue=challengetoken&domain=capsulecdfake.com&rrhost=orig.testfqdn&rrtype=TXT&version=1&type=xml
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=orig.testfqdn&rrtype=TXT&rrvalue=challengetoken&type=xml&version=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
@@ -64,7 +64,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/dnsListRecords?domain=capsulecdfake.com&version=1&type=xml
+    uri: http://sandbox.namesilo.com/api/dnsListRecords?domain=capsulecdfake.com&type=xml&version=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
@@ -92,7 +92,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/dnsUpdateRecord?domain=capsulecdfake.com&rrhost=updated.testfqdn&rrid=423d488cc8d1007f5e7285bd825c35cb&version=1&rdata=challengetoken&type=xml
+    uri: http://sandbox.namesilo.com/api/dnsUpdateRecord?domain=capsulecdfake.com&rrvalue=challengetoken&rrhost=updated.testfqdn&rrid=423d488cc8d1007f5e7285bd825c35cb&type=xml&version=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
@@ -109,6 +109,36 @@ interactions:
       pragma: [no-cache]
       server: [nginx]
       set-cookie: [PHPSESSID=e6618cd50f0afb1528a5563b2b7c05d3; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.13.0]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsUpdateRecord?domain=capsulecdfake.com&rrhost=updated.testfqdn&rrid=423d488cc8d1007f5e7285bd825c35cb&rrvalue=challengetoken&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsUpdateRecord</operation><ip>208.72.142.184</ip></request><reply><code>110</code><detail>Invalid
+        API Key</detail></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['187']
+      content-type: [text/xml]
+      date: ['Sat, 01 Apr 2017 21:09:38 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=dfia4v4v76j8cuut8r4dgaplm4lhceks; path=/; domain=dev.namesilo.com]
       transfer-encoding: [chunked]
       vary: [Accept-Encoding]
       x-proxy-cache: [MISS]
