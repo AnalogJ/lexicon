@@ -41,6 +41,7 @@ The current supported providers are:
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Vultr ([docs](https://www.vultr.com/api/))
+- Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
