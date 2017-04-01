@@ -133,7 +133,7 @@ Then you'll need to setup your environment variables for testing. Unlike running
 any `auth-*` arguments using environmental variables prefixed with `LEXICON_`.
 
 eg. if you had a `--auth-token` CLI argument, you can also populate it
-using the `LEXICON_AUTH_TOKEN` environmental variable.
+using the `LEXICON_FOO_AUTH_TOKEN` environmental variable.
 
 Now run the `py.test` suite again. It will automatically generate recordings for
 your provider:
