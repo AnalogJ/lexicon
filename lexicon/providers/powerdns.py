@@ -3,7 +3,6 @@ from __future__ import absolute_import
 from .base import Provider as BaseProvider
 import requests
 import json
-import os
 
 # Lexicon PowerDNS Provider
 #
@@ -39,8 +38,6 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(options)
 
         self.api_endpoint = options.get('pdns_server')
-        if self.api_endpoint is None:
-            self.api_endpoint = os.environ.get("LEXICON_POWERDNS_PDNS_SERVER")
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
