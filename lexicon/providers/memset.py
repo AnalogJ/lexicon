@@ -3,7 +3,6 @@ from __future__ import absolute_import
 from .base import Provider as BaseProvider
 import requests
 import json
-from pprint import pprint
 
 
 def ProviderParser(subparser):
