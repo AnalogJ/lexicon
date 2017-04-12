@@ -76,7 +76,6 @@ class Provider(BaseProvider):
         data = {}
         if not identifier:
             records = self.list_records(type, self._relative_name(name))
-            print(records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
