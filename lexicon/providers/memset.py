@@ -74,6 +74,12 @@ class Provider(BaseProvider):
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
         data = {}
+        if not identifier:
+            records = self.list_records(type, self._relative_name(name))
+            if len(records) == 1:
+                identifier = records[0]['id']
+            else:
+                raise Exception('Record identifier could not be found.')
         if type:
             data['type'] = type
         if name:
