@@ -245,9 +245,10 @@ class IntegrationTests(object):
     Like `api_endpoint`.
     """
     def _test_engine_overrides(self):
-        return {
+        overrides = {
             'fallbackFn': (lambda x: 'placeholder_' + x)
         }
+        return overrides
 
     def _cassette_path(self, fixture_subpath):
         return "{0}/{1}".format(self.provider_name, fixture_subpath)

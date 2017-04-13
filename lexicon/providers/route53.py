@@ -74,7 +74,7 @@ class RecordSetPaginator(object):
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
-    def __init__(self, options, engine_overrides={}):
+    def __init__(self, options, engine_overrides=None):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None

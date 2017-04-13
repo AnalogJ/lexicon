@@ -19,7 +19,8 @@ def env_auth_options(provider_name):
 
 class SafeOptions(dict):
     def update(self, update_options):
-        super(SafeOptions, self).update({k:v for k,v in update_options.iteritems() if v})
+        if update_options:
+            super(SafeOptions, self).update({k:v for k,v in update_options.iteritems() if v})
 
 
 class SafeOptionsWithFallback(SafeOptions):
@@ -32,3 +33,6 @@ class SafeOptionsWithFallback(SafeOptions):
     # should not be used directly.
     def __missing__(self, key):
         return self.fallbackFn(key)
+
+    def get(self,key,default=None):
+        return self[key] or default

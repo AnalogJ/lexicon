@@ -28,10 +28,11 @@ class Provider(object):
     :param provider_env_cli_options: is a SafeOptions object that contains all the options for this provider, merged from CLI and Env variables.
     :param engine_overrides: is an empty dict under runtime conditions, only used for testing (eg. overriding api_endpoint to point to sandbox url) see tests/providers/integration_tests.py
     """
-    def __init__(self, provider_env_cli_options, engine_overrides):
+    def __init__(self, provider_env_cli_options, engine_overrides=None):
         self.provider_name = 'example',
+        self.engine_overrides = engine_overrides or {}
 
-        base_options = SafeOptionsWithFallback({'ttl': 3600}, engine_overrides.get('fallbackFn'))
+        base_options = SafeOptionsWithFallback({'ttl': 3600}, engine_overrides.get('fallbackFn') if engine_overrides else None)
         base_options.update(provider_env_cli_options)
         self.options = base_options
 

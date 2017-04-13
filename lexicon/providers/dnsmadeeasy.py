@@ -16,10 +16,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides={}):
+    def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_endpoint = engine_overrides.get('api_endpoint') or 'https://api.dnsmadeeasy.com/V2.0'
+        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dnsmadeeasy.com/V2.0')
 
     def authenticate(self):
 

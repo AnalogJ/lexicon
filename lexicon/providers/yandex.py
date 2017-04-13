@@ -12,10 +12,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides={}):
+    def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_endpoint = engine_overrides.get('api_endpoint') or 'https://pddimp.yandex.ru/api2/admin/dns'
+        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://pddimp.yandex.ru/api2/admin/dns')
 
     def authenticate(self):
         payload = self._get('/list?domain={0}'.format(self.options['domain']))

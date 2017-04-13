@@ -1,6 +1,7 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from .base import Provider as BaseProvider
+from ..common.options_handler import SafeOptions
 try:
     from transip.service.dns import DnsEntry
     from transip.service.domain import DomainService
@@ -15,9 +16,21 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options, engine_overrides={}):
-        super(Provider, self).__init__(options, engine_overrides)
-        self.options.update(engine_overrides)
+
+    """
+    provider_options can be overwritten by a Provider to setup custom defaults.
+    They will be overwritten by any options set via the CLI or Env.
+    order is:
+
+    """
+    def provider_options(self):
+        return {}
+
+    def __init__(self, options, engine_overrides=None):
+        base_provider_options = SafeOptions({'ttl': 86400})
+        base_provider_options.update(self.provider_options())
+        base_provider_options.update(options)
+        super(Provider, self).__init__(base_provider_options, engine_overrides)
         self.provider_name = 'transip'
         self.domain_id = None
 
@@ -59,7 +72,7 @@ class Provider(BaseProvider):
             "name": self._relative_name(name),
             "record_type": type,
             "content": self._bind_format_target(type, content),
-            "expire": self.options.get('ttl') or 86400
+            "expire": self.options.get('ttl')
         }))
 
         self.client.set_dns_entries(self.options.get('domain'), records)
@@ -97,7 +110,7 @@ class Provider(BaseProvider):
             "name": name,
             "type": type,
             "content": self._bind_format_target(type, content),
-            "ttl": self.options.get('ttl') or 86400
+            "ttl": self.options.get('ttl')
         })
 
 
