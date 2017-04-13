@@ -26,7 +26,8 @@ class Client(object):
 
         self.action = cli_options.get('action')
         self.provider_name = cli_options.get('provider_name')
-        self.options = env_auth_options(self.provider_name).update(cli_options)
+        self.options = env_auth_options(self.provider_name)
+        self.options.update(cli_options)
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
