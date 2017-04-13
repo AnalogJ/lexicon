@@ -24,13 +24,10 @@ class Provider(BaseProvider):
 
     """
     def provider_options(self):
-        return {}
+        return {'ttl': 86400}
 
     def __init__(self, options, engine_overrides=None):
-        base_provider_options = SafeOptions({'ttl': 86400})
-        base_provider_options.update(self.provider_options())
-        base_provider_options.update(options)
-        super(Provider, self).__init__(base_provider_options, engine_overrides)
+        super(Provider, self).__init__(options, engine_overrides)
         self.provider_name = 'transip'
         self.domain_id = None
 
