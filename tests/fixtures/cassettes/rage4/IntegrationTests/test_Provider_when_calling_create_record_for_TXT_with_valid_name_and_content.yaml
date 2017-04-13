@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -24,7 +24,7 @@ interactions:
       x-powered-by: [Rage4]
     status: {code: 200, message: OK}
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -33,7 +33,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
-    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&type=TXT&id=57039&name=_acme-challenge.test.capsulecd.com
+    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&type=TXT&id=57039&name=_acme-challenge.test.capsulecd.com&ttl=3600
   response:
     body: {string: !!python/unicode '{"status":true,"id":1954629,"error":""}'}
     headers:
