@@ -62,7 +62,6 @@ interactions:
       date: ['Tue, 24 Jan 2017 05:44:52 GMT']
       server: [nginx/1.8.1]
       strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}
@@ -76,7 +75,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
-    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=CNAME&subdomain=docs&content=docs.example.com.
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=CNAME&subdomain=docs&content=docs.example.com.&ttl=3600
   response:
     body: {string: !!python/unicode '{"record": {"content": "docs.example.com.", "domain":
         "capsulecd.com", "fqdn": "docs.capsulecd.com", "priority": "", "ttl": 21600,
