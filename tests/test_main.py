@@ -7,6 +7,7 @@ def test_BaseProviderParser():
     assert parsed.action == 'list'
     assert parsed.domain == 'capsulecd.com'
     assert parsed.type == 'TXT'
+    assert parsed.ttl == 'TXT'
 
 
 def test_BaseProviderParser_without_domain():

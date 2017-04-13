@@ -11,10 +11,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, provider_options={}):
-        super(Provider, self).__init__(options)
+    def __init__(self, options, engine_overrides={}):
+        super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'https://rest.easydns.net'
+        self.api_endpoint = engine_overrides.get('api_endpoint') or 'https://rest.easydns.net'
 
     def authenticate(self):
 
@@ -32,7 +32,7 @@ class Provider(BaseProvider):
             'type': type,
             'domain': self.domain_id,
             'host': self._relative_name(name),
-            'ttl': self.options.get('ttl') or self.default_ttl,
+            'ttl': self.options['ttl'],
             'prio': 0,
             'rdata': content
         }
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
-            'ttl': self.options.get('ttl') or self.default_ttl
+            'ttl': self.options['ttl']
         }
         if type:
             data['type'] = type

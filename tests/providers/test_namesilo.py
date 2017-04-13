@@ -12,6 +12,11 @@ class NameSiloProviderTests(TestCase, IntegrationTests):
     Provider = Provider
     provider_name = 'namesilo'
     domain = 'capsulecdfake.com'
-    provider_opts = {'api_endpoint': 'http://sandbox.namesilo.com/api'}
+
+    def _test_engine_overrides(self):
+        overrides = super(NameSiloProviderTests, self)._test_engine_overrides()
+        overrides.update({'api_endpoint': 'http://sandbox.namesilo.com/api'})
+        return overrides
+
     def _filter_query_parameters(self):
         return ['key']

@@ -11,6 +11,11 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
     Provider = Provider
     provider_name = 'dnsimple'
     domain = 'wopr.tech'
-    provider_opts = {'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'}
+
+    def _test_engine_overrides(self):
+        overrides = super(DnsimpleProviderTests, self)._test_engine_overrides()
+        overrides.update({'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'})
+        return overrides
+
     def _filter_headers(self):
         return ['Authorization','set-cookie','X-Dnsimple-OTP']

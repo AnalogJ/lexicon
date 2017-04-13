@@ -57,10 +57,13 @@ class TransipProviderTests(TestCase, IntegrationTests):
     # Disable setUp and tearDown, and set a real username and key in
     # provider_opts to execute real calls
 
-    provider_opts = {
-        'auth_username': 'foo',
-        'auth_api_key': 'None'
-    }
+    def _test_engine_overrides(self):
+        overrides = super(TransipProviderTests, self)._test_engine_overrides()
+        overrides.update({
+            'auth_username': 'foo',
+            'auth_api_key': 'None'
+        })
+        return overrides
 
     @classmethod
     def setUpClass(cls):
