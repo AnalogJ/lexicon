@@ -20,7 +20,7 @@ def env_auth_options(provider_name):
 class SafeOptions(dict):
     def update(self, update_options):
         if update_options:
-            super(SafeOptions, self).update({k:v for k,v in update_options.iteritems() if v})
+            super(SafeOptions, self).update({k:v for k,v in update_options.items() if v})
 
 
 class SafeOptionsWithFallback(SafeOptions):
