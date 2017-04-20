@@ -10,10 +10,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, provider_options={}):
-        super(Provider, self).__init__(options)
+    def __init__(self, options, engine_overrides=None):
+        super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.cloudflare.com/client/v4'
+        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.cloudflare.com/client/v4')
 
     def authenticate(self):
 

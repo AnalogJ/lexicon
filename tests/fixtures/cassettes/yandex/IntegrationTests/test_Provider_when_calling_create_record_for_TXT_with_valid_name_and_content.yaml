@@ -69,7 +69,6 @@ interactions:
       date: ['Tue, 24 Jan 2017 05:45:52 GMT']
       server: [nginx/1.8.1]
       strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}
@@ -83,7 +82,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
-    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=_acme-challenge.test&content=challengetoken
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=_acme-challenge.test&content=challengetoken&ttl=3600
   response:
     body: {string: !!python/unicode '{"record": {"content": "challengetoken", "domain":
         "capsulecd.com", "fqdn": "_acme-challenge.test.capsulecd.com", "priority":

@@ -7,7 +7,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&version=1&type=xml
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&type=xml&version=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 
@@ -36,7 +36,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.9.1]
     method: GET
-    uri: http://sandbox.namesilo.com/api/dnsAddRecord?rrvalue=challengetoken&domain=capsulecdfake.com&rrhost=_acme-challenge.full&rrtype=TXT&version=1&type=xml
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=_acme-challenge.full&rrtype=TXT&rrvalue=challengetoken&type=xml&version=1&rrttl=3600
   response:
     body: {string: !!python/unicode '<?xml version="1.0"?>
 

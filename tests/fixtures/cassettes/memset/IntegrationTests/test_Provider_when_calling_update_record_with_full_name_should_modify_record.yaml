@@ -18,7 +18,6 @@ interactions:
       content-type: [application/json]
       date: ['Sat, 01 Apr 2017 12:24:00 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -80,7 +79,6 @@ interactions:
       content-type: [application/json]
       date: ['Sat, 01 Apr 2017 12:24:00 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -92,7 +90,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.13.0]
     method: GET
-    uri: https://api.memset.com/v1/json/dns.zone_record_create?record=orig.testfull&type=TXT&zone_id=ce64e02f2e2e893bdf14703bb8bef9c3&address=challengetoken
+    uri: https://api.memset.com/v1/json/dns.zone_record_create?record=orig.testfull&type=TXT&zone_id=ce64e02f2e2e893bdf14703bb8bef9c3&address=challengetoken&ttl=3600
   response:
     body: {string: !!python/unicode "{\n \"priority\": 0, \n \"zone_id\": \"ce64e02f2e2e893bdf14703bb8bef9c3\"\
         , \n \"address\": \"challengetoken\", \n \"relative\": false, \n \"record\"\
@@ -103,7 +101,6 @@ interactions:
       content-type: [application/json]
       date: ['Sat, 01 Apr 2017 12:24:01 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -125,7 +122,6 @@ interactions:
       content-type: [application/json]
       date: ['Sat, 01 Apr 2017 12:24:01 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -190,7 +186,6 @@ interactions:
       content-type: [application/json]
       date: ['Sat, 01 Apr 2017 12:24:01 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -202,7 +197,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.13.0]
     method: GET
-    uri: https://api.memset.com/v1/json/dns.zone_record_update?record=updated.testfull&zone_id=ce64e02f2e2e893bdf14703bb8bef9c3&type=TXT&id=d45414b637da6771ba5edac85c58f5a8&address=challengetoken
+    uri: https://api.memset.com/v1/json/dns.zone_record_update?record=updated.testfull&zone_id=ce64e02f2e2e893bdf14703bb8bef9c3&type=TXT&id=d45414b637da6771ba5edac85c58f5a8&address=challengetoken&ttl=3600
   response:
     body: {string: !!python/unicode "{\n \"priority\": 0, \n \"zone_id\": \"ce64e02f2e2e893bdf14703bb8bef9c3\"\
         , \n \"address\": \"challengetoken\", \n \"relative\": false, \n \"record\"\

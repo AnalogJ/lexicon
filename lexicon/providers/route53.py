@@ -74,9 +74,9 @@ class RecordSetPaginator(object):
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
-    def __init__(self, options, provider_options={}):
+    def __init__(self, options, engine_overrides=None):
         """Initialize AWS Route 53 DNS provider."""
-        super(Provider, self).__init__(options)
+        super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
         # instantiate the client
         self.r53_client = boto3.client(
@@ -100,7 +100,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
     def _change_record_sets(self, action, type, name, content):
-        ttl = self.options.get('ttl') or self.default_ttl
+        ttl = self.options['ttl']
         value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
         try:
             self.r53_client.change_resource_record_sets(

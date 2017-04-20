@@ -9,10 +9,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, provider_options={}):
-        super(Provider, self).__init__(options)
+    def __init__(self, options, engine_overrides=None):
+        super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_endpoint = provider_options.get('api_endpoint') or 'https://api.vultr.com/v1'
+        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.vultr.com/v1')
 
     def authenticate(self):
 
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
             processed_record = {
                 'type': record['type'],
                 'name': "{0}.{1}".format(record['name'], self.domain_id),
-                'ttl': record.get('ttl', self.options.get('ttl') or self.default_ttl),
+                'ttl': record.get('ttl', self.options['ttl']),
                 'content': record['data'],
                 'id': record['RECORDID']
             }
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id,
             'RECORDID': identifier,
-            'ttl': self.options.get('ttl') or self.default_ttl
+            'ttl': self.options['ttl']
         }
         # if type:
         #     data['type'] = type

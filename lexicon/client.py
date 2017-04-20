@@ -2,31 +2,32 @@ from builtins import object
 import importlib
 import os
 import tldextract
+from .common.options_handler import env_auth_options
+
 #from providers import Example
 class Client(object):
-    def __init__(self, options):
+    def __init__(self, cli_options):
         #validate options
-        self._validate(options)
+        self._validate(cli_options)
 
         #process domain, strip subdomain
-        domain_parts = tldextract.extract(options.get('domain'))
-        options['domain'] = '{0}.{1}'.format(domain_parts.domain, domain_parts.suffix)
+        domain_parts = tldextract.extract(cli_options.get('domain'))
+        cli_options['domain'] = '{0}.{1}'.format(domain_parts.domain, domain_parts.suffix)
 
-        if options.get('delegated'):
+        if cli_options.get('delegated'):
             # handle delegated domain
-            delegated = options.get('delegated').rstrip('.')
+            delegated = cli_options.get('delegated').rstrip('.')
             # convert to relative name
-            if delegated.endswith(options.get('domain')):
-                delegated = delegated[:-len(options.get('domain'))]
+            if delegated.endswith(cli_options.get('domain')):
+                delegated = delegated[:-len(cli_options.get('domain'))]
                 delegated = delegated.rstrip('.')
             # update domain
-            options['domain'] = '{0}.{1}'.format(delegated, options.get('domain'))
+            cli_options['domain'] = '{0}.{1}'.format(delegated, cli_options.get('domain'))
 
-        self.action = options.get('action')
-        self.provider_name = options.get('provider_name')
-        self.options = options
-
-        self._parse_env()
+        self.action = cli_options.get('action')
+        self.provider_name = cli_options.get('provider_name')
+        self.options = env_auth_options(self.provider_name)
+        self.options.update(cli_options)
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
@@ -46,20 +47,6 @@ class Client(object):
 
         elif self.action == 'delete':
             return self.provider.delete_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
-
-    def _parse_env(self):
-        # make sure that auth parameters can be specified via environmental variables as well.
-        # basically we map env variables for the chosen provider to the options dictionary (if a value isnt already provided)
-        # LEXICON_CLOUDFLARE_TOKEN => options['auth_token']
-        # LEXICON_CLOUDFLARE_USERNAME => options['auth_username']
-        # LEXICON_CLOUDFLARE_PASSWORD => options['auth_password']
-        env_prefix = 'LEXICON_{0}_'.format(self.provider_name.upper())
-        for key in list(os.environ.keys()):
-            if key.startswith(env_prefix):
-                auth_type = key[len(env_prefix):].lower()
-                # only assign auth_username/token/etc if its not already provided by CLI.
-                if self.options.get('auth_{0}'.format(auth_type)) is None:
-                    self.options['auth_{0}'.format(auth_type)] = os.environ[key]
 
     def _validate(self, options):
         if not options.get('provider_name'):

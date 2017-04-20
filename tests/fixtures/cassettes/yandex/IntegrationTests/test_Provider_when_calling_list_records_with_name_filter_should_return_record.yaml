@@ -78,7 +78,6 @@ interactions:
       date: ['Tue, 24 Jan 2017 05:47:13 GMT']
       server: [nginx/1.8.1]
       strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}
@@ -92,7 +91,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.9.1]
     method: POST
-    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=random.test&content=challengetoken
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=random.test&content=challengetoken&ttl=3600
   response:
     body: {string: !!python/unicode '{"record": {"content": "challengetoken", "domain":
         "capsulecd.com", "fqdn": "random.test.capsulecd.com", "priority": "", "ttl":
@@ -194,7 +193,6 @@ interactions:
       date: ['Tue, 24 Jan 2017 05:47:14 GMT']
       server: [nginx/1.8.1]
       strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
     status: {code: 200, message: OK}

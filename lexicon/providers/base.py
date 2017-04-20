@@ -1,9 +1,40 @@
 from builtins import object
+from ..common.options_handler import SafeOptionsWithFallback
 class Provider(object):
-    def __init__(self, options):
+
+    """
+    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implmented
+    Providers follow a standard ducktype. All standardized options will be provided here as defaults, but can be overwritten
+    by environmental variables and cli arguments.
+
+    Common options are:
+
+    action
+    domain
+    type
+    name
+    content
+    ttl
+    priority
+    identifier
+
+    The provider_env_cli_options will also contain any Provider specific options:
+
+    auth_username
+    auth_token
+    auth_password
+    ...
+
+    :param provider_env_cli_options: is a SafeOptions object that contains all the options for this provider, merged from CLI and Env variables.
+    :param engine_overrides: is an empty dict under runtime conditions, only used for testing (eg. overriding api_endpoint to point to sandbox url) see tests/providers/integration_tests.py
+    """
+    def __init__(self, provider_env_cli_options, engine_overrides=None):
         self.provider_name = 'example',
-        self.options = options
-        self.default_ttl = 3600
+        self.engine_overrides = engine_overrides or {}
+
+        base_options = SafeOptionsWithFallback({'ttl': 3600}, engine_overrides.get('fallbackFn') if engine_overrides else None)
+        base_options.update(provider_env_cli_options)
+        self.options = base_options
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
