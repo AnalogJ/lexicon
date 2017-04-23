@@ -34,10 +34,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, provider_options={}):
-        super(Provider, self).__init__(options)
+    def __init__(self, options, engine_overrides=None):
+        super(Provider, self).__init__(options, engine_overrides)
 
-        self.api_endpoint = options.get('pdns_server')
+        self.api_endpoint = self.options.get('pdns_server')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
         if not self.api_endpoint.endswith("/api/v1"):
             self.api_endpoint += "/api/v1"
 
-        self.server_id = options.get('pdns_server_id')
+        self.server_id = self.options.get('pdns_server_id')
         if self.server_id is None:
             self.server_id = 'localhost'
 
