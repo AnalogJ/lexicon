@@ -156,6 +156,13 @@ class IntegrationTests(object):
             records = provider.list_records('TXT','orig.test')
             assert provider.update_record(records[0].get('id', None),'TXT','updated.test','challengetoken')
 
+    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record_name_specified.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT','orig.nameonly.test','challengetoken')
+            assert provider.update_record(None,'TXT','orig.nameonly.test','updated')
+
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_full_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
