@@ -18,7 +18,6 @@ interactions:
       content-type: [application/json]
       date: ['Thu, 13 Apr 2017 12:57:00 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -41,7 +40,6 @@ interactions:
       content-type: [application/json]
       date: ['Thu, 13 Apr 2017 12:57:01 GMT']
       server: [nginx]
-      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -53,7 +51,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.13.0]
     method: GET
-    uri: https://api.memset.com/v1/json/dns.zone_record_create?record=localhost&type=A&zone_id=cbceea86fe9c099f019e386488ead6d8&address=127.0.0.1
+    uri: https://api.memset.com/v1/json/dns.zone_record_create?record=localhost&type=A&zone_id=cbceea86fe9c099f019e386488ead6d8&address=127.0.0.1&ttl=3600
   response:
     body: {string: !!python/unicode "{\n \"priority\": 0, \n \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\"\
         , \n \"address\": \"127.0.0.1\", \n \"relative\": false, \n \"record\": \"\
