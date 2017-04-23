@@ -22,3 +22,8 @@ class Rage4ProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="update requires type to be specified for this provider")
     def test_Provider_when_calling_update_record_should_modify_record(self):
         return
+
+    # TODO: this should be enabled
+    @pytest.mark.skip(reason="regenerating auth keys required")
+    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+        return
