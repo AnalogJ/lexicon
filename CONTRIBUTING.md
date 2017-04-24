@@ -20,7 +20,7 @@ Install all `lexicon` requirements:
 
 Install `lexicon` in development mode
 
-    $ python setup.py develop
+    $ pip install -e .
 
 Make sure the tests pass:
 
