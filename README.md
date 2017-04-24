@@ -38,6 +38,7 @@ The current supported providers are:
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
+- PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
@@ -62,7 +63,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ <sub>Unable to test, requires paid account</sub>
-- PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
