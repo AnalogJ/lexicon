@@ -1,8 +1,15 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+
 import json
+import logging
+
+import requests
+
+from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify email address used to authenticate")
@@ -37,7 +44,7 @@ class Provider(BaseProvider):
             data['ttl'] = self.options.get('ttl')
         payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
 
-        print('create_record: {0}'.format(payload['success']))
+        logger.debug('create_record: %s', payload['success'])
         return payload['success']
 
     # List all records. Return an empty list if no records found
@@ -65,7 +72,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -83,7 +90,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
-        print('update_record: {0}'.format(payload['success']))
+        logger.debug('update_record: %s', payload['success'])
         return payload['success']
 
     # Delete an existing record.
@@ -91,14 +98,14 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
+            logger.debug("records: %s", records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
                 raise Exception('Record identifier could not be found.')
         payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier))
 
-        print('delete_record: {0}'.format(payload['success']))
+        logger.debug('delete_record: %s', payload['success'])
         return payload['success']
 
 

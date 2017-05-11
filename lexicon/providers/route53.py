@@ -1,14 +1,18 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
-from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import print_function
+
+import logging
+
 from .base import Provider as BaseProvider
+
 try:
     import boto3 #optional dep
     import botocore #optional dep
 except ImportError:
     pass
 
-
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -128,7 +132,7 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as e:
-            print(e.message)
+            logger.debug(e.message, exc_info=True)
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
@@ -161,12 +165,12 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
-            print(record)
+            logger.debug('record: %s', record)
             records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
             })
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records

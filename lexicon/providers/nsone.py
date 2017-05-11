@@ -1,8 +1,15 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+
 import json
+import logging
+
+import requests
+
+from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify token used authenticate to DNS provider")
@@ -42,7 +49,7 @@ class Provider(BaseProvider):
                 payload = {}
 
                 # http 400 is ok here, because the record probably already exists
-        print('create_record: {0}'.format('id' in payload))
+        logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
 
     # List all records. Return an empty list if no records found
@@ -71,7 +78,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -95,7 +102,7 @@ class Provider(BaseProvider):
             self.create_record(type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
             self.delete_record(identifier)
 
-        print('update_record: {0}'.format(True))
+        logger.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -103,7 +110,7 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
+            logger.debug('records: %s', records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
@@ -111,7 +118,7 @@ class Provider(BaseProvider):
         payload = self._delete('/zones/{0}'.format(identifier))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        print('delete_record: {0}'.format(True))
+        logger.debug('delete_record: %s', True)
         return True
 
 

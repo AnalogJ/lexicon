@@ -1,11 +1,19 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+
 import json
+import logging
+
+import requests
+
+from .base import Provider as BaseProvider
+
 __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'
 __contact__ = 'https://github.com/kharkevich'
+
+logger = logging.getLogger(__name__)
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
@@ -70,14 +78,14 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'].lower() == content.lower()]
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Just update existing record. Domain ID (domain) and Identifier (record_id) is mandatory
     def update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
-            print('Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
+            logger.debug('Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
             return False
         
         data = ''
@@ -97,7 +105,7 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
+            logger.debug('records: %s', records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
@@ -133,8 +141,8 @@ class Provider(BaseProvider):
 
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
-            print('{0}: {1}'.format(title, payload['success']))
+            logger.debug('%s: %s', title, payload['success'])
             return True
         else:
-            print('{0}: {1}'.format(title, payload['error']))
+            logger.debug('%s: %s', title, payload['error'])
             return False
