@@ -30,9 +30,15 @@ class Provider(BaseProvider):
 
     def authenticate(self):
 
-        payload = self._get('/dns/managed/name', {'domainname': self.options['domain']})
+        try:
+            payload = self._get('/dns/managed/name', {'domainname': self.options['domain']})
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                payload = {}
+            else:
+                raise e
 
-        if not payload['id']:
+        if not payload or not payload['id']:
             raise Exception('No domain found')
 
         self.domain_id = payload['id']
