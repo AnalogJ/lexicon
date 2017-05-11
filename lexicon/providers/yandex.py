@@ -1,8 +1,12 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+
 import json
+
+import requests
+
+from .base import Provider as BaseProvider
+
 __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'
 __contact__ = 'https://github.com/kharkevich'

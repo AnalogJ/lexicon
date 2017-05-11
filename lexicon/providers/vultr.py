@@ -1,8 +1,10 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
+from __future__ import print_function
+
 import requests
-import json
+
+from .base import Provider as BaseProvider
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify token used authenticate to DNS provider")

@@ -1,14 +1,18 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-from builtins import bytes
-import requests
-import json
-import datetime
-import locale
+from __future__ import print_function
+
 import contextlib
-from hashlib import sha1
+import datetime
 import hmac
+import json
+import locale
+from hashlib import sha1
+
+import requests
+from builtins import bytes
+
+from .base import Provider as BaseProvider
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username used to authenticate")

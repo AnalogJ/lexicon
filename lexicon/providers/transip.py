@@ -1,13 +1,13 @@
-from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import print_function
+
 from .base import Provider as BaseProvider
-from ..common.options_handler import SafeOptions
+
 try:
     from transip.service.dns import DnsEntry
     from transip.service.domain import DomainService
 except ImportError:
     pass
-
 
 
 def ProviderParser(subparser):

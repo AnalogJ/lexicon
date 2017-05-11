@@ -1,8 +1,12 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
+from __future__ import print_function
+
 from xml.etree import ElementTree
+
+import requests
+
+from .base import Provider as BaseProvider
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify key used authenticate")

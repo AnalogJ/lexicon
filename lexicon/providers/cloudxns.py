@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
-import requests
-import json
-import time
-import hashlib
+from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
+
+import hashlib
+import json
+import time
+
+import requests
+
+from .base import Provider as BaseProvider
+
 from urllib.parse import urlencode
 
 

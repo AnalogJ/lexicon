@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
 from __future__ import absolute_import
-from .base import Provider as BaseProvider
+from __future__ import print_function
+
 import requests
-import json
+
+from .base import Provider as BaseProvider
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify api id used to authenticate")
