@@ -4,14 +4,17 @@ from __future__ import print_function
 
 import argparse
 import importlib
+import logging
 import os
+import sys
 
 import pkg_resources
 
 from .client import Client
 
-
 #based off https://docs.python.org/2/howto/argparse.html
+
+logger = logging.getLogger(__name__)
 
 
 def BaseProviderParser():
@@ -58,8 +61,10 @@ def MainParser():
 
 #dynamically determine all the providers available.
 def main():
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(message)s')
+
     parsed_args = MainParser().parse_args()
-    print(parsed_args)
+    logger.debug('Arguments: %s', parsed_args)
     client = Client(parsed_args.__dict__)
     client.execute()
 

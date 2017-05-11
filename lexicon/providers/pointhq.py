@@ -2,10 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import json
+import logging
 
 import requests
 
 from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -32,7 +35,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': self._relative_name(name), 'data': content}})
 
-        print('create_record: {0}'.format(payload['zone_record']))
+        logger.debug('create_record: %s', payload['zone_record'])
         return bool(payload['zone_record'])
 
     # List all records. Return an empty list if no records found
@@ -61,7 +64,7 @@ class Provider(BaseProvider):
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -77,7 +80,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/zones/{0}/records/{1}'.format(self.domain_id, identifier), {'zone_record': data})
 
-        print('update_record: {0}'.format(payload))
+        logger.debug('update_record: %s', payload)
         return bool(payload['zone_record'])
 
     # Delete an existing record.
@@ -85,14 +88,14 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
+            logger.debug('records: %s', records)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
                 raise Exception('Record identifier could not be found.')
         payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, identifier))
 
-        print('delete_record: {0}'.format(payload['zone_record']['status']))
+        logger.debug('delete_record: %s', payload['zone_record']['status'])
         return payload['zone_record']['status'] == 'OK'
 
 

@@ -2,10 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import json
+import logging
 
 import requests
 
 from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -37,7 +40,7 @@ class Provider(BaseProvider):
             payload = self._get('/dns.zone_record_create', data)
             if payload['id']:
                 self._get('/dns.reload')
-                print('create_record: {0}'.format(payload['id']))
+                logger.debug('create_record: %s', payload['id'])
                 return payload['id']
 
     # List all records. Return an empty list if no records found
@@ -71,7 +74,7 @@ class Provider(BaseProvider):
                 else:
                     records.append(processed_record)
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -97,7 +100,7 @@ class Provider(BaseProvider):
         payload = self._get('/dns.zone_record_update', data)
         if payload['id']:
             self._get('/dns.reload')
-            print('update_record: {0}'.format(payload['id']))
+            logger.debug('update_record: %s', payload['id'])
             return payload['id']
 
     # Delete an existing record.
@@ -112,7 +115,7 @@ class Provider(BaseProvider):
         payload = self._get('/dns.zone_record_delete', {'id': identifier})
         if payload['id']:
             self._get('/dns.reload')
-            print('delete_record: {0}'.format(payload['id']))
+            logger.debug('delete_record: %s', payload['id'])
             return payload['id']
 
     # Helpers

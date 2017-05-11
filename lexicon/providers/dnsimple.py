@@ -2,10 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import json
+import logging
 
 import requests
 
 from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -64,7 +67,7 @@ class Provider(BaseProvider):
         else:
             payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
 
-        print('create_record: {0}'.format('id' in payload))
+        logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
 
     # List all records. Return an empty list if no records found
@@ -91,7 +94,7 @@ class Provider(BaseProvider):
                 processed_record['priority'] = record['priority']
             records.append(processed_record)
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -112,7 +115,7 @@ class Provider(BaseProvider):
 
         payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier), data)
 
-        print('update_record: {0}'.format('id' in payload))
+        logger.debug('update_record: %s', 'id' in payload)
         return 'id' in payload
 
     # Delete an existing record.
@@ -127,7 +130,7 @@ class Provider(BaseProvider):
         payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
-        print('delete_record: {0}'.format(True))
+        logger.debug('delete_record: {0}', True)
         return True
 
 

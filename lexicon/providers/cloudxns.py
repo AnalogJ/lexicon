@@ -6,6 +6,7 @@ install_aliases()
 
 import hashlib
 import json
+import logging
 import time
 
 import requests
@@ -13,6 +14,8 @@ import requests
 from .base import Provider as BaseProvider
 
 from urllib.parse import urlencode
+
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -52,7 +55,7 @@ class Provider(BaseProvider):
 
         payload = self._post('/record', record)
 
-        print('create_record: {0}'.format(True)) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
+        logger.debug('create_record: %s', True) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
         return True
 
     # List all records. Return an empty list if no records found
@@ -84,7 +87,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -108,7 +111,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/record/' + identifier, data)
 
-        print('update_record: {0}'.format(True))
+        logger.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -125,7 +128,7 @@ class Provider(BaseProvider):
         payload = self._delete('/record/' + identifier + '/' + self.domain_id)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        print('delete_record: {0}'.format(True))
+        logger.debug('delete_record: %s', True)
         return True
 
 

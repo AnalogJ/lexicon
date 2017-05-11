@@ -2,10 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import json
+import logging
 
 import requests
 
 from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
 
 
 # Lexicon PowerDNS Provider
@@ -93,7 +96,7 @@ class Provider(BaseProvider):
                             'content': self._unclean_content(rrset['type'], record['content']),
                             'id': self._make_identifier(rrset['type'], rrset['name'], record['content'])
                         })
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     def _clean_content(self, type, content):
@@ -143,7 +146,7 @@ class Provider(BaseProvider):
         update_data['name'] = self._fqdn_name(update_data['name'])
 
         request = {'rrsets': [update_data]}
-        print(request)
+        logger.debug('request: %s', request)
 
         self._patch('/zones/' + self.options['domain'], data=request)
         self._zone_data = None
@@ -153,7 +156,7 @@ class Provider(BaseProvider):
         if identifier is not None:
             type, name, content = self._parse_identifier(identifier)
 
-        print("delete {} {} {}".format(type, name, content))
+        logger.debug("delete %s %s %s", type, name, content)
         if type is None or name is None:
             raise Exception("Must specify at least both type and name")
 
@@ -176,7 +179,7 @@ class Provider(BaseProvider):
         update_data['records'] = new_records
 
         request = {'rrsets': [update_data]}
-        print(request)
+        logger.debug('request: %s', request)
 
         self._patch('/zones/' + self.options['domain'], data=request)
         self._zone_data = None
@@ -200,6 +203,6 @@ class Provider(BaseProvider):
                                  'X-API-Key': self.api_key,
                                  'Content-Type': 'application/json'
                              })
-        print("response: " + r.text)
+        logger.debug('response: %s', r.text)
         r.raise_for_status()
         return r

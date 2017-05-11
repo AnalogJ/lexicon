@@ -1,11 +1,14 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
+import logging
 from xml.etree import ElementTree
 
 import requests
 
 from .base import Provider as BaseProvider
+
+logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
@@ -36,7 +39,7 @@ class Provider(BaseProvider):
         if self.options.get('ttl'):
             record['rrttl'] = self.options.get('ttl')
         payload = self._get('/dnsAddRecord', record)
-        print('create_record: {0}'.format(True))
+        logger.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -64,7 +67,7 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        print('list_records: {0}'.format(records))
+        logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -85,7 +88,7 @@ class Provider(BaseProvider):
 
         payload = self._get('/dnsUpdateRecord', data)
 
-        print('update_record: {0}'.format(True))
+        logger.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -96,7 +99,7 @@ class Provider(BaseProvider):
         }
         if not identifier:
             records = self.list_records(type, name, content)
-            print(records)
+            logger.debug('records: %s', records)
             if len(records) == 1:
                 data['rrid'] = records[0]['id']
             else:
@@ -105,7 +108,7 @@ class Provider(BaseProvider):
             data['rrid'] = identifier
         payload = self._get('/dnsDeleteRecord', data)
 
-        print('delete_record: {0}'.format(True))
+        logger.debug('delete_record: %s', True)
         return True
 
 
