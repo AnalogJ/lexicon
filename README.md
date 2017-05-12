@@ -32,7 +32,6 @@ The current supported providers are:
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/functions_domain))
-- Gandi ([docs](http://doc.rpc.gandi.net/))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
@@ -53,6 +52,7 @@ Potential providers are as follows. If you would like to contribute one, please 
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
+- Gandi ([docs](http://doc.rpc.gandi.net/)) <sub>was removed in [319ac2a46](https://github.com/AnalogJ/lexicon/commit/319ac2a4633586e60fcd32592bbd22032d8facc3) and [bf8ca76df61](https://github.com/AnalogJ/lexicon/commit/bf8ca76df616ce189dcd4c514063b4f3c8ab1439)</sub>
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - GoDaddy DNS ([docs](https://developer.godaddy.com/getstarted#access))
 - ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
