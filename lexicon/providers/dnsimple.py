@@ -130,7 +130,7 @@ class Provider(BaseProvider):
         payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
-        logger.debug('delete_record: {0}', True)
+        logger.debug('delete_record: True')
         return True
 
 
