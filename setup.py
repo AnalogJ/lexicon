@@ -86,7 +86,8 @@ setup(
     # added to optional-requirements.txt as well.
     extras_require={
         'route53': ['boto3'],
-        'transip': ['transip>=0.3.0']
+        'transip': ['transip>=0.3.0'],
+        'ovh': ['ovh']
     },
 
     # To provide executable scripts, use entry points in preference to the
