@@ -1,4 +1,4 @@
-from ovh import Client
+from ovh import Client as OvhClient
 from .base import Provider as BaseProvider
 
 def ProviderParser(subparser):
@@ -16,7 +16,7 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         print(self.options)
-        self.ovh_client = Client(
+        self.ovh_client = OvhClient(
             endpoint=self.options.get('auth_entrypoint'),
             application_key=self.options.get('auth_application_key'),
             application_secret=self.options.get('auth_application_secret'),
@@ -34,14 +34,20 @@ class Provider(BaseProvider):
         if not status['isDeployed']:
             raise Exception('Zone {0} is not deployed'.format(domain))
 
+        self.domain_id = domain
+
     def create_record(self, type, name, content):
         domain = self.options.get('domain')
+        ttl = self.options.get('ttl')
 
         config = {
             'fieldType': type,
             'subDomain': self._relative_name(name),
             'target': content
         }
+
+        if ttl:
+            config['ttl'] = ttl
 
         self.ovh_client.post('/domain/zone/{0}/record'.format(domain), **config)
         self.ovh_client.post('/domain/zone/{0}/refresh'.format(domain))
@@ -64,7 +70,7 @@ class Provider(BaseProvider):
             raw = self.ovh_client.get('/domain/zone/{0}/record/{1}'.format(domain, record_id))
             records.append({
                 'type': raw['fieldType'],
-                'name': raw['subDomain'],
+                'name': '{0}.{1}'.format(raw['subDomain'], domain),
                 'ttl': raw['ttl'],
                 'content': raw['target'],
                 'id': raw['id']
@@ -77,6 +83,15 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, type=None, name=None, content=None):
         domain = self.options.get('domain')
+
+        if not identifier:
+            records = self.list_records(type, name)
+            if len(records) == 1:
+                identifier = records[0]['id']
+            elif len(records) > 1:
+                raise Exception('Several record identifiers match the request')
+            else:
+                raise Exception('Record identifier could not be found')
 
         config = {}
         if name:
@@ -96,6 +111,8 @@ class Provider(BaseProvider):
             records = self.list_records(type, name, content)
             if len(records) == 1:
                 identifier = records[0]['id']
+            elif len(records) > 1:
+                raise Exception('Several record identifiers match the request')
             else:
                 raise Exception('Record identifier could not be found')
 
