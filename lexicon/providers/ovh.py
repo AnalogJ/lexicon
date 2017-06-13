@@ -15,15 +15,16 @@ class Provider(BaseProvider):
 
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
+        print(self.options)
         self.ovh_client = Client(
-            endpoint=options['auth_entrypoint'],
-            application_key=options['auth_application_key'],
-            application_secret=options['auth_application_secret'],
-            consumer_key=options['auth_consumer_key']
+            endpoint=self.options.get('auth_entrypoint'),
+            application_key=self.options.get('auth_application_key'),
+            application_secret=self.options.get('auth_application_secret'),
+            consumer_key=self.options.get('auth_consumer_key')
         )
 
     def authenticate(self):
-        domain = self.options['domain']
+        domain = self.options.get('domain')
 
         domains = self.ovh_client.get('/domain/zone')
         if domain not in domains:
@@ -34,7 +35,7 @@ class Provider(BaseProvider):
             raise Exception('Zone {0} is not deployed'.format(domain))
 
     def create_record(self, type, name, content):
-        domain = self.options['domain']
+        domain = self.options.get('domain')
 
         config = {
             'fieldType': type,
@@ -48,7 +49,7 @@ class Provider(BaseProvider):
         return True
 
     def list_records(self, type=None, name=None, content=None):
-        domain = self.options['domain']
+        domain = self.options.get('domain')
         records = []
 
         config = {}
@@ -75,7 +76,7 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        domain = self.options['domain']
+        domain = self.options.get('domain')
 
         config = {}
         if name:
@@ -89,7 +90,7 @@ class Provider(BaseProvider):
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        domain = self.options['domain']
+        domain = self.options.get('domain')
 
         if not identifier:
             records = self.list_records(type, name, content)
