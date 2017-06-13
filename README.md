@@ -36,6 +36,7 @@ The current supported providers are:
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
+- OVH ([docs](https://api.ovh.com/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
@@ -76,7 +77,7 @@ To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
 
-Some providers (like Route53 and TransIP) require additional dependencies. You can install provider specific dependencies seperately:
+Some providers (like OVH, Route53 and TransIP) require additional dependencies. You can install provider specific dependencies separately:
 
     pip install dns-lexicon[route53]
 
