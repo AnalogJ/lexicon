@@ -77,7 +77,7 @@ To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
 
-Some providers (like OVH, Route53 and TransIP) require additional dependencies. You can install provider specific dependencies separately:
+Some providers (like Route53 and TransIP) require additional dependencies. You can install provider specific dependencies separately:
 
     pip install dns-lexicon[route53]
 
