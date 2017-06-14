@@ -19,5 +19,6 @@ class OvhProviderTests(TestCase, IntegrationTests):
     # Override _test_options to call env_auth_options and then import auth config from env variables
     def _test_options(self):
         cmd_options = env_auth_options(self.provider_name)
+        cmd_options['auth_entrypoint'] = 'ovh-eu'
         cmd_options['domain'] = self.domain
         return cmd_options
