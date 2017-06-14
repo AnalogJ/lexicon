@@ -1,0 +1,136 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.17.3]
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/auth/time
+  response:
+    body: {string: '1497441446'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 11:57:26 GMT']
+      Keep-Alive: ['timeout=15, max=100']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.594124a6.14816.4620]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.17.3]
+      X-Ovh-Timestamp: ['1497441446']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/
+  response:
+    body: {string: '["elogium.net"]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 11:57:26 GMT']
+      Keep-Alive: ['timeout=15, max=99']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.594124a6.14816.6575]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.17.3]
+      X-Ovh-Timestamp: ['1497441446']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/elogium.net/status
+  response:
+    body: {string: '{"warnings":null,"errors":null,"isDeployed":true}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 11:57:26 GMT']
+      Keep-Alive: ['timeout=15, max=98']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.594124a6.14816.6281]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"fieldType": "A", "subDomain": "localhost", "target": "127.0.0.1", "ttl":
+      3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['80']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.17.3]
+      X-Ovh-Timestamp: ['1497441446']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/elogium.net/record
+  response:
+    body: {string: '{"target":"127.0.0.1","ttl":3600,"zone":"elogium.net","fieldType":"A","id":1466302808,"subDomain":"localhost"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 11:57:26 GMT']
+      Keep-Alive: ['timeout=15, max=97']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.594124a6.32155.3626]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.17.3]
+      X-Ovh-Timestamp: ['1497441446']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/elogium.net/refresh
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 11:57:26 GMT']
+      Keep-Alive: ['timeout=15, max=96']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.594124a6.32155.0535]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+version: 1
