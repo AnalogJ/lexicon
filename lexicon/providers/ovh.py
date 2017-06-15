@@ -1,9 +1,12 @@
 import json
 import hashlib
 import time
+import logging
 import requests
 
 from .base import Provider as BaseProvider
+
+LOGGER = logging.getLogger(__name__)
 
 ENDPOINTS = {
     'ovh-eu': 'https://eu.api.ovh.com/1.0',
@@ -78,8 +81,10 @@ class Provider(BaseProvider):
         if ttl:
             data['ttl'] = ttl
 
-        self._post('/domain/zone/{0}/record'.format(domain), data)
+        result = self._post('/domain/zone/{0}/record'.format(domain), data)
         self._post('/domain/zone/{0}/refresh'.format(domain))
+
+        LOGGER.debug('create_record: %s', result['id'])
 
         return True
 
@@ -108,6 +113,8 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'].lower() == content.lower()]
 
+        LOGGER.debug('list_records: %s', records)
+
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
@@ -131,6 +138,8 @@ class Provider(BaseProvider):
         self._put('/domain/zone/{0}/record/{1}'.format(domain, identifier), data)
         self._post('/domain/zone/{0}/refresh'.format(domain))
 
+        LOGGER.debug('update_record: %s', identifier)
+
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
@@ -147,6 +156,8 @@ class Provider(BaseProvider):
 
         self._delete('/domain/zone/{0}/record/{1}'.format(domain, identifier))
         self._post('/domain/zone/{0}/refresh'.format(domain))
+
+        LOGGER.debug('delete_record: %s', identifier)
 
         return True
 
