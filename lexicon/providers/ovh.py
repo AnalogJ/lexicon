@@ -104,7 +104,7 @@ class Provider(BaseProvider):
             raw = self._get('/domain/zone/{0}/record/{1}'.format(domain, record_id))
             records.append({
                 'type': raw['fieldType'],
-                'name': '{0}.{1}'.format(raw['subDomain'], domain),
+                'name': self._full_name(raw['subDomain']),
                 'ttl': raw['ttl'],
                 'content': raw['target'],
                 'id': raw['id']
