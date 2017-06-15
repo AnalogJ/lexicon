@@ -14,11 +14,6 @@ class GandiProviderTests(TestCase, IntegrationTests):
     provider_name = 'gandi'
     domain = 'reachlike.ca'
 
-    def _test_options(self):
-        cmd_options = env_auth_options(self.provider_name)
-        cmd_options['domain'] = self.domain
-        return cmd_options
-
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         return
