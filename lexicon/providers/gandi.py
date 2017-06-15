@@ -59,6 +59,8 @@ class Provider(BaseProvider):
         self.apikey = self.options['auth_token']
         self.api = xmlrpclib.ServerProxy(api_endpoint, allow_none=True)
 
+        self.default_ttl = 3600
+
         # self.domain_id is required by test suite
         self.domain_id = None
         self.zone_id = None
@@ -87,7 +89,7 @@ class Provider(BaseProvider):
         version = None
         ret = False
 
-        name = self._canonicalize_name(name)
+        name = self._relative_name(name)
 
         # This isn't quite "do nothing" if the record already exists.
         # In this case, no new record will be created, but a new zone version
@@ -120,7 +122,7 @@ class Provider(BaseProvider):
         if type is not None:
             opts['type'] = type.upper()
         if name is not None:
-            opts['name'] = self._canonicalize_name(name)
+            opts['name'] = self._relative_name(name)
         if content is not None:
             opts['value'] = self._txt_encode(content) if opts.get('type', '') == 'TXT' else content
 
@@ -129,7 +131,7 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 'type': record['type'],
-                'name': self._fqdn(record['name']),
+                'name': self._fqdn_name(record['name']),
                 'ttl': record['ttl'],
                 'content': record['value'],
                 'id': record['id']
@@ -180,7 +182,7 @@ class Provider(BaseProvider):
                 if type is not None:
                     rec['type'] = type.upper()
                 if name is not None:
-                    rec['name'] = self._canonicalize_name(name)
+                    rec['name'] = self._relative_name(name)
                 if content is not None:
                     rec['value'] = self._txt_encode(content) if rec['type'] == 'TXT' else content
 
@@ -219,7 +221,7 @@ class Provider(BaseProvider):
             opts['id'] = identifier
         else:
             opts['type'] = type.upper()
-            opts['name'] = self._canonicalize_name(name)
+            opts['name'] = self._relative_name(name)
             opts["value"] = self._txt_encode(content) if opts['type'] == 'TXT' else content
 
         records = self.api.domain.zone.record.list(self.apikey, self.zone_id, 0, opts)
@@ -245,19 +247,6 @@ class Provider(BaseProvider):
 
         print("delete_record: {0}".format(ret))
         return ret
-
-    def _fqdn(self, name):
-        if not name.endswith('.') and not name.endswith('.{0}'.format(self.domain)):
-            name += '.{0}'.format(self.domain)
-        return name
-
-    def _canonicalize_name(self, name):
-        name = name.lower()
-        if name.endswith('.{0}.'.format(self.domain)):
-            name = name[:-1]
-        if name.endswith('.{0}'.format(self.domain)):
-            name = name[:-(len(self.domain) + 1)]
-        return name
 
     @staticmethod
     def _txt_encode(val):
