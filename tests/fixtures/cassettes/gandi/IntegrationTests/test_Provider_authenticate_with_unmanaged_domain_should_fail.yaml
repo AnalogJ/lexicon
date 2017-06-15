@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '<?xml version=''1.0''?>
+    body: '<?xml version=''1.0''?>
 
       <methodCall>
 
@@ -10,7 +10,7 @@ interactions:
 
       <param>
 
-      <value><string>tBm11EzvfADiaiKGHZafv8R4</string></value>
+      <value><string>GANDI-TOKEN</string></value>
 
       </param>
 
@@ -24,16 +24,16 @@ interactions:
 
       </methodCall>
 
-'
+      '
     headers:
       Accept-Encoding: [gzip]
       Content-Length: ['255']
       Content-Type: [text/xml]
-      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+      User-Agent: [Python-xmlrpc/3.6]
     method: POST
-    uri: https://rpc.ote.gandi.net/xmlrpc/
+    uri: https://rpc.gandi.net/xmlrpc/
   response:
-    body: {string: !!python/unicode '<?xml version=''1.0''?>
+    body: {string: '<?xml version=''1.0''?>
 
         <methodResponse>
 
@@ -64,14 +64,13 @@ interactions:
 
         </methodResponse>
 
-'}
+        '}
     headers:
-      connection: [close]
+      Connection: [close]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 14 Jun 2017 19:20:12 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
       content-length: ['361']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Wed, 13 Jul 2016 01:40:47 GMT']
-      server: [Apache/2.2.16 (Debian) mod_fastcgi/2.4.6 mod_ssl/2.2.16 OpenSSL/0.9.8o
-          mod_wsgi/3.3 Python/2.6.6]
-      vary: [Accept-Encoding]
     status: {code: 200, message: OK}
 version: 1
