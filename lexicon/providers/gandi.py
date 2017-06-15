@@ -134,7 +134,7 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 'type': record['type'],
-                'name': self._fqdn_name(record['name']),
+                'name': self._full_name(record['name']),
                 'ttl': record['ttl'],
                 'content': record['value'],
                 'id': record['id']
