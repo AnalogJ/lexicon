@@ -1,7 +1,6 @@
 [![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
-[![PyPI](https://img.shields.io/pypi/dm/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
 [![PyPI](https://img.shields.io/pypi/pyversions/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
 [![GitHub license](https://img.shields.io/github/license/AnalogJ/lexicon.svg)](https://github.com/AnalogJ/lexicon/blob/master/LICENSE)
