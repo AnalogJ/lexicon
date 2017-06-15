@@ -22,12 +22,15 @@ attempt to detect and account for that.
 """
 from __future__ import print_function
 from __future__ import absolute_import
+import logging
 from .base import Provider as BaseProvider
 
 try:
     import xmlrpclib
 except ImportError:
     import xmlrpc.client as xmlrpclib
+
+LOGGER = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
@@ -109,7 +112,7 @@ class Provider(BaseProvider):
             if not ret and version is not None:
                 self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print("create_record: {0}".format(ret))
+        LOGGER.debug("create_record: %s", ret)
         return ret
 
     # List all records. Return an empty list if no records found
@@ -143,7 +146,7 @@ class Provider(BaseProvider):
 
             records.append(processed_record)
 
-        print("list_records: {0}".format(records))
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Update a record. Identifier must be specified.
@@ -204,7 +207,7 @@ class Provider(BaseProvider):
                 if not ret and version is not None:
                     self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print("update_record: {0}".format(ret))
+        LOGGER.debug("update_record: %s", ret)
         return ret
 
     # Delete an existing record.
@@ -245,7 +248,7 @@ class Provider(BaseProvider):
                 if not ret and version is not None:
                     self.api.domain.zone.version.delete(self.apikey, self.zone_id, version)
 
-        print("delete_record: {0}".format(ret))
+        LOGGER.debug("delete_record: %s", ret)
         return ret
 
     @staticmethod
