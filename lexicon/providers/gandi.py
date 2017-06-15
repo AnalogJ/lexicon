@@ -251,6 +251,10 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_record: %s", ret)
         return ret
 
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Not used here, as requests are handled by xmlrpc
+        pass
+
     @staticmethod
     def _txt_encode(val):
         return ''.join(['"', val.replace('\\', '\\\\').replace('"', '\\"'), '"'])
