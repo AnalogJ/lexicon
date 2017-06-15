@@ -1,7 +1,6 @@
 # Test for one implementation of the interface
 from unittest import TestCase
 from lexicon.providers.ovh import Provider
-from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -18,7 +17,6 @@ class OvhProviderTests(TestCase, IntegrationTests):
 
     # Override _test_options to call env_auth_options and then import auth config from env variables
     def _test_options(self):
-        cmd_options = env_auth_options(self.provider_name)
-        cmd_options['auth_entrypoint'] = 'ovh-eu'
-        cmd_options['domain'] = self.domain
+        cmd_options = super(OvhProviderTests, self)._test_options()
+        cmd_options.update({'auth_entrypoint':'ovh-eu'})
         return cmd_options
