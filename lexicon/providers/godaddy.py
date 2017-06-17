@@ -66,6 +66,8 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
+        # With GoDaddy API, creating a record for given type and name is the same
+        #   than updating the record.
         return self.create_record(type, name, content)
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
@@ -78,6 +80,18 @@ class Provider(BaseProvider):
         if not content:
             raise Exception('ERROR: content must be setted')
 
+        # OK some explanations need to be done here.
+        # GoDaddy DNS API does not provide a direct way to delete a record (weird).
+        # However it provides a way to get and update all records of a zone.
+        # So :
+        #  - we get all the records,
+        #  - we filter the array to remove the record to be deleted,
+        #  - then we push back the filtered array to set the zone without the record to be deleted.
+        # And yes, we could limit the operation to a given type record (eg. TXT, there is an URL
+        #   for that), but GoDaddy refuses to push back an empty set of a given type (yep, you
+        #   cannot remove all your TXT with this URL, ultra weird).
+        # It is likely to happen during a DNS challenge, as all TXT should be removed at the end.
+        # So operating on all the zone avoid empty sets (there will always at least NS entries).
         records = self._get('/domains/{0}/records'.format(domain))
         to_insert = [record for record in records
                      if record['type'].lower() != type.lower()
@@ -89,9 +103,6 @@ class Provider(BaseProvider):
         if num_to_delete > 1:
             raise Exception('ERROR: multiple records marked to be deleted')
 
-        print(records)
-        print(to_insert)
-        print(num_to_delete)
         self._put('/domains/{0}/records'.format(domain), to_insert)
 
         LOGGER.debug('delete_record: %s', num_to_delete != 0)
@@ -110,6 +121,7 @@ class Provider(BaseProvider):
                                   headers={
                                       'Content-Type': 'application/json',
                                       'Accept': 'application/json',
+                                      # GoDaddy use a key/secret pair to authenticate
                                       'Authorization': 'sso-key {0}:{1}'.format(
                                           self.options.get('auth_key'),
                                           self.options.get('auth_secret'))
