@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz
+  response:
+    body: {string: !!python/unicode '{"domainId":1002111,"domain":"000.biz","status":"TRANSFERRED_OUT","expires":"2016-06-14T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":false,"transferProtected":false,"createdAt":"2015-06-15T13:10:43Z","authCode":"C36C3C6M26XE4DB5","subaccountId":"857256"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['329']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:07:37 GMT']
+      etag: [W/"149-Wv5RnvoMk5suL5kc+t99b36u7fY"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeBksIUAdRBFFXAgFYX1oBCglRTUAEAw5ESBNXA1QEUAAFV11VAV5QAhFJXwBdElY/]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '[{"data": "challengetoken", "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['41']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: PUT
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/_acme-challenge.fqdn
+  response:
+    body: {string: !!python/unicode '{}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['2']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:07:40 GMT']
+      etag: [W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUxhbCAJVVhJIUU4FHwdSXQIOAFZTWk4SUBpOGgkAAANTAVcEUVADVQRRUURPXlJcFwQ/]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+version: 1

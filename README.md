@@ -32,6 +32,7 @@ The current supported providers are:
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Gandi ([docs](http://doc.rpc.gandi.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/functions_domain))
+- GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
@@ -54,7 +55,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
-- GoDaddy DNS ([docs](https://developer.godaddy.com/getstarted#access))
 - ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
 - ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ <sub>Unable to test, requires paid account</sub>
 - ~~Linode ([docs](https://www.linode.com/api/dns))~~ <sub>Unable to test, requires paid account</sub>

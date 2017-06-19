@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz
+  response:
+    body: {string: !!python/unicode '{"domainId":1002111,"domain":"000.biz","status":"TRANSFERRED_OUT","expires":"2016-06-14T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":false,"transferProtected":false,"createdAt":"2015-06-15T13:10:43Z","authCode":"C36C3C6M26XE4DB5","subaccountId":"857256"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['329']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:10:23 GMT']
+      etag: [W/"149-Wv5RnvoMk5suL5kc+t99b36u7fY"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeB0sNUwdUBFtdAQRNRFAKChJIQ1oGAgNXUVADClFTWlcIQBQEWVRHV24=]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records
+  response:
+    body: {string: !!python/unicode '[{"type":"A","name":"@","data":"1.2.3.5","ttl":3600},{"type":"A","name":"localhost","data":"127.0.0.1","ttl":3600},{"type":"CNAME","name":"docs","data":"docs.example.com","ttl":3600},{"type":"CNAME","name":"domain-service-it","data":"mail","ttl":1000},{"type":"CNAME","name":"imap","data":"mail","ttl":1002},{"type":"CNAME","name":"pop","data":"mail","ttl":1003},{"type":"CNAME","name":"smtp","data":"mail","ttl":1004},{"type":"CNAME","name":"test2","data":"test","ttl":3600},{"type":"MX","name":"@","data":"mail.000.biz","priority":0,"ttl":3600},{"type":"TXT","name":"delete.testfilt","data":"challengetoken","ttl":3600},{"type":"TXT","name":"delete.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"delete.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.nameonly.test","data":"updated","ttl":3600},{"type":"TXT","name":"orig.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.fqdntest","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.fulltest","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"ttl.fqdn","data":"ttlshouldbe3600","ttl":3600},{"type":"TXT","name":"updated.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"updated.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"updated.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.fqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.full","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.test","data":"challengetoken","ttl":3600},{"type":"NS","name":"@","data":"ns01.ote.domaincontrol.com","ttl":3600},{"type":"NS","name":"@","data":"ns02.ote.domaincontrol.com","ttl":3600}]'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['1956']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:10:24 GMT']
+      etag: [W/"7a4-yf2MjU589PgIPHsmLrPRiG29hOE"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUwhOXA1ZXlVbQ04HHQdIVwQHAVBUUlYcQAlbDQ4WHhFUDQJSAgMDXQMDAldWDAMSSAcDW0JSOw==]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+version: 1

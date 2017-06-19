@@ -1,0 +1,178 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz
+  response:
+    body: {string: !!python/unicode '{"domainId":1002111,"domain":"000.biz","status":"TRANSFERRED_OUT","expires":"2016-06-14T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":false,"transferProtected":false,"createdAt":"2015-06-15T13:10:43Z","authCode":"C36C3C6M26XE4DB5","subaccountId":"857256"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['329']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:09:34 GMT']
+      etag: [W/"149-Wv5RnvoMk5suL5kc+t99b36u7fY"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeBksBWAlXBlJXAQBNRFAKChJIQ1dTVA5fAQAOVQNWBgEAQBQEWVRHV24=]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '[{"data": "challengetoken", "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['41']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: PUT
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/delete.testfull
+  response:
+    body: {string: !!python/unicode '{}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['2']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:09:36 GMT']
+      etag: [W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUxhbCAJVVhJIUU4GHwRWUAcGA1BfUE4SUBpOGltWB1ZWDQAFVQpaAA4PQ0oFWV9DATw=]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records
+  response:
+    body: {string: !!python/unicode '[{"type":"A","name":"@","data":"1.2.3.5","ttl":3600},{"type":"A","name":"localhost","data":"127.0.0.1","ttl":3600},{"type":"CNAME","name":"docs","data":"docs.example.com","ttl":3600},{"type":"CNAME","name":"domain-service-it","data":"mail","ttl":1000},{"type":"CNAME","name":"imap","data":"mail","ttl":1002},{"type":"CNAME","name":"pop","data":"mail","ttl":1003},{"type":"CNAME","name":"smtp","data":"mail","ttl":1004},{"type":"CNAME","name":"test2","data":"test","ttl":3600},{"type":"MX","name":"@","data":"mail.000.biz","priority":0,"ttl":3600},{"type":"TXT","name":"delete.testfilt","data":"challengetoken","ttl":3600},{"type":"TXT","name":"delete.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"delete.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.nameonly.test","data":"updated","ttl":3600},{"type":"TXT","name":"orig.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"orig.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.fqdntest","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.fulltest","data":"challengetoken","ttl":3600},{"type":"TXT","name":"random.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"ttl.fqdn","data":"ttlshouldbe3600","ttl":3600},{"type":"TXT","name":"updated.test","data":"challengetoken","ttl":3600},{"type":"TXT","name":"updated.testfqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"updated.testfull","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.fqdn","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.full","data":"challengetoken","ttl":3600},{"type":"TXT","name":"_acme-challenge.test","data":"challengetoken","ttl":3600},{"type":"NS","name":"@","data":"ns01.ote.domaincontrol.com","ttl":3600},{"type":"NS","name":"@","data":"ns02.ote.domaincontrol.com","ttl":3600}]'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['1956']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:09:37 GMT']
+      etag: [W/"7a4-yf2MjU589PgIPHsmLrPRiG29hOE"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUwhOXA1ZXlVbQ04HHQdIVwkFBFtXU1MAUghSCAgEAgdJG1AIVAVASBQAWQRaCgYJU1lQAgRSUkYdUFIOFQY/]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '[{"data": "1.2.3.5", "type": "A", "name": "@", "ttl":
+      3600}, {"data": "127.0.0.1", "type": "A", "name": "localhost", "ttl": 3600},
+      {"data": "docs.example.com", "type": "CNAME", "name": "docs", "ttl": 3600},
+      {"data": "mail", "type": "CNAME", "name": "domain-service-it", "ttl": 1000},
+      {"data": "mail", "type": "CNAME", "name": "imap", "ttl": 1002}, {"data": "mail",
+      "type": "CNAME", "name": "pop", "ttl": 1003}, {"data": "mail", "type": "CNAME",
+      "name": "smtp", "ttl": 1004}, {"data": "test", "type": "CNAME", "name": "test2",
+      "ttl": 3600}, {"priority": 0, "data": "mail.000.biz", "type": "MX", "name":
+      "@", "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "delete.testfilt",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "delete.testfqdn",
+      "ttl": 3600}, {"data": "updated", "type": "TXT", "name": "orig.nameonly.test",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "orig.test",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "orig.testfqdn",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "orig.testfull",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "random.fqdntest",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "random.fulltest",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "random.test",
+      "ttl": 3600}, {"data": "ttlshouldbe3600", "type": "TXT", "name": "ttl.fqdn",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "updated.test",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "updated.testfqdn",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "updated.testfull",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "_acme-challenge.fqdn",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "_acme-challenge.full",
+      "ttl": 3600}, {"data": "challengetoken", "type": "TXT", "name": "_acme-challenge.test",
+      "ttl": 3600}, {"data": "ns01.ote.domaincontrol.com", "type": "NS", "name": "@",
+      "ttl": 3600}, {"data": "ns02.ote.domaincontrol.com", "type": "NS", "name": "@",
+      "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2098']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: PUT
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records
+  response:
+    body: {string: !!python/unicode '{}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['121']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:09:39 GMT']
+      etag: [W/"79-DSgzB+j1FNeoO72UsWN6P7TAtpw"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEhNNA05VGAVSVFoKBAVTV04VAAVXRh0UAlJUAVZVAVtQXFoBAQBVG01XAF8RAWs=]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/delete.testfull
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['74']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:09:40 GMT']
+      etag: [W/"4a-zgPi4dQGKV+JKL3hO49d0lx6Nd0"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUwhOXA1ZXlVbQ04HHQdIVwYPAlJSU1YCThpVDBoYEAZRAFlQVgNUVVJVAwdBFFVRCBIHag==]
+      x-powered-by: [Express]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://api.ote-godaddy.com/v1/domains/thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"code":"NOT_FOUND","message":"Domain thisisadomainidonotown.com
+        not found for shopper","name":"ApiError"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
+      access-control-allow-origin: ['*']
+      connection: [Keep-Alive]
+      content-length: ['106']
+      content-type: [application/json; charset=utf-8]
+      date: ['Sat, 17 Jun 2017 10:07:13 GMT']
+      etag: [W/"6a-hmteov0EBQpvLV5wjJuGbVJ3arg"]
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache/2.4.6 (CentOS)]
+      transfer-encoding: [chunked]
+      vary: ['Origin,Accept-Encoding']
+      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
+      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeA0sJVwZUBFdcBAZRVlMIAwBUUE4VAAdQRh0UAldeBwNSBgFQCF4GBwRVG01XAF8RAWs=]
+      x-powered-by: [Express]
+    status: {code: 404, message: Not Found}
+version: 1
