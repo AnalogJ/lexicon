@@ -74,11 +74,11 @@ class Provider(BaseProvider):
         domain = self.options.get('domain')
 
         if not type:
-            raise Exception('ERROR: type must be setted')
+            raise Exception('ERROR: type is required')
         if not name:
-            raise Exception('ERROR: name must be setted')
+            raise Exception('ERROR: name is required')
         if not content:
-            raise Exception('ERROR: content must be setted')
+            raise Exception('ERROR: content is required')
 
         # OK some explanations need to be done here.
         # GoDaddy DNS API does not provide a direct way to delete a record (weird).
