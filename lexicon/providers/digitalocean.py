@@ -108,7 +108,7 @@ class Provider(BaseProvider):
         payload = self._delete('/domains/{0}/records/{1}'.format(self.domain_id, identifier))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: {0}', True)
+        logger.debug('delete_record: %s', True)
         return True
 
 
