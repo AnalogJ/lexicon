@@ -107,7 +107,7 @@ class Provider(BaseProvider):
 
         payload = self._put('/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: {0}', True)
+        logger.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
