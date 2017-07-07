@@ -13,13 +13,11 @@ logger = logging.getLogger(__name__)
 def ProviderParser(subparser):
     subparser.add_argument(
         '--auth-token',
-        help='specify api token used to authenticate',
-        required=True
+        help='specify api token used to authenticate'
     )
     subparser.add_argument(
         '--auth-username',
-        help='specify email address used to authenticate',
-        required=True
+        help='specify email address used to authenticate'
     )
     # FIXME What is the client IP used for?
     subparser.add_argument(
