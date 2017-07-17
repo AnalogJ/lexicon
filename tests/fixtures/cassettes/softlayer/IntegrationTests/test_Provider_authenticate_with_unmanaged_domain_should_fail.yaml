@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>getDomains</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>headers</name>
+
+      <value><struct>
+
+      <member>
+
+      <name>authenticate</name>
+
+      <value><struct>
+
+      <member>
+
+      <name>username</name>
+
+      <value><string>placeholder_auth_username</string></value>
+
+      </member>
+
+      <member>
+
+      <name>apiKey</name>
+
+      <value><string>placeholder_auth_api_key</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </member>
+
+      <member>
+
+      <name>SoftLayer_AccountObjectFilter</name>
+
+      <value><struct>
+
+      <member>
+
+      <name>domains</name>
+
+      <value><struct>
+
+      <member>
+
+      <name>name</name>
+
+      <value><struct>
+
+      <member>
+
+      <name>operation</name>
+
+      <value><string>_= thisisadomainidonotown.com</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </member>
+
+      </struct></value>
+
+      </member>
+
+      </struct></value>
+
+      </member>
+
+      </struct></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate, compress']
+      Connection: [keep-alive]
+      Content-Length: ['870']
+      Content-Type: [application/xml]
+      User-Agent: [softlayer-python/v4.1.1]
+    method: POST
+    uri: https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<params>\n<param>\n
+        <value>\n  <array>\n   <data/>\n  </array>\n </value>\n</param>\n</params>\n"}
+    headers:
+      cache-control: [private]
+      connection: [close]
+      content-length: ['126']
+      content-type: [text/xml]
+      date: ['Sun, 16 Jul 2017 03:18:10 GMT']
+      ntcoent-length: ['126']
+      server: [Apache]
+      softlayer-total-items: ['0']
+      vary: [Accept-Encoding]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

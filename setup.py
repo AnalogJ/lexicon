@@ -86,6 +86,7 @@ setup(
     # added to optional-requirements.txt as well.
     extras_require={
         'route53': ['boto3'],
+        'softlayer': ['SoftLayer'],
         'transip': ['transip>=0.3.0']
     },
 
