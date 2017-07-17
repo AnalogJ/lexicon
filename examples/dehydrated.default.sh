@@ -49,6 +49,22 @@ function clean_challenge {
     # The parameters are the same as for deploy_challenge.
 }
 
+function invalid_challenge() {
+    local DOMAIN="${1}" RESPONSE="${2}"
+
+    echo "invalid_challenge called: ${DOMAIN}, ${RESPONSE}"
+
+    # This hook is called if the challenge response has failed, so domain
+    # owners can be aware and act accordingly.
+    #
+    # Parameters:
+    # - DOMAIN
+    #   The primary domain name, i.e. the certificate common
+    #   name (CN).
+    # - RESPONSE
+    #   The response that the verification server returned
+}
+
 function deploy_cert {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}"
 
