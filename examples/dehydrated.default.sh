@@ -117,4 +117,11 @@ exit_hook() {
   :
 }
 
+startup_hook() {
+  # This hook is called before the dehydrated command to do some initial tasks
+  # (e.g. starting a webserver).
+
+  :
+}
+
 HANDLER=$1; shift; $HANDLER "$@"
