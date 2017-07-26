@@ -130,10 +130,12 @@ your provider.
 
 Then you'll need to setup your environment variables for testing. Unlike running
 `lexicon` via the CLI, the test suite cannot take user input, so we'll need to provide
-any `auth-*` arguments using environmental variables prefixed with `LEXICON_`.
+any `auth-*` secrets/arguments using environmental variables prefixed with `LEXICON_FOO_`.
 
 eg. if you had a `--auth-token` CLI argument, you can also populate it
-using the `LEXICON_FOO_AUTH_TOKEN` environmental variable.
+using the `LEXICON_FOO_TOKEN` environmental variable. Notice that only `--auth-*` arguments
+can be passed like this. All non-secret arguments should be specified in the `test_options`.
+See: https://github.com/AnalogJ/lexicon/blob/82fa5056df2122357af7f9bec94aebc58b247f91/tests/providers/test_powerdns.py#L18-L21
 
 Now run the `py.test` suite again. It will automatically generate recordings for
 your provider:
