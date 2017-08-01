@@ -31,7 +31,7 @@ The current supported providers are:
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Gandi ([docs](http://doc.rpc.gandi.net/))
-- Glesys ([docs](https://github.com/glesys/API/wiki/functions_domain))
+- Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
