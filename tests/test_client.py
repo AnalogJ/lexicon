@@ -33,7 +33,7 @@ def test_Client_init_with_delegated_domain_name():
     options = {
         'provider_name':'base',
         'action': 'list',
-        'domain': 'example.com',
+        'domain': 'www.sub.example.com',
         'delegated': 'sub',
         'type': 'TXT'
     }
@@ -48,7 +48,7 @@ def test_Client_init_with_delegated_domain_fqdn():
     options = {
         'provider_name':'base',
         'action': 'list',
-        'domain': 'example.com',
+        'domain': 'www.sub.example.com',
         'delegated': 'sub.example.com',
         'type': 'TXT'
     }
@@ -59,6 +59,20 @@ def test_Client_init_with_delegated_domain_fqdn():
     assert client.options['domain'] == "sub.example.com"
     assert client.options['type'] == options['type']
 
+def test_Client_init_with_same_delegated_domain_fqdn():
+    options = {
+        'provider_name':'base',
+        'action': 'list',
+        'domain': 'www.example.com',
+        'delegated': 'example.com',
+        'type': 'TXT'
+    }
+    client = lexicon.client.Client(options)
+
+    assert client.provider_name == options['provider_name']
+    assert client.action == options['action']
+    assert client.options['domain'] == "example.com"
+    assert client.options['type'] == options['type']
 
 def test_Client_init_when_missing_provider_should_fail():
     options = {
