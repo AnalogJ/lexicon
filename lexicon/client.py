@@ -17,12 +17,13 @@ class Client(object):
         if cli_options.get('delegated'):
             # handle delegated domain
             delegated = cli_options.get('delegated').rstrip('.')
-            # convert to relative name
-            if delegated.endswith(cli_options.get('domain')):
-                delegated = delegated[:-len(cli_options.get('domain'))]
-                delegated = delegated.rstrip('.')
-            # update domain
-            cli_options['domain'] = '{0}.{1}'.format(delegated, cli_options.get('domain'))
+            if delegated != cli_options.get('domain'):
+                # convert to relative name
+                if delegated.endswith(cli_options.get('domain')):
+                    delegated = delegated[:-len(cli_options.get('domain'))]
+                    delegated = delegated.rstrip('.')
+                # update domain
+                cli_options['domain'] = '{0}.{1}'.format(delegated, cli_options.get('domain'))
 
         self.action = cli_options.get('action')
         self.provider_name = cli_options.get('provider_name')
@@ -57,3 +58,4 @@ class Client(object):
             raise AttributeError('domain')
         if not options.get('type'):
             raise AttributeError('type')
+
