@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.3]
+    method: GET
+    uri: https://api.cloudns.net/dns/get-zone-info.json?domain-name=thisisadomainidonotown.com
+  response:
+    body: {string: '{"status":"Failed","statusDescription":"Missing domain-name"}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['61']
+      Content-Type: [application/json]
+      Date: ['Fri, 04 Aug 2017 21:44:30 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1
