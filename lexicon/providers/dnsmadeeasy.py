@@ -7,6 +7,7 @@ import hmac
 import json
 import locale
 import logging
+import babel.dates.format_datetime
 from hashlib import sha1
 
 import requests
@@ -129,15 +130,6 @@ class Provider(BaseProvider):
 
     # Helpers
 
-    # this method allows you to set the locale when doing datetime string formatting.
-    # https://stackoverflow.com/questions/18593661/how-do-i-strftime-a-date-object-in-a-different-locale
-    @contextlib.contextmanager
-    def setlocale(self, *args, **kw):
-        saved = locale.setlocale(locale.LC_ALL)
-        #yield locale.setlocale(*args, **kw)
-        yield locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
-        locale.setlocale(locale.LC_ALL, saved)
-
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -153,13 +145,13 @@ class Provider(BaseProvider):
         # all requests require a HMAC header and timestamp header.
         now = datetime.datetime.utcnow()
         # required format: Sat, 12 Feb 2011 20:59:04 GMT
-        with self.setlocale(locale.LC_TIME, 'en_US.utf8'):
-            request_date = now.strftime('%a, %d %b %Y %H:%M:%S GMT')
-            hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'), 
-                              bytes(request_date, 'ascii'), sha1)
 
-            default_headers['x-dnsme-requestDate'] = request_date
-            default_headers['x-dnsme-hmac'] = hashed.hexdigest()
+        request_date = format_datetime(now, '%a, %d %b %Y %H:%M:%S GMT', locale='en_US')
+        hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'),
+                          bytes(request_date, 'ascii'), sha1)
+
+        default_headers['x-dnsme-requestDate'] = request_date
+        default_headers['x-dnsme-hmac'] = hashed.hexdigest()
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),

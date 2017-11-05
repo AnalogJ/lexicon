@@ -87,7 +87,8 @@ setup(
     extras_require={
         'route53': ['boto3'],
         'softlayer': ['SoftLayer'],
-        'transip': ['transip>=0.3.0']
+        'transip': ['transip>=0.3.0'],
+        'dnsmadeeasy': ['Babel']
     },
 
     # To provide executable scripts, use entry points in preference to the
