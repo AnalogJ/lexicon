@@ -3,8 +3,6 @@ from __future__ import print_function
 
 import logging
 from xml.etree import ElementTree
-
-
 import requests
 
 from .base import Provider as BaseProvider
@@ -65,17 +63,12 @@ class Provider(BaseProvider):
 
 
     def authenticate(self):
-
         payload = self._get('/dns/dyndns.jsp', {
             'action' : 'QUERY',
-            'name': "**." + self.options['domain'],
-        })
-        #print payload
-        #if not payload['result']:
-        #    raise Exception('No domain found')
-        #if len(payload['result']) > 1:
-        #    raise Exception('Too many domains found. This should not happen')
+            'name': "**." + self.options['domain'] })
 
+        if payload.find('is_ok').text != 'OK:':
+            raise Exception('Error with api {0}'.format(payload.find('is_ok').text))
         self.domain_id = self.options['domain']
 
     def _make_identifier(self, type, name, content):
@@ -91,18 +84,49 @@ class Provider(BaseProvider):
 
 
     def create_record(self, type, name, content):
-        data = {'action': 'SET', 'type': type, 'name': self._full_name(name), 'value': content}
+        query = {'action': 'SET', 'type': type, 'name': self._full_name(name), 'value': content}
         if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
-        payload = self._get('/dns/dyndns.jsp', data)
+            query['ttl'] = self.options.get('ttl')
+        payload = self._get('/dns/dyndns.jsp', query)
 
         #logger.debug('create_record: %s', payload['success'])
         #return payload['success']
 
 
-#
-#    def list_records(self, type=None, name=None, content=None):
-#        records = []
+
+    def list_records(self, type=None, name=None, content=None):
+        records = []
+
+        request = {
+            'action' : 'QUERY',
+            'name': "**." + self.options['domain'],
+            }
+
+        logger.debug('{} {} {}'.format(type, name, content))
+
+        if type is not None:
+            request['type'] = type
+        if name is not None:
+            request['name'] = name
+        if content is not None:
+            request['value'] = content
+        
+
+        payload = self._get('/dns/dyndns.jsp', request)
+        for rxml in payload.iter('record'):
+            processed_record = {
+                'type': rxml.attrib['type'],
+                'name': rxml.attrib['name'],
+                'ttl': rxml.attrib['ttl'],
+                'content': rxml.attrib['content'],
+                'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content'])
+            }
+            records.append(processed_record)
+        logger.debug('list_records: %s', records)
+        return records
+
+
+      
 #        for rrset in self.zone_data()['rrsets']:
 #            if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(name)) and (type is None or rrset['type'] == type):
 #                for record in rrset['records']:
@@ -207,8 +231,6 @@ class Provider(BaseProvider):
 #        self.delete_record(identifier)
 #        return self.create_record(type, name, content)
 #
-    def _patch(self, url='/', data=None, query_params=None):
-        return self._request('PATCH', url, data=data, query_params=query_params)
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
@@ -216,12 +238,13 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         else:
-            query_params.update({'api_key': self.api_key})
+            query_params['api_key'] = self.api_key
 
         r = requests.request(action, self.api_endpoint + url, params=query_params)
-        logger.debug('response: %s', r.text)
-        r.raise_for_status()
+        logger.debug('response: %s', r.content)
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
-
-        return r
+        if root.tag == 'error':
+            raise Exception('An error occurred: {0}'.format(root.text))
+        #r.raise_for_status()
+        return root
