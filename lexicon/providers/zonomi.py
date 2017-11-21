@@ -1,14 +1,21 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-import json
 import logging
+from xml.etree import ElementTree
+
 
 import requests
 
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+APIENDPOINTS = {
+        'zonomi': 'https://zonomi.com/app',
+        'rimuhosting' : 'https://rimuhosting.com'
+}
+
 
 
 # Lexicon PowerDNS Provider
@@ -36,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify token used authenticate")
-    subparser.add_argument("--use-rimudns", help="use Rimuhosting DNS API")
+    subparser.add_argument("--endpoint", help="Use Zonomi or Rimuhosting API", choices=[
+        'zonomi', 'rimuhosting' ])
 
 
 class Provider(BaseProvider):
@@ -44,10 +52,17 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-        self.api_key = self.options.get('auth_token')
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://zonomi.com/app')
 
-        #self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://rimuhosting.com/')
+        if not self.options.get('auth_token'):
+            raise Exception('Error, application key is not defined')
+
+        self.api_key = self.options.get('auth_token')
+
+        if not self.options.get('endpoint'):
+            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENDPOINTS.get('zonomi'))
+        else:
+            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENDPOINTS.get(self.options.get('endpoint')))
+
 
     def authenticate(self):
 
@@ -76,13 +91,13 @@ class Provider(BaseProvider):
 
 
     def create_record(self, type, name, content):
-        data = {'action': 'SET', 'type': type, 'name': self._full_name(name), 'content': content}
+        data = {'action': 'SET', 'type': type, 'name': self._full_name(name), 'value': content}
         if self.options.get('ttl'):
             data['ttl'] = self.options.get('ttl')
         payload = self._get('/dns/dyndns.jsp', data)
 
-        logger.debug('create_record: %s', payload['success'])
-        return payload['success']
+        #logger.debug('create_record: %s', payload['success'])
+        #return payload['success']
 
 
 #
@@ -203,10 +218,10 @@ class Provider(BaseProvider):
         else:
             query_params.update({'api_key': self.api_key})
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data)
-                             
-                             )
+        r = requests.request(action, self.api_endpoint + url, params=query_params)
         logger.debug('response: %s', r.text)
         r.raise_for_status()
+        tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
+        root = tree.getroot()
+
         return r
