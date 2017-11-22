@@ -40,6 +40,7 @@ APIENDPOINTS = {
 
 
 def ProviderParser(subparser):
+    #subparser.add_argument("--priority", help="priority")
     subparser.add_argument("--auth-token", help="specify token used authenticate")
     subparser.add_argument("--endpoint", help="Use Zonomi or Rimuhosting API", choices=[
         'zonomi', 'rimuhosting' ])
@@ -69,6 +70,7 @@ class Provider(BaseProvider):
 
         if payload.find('is_ok').text != 'OK:':
             raise Exception('Error with api {0}'.format(payload.find('is_ok').text))
+
         self.domain_id = self.options['domain']
 
     def _make_identifier(self, type, name, content):
@@ -84,13 +86,26 @@ class Provider(BaseProvider):
 
 
     def create_record(self, type, name, content):
-        query = {'action': 'SET', 'type': type, 'name': self._full_name(name), 'value': content}
-        if self.options.get('ttl'):
-            query['ttl'] = self.options.get('ttl')
-        payload = self._get('/dns/dyndns.jsp', query)
+        request = {
+                'action': 'SET', 
+                'type': type, 
+                'name': self.options['domain'], 
+                'value': content 
+                }
 
-        #logger.debug('create_record: %s', payload['success'])
-        #return payload['success']
+        if name is not None:
+            request['name'] = self._full_name(name)
+ 
+        if self.options.get('ttl'):
+            request['ttl'] = self.options.get('ttl')
+
+        if self.options.get('priority'):
+            request['prio'] = self.options.get('priority')
+        
+        payload = self._get('/dns/dyndns.jsp', request)
+        
+        logger.debug('create_record: %s', payload.find('is_ok').text)
+        return payload.find('is_ok').text
 
 
 
@@ -100,14 +115,12 @@ class Provider(BaseProvider):
         request = {
             'action' : 'QUERY',
             'name': "**." + self.options['domain'],
-            }
-
-        logger.debug('{} {} {}'.format(type, name, content))
+        }
 
         if type is not None:
             request['type'] = type
         if name is not None:
-            request['name'] = name
+            request['name'] = self._full_name(name)
         if content is not None:
             request['value'] = content
         
@@ -121,116 +134,57 @@ class Provider(BaseProvider):
                 'content': rxml.attrib['content'],
                 'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content'])
             }
+            if rxml.attrib['prio']:
+                processed_record['priority'] = rxml.attrib['prio']
+
             records.append(processed_record)
         logger.debug('list_records: %s', records)
         return records
 
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        if identifier is not None:
+            type, name, content = self._parse_identifier(identifier)
+        request = {
+            'action' : 'DELETE',
+            'type' : type,
+            'name' : self._full_name(name),
+            'value': content
+        }
 
-      
-#        for rrset in self.zone_data()['rrsets']:
-#            if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(name)) and (type is None or rrset['type'] == type):
-#                for record in rrset['records']:
-#                    if content is None or record['content'] == self._clean_content(type, content):
-#                        records.append({
-#                            'type': rrset['type'],
-#                            'name': self._full_name(rrset['name']),
-#                            'ttl': rrset['ttl'],
-#                            'content': self._unclean_content(rrset['type'], record['content']),
-#                            'id': self._make_identifier(rrset['type'], rrset['name'], record['content'])
-#                        })
-#        logger.debug('list_records: %s', records)
-#        return records
-#
-#    def _clean_content(self, type, content):
-#        if type in ("TXT", "LOC"):
-#            if content[0] != '"':
-#                content = '"' + content
-#            if content[-1] != '"':
-#                content += '"'
-#        elif type == "CNAME":
-#            content = self._fqdn_name(content)
-#        return content
-#
-#    def _unclean_content(self, type, content):
-#        if type in ("TXT", "LOC"):
-#            content = content.strip('"')
-#        elif type == "CNAME":
-#            content = self._full_name(content)
-#        return content
-#
-#    def create_record(self, type, name, content):
-#        content = self._clean_content(type, content)
-#        for rrset in self.zone_data()['rrsets']:
-#            if rrset['name'] == name and rrset['type'] == type:
-#                update_data = rrset
-#                if 'comments' in update_data:
-#                    del update_data['comments']
-#                update_data['changetype'] = 'REPLACE'
-#                break
-#        else:
-#            update_data = {
-#                'name': name,
-#                'type': type,
-#                'records': [],
-#                'ttl': self.options.get('ttl', 600),
-#                'changetype': 'REPLACE'
-#            }
-#
-#        for record in update_data['records']:
-#            if record['content'] == content:
-#                return True
-#
-#        update_data['records'].append({
-#            'content': content,
-#            'disabled': False
-#        })
-#
-#        update_data['name'] = self._fqdn_name(update_data['name'])
-#
-#        request = {'rrsets': [update_data]}
-#        logger.debug('request: %s', request)
-#
-#        self._patch('/zones/' + self.options['domain'], data=request)
-#        self._zone_data = None
-#        return True
-#
-#    def delete_record(self, identifier=None, type=None, name=None, content=None):
-#        if identifier is not None:
-#            type, name, content = self._parse_identifier(identifier)
-#
-#        logger.debug("delete %s %s %s", type, name, content)
-#        if type is None or name is None:
-#            raise Exception("Must specify at least both type and name")
-#
-#        for rrset in self.zone_data()['rrsets']:
-#            if rrset['type'] == type and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
-#                update_data = rrset
-#                if 'comments' in update_data:
-#                    del update_data['comments']
-#                update_data['changetype'] = 'REPLACE'
-#                break
-#        else:
-#            return True
-#
-#        new_records = []
-#        for record in update_data['records']:
-#            if content is None or self._unclean_content(type, record['content']) != self._unclean_content(type, content):
-#                new_records.append(record)
-#
-#        update_data['name'] = self._fqdn_name(update_data['name'])
-#        update_data['records'] = new_records
-#
-#        request = {'rrsets': [update_data]}
-#        logger.debug('request: %s', request)
-#
-#        self._patch('/zones/' + self.options['domain'], data=request)
-#        self._zone_data = None
-#        return True
-#
-#    def update_record(self, identifier, type=None, name=None, content=None):
-#        self.delete_record(identifier)
-#        return self.create_record(type, name, content)
-#
+        payload = self._get('/dns/dyndns.jsp', request)
+        
+        logger.debug('delete_record: %s', payload.find('is_ok').text)
+        return payload.find('is_ok').text
+
+
+    def update_record(self, identifier, type=None, name=None, content=None):
+        
+        self.delete_record(identifier)
+        
+        ttype, tname, tcontent = self._parse_identifier(identifier)
+
+        request = {
+                'action': 'SET', 
+                'type': ttype, 
+                'name': self._full_name(tname), 
+                'value': tcontent 
+                }
+
+        if name:
+            request['name'] = self._full_name(name)
+        if content:
+            request['value'] = content
+        if self.options.get('ttl'):
+            request['ttl'] = self.options.get('ttl')
+        if self.options.get('priority'):
+            request['prio'] = self.options.get('priority')
+
+        payload = self._get('/dns/dyndns.jsp', request)
+
+        logger.debug('update_record: %s', payload.find('is_ok').text)
+        return payload.find('is_ok').text
+
+
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
@@ -238,7 +192,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         else:
-            query_params['api_key'] = self.api_key
+            query_params['api_key'] = self.options.get('auth_token')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params)
         logger.debug('response: %s', r.content)
