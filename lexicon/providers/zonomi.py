@@ -16,11 +16,12 @@ APIENDPOINTS = {
 
 
 
-# Lexicon PowerDNS Provider
+# Lexicon Zonomi and Rimuhosting Provider
 #
 # Author: Juan Rossi, 2017
 #
-# API Docs: https://zonomi.com/app/dns/dyndns.jsp
+# Zonomi API Docs: https://zonomi.com/app/dns/dyndns.jsp
+# Rimuhosting API Docs: https://rimuhosting.com/dns/dyndns.jsp
 #
 # Implementation notes:
 # * Lots of tricks taken from the PowerDNS API
@@ -32,11 +33,6 @@ APIENDPOINTS = {
 #   or 'delete all records for this name and type. Similarly, there is no notion of
 #   'change the content of this record', because records are identified by their name,
 #   type and content.
-# * The API is very picky about the format of values used when creating records:
-# ** CNAMEs must be fully qualified
-# ** TXT, LOC records must be quoted
-#   This is why the _clean_content and _unclean_content methods exist, to convert
-#   back and forth between the format PowerDNS expects, and the format Lexicon uses
 
 
 def ProviderParser(subparser):
