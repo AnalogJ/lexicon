@@ -1,6 +1,6 @@
 from builtins import object
 import lexicon.client
-from lexicon.common.options_handler import SafeOptions
+from lexicon.common.options_handler import SafeOptions, env_auth_options
 
 import pytest
 import vcr
@@ -238,6 +238,7 @@ class IntegrationTests(object):
     def _test_options(self):
         cmd_options = SafeOptions()
         cmd_options['domain'] = self.domain
+        cmd_options.update(env_auth_options(self.provider_name))
         return cmd_options
 
     """
