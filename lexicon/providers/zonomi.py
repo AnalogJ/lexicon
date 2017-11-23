@@ -100,9 +100,11 @@ class Provider(BaseProvider):
         
         payload = self._get('/dns/dyndns.jsp', request)
         
-        logger.debug('create_record: %s', payload.find('is_ok').text)
-        return payload.find('is_ok').text
-
+        if payload.find('is_ok').text != 'OK:':
+            raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
+            
+        logger.debug('create_record: %s', True)
+        return True
 
 
     def list_records(self, type=None, name=None, content=None):
@@ -110,7 +112,7 @@ class Provider(BaseProvider):
 
         request = {
             'action' : 'QUERY',
-            'name': "**." + self.options['domain'],
+            'name': "**." + self.options['domain']
         }
 
         if type is not None:
@@ -126,7 +128,7 @@ class Provider(BaseProvider):
             processed_record = {
                 'type': rxml.attrib['type'],
                 'name': rxml.attrib['name'],
-                'ttl': rxml.attrib['ttl'],
+                'ttl': rxml.attrib['ttl'].split()[0],
                 'content': rxml.attrib['content'],
                 'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content'])
             }
@@ -136,6 +138,7 @@ class Provider(BaseProvider):
             records.append(processed_record)
         logger.debug('list_records: %s', records)
         return records
+
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier is not None:
@@ -148,9 +151,12 @@ class Provider(BaseProvider):
         }
 
         payload = self._get('/dns/dyndns.jsp', request)
-        
-        logger.debug('delete_record: %s', payload.find('is_ok').text)
-        return payload.find('is_ok').text
+
+        if payload.find('is_ok').text != 'OK:':
+            raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
+            
+        logger.debug('delete_record: %s', True)
+        return True
 
 
     def update_record(self, identifier, type=None, name=None, content=None):
@@ -177,9 +183,12 @@ class Provider(BaseProvider):
 
         payload = self._get('/dns/dyndns.jsp', request)
 
-        logger.debug('update_record: %s', payload.find('is_ok').text)
-        return payload.find('is_ok').text
-
+        if payload.find('is_ok').text != 'OK:':
+            raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
+            
+        logger.debug('update_record: %s', True)
+        return True
+        
 
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
@@ -191,7 +200,7 @@ class Provider(BaseProvider):
             query_params['api_key'] = self.options.get('auth_token')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params)
-        logger.debug('response: %s', r.content)
+        #logger.debug('response: %s', r.content)
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
         if root.tag == 'error':
