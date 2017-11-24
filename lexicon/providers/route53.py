@@ -19,6 +19,7 @@ def ProviderParser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
     subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY used to authenticate")
     subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET used authenticate")
+    subparser.add_argument("--private-zone", help="indicates what kind of hosted zone to use, if true, use only private zones, if false, use only public zones")
 
     #TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
@@ -82,12 +83,27 @@ class Provider(BaseProvider):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
+        self.private_zone = options.get('private_zone', None)
         # instantiate the client
         self.r53_client = boto3.client(
             'route53',
             aws_access_key_id=self.options.get('auth_access_key', self.options.get('auth_username')),
             aws_secret_access_key=self.options.get('auth_access_secret', self.options.get('auth_token'))
         )
+
+    def filter_zone(self, hz):
+        if self.private_zone is not None:
+            if hz['Config']['PrivateZone'] != self.str2bool(self.private_zone):
+                return False
+
+        if hz['Name'] != '{0}.'.format(self.options['domain']):
+            return False
+
+        return True
+
+    @staticmethod
+    def str2bool(input_string):
+        return input_string.lower() in ('true', 'yes')
 
     def authenticate(self):
         """Determine the hosted zone id for the domain."""
@@ -97,7 +113,7 @@ class Provider(BaseProvider):
             ]
             hosted_zone = next(
                 hz for hz in hosted_zones
-                if hz['Name'] == '{0}.'.format(self.options['domain'])
+                if self.filter_zone(hz)
             )
             self.domain_id = hosted_zone['Id']
         except StopIteration:
