@@ -8,23 +8,20 @@ import pytest
 # pass, by inheritance from integration_tests.IntegrationTests
 class ZonomiProviderTests(TestCase, IntegrationTests):
 
-	Provider = Provider
-	provider_name = 'zonomi'
-	domain = 'pcekper.com.ar'
-
+    Provider = Provider
+    provider_name = 'zonomi'
+    domain = 'pcekper.com.ar'
         
-        def _test_engine_overrides(self):
-            overrides = super(ZonomiProviderTests, self)._test_engine_overrides()
-            overrides.update({'api_endpoint': 'https://zonomi.com/app'})
+    def _test_engine_overrides(self):
+        overrides = super(ZonomiProviderTests, self)._test_engine_overrides()
+        overrides.update({'api_endpoint': 'https://zonomi.com/app'})
+        return overrides
+    
+    def _filter_query_parameters(self):
+        return ['api_key']
 
-            return overrides
-
-#        def _filter_query_parameters(self):
-#            return ['api_key']
-
-
-
-        @pytest.mark.skip(reason="can not set ttl when creating/updating records")
-        def test_Provider_when_calling_list_records_after_setting_ttl(self):
-            return
+    # TODO: this should be enabled
+    @pytest.mark.skip(reason="The record identifier is based on the name, this needs disabled")
+    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+        return
 
