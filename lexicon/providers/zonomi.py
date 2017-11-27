@@ -62,15 +62,18 @@ class Provider(BaseProvider):
     def authenticate(self):
         payload = self._get('/dns/dyndns.jsp', {
             'action' : 'QUERY',
-            'name': "**." + self.options['domain'] })
+            'name': "**." + self.options['domain'] 
+        })
 
         if payload.find('is_ok').text != 'OK:':
             raise Exception('Error with api {0}'.format(payload.find('is_ok').text))
 
         self.domain_id = self.options['domain']
 
+
     def _make_identifier(self, type, name, content):
-        return "{}/{}={}".format(type, name, content)
+        return "{}/{}={}".format(type, self._full_name(name), content)
+
 
     def _parse_identifier(self, identifier):
         parts = identifier.split('/')
@@ -87,22 +90,22 @@ class Provider(BaseProvider):
                 'type': type, 
                 'name': self.options['domain'], 
                 'value': content 
-                }
+        }
 
         if name is not None:
             request['name'] = self._full_name(name)
- 
+
         if self.options.get('ttl'):
             request['ttl'] = self.options.get('ttl')
 
         if self.options.get('priority'):
             request['prio'] = self.options.get('priority')
-        
+
         payload = self._get('/dns/dyndns.jsp', request)
-        
+
         if payload.find('is_ok').text != 'OK:':
             raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
-            
+
         logger.debug('create_record: %s', True)
         return True
 
@@ -121,20 +124,15 @@ class Provider(BaseProvider):
             request['name'] = self._full_name(name)
         if content is not None:
             request['value'] = content
-        
 
         payload = self._get('/dns/dyndns.jsp', request)
         for rxml in payload.iter('record'):
             processed_record = {
                 'type': rxml.attrib['type'],
                 'name': rxml.attrib['name'],
-                'ttl': rxml.attrib['ttl'].split()[0],
                 'content': rxml.attrib['content'],
                 'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content'])
             }
-            if rxml.attrib['prio']:
-                processed_record['priority'] = rxml.attrib['prio']
-
             records.append(processed_record)
         logger.debug('list_records: %s', records)
         return records
@@ -154,23 +152,21 @@ class Provider(BaseProvider):
 
         if payload.find('is_ok').text != 'OK:':
             raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
-            
+
         logger.debug('delete_record: %s', True)
         return True
 
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        
         self.delete_record(identifier)
-        
         ttype, tname, tcontent = self._parse_identifier(identifier)
 
         request = {
-                'action': 'SET', 
-                'type': ttype, 
-                'name': self._full_name(tname), 
-                'value': tcontent 
-                }
+                'action': 'SET',
+                'type': ttype,
+                'name': self._full_name(tname),
+                'value': tcontent
+        }
 
         if name:
             request['name'] = self._full_name(name)
@@ -185,11 +181,9 @@ class Provider(BaseProvider):
 
         if payload.find('is_ok').text != 'OK:':
             raise Exception('An error occurred: {0}'.format(payload.find('is_ok').text))
-            
+
         logger.debug('update_record: %s', True)
         return True
-        
-
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
@@ -200,10 +194,10 @@ class Provider(BaseProvider):
             query_params['api_key'] = self.options.get('auth_token')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params)
-        #logger.debug('response: %s', r.content)
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
         if root.tag == 'error':
             raise Exception('An error occurred: {0}'.format(root.text))
-        #r.raise_for_status()
+        else:
+            r.raise_for_status()
         return root
