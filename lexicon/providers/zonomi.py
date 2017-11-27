@@ -131,7 +131,8 @@ class Provider(BaseProvider):
                 'type': rxml.attrib['type'],
                 'name': rxml.attrib['name'],
                 'content': rxml.attrib['content'],
-                'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content'])
+                'id': self._make_identifier(rxml.attrib['type'],rxml.attrib['name'],rxml.attrib['content']),
+                'ttl': rxml.attrib['ttl'].split()[0]
             }
             records.append(processed_record)
         logger.debug('list_records: %s', records)
@@ -141,12 +142,17 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier is not None:
             type, name, content = self._parse_identifier(identifier)
+
         request = {
             'action' : 'DELETE',
             'type' : type,
-            'name' : self._full_name(name),
-            'value': content
+            'name': self.options['domain'] 
         }
+        
+        if name:
+            request['name'] = self._full_name(name)
+        if content:
+            request['value'] = content
 
         payload = self._get('/dns/dyndns.jsp', request)
 
@@ -160,7 +166,6 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
         self.delete_record(identifier)
         ttype, tname, tcontent = self._parse_identifier(identifier)
-
         request = {
                 'action': 'SET',
                 'type': ttype,
