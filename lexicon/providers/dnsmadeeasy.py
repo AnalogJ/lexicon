@@ -2,12 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import contextlib
-import datetime
 import hmac
 import json
 import locale
 import logging
-from babel.dates import format_date, format_datetime, format_time
+from datetime import datetime
+from email.utils import formatdate
+from time import mktime
 from hashlib import sha1
 
 import requests
@@ -130,6 +131,13 @@ class Provider(BaseProvider):
 
     # Helpers
 
+    @staticmethod
+    def _get_request_date():
+        "Returns a string for todays date e.g. Sat, 12 Feb 2011 20:59:04 GMT"
+        now = datetime.utcnow()
+        now_ts = mktime(now.timetuple())
+        return formatdate(timeval=now_ts, usegmt=True)
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -142,11 +150,7 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        # all requests require a HMAC header and timestamp header.
-        now = datetime.datetime.utcnow()
-        # required format: Sat, 12 Feb 2011 20:59:04 GMT
-
-        request_date = format_datetime(now, '%a, %d %b %Y %H:%M:%S GMT', locale='en_US')
+        request_date = self._get_request_date()
         hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'),
                           bytes(request_date, 'ascii'), sha1)
 
