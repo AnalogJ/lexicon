@@ -46,6 +46,7 @@ The current supported providers are:
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Vultr ([docs](https://www.vultr.com/api/))
+- Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
@@ -69,7 +70,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
 - ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
 - ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
-- ~~Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))~~ <sub>Unable to test, requires paid account</sub>
 
 ## Setup
 To use lexicon as a CLI application, do the following:
