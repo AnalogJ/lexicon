@@ -6,9 +6,7 @@ import hmac
 import json
 import locale
 import logging
-from datetime import datetime
 from email.utils import formatdate
-from time import mktime
 from hashlib import sha1
 
 import requests
@@ -131,13 +129,6 @@ class Provider(BaseProvider):
 
     # Helpers
 
-    @staticmethod
-    def _get_request_date():
-        "Returns a string for todays date e.g. Sat, 12 Feb 2011 20:59:04 GMT"
-        now = datetime.utcnow()
-        now_ts = mktime(now.timetuple())
-        return formatdate(timeval=now_ts, usegmt=True)
-
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -150,7 +141,9 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        request_date = self._get_request_date()
+        # Date string in HTTP format e.g. Sat, 12 Feb 2011 20:59:04 GMT
+        request_date = formatdate(usegmt=True)
+
         hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'),
                           bytes(request_date, 'ascii'), sha1)
 
