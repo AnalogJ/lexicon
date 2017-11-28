@@ -9,7 +9,7 @@ from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
-APIENDPOINTS = {
+APIENTRYPOINT = {
         'zonomi': 'https://zonomi.com/app',
         'rimuhosting' : 'https://rimuhosting.com'
 }
@@ -36,9 +36,8 @@ APIENDPOINTS = {
 
 
 def ProviderParser(subparser):
-    #subparser.add_argument("--priority", help="priority")
     subparser.add_argument("--auth-token", help="specify token used authenticate")
-    subparser.add_argument("--endpoint", help="Use Zonomi or Rimuhosting API", choices=[
+    subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[
         'zonomi', 'rimuhosting' ])
 
 
@@ -47,19 +46,17 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
-
         if not self.options.get('auth_token'):
             raise Exception('Error, application key is not defined')
 
-        self.api_key = self.options.get('auth_token')
+        self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENTRYPOINT.get('zonomi'))
 
-        if not self.options.get('endpoint'):
-            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENDPOINTS.get('zonomi'))
-        else:
-            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENDPOINTS.get(self.options.get('endpoint')))
+        if self.options.get('auth_entrypoint'):
+            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENTRYPOINT.get(self.options.get('auth_entrypoint')))
 
 
     def authenticate(self):
+    
         payload = self._get('/dns/dyndns.jsp', {
             'action' : 'QUERY',
             'name': "**." + self.options['domain'] 
@@ -145,13 +142,14 @@ class Provider(BaseProvider):
 
         request = {
             'action' : 'DELETE',
-            'type' : type,
             'name': self.options['domain'] 
         }
         
-        if name:
+        if type is not None:
+            request['type'] = type
+        if name is not None:
             request['name'] = self._full_name(name)
-        if content:
+        if content is not None:
             request['value'] = content
 
         payload = self._get('/dns/dyndns.jsp', request)
@@ -173,9 +171,11 @@ class Provider(BaseProvider):
                 'value': tcontent
         }
 
-        if name:
+        if type is not None:
+            request['type'] = type
+        if name is not None:
             request['name'] = self._full_name(name)
-        if content:
+        if content is not None:
             request['value'] = content
         if self.options.get('ttl'):
             request['ttl'] = self.options.get('ttl')
