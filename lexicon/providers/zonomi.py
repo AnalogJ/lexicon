@@ -59,7 +59,8 @@ class Provider(BaseProvider):
     
         payload = self._get('/dns/dyndns.jsp', {
             'action' : 'QUERY',
-            'name': "**." + self.options['domain'] 
+            'name' : "**." + self.options['domain'],
+            'type' : 'SOA'
         })
 
         if payload.find('is_ok').text != 'OK:':
