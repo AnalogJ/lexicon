@@ -1,0 +1,27 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=%2A%2A.thisisadomainidonotown.com&type=SOA
+  response:
+    body: {string: !!python/unicode '<?xml version ="1.0"  ?><!DOCTYPE html [<!ENTITY
+        nbsp ''&#160;''><!ENTITY trade ''&#8482;''><!ENTITY copy ''&#169;''>]>
+
+        <error>ERROR: No zone found for thisisadomainidonotown.com</error>'}
+    headers:
+      cache-control: [no-store]
+      connection: [close]
+      content-length: ['180']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:07 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=849951985; Expires=Wed, 28-Nov-2018 22:03:07 GMT; Path=/app;
+          HttpOnly', JSESSIONID=1E1CD2D59E034E25FF4A2A9C5AA5A0C3; Path=/app/; Secure;
+          HttpOnly]
+    status: {code: 500, message: Internal Server Error}
+version: 1

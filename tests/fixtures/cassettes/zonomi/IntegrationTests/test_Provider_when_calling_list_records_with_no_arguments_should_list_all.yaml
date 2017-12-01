@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=%2A%2A.pcekper.com.ar&type=SOA
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"QUERY\"\n host=\"pcekper.com.ar\"\n\
+        \ type=\"SOA\">\n<record \n name=\"pcekper.com.ar\"\n type=\"SOA\"\n content=\"\
+        ns1.zonomi.com. soacontact.zonomi.com. 39 10800 3600 604800 3600\"\n ttl=\"\
+        86400 seconds\"\n prio=\"0\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['477']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:48 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=580061985; Expires=Wed, 28-Nov-2018 22:03:48 GMT; Path=/app;
+          HttpOnly', JSESSIONID=365DBDD1DB887EF1D28006393043985D; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=%2A%2A.pcekper.com.ar
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"QUERY\"\n host=\"pcekper.com.ar, localhost.pcekper.com.ar,\
+        \ docs.pcekper.com.ar, _acme-challenge.fqdn.pcekper.com.ar, _acme-challenge.full.pcekper.com.ar,\
+        \ _acme-challenge.test.pcekper.com.ar, ttl.fqdn.pcekper.com.ar, random.fqdntest.pcekper.com.ar,\
+        \ random.fulltest.pcekper.com.ar, random.test.pcekper.com.ar\">\n<record \n\
+        \ name=\"pcekper.com.ar\"\n type=\"SOA\"\n content=\"ns1.zonomi.com. soacontact.zonomi.com.\
+        \ 39 10800 3600 604800 3600\"\n ttl=\"86400 seconds\"\n prio=\"0\"/>\t\n<record\
+        \ \n name=\"pcekper.com.ar\"\n type=\"NS\"\n content=\"ns1.zonomi.com\"\n\
+        \ ttl=\"3600 seconds\"\n prio=\"0\"/>\t\n<record \n name=\"pcekper.com.ar\"\
+        \n type=\"NS\"\n content=\"ns3.zonomi.com\"\n ttl=\"3600 seconds\"\n prio=\"\
+        0\"/>\t\n<record \n name=\"localhost.pcekper.com.ar\"\n type=\"A\"\n content=\"\
+        127.0.0.1\"\n ttl=\"3600 seconds\"\n prio=\"0\"/>\t\n<record \n name=\"docs.pcekper.com.ar\"\
+        \n type=\"CNAME\"\n content=\"docs.example.com\"\n ttl=\"3600 seconds\"\n\
+        \ prio=\"0\"/>\t\n<record \n name=\"_acme-challenge.fqdn.pcekper.com.ar\"\n\
+        \ type=\"TXT\"\n content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"\
+        0\"/>\t\n<record \n name=\"_acme-challenge.full.pcekper.com.ar\"\n type=\"\
+        TXT\"\n content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"0\"/>\t\
+        \n<record \n name=\"_acme-challenge.test.pcekper.com.ar\"\n type=\"TXT\"\n\
+        \ content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"0\"/>\t\n<record\
+        \ \n name=\"ttl.fqdn.pcekper.com.ar\"\n type=\"TXT\"\n content=\"ttlshouldbe3600\"\
+        \n ttl=\"3600 seconds\"\n prio=\"0\"/>\t\n<record \n name=\"random.fqdntest.pcekper.com.ar\"\
+        \n type=\"TXT\"\n content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"\
+        0\"/>\t\n<record \n name=\"random.fulltest.pcekper.com.ar\"\n type=\"TXT\"\
+        \n content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"0\"/>\t\n<record\
+        \ \n name=\"random.test.pcekper.com.ar\"\n type=\"TXT\"\n content=\"challengetoken\"\
+        \n ttl=\"3600 seconds\"\n prio=\"0\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['2000']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:49 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=780061985; Expires=Wed, 28-Nov-2018 22:03:49 GMT; Path=/app;
+          HttpOnly', JSESSIONID=B79A348B5DF452C063DA2541160C729B; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
