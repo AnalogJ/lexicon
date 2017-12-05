@@ -52,31 +52,77 @@ class Provider(BaseProvider):
         logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
 
+    def _find_record(self, domain):
+        """search for a record on NS1 across zones. returns None if not found."""
+
+        payload = self._get('/search?q={0}&type=record'.format(domain))
+        match = [ record for record in payload if record.get('domain', None) == domain ]
+        if not match:
+            return None # no such domain to access on ns1
+
+        record = self._get('/zones/{0}/{1}/{2}'.format(match[0]['zone'], match[0]['domain'], match[0]['type']))
+        if record.get('message', None):
+            return None # {"message":"record not found"}
+        short_answers = [ x['answer'][0] for x in record['answers'] ]
+
+        # ensure a compatibility level with self.list_records
+        record['short_answers'] = short_answers
+        return record
+
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        filter = {}
+
+        def _resolve_link(record, recurse=0):
+            # https://ns1.com/articles/cname-alias-and-linked-records
+            # - recursion is allowed
+            # - link source and link target are always of the same type
+            # - target can be anywhere on ns1, not necessarily self.domain_id.
+            if record.get('link', None) is None:
+                # not a linked record
+                return record
+
+            if recurse < 1:
+                return None
+
+            match = self._find_record(record['link'])
+            if not match:
+                return None
+
+            return _resolve_link(match, recurse=recurse-1)
 
         payload = self._get('/zones/{0}'.format(self.domain_id))
         records = []
         for record in payload['records']:
+
+            if type and record['type'] != type:
+                continue
+
+            if name and record['domain'] != self._full_name(name):
+                continue
+
+            link_target = _resolve_link(record, recurse=3)
+
+            if link_target and link_target.get('short_answers', None):
+                # target found (could be the same as orig record)
+                answer = link_target['short_answers'][0]
+            else:
+                # recursion limit reached. or unhandled record format.
+                answer = ''
+
+            if content and answer != content:
+                continue
+
             processed_record = {
                 'type': record['type'],
                 'name': record['domain'],
                 'ttl': record['ttl'],
-                'content': record['short_answers'][0],
+                'content': answer,
                 #this id is useless unless your doing record linking. Lets return the original record identifier.
-                'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type']) #
+                'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type'])
             }
             records.append(processed_record)
-
-        if type:
-            records = [record for record in records if record['type'] == type]
-        if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
-        if content:
-            records = [record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records
