@@ -7,4 +7,4 @@
 
 test = dict({'foo':'bar'})
 
-print test['foo']
+print(test['foo'])
