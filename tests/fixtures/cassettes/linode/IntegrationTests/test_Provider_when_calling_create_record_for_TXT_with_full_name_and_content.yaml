@@ -9,14 +9,14 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.1]
     method: GET
-    uri: https://api.linode.com/api/?api_key=xxxxxxxxxx&api_action=domain.list&resultFormat=JSON
+    uri: https://api.linode.com/api/?api_action=domain.list&resultFormat=JSON
   response:
     body: {string: '{"ACTION":"domain.list","DATA":[{"DOMAIN":"lexicon-example.com","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1019812,"SOA_EMAIL":"trinopoty@hotmail.com","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"}],"ERRORARRAY":[]}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Type: [application/json;charset=UTF-8]
-      Date: ['Wed, 06 Dec 2017 14:04:44 GMT']
+      Date: ['Wed, 06 Dec 2017 14:25:17 GMT']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
       Transfer-Encoding: [chunked]
@@ -32,14 +32,14 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.1]
     method: GET
-    uri: https://api.linode.com/api/?api_key=xxxxxxxxxx&Type=TXT&TTL_sec=0&api_action=domain.resource.create&resultFormat=JSON&Name=_acme-challenge.full&DomainID=1019812&Target=challengetoken
+    uri: https://api.linode.com/api/?DomainID=1019812&Name=_acme-challenge.full&TTL_sec=0&Target=challengetoken&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
   response:
-    body: {string: '{"ACTION":"domain.resource.create","DATA":{"ResourceID":8584582},"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.create","DATA":{"ResourceID":8584650},"ERRORARRAY":[]}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Type: [application/json;charset=UTF-8]
-      Date: ['Wed, 06 Dec 2017 14:04:45 GMT']
+      Date: ['Wed, 06 Dec 2017 14:25:18 GMT']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
       Transfer-Encoding: [chunked]
