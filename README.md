@@ -34,6 +34,7 @@ The current supported providers are:
 - Gandi ([docs](http://doc.rpc.gandi.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
+- Linode ([docs](https://www.linode.com/api/dns)) <sub>Unable to test, requires paid account</sub>
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
@@ -59,7 +60,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
 - ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ <sub>Unable to test, requires paid account</sub>
-- ~~Linode ([docs](https://www.linode.com/api/dns))~~ <sub>Unable to test, requires paid account</sub>
 - ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
