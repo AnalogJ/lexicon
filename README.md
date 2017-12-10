@@ -34,7 +34,7 @@ The current supported providers are:
 - Gandi ([docs](http://doc.rpc.gandi.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
-- Linode ([docs](https://www.linode.com/api/dns)) <sub>Unable to test, requires paid account</sub>
+- Linode ([docs](https://www.linode.com/api/dns))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
