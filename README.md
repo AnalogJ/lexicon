@@ -59,7 +59,9 @@ Potential providers are as follows. If you would like to contribute one, please 
 - ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
+- HostEurope
 - ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ <sub>Unable to test, requires paid account</sub>
+- INWX ([docs](https://github.com/inwx/python2.7-client))
 - ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
@@ -69,8 +71,9 @@ Potential providers are as follows. If you would like to contribute one, please 
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
 - ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
+- Zeit ([docs](https://zeit.co/api#post-domain-records))
 - ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
-
+- Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 ## Setup
 To use lexicon as a CLI application, do the following:
 
