@@ -85,6 +85,7 @@ setup(
     # When adding a new depenency group here, please ensure that it has been
     # added to optional-requirements.txt as well.
     extras_require={
+        'namecheap': ['PyNamecheap'],
         'route53': ['boto3'],
         'softlayer': ['SoftLayer'],
         'transip': ['transip>=0.3.0'],
