@@ -68,29 +68,29 @@ class Provider(BaseProvider):
         }
         # logger.debug('create_record: %s', 'id' in payload)
         # return 'id' in payload
-        return self.client.domains_dns_addHost(self.domain, record)
+        self.client.domains_dns_addHost(self.domain, record)
+        return True
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, type=None, name=None, content=None, id=None):
+
+
         records = []
         raw_records = self.client.domains_dns_getHosts(self.domain)
         for record in raw_records:
-            processed_record = {
-                'type': record['Type'],
-                'name': '{0}.{1}'.format(record['Name'], self.domain),
-                'ttl': record['TTL'],
-                'content': record['Address'],
-                'id': record['HostId']
-            }
-            records.append(processed_record)
+            records.append(self._convert_to_lexicon(record))
 
+        if id:
+            records = [record for record in records if record['id'] == id]
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == '{0}.{1}'.format(name, self.domain)]
+            if name.endswith('.'):
+                name = name[:-1]
+            records = [record for record in records if name in record['name'] ]
         if content:
             records = [record for record in records if record['content'].lower() == content.lower()]
 
@@ -103,23 +103,50 @@ class Provider(BaseProvider):
         self.delete_record(identifier, type, name, content)
         return self.create_record(type, name, content)
 
-    def _find_record(self, name, type=None):
-        '''
-        Find a Namecheap Record based on its name and type (optional)
-        '''
-        raw_records = self.client.domains_dns_getHosts(self.domain)
-        for record in raw_records:
-            if record['Name'] == name:
-                if type:
-                    if record['Type'] == type:
-                        return record
-                else:
-                    return record
-
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        # FIXME identifier parameter is ignored
-        record = self._find_record(name=name, type=type)
+
+        record = self.list_records(type=type, name=name, content=content, id=identifier)
         if record:
-            return self.client.domains_dns_delHost(self.domain, record)
+            self.client.domains_dns_delHost(self.domain, self._convert_to_namecheap(record[0]))
+            return True
+        else:
+            return False
+
+    def _convert_to_namecheap(self, record):
+        """ converts from lexicon format record to namecheap format record,
+        suitable to sending through the api to namecheap"""
+
+        name = record['name']
+        if name.endswith('.'):
+            name = name[:-1]
+
+        short_name = name[:name.find(self.domain)-1]
+        processed_record = {
+            'Type': record['type'],
+            'Name': short_name,
+            'TTL': record['ttl'],
+            'Address': record['content'],
+            'HostId': record['id']
+        }
+
+        return processed_record
+
+    def _convert_to_lexicon(self, record):
+        """ converts from namecheap raw record format to lexicon format record
+        """
+
+        name = record['Name']
+        if self.domain not in name:
+            name = "{}.{}".format(name,self.domain)
+
+        processed_record = {
+            'type': record['Type'],
+            'name': '{0}.{1}'.format(record['Name'], self.domain),
+            'ttl': record['TTL'],
+            'content': record['Address'],
+            'id': record['HostId']
+        }
+
+        return processed_record
