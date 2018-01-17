@@ -37,10 +37,10 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(options, engine_overrides)
         self.options = options
         self.client = namecheap.Api(
-            ApiUser=options['auth_username'],
-            ApiKey=options['auth_token'],
-            UserName=options['auth_username'],
-            ClientIP=options['auth_client_ip'],
+            ApiUser=options.get('auth_username',''),
+            ApiKey=options.get('auth_token',''),
+            UserName=options.get('auth_username',''),
+            ClientIP=options.get('auth_client_ip',''),
             sandbox=options.get('auth_sandbox', False),
             debug=False
         )
