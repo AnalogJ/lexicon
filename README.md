@@ -31,7 +31,7 @@ The current supported providers are:
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
-- Gandi ([docs](http://doc.rpc.gandi.net/))
+- Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Linode ([docs](https://www.linode.com/api/dns))
