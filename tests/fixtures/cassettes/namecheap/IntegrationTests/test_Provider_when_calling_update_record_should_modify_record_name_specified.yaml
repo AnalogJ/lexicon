@@ -1,0 +1,316 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getList&Page=1
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getlist</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.getList\">\r\n    <DomainGetListResult>\r\
+        \n      <Domain ID=\"160248\" Name=\"dnscontrol.com\" User=\"sandypants\"\
+        \ Created=\"04/18/2017\" Expires=\"04/18/2018\" IsExpired=\"false\" IsLocked=\"\
+        false\" AutoRenew=\"false\" WhoisGuard=\"NOTPRESENT\" IsPremium=\"false\"\
+        \ IsOurDNS=\"true\" />\r\n      <Domain ID=\"261173\" Name=\"lexicontest.com\"\
+        \ User=\"sandypants\" Created=\"01/16/2018\" Expires=\"01/16/2019\" IsExpired=\"\
+        false\" IsLocked=\"false\" AutoRenew=\"false\" WhoisGuard=\"NOTPRESENT\" IsPremium=\"\
+        false\" IsOurDNS=\"true\" />\r\n    </DomainGetListResult>\r\n    <Paging>\r\
+        \n      <TotalItems>2</TotalItems>\r\n      <CurrentPage>1</CurrentPage>\r\
+        \n      <PageSize>20</PageSize>\r\n    </Paging>\r\n  </CommandResponse>\r\
+        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\
+        \n  <ExecutionTime>0.015</ExecutionTime>\r\n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['1053']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:47 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getList&Page=2
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getlist</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.getList\">\r\n    <DomainGetListResult\
+        \ />\r\n    <Paging>\r\n      <TotalItems>2</TotalItems>\r\n      <CurrentPage>2</CurrentPage>\r\
+        \n      <PageSize>20</PageSize>\r\n    </Paging>\r\n  </CommandResponse>\r\
+        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\
+        \n  <ExecutionTime>0.016</ExecutionTime>\r\n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['580']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:47 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.getHosts&SLD=lexicontest&TLD=com
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.getHosts\">\r\n    <DomainDNSGetHostsResult\
+        \ Domain=\"lexicontest.com\" EmailType=\"FWD\" IsUsingOurDNS=\"true\">\r\n\
+        \      <host HostId=\"506042\" Name=\"localhost\" Type=\"A\" Address=\"127.0.0.1\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506043\" Name=\"\
+        docs\" Type=\"CNAME\" Address=\"docs.example.com.\" MXPref=\"10\" TTL=\"1800\"\
+        \ AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"506041\" Name=\"www\" Type=\"CNAME\" Address=\"\
+        parkingpage.namecheap.com.\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"CName Record\" IsActive=\"true\" IsDDNSEnabled=\"false\"\
+        \ />\r\n      <host HostId=\"506044\" Name=\"_acme-challenge.fqdn\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506045\" Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506046\"\
+        \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506054\" Name=\"orig.test\"\
+        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506051\" Name=\"random.fqdntest\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506052\"\
+        \ Name=\"random.fulltest\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506053\" Name=\"random.test\"\
+        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506055\" Name=\"updated.test\" Type=\"TXT\" Address=\"challengetoken\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"505697\" Name=\"\
+        @\" Type=\"URL\" Address=\"http://www.lexicontest.com/?from=@\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"URL Record\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\n  </CommandResponse>\r\
+        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\
+        \n  <ExecutionTime>0.873</ExecutionTime>\r\n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['2849']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:49 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode 'IsActive10=true&AssociatedAppTitle11=&IsDDNSEnabled10=false&IsDDNSEnabled11=false&IsDDNSEnabled12=false&RecordType10=TXT&RecordType11=TXT&RecordType12=URL&RecordType13=TXT&HostId8=506051&HostId9=506052&FriendlyName6=&AssociatedAppTitle10=&HostId1=506042&HostId2=506043&HostId3=506041&HostId4=506044&HostId5=506045&HostId6=506046&HostId7=506054&RecordType6=TXT&RecordType7=TXT&RecordType4=TXT&RecordType5=TXT&RecordType2=CNAME&RecordType3=CNAME&RecordType1=A&RecordType8=TXT&RecordType9=TXT&FriendlyName1=&FriendlyName3=CName+Record&AssociatedAppTitle5=&FriendlyName11=&AssociatedAppTitle2=&FriendlyName12=URL+Record&AssociatedAppTitle3=&HostId12=505697&HostId10=506053&HostId11=506055&IsDDNSEnabled8=false&IsDDNSEnabled9=false&IsDDNSEnabled6=false&IsDDNSEnabled7=false&IsDDNSEnabled4=false&IsDDNSEnabled5=false&IsDDNSEnabled2=false&IsDDNSEnabled3=false&IsDDNSEnabled1=false&Address8=challengetoken&Address9=challengetoken&IsActive9=true&IsActive8=true&IsActive3=true&IsActive2=true&IsActive1=true&IsActive7=true&IsActive6=true&IsActive5=true&IsActive4=true&TTL4=1800&HostName12=%40&HostName13=orig.nameonly.test&HostName10=random.test&HostName11=updated.test&Address1=127.0.0.1&MXPref5=10&IsActive12=true&IsActive11=true&TTL3=1800&Address4=challengetoken&MXPref2=10&MXPref1=10&Address7=challengetoken&TTL8=1800&TTL9=1800&MXPref9=10&MXPref8=10&MXPref7=10&TTL1=1800&TTL2=1800&Address3=parkingpage.namecheap.com.&MXPref3=10&TTL5=1800&TTL6=1800&TTL7=1800&TLD=com&FriendlyName10=&Address2=docs.example.com.&Address12=http%3A%2F%2Fwww.lexicontest.com%2F%3Ffrom%3D%40&AssociatedAppTitle12=&Address13=challengetoken&MXPref12=10&MXPref11=10&MXPref10=10&HostName1=localhost&HostName2=docs&HostName3=www&HostName4=_acme-challenge.fqdn&HostName5=_acme-challenge.full&HostName6=_acme-challenge.test&HostName7=orig.test&HostName8=random.fqdntest&HostName9=random.fulltest&Address10=challengetoken&Address11=challengetoken&MXPref6=10&TTL12=1800&TTL10=1800&TTL11=1800&Address5=challengetoken&AssociatedAppTitle6=&AssociatedAppTitle7=&AssociatedAppTitle4=&FriendlyName2=&FriendlyName5=&FriendlyName4=&FriendlyName7=&AssociatedAppTitle1=&FriendlyName9=&FriendlyName8=&AssociatedAppTitle8=&AssociatedAppTitle9=&Address6=challengetoken&SLD=lexicontest&MXPref4=10'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2242']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.setHosts
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.sethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.setHosts\">\r\n    <DomainDNSSetHostsResult\
+        \ Domain=\"lexicontest.com\" IsSuccess=\"true\">\r\n      <Warnings />\r\n\
+        \    </DomainDNSSetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
+        \n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\n  <ExecutionTime>1.028</ExecutionTime>\r\
+        \n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['556']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:50 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.getHosts&SLD=lexicontest&TLD=com
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.getHosts\">\r\n    <DomainDNSGetHostsResult\
+        \ Domain=\"lexicontest.com\" EmailType=\"FWD\" IsUsingOurDNS=\"true\">\r\n\
+        \      <host HostId=\"506042\" Name=\"localhost\" Type=\"A\" Address=\"127.0.0.1\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506043\" Name=\"\
+        docs\" Type=\"CNAME\" Address=\"docs.example.com.\" MXPref=\"10\" TTL=\"1800\"\
+        \ AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"506041\" Name=\"www\" Type=\"CNAME\" Address=\"\
+        parkingpage.namecheap.com.\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"CName Record\" IsActive=\"true\" IsDDNSEnabled=\"false\"\
+        \ />\r\n      <host HostId=\"506044\" Name=\"_acme-challenge.fqdn\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506045\" Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506046\"\
+        \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506056\" Name=\"orig.nameonly.test\"\
+        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506054\" Name=\"orig.test\" Type=\"TXT\" Address=\"challengetoken\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506051\" Name=\"\
+        random.fqdntest\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
+        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"506052\" Name=\"random.fulltest\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506053\" Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506055\" Name=\"\
+        updated.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
+        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"505697\" Name=\"@\" Type=\"URL\" Address=\"\
+        http://www.lexicontest.com/?from=@\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"URL Record\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\
+        \n    </DomainDNSGetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
+        \n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\n  <ExecutionTime>0.854</ExecutionTime>\r\
+        \n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['3042']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:51 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.getHosts&SLD=lexicontest&TLD=com
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.getHosts\">\r\n    <DomainDNSGetHostsResult\
+        \ Domain=\"lexicontest.com\" EmailType=\"FWD\" IsUsingOurDNS=\"true\">\r\n\
+        \      <host HostId=\"506042\" Name=\"localhost\" Type=\"A\" Address=\"127.0.0.1\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506043\" Name=\"\
+        docs\" Type=\"CNAME\" Address=\"docs.example.com.\" MXPref=\"10\" TTL=\"1800\"\
+        \ AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"506041\" Name=\"www\" Type=\"CNAME\" Address=\"\
+        parkingpage.namecheap.com.\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"CName Record\" IsActive=\"true\" IsDDNSEnabled=\"false\"\
+        \ />\r\n      <host HostId=\"506044\" Name=\"_acme-challenge.fqdn\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506045\" Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506046\"\
+        \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506056\" Name=\"orig.nameonly.test\"\
+        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506054\" Name=\"orig.test\" Type=\"TXT\" Address=\"challengetoken\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506051\" Name=\"\
+        random.fqdntest\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
+        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"506052\" Name=\"random.fulltest\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"506053\" Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\"\
+        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"506055\" Name=\"\
+        updated.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
+        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
+        false\" />\r\n      <host HostId=\"505697\" Name=\"@\" Type=\"URL\" Address=\"\
+        http://www.lexicontest.com/?from=@\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"URL Record\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\
+        \n    </DomainDNSGetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
+        \n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\n  <ExecutionTime>0.718</ExecutionTime>\r\
+        \n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['3042']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:53 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode 'IsActive10=true&AssociatedAppTitle11=&IsDDNSEnabled10=false&IsDDNSEnabled11=false&IsDDNSEnabled12=false&IsDDNSEnabled13=false&AssociatedAppTitle13=&RecordType10=TXT&RecordType11=TXT&RecordType12=TXT&RecordType13=URL&RecordType14=TXT&HostId8=506054&HostId9=506051&FriendlyName6=&AssociatedAppTitle10=&HostId1=506042&HostId2=506043&HostId3=506041&HostId4=506044&HostId5=506045&HostId6=506046&HostId7=506056&RecordType6=TXT&RecordType7=TXT&RecordType4=TXT&RecordType5=TXT&RecordType2=CNAME&RecordType3=CNAME&RecordType1=A&RecordType8=TXT&RecordType9=TXT&FriendlyName1=&FriendlyName3=CName+Record&AssociatedAppTitle5=&FriendlyName11=&AssociatedAppTitle2=&FriendlyName13=URL+Record&FriendlyName12=&AssociatedAppTitle3=&HostId12=506055&HostId13=505697&HostId10=506052&HostId11=506053&IsDDNSEnabled8=false&IsDDNSEnabled9=false&IsDDNSEnabled6=false&IsDDNSEnabled7=false&IsDDNSEnabled4=false&IsDDNSEnabled5=false&IsDDNSEnabled2=false&IsDDNSEnabled3=false&IsDDNSEnabled1=false&Address8=challengetoken&Address9=challengetoken&IsActive9=true&IsActive8=true&IsActive3=true&IsActive2=true&IsActive1=true&IsActive7=true&IsActive6=true&IsActive5=true&IsActive4=true&TTL4=1800&HostName12=updated.test&HostName13=%40&HostName10=random.fulltest&HostName11=random.test&HostName14=orig.nameonly.test&Address1=127.0.0.1&MXPref5=10&IsActive13=true&IsActive12=true&IsActive11=true&TTL3=1800&Address4=challengetoken&MXPref2=10&MXPref1=10&Address7=challengetoken&TTL8=1800&TTL9=1800&MXPref9=10&MXPref8=10&MXPref7=10&TTL1=1800&TTL2=1800&Address3=parkingpage.namecheap.com.&MXPref3=10&TTL5=1800&TTL6=1800&TTL7=1800&Address13=http%3A%2F%2Fwww.lexicontest.com%2F%3Ffrom%3D%40&TLD=com&FriendlyName10=&Address2=docs.example.com.&Address12=challengetoken&AssociatedAppTitle12=&MXPref13=10&MXPref12=10&MXPref11=10&MXPref10=10&HostName1=localhost&HostName2=docs&HostName3=www&HostName4=_acme-challenge.fqdn&HostName5=_acme-challenge.full&HostName6=_acme-challenge.test&HostName7=orig.nameonly.test&HostName8=orig.test&HostName9=random.fqdntest&Address10=challengetoken&Address11=challengetoken&MXPref6=10&Address14=updated&TTL12=1800&TTL13=1800&TTL10=1800&TTL11=1800&Address5=challengetoken&AssociatedAppTitle6=&AssociatedAppTitle7=&AssociatedAppTitle4=&FriendlyName2=&FriendlyName5=&FriendlyName4=&FriendlyName7=&AssociatedAppTitle1=&FriendlyName9=&FriendlyName8=&AssociatedAppTitle8=&AssociatedAppTitle9=&Address6=challengetoken&SLD=lexicontest&MXPref4=10'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2422']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.setHosts
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.sethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.setHosts\">\r\n    <DomainDNSSetHostsResult\
+        \ Domain=\"lexicontest.com\" IsSuccess=\"true\">\r\n      <Warnings />\r\n\
+        \    </DomainDNSSetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
+        \n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\n  <ExecutionTime>0.953</ExecutionTime>\r\
+        \n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['556']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Wed, 17 Jan 2018 19:04:55 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+version: 1
