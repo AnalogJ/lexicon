@@ -3,9 +3,13 @@ from __future__ import print_function
 
 import logging
 
-import namecheap
 
 from .base import Provider as BaseProvider
+
+try:
+    import namecheap #optional dep
+except ImportError:
+    pass
 
 logger = logging.getLogger(__name__)
 
