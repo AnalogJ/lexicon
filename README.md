@@ -37,6 +37,7 @@ The current supported providers are:
 - Linode ([docs](https://www.linode.com/api/dns))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
+- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
 - OVH ([docs](https://api.ovh.com/))
@@ -64,7 +65,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - INWX ([docs](https://github.com/inwx/python2.7-client))
 - ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
-- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ <sub>Unable to test, requires paid account</sub>
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
