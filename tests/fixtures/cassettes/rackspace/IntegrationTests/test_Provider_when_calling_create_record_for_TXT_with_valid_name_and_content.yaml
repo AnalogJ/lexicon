@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
+      "foo", "apiKey": "bar"}}}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['116']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+  response:
+    body: {string: !!python/unicode '{"access":{"token":{"expires":"2018-02-01T15:05:18.395Z","RAX-AUTH:issued":"2018-01-31T15:02:33.395Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['14511']
+      content-security-policy: [default-src 'self']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:33 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15552000; includeSubDomains]
+      vary: ['Accept, Accept-Encoding, X-Auth-Token']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-node-id: [ord-03]
+      x-tenant-id: [placeholder_auth_account]
+      x-trans-id: [eyJyZXF1ZXN0SWQiOiJlNWUzMDE5OC1hZDVlLTRlOTYtOTNlNS1jZjU1YmJiNmJjMzAiLCJvcmlnaW4iOm51bGx9]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"domains":[{"name":"capsulecd.com","id":1234567,"emailAddress":"hostmaster@capsulecd.com","updated":"2018-01-31T15:02:32.000+0000","created":"2017-09-21T21:02:56.000+0000"}],"totalEntries":1}'}
+    headers:
+      content-length: ['211']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:33 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"records": [{"data": "challengetoken", "type": "TXT",
+      "name": "_acme-challenge.test.capsulecd.com", "ttl": 3600}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['127']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: POST
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records
+  response:
+    body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
+        \"type\": \"TXT\", \"name\": \"_acme-challenge.test.capsulecd.com\", \"ttl\":
+        3600}]}","status":"RUNNING","verb":"POST","jobId":"aadd2fc8-ea51-4b3b-a82c-2e85f32c7985","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/aadd2fc8-ea51-4b3b-a82c-2e85f32c7985","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+    headers:
+      content-length: ['430']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:34 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/aadd2fc8-ea51-4b3b-a82c-2e85f32c7985?showDetails=true
+  response:
+    body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
+        \"type\": \"TXT\", \"name\": \"_acme-challenge.test.capsulecd.com\", \"ttl\":
+        3600}]}","status":"COMPLETED","response":{"records":[{"name":"_acme-challenge.test.capsulecd.com","id":"TXT-1614046","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:34.000+0000","created":"2018-01-31T15:02:34.000+0000"}]},"verb":"POST","jobId":"aadd2fc8-ea51-4b3b-a82c-2e85f32c7985","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/aadd2fc8-ea51-4b3b-a82c-2e85f32c7985","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+    headers:
+      content-length: ['664']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:35 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+    status: {code: 200, message: OK}
+version: 1
