@@ -14,8 +14,12 @@ class RackspaceProviderTests(TestCase, IntegrationTests):
     Provider = Provider
     provider_name = 'rackspace'
     domain = 'capsulecd.com'
+
+    def _filter_post_data_parameters(self):
+        return ['auth']
+
     def _filter_headers(self):
-        return []
+        return ['X-Auth-Token']
 
     # Rackspace does not provide a sandbox API; actual credentials are required
     # Replace the auth_account, auth_username and auth_api_key as well as the
@@ -31,4 +35,3 @@ class RackspaceProviderTests(TestCase, IntegrationTests):
         })
         options['auth_token'] = None
         return options
-
