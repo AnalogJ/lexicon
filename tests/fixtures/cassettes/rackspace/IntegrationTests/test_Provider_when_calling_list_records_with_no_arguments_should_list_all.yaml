@@ -1,0 +1,79 @@
+interactions:
+- request:
+    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
+      "foo", "apiKey": "bar"}}}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['116']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+  response:
+    body: {string: !!python/unicode '{"access":{"token":{"expires":"2018-02-01T14:55:10.439Z","RAX-AUTH:issued":"2018-01-31T15:03:02.440Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['14511']
+      content-security-policy: [default-src 'self']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:03:02 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15552000; includeSubDomains]
+      vary: ['Accept, Accept-Encoding, X-Auth-Token']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+
+      x-node-id: [ord-01]
+      x-tenant-id: ['placeholder_auth_account']
+      x-trans-id: [eyJyZXF1ZXN0SWQiOiI4YzY5Mjg1OC03YTk2LTQ3MWMtOWQ0ZC0xMTQxYWU1MjI1ZDgiLCJvcmlnaW4iOm51bGx9]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"domains":[{"name":"capsulecd.com","id":1234567,"emailAddress":"hostmaster@capsulecd.com","updated":"2018-01-31T15:03:01.000+0000","created":"2017-09-21T21:02:56.000+0000"}],"totalEntries":1}'}
+    headers:
+      content-length: ['211']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:03:02 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?per_page=100
+  response:
+    body: {string: !!python/unicode '{"records":[{"name":"capsulecd.com","id":"A-21464626","type":"A","data":"192.168.1.1","ttl":300,"updated":"2017-09-22T20:19:19.000+0000","created":"2017-09-22T20:19:19.000+0000"},{"name":"localhost.capsulecd.com","id":"A-23093932","type":"A","data":"127.0.0.1","ttl":3600,"updated":"2018-01-31T15:02:26.000+0000","created":"2018-01-31T15:02:26.000+0000"},{"name":"capsulecd.com","id":"NS-13393507","type":"NS","data":"dns1.stabletransit.com","ttl":300,"updated":"2017-09-21T21:02:56.000+0000","created":"2017-09-21T21:02:56.000+0000"},{"name":"capsulecd.com","id":"NS-13393510","type":"NS","data":"dns2.stabletransit.com","ttl":300,"updated":"2017-09-21T21:02:56.000+0000","created":"2017-09-21T21:02:56.000+0000"},{"name":"capsulecd.com","id":"MX-6687355","priority":1,"type":"MX","data":"ASPMX.L.GOOGLE.COM","ttl":300,"updated":"2017-09-21T21:33:33.000+0000","created":"2017-09-21T21:33:33.000+0000"},{"name":"capsulecd.com","id":"MX-6687358","priority":5,"type":"MX","data":"ALT1.ASPMX.L.GOOGLE.COM","ttl":300,"updated":"2017-09-21T21:33:52.000+0000","created":"2017-09-21T21:33:52.000+0000"},{"name":"capsulecd.com","id":"MX-6687361","priority":5,"type":"MX","data":"ALT2.ASPMX.L.GOOGLE.COM","ttl":300,"updated":"2017-09-21T21:34:10.000+0000","created":"2017-09-21T21:34:10.000+0000"},{"name":"capsulecd.com","id":"MX-6687364","priority":10,"type":"MX","data":"ASPMX2.GOOGLEMAIL.COM","ttl":300,"updated":"2017-09-21T21:34:28.000+0000","created":"2017-09-21T21:34:28.000+0000"},{"name":"capsulecd.com","id":"MX-6687367","priority":10,"type":"MX","data":"ASPMX3.GOOGLEMAIL.COM","ttl":300,"updated":"2017-09-21T21:34:45.000+0000","created":"2017-09-21T21:34:45.000+0000"},{"name":"capsulecd.com","id":"TXT-1492876","type":"TXT","data":"google-site-verification=placeholder_google_site_key","ttl":300,"updated":"2017-09-21T21:21:01.000+0000","created":"2017-09-21T21:21:01.000+0000"},{"name":"capsulecd.com","id":"TXT-1492933","type":"TXT","data":"v=spf1
+        include:_spf.google.com","ttl":300,"updated":"2017-09-22T04:32:25.000+0000","created":"2017-09-21T21:38:04.000+0000"},{"name":"_acme-challenge.fqdn.capsulecd.com","id":"TXT-1614040","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:30.000+0000","created":"2018-01-31T15:02:30.000+0000"},{"name":"_acme-challenge.full.capsulecd.com","id":"TXT-1614043","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:32.000+0000","created":"2018-01-31T15:02:32.000+0000"},{"name":"_acme-challenge.test.capsulecd.com","id":"TXT-1614046","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:34.000+0000","created":"2018-01-31T15:02:34.000+0000"},{"name":"ttl.fqdn.capsulecd.com","id":"TXT-1614061","type":"TXT","data":"ttlshouldbe3600","ttl":3600,"updated":"2018-01-31T15:02:54.000+0000","created":"2018-01-31T15:02:54.000+0000"},{"name":"random.fqdntest.capsulecd.com","id":"TXT-1614064","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:56.000+0000","created":"2018-01-31T15:02:56.000+0000"},{"name":"random.fulltest.capsulecd.com","id":"TXT-1614067","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:58.000+0000","created":"2018-01-31T15:02:58.000+0000"},{"name":"random.test.capsulecd.com","id":"TXT-1614070","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:03:01.000+0000","created":"2018-01-31T15:03:01.000+0000"},{"name":"www.capsulecd.com","id":"CNAME-16055497","type":"CNAME","data":"capsulecd.com","ttl":300,"updated":"2017-09-22T20:20:01.000+0000","created":"2017-09-22T20:20:01.000+0000"},{"name":"dev.capsulecd.com","id":"CNAME-16055719","type":"CNAME","data":"capsulecd.com","ttl":300,"updated":"2017-09-22T21:31:04.000+0000","created":"2017-09-22T21:31:04.000+0000"},{"name":"docs.capsulecd.com","id":"CNAME-16373758","type":"CNAME","data":"docs.example.com","ttl":3600,"updated":"2018-01-31T15:02:28.000+0000","created":"2018-01-31T15:02:28.000+0000"}],"totalEntries":21}'}
+    headers:
+      content-length: ['4344']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:03:03 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+    status: {code: 200, message: OK}
+version: 1

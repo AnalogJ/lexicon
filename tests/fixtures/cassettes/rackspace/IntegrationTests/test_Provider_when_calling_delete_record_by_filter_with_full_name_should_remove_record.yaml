@@ -1,0 +1,194 @@
+interactions:
+- request:
+    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
+      "foo", "apiKey": "bar"}}}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['116']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+  response:
+    body: {string: !!python/unicode '{"access":{"token":{"expires":"2018-02-01T14:50:35.638Z","RAX-AUTH:issued":"2018-01-31T15:02:43.638Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['14511']
+      content-security-policy: [default-src 'self']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:43 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15552000; includeSubDomains]
+      vary: ['Accept, Accept-Encoding, X-Auth-Token']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-node-id: [ord-06]
+      x-tenant-id: ['placeholder_auth_account']
+      x-trans-id: [eyJyZXF1ZXN0SWQiOiI2OWVkNTE3Zi1jOTZiLTRlMGItYjcyMC01MzEzNjU2NzliYWYiLCJvcmlnaW4iOm51bGx9]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"domains":[{"name":"capsulecd.com","id":1234567,"emailAddress":"hostmaster@capsulecd.com","updated":"2018-01-31T15:02:42.000+0000","created":"2017-09-21T21:02:56.000+0000"}],"totalEntries":1}'}
+    headers:
+      content-length: ['211']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:44 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"records": [{"data": "challengetoken", "type": "TXT",
+      "name": "delete.testfull.capsulecd.com", "ttl": 3600}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['122']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: POST
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records
+  response:
+    body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
+        \"type\": \"TXT\", \"name\": \"delete.testfull.capsulecd.com\", \"ttl\": 3600}]}","status":"RUNNING","verb":"POST","jobId":"bedfcdb4-d035-4d90-97f5-325b558e60a0","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/bedfcdb4-d035-4d90-97f5-325b558e60a0","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+    headers:
+      content-length: ['425']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:44 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/bedfcdb4-d035-4d90-97f5-325b558e60a0?showDetails=true
+  response:
+    body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
+        \"type\": \"TXT\", \"name\": \"delete.testfull.capsulecd.com\", \"ttl\": 3600}]}","status":"COMPLETED","response":{"records":[{"name":"delete.testfull.capsulecd.com","id":"TXT-1614055","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:44.000+0000","created":"2018-01-31T15:02:44.000+0000"}]},"verb":"POST","jobId":"bedfcdb4-d035-4d90-97f5-325b558e60a0","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/bedfcdb4-d035-4d90-97f5-325b558e60a0","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+    headers:
+      content-length: ['654']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:45 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?content=challengetoken&per_page=100&type=TXT&name=delete.testfull.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"records":[{"name":"delete.testfull.capsulecd.com","id":"TXT-1614055","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:02:44.000+0000","created":"2018-01-31T15:02:44.000+0000"}]}'}
+    headers:
+      content-length: ['215']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:45 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: DELETE
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records/TXT-1614055
+  response:
+    body: {string: !!python/unicode '{"request":"{}","status":"RUNNING","verb":"DELETE","jobId":"b47dc6da-e433-497a-b2be-555e9f8f6e1e","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/b47dc6da-e433-497a-b2be-555e9f8f6e1e","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records/TXT-1614055"}'}
+    headers:
+      content-length: ['303']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:45 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/b47dc6da-e433-497a-b2be-555e9f8f6e1e?showDetails=true
+  response:
+    body: {string: !!python/unicode '{"request":"{}","status":"COMPLETED","verb":"DELETE","jobId":"b47dc6da-e433-497a-b2be-555e9f8f6e1e","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/b47dc6da-e433-497a-b2be-555e9f8f6e1e","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records/TXT-1614055"}'}
+    headers:
+      content-length: ['305']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:47 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?per_page=100&type=TXT&name=delete.testfull.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"records":[]}'}
+    headers:
+      content-length: ['14']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:47 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+
+    status: {code: 200, message: OK}
+version: 1
