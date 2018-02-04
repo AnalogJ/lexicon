@@ -43,6 +43,7 @@ The current supported providers are:
 - OVH ([docs](https://api.ovh.com/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
+- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Transip ([docs](https://www.transip.nl/transip/api/))
@@ -67,7 +68,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ <sub>Unable to test, requires paid account</sub>
-- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
 - ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
