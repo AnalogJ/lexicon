@@ -187,6 +187,7 @@ All you need to do is set the PROVIDER env variable.
 
     PROVIDER=cloudflare dehydrated --cron --hook dehydrated.default.sh --challenge dns-01
 
+Lexicon can also be used with [Certbot](https://certbot.eff.org/) and the included [Certbot hook file](examples/certbot.default.sh) (requires configuration).
 
 ## TroubleShooting & Useful Tools
 There is an included example Dockerfile that can be used to automatically generate certificates for your website.
