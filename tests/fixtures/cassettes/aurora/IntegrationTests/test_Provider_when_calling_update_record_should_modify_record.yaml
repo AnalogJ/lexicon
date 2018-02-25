@@ -1,0 +1,165 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111306Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones
+  response:
+    body: {string: "[\n  {\n    \"account_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n\
+        \    \"cluster_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n    \"created\"\
+        : \"2018-02-25T11:12:31Z\",\n    \"id\": \"0645e7fa-6b94-46dd-99dd-bfb572f4e740\"\
+        ,\n    \"name\": \"example.nl\",\n    \"servers\": [\n      \"ns001.auroradns.eu\"\
+        ,\n      \"ns002.auroradns.nl\",\n      \"ns003.auroradns.info\"\n    ]\n\
+        \  }\n]\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['1752']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:13:06 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "orig.test", "content": "challengetoken", "ttl":
+      3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['78']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111306Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/0645e7fa-6b94-46dd-99dd-bfb572f4e740/records
+  response:
+    body: {string: "{\n  \"content\": \"challengetoken\",\n  \"created\": \"2018-02-25T11:13:07Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"18561eb7-219b-44a9-aa7e-0bb8d51f0579\"\
+        ,\n  \"modified\": \"2018-02-25T11:13:07Z\",\n  \"name\": \"orig.test\",\n\
+        \  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['273']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:13:07 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111307Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones/0645e7fa-6b94-46dd-99dd-bfb572f4e740/records
+  response:
+    body: {string: "[\n  {\n    \"content\": \"ns001.auroradns.eu admin.auroradns.eu\
+        \ 2018022501 86400 7200 604800 300\",\n    \"created\": \"2018-02-25T11:12:31Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        93b5d729-54be-4cef-9ae8-3cf1d6f0bfb6\",\n    \"modified\": \"2018-02-25T11:12:31Z\"\
+        ,\n    \"name\": \"\",\n    \"prio\": 0,\n    \"ttl\": 4800,\n    \"type\"\
+        : \"SOA\"\n  },\n  {\n    \"content\": \"ns001.auroradns.eu\",\n    \"created\"\
+        : \"2018-02-25T11:12:31Z\",\n    \"disabled\": false,\n    \"health_check_id\"\
+        : null,\n    \"id\": \"2bb674e4-4c56-4249-9709-fd361c5d6a14\",\n    \"modified\"\
+        : \"2018-02-25T11:12:31Z\",\n    \"name\": \"\",\n    \"prio\": 0,\n    \"\
+        ttl\": 3600,\n    \"type\": \"NS\"\n  },\n  {\n    \"content\": \"ns002.auroradns.nl\"\
+        ,\n    \"created\": \"2018-02-25T11:12:31Z\",\n    \"disabled\": false,\n\
+        \    \"health_check_id\": null,\n    \"id\": \"5238e130-e50b-49e8-91f2-900e4b63dfe0\"\
+        ,\n    \"modified\": \"2018-02-25T11:12:31Z\",\n    \"name\": \"\",\n    \"\
+        prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"NS\"\n  },\n  {\n    \"content\"\
+        : \"ns003.auroradns.info\",\n    \"created\": \"2018-02-25T11:12:31Z\",\n\
+        \    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        616ca5b2-189f-424c-a429-1300acd64fbc\",\n    \"modified\": \"2018-02-25T11:12:31Z\"\
+        ,\n    \"name\": \"\",\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\"\
+        : \"NS\"\n  },\n  {\n    \"content\": \"127.0.0.1\",\n    \"created\": \"\
+        2018-02-25T11:12:52Z\",\n    \"disabled\": false,\n    \"health_check_id\"\
+        : null,\n    \"id\": \"56758f4b-08c0-4151-88f5-d281a98b9282\",\n    \"modified\"\
+        : \"2018-02-25T11:12:52Z\",\n    \"name\": \"localhost\",\n    \"prio\": 0,\n\
+        \    \"ttl\": 3600,\n    \"type\": \"A\"\n  },\n  {\n    \"content\": \"docs.example.com\"\
+        ,\n    \"created\": \"2018-02-25T11:12:53Z\",\n    \"disabled\": false,\n\
+        \    \"health_check_id\": null,\n    \"id\": \"a72321c3-ad80-44ae-bd26-2b891af7f803\"\
+        ,\n    \"modified\": \"2018-02-25T11:12:53Z\",\n    \"name\": \"docs\",\n\
+        \    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"CNAME\"\n  },\n  {\n\
+        \    \"content\": \"challengetoken\",\n    \"created\": \"2018-02-25T11:12:53Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        911c508d-dd66-4463-8136-5c092ac395b1\",\n    \"modified\": \"2018-02-25T11:12:53Z\"\
+        ,\n    \"name\": \"_acme-challenge.fqdn\",\n    \"prio\": 0,\n    \"ttl\"\
+        : 3600,\n    \"type\": \"TXT\"\n  },\n  {\n    \"content\": \"challengetoken\"\
+        ,\n    \"created\": \"2018-02-25T11:12:53Z\",\n    \"disabled\": false,\n\
+        \    \"health_check_id\": null,\n    \"id\": \"8e8ddeb7-52b2-4dbf-8711-ff4be93110c8\"\
+        ,\n    \"modified\": \"2018-02-25T11:12:53Z\",\n    \"name\": \"_acme-challenge.full\"\
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n\
+        \    \"content\": \"challengetoken\",\n    \"created\": \"2018-02-25T11:12:54Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        420cfedc-cc0d-43f7-ab57-f001088c7815\",\n    \"modified\": \"2018-02-25T11:12:54Z\"\
+        ,\n    \"name\": \"_acme-challenge.test\",\n    \"prio\": 0,\n    \"ttl\"\
+        : 3600,\n    \"type\": \"TXT\"\n  },\n  {\n    \"content\": \"ttlshouldbe3600\"\
+        ,\n    \"created\": \"2018-02-25T11:13:04Z\",\n    \"disabled\": false,\n\
+        \    \"health_check_id\": null,\n    \"id\": \"5f79805f-c02e-43c2-945e-c803dca4e959\"\
+        ,\n    \"modified\": \"2018-02-25T11:13:04Z\",\n    \"name\": \"ttl.fqdn\"\
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n\
+        \    \"content\": \"challengetoken\",\n    \"created\": \"2018-02-25T11:13:04Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        8ca18cbc-ca8f-49fc-afb5-f8ea9fdc21c3\",\n    \"modified\": \"2018-02-25T11:13:04Z\"\
+        ,\n    \"name\": \"random.fqdntest\",\n    \"prio\": 0,\n    \"ttl\": 3600,\n\
+        \    \"type\": \"TXT\"\n  },\n  {\n    \"content\": \"challengetoken\",\n\
+        \    \"created\": \"2018-02-25T11:13:05Z\",\n    \"disabled\": false,\n  \
+        \  \"health_check_id\": null,\n    \"id\": \"cd4a21a8-b2b6-4ed0-9769-61afbb927f2f\"\
+        ,\n    \"modified\": \"2018-02-25T11:13:05Z\",\n    \"name\": \"random.fulltest\"\
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n\
+        \    \"content\": \"challengetoken\",\n    \"created\": \"2018-02-25T11:13:06Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        20430bbe-b803-43e3-b12b-700ff323cde0\",\n    \"modified\": \"2018-02-25T11:13:06Z\"\
+        ,\n    \"name\": \"random.test\",\n    \"prio\": 0,\n    \"ttl\": 3600,\n\
+        \    \"type\": \"TXT\"\n  },\n  {\n    \"content\": \"challengetoken\",\n\
+        \    \"created\": \"2018-02-25T11:13:07Z\",\n    \"disabled\": false,\n  \
+        \  \"health_check_id\": null,\n    \"id\": \"18561eb7-219b-44a9-aa7e-0bb8d51f0579\"\
+        ,\n    \"modified\": \"2018-02-25T11:13:07Z\",\n    \"name\": \"orig.test\"\
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  }\n]\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['4245']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:13:07 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "updated.test", "content": "challengetoken", "ttl":
+      3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['81']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111307Z]
+    method: PUT
+    uri: https://api.auroradns.eu/zones/0645e7fa-6b94-46dd-99dd-bfb572f4e740/records/18561eb7-219b-44a9-aa7e-0bb8d51f0579
+  response:
+    body: {string: '
+
+
+        '}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['2']
+      Content-Type: [text/plain; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:13:07 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+version: 1

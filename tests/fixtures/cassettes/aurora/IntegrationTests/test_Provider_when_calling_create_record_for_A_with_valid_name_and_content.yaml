@@ -1,0 +1,54 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111252Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones
+  response:
+    body: {string: "[\n  {\n    \"account_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n\
+        \    \"cluster_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n    \"created\"\
+        : \"2018-02-25T11:12:31Z\",\n    \"id\": \"0645e7fa-6b94-46dd-99dd-bfb572f4e740\"\
+        ,\n    \"name\": \"example.nl\",\n    \"servers\": [\n      \"ns001.auroradns.eu\"\
+        ,\n      \"ns002.auroradns.nl\",\n      \"ns003.auroradns.info\"\n    ]\n\
+        \  }\n]\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['1752']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:12:52 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "A", "name": "localhost", "content": "127.0.0.1", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['71']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111252Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/0645e7fa-6b94-46dd-99dd-bfb572f4e740/records
+  response:
+    body: {string: "{\n  \"content\": \"127.0.0.1\",\n  \"created\": \"2018-02-25T11:12:52Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"56758f4b-08c0-4151-88f5-d281a98b9282\"\
+        ,\n  \"modified\": \"2018-02-25T11:12:52Z\",\n  \"name\": \"localhost\",\n\
+        \  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"A\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['266']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:12:52 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+version: 1

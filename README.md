@@ -21,6 +21,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
+- AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
@@ -53,7 +54,6 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
-- AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
@@ -209,4 +209,4 @@ MIT
 ## References
 
     tox
-    
+
