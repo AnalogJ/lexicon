@@ -1,0 +1,54 @@
+interactions:
+- request:
+    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
+      "foo", "apiKey": "bar"}}}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['116']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+  response:
+    body: {string: !!python/unicode '{"access":{"token":{"expires":"2018-02-01T15:13:03.818Z","RAX-AUTH:issued":"2018-01-31T15:02:24.818Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['14511']
+      content-security-policy: [default-src 'self']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:24 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15552000; includeSubDomains]
+      vary: ['Accept, Accept-Encoding, X-Auth-Token']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-node-id: [ord-03]
+      x-tenant-id: [placeholder_auth_account]
+      x-trans-id: [eyJyZXF1ZXN0SWQiOiJmNzMyNTQ2Yi05MGVlLTQzMjktYjY3Mi0wMjlmY2E2M2Y3NzMiLCJvcmlnaW4iOm51bGx9]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
+    method: GET
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=thisisadomainidonotown.com
+  response:
+    body: {string: !!python/unicode '{"domains":[],"totalEntries":0}'}
+    headers:
+      content-length: ['31']
+      content-type: [application/json]
+      date: ['Wed, 31 Jan 2018 15:02:25 GMT']
+      server: [Jetty(8.0.y.z-SNAPSHOT)]
+      via: [1.1 Repose (Repose/2.13.2)]
+      x-api-version: [1.0.37]
+    status: {code: 200, message: OK}
+version: 1

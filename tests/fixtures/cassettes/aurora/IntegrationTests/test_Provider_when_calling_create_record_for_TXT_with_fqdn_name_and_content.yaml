@@ -1,0 +1,55 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111253Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones
+  response:
+    body: {string: "[\n  {\n    \"account_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n\
+        \    \"cluster_id\": \"ffffffff-0000-ffff-0000-ffffffffffff\",\n    \"created\"\
+        : \"2018-02-25T11:12:31Z\",\n    \"id\": \"0645e7fa-6b94-46dd-99dd-bfb572f4e740\"\
+        ,\n    \"name\": \"example.nl\",\n    \"servers\": [\n      \"ns001.auroradns.eu\"\
+        ,\n      \"ns002.auroradns.nl\",\n      \"ns003.auroradns.info\"\n    ]\n\
+        \  }\n]\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['1752']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:12:53 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.fqdn", "content": "challengetoken",
+      "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['89']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180225T111253Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/0645e7fa-6b94-46dd-99dd-bfb572f4e740/records
+  response:
+    body: {string: "{\n  \"content\": \"challengetoken\",\n  \"created\": \"2018-02-25T11:12:53Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"911c508d-dd66-4463-8136-5c092ac395b1\"\
+        ,\n  \"modified\": \"2018-02-25T11:12:53Z\",\n  \"name\": \"_acme-challenge.fqdn\"\
+        ,\n  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['284']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Sun, 25 Feb 2018 11:12:53 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+version: 1

@@ -21,6 +21,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
+- AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
@@ -37,11 +38,13 @@ The current supported providers are:
 - Linode ([docs](https://www.linode.com/api/dns))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
+- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
 - OVH ([docs](https://api.ovh.com/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
+- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Transip ([docs](https://www.transip.nl/transip/api/))
@@ -51,7 +54,6 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
-- AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
@@ -64,16 +66,16 @@ Potential providers are as follows. If you would like to contribute one, please 
 - INWX ([docs](https://github.com/inwx/python2.7-client))
 - ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
-- Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~OnApp DNS ([docs](https://docs.onapp.com/display/3api/DNS+Zones))~~ <sub>Unable to test, requires paid account</sub>
-- Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
 - ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
 - ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
+- __Any others I missed__
+
 ## Setup
 To use lexicon as a CLI application, do the following:
 
@@ -187,6 +189,7 @@ All you need to do is set the PROVIDER env variable.
 
     PROVIDER=cloudflare dehydrated --cron --hook dehydrated.default.sh --challenge dns-01
 
+Lexicon can also be used with [Certbot](https://certbot.eff.org/) and the included [Certbot hook file](examples/certbot.default.sh) (requires configuration).
 
 ## TroubleShooting & Useful Tools
 There is an included example Dockerfile that can be used to automatically generate certificates for your website.
@@ -208,4 +211,4 @@ MIT
 ## References
 
     tox
-    
+
