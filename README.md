@@ -74,6 +74,8 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
 - ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
+- __Any others I missed__
+
 ## Setup
 To use lexicon as a CLI application, do the following:
 
