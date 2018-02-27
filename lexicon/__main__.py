@@ -28,6 +28,7 @@ def BaseProviderParser():
     parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
     parser.add_argument("--priority", help="specify the record priority")
     parser.add_argument("--identifier", help="specify the record for update or delete actions")
+    parser.add_argument("--log_level", help="specify the log level", default="DEBUG", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
     return parser
 
 def MainParser():
@@ -61,9 +62,11 @@ def MainParser():
 
 #dynamically determine all the providers available.
 def main():
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(message)s')
 
     parsed_args = MainParser().parse_args()
+    log_level = logging.getLevelName(parsed_args.log_level)
+    logging.basicConfig(stream=sys.stdout, level=log_level, format='%(message)s')
+
     logger.debug('Arguments: %s', parsed_args)
     client = Client(parsed_args.__dict__)
     client.execute()
