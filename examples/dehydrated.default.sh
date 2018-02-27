@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Example how to deploy a DNS challange using lexicon
+# Example how to deploy a DNS challenge using lexicon
 
 set -e
 set -u
