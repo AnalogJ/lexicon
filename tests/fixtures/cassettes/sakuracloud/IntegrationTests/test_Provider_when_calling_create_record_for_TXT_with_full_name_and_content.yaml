@@ -1,0 +1,101 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem?%7B%22Filter%22:%20%7B%22Provider.Class%22:%20%22dns%22,%20%22Name%22:%20%22example.com%22%7D%7D
+  response:
+    body: {string: '{"From":0,"Count":1,"Total":1,"CommonServiceItems":[{"Index":0,"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"22355f172b303c041c62a5678e453557","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]}],"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/6d07b84dd33f1fff131d789ec258678e"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:02 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['836']
+      X-Sakura-Encode-Microtime: ['675']
+      X-Sakura-Proxy-Decode-Microtime: ['96']
+      X-Sakura-Proxy-Microtime: ['66274']
+      X-Sakura-Serial: [6d07b84dd33f1fff131d789ec258678e]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['836']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"22355f172b303c041c62a5678e453557","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/c3c9a702eb2c9d0dcd4be46c65d4b354"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:02 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['794']
+      X-Sakura-Encode-Microtime: ['548']
+      X-Sakura-Proxy-Decode-Microtime: ['100']
+      X-Sakura-Proxy-Microtime: ['62854']
+      X-Sakura-Serial: [c3c9a702eb2c9d0dcd4be46c65d4b354]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['794']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"CommonServiceItem": {"Settings": {"DNS": {"ResourceRecordSets": [{"Name":
+      "localhost", "Type": "A", "RData": "127.0.0.1", "TTL": 3600}, {"Name": "_acme-challenge.fqdn",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.full",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}]}}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['319']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"41ea079e78554ef7311c718a29eb8442","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"Success":true,"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/e5963bb45ae8746509d72606ca7375f1"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:04 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['890']
+      X-Sakura-Encode-Microtime: ['320']
+      X-Sakura-Proxy-Decode-Microtime: ['80']
+      X-Sakura-Proxy-Microtime: ['1811583']
+      X-Sakura-Serial: [e5963bb45ae8746509d72606ca7375f1]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['890']
+    status: {code: 200, message: OK}
+version: 1

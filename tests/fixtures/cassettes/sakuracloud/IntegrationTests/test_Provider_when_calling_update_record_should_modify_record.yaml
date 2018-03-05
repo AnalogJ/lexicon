@@ -1,0 +1,213 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem?%7B%22Filter%22:%20%7B%22Provider.Class%22:%20%22dns%22,%20%22Name%22:%20%22example.com%22%7D%7D
+  response:
+    body: {string: '{"From":0,"Count":1,"Total":1,"CommonServiceItems":[{"Index":0,"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"35a197689a33007438facdc128c5a674","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]}],"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/547154c593836ea9c5dbbca7adce48eb"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:34 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1292']
+      X-Sakura-Encode-Microtime: ['621']
+      X-Sakura-Proxy-Decode-Microtime: ['126']
+      X-Sakura-Proxy-Microtime: ['58807']
+      X-Sakura-Serial: [547154c593836ea9c5dbbca7adce48eb]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1292']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"35a197689a33007438facdc128c5a674","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/020476ba8124709c84aab87e34fd661c"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:35 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1250']
+      X-Sakura-Encode-Microtime: ['636']
+      X-Sakura-Proxy-Decode-Microtime: ['121']
+      X-Sakura-Proxy-Microtime: ['57340']
+      X-Sakura-Serial: [020476ba8124709c84aab87e34fd661c]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1250']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"CommonServiceItem": {"Settings": {"DNS": {"ResourceRecordSets": [{"Name":
+      "localhost", "Type": "A", "RData": "127.0.0.1", "TTL": 3600}, {"Name": "_acme-challenge.fqdn",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.full",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "ttl.fqdn",
+      "Type": "TXT", "RData": "ttlshouldbe3600", "TTL": 3600}, {"Name": "random.fqdntest",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "random.fulltest",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "random.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "orig.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}]}}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['812']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"orig.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"814ed6e51263d807078e814a9bb1e537","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"Success":true,"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/bb29219e7cd0f7cf15ca76b742dbb5f2"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:37 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1335']
+      X-Sakura-Encode-Microtime: ['689']
+      X-Sakura-Proxy-Decode-Microtime: ['140']
+      X-Sakura-Proxy-Microtime: ['1890505']
+      X-Sakura-Serial: [bb29219e7cd0f7cf15ca76b742dbb5f2]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1335']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"orig.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"814ed6e51263d807078e814a9bb1e537","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/5826f1f9fe7b88d32fb1ab5a73d4525a"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:37 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1320']
+      X-Sakura-Encode-Microtime: ['600']
+      X-Sakura-Proxy-Decode-Microtime: ['113']
+      X-Sakura-Proxy-Microtime: ['62881']
+      X-Sakura-Serial: [5826f1f9fe7b88d32fb1ab5a73d4525a]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1320']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"orig.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"814ed6e51263d807078e814a9bb1e537","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/f22ff95e3b079f5e4b3579097fcd785b"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:37 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1320']
+      X-Sakura-Encode-Microtime: ['652']
+      X-Sakura-Proxy-Decode-Microtime: ['130']
+      X-Sakura-Proxy-Microtime: ['61529']
+      X-Sakura-Serial: [f22ff95e3b079f5e4b3579097fcd785b]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1320']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"CommonServiceItem": {"Settings": {"DNS": {"ResourceRecordSets": [{"Name":
+      "localhost", "Type": "A", "RData": "127.0.0.1", "TTL": 3600}, {"Name": "_acme-challenge.fqdn",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.full",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "ttl.fqdn",
+      "Type": "TXT", "RData": "ttlshouldbe3600", "TTL": 3600}, {"Name": "random.fqdntest",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "random.fulltest",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "random.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "orig.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "updated.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}]}}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['893']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600},{"Name":"random.fqdntest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.fulltest","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"random.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"orig.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"updated.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"dccf5574367933b9f67aca68bf266204","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"Success":true,"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/2d548f873abfe1d2d6b9d13b33e4ffea"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:39 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1408']
+      X-Sakura-Encode-Microtime: ['647']
+      X-Sakura-Proxy-Decode-Microtime: ['138']
+      X-Sakura-Proxy-Microtime: ['1738145']
+      X-Sakura-Serial: [2d548f873abfe1d2d6b9d13b33e4ffea]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1408']
+    status: {code: 200, message: OK}
+version: 1
