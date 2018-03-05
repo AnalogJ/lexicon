@@ -33,6 +33,7 @@ The current supported providers are:
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Gandi ([docs](http://doc.rpc.gandi.net/))
+- Gehirn Infrastructure Service ([docs](https://support.gehirn.jp/apidocs/gis/dns/index.html))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Linode ([docs](https://www.linode.com/api/dns))
@@ -211,4 +212,3 @@ MIT
 ## References
 
     tox
-
