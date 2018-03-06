@@ -1,0 +1,95 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.gis.gehirn.jp/dns/v1/zones
+  response:
+    body: {string: "[\n  {\n    \"id\": \"4c6409ac-b37f-4ca4-87ea-7915f44a84eb\",\n\
+        \    \"current_version\": {\n      \"id\": \"be70daaf-0f51-459b-881e-07dc82a4b092\"\
+        ,\n      \"created_at\": \"2018-03-06T07:40:10Z\",\n      \"editable\": true,\n\
+        \      \"last_modified_at\": \"2018-03-06T07:40:20Z\",\n      \"name\": \"\
+        test05\"\n    },\n    \"current_version_id\": \"be70daaf-0f51-459b-881e-07dc82a4b092\"\
+        ,\n    \"name\": \"example.com\"\n  }\n]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['388']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Tue, 06 Mar 2018 07:40:21 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.gis.gehirn.jp/dns/v1/zones/4c6409ac-b37f-4ca4-87ea-7915f44a84eb/versions/be70daaf-0f51-459b-881e-07dc82a4b092/records
+  response:
+    body: {string: "[\n  {\n    \"id\": \"e693bb87-8d5f-436d-99cf-19db1028b428\",\n\
+        \    \"type\": \"NS\",\n    \"name\": \"example.com.\",\n    \"\
+        enable_alias\": false,\n    \"ttl\": 86400,\n    \"records\": [\n      {\n\
+        \        \"nsdname\": \"ns2.gehirndns.com.\"\n      },\n      {\n        \"\
+        nsdname\": \"ns2.gehirndns.net.\"\n      },\n      {\n        \"nsdname\"\
+        : \"ns2.gehirndns.jp.\"\n      },\n      {\n        \"nsdname\": \"ns2.gehirndns.org.\"\
+        \n      }\n    ]\n  },\n  {\n    \"id\": \"bb624c31-4dbc-41e9-aa83-af3090496cff\"\
+        ,\n    \"type\": \"A\",\n    \"name\": \"localhost.example.com.\"\
+        ,\n    \"enable_alias\": false,\n    \"ttl\": 3600,\n    \"records\": [\n\
+        \      {\n        \"address\": \"127.0.0.1\"\n      }\n    ]\n  }\n]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['649']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Tue, 06 Mar 2018 07:40:21 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "CNAME", "name": "docs.example.com.", "enable_alias":
+      false, "ttl": 3600, "records": [{"cname": "docs.example.com"}]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['136']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.gis.gehirn.jp/dns/v1/zones/4c6409ac-b37f-4ca4-87ea-7915f44a84eb/versions/be70daaf-0f51-459b-881e-07dc82a4b092/records
+  response:
+    body: {string: "{\n  \"id\": \"1627d630-f6c3-47bc-ab93-f092b84b8bd7\",\n  \"type\"\
+        : \"CNAME\",\n  \"name\": \"docs.example.com.\",\n  \"enable_alias\"\
+        : false,\n  \"ttl\": 3600,\n  \"records\": [\n    {\n      \"cname\": \"docs.example.com.example.com.\"\
+        \n    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['239']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Tue, 06 Mar 2018 07:40:22 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1
