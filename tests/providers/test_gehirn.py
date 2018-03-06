@@ -17,8 +17,3 @@ class GehirnProviderTests(TestCase, IntegrationTests):
 
     def _filter_headers(self):
         return ['Authorization']
-
-    # TODO: this should be enabled
-    @pytest.mark.skip(reason="record id is not exists")
-    def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
-        return

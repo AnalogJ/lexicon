@@ -4,6 +4,8 @@ from __future__ import print_function
 import json
 import logging
 import re
+import base64
+import copy
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -80,8 +82,8 @@ class Provider(BaseProvider):
             record = records[0]
 
         if r in record["records"]:
-            logger.debug('create_record: %s', False)
-            return False
+            logger.debug('create_record: %s', True)
+            return True
 
         record["records"].append(r)
         self._update_record(record)
@@ -97,12 +99,13 @@ class Provider(BaseProvider):
             name = self._full_name(name)
         for record in self._get_records(type=type, name=name):
             for i, r in enumerate(record["records"]):
+                c = self._build_content(record['type'], r)
                 processed_record = {
                     'type': record['type'],
                     'name': record['name'].rstrip("."),
                     'ttl': record['ttl'],
-                    'content': self._build_content(record['type'], r),
-                    # 'id': "{}.{}".format(record["id"], i),
+                    'content': c,
+                    'id': "{}.{}".format(record["id"], base64.b64encode(c.encode("utf-8")).decode("ascii")),
                 }
                 self._parse_content(
                     record['type'], processed_record["content"])
@@ -117,30 +120,60 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def update_record(self, identifier=None, type=None, name=None, content=None):
-        if identifier:
-            raise NotImplementedError('identifier is not supported')
 
-        if not (type and name and content):
-            raise Exception("type ,name and content must be specified.")
+        if name:
+            name = self._full_name(name)
 
-        name = self._full_name(name)
-        r = self._parse_content(type, content)
+        record = None
+        if not identifier:
+            if not (type and name and content):
+                raise Exception("type, name and content must be specified.")
+                r = self._parse_content(type, content)
 
-        records = self._get_records(type=type, name=name)
+            records = self._get_records(type=type, name=name)
 
-        if not records:
-            self.create_record(type=type, name=name, content=content)
-            logger.debug('update_record: %s', True)
-            return True
+            if not records:
+                self.create_record(type=type, name=name, content=content)
+                logger.debug('update_record: %s', True)
+                return True
 
-        record = {
-            'id': records[0]["id"],
-            'type': type,
-            'name': name,
-            'enable_alias': False,
-            'ttl': self.options['ttl'],
-            'records': [self._parse_content(type, content)],
-        }
+            record = {
+                'id': records[0]["id"],
+                'type': type,
+                'name': name,
+                'enable_alias': False,
+                'ttl': self.options['ttl'],
+                'records': [self._parse_content(type, content)],
+            }
+
+        else:
+            # with identifier
+            records = self._get_records(identifier=identifier)
+            if not records:
+                raise Exception('Record identifier could not be found.')
+
+            record = records[0]
+
+            if "." in identifier:
+                # modify single record
+                self.delete_record(identifier=identifier)
+                self.create_record(
+                    type=type or record["type"],
+                    name=name or record["name"],
+                    content=content
+                )
+                logger.debug('update_record: %s', True)
+                return True
+            else:
+                # update entire record
+                if type:
+                    record["type"] = type
+                if name:
+                    record["name"] = name
+                record["ttl"] = self.options['ttl']
+                if content:
+                    record["records"] = [
+                        self._parse_content(record["type"], content)]
 
         self._update_record(record)
         logger.debug('update_record: %s', True)
@@ -150,7 +183,42 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
-            raise NotImplementedError('identifier is not supported')
+            if "." not in identifier:
+                # delete entire record
+                path = '/zones/{}/versions/{}/records/{}'.format(
+                    self.domain_id, self.version_id, identifier,
+                )
+                self._delete(path)
+                logger.debug('delete_record: %s', True)
+                return True
+
+            record_identifier = identifier.split(".")[1]
+
+            records = self._get_records(identifier=identifier)
+            if not records:
+                raise Exception('Record identifier could not be found.')
+
+            record = records[0]
+            for index, r in enumerate(record["records"]):
+                target_content = self._build_content(record['type'], r)
+                target_identifier = base64.b64encode(
+                    target_content.encode("utf-8")).decode("ascii")
+
+                if target_identifier == record_identifier:
+                    del record["records"][index]
+                if len(record["records"]) == 0:
+                    # delete entire record
+                    path = '/zones/{}/versions/{}/records/{}'.format(
+                        self.domain_id, self.version_id, record['id'],
+                    )
+                    self._delete(path)
+                else:
+                    self._update_record(record)
+
+                logger.debug('delete_record: %s', True)
+                return True
+            else:
+                raise Exception('Record identifier could not be found.')
 
         r = None
         if name is not None:
@@ -188,20 +256,26 @@ class Provider(BaseProvider):
             target += "."
         return target
 
-    def _filter_records(self, records, type=None, name=None):
+    def _filter_records(self, records, identifier=None, type=None, name=None):
         filtered_records = []
+
+        if identifier:
+            identifier = identifier.split(".")[0]
+
         for record in records:
             if type and record['type'] != type:
                 continue
             if name and record['name'] != name:
                 continue
+            if identifier and record['id'] != identifier:
+                continue
             filtered_records.append(record)
         return filtered_records
 
-    def _get_records(self, type=None, name=None):
+    def _get_records(self, identifier=None, type=None, name=None):
         path = '/zones/{}/versions/{}/records'.format(
             self.domain_id, self.version_id)
-        return self._filter_records(self._get(path), type=type, name=name)
+        return self._filter_records(self._get(path), identifier=identifier, type=type, name=name)
 
     def _update_record(self, record):
         if record.get("id"):
@@ -247,6 +321,6 @@ class Provider(BaseProvider):
             # if the request fails for any reason, throw an error.
             r.raise_for_status()
         except:
-            logger.error("{code} {message}".format(**r.json()))
+            logger.error(r.text)
             raise
         return r.json()
