@@ -97,16 +97,19 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id
         }
+        
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            logger.debug('records: %s', records)
-            if len(records) == 1:
-                data['rrid'] = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
+            delete_record_id = [record['id'] for record in records]
         else:
-            data['rrid'] = identifier
-        payload = self._get('/dnsDeleteRecord', data)
+            delete_record_id.append(identifier)
+
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            data['rrid'] = record_id
+            payload = self._get('/dnsDeleteRecord', data)
 
         logger.debug('delete_record: %s', True)
         return True
