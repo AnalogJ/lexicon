@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem?%7B%22Filter%22:%20%7B%22Provider.Class%22:%20%22dns%22,%20%22Name%22:%20%22example.com%22%7D%7D
+  response:
+    body: {string: '{"From":0,"Count":1,"Total":1,"CommonServiceItems":[{"Index":0,"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"a0b341106ab458cdaf4232e3122bf9fe","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]}],"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/702bb602c8285162be53a020462422db"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:22 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['998']
+      X-Sakura-Encode-Microtime: ['551']
+      X-Sakura-Proxy-Decode-Microtime: ['144']
+      X-Sakura-Proxy-Microtime: ['64746']
+      X-Sakura-Serial: [702bb602c8285162be53a020462422db]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['998']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600}]}},"SettingsHash":"a0b341106ab458cdaf4232e3122bf9fe","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/d1e52d4db3865735c655b67883d557d9"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:23 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['956']
+      X-Sakura-Encode-Microtime: ['597']
+      X-Sakura-Proxy-Decode-Microtime: ['120']
+      X-Sakura-Proxy-Microtime: ['60972']
+      X-Sakura-Serial: [d1e52d4db3865735c655b67883d557d9]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['956']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"CommonServiceItem": {"Settings": {"DNS": {"ResourceRecordSets": [{"Name":
+      "localhost", "Type": "A", "RData": "127.0.0.1", "TTL": 3600}, {"Name": "_acme-challenge.fqdn",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.full",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "_acme-challenge.test",
+      "Type": "TXT", "RData": "challengetoken", "TTL": 3600}, {"Name": "ttl.fqdn",
+      "Type": "TXT", "RData": "ttlshouldbe3600", "TTL": 3600}]}}}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['486']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600}]}},"SettingsHash":"6d77943e0ec86431945028596a58c25c","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"Success":true,"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/2bdfc41072a145d6ed867ebbe9c5f6e1"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:25 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1041']
+      X-Sakura-Encode-Microtime: ['662']
+      X-Sakura-Proxy-Decode-Microtime: ['112']
+      X-Sakura-Proxy-Microtime: ['1700783']
+      X-Sakura-Serial: [2bdfc41072a145d6ed867ebbe9c5f6e1]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1041']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/commonserviceitem/112901284755
+  response:
+    body: {string: '{"CommonServiceItem":{"ID":"112901284755","Name":"example.com","Description":"","Settings":{"DNS":{"ResourceRecordSets":[{"Name":"localhost","Type":"A","RData":"127.0.0.1","TTL":3600},{"Name":"_acme-challenge.fqdn","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.full","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"_acme-challenge.test","Type":"TXT","RData":"challengetoken","TTL":3600},{"Name":"ttl.fqdn","Type":"TXT","RData":"ttlshouldbe3600","TTL":3600}]}},"SettingsHash":"6d77943e0ec86431945028596a58c25c","Status":{"Zone":"example.com","NS":["ns1.gslb4.sakura.ne.jp","ns2.gslb4.sakura.ne.jp"]},"ServiceClass":"cloud\/dns","Availability":"available","CreatedAt":"2017-10-12T12:23:40+09:00","ModifiedAt":"2017-10-12T12:23:40+09:00","Provider":{"ID":2000002,"Class":"dns","Name":"gslb4.sakura.ne.jp","ServiceClass":"cloud\/dns"},"Icon":null,"Tags":[]},"is_ok":true,"_log_url":"http:\/\/is1a-so.cloud.alpha.sakura.ad.jp\/apilog\/#!\/22167a14390035f0806aa4cd09dffe5b"}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 05 Mar 2018 06:23:25 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Status: [200 OK]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Sakura-Content-Length: ['1026']
+      X-Sakura-Encode-Microtime: ['323']
+      X-Sakura-Proxy-Decode-Microtime: ['67']
+      X-Sakura-Proxy-Microtime: ['58063']
+      X-Sakura-Serial: [22167a14390035f0806aa4cd09dffe5b]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['1026']
+    status: {code: 200, message: OK}
+version: 1
