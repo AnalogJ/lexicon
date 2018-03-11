@@ -121,13 +121,17 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
-        payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), record_id))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
         logger.debug('delete_record: True')
