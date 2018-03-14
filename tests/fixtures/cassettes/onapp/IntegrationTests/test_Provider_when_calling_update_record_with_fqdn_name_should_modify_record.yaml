@@ -10,20 +10,21 @@ interactions:
     method: GET
     uri: https://dashboard.dynomesh.com.au/dns_zones.json
   response:
-    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"cdn_reference":556960568}}]'}
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-15T08:53:45+11:00","id":649,"name":"my-test.org","updated_at":"2018-03-15T08:53:45+11:00","user_id":348,"cdn_reference":73259687}}]'}
     headers:
       Cache-Control: ['must-revalidate, private, max-age=0']
       Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Wed, 14 Mar 2018 09:40:32 GMT']
-      ETag: ['"ec75dde3c3b5ed64907fa69245eb9a86"']
+      Date: ['Wed, 14 Mar 2018 21:56:39 GMT']
+      ETag: ['"20964277e99a25982691d91da6e0d4ab"']
       Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=15ed9253bbfbeb2d09521f6483e8768a; path=/; HttpOnly]
       Status: [200 OK]
       Transfer-Encoding: [chunked]
       X-Powered-By: [Phusion Passenger 4.0.35]
       X-Rack-Cache: [miss]
-      X-Request-Id: [c3c869b7ccb41365d9560d18aae642e0]
-      X-Runtime: ['0.143604']
+      X-Request-Id: [84c5881b5aba0effa8b9b8849c38cbfc]
+      X-Runtime: ['0.128499']
       X-UA-Compatible: ['IE=Edge,chrome=1']
     status: {code: 200, message: OK}
 - request:
@@ -35,25 +36,27 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['96']
       Content-Type: [application/json]
+      Cookie: [_session_id=15ed9253bbfbeb2d09521f6483e8768a]
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+    uri: https://dashboard.dynomesh.com.au/dns_zones/649/records.json
   response:
-    body: {string: '{"dns_record":{"id":2791874,"name":"orig.testfqdn","ttl":"3600","txt":"challengetoken","type":"TXT"}}'}
+    body: {string: '{"dns_record":{"id":2792045,"name":"orig.testfqdn","ttl":"3600","txt":"challengetoken","type":"TXT"}}'}
     headers:
       Cache-Control: ['max-age=0, private, must-revalidate']
       Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Wed, 14 Mar 2018 09:40:32 GMT']
-      ETag: ['"29fb18869b45f4330fc422dabd415f33"']
-      Location: [/dns_zones/648/records]
+      Date: ['Wed, 14 Mar 2018 21:56:39 GMT']
+      ETag: ['"7a2c9215e4a953fbd9ee502fdee7a3d1"']
+      Location: [/dns_zones/649/records]
       Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=dac31cba0984aca2111977b6ce0f2c3c; path=/; HttpOnly]
       Status: [201 Created]
       Transfer-Encoding: [chunked]
       X-Powered-By: [Phusion Passenger 4.0.35]
       X-Rack-Cache: ['invalidate, pass']
-      X-Request-Id: [aef11bd022c1e683014a429151871494]
-      X-Runtime: ['3.342049']
+      X-Request-Id: [8144dd9e5e9b61b05f0b9307a85682c4]
+      X-Runtime: ['2.803381']
       X-UA-Compatible: ['IE=Edge,chrome=1']
     status: {code: 201, message: Created}
 - request:
@@ -63,24 +66,25 @@ interactions:
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Type: [application/json]
+      Cookie: [_session_id=dac31cba0984aca2111977b6ce0f2c3c]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+    uri: https://dashboard.dynomesh.com.au/dns_zones/649/records.json
   response:
-    body: {string: '{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2791858,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":45,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2791854,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2791855,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2791856,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2791857,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2791859,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2791860,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2791861,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791862,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791863,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791868,"name":"ttl.fqdn","ttl":3600,"txt":"ttlshouldbe3600","type":"TXT"}},{"dns_record":{"id":2791869,"name":"random.fqdntest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791870,"name":"random.fulltest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791871,"name":"random.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791872,"name":"updated.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791873,"name":"orig.nameonly.test","ttl":3600,"txt":"updated","type":"TXT"}},{"dns_record":{"id":2791874,"name":"orig.testfqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":556960568}}'}
+    body: {string: '{"dns_zone":{"created_at":"2018-03-15T08:53:45+11:00","id":649,"name":"my-test.org","updated_at":"2018-03-15T08:53:45+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2792029,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":45,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2792025,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2792026,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2792027,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2792028,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2792030,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2792031,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2792032,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792033,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792034,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792039,"name":"ttl.fqdn","ttl":3600,"txt":"ttlshouldbe3600","type":"TXT"}},{"dns_record":{"id":2792040,"name":"random.fqdntest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792041,"name":"random.fulltest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792042,"name":"random.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792043,"name":"updated.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2792044,"name":"orig.nameonly.test","ttl":3600,"txt":"updated","type":"TXT"}},{"dns_record":{"id":2792045,"name":"orig.testfqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":73259687}}'}
     headers:
       Cache-Control: ['must-revalidate, private, max-age=0']
       Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Wed, 14 Mar 2018 09:40:36 GMT']
-      ETag: ['"9ea6360cd01aa2259bf5bf55c31c1413"']
+      Date: ['Wed, 14 Mar 2018 21:56:42 GMT']
+      ETag: ['"6f8dd68f35a40ec9eeb18919fd815790"']
       Server: [Apache/2.2.15 (CentOS)]
       Status: [200 OK]
       Transfer-Encoding: [chunked]
       X-Powered-By: [Phusion Passenger 4.0.35]
       X-Rack-Cache: [miss]
-      X-Request-Id: [5ad8272c970f3e2cde1beb984cb0d2fe]
-      X-Runtime: ['3.395429']
+      X-Request-Id: [82139cc74243a0d3063a7dd7435796ee]
+      X-Runtime: ['3.158173']
       X-UA-Compatible: ['IE=Edge,chrome=1']
     status: {code: 200, message: OK}
 - request:
@@ -91,9 +95,10 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['84']
       Content-Type: [application/json]
+      Cookie: [_session_id=dac31cba0984aca2111977b6ce0f2c3c]
       User-Agent: [python-requests/2.18.4]
     method: PUT
-    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records/2791874.json
+    uri: https://dashboard.dynomesh.com.au/dns_zones/649/records/2792045.json
   response:
     body: {string: ''}
     headers:
@@ -101,13 +106,14 @@ interactions:
       Connection: [close]
       Content-Length: ['0']
       Content-Type: [text/plain; charset=UTF-8]
-      Date: ['Wed, 14 Mar 2018 09:40:39 GMT']
+      Date: ['Wed, 14 Mar 2018 21:56:46 GMT']
       Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=6e167dee6a677f9cde49f74fd2243c82; path=/; HttpOnly]
       Status: [204 No Content]
       X-Powered-By: [Phusion Passenger 4.0.35]
       X-Rack-Cache: ['invalidate, pass']
-      X-Request-Id: [0ef0cdbf731ae039b7b1e17770fc9aef]
-      X-Runtime: ['7.183338']
+      X-Request-Id: [f3f7f8c3c800e0076ca4933d5e64b163]
+      X-Runtime: ['6.416511']
       X-UA-Compatible: ['IE=Edge,chrome=1']
     status: {code: 204, message: No Content}
 version: 1
