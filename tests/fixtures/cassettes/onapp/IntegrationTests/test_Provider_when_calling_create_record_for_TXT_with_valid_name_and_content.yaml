@@ -1,0 +1,59 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones.json
+  response:
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"cdn_reference":556960568}}]'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:38:07 GMT']
+      ETag: ['"ec75dde3c3b5ed64907fa69245eb9a86"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [c0b2531240b4ea7cd1ed922cf51f5e14]
+      X-Runtime: ['0.134735']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"dns_record": {"name": "_acme-challenge.test", "type": "TXT", "txt": "challengetoken",
+      "ttl": "3600"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['103']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+  response:
+    body: {string: '{"dns_record":{"id":2791863,"name":"_acme-challenge.test","ttl":"3600","txt":"challengetoken","type":"TXT"}}'}
+    headers:
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:38:08 GMT']
+      ETag: ['"3d46f68ed78591e03ad1ac47208d0ce2"']
+      Location: [/dns_zones/648/records]
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [201 Created]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: ['invalidate, pass']
+      X-Request-Id: [ab75f0fd459f0230868075d0f0eeef48]
+      X-Runtime: ['3.394591']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 201, message: Created}
+version: 1
