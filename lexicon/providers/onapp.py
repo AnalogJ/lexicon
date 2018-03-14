@@ -139,13 +139,13 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        target = self.options.get('auth_server') + url
+        target = self.options['auth_server'] + url
         
         body = ''
         if data is not None:
             body = json.dumps(data)
 
-        auth = HTTPBasicAuth(self.options.get('auth_username'), self.options.get('auth_token'))
+        auth = HTTPBasicAuth(self.options['auth_username'], self.options['auth_token'])
 
         request = requests.Request(action, target, data=body, headers=headers, params=query_params, auth=auth)
         prepared_request = self.session.prepare_request(request)
