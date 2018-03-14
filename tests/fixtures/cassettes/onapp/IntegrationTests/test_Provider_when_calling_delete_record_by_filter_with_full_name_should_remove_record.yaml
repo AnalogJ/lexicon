@@ -1,0 +1,140 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones.json
+  response:
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"cdn_reference":556960568}}]'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:38:46 GMT']
+      ETag: ['"ec75dde3c3b5ed64907fa69245eb9a86"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [bbd8e2a4123c98f640f001903a514de6]
+      X-Runtime: ['0.134750']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"dns_record": {"name": "delete.testfull", "type": "TXT", "txt": "challengetoken",
+      "ttl": "3600"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['98']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+  response:
+    body: {string: '{"dns_record":{"id":2791866,"name":"delete.testfull","ttl":"3600","txt":"challengetoken","type":"TXT"}}'}
+    headers:
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:38:47 GMT']
+      ETag: ['"c23fa58e14392c66ca5081e096570b60"']
+      Location: [/dns_zones/648/records]
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [201 Created]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: ['invalidate, pass']
+      X-Request-Id: [94928dd8f21387535fb4796af397935f]
+      X-Runtime: ['3.312866']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 201, message: Created}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+  response:
+    body: {string: '{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2791858,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":33,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2791854,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2791855,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2791856,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2791857,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2791859,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2791860,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2791861,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791862,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791863,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791866,"name":"delete.testfull","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":556960568}}'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:38:50 GMT']
+      ETag: ['"1f96d3d77c057583757d37ec3f7c22eb"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [638830bbfba626b63ba1e8ac90f134b6]
+      X-Runtime: ['3.642614']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records/2791866.json
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [close]
+      Content-Length: ['0']
+      Content-Type: [text/plain; charset=UTF-8]
+      Date: ['Wed, 14 Mar 2018 09:38:54 GMT']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [204 No Content]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: ['invalidate, pass']
+      X-Request-Id: [81bb16ba1fbd70e454fae7b758bb47c0]
+      X-Runtime: ['6.500444']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones/648/records.json
+  response:
+    body: {string: '{"dns_zone":{"created_at":"2018-03-14T20:37:34+11:00","id":648,"name":"my-test.org","updated_at":"2018-03-14T20:37:34+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2791858,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":34,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2791854,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2791855,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2791856,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2791857,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2791859,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2791860,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2791861,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791862,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2791863,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":556960568}}'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 14 Mar 2018 09:39:01 GMT']
+      ETag: ['"42409d504f2a7463c90e2ff4b40a7dc2"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [4ceeb701358e0f5ea1b9a60aa17a5ad4]
+      X-Runtime: ['3.329434']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1
