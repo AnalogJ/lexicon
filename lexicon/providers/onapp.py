@@ -126,11 +126,18 @@ class Provider(BaseProvider):
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        if not identifier:
-            identifier = self._guess_record(type, name, content)['id']
+        deletion_ids = []
 
-        result = self._delete('/dns_zones/{0}/records/{1}.json'.format(self.domain_id, identifier))
-        logger.debug('delete_record: %s', result)
+        if not identifier:
+            records = self.list_records(type, name, content)
+            deletion_ids = [ record['id'] for record in records ]
+        else:
+            deletion_ids.append(identifier)
+
+        for id in deletion_ids:
+            self._delete('/dns_zones/{0}/records/{1}.json'.format(self.domain_id, id))
+
+        logger.debug('delete_record: %s', True)
 
         return True
 
