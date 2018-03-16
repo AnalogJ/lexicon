@@ -72,7 +72,13 @@ class Provider(BaseProvider):
         data = {'records': [{'type': type, 'name': self._full_name(name), 'data': content}]}
         if self.options.get('ttl'):
             data['records'][0]['ttl'] = self.options.get('ttl')
-        payload = self._post_and_wait('/domains/{0}/records'.format(self.domain_id), data)
+
+        try:
+            payload = self._post_and_wait('/domains/{0}/records'.format(self.domain_id), data)
+        except Exception as e:
+            if str(e).startswith('Record is a duplicate of another record'):
+                return self.update_record(None, type, name, content)
+            raise e
 
         success = len(payload['records']) > 0
         logger.debug('create_record: %s', success)
@@ -82,26 +88,27 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        filter = {'per_page': 100}
+        params = {'per_page': 100}
         if type:
-            filter['type'] = type
+            params['type'] = type
         if name:
-            filter['name'] = self._full_name(name)
+            params['name'] = self._full_name(name)
+        # Sending the data filter to the Rackspace DNS API results in a 503 error
+        # if content:
+        #     params['data'] = content
+
+        payload = self._get('/domains/{0}/records'.format(self.domain_id), params)
+
+        records = list(payload['records'])
         if content:
-            filter['content'] = content
-
-        payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
-
-        records = []
-        for record in payload['records']:
-            processed_record = {
-                'type': record['type'],
-                'name': record['name'],
-                'ttl': record['ttl'],
-                'content': record['data'],
-                'id': record['id']
-            }
-            records.append(processed_record)
+            records = [record for record in records if record['data'] == content]
+        records = [{
+            'type': record['type'],
+            'name': record['name'],
+            'ttl': record['ttl'],
+            'content': record['data'],
+            'id': record['id']
+        } for record in records]
 
         logger.debug('list_records: %s', records)
         return records
