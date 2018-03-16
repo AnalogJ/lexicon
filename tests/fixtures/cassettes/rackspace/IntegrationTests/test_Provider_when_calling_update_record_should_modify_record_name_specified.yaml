@@ -1,7 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
-      "foo", "apiKey": "bar"}}}'
+    body: !!python/unicode '{}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -24,9 +23,8 @@ interactions:
       vary: ['Accept, Accept-Encoding, X-Auth-Token']
       x-content-type-options: [nosniff]
       x-frame-options: [DENY]
-
       x-node-id: [ord-05]
-      x-tenant-id: ['placeholder_auth_account']
+      x-tenant-id: [placeholder_auth_account]
       x-trans-id: [eyJyZXF1ZXN0SWQiOiJhOGQ4YWQ4MS0xMWY4LTRiYmItOWEzYS1mNjM2OTdiZWMxZGIiLCJvcmlnaW4iOm51bGx9]
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
@@ -39,7 +37,6 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=capsulecd.com
   response:
@@ -51,10 +48,9 @@ interactions:
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
-
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"records": [{"data": "challengetoken", "type": "TXT",
+    body: !!python/unicode '{"records": [{"type": "TXT", "data": "challengetoken",
       "name": "orig.nameonly.test.capsulecd.com", "ttl": 3600}]}'
     headers:
       Accept: ['*/*']
@@ -63,7 +59,6 @@ interactions:
       Content-Length: ['125']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: POST
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records
   response:
@@ -77,7 +72,6 @@ interactions:
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
-
     status: {code: 202, message: Accepted}
 - request:
     body: null
@@ -87,7 +81,6 @@ interactions:
       Connection: [keep-alive]
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/27efbaf5-36ab-4948-bbae-eb59365c2725?showDetails=true
   response:
@@ -101,7 +94,6 @@ interactions:
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
-
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -112,11 +104,10 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
-    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?content=updated&per_page=100&type=TXT&name=orig.nameonly.test.capsulecd.com
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?per_page=100&type=TXT&name=orig.nameonly.test.capsulecd.com
   response:
-    body: {string: !!python/unicode '{"records":[{"name":"orig.nameonly.test.capsulecd.com","id":"TXT-1614076","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:03:08.000+0000","created":"2018-01-31T15:03:08.000+0000"}]}'}
+    body: {string: !!python/unicode '{"records":[{"name":"orig.nameonly.test.capsulecd.com","id":"TXT-1614077","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:03:08.000+0000","created":"2018-01-31T15:03:08.000+0000"},{"name":"orig.nameonly.test.capsulecd.com","id":"TXT-1614076","type":"TXT","data":"updated","ttl":3600,"updated":"2018-01-31T15:03:08.000+0000","created":"2018-01-31T15:03:08.000+0000"}]}'}
     headers:
       content-length: ['218']
       content-type: [application/json]
@@ -124,7 +115,6 @@ interactions:
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
-
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{"data": "updated", "type": "TXT", "name": "orig.nameonly.test.capsulecd.com",
@@ -136,7 +126,6 @@ interactions:
       Content-Length: ['103']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: PUT
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records/TXT-1614076
   response:
@@ -149,7 +138,6 @@ interactions:
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
-
     status: {code: 202, message: Accepted}
 - request:
     body: null
@@ -159,7 +147,6 @@ interactions:
       Connection: [keep-alive]
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/6fe88212-747d-430a-acea-e98a1c126dc2?showDetails=true
   response:
