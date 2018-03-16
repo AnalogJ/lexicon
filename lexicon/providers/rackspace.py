@@ -72,7 +72,13 @@ class Provider(BaseProvider):
         data = {'records': [{'type': type, 'name': self._full_name(name), 'data': content}]}
         if self.options.get('ttl'):
             data['records'][0]['ttl'] = self.options.get('ttl')
-        payload = self._post_and_wait('/domains/{0}/records'.format(self.domain_id), data)
+
+        try:
+            payload = self._post_and_wait('/domains/{0}/records'.format(self.domain_id), data)
+        except Exception as e:
+            if str(e).startswith('Record is a duplicate of another record'):
+                return self.update_record(None, type, name, content)
+            raise e
 
         success = len(payload['records']) > 0
         logger.debug('create_record: %s', success)
@@ -88,7 +94,7 @@ class Provider(BaseProvider):
         if name:
             filter['name'] = self._full_name(name)
         if content:
-            filter['content'] = content
+            filter['data'] = content.split('_')[0]
 
         payload = self._get('/domains/{0}/records'.format(self.domain_id), filter)
 
