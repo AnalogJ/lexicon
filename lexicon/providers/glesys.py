@@ -89,18 +89,17 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            if len(records) > 0:
-                # At least one record was found. Delete first match.
-                identifier = records[0]['id']
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
 
-        if not identifier:
-            # Does not exist, do nothing.
-            return True
+        for record_id in delete_record_id:
+            request_data = {'recordid': record_id}
+            self._post('/domain/deleterecord', data=request_data)
 
-        request_data = {'recordid': identifier}
-        self._post('/domain/deleterecord', data=request_data)
         return True
 
     # Helpers.
