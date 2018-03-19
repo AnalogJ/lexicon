@@ -219,7 +219,57 @@ class IntegrationTests(object):
             records = provider.list_records('TXT', 'delete.testfqdn.{0}.'.format(self.domain))
             assert len(records) == 0
 
-# Private helpers, mimicing the auth_* options provided by the Client
+    ###########################################################################
+    # Extended Test Suite - March 2018 - Validation for Create Record NOOP & Record Sets
+    ###########################################################################
+    def test_Provider_when_duplicate_create_record_should_be_noop(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_duplicate_create_record_should_be_noop.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.donothing.{0}.".format(self.domain),'challengetoken')
+            assert provider.create_record('TXT',"_acme-challenge.donothing.{0}.".format(self.domain),'challengetoken')
+
+    def test_Provider_when_creating_record_set(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_creating_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
+            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
+
+    def test_Provider_when_listing_record_set(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_listing_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken1')
+            provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken2')
+            records = provider.list_records('TXT','_acme-challenge.listrecordset.{0}.'.format(self.domain))
+            assert len(records) == 2
+
+    def test_Provider_when_deleting_record_set_should_remove_all_matching(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_deleting_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken1')
+            assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken2')
+
+            assert provider.delete_record(None, 'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+            records = provider.list_records('TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+            assert len(records) == 0
+
+    def test_Provider_when_deleting_record_in_record_set_by_content_should_leave_others_untouched(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_deleting_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken1')
+            assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken2')
+
+            assert provider.delete_record(None, 'TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain),'challengetoken1')
+            records = provider.list_records('TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain))
+            assert len(records) == 1
+
+
+
+        # Private helpers, mimicing the auth_* options provided by the Client
 # http://stackoverflow.com/questions/6229073/how-to-make-a-python-dictionary-that-returns-key-for-keys-missing-from-the-dicti
 
 
