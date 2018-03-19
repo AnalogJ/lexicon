@@ -42,7 +42,15 @@ class Provider(BaseProvider):
         data = {'type': type, 'name': self._full_name(name), 'content': content}
         if self.options.get('ttl'):
             data['ttl'] = self.options.get('ttl')
-        payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
+
+        payload = {'success': True}
+        try:
+            payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
+        except requests.exceptions.HTTPError as err:
+            print( "{0}".format(err.response.json()))
+            already_exists = next((True for error in err.response.json()['errors'] if error['code'] == 81057), False)
+            if not already_exists:
+                raise
 
         logger.debug('create_record: %s', payload['success'])
         return payload['success']
