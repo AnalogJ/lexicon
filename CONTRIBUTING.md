@@ -13,6 +13,11 @@ Fork, then clone the repo:
 
     $ git clone git@github.com:your-username/lexicon.git
 
+Create a python virtual environment
+
+	$ virtualenv -p python2.7 venv
+	$ source venv/bin/activate
+
 Install all `lexicon` requirements:
 
     $ pip install -r optional-requirements.txt
