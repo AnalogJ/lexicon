@@ -1,3 +1,5 @@
+import contextlib
+
 from builtins import object
 import lexicon.client
 from lexicon.common.options_handler import SafeOptions, env_auth_options
@@ -34,13 +36,13 @@ class IntegrationTests(object):
     # Provider.authenticate()
     ###########################################################################
     def test_Provider_authenticate(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_authenticate'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.domain_id is not None
 
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_authenticate_with_unmanaged_domain_should_fail.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_authenticate_with_unmanaged_domain_should_fail'):
             options = self._test_options()
             options['domain'] = 'thisisadomainidonotown.com'
             provider = self.Provider(options, self._test_engine_overrides())
@@ -51,31 +53,31 @@ class IntegrationTests(object):
     # Provider.create_record()
     ###########################################################################
     def test_Provider_when_calling_create_record_for_A_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_A_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_for_A_with_valid_name_and_content'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('A','localhost','127.0.0.1')
 
     def test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('CNAME','docs','docs.example.com')
 
     def test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','_acme-challenge.test','challengetoken')
 
     def test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.full.{0}".format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.fqdn.{0}.".format(self.domain),'challengetoken')
@@ -84,13 +86,13 @@ class IntegrationTests(object):
     # Provider.list_records()
     ###########################################################################
     def test_Provider_when_calling_list_records_with_no_arguments_should_list_all(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_no_arguments_should_list_all.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_no_arguments_should_list_all'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
     def test_Provider_when_calling_list_records_with_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_name_filter_should_return_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             provider.create_record('TXT','random.test','challengetoken')
@@ -101,7 +103,7 @@ class IntegrationTests(object):
             assert records[0]['name'] == 'random.test.{0}'.format(self.domain)
 
     def test_Provider_when_calling_list_records_with_full_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_full_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_full_name_filter_should_return_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             provider.create_record('TXT','random.fulltest.{0}'.format(self.domain),'challengetoken')
@@ -112,7 +114,7 @@ class IntegrationTests(object):
             assert records[0]['name'] == 'random.fulltest.{0}'.format(self.domain)
 
     def test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             provider.create_record('TXT','random.fqdntest.{0}.'.format(self.domain),'challengetoken')
@@ -123,7 +125,7 @@ class IntegrationTests(object):
             assert records[0]['name'] == 'random.fqdntest.{0}'.format(self.domain)
 
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_after_setting_ttl.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_after_setting_ttl'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"ttl.fqdn.{0}.".format(self.domain),'ttlshouldbe3600')
@@ -133,14 +135,14 @@ class IntegrationTests(object):
 
     @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
     def test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
 
     @pytest.mark.skip(reason="not sure how to test filtering across multiple providers")
     def test_Provider_when_calling_list_records_with_arguments_should_filter_list(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_list_records_with_arguments_should_filter_list.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_arguments_should_filter_list'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert isinstance(provider.list_records(), list)
@@ -149,7 +151,7 @@ class IntegrationTests(object):
     # Provider.update_record()
     ###########################################################################
     def test_Provider_when_calling_update_record_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','orig.test','challengetoken')
@@ -157,14 +159,14 @@ class IntegrationTests(object):
             assert provider.update_record(records[0].get('id', None),'TXT','updated.test','challengetoken')
 
     def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_should_modify_record_name_specified.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_should_modify_record_name_specified'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','orig.nameonly.test','challengetoken')
             assert provider.update_record(None,'TXT','orig.nameonly.test','updated')
 
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_full_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_full_name_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','orig.testfull.{0}'.format(self.domain),'challengetoken')
@@ -172,7 +174,7 @@ class IntegrationTests(object):
             assert provider.update_record(records[0].get('id', None),'TXT','updated.testfull.{0}'.format(self.domain),'challengetoken')
 
     def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','orig.testfqdn.{0}.'.format(self.domain),'challengetoken')
@@ -183,7 +185,7 @@ class IntegrationTests(object):
     # Provider.delete_record()
     ###########################################################################
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_identifier_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_by_identifier_should_remove_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','delete.testid','challengetoken')
@@ -193,7 +195,7 @@ class IntegrationTests(object):
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_by_filter_should_remove_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT','delete.testfilt','challengetoken')
@@ -202,7 +204,7 @@ class IntegrationTests(object):
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT', 'delete.testfull.{0}'.format(self.domain),'challengetoken')
@@ -211,7 +213,7 @@ class IntegrationTests(object):
             assert len(records) == 0
 
     def test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT', 'delete.testfqdn.{0}.'.format(self.domain),'challengetoken')
@@ -223,21 +225,24 @@ class IntegrationTests(object):
     # Extended Test Suite - March 2018 - Validation for Create Record NOOP & Record Sets
     ###########################################################################
     def test_Provider_when_duplicate_create_record_should_be_noop(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_duplicate_create_record_should_be_noop.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_duplicate_create_record_should_be_noop'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
-            assert provider.create_record('TXT',"_acme-challenge.donothing.{0}.".format(self.domain),'challengetoken')
-            assert provider.create_record('TXT',"_acme-challenge.donothing.{0}.".format(self.domain),'challengetoken')
+            assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
+            assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
+            records = provider.list_records('TXT',"_acme-challenge.noop.{0}.".format(self.domain))
+            assert len(records) == 1
+
 
     def test_Provider_when_creating_record_set(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_creating_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_creating_record_set'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
             assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
 
     def test_Provider_when_listing_record_set(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_listing_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_listing_record_set'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken1')
@@ -246,7 +251,7 @@ class IntegrationTests(object):
             assert len(records) == 2
 
     def test_Provider_when_deleting_record_set_should_remove_all_matching(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_deleting_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_deleting_record_set_should_remove_all_matching'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken1')
@@ -257,7 +262,7 @@ class IntegrationTests(object):
             assert len(records) == 0
 
     def test_Provider_when_deleting_record_in_record_set_by_content_should_leave_others_untouched(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/test_Provider_when_deleting_record_set.yaml'), filter_headers=self._filter_headers(), filter_query_parameters=self._filter_query_parameters(), filter_post_data_parameters=self._filter_post_data_parameters()):
+        with self._test_fixture_recording('test_Provider_when_deleting_record_in_record_set_by_content_should_leave_others_untouched'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken1')
@@ -317,3 +322,13 @@ class IntegrationTests(object):
         return []
     def _filter_post_data_parameters(self):
         return []
+
+    #http://preshing.com/20110920/the-python-with-statement-by-example/
+    #https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/
+    @contextlib.contextmanager
+    def _test_fixture_recording(self, test_name, recording_extension='yaml', recording_folder='IntegrationTests'):
+        with provider_vcr.use_cassette(self._cassette_path('{0}/{1}.{2}'.format(recording_folder, test_name, recording_extension)),
+                                       filter_headers=self._filter_headers(),
+                                       filter_query_parameters=self._filter_query_parameters(),
+                                       filter_post_data_parameters=self._filter_post_data_parameters()):
+            yield
