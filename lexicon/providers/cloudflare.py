@@ -47,7 +47,6 @@ class Provider(BaseProvider):
         try:
             payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
         except requests.exceptions.HTTPError as err:
-            print( "{0}".format(err.response.json()))
             already_exists = next((True for error in err.response.json()['errors'] if error['code'] == 81057), False)
             if not already_exists:
                 raise

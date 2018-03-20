@@ -53,7 +53,12 @@ class Provider(BaseProvider):
         if self.options.get('ttl'):
             record['ttl'] = self.options.get('ttl')
 
-        payload = self._post('/record', record)
+        try:
+            payload = self._post('/record', record)
+        except requests.exceptions.HTTPError as err:
+            already_exists = (err.response.json()['code'] == 34)
+            if not already_exists:
+                raise
 
         logger.debug('create_record: %s', True) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
         return True
