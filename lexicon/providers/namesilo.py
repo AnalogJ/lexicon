@@ -38,7 +38,12 @@ class Provider(BaseProvider):
         }
         if self.options.get('ttl'):
             record['rrttl'] = self.options.get('ttl')
-        payload = self._get('/dnsAddRecord', record)
+        try:
+            payload = self._get('/dnsAddRecord', record)
+        except ValueError as err:
+            # noop if attempting to create record that already exists.
+            logger.debug('Ignoring error: {0}'.format(err))
+
         logger.debug('create_record: %s', True)
         return True
 
@@ -130,7 +135,9 @@ class Provider(BaseProvider):
         # TODO: check if the response is an error using
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
-        if root.find('reply').find('code').text != '300':
+        if root.find('reply').find('code').text == '280':
+            raise ValueError('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
+        elif root.find('reply').find('code').text != '300':
             raise Exception('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
 
 
