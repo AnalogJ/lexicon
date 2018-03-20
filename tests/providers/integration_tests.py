@@ -224,14 +224,21 @@ class IntegrationTests(object):
     ###########################################################################
     # Extended Test Suite - March 2018 - Validation for Create Record NOOP & Record Sets
     ###########################################################################
-    def test_Provider_when_duplicate_create_record_should_be_noop(self):
-        with self._test_fixture_recording('test_Provider_when_duplicate_create_record_should_be_noop'):
+    def test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop(self):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
             assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
             records = provider.list_records('TXT',"_acme-challenge.noop.{0}.".format(self.domain))
             assert len(records) == 1
+
+    def test_Provider_when_calling_create_record_multiple_times_should_create_record_set(self):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_multiple_times_should_create_record_set'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
+            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
 
     def test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
         with self._test_fixture_recording('test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list'):
@@ -240,15 +247,8 @@ class IntegrationTests(object):
             records = provider.list_records('TXT','filter.thisdoesnotexist.{0}'.format(self.domain))
             assert len(records) == 0
 
-    def test_Provider_when_creating_record_set(self):
-        with self._test_fixture_recording('test_Provider_when_creating_record_set'):
-            provider = self.Provider(self._test_options(), self._test_engine_overrides())
-            provider.authenticate()
-            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
-            assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
-
-    def test_Provider_when_listing_record_set(self):
-        with self._test_fixture_recording('test_Provider_when_listing_record_set'):
+    def test_Provider_when_calling_list_records_should_handle_record_sets(self):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_should_handle_record_sets'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken1')
@@ -256,8 +256,8 @@ class IntegrationTests(object):
             records = provider.list_records('TXT','_acme-challenge.listrecordset.{0}.'.format(self.domain))
             assert len(records) == 2
 
-    def test_Provider_when_deleting_record_set_should_remove_all_matching(self):
-        with self._test_fixture_recording('test_Provider_when_deleting_record_set_should_remove_all_matching'):
+    def test_Provider_when_calling_delete_record_with_record_set_name_remove_all(self):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_with_record_set_name_remove_all'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken1')
@@ -267,8 +267,8 @@ class IntegrationTests(object):
             records = provider.list_records('TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
             assert len(records) == 0
 
-    def test_Provider_when_deleting_record_in_record_set_by_content_should_leave_others_untouched(self):
-        with self._test_fixture_recording('test_Provider_when_deleting_record_in_record_set_by_content_should_leave_others_untouched'):
+    def test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):
+        with self._test_fixture_recording('test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
             assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken1')
