@@ -1,0 +1,25 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/get-zone-info.json?domain-name=api-example.com
+  response:
+    body: {string: !!python/unicode '{"status":"Failed","statusDescription":"Invalid
+        authentication, incorrect auth-id or auth-password."}'}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['101']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 11:25:29 GMT']
+      keep-alive: [timeout=5]
+      server: [Apache]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

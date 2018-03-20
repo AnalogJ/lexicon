@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.sandbox.dnsimple.com/v2/accounts
+  response:
+    body: {string: !!python/unicode '{"message":"Authentication failed"}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 11:25:38 GMT']
+      server: [nginx]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-download-options: [noopen]
+      x-frame-options: [DENY]
+      x-permitted-cross-domain-policies: [none]
+      x-ratelimit-limit: ['30']
+      x-ratelimit-remaining: ['30']
+      x-ratelimit-reset: ['1521548738']
+      x-request-id: [3c7118a3-9486-40c9-9f76-6a93e44b8b5d]
+      x-runtime: ['0.009265']
+      x-xss-protection: [1; mode=block]
+    status: {code: 401, message: Unauthorized}
+version: 1
