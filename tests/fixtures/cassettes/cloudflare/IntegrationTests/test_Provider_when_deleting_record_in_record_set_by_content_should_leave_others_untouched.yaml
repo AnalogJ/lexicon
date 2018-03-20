@@ -1,0 +1,197 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2018-03-19T18:52:16.496841Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"id":"521a961001d9333c8191f53a9f70eb31","type":"user","email":"darkmethodz@gmail.com"},"account":{"id":"b8a8f2a19ca47cd6e934b5d3f3d4c7a5","name":"darkmethodz@gmail.com"},"permissions":["#access:edit","#access:read","#analytics:read","#app:edit","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#member:edit","#member:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#subscription:edit","#subscription:read","#waf:edit","#waf:read","#worker:edit","#worker:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","is_subscribed":true,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229bdc4e6cfa-SJC]
+      connection: [keep-alive]
+      content-length: ['1593']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:16 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.041']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d9fa4f59b64065f57832834989139795f1521485536; expires=Tue,
+          19-Mar-19 18:52:16 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"content": "challengetoken1", "type": "TXT", "name":
+      "_acme-challenge.deleterecordinset.capsulecd.com", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['117']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"42a00534944f5e9abed3feb99f86e095","type":"TXT","name":"_acme-challenge.deleterecordinset.capsulecd.com","content":"challengetoken1","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2018-03-19T18:52:16.775262Z","created_on":"2018-03-19T18:52:16.775262Z","meta":{"auto_added":false,"managed_by_apps":false}},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229c8e246ce2-SJC]
+      connection: [keep-alive]
+      content-length: ['463']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:16 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.051']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d6cc729d91b67d12733c4554a4d5de0791521485536; expires=Tue,
+          19-Mar-19 18:52:16 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"content": "challengetoken2", "type": "TXT", "name":
+      "_acme-challenge.deleterecordinset.capsulecd.com", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['117']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"81f8e22e37d45f5dccc622ef62e0d66a","type":"TXT","name":"_acme-challenge.deleterecordinset.capsulecd.com","content":"challengetoken2","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2018-03-19T18:52:16.959862Z","created_on":"2018-03-19T18:52:16.959862Z","meta":{"auto_added":false,"managed_by_apps":false}},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229d4ea26d00-SJC]
+      connection: [keep-alive]
+      content-length: ['463']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:16 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.063']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=deb59b5843a26979ef5a9a0a748932a411521485536; expires=Tue,
+          19-Mar-19 18:52:16 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?content=challengetoken1&per_page=100&type=TXT&name=_acme-challenge.deleterecordinset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"42a00534944f5e9abed3feb99f86e095","type":"TXT","name":"_acme-challenge.deleterecordinset.capsulecd.com","content":"challengetoken1","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2018-03-19T18:52:16.775262Z","created_on":"2018-03-19T18:52:16.775262Z","meta":{"auto_added":false,"managed_by_apps":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229e7f3a6d30-SJC]
+      connection: [keep-alive]
+      content-length: ['547']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:17 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.051']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d79f002c7045e726d371fe93150f5c74d1521485537; expires=Tue,
+          19-Mar-19 18:52:17 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records/42a00534944f5e9abed3feb99f86e095
+  response:
+    body: {string: !!python/unicode '{"result":{"id":"42a00534944f5e9abed3feb99f86e095"},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229f3b726cee-SJC]
+      connection: [keep-alive]
+      content-length: ['93']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:17 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.050']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d3a116649d2fdea8336243fda049c70b51521485537; expires=Tue,
+          19-Mar-19 18:52:17 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?per_page=100&type=TXT&name=_acme-challenge.deleterecordinset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"result":[{"id":"81f8e22e37d45f5dccc622ef62e0d66a","type":"TXT","name":"_acme-challenge.deleterecordinset.capsulecd.com","content":"challengetoken2","proxiable":false,"proxied":false,"ttl":3600,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2018-03-19T18:52:16.959862Z","created_on":"2018-03-19T18:52:16.959862Z","meta":{"auto_added":false,"managed_by_apps":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      cf-ray: [3fe2229ff91f6cca-SJC]
+      connection: [keep-alive]
+      content-length: ['547']
+      content-type: [application/json]
+      date: ['Mon, 19 Mar 2018 18:52:17 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
+      pragma: [no-cache]
+      served-in-seconds: ['0.042']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d4063181680c29e026f59cae0499b489b1521485537; expires=Tue,
+          19-Mar-19 18:52:17 GMT; path=/; domain=.cloudflare.com; HttpOnly']
+      strict-transport-security: [max-age=15780000; includeSubDomains]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
