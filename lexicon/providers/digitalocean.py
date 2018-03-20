@@ -27,6 +27,11 @@ class Provider(BaseProvider):
         self.domain_id = self.options['domain']
 
     def create_record(self, type, name, content):
+        # check if record already exists
+        existing_records = self.list_records(type,name,content)
+        if len(existing_records) == 1:
+            return True
+
         record = {
             'type': type,
             'name': self._relative_name(name),
