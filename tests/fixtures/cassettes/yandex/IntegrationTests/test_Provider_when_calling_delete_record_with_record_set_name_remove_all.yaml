@@ -1,0 +1,370 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pddimp.yandex.ru/api2/admin/dns/list?domain=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"records": [{"content": "mx.yandex.net.", "domain":
+        "capsulecd.com", "fqdn": "capsulecd.com", "priority": 10, "ttl": 21600, "record_id":
+        39559783, "subdomain": "@", "type": "MX"}, {"content": "dns1.yandex.net.",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559782, "subdomain": "@", "type": "NS"}, {"content":
+        "dns2.yandex.net.", "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559781, "subdomain": "@", "type": "NS"},
+        {"content": "dns1.yandex.net.", "domain": "capsulecd.com", "retry": 900, "fqdn":
+        "capsulecd.com", "refresh": 14400, "admin_mail": "lexicon.test.yandex.ru",
+        "priority": "", "expire": 1209600, "ttl": 21600, "record_id": 39559780, "subdomain":
+        "@", "type": "SOA", "minttl": 14400}, {"content": "v=spf1 redirect=_spf.yandex.net",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559784, "subdomain": "@", "type": "TXT"}, {"content":
+        "docs.example.com.", "domain": "capsulecd.com", "fqdn": "docs.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39560158, "subdomain": "docs",
+        "type": "CNAME"}, {"content": "domain.mail.yandex.net.", "domain": "capsulecd.com",
+        "fqdn": "mail.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559969,
+        "subdomain": "mail", "type": "CNAME"}, {"content": "ttlshouldbe3600", "domain":
+        "capsulecd.com", "fqdn": "ttl.fqdn.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 39560388, "subdomain": "ttl.fqdn", "type": "TXT"}, {"content":
+        "104.31.76.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559785, "subdomain": "www", "type": "A"},
+        {"content": "104.31.77.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39559786, "subdomain": "www", "type":
+        "A"}, {"content": "2400:cb00:2048:1::681f:4ca4", "domain": "capsulecd.com",
+        "fqdn": "www.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559791,
+        "subdomain": "www", "type": "AAAA"}, {"content": "2400:cb00:2048:1::681f:4da4",
+        "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559792, "subdomain": "www", "type": "AAAA"}, {"content":
+        "challengetoken1", "domain": "capsulecd.com", "fqdn": "_acme-challenge.createrecordset.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535403, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.createrecordset.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 48535404, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.deleterecordinset.capsulecd.com", "priority": "",
+        "ttl": 3600, "record_id": 48535409, "subdomain": "_acme-challenge.deleterecordinset",
+        "type": "TXT"}, {"content": "challengetoken", "domain": "capsulecd.com", "fqdn":
+        "_acme-challenge.donothing.capsulecd.com", "priority": "", "ttl": 3600, "record_id":
+        48488964, "subdomain": "_acme-challenge.donothing", "type": "TXT"}, {"content":
+        "challengetoken", "domain": "capsulecd.com", "fqdn": "_acme-challenge.noop.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535405, "subdomain": "_acme-challenge.noop",
+        "type": "TXT"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.capsulecd.com", "port": 5222, "priority":
+        20, "ttl": 21600, "record_id": 39559787, "subdomain": "_xmpp-client._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.conference.capsulecd.com", "port":
+        5222, "priority": 20, "ttl": 21600, "record_id": 39559789, "subdomain": "_xmpp-client._tcp.conference",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.capsulecd.com", "port": 5269, "priority":
+        20, "ttl": 21600, "record_id": 39559788, "subdomain": "_xmpp-server._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.conference.capsulecd.com", "port":
+        5269, "priority": 20, "ttl": 21600, "record_id": 39559790, "subdomain": "_xmpp-server._tcp.conference",
+        "type": "SRV"}], "domain": "capsulecd.com", "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['4431']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:26 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=_acme-challenge.deleterecordset&content=challengetoken1&ttl=3600
+  response:
+    body: {string: !!python/unicode '{"record": {"content": "challengetoken1", "domain":
+        "capsulecd.com", "fqdn": "_acme-challenge.deleterecordset.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535410, "subdomain": "_acme-challenge.deleterecordset",
+        "type": "TXT"}, "domain": "capsulecd.com", "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['286']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:27 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=capsulecd.com&type=TXT&subdomain=_acme-challenge.deleterecordset&content=challengetoken2&ttl=3600
+  response:
+    body: {string: !!python/unicode '{"record": {"content": "challengetoken2", "domain":
+        "capsulecd.com", "fqdn": "_acme-challenge.deleterecordset.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535417, "subdomain": "_acme-challenge.deleterecordset",
+        "type": "TXT"}, "domain": "capsulecd.com", "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['286']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:26 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pddimp.yandex.ru/api2/admin/dns/list?domain=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"records": [{"content": "mx.yandex.net.", "domain":
+        "capsulecd.com", "fqdn": "capsulecd.com", "priority": 10, "ttl": 21600, "record_id":
+        39559783, "subdomain": "@", "type": "MX"}, {"content": "dns1.yandex.net.",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559782, "subdomain": "@", "type": "NS"}, {"content":
+        "dns2.yandex.net.", "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559781, "subdomain": "@", "type": "NS"},
+        {"content": "dns1.yandex.net.", "domain": "capsulecd.com", "retry": 900, "fqdn":
+        "capsulecd.com", "refresh": 14400, "admin_mail": "lexicon.test.yandex.ru",
+        "priority": "", "expire": 1209600, "ttl": 21600, "record_id": 39559780, "subdomain":
+        "@", "type": "SOA", "minttl": 14400}, {"content": "v=spf1 redirect=_spf.yandex.net",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559784, "subdomain": "@", "type": "TXT"}, {"content":
+        "docs.example.com.", "domain": "capsulecd.com", "fqdn": "docs.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39560158, "subdomain": "docs",
+        "type": "CNAME"}, {"content": "domain.mail.yandex.net.", "domain": "capsulecd.com",
+        "fqdn": "mail.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559969,
+        "subdomain": "mail", "type": "CNAME"}, {"content": "ttlshouldbe3600", "domain":
+        "capsulecd.com", "fqdn": "ttl.fqdn.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 39560388, "subdomain": "ttl.fqdn", "type": "TXT"}, {"content":
+        "104.31.76.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559785, "subdomain": "www", "type": "A"},
+        {"content": "104.31.77.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39559786, "subdomain": "www", "type":
+        "A"}, {"content": "2400:cb00:2048:1::681f:4ca4", "domain": "capsulecd.com",
+        "fqdn": "www.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559791,
+        "subdomain": "www", "type": "AAAA"}, {"content": "2400:cb00:2048:1::681f:4da4",
+        "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559792, "subdomain": "www", "type": "AAAA"}, {"content":
+        "challengetoken1", "domain": "capsulecd.com", "fqdn": "_acme-challenge.createrecordset.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535403, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.createrecordset.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 48535404, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.deleterecordinset.capsulecd.com", "priority": "",
+        "ttl": 3600, "record_id": 48535409, "subdomain": "_acme-challenge.deleterecordinset",
+        "type": "TXT"}, {"content": "challengetoken1", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.deleterecordset.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 48535410, "subdomain": "_acme-challenge.deleterecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.deleterecordset.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 48535417, "subdomain": "_acme-challenge.deleterecordset",
+        "type": "TXT"}, {"content": "challengetoken", "domain": "capsulecd.com", "fqdn":
+        "_acme-challenge.donothing.capsulecd.com", "priority": "", "ttl": 3600, "record_id":
+        48488964, "subdomain": "_acme-challenge.donothing", "type": "TXT"}, {"content":
+        "challengetoken", "domain": "capsulecd.com", "fqdn": "_acme-challenge.noop.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535405, "subdomain": "_acme-challenge.noop",
+        "type": "TXT"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.capsulecd.com", "port": 5222, "priority":
+        20, "ttl": 21600, "record_id": 39559787, "subdomain": "_xmpp-client._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.conference.capsulecd.com", "port":
+        5222, "priority": 20, "ttl": 21600, "record_id": 39559789, "subdomain": "_xmpp-client._tcp.conference",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.capsulecd.com", "port": 5269, "priority":
+        20, "ttl": 21600, "record_id": 39559788, "subdomain": "_xmpp-server._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.conference.capsulecd.com", "port":
+        5269, "priority": 20, "ttl": 21600, "record_id": 39559790, "subdomain": "_xmpp-server._tcp.conference",
+        "type": "SRV"}], "domain": "capsulecd.com", "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['4893']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:29 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pddimp.yandex.ru/api2/admin/dns/del?domain=capsulecd.com&record_id=48535410
+  response:
+    body: {string: !!python/unicode '{"record_id": 48535410, "domain": "capsulecd.com",
+        "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['68']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:38:24 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pddimp.yandex.ru/api2/admin/dns/del?domain=capsulecd.com&record_id=48535417
+  response:
+    body: {string: !!python/unicode '{"record_id": 48535417, "domain": "capsulecd.com",
+        "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['68']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:29 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pddimp.yandex.ru/api2/admin/dns/list?domain=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"records": [{"content": "mx.yandex.net.", "domain":
+        "capsulecd.com", "fqdn": "capsulecd.com", "priority": 10, "ttl": 21600, "record_id":
+        39559783, "subdomain": "@", "type": "MX"}, {"content": "dns1.yandex.net.",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559782, "subdomain": "@", "type": "NS"}, {"content":
+        "dns2.yandex.net.", "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559781, "subdomain": "@", "type": "NS"},
+        {"content": "dns1.yandex.net.", "domain": "capsulecd.com", "retry": 900, "fqdn":
+        "capsulecd.com", "refresh": 14400, "admin_mail": "lexicon.test.yandex.ru",
+        "priority": "", "expire": 1209600, "ttl": 21600, "record_id": 39559780, "subdomain":
+        "@", "type": "SOA", "minttl": 14400}, {"content": "v=spf1 redirect=_spf.yandex.net",
+        "domain": "capsulecd.com", "fqdn": "capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559784, "subdomain": "@", "type": "TXT"}, {"content":
+        "docs.example.com.", "domain": "capsulecd.com", "fqdn": "docs.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39560158, "subdomain": "docs",
+        "type": "CNAME"}, {"content": "domain.mail.yandex.net.", "domain": "capsulecd.com",
+        "fqdn": "mail.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559969,
+        "subdomain": "mail", "type": "CNAME"}, {"content": "ttlshouldbe3600", "domain":
+        "capsulecd.com", "fqdn": "ttl.fqdn.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 39560388, "subdomain": "ttl.fqdn", "type": "TXT"}, {"content":
+        "104.31.76.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority":
+        "", "ttl": 21600, "record_id": 39559785, "subdomain": "www", "type": "A"},
+        {"content": "104.31.77.164", "domain": "capsulecd.com", "fqdn": "www.capsulecd.com",
+        "priority": "", "ttl": 21600, "record_id": 39559786, "subdomain": "www", "type":
+        "A"}, {"content": "2400:cb00:2048:1::681f:4ca4", "domain": "capsulecd.com",
+        "fqdn": "www.capsulecd.com", "priority": "", "ttl": 21600, "record_id": 39559791,
+        "subdomain": "www", "type": "AAAA"}, {"content": "2400:cb00:2048:1::681f:4da4",
+        "domain": "capsulecd.com", "fqdn": "www.capsulecd.com", "priority": "", "ttl":
+        21600, "record_id": 39559792, "subdomain": "www", "type": "AAAA"}, {"content":
+        "challengetoken1", "domain": "capsulecd.com", "fqdn": "_acme-challenge.createrecordset.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535403, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.createrecordset.capsulecd.com", "priority": "", "ttl":
+        3600, "record_id": 48535404, "subdomain": "_acme-challenge.createrecordset",
+        "type": "TXT"}, {"content": "challengetoken2", "domain": "capsulecd.com",
+        "fqdn": "_acme-challenge.deleterecordinset.capsulecd.com", "priority": "",
+        "ttl": 3600, "record_id": 48535409, "subdomain": "_acme-challenge.deleterecordinset",
+        "type": "TXT"}, {"content": "challengetoken", "domain": "capsulecd.com", "fqdn":
+        "_acme-challenge.donothing.capsulecd.com", "priority": "", "ttl": 3600, "record_id":
+        48488964, "subdomain": "_acme-challenge.donothing", "type": "TXT"}, {"content":
+        "challengetoken", "domain": "capsulecd.com", "fqdn": "_acme-challenge.noop.capsulecd.com",
+        "priority": "", "ttl": 3600, "record_id": 48535405, "subdomain": "_acme-challenge.noop",
+        "type": "TXT"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.capsulecd.com", "port": 5222, "priority":
+        20, "ttl": 21600, "record_id": 39559787, "subdomain": "_xmpp-client._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-client._tcp.conference.capsulecd.com", "port":
+        5222, "priority": 20, "ttl": 21600, "record_id": 39559789, "subdomain": "_xmpp-client._tcp.conference",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.capsulecd.com", "port": 5269, "priority":
+        20, "ttl": 21600, "record_id": 39559788, "subdomain": "_xmpp-server._tcp",
+        "type": "SRV"}, {"content": "domain-xmpp.yandex.net.", "domain": "capsulecd.com",
+        "weight": 0, "fqdn": "_xmpp-server._tcp.conference.capsulecd.com", "port":
+        5269, "priority": 20, "ttl": 21600, "record_id": 39559790, "subdomain": "_xmpp-server._tcp.conference",
+        "type": "SRV"}], "domain": "capsulecd.com", "success": "ok"}
+
+        '}
+    headers:
+      connection: [keep-alive]
+      content-disposition: [attachment; filename="json.txt"; filename*=UTF-8''json.txt]
+      content-length: ['4431']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 17:37:32 GMT']
+      server: [nginx/1.8.1]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

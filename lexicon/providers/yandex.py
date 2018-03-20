@@ -142,10 +142,12 @@ class Provider(BaseProvider):
         else:
             return r.json()
 
-
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
             logger.debug('%s: %s', title, payload['success'])
+            return True
+        elif payload['error'] == 'record_exists':
+            logger.debug('%s: %s', title, True)
             return True
         else:
             logger.debug('%s: %s', title, payload['error'])
