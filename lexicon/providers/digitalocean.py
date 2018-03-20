@@ -28,21 +28,17 @@ class Provider(BaseProvider):
 
     def create_record(self, type, name, content):
         # check if record already exists
-        existing_records = self.list_records(type,name,content)
-        if len(existing_records) == 1:
-            return True
+        if len(self.list_records(type, name, content)) == 0:
+            record = {
+                'type': type,
+                'name': self._relative_name(name),
+                'data': content,
 
-        record = {
-            'type': type,
-            'name': self._relative_name(name),
-            'data': content,
+            }
+            if type == 'CNAME':
+                record['data'] = record['data'].rstrip('.') + '.' # make sure a the data is always a FQDN for CNAMe.
 
-        }
-        if type == 'CNAME':
-            record['data'] = record['data'].rstrip('.') + '.' # make sure a the data is always a FQDN for CNAMe.
-
-        payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
-
+            payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
         logger.debug('create_record: %s', True)
         return True
 
