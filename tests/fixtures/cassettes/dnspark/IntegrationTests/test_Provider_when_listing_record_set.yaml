@@ -1,0 +1,28 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dnspark.com/v2/dns/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":false,"error":"Not authorized"}'}
+    headers:
+      connection: [close]
+      content-length: ['41']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 11:26:10 GMT']
+      server: [nginx]
+      set-cookie: ['dpapicsrf_cookie=28694c261a9bbed3233114de41ee9aea; expires=Tue,
+          20-Mar-2018 13:26:10 GMT; Max-Age=7200; path=/; domain=.dnspark.com']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      www-authenticate: [Basic realm="DNS Park API"]
+      x-powered-by: [PHP/5.5.30-1+deb.sury.org~precise+1]
+    status: {code: 401, message: ''}
+version: 1

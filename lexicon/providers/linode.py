@@ -30,14 +30,15 @@ class Provider(BaseProvider):
             raise Exception('Domain not found')
 
     def create_record(self, type, name, content):
-        self._get('domain.resource.create', query_params={
-            'DomainID': self.domain_id,
-            'Name': self._relative_name(name),
-            'Type': type,
-            'Target': content,
-            'TTL_sec': 0
-        })
-        
+        if len(self.list_records(type, name, content)) == 0:
+            self._get('domain.resource.create', query_params={
+                'DomainID': self.domain_id,
+                'Name': self._relative_name(name),
+                'Type': type,
+                'Target': content,
+                'TTL_sec': 0
+            })
+
         return True
     
     # List all records. Return an empty list if no records found

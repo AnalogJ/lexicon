@@ -1,0 +1,25 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180320T112520Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones
+  response:
+    body: {string: !!python/unicode "{\n  \"error\": \"AuthenticationFailedError\",\n
+        \ \"errormsg\": \"User placeholder_auth_api_key was not found\"\n}\n"}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['104']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 11:25:21 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 403, message: FORBIDDEN}
+version: 1
