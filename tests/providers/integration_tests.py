@@ -233,6 +233,12 @@ class IntegrationTests(object):
             records = provider.list_records('TXT',"_acme-challenge.noop.{0}.".format(self.domain))
             assert len(records) == 1
 
+    def test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
+        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            records = provider.list_records('TXT','filter.thisdoesnotexist.{0}'.format(self.domain))
+            assert len(records) == 0
 
     def test_Provider_when_creating_record_set(self):
         with self._test_fixture_recording('test_Provider_when_creating_record_set'):
