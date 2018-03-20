@@ -36,6 +36,11 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
+        # check if record already exists
+        existing_records = self.list_records(type, name, content)
+        if len(existing_records) == 1:
+            return True
+
         payload = self._post('/zones/{0}/records'.format(self.domain_id), {'type': type, 'name': self._fqdn_name(name), 'content': content, 'ttl': self.options['ttl']})
 
         logger.debug('create_record: %s', True)

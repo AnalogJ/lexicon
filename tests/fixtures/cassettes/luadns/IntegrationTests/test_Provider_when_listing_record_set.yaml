@@ -1,0 +1,169 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.luadns.com/v1/zones
+  response:
+    body: {string: !!python/unicode '[{"id":39105,"name":"capsulecd.com","template_id":0,"synced":true,"queries_count":0,"records_count":21,"aliases_count":0,"redirects_count":0,"forwards_count":0}]
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['162']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:42 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '[{"id":40753636,"name":"_acme-challenge.noop.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:41.181252Z","updated_at":"2018-03-20T07:18:41.181254Z"},{"id":40753633,"name":"_acme-challenge.deleterecordinset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:35.814417Z","updated_at":"2018-03-20T07:18:35.814419Z"},{"id":40753631,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:34.158781Z","updated_at":"2018-03-20T07:18:34.158783Z"},{"id":40753630,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:33.498697Z","updated_at":"2018-03-20T07:18:33.498699Z"},{"id":40753629,"name":"updated.testfull.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:31.373003Z","updated_at":"2018-03-20T07:18:32.117453Z"},{"id":40753628,"name":"updated.testfqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:29.647869Z","updated_at":"2018-03-20T07:18:30.305972Z"},{"id":40753627,"name":"updated.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:27.947293Z","updated_at":"2018-03-20T07:18:28.610406Z"},{"id":40753626,"name":"random.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:25.890875Z","updated_at":"2018-03-20T07:18:25.890877Z"},{"id":40753625,"name":"random.fulltest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:23.841171Z","updated_at":"2018-03-20T07:18:23.841173Z"},{"id":40753624,"name":"random.fqdntest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:22.447326Z","updated_at":"2018-03-20T07:18:22.447328Z"},{"id":40753623,"name":"ttl.fqdn.capsulecd.com.","type":"TXT","content":"ttlshouldbe3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:21.079966Z","updated_at":"2018-03-20T07:18:21.079968Z"},{"id":40753614,"name":"_acme-challenge.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:11.252634Z","updated_at":"2018-03-20T07:18:11.252636Z"},{"id":40753613,"name":"_acme-challenge.full.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:10.1051Z","updated_at":"2018-03-20T07:18:10.105102Z"},{"id":40753612,"name":"_acme-challenge.fqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:09.105352Z","updated_at":"2018-03-20T07:18:09.105354Z"},{"id":40753611,"name":"localhost.capsulecd.com.","type":"A","content":"127.0.0.1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:08.068354Z","updated_at":"2018-03-20T07:18:08.068356Z"},{"id":23373137,"name":"capsulecd.com.","type":"NS","content":"ns5.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463466Z","updated_at":"2016-07-30T19:13:48.463467Z"},{"id":23373136,"name":"capsulecd.com.","type":"NS","content":"ns4.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463465Z","updated_at":"2016-07-30T19:13:48.463465Z"},{"id":23373135,"name":"capsulecd.com.","type":"NS","content":"ns3.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463463Z","updated_at":"2016-07-30T19:13:48.463464Z"},{"id":23373134,"name":"capsulecd.com.","type":"NS","content":"ns2.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463462Z","updated_at":"2016-07-30T19:13:48.463462Z"},{"id":23373133,"name":"capsulecd.com.","type":"NS","content":"ns1.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.46346Z","updated_at":"2016-07-30T19:13:48.46346Z"},{"id":23373132,"name":"capsulecd.com.","type":"SOA","content":"ns1.luadns.net.
+        hostmaster.luadns.com. 1521530321 1200 120 604800 3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463456Z","updated_at":"2016-07-30T19:13:48.463456Z"}]
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['4779']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:42 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"content": "challengetoken1", "type": "TXT", "name":
+      "_acme-challenge.listrecordset.capsulecd.com.", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['114']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '{"id":40753637,"name":"_acme-challenge.listrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:42.911828154Z","updated_at":"2018-03-20T07:18:42.911830061Z"}
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['248']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:42 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '[{"id":40753637,"name":"_acme-challenge.listrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:42.911828Z","updated_at":"2018-03-20T07:18:42.91183Z"},{"id":40753636,"name":"_acme-challenge.noop.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:41.181252Z","updated_at":"2018-03-20T07:18:41.181254Z"},{"id":40753633,"name":"_acme-challenge.deleterecordinset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:35.814417Z","updated_at":"2018-03-20T07:18:35.814419Z"},{"id":40753631,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:34.158781Z","updated_at":"2018-03-20T07:18:34.158783Z"},{"id":40753630,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:33.498697Z","updated_at":"2018-03-20T07:18:33.498699Z"},{"id":40753629,"name":"updated.testfull.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:31.373003Z","updated_at":"2018-03-20T07:18:32.117453Z"},{"id":40753628,"name":"updated.testfqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:29.647869Z","updated_at":"2018-03-20T07:18:30.305972Z"},{"id":40753627,"name":"updated.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:27.947293Z","updated_at":"2018-03-20T07:18:28.610406Z"},{"id":40753626,"name":"random.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:25.890875Z","updated_at":"2018-03-20T07:18:25.890877Z"},{"id":40753625,"name":"random.fulltest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:23.841171Z","updated_at":"2018-03-20T07:18:23.841173Z"},{"id":40753624,"name":"random.fqdntest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:22.447326Z","updated_at":"2018-03-20T07:18:22.447328Z"},{"id":40753623,"name":"ttl.fqdn.capsulecd.com.","type":"TXT","content":"ttlshouldbe3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:21.079966Z","updated_at":"2018-03-20T07:18:21.079968Z"},{"id":40753614,"name":"_acme-challenge.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:11.252634Z","updated_at":"2018-03-20T07:18:11.252636Z"},{"id":40753613,"name":"_acme-challenge.full.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:10.1051Z","updated_at":"2018-03-20T07:18:10.105102Z"},{"id":40753612,"name":"_acme-challenge.fqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:09.105352Z","updated_at":"2018-03-20T07:18:09.105354Z"},{"id":40753611,"name":"localhost.capsulecd.com.","type":"A","content":"127.0.0.1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:08.068354Z","updated_at":"2018-03-20T07:18:08.068356Z"},{"id":23373137,"name":"capsulecd.com.","type":"NS","content":"ns5.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463466Z","updated_at":"2016-07-30T19:13:48.463467Z"},{"id":23373136,"name":"capsulecd.com.","type":"NS","content":"ns4.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463465Z","updated_at":"2016-07-30T19:13:48.463465Z"},{"id":23373135,"name":"capsulecd.com.","type":"NS","content":"ns3.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463463Z","updated_at":"2016-07-30T19:13:48.463464Z"},{"id":23373134,"name":"capsulecd.com.","type":"NS","content":"ns2.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463462Z","updated_at":"2016-07-30T19:13:48.463462Z"},{"id":23373133,"name":"capsulecd.com.","type":"NS","content":"ns1.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.46346Z","updated_at":"2016-07-30T19:13:48.46346Z"},{"id":23373132,"name":"capsulecd.com.","type":"SOA","content":"ns1.luadns.net.
+        hostmaster.luadns.com. 1521530323 1200 120 604800 3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463456Z","updated_at":"2016-07-30T19:13:48.463456Z"}]
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['5020']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:43 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"content": "challengetoken2", "type": "TXT", "name":
+      "_acme-challenge.listrecordset.capsulecd.com.", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['114']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '{"id":40753638,"name":"_acme-challenge.listrecordset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:43.599496336Z","updated_at":"2018-03-20T07:18:43.599498234Z"}
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['248']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:43 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.luadns.com/v1/zones/39105/records
+  response:
+    body: {string: !!python/unicode '[{"id":40753638,"name":"_acme-challenge.listrecordset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:43.599496Z","updated_at":"2018-03-20T07:18:43.599498Z"},{"id":40753637,"name":"_acme-challenge.listrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:42.911828Z","updated_at":"2018-03-20T07:18:42.91183Z"},{"id":40753636,"name":"_acme-challenge.noop.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:41.181252Z","updated_at":"2018-03-20T07:18:41.181254Z"},{"id":40753633,"name":"_acme-challenge.deleterecordinset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:35.814417Z","updated_at":"2018-03-20T07:18:35.814419Z"},{"id":40753631,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken2","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:34.158781Z","updated_at":"2018-03-20T07:18:34.158783Z"},{"id":40753630,"name":"_acme-challenge.createrecordset.capsulecd.com.","type":"TXT","content":"challengetoken1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:33.498697Z","updated_at":"2018-03-20T07:18:33.498699Z"},{"id":40753629,"name":"updated.testfull.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:31.373003Z","updated_at":"2018-03-20T07:18:32.117453Z"},{"id":40753628,"name":"updated.testfqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:29.647869Z","updated_at":"2018-03-20T07:18:30.305972Z"},{"id":40753627,"name":"updated.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:27.947293Z","updated_at":"2018-03-20T07:18:28.610406Z"},{"id":40753626,"name":"random.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:25.890875Z","updated_at":"2018-03-20T07:18:25.890877Z"},{"id":40753625,"name":"random.fulltest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:23.841171Z","updated_at":"2018-03-20T07:18:23.841173Z"},{"id":40753624,"name":"random.fqdntest.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:22.447326Z","updated_at":"2018-03-20T07:18:22.447328Z"},{"id":40753623,"name":"ttl.fqdn.capsulecd.com.","type":"TXT","content":"ttlshouldbe3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:21.079966Z","updated_at":"2018-03-20T07:18:21.079968Z"},{"id":40753614,"name":"_acme-challenge.test.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:11.252634Z","updated_at":"2018-03-20T07:18:11.252636Z"},{"id":40753613,"name":"_acme-challenge.full.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:10.1051Z","updated_at":"2018-03-20T07:18:10.105102Z"},{"id":40753612,"name":"_acme-challenge.fqdn.capsulecd.com.","type":"TXT","content":"challengetoken","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:09.105352Z","updated_at":"2018-03-20T07:18:09.105354Z"},{"id":40753611,"name":"localhost.capsulecd.com.","type":"A","content":"127.0.0.1","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2018-03-20T07:18:08.068354Z","updated_at":"2018-03-20T07:18:08.068356Z"},{"id":23373137,"name":"capsulecd.com.","type":"NS","content":"ns5.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463466Z","updated_at":"2016-07-30T19:13:48.463467Z"},{"id":23373136,"name":"capsulecd.com.","type":"NS","content":"ns4.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463465Z","updated_at":"2016-07-30T19:13:48.463465Z"},{"id":23373135,"name":"capsulecd.com.","type":"NS","content":"ns3.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463463Z","updated_at":"2016-07-30T19:13:48.463464Z"},{"id":23373134,"name":"capsulecd.com.","type":"NS","content":"ns2.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463462Z","updated_at":"2016-07-30T19:13:48.463462Z"},{"id":23373133,"name":"capsulecd.com.","type":"NS","content":"ns1.luadns.net.","ttl":86400,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.46346Z","updated_at":"2016-07-30T19:13:48.46346Z"},{"id":23373132,"name":"capsulecd.com.","type":"SOA","content":"ns1.luadns.net.
+        hostmaster.luadns.com. 1521530324 1200 120 604800 3600","ttl":3600,"zone_id":39105,"generated":false,"created_at":"2016-07-30T19:13:48.463456Z","updated_at":"2016-07-30T19:13:48.463456Z"}]
+
+        '}
+    headers:
+      cache-control: ['no-cache, private, max-age=0']
+      connection: [keep-alive]
+      content-length: ['5262']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:43 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
+      keep-alive: [timeout=10]
+      pragma: [no-cache]
+      server: [nginx]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
