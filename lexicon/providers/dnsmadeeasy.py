@@ -56,12 +56,12 @@ class Provider(BaseProvider):
         try:
             payload = self._post('/dns/managed/{0}/records/'.format(self.domain_id), record)
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
+            if e.response.status_code != 400:
+                raise
 
                 # http 400 is ok here, because the record probably already exists
         logger.debug('create_record: %s', 'name' in payload)
-        return 'name' in payload
+        return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -86,6 +86,9 @@ class Provider(BaseProvider):
 
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
+
+        if content:
+            records = [record for record in records if record['content'].lower() == content.lower()]
 
         logger.debug('list_records: %s', records)
         return records

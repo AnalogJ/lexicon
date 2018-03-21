@@ -1,0 +1,103 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:15 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"created":1521590400000,"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":2052,"gtdEnabled":false,"nameServers":[{"fqdn":"ns1.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.45","ipv6":"2600:1806:511:210:1eaf::45"},{"fqdn":"ns2.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.46","ipv6":"2600:1806:511:210:1eaf::46"},{"fqdn":"ns3.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.47","ipv6":"2600:1806:511:210:1eaf::47"},{"fqdn":"ns4.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.48","ipv6":"2600:1806:511:210:1eaf::48"},{"fqdn":"ns5.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.49","ipv6":"2600:1806:511:210:1eaf::49"}],"pendingActionId":0,"updated":1521609889401,"processMulti":false,"activeThirdParties":[],"name":"capsulecd.com","id":878951}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:14 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=D9A37758619957330746445119B765BE; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [6e0385db-96d7-40f8-9c97-a9138dbd568b]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['134']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.noop", "value":
+      "challengetoken", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['87']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:15 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/
+  response:
+    body: {string: !!python/unicode '{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.noop","value":"\"challengetoken\"","id":10168991,"type":"TXT"}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:15 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/10168991']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=012B584F805A9B75A4C40BBE8BB3F6A1; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [b68d6af7-a2e2-4c40-979c-260f6a993e1f]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['133']
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.noop", "value":
+      "challengetoken", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['87']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:15 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/
+  response:
+    body: {string: !!python/unicode '{"error":["Record with this type (TXT), name
+        (_acme-challenge.noop), and value (\"challengetoken\") already exists."]}'}
+    headers:
+      connection: [close]
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:15 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=B24950C826FF3DE92347C5F1ED063B66; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [ca71c253-a072-4904-b8f5-05b6bb8574d1]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['132']
+    status: {code: 400, message: Bad Request}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:16 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records?recordName=_acme-challenge.noop&type=TXT
+  response:
+    body: {string: !!python/unicode '{"totalPages":1,"totalRecords":1,"data":[{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.noop","value":"\"challengetoken\"","id":10168991,"type":"TXT"}],"page":0}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:15 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=3CDD01FC3AA74D29AD282F88373B82BD; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [fab0faa4-6201-422c-8fe2-f65cc9e4c1e1]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['131']
+    status: {code: 200, message: OK}
+version: 1
