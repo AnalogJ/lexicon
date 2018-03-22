@@ -1,23 +1,23 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://api.memset.com/v1/json/dns.zone_domain_info?domain=thisisadomainidonotown.com
   response:
-    body: {string: !!python/unicode "{\n \"error_type\": \"ApiErrorDoesNotExist\"\
-        , \n \"error_code\": 3, \n \"error\": \"Zone domain not found\"\n}"}
+    body: {string: "{\n \"error_type\": \"ApiErrorDoesNotExist\", \n \"error_code\":
+        3, \n \"error\": \"Zone domain not found\"\n}"}
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
-      date: ['Thu, 13 Apr 2017 12:57:00 GMT']
-      server: [nginx]
-      transfer-encoding: [chunked]
-    status: {code: 404, message: OK}
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 09:46:26 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 404, message: NOT FOUND}
 version: 1
