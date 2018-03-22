@@ -8,7 +8,7 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-AuroraDNS-Date: [20180322T204153Z]
+      X-AuroraDNS-Date: [20180322T204158Z]
     method: GET
     uri: https://api.auroradns.eu/zones
   response:
@@ -22,33 +22,59 @@ interactions:
       Connection: [Keep-Alive]
       Content-Length: ['1752']
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 22 Mar 2018 20:41:54 GMT']
+      Date: ['Thu, 22 Mar 2018 20:41:59 GMT']
       Keep-Alive: ['timeout=5, max=100']
       Server: [Apache/2.4.7 (Ubuntu)]
     status: {code: 200, message: OK}
 - request:
-    body: '{"type": "TXT", "name": "delete.testfilt", "content": "challengetoken",
-      "ttl": 3600}'
+    body: '{"type": "TXT", "name": "_acme-challenge.deleterecordinset", "content":
+      "challengetoken1", "ttl": 3600}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['84']
+      Content-Length: ['103']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-AuroraDNS-Date: [20180322T204153Z]
+      X-AuroraDNS-Date: [20180322T204159Z]
     method: POST
     uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
   response:
-    body: {string: "{\n  \"content\": \"challengetoken\",\n  \"created\": \"2018-03-22T20:41:54Z\"\
-        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"0481db36-16ce-4e6c-8171-fc52ef8fde78\"\
-        ,\n  \"modified\": \"2018-03-22T20:41:54Z\",\n  \"name\": \"delete.testfilt\"\
+    body: {string: "{\n  \"content\": \"challengetoken1\",\n  \"created\": \"2018-03-22T20:42:00Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"a71160fe-d107-47d1-b7f4-5d75f8168e3f\"\
+        ,\n  \"modified\": \"2018-03-22T20:42:00Z\",\n  \"name\": \"_acme-challenge.deleterecordinset\"\
         ,\n  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
     headers:
       Connection: [Keep-Alive]
-      Content-Length: ['279']
+      Content-Length: ['298']
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 22 Mar 2018 20:41:54 GMT']
+      Date: ['Thu, 22 Mar 2018 20:42:00 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.deleterecordinset", "content":
+      "challengetoken2", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['103']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180322T204159Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
+  response:
+    body: {string: "{\n  \"content\": \"challengetoken2\",\n  \"created\": \"2018-03-22T20:42:00Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"818387bc-def0-484b-9689-e8b64d36516b\"\
+        ,\n  \"modified\": \"2018-03-22T20:42:00Z\",\n  \"name\": \"_acme-challenge.deleterecordinset\"\
+        ,\n  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['298']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 22 Mar 2018 20:42:00 GMT']
       Keep-Alive: ['timeout=5, max=100']
       Server: [Apache/2.4.7 (Ubuntu)]
     status: {code: 201, message: CREATED}
@@ -61,7 +87,7 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-AuroraDNS-Date: [20180322T204153Z]
+      X-AuroraDNS-Date: [20180322T204159Z]
     method: GET
     uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
   response:
@@ -119,16 +145,20 @@ interactions:
         : false,\n    \"health_check_id\": null,\n    \"id\": \"b83a4d56-653a-48da-aeea-6d0f97434c64\"\
         ,\n    \"modified\": \"2018-03-22T20:41:53Z\",\n    \"name\": \"_acme-challenge.noop\"\
         ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n\
-        \    \"content\": \"challengetoken\",\n    \"created\": \"2018-03-22T20:41:54Z\"\
+        \    \"content\": \"challengetoken1\",\n    \"created\": \"2018-03-22T20:42:00Z\"\
         ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
-        0481db36-16ce-4e6c-8171-fc52ef8fde78\",\n    \"modified\": \"2018-03-22T20:41:54Z\"\
-        ,\n    \"name\": \"delete.testfilt\",\n    \"prio\": 0,\n    \"ttl\": 3600,\n\
-        \    \"type\": \"TXT\"\n  }\n]\n"}
+        a71160fe-d107-47d1-b7f4-5d75f8168e3f\",\n    \"modified\": \"2018-03-22T20:42:00Z\"\
+        ,\n    \"name\": \"_acme-challenge.deleterecordinset\",\n    \"prio\": 0,\n\
+        \    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n    \"content\": \"\
+        challengetoken2\",\n    \"created\": \"2018-03-22T20:42:00Z\",\n    \"disabled\"\
+        : false,\n    \"health_check_id\": null,\n    \"id\": \"818387bc-def0-484b-9689-e8b64d36516b\"\
+        ,\n    \"modified\": \"2018-03-22T20:42:00Z\",\n    \"name\": \"_acme-challenge.deleterecordinset\"\
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  }\n]\n"}
     headers:
       Connection: [Keep-Alive]
-      Content-Length: ['3996']
+      Content-Length: ['4338']
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 22 Mar 2018 20:41:54 GMT']
+      Date: ['Thu, 22 Mar 2018 20:42:00 GMT']
       Keep-Alive: ['timeout=5, max=100']
       Server: [Apache/2.4.7 (Ubuntu)]
     status: {code: 200, message: OK}
@@ -141,9 +171,9 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-AuroraDNS-Date: [20180322T204154Z]
+      X-AuroraDNS-Date: [20180322T204159Z]
     method: DELETE
-    uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records/0481db36-16ce-4e6c-8171-fc52ef8fde78
+    uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records/a71160fe-d107-47d1-b7f4-5d75f8168e3f
   response:
     body: {string: '
 
@@ -153,7 +183,7 @@ interactions:
       Connection: [Keep-Alive]
       Content-Length: ['2']
       Content-Type: [text/plain; charset=utf-8]
-      Date: ['Thu, 22 Mar 2018 20:41:55 GMT']
+      Date: ['Thu, 22 Mar 2018 20:42:00 GMT']
       Keep-Alive: ['timeout=5, max=100']
       Server: [Apache/2.4.7 (Ubuntu)]
     status: {code: 200, message: OK}
@@ -166,7 +196,7 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-AuroraDNS-Date: [20180322T204154Z]
+      X-AuroraDNS-Date: [20180322T204159Z]
     method: GET
     uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
   response:
@@ -223,12 +253,17 @@ interactions:
         challengetoken\",\n    \"created\": \"2018-03-22T20:41:53Z\",\n    \"disabled\"\
         : false,\n    \"health_check_id\": null,\n    \"id\": \"b83a4d56-653a-48da-aeea-6d0f97434c64\"\
         ,\n    \"modified\": \"2018-03-22T20:41:53Z\",\n    \"name\": \"_acme-challenge.noop\"\
-        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  }\n]\n"}
+        ,\n    \"prio\": 0,\n    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  },\n  {\n\
+        \    \"content\": \"challengetoken2\",\n    \"created\": \"2018-03-22T20:42:00Z\"\
+        ,\n    \"disabled\": false,\n    \"health_check_id\": null,\n    \"id\": \"\
+        818387bc-def0-484b-9689-e8b64d36516b\",\n    \"modified\": \"2018-03-22T20:42:00Z\"\
+        ,\n    \"name\": \"_acme-challenge.deleterecordinset\",\n    \"prio\": 0,\n\
+        \    \"ttl\": 3600,\n    \"type\": \"TXT\"\n  }\n]\n"}
     headers:
       Connection: [Keep-Alive]
-      Content-Length: ['3692']
+      Content-Length: ['4015']
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 22 Mar 2018 20:41:55 GMT']
+      Date: ['Thu, 22 Mar 2018 20:42:00 GMT']
       Keep-Alive: ['timeout=5, max=100']
       Server: [Apache/2.4.7 (Ubuntu)]
     status: {code: 200, message: OK}
