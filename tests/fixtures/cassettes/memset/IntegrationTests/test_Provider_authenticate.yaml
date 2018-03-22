@@ -1,23 +1,22 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://api.memset.com/v1/json/dns.zone_domain_info?domain=testzone.com
   response:
-    body: {string: !!python/unicode "{\n \"domain\": \"testzone.com\", \n \"zone_id\"\
-        : \"cbceea86fe9c099f019e386488ead6d8\"\n}"}
+    body: {string: "{\n \"domain\": \"testzone.com\", \n \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\"\n}"}
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
-      date: ['Thu, 13 Apr 2017 12:57:00 GMT']
-      server: [nginx]
-      transfer-encoding: [chunked]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:30 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
     status: {code: 200, message: OK}
 version: 1
