@@ -33,6 +33,11 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
+        # check if record already exists
+        existing_records = self.list_records(type, name, content)
+        if len(existing_records) == 1:
+            return True
+
         payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': self._relative_name(name), 'data': content}})
 
         logger.debug('create_record: %s', payload['zone_record'])
@@ -47,8 +52,6 @@ class Provider(BaseProvider):
             filter['record_type'] = type
         if name:
             filter['name'] = self._relative_name(name)
-        if content:
-            filter['data'] = content
 
         payload = self._get('/zones/{0}/records'.format(self.domain_id), filter)
 
@@ -63,6 +66,9 @@ class Provider(BaseProvider):
             }
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
+
+        if content:
+            records = [record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records

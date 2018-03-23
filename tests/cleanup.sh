@@ -1,18 +1,19 @@
-PROVIDER_NAME=dnsimple
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.createrecordset.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.deleterecordinset.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.deleterecordset.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.fqdn.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.full.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.listrecordset.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.noop.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.test.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name random.fqdntest.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name random.fulltest.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name random.test.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.test.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.testfqdn.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.testfull.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com A --name localhost.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com TXT --name ttl.fqdn.capsulecd.com
-lexicon $PROVIDER_NAME delete capsulecd.com CNAME --name docs.example.com
+PROVIDER_NAME=pointhq
+TEST_DOMAIN=capsulecd.com
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.createrecordset.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.deleterecordinset.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.deleterecordset.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.fqdn.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.full.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.listrecordset.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.noop.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.test.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name random.fqdntest.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name random.fulltest.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name random.test.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name updated.test.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name updated.testfqdn.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name updated.testfull.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com A --name localhost.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name ttl.fqdn.${TEST_DOMAIN}
+lexicon ${PROVIDER_NAME} delete capsulecd.com CNAME --name docs.${TEST_DOMAIN}
