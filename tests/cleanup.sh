@@ -1,4 +1,4 @@
-PROVIDER_NAME=pointhq
+PROVIDER_NAME=rage4
 TEST_DOMAIN=capsulecd.com
 lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.createrecordset.${TEST_DOMAIN}
 lexicon ${PROVIDER_NAME} delete capsulecd.com TXT --name _acme-challenge.deleterecordinset.${TEST_DOMAIN}

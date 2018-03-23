@@ -33,6 +33,11 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
+        # check if record already exists
+        existing_records = self.list_records(type, name, content)
+        if len(existing_records) == 1:
+            return True
+
         record = {
             'id': self.domain_id,
             'name': self._full_name(name),
@@ -75,6 +80,10 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
+        if type:
+            records = [record for record in records if record['type'] == type]
+        if content:
+            records = [record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records

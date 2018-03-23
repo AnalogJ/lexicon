@@ -18,7 +18,7 @@ interactions:
       connection: [close]
       content-length: ['242']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:04 GMT']
+      date: ['Fri, 23 Mar 2018 06:50:14 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
@@ -33,7 +33,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://rage4.com/rapi/getrecords/?id=67787&name=delete.testid.capsulecd.com
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=_acme-challenge.noop.capsulecd.com
   response:
     body: {string: !!python/unicode '[]'}
     headers:
@@ -42,7 +42,7 @@ interactions:
       connection: [close]
       content-length: ['2']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:21 GMT']
+      date: ['Fri, 23 Mar 2018 06:50:14 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
@@ -57,16 +57,16 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&ttl=3600&type=TXT&id=67787&name=delete.testid.capsulecd.com
+    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&ttl=3600&type=TXT&id=67787&name=_acme-challenge.noop.capsulecd.com
   response:
-    body: {string: !!python/unicode '{"status":true,"id":2863455,"error":""}'}
+    body: {string: !!python/unicode '{"status":true,"id":2863447,"error":""}'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
       connection: [close]
       content-length: ['39']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:37 GMT']
+      date: ['Fri, 23 Mar 2018 06:50:15 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
@@ -81,40 +81,16 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://rage4.com/rapi/getrecords/?id=67787&name=delete.testid.capsulecd.com
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=_acme-challenge.noop.capsulecd.com
   response:
-    body: {string: !!python/unicode '[{"id":2863455,"name":"delete.testid.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":67787,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
+    body: {string: !!python/unicode '[{"id":2863447,"name":"_acme-challenge.noop.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":67787,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
       connection: [close]
-      content-length: ['351']
+      content-length: ['358']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:38 GMT']
-      server: [GBSHouse/2.0]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      x-powered-by: [GBSHouse]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{"id": 2863455}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['15']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://rage4.com/rapi/deleterecord/
-  response:
-    body: {string: !!python/unicode '{"status":true,"id":2863455,"error":""}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['private, s-maxage=0']
-      connection: [close]
-      content-length: ['39']
-      content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:38 GMT']
+      date: ['Fri, 23 Mar 2018 06:50:28 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
@@ -129,16 +105,16 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://rage4.com/rapi/getrecords/?id=67787&name=delete.testid.capsulecd.com
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=_acme-challenge.noop.capsulecd.com
   response:
-    body: {string: !!python/unicode '[]'}
+    body: {string: !!python/unicode '[{"id":2863447,"name":"_acme-challenge.noop.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":67787,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
       connection: [close]
-      content-length: ['2']
+      content-length: ['358']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:51:39 GMT']
+      date: ['Fri, 23 Mar 2018 06:50:28 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]

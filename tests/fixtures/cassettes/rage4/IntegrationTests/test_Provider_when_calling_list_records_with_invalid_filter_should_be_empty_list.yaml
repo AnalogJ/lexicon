@@ -18,7 +18,7 @@ interactions:
       connection: [close]
       content-length: ['242']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:49:29 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:02 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
@@ -33,7 +33,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://rage4.com/rapi/getrecords/?id=67787&name=localhost.capsulecd.com
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=filter.thisdoesnotexist.capsulecd.com
   response:
     body: {string: !!python/unicode '[]'}
     headers:
@@ -42,31 +42,7 @@ interactions:
       connection: [close]
       content-length: ['2']
       content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:49:29 GMT']
-      server: [GBSHouse/2.0]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      x-powered-by: [GBSHouse]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://rage4.com/rapi/createrecord/?content=127.0.0.1&ttl=3600&type=A&id=67787&name=localhost.capsulecd.com
-  response:
-    body: {string: !!python/unicode '{"status":true,"id":2863433,"error":""}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['private, s-maxage=0']
-      connection: [close]
-      content-length: ['39']
-      content-type: [text/plain; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 06:49:31 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:03 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
       x-powered-by: [GBSHouse]
