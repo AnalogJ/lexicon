@@ -42,6 +42,8 @@ class Provider(BaseProvider):
                 self._get('/dns.reload')
                 logger.debug('create_record: %s', payload['id'])
                 return payload['id']
+        else:
+            return check_exists
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -136,3 +138,4 @@ class Provider(BaseProvider):
                              headers={'Content-Type': 'application/json'})
         r.raise_for_status()  # if the request fails for any reason, throw an error.
         return r.json()
+

@@ -14,4 +14,5 @@ lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.test.capsulecd.co
 lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.testfqdn.capsulecd.com
 lexicon $PROVIDER_NAME delete capsulecd.com TXT --name updated.testfull.capsulecd.com
 lexicon $PROVIDER_NAME delete capsulecd.com A --name localhost.capsulecd.com
+lexicon $PROVIDER_NAME delete capsulecd.com TXT --name ttl.fqdn.capsulecd.com
 lexicon $PROVIDER_NAME delete capsulecd.com CNAME --name docs.example.com
