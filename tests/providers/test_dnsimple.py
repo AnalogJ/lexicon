@@ -11,12 +11,18 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'dnsimple'
-    domain = 'wopr.tech'
+    domain = 'lexicontest.com'
 
     def _test_engine_overrides(self):
         overrides = super(DnsimpleProviderTests, self)._test_engine_overrides()
         overrides.update({'api_endpoint': 'https://api.sandbox.dnsimple.com/v2'})
         return overrides
+
+    # Override _test_options to call env_auth_options and then import auth config from env variables
+    def _test_options(self):
+        cmd_options = super(DnsimpleProviderTests, self)._test_options()
+        cmd_options['regions'] = ['global']
+        return cmd_options
 
     def _filter_headers(self):
         return ['Authorization','set-cookie','X-Dnsimple-OTP']

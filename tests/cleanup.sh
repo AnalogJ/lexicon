@@ -1,4 +1,4 @@
-PROVIDER_NAME=pointhq
+PROVIDER_NAME=dnsimple
 lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.createrecordset.capsulecd.com
 lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.deleterecordinset.capsulecd.com
 lexicon $PROVIDER_NAME delete capsulecd.com TXT --name _acme-challenge.deleterecordset.capsulecd.com

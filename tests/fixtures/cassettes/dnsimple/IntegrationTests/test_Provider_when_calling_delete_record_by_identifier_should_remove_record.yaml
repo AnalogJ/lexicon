@@ -7,18 +7,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://api.sandbox.dnsimple.com/v2/accounts
   response:
-    body: {string: !!python/unicode '{"data":[{"id":475,"plan_identifier":"dnsimple-personal","created_at":"2017-03-11T04:50:42Z","updated_at":"2017-03-12T08:06:55Z"}]}'}
+    body: {string: !!python/unicode '{"data":[{"id":762,"email":"lexicontest@mailinator.com","plan_identifier":"dnsimple-professional","created_at":"2018-03-23T04:57:08Z","updated_at":"2018-03-23T04:57:35Z"}]}'}
     headers:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
-      content-length: ['156']
+      content-length: ['172']
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:04 GMT']
-      etag: [W/"72b5baad57ee66be3c25031e6dd757be"]
+      date: ['Fri, 23 Mar 2018 05:35:13 GMT']
+      etag: [W/"41f6b179fd60416d261e24db13a6b843"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
@@ -27,10 +27,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2384']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [5ffd8586-3111-4c3c-a1e7-30127514b7c1]
-      x-runtime: ['0.031009']
+      x-ratelimit-remaining: ['1844']
+      x-ratelimit-reset: ['1521784779']
+      x-request-id: [5117ace7-fabc-46b8-a434-609b9d0b7cf8]
+      x-runtime: ['0.024576']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -41,18 +41,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/475/domains?name_like=wopr.tech
+    uri: https://api.sandbox.dnsimple.com/v2/762/domains?name_like=lexicontest.com
   response:
-    body: {string: !!python/unicode '{"data":[{"id":32240,"account_id":475,"registrant_id":null,"name":"wopr.tech","unicode_name":"wopr.tech","state":"hosted","auto_renew":false,"private_whois":false,"expires_on":null,"created_at":"2017-03-12T23:53:34Z","updated_at":"2017-03-12T23:53:34Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    body: {string: !!python/unicode '{"data":[{"id":39243,"account_id":762,"registrant_id":null,"name":"lexicontest.com","unicode_name":"lexicontest.com","token":"Xq3UtdK2VXBM23CE0w3xNDQkigc8VnWj","state":"hosted","auto_renew":false,"private_whois":false,"expires_on":null,"created_at":"2018-03-23T04:58:39Z","updated_at":"2018-03-23T04:58:39Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
     headers:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
-      content-length: ['378']
+      content-length: ['390']
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:04 GMT']
-      etag: [W/"f8acd1dd7c5dc59b6f1af98347e840ee"]
+      date: ['Fri, 23 Mar 2018 05:35:13 GMT']
+      etag: [W/"3c522308175b5c6e8cebe22bd408c32a"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
@@ -61,10 +61,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2356']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [7f2b258e-a629-4230-b931-38d57e5f4e11]
-      x-runtime: ['0.031469']
+      x-ratelimit-remaining: ['1843']
+      x-ratelimit-reset: ['1521784778']
+      x-request-id: [8301b45a-4886-4bc1-89c1-9ebe34a2e423]
+      x-runtime: ['0.024381']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -75,9 +75,9 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testid
+    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=delete.testid
   response:
     body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
     headers:
@@ -85,7 +85,7 @@ interactions:
       connection: [keep-alive]
       content-length: ['91']
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:04 GMT']
+      date: ['Fri, 23 Mar 2018 05:35:14 GMT']
       etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
@@ -95,31 +95,32 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2355']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [582d9d1e-14e6-4be4-9277-5e8845831e11]
-      x-runtime: ['0.042609']
+      x-ratelimit-remaining: ['1842']
+      x-ratelimit-reset: ['1521784779']
+      x-request-id: [5eddc2eb-92cf-4e59-b209-953e68e0d87a]
+      x-runtime: ['0.032437']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"content": "challengetoken", "type": "TXT", "name": "delete.testid"}'
+    body: !!python/unicode '{"priority": "placeholder_priority", "name": "delete.testid",
+      "content": "challengetoken", "regions": ["global"], "ttl": 3600, "type": "TXT"}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['69']
+      Content-Length: ['141']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://api.sandbox.dnsimple.com/v2475/zones/wopr.tech/records
+    uri: https://api.sandbox.dnsimple.com/v2762/zones/lexicontest.com/records
   response:
-    body: {string: !!python/unicode '{"data":{"id":311252,"zone_id":"wopr.tech","parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2017-03-12T23:54:05Z","updated_at":"2017-03-12T23:54:05Z"}}'}
+    body: {string: !!python/unicode '{"data":{"id":362808,"zone_id":"lexicontest.com","parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:14Z","updated_at":"2018-03-23T05:35:14Z"}}'}
     headers:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:05 GMT']
-      etag: [W/"f280013eadfe097f33c0d6eeaa291e39"]
+      date: ['Fri, 23 Mar 2018 05:35:14 GMT']
+      etag: [W/"ec9941ddd97f7c6c7c2df7e37f793e37"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
@@ -128,10 +129,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2354']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [ced46787-4fcc-4614-bdaf-8b54de3d5e47]
-      x-runtime: ['0.083331']
+      x-ratelimit-remaining: ['1841']
+      x-ratelimit-reset: ['1521784778']
+      x-request-id: [ee7851e9-1140-4f47-a478-d413ec93115b]
+      x-runtime: ['0.085997']
       x-xss-protection: [1; mode=block]
     status: {code: 201, message: Created}
 - request:
@@ -142,18 +143,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testid
+    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=delete.testid
   response:
-    body: {string: !!python/unicode '{"data":[{"id":311252,"zone_id":"wopr.tech","parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2017-03-12T23:54:05Z","updated_at":"2017-03-12T23:54:05Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    body: {string: !!python/unicode '{"data":[{"id":362808,"zone_id":"lexicontest.com","parent_id":null,"name":"delete.testid","content":"challengetoken","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:14Z","updated_at":"2018-03-23T05:35:14Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
     headers:
       cache-control: ['max-age=0, private, must-revalidate']
       connection: [keep-alive]
-      content-length: ['348']
+      content-length: ['354']
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:05 GMT']
-      etag: [W/"b0bdd98dafbf165ba329fae352e36dc6"]
+      date: ['Fri, 23 Mar 2018 05:35:15 GMT']
+      etag: [W/"3a8a48d0020e79da1df91d989fdeaa40"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
@@ -162,10 +163,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2353']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [7949e250-dd7a-4597-90fa-95bb22c20c2d]
-      x-runtime: ['0.032023']
+      x-ratelimit-remaining: ['1840']
+      x-ratelimit-reset: ['1521784779']
+      x-request-id: [5d03d344-002b-495e-a8e3-adbbcdc49fac]
+      x-runtime: ['0.027272']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -176,15 +177,15 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: DELETE
-    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records/311252
+    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records/362808
   response:
     body: {string: !!python/unicode ''}
     headers:
       cache-control: [no-cache]
       connection: [keep-alive]
-      date: ['Sun, 12 Mar 2017 23:54:06 GMT']
+      date: ['Fri, 23 Mar 2018 05:35:15 GMT']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       x-content-type-options: [nosniff]
@@ -192,10 +193,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2352']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [13ecc866-1872-4f65-80d3-192e284b0427]
-      x-runtime: ['0.148382']
+      x-ratelimit-remaining: ['1839']
+      x-ratelimit-reset: ['1521784779']
+      x-request-id: [83a2cfd1-c38f-4d63-b94f-18313a3886f3]
+      x-runtime: ['0.096837']
       x-xss-protection: [1; mode=block]
     status: {code: 204, message: No Content}
 - request:
@@ -206,9 +207,9 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.13.0]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/475/zones/wopr.tech/records?type=TXT&name=delete.testid
+    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=delete.testid
   response:
     body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
     headers:
@@ -216,7 +217,7 @@ interactions:
       connection: [keep-alive]
       content-length: ['91']
       content-type: [application/json; charset=utf-8]
-      date: ['Sun, 12 Mar 2017 23:54:06 GMT']
+      date: ['Fri, 23 Mar 2018 05:35:15 GMT']
       etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
       server: [nginx]
       strict-transport-security: [max-age=31536000]
@@ -226,10 +227,10 @@ interactions:
       x-frame-options: [DENY]
       x-permitted-cross-domain-policies: [none]
       x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['2351']
-      x-ratelimit-reset: ['1489366392']
-      x-request-id: [008d1213-bf55-4179-8272-6c2214044e87]
-      x-runtime: ['0.035753']
+      x-ratelimit-remaining: ['1838']
+      x-ratelimit-reset: ['1521784778']
+      x-request-id: [987d23db-24dc-43bd-89fa-c9574daa17ae]
+      x-runtime: ['0.027512']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1
