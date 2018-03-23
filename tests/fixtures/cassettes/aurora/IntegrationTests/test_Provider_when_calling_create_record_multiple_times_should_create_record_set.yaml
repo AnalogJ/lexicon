@@ -1,0 +1,81 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180322T204152Z]
+    method: GET
+    uri: https://api.auroradns.eu/zones
+  response:
+    body: {string: "[\n  {\n    \"account_id\": \"e8cb5994-0158-5f45-82b2-879810619c84\",\n\
+        \    \"cluster_id\": \"511d5146-ca0f-4cb0-b005-f546afaa1006\",\n    \"created\"\
+        : \"2018-03-22T19:54:33Z\",\n    \"id\": \"2128b47e-556d-40c6-be5f-e595015921eb\"\
+        ,\n    \"name\": \"example.nl\",\n    \"servers\": [\n      \"ns001.auroradns.eu\"\
+        ,\n      \"ns002.auroradns.nl\",\n      \"ns003.auroradns.info\"\n    ]\n\
+        \  }\n]\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['1752']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 22 Mar 2018 20:41:53 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset", "content": "challengetoken1",
+      "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['101']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180322T204152Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
+  response:
+    body: {string: "{\n  \"content\": \"challengetoken1\",\n  \"created\": \"2018-03-22T20:41:53Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"ac2adeba-deb8-4d34-a6e5-6ff195b19f51\"\
+        ,\n  \"modified\": \"2018-03-22T20:41:53Z\",\n  \"name\": \"_acme-challenge.createrecordset\"\
+        ,\n  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['296']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 22 Mar 2018 20:41:53 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset", "content": "challengetoken2",
+      "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['101']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-AuroraDNS-Date: [20180322T204152Z]
+    method: POST
+    uri: https://api.auroradns.eu/zones/2128b47e-556d-40c6-be5f-e595015921eb/records
+  response:
+    body: {string: "{\n  \"content\": \"challengetoken2\",\n  \"created\": \"2018-03-22T20:41:53Z\"\
+        ,\n  \"disabled\": false,\n  \"health_check_id\": null,\n  \"id\": \"047c7b9d-5b02-4b38-8ac0-923fccc7b7f0\"\
+        ,\n  \"modified\": \"2018-03-22T20:41:53Z\",\n  \"name\": \"_acme-challenge.createrecordset\"\
+        ,\n  \"prio\": 0,\n  \"ttl\": 3600,\n  \"type\": \"TXT\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['296']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 22 Mar 2018 20:41:53 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.7 (Ubuntu)]
+    status: {code: 201, message: CREATED}
+version: 1

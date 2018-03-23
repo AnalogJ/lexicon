@@ -138,7 +138,11 @@ class Provider(BaseProvider):
                 'Content-Type': 'application/json'
             })
 
-        # If the request fails for any reason, throw an error.
+        # If the response is a HTTP 409 statusCode, the record already exists: return true.
+        if r.status_code == 409:
+            return True
+
+        # If the request fails for any other reason, throw an error.
         r.raise_for_status()
 
         # Try to parse the json, if it not exists, return true.
