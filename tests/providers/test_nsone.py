@@ -11,7 +11,7 @@ class Ns1ProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'nsone'
-    domain = 'capsulecd.com'
+    domain = 'lexicon-example.com'
     def _filter_headers(self):
         return ['X-NSONE-Key', 'Authorization']
 
