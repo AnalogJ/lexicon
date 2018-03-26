@@ -29,6 +29,7 @@ self.provider_name must be set
 self.domain must be set
 self._filter_headers can be defined to provide a list of sensitive headers
 self._filter_query_parameters can be defined to provide a list of sensitive parameter
+self.provider_variant can be defined as a prefix for saving cassettes when a provider uses multiple variants
 
 
 Extended test suites can be skipped by adding the following snippet to the test_{PROVIDER_NAME}.py file
@@ -335,7 +336,20 @@ class IntegrationTests(object):
         return overrides
 
     def _cassette_path(self, fixture_subpath):
-        return "{0}/{1}".format(self.provider_name, fixture_subpath)
+        """
+        A path customized for the provider's fixture.
+        The default path is, for example:
+            {provider}/IntegrationTests
+        but if the test is a `provider_variant`, the path is customized to the variant:
+            {provider}/{variant_name}-IntegrationTests
+        """
+        if self.provider_variant:
+            return "{0}/{1}-{2}".format(self.provider_name, self.provider_variant, fixture_subpath)
+        else:
+            return "{0}/{1}".format(self.provider_name, fixture_subpath)
+
+    # optional. used to identify the test variant, if any.
+    provider_variant = None
 
     def _filter_headers(self):
         return []
