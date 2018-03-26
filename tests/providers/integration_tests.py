@@ -29,9 +29,17 @@ self.provider_name must be set
 self.domain must be set
 self._filter_headers can be defined to provide a list of sensitive headers
 self._filter_query_parameters can be defined to provide a list of sensitive parameter
+
+
+Extended test suites can be skipped by adding the following snippet to the test_{PROVIDER_NAME}.py file
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')
+
 """
 class IntegrationTests(object):
-
     ###########################################################################
     # Provider.authenticate()
     ###########################################################################
@@ -222,8 +230,10 @@ class IntegrationTests(object):
             assert len(records) == 0
 
     ###########################################################################
-    # Extended Test Suite - March 2018 - Validation for Create Record NOOP & Record Sets
+    # Extended Test Suite 1 - March 2018 - Validation for Create Record NOOP & Record Sets
     ###########################################################################
+
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop(self):
         with self._test_fixture_recording('test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
@@ -233,6 +243,7 @@ class IntegrationTests(object):
             records = provider.list_records('TXT',"_acme-challenge.noop.{0}.".format(self.domain))
             assert len(records) == 1
 
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_create_record_multiple_times_should_create_record_set(self):
         with self._test_fixture_recording('test_Provider_when_calling_create_record_multiple_times_should_create_record_set'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
@@ -240,6 +251,7 @@ class IntegrationTests(object):
             assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
             assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
 
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
         with self._test_fixture_recording('test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
@@ -247,6 +259,7 @@ class IntegrationTests(object):
             records = provider.list_records('TXT','filter.thisdoesnotexist.{0}'.format(self.domain))
             assert len(records) == 0
 
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_list_records_should_handle_record_sets(self):
         with self._test_fixture_recording('test_Provider_when_calling_list_records_should_handle_record_sets'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
@@ -256,6 +269,7 @@ class IntegrationTests(object):
             records = provider.list_records('TXT','_acme-challenge.listrecordset.{0}.'.format(self.domain))
             assert len(records) == 2
 
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_delete_record_with_record_set_name_remove_all(self):
         with self._test_fixture_recording('test_Provider_when_calling_delete_record_with_record_set_name_remove_all'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
@@ -267,6 +281,7 @@ class IntegrationTests(object):
             records = provider.list_records('TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
             assert len(records) == 0
 
+    @pytest.mark.ext_suite_1
     def test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):
         with self._test_fixture_recording('test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
