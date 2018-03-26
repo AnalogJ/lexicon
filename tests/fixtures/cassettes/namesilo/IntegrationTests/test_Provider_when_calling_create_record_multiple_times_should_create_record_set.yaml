@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>getDomainInfo</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><created>2016-04-02</created><expires>2018-04-02</expires><status>Active</status><locked>Yes</locked><private>Yes</private><auto_renew>Yes</auto_renew><traffic_type>Parked</traffic_type><email_verification_required>No</email_verification_required><portfolio>N/A</portfolio><forward_url>N/A</forward_url><forward_type>N/A</forward_type><nameservers><nameserver
+        position="1">NS1.NAMESILO.COM</nameserver><nameserver position="2">NS2.NAMESILO.COM</nameserver></nameservers><contact_ids><registrant>1321</registrant><administrative>1321</administrative><technical>1321</technical><billing>1321</billing></contact_ids></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['788']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:08 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=f8cj51fk3t2lpsmjcv0cnvu7q7t9vv3h; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=_acme-challenge.createrecordset&rrttl=3600&rrtype=TXT&rrvalue=challengetoken1&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsAddRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><record_id>9769d6359fa90a13fc320442f0534a70</record_id></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['229']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:08 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=90btplk3jrl207o4for1pnv89h0he8ia; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=_acme-challenge.createrecordset&rrttl=3600&rrtype=TXT&rrvalue=challengetoken2&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsAddRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><record_id>24050ef6ede7eb1667a9f324827b51cf</record_id></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['229']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:08 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=f6tplvc3e0s29b1t9d40kk1vh4629i8c; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+version: 1

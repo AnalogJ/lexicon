@@ -13,6 +13,11 @@ Fork, then clone the repo:
 
     $ git clone git@github.com:your-username/lexicon.git
 
+Create a python virtual environment
+
+	$ virtualenv -p python2.7 venv
+	$ source venv/bin/activate
+
 Install all `lexicon` requirements:
 
     $ pip install -r optional-requirements.txt
@@ -25,6 +30,10 @@ Install `lexicon` in development mode
 Make sure the tests pass:
 
     $ py.test tests
+
+You can test a specific provider using:
+
+	$ py.test tests/providers/test_foo.py
 
 
 ## Adding a new DNS provider
@@ -111,10 +120,6 @@ class FooProviderTests(TestCase, IntegrationTests):
 
 	def _filter_query_parameters(self):
 		return ['secret_key']
-
-	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
-	def test_Provider_when_calling_list_records_after_setting_ttl(self):
-		return
 ```
 
 Make sure to replace any instance of `foo` or `Foo` with your provider name.
@@ -124,9 +129,6 @@ providers have a sandbox/test environment which doesn't require you to validate 
 The `_filter_*` methods ensure that your credentials are not included in the
 `vcrpy` recordings that are created. You can take a look at recordings for other
  providers, they are stored in the [`tests/fixtures/cassettes/`](https://github.com/AnalogJ/lexicon/tree/master/tests/fixtures/cassettes) sub-folders.
-
-You can use `@pytest.mark.skip` to skip any individual test that will never pass with
-your provider.
 
 Then you'll need to setup your environment variables for testing. Unlike running
 `lexicon` via the CLI, the test suite cannot take user input, so we'll need to provide
@@ -155,6 +157,28 @@ Once all your tests pass, you'll want to double check that there is no sensitive
 Finally, push your changes to your Github fork, and open a PR.
 
 :)
+
+## Skipping Tests/Suites
+
+Neither of the snippets below should be used unless necessary. They are only included in the interest of documentation.
+
+In your `tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to skip any individual test that does not apply (and will never pass)
+
+```python
+	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
+	def test_Provider_when_calling_list_records_after_setting_ttl(self):
+		return
+```
+
+You can also skip extended test suites by adding the following snipped:
+
+```python
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')
+```
+
 
 ## Additional Notes
 

@@ -17,3 +17,8 @@ class GehirnProviderTests(TestCase, IntegrationTests):
 
     def _filter_headers(self):
         return ['Authorization']
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

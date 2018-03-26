@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: !!python/unicode domain=capsulecd.com&format=json
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['95']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://dnsapi.cn/Domain.Info
+  response:
+    body: {string: !!python/unicode '{"status":{"code":"10002","message":"The login
+        token ID is invalid","created_at":"2018-03-20 19:26:13"}}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['104']
+      content-type: [text/html;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:26:13 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [DNSPODID=fcg4dhirvfrvsl02uld112m072; path=/; secure; HttpOnly,
+        '_xsrf=232c19d3b1839f7323ffe39ad0168bfe%7C1521545173; expires=Tue, 27-Mar-2018
+          11:26:13 GMT; Max-Age=604800; path=/']
+      transfer-encoding: [chunked]
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1

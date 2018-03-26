@@ -103,13 +103,20 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
+        delete_record_id = []
         if not identifier:
-            identifier = self._find_record_identifier(type, name, None)
+            records = self.list_records(type, name, content)
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
-        payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, identifier))
-
-        logger.debug('delete_record: %s', payload)
-        return payload
+        logger.debug('delete_record: %s', True)
+        return True
 
 
     # Helpers
@@ -131,7 +138,11 @@ class Provider(BaseProvider):
                 'Content-Type': 'application/json'
             })
 
-        # If the request fails for any reason, throw an error.
+        # If the response is a HTTP 409 statusCode, the record already exists: return true.
+        if r.status_code == 409:
+            return True
+
+        # If the request fails for any other reason, throw an error.
         r.raise_for_status()
 
         # Try to parse the json, if it not exists, return true.

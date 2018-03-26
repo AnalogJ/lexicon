@@ -145,19 +145,21 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         domain = self.options.get('domain')
 
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            elif len(records) > 1:
-                raise Exception('Several record identifiers match the request')
-            else:
-                raise Exception('Record identifier could not be found')
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
 
-        self._delete('/domain/zone/{0}/record/{1}'.format(domain, identifier))
+        LOGGER.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            self._delete('/domain/zone/{0}/record/{1}'.format(domain, record_id))
+
         self._post('/domain/zone/{0}/refresh'.format(domain))
 
-        LOGGER.debug('delete_record: %s', identifier)
+        LOGGER.debug('delete_record: %s', True)
 
         return True
 

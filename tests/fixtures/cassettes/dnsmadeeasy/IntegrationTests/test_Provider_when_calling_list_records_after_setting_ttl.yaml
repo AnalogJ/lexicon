@@ -1,73 +1,76 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Sat, 27 Aug 2016 19:30:26 GMT']
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:26 GMT']
     method: GET
     uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"name":"capsulecd.com","id":874984,"created":1458864000000,"processMulti":false,"activeThirdParties":[],"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":1668,"gtdEnabled":false,"nameServers":[{"ipv4":"208.94.147.112","ipv6":"2600:1800:0::1","fqdn":"ns1.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.113","ipv6":"2600:1801:1::1","fqdn":"ns2.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.114","ipv6":"2600:1802:2::1","fqdn":"ns3.sandbox.dnsmadeeasy.com"},{"ipv4":"208.94.147.116","ipv6":"2600:1801:3::1","fqdn":"ns4.sandbox.dnsmadeeasy.com"}],"pendingActionId":0,"updated":1472326176934}'}
+    body: {string: !!python/unicode '{"created":1521590400000,"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":2052,"gtdEnabled":false,"nameServers":[{"fqdn":"ns1.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.45","ipv6":"2600:1806:511:210:1eaf::45"},{"fqdn":"ns2.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.46","ipv6":"2600:1806:511:210:1eaf::46"},{"fqdn":"ns3.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.47","ipv6":"2600:1806:511:210:1eaf::47"},{"fqdn":"ns4.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.48","ipv6":"2600:1806:511:210:1eaf::48"},{"fqdn":"ns5.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.49","ipv6":"2600:1806:511:210:1eaf::49"}],"pendingActionId":0,"updated":1521609889401,"processMulti":false,"activeThirdParties":[],"name":"capsulecd.com","id":878951}'}
     headers:
       content-type: [application/json]
-      date: ['Sat, 27 Aug 2016 19:30:26 GMT']
+      date: ['Wed, 21 Mar 2018 05:25:25 GMT']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=991B724137B73C14FAD494757D99E5A4; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [7887fb2a-af13-4b97-b76b-053114585c9b]
+      set-cookie: [JSESSIONID=5334F22A40EFAE399CA6AF5186AC78B8; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [c035ba5b-13df-4093-9cf7-7e32971ece87]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['59']
+      x-dnsme-requestsremaining: ['96']
     status: {code: 200, message: OK}
 - request:
-    body: '{"type": "TXT", "name": "ttl.fqdn", "value": "ttlshouldbe3600", "ttl":
-      3600}'
+    body: !!python/unicode '{"type": "TXT", "name": "ttl.fqdn", "value": "ttlshouldbe3600",
+      "ttl": 3600}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['76']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Sat, 27 Aug 2016 19:30:26 GMT']
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:26 GMT']
     method: POST
-    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/
   response:
-    body: {string: !!python/unicode '{"name":"ttl.fqdn","value":"\"ttlshouldbe3600\"","id":10124253,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false}'}
+    body: {string: !!python/unicode '{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"ttl.fqdn","value":"\"ttlshouldbe3600\"","id":10169000,"type":"TXT"}'}
     headers:
       content-type: [application/json]
-      date: ['Sat, 27 Aug 2016 19:30:27 GMT']
-      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records/10124253']
+      date: ['Wed, 21 Mar 2018 05:25:25 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/10169000']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=C811061400BC9ECF9C976270843C3062; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [54b89fd6-ef84-45ef-92b5-7d96e7735087]
+      set-cookie: [JSESSIONID=D5CEBF33577AA786770FDD128D70F808; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [fbb94da4-2b7c-48fc-b1c3-2bc5244dc3db]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['58']
+      x-dnsme-requestsremaining: ['95']
     status: {code: 201, message: Created}
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-      x-dnsme-requestDate: ['Sat, 27 Aug 2016 19:30:27 GMT']
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:26 GMT']
     method: GET
-    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/874984/records?recordName=ttl.fqdn&type=TXT
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records?recordName=ttl.fqdn&type=TXT
   response:
-    body: {string: !!python/unicode '{"data":[{"name":"ttl.fqdn","value":"\"ttlshouldbe3600\"","id":10124253,"type":"TXT","source":1,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"monitor":false,"sourceId":874984,"failover":false}],"page":0,"totalPages":1,"totalRecords":1}'}
+    body: {string: !!python/unicode '{"totalPages":1,"totalRecords":1,"data":[{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"ttl.fqdn","value":"\"ttlshouldbe3600\"","id":10169000,"type":"TXT"}],"page":0}'}
     headers:
       content-type: [application/json]
-      date: ['Sat, 27 Aug 2016 19:30:27 GMT']
+      date: ['Wed, 21 Mar 2018 05:25:25 GMT']
       server: [Apache-Coyote/1.1]
-      set-cookie: [JSESSIONID=136910DE5BEE0DBF13777F8FF7D0CD0C; Path=/V2.0/; HttpOnly]
-      x-dnsme-requestid: [e8bea938-f0da-46d7-83bf-57b2aa17f94c]
+      set-cookie: [JSESSIONID=A0C15781E38C4625D1BF8B9144100DA9; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [f06024ca-e829-4a7e-ba3d-b2347c274556]
       x-dnsme-requestlimit: ['150']
-      x-dnsme-requestsremaining: ['57']
+      x-dnsme-requestsremaining: ['94']
     status: {code: 200, message: OK}
 version: 1

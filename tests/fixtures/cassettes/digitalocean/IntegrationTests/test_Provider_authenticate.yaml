@@ -1,40 +1,43 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://api.digitalocean.com/v2/domains/capsulecd.com
   response:
     body: {string: !!python/unicode '{"domain":{"name":"capsulecd.com","ttl":1800,"zone_file":"$ORIGIN
         capsulecd.com.\n$TTL 1800\ncapsulecd.com. IN SOA ns1.digitalocean.com. hostmaster.capsulecd.com.
-        1460668241 10800 3600 604800 1800\ncapsulecd.com. 1800 IN NS ns1.digitalocean.com.\ncapsulecd.com.
+        1521528334 10800 3600 604800 1800\ncapsulecd.com. 1800 IN NS ns1.digitalocean.com.\ncapsulecd.com.
         1800 IN NS ns2.digitalocean.com.\ncapsulecd.com. 1800 IN NS ns3.digitalocean.com.\ncapsulecd.com.
         1800 IN A 127.0.0.1\n"}}'}
     headers:
       cache-control: ['max-age=0, private, must-revalidate']
-      cf-ray: [293a42ce53c22a4f-SEA]
+      cf-ray: [3fe63986eabc93ba-SJC]
       connection: [keep-alive]
       content-length: ['384']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 14 Apr 2016 21:30:47 GMT']
+      date: ['Tue, 20 Mar 2018 06:46:58 GMT']
+      etag: [W/"14737b4e9755da61fdc598b65a8acfef"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
       ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4999']
-      ratelimit-reset: ['1460673047']
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d5b0e3041c7616f8f642b64dc5ea9cfc61460669447; expires=Fri,
-          14-Apr-17 21:30:47 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      status: [200 OK]
+      ratelimit-remaining: ['4831']
+      ratelimit-reset: ['1521525195']
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d4d58f93be576a6ce11836df58a77a36a1521528418; expires=Wed,
+          20-Mar-19 06:46:58 GMT; path=/; domain=.digitalocean.com; HttpOnly']
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
-      x-request-id: [ef1306c4-cb20-4139-8b4f-177c2a73b6b2]
-      x-runtime: ['0.038532']
+      x-gateway: [Edge-Gateway]
+      x-request-id: [3b0268bb-cd71-4d06-b9c8-a488fea3b5d9]
+      x-response-from: [service]
+      x-runtime: ['0.139256']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

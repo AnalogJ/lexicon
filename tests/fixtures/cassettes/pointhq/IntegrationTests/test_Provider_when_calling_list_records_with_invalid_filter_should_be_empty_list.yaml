@@ -1,0 +1,67 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"zone":{"id":170389,"name":"capsulecd.com","group":"Default
+        Group","user-id":26963,"ttl":3600}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['96']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:36:11 GMT']
+      etag: ['"64759825f5fbcfb9ee3f1ac1c0819f88"']
+      server: [nginx]
+      set-cookie: [_passenger_route=1697826421; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1FB632A2DAFA326A2C02407F68C0AEFEF9286542B7B5AB062DDE4DBB44D319B80;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [7eea6dcdad5f2e010939d239087c9247]
+      x-runtime: ['0.366407']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=filter.thisdoesnotexist
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['2']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:36:12 GMT']
+      etag: ['"d751713988987e9331980363e24189ce"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [e0332eb23793ece2bfc3e126f2435f68]
+      x-runtime: ['0.079946']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

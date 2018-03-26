@@ -1,0 +1,86 @@
+interactions:
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [c5572677d5b483ef84eb6a64643a5c67]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:09 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://www.cloudxns.net/api2/domain
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"Operate successfully","total":"1","data":[{"id":"89415","domain":"capsulecd.com.","status":"ok","level":"3","take_over_status":"Untaken
+        over","create_time":"2016-06-08 14:49:10","update_time":"2018-03-19 13:36:38","ttl":"600"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['249']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:10 GMT']
+      set-cookie: ['CloudXNS_TOKEN=23ef292366aa36441812b56d24d16c6e; expires=Tue,
+          20-Mar-2018 13:56:10 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"format": "json", "login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "value": "challengetoken1", "line_id": 1, "host": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT", "domain_id": "89415"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [3a6de8b513ef9fa165b06f6c8a8212f0]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:10 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['221']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://www.cloudxns.net/api2/record
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","record_id":[4223741]}'}
+    headers:
+      connection: [close]
+      content-length: ['52']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:11 GMT']
+      set-cookie: ['CloudXNS_TOKEN=f5ce26586a91c6fec83b6215c99e500f; expires=Tue,
+          20-Mar-2018 13:56:11 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"format": "json", "login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "value": "challengetoken2", "line_id": 1, "host": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT", "domain_id": "89415"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [fe27ee687e736f487939877703b816b9]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:11 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['221']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://www.cloudxns.net/api2/record
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","record_id":[4223743]}'}
+    headers:
+      connection: [close]
+      content-length: ['52']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:12 GMT']
+      set-cookie: ['CloudXNS_TOKEN=f5104efd4872bf12aa117d689b359bca; expires=Tue,
+          20-Mar-2018 13:56:12 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

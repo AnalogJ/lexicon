@@ -1,0 +1,310 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"lexicon-example.com","dnssec":false,"network_pools":["p08"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p08.nsone.net","dns2.p08.nsone.net","dns3.p08.nsone.net","dns4.p08.nsone.net"],"records":[{"domain":"_acme-challenge.createrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b712c9c79d0001ad45e6"},{"domain":"_acme-challenge.fqdn.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b709a632f60001419f0e"},{"domain":"_acme-challenge.full.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70cc94a900001c1dffa"},{"domain":"_acme-challenge.noop.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7170c13a400014ee124"},{"domain":"_acme-challenge.test.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70fa632f60001b0b4a6"},{"domain":"docs.lexicon-example.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"5ab7b7050c13a400014ee10c"},{"domain":"localhost.lexicon-example.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"5ab7b702a632f60001b0b499"}],"meta":{},"link":null,"serial":1521989421,"ttl":3600,"id":"5ab69dd6bbccf900012ef579","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p08"}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [401230861f472dcd-BOM]
+      connection: [keep-alive]
+      content-length: ['1598']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:25 GMT']
+      etag: [W/"3d9cf673bd2dd09dcb5bc9a273ba9e524237b9d2"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d8329ba817c44d1ab8fcba42f7b61c4751521989423; expires=Mon,
+          25-Mar-19 14:50:23 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"message":"record not found"}
+
+'}
+    headers:
+      cache-control: [no-cache]
+      cf-ray: [40123095dd712dd9-BOM]
+      connection: [keep-alive]
+      content-length: ['31']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:25 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d3a16eddc5361b276327b283a127dc5281521989425; expires=Mon,
+          25-Mar-19 14:50:25 GMT; path=/; domain=.nsone.net; HttpOnly']
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"domain": "_acme-challenge.deleterecordinset.lexicon-example.com",
+      "type": "TXT", "answers": [{"answer": ["challengetoken1"]}], "zone": "lexicon-example.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['159']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken1"],"id":"5ab7b7320c13a400014ee148"}],"id":"5ab7b7320c13a400014ee149","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [4012309a6ca62de5-BOM]
+      connection: [keep-alive]
+      content-length: ['324']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:26 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=dbad8490a91b334ea4efb572e53c7b0771521989426; expires=Mon,
+          25-Mar-19 14:50:26 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['100']
+      x-ratelimit-period: ['200']
+      x-ratelimit-remaining: ['99']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken1"],"id":"5ab7b7320c13a400014ee148"}],"id":"5ab7b7320c13a400014ee149","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [4012309e297b2ddf-BOM]
+      connection: [keep-alive]
+      content-length: ['324']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:27 GMT']
+      etag: [W/"1400e766e2d975f3f58350c3aabb275ab2c5ef47"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d07a5128d36f7236b8dd225226192b6911521989426; expires=Mon,
+          25-Mar-19 14:50:26 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.deleterecordinset.lexicon-example.com",
+      "answers": [{"answer": ["challengetoken1"], "id": "5ab7b7320c13a400014ee148"},
+      {"answer": ["challengetoken2"]}], "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['206']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken1"],"id":"5ab7b7320c13a400014ee148"},{"answer":["challengetoken2"],"id":"5ab7b733a632f60001419f40"}],"id":"5ab7b7320c13a400014ee149","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [401230a1dc742da9-BOM]
+      connection: [keep-alive]
+      content-length: ['387']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:27 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=dfd44775926ea61bcd39a6c0c49cf627b1521989427; expires=Mon,
+          25-Mar-19 14:50:27 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['300']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['299']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken1"],"id":"5ab7b7320c13a400014ee148"},{"answer":["challengetoken2"],"id":"5ab7b733a632f60001419f40"}],"id":"5ab7b7320c13a400014ee149","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [401230a67f482dc7-BOM]
+      connection: [keep-alive]
+      content-length: ['387']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:28 GMT']
+      etag: [W/"240df554b81af5b78e6db2ed6a062c3f30ded5fc"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=da7e3e2da1c78d7af86ac4e6aff5d34fd1521989428; expires=Mon,
+          25-Mar-19 14:50:28 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.deleterecordinset.lexicon-example.com",
+      "answers": [{"answer": ["challengetoken2"], "id": "5ab7b733a632f60001419f40"}],
+      "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['173']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/_acme-challenge.deleterecordinset.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken2"],"id":"5ab7b733a632f60001419f40"}],"id":"5ab7b7320c13a400014ee149","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [401230ab0e5288a2-BOM]
+      connection: [keep-alive]
+      content-length: ['324']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:29 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d37f0ca5640b8fed9fbf3acc201b790531521989428; expires=Mon,
+          25-Mar-19 14:50:28 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['300']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['299']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com
+  response:
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"lexicon-example.com","dnssec":false,"network_pools":["p08"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p08.nsone.net","dns2.p08.nsone.net","dns3.p08.nsone.net","dns4.p08.nsone.net"],"records":[{"domain":"_acme-challenge.createrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b712c9c79d0001ad45e6"},{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","short_answers":["challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7320c13a400014ee149"},{"domain":"_acme-challenge.fqdn.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b709a632f60001419f0e"},{"domain":"_acme-challenge.full.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70cc94a900001c1dffa"},{"domain":"_acme-challenge.noop.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7170c13a400014ee124"},{"domain":"_acme-challenge.test.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70fa632f60001b0b4a6"},{"domain":"docs.lexicon-example.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"5ab7b7050c13a400014ee10c"},{"domain":"localhost.lexicon-example.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"5ab7b702a632f60001b0b499"}],"meta":{},"link":null,"serial":1521989429,"ttl":3600,"id":"5ab69dd6bbccf900012ef579","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p08"}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [401230b33d182de5-BOM]
+      connection: [keep-alive]
+      content-length: ['1778']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:30 GMT']
+      etag: [W/"efe16db11551a6991fbb7b1cc94eb6907fe8269b"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=dbf85d6656ba2451ad816c2a1dbb666781521989430; expires=Mon,
+          25-Mar-19 14:50:30 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

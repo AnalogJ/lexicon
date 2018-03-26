@@ -1,93 +1,152 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.nsone.net/v1/zones/capsulecd.com
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"lexicon-example.com","dnssec":false,"network_pools":["p08"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p08.nsone.net","dns2.p08.nsone.net","dns3.p08.nsone.net","dns4.p08.nsone.net"],"records":[{"domain":"_acme-challenge.createrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b712c9c79d0001ad45e6"},{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","short_answers":["challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7320c13a400014ee149"},{"domain":"_acme-challenge.fqdn.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b709a632f60001419f0e"},{"domain":"_acme-challenge.full.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70cc94a900001c1dffa"},{"domain":"_acme-challenge.listrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b73ea632f60001419f47"},{"domain":"_acme-challenge.noop.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7170c13a400014ee124"},{"domain":"_acme-challenge.test.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70fa632f60001b0b4a6"},{"domain":"docs.lexicon-example.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"5ab7b7050c13a400014ee10c"},{"domain":"localhost.lexicon-example.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"5ab7b702a632f60001b0b499"},{"domain":"random.fqdntest.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7420c13a4000159eded"}],"meta":{},"link":null,"serial":1521989442,"ttl":3600,"id":"5ab69dd6bbccf900012ef579","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p08"}
 
-        '}
+'}
     headers:
-      cache-control: [no-cache]
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [40123103eba22db5-BOM]
       connection: [keep-alive]
-      content-length: ['740']
+      content-length: ['2133']
       content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:59:31 GMT']
-      etag: [W/"c56cf31101dcd3e7eb1f2486be864e51226e9ce1"]
+      date: ['Sun, 25 Mar 2018 14:50:43 GMT']
+      etag: [W/"f979f412090954ee43218ef52d6746987990fe2e"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
       expires: ['0']
       pragma: [no-cache]
-      server: [NSONE API v1]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d2cda25b5ac9c63267fa5ea3d6af2166b1521989443; expires=Mon,
+          25-Mar-19 14:50:43 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['900']
       x-ratelimit-period: ['300']
       x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: '{"domain": "random.fulltest.capsulecd.com", "type": "TXT", "answers": [{"answer":
-      ["challengetoken"]}], "zone": "capsulecd.com"}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['128']
+      Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: PUT
-    uri: https://api.nsone.net/v1/zones/capsulecd.com/random.fulltest.capsulecd.com/TXT
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/random.fulltest.lexicon-example.com/TXT
   response:
-    body: {string: !!python/unicode '{"domain":"random.fulltest.capsulecd.com","zone":"capsulecd.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"56fb33235927240006115bdd"}],"id":"56fb33235927240006115bde","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+    body: {string: !!python/unicode '{"message":"record not found"}
 
-        '}
+'}
     headers:
       cache-control: [no-cache]
+      cf-ray: [40123107bb252dbb-BOM]
       connection: [keep-alive]
-      content-length: ['293']
+      content-length: ['31']
       content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 02:00:03 GMT']
+      date: ['Sun, 25 Mar 2018 14:50:44 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
       expires: ['0']
       pragma: [no-cache]
-      server: [NSONE API v1]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=dd9c74efb5415c4f2894fef3f34ab088d1521989443; expires=Mon,
+          25-Mar-19 14:50:43 GMT; path=/; domain=.nsone.net; HttpOnly']
+      x-ratelimit-by: [customer]
+      x-ratelimit-limit: ['900']
+      x-ratelimit-period: ['300']
+      x-ratelimit-remaining: ['899']
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"domain": "random.fulltest.lexicon-example.com", "type":
+      "TXT", "answers": [{"answer": ["challengetoken"]}], "zone": "lexicon-example.com"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['140']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com/random.fulltest.lexicon-example.com/TXT
+  response:
+    body: {string: !!python/unicode '{"domain":"random.fulltest.lexicon-example.com","zone":"lexicon-example.com","use_client_subnet":true,"answers":[{"answer":["challengetoken"],"id":"5ab7b744a632f60001419f4d"}],"id":"5ab7b744a632f60001419f4e","regions":{},"meta":{},"link":null,"filters":[],"ttl":3600,"tier":1,"type":"TXT","networks":[0]}
+
+'}
+    headers:
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [4012310bad072daf-BOM]
+      connection: [keep-alive]
+      content-length: ['305']
+      content-type: [application/json]
+      date: ['Sun, 25 Mar 2018 14:50:44 GMT']
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
+      expires: ['0']
+      pragma: [no-cache]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d334b38965975e134167462b9b21e36f31521989444; expires=Mon,
+          25-Mar-19 14:50:44 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
+      transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['100']
       x-ratelimit-period: ['200']
-      x-ratelimit-remaining: ['91']
+      x-ratelimit-remaining: ['99']
+      x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.nsone.net/v1/zones/capsulecd.com
+    uri: https://api.nsone.net/v1/zones/lexicon-example.com
   response:
-    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"capsulecd.com","network_pools":["p06"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"records":[{"domain":"_acme-challenge.fqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bb8"},{"domain":"_acme-challenge.full.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bbe"},{"domain":"_acme-challenge.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33205927240006115bc4"},{"domain":"capsulecd.com","short_answers":["dns1.p06.nsone.net","dns2.p06.nsone.net","dns3.p06.nsone.net","dns4.p06.nsone.net"],"ttl":3600,"tier":1,"type":"NS","id":"56f85f4e9f939b00066237b0"},{"domain":"delete.testfilt.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bca"},{"domain":"delete.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33215927240006115bce"},{"domain":"delete.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd2"},{"domain":"delete.testid.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33225927240006115bd6"},{"domain":"docs.capsulecd.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"56fb331f5927240006115bb4"},{"domain":"localhost.capsulecd.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"56fb331f5927240006115bae"},{"domain":"orig.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be6"},{"domain":"orig.testfqdn.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bea"},{"domain":"orig.testfull.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33255927240006115bf0"},{"domain":"random.fqdntest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bda"},{"domain":"random.fulltest.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33235927240006115bde"},{"domain":"random.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56fb33245927240006115be2"},{"domain":"updated.test.capsulecd.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"56f87ab459272400060f8ae4"}],"meta":{},"link":null,"ttl":3600,"id":"56f85f4e9f939b00066237ab","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p06"}
+    body: {string: !!python/unicode '{"nx_ttl":3600,"retry":7200,"zone":"lexicon-example.com","dnssec":false,"network_pools":["p08"],"primary":{"enabled":false,"secondaries":[]},"refresh":43200,"expiry":1209600,"dns_servers":["dns1.p08.nsone.net","dns2.p08.nsone.net","dns3.p08.nsone.net","dns4.p08.nsone.net"],"records":[{"domain":"_acme-challenge.createrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b712c9c79d0001ad45e6"},{"domain":"_acme-challenge.deleterecordinset.lexicon-example.com","short_answers":["challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7320c13a400014ee149"},{"domain":"_acme-challenge.fqdn.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b709a632f60001419f0e"},{"domain":"_acme-challenge.full.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70cc94a900001c1dffa"},{"domain":"_acme-challenge.listrecordset.lexicon-example.com","short_answers":["challengetoken1","challengetoken2"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b73ea632f60001419f47"},{"domain":"_acme-challenge.noop.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7170c13a400014ee124"},{"domain":"_acme-challenge.test.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b70fa632f60001b0b4a6"},{"domain":"docs.lexicon-example.com","short_answers":["docs.example.com"],"link":null,"ttl":3600,"tier":1,"type":"CNAME","id":"5ab7b7050c13a400014ee10c"},{"domain":"localhost.lexicon-example.com","short_answers":["127.0.0.1"],"link":null,"ttl":3600,"tier":1,"type":"A","id":"5ab7b702a632f60001b0b499"},{"domain":"random.fqdntest.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b7420c13a4000159eded"},{"domain":"random.fulltest.lexicon-example.com","short_answers":["challengetoken"],"link":null,"ttl":3600,"tier":1,"type":"TXT","id":"5ab7b744a632f60001419f4e"}],"meta":{},"link":null,"serial":1521989444,"ttl":3600,"id":"5ab69dd6bbccf900012ef579","hostmaster":"hostmaster@nsone.net","networks":[0],"pool":"p08"}
 
-        '}
+'}
     headers:
-      cache-control: [no-cache]
+      cache-control: [no-cache, 'private, max-age=0, no-cache, no-store']
+      cf-ray: [4012310f8c572deb-BOM]
       connection: [keep-alive]
-      content-length: ['3044']
+      content-length: ['2294']
       content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 02:00:19 GMT']
-      etag: [W/"2c90c1b21209f6c73ed71a421540ef32f59ed470"]
+      date: ['Sun, 25 Mar 2018 14:50:45 GMT']
+      etag: [W/"a8c0e5820ef498c2e623ef866cf409e818a252af"]
+      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
       expires: ['0']
       pragma: [no-cache]
-      server: [NSONE API v1]
+      server: [cloudflare]
+      set-cookie: ['__cfduid=d9fea1b30177657406f943fc6a8c254271521989445; expires=Mon,
+          25-Mar-19 14:50:45 GMT; path=/; domain=.nsone.net; HttpOnly']
+      strict-transport-security: [max-age=63072000; includeSubdomains; preload]
       transfer-encoding: [chunked]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
       x-ratelimit-by: [customer]
       x-ratelimit-limit: ['900']
       x-ratelimit-period: ['300']
       x-ratelimit-remaining: ['899']
+      x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

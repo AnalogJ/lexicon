@@ -30,27 +30,58 @@ class Provider(BaseProvider):
 
         self.domain_id = self.options['domain']
 
+    def _get_record_set(self, name, type):
+        try:
+            payload = self._get('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                return None
+            else:
+                raise e
+
+        return {
+            'type': payload['type'],
+            'name': payload['domain'],
+            'ttl': payload['ttl'],
+            'answers': payload['answers']
+        }
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        record = {
-            'type': type,
-            'domain': self._full_name(name),
-            'zone': self.domain_id,
-            'answers':[
-                {"answer": [content]}
-            ]
-        }
-        payload = {}
-        try:
-            payload = self._put('/zones/{0}/{1}/{2}'.format(self.domain_id, self._full_name(name),type), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
+        name = self._full_name(name)
+        existing_record_set = self._get_record_set(name, type)
+        if existing_record_set:
+            def _record_set_has_answer(record_set, content):
+                for answer in record_set['answers']:
+                    if content in answer['answer']:
+                        return True
+                return False
 
+            if not _record_set_has_answer(existing_record_set, content):
+                existing_record_set['answers'].append({
+                    'answer': [content]
+                })
+                self._post('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), existing_record_set)
+        else:
+            record = {
+                'type': type,
+                'domain': name,
+                'zone': self.domain_id,
+                'answers':[
+                    {"answer": [content]}
+                ]
+            }
+            payload = {}
+            try:
+                payload = self._put('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record)
+            except requests.exceptions.HTTPError as e:
                 # http 400 is ok here, because the record probably already exists
-        logger.debug('create_record: %s', 'id' in payload)
-        return 'id' in payload
+                if e.response.status_code == 400:
+                    payload = {}
+
+            logger.debug('create_record: %s', 'id' in payload)
+
+        return True
 
     def _find_record(self, domain, _type=None):
         """search for a record on NS1 across zones. returns None if not found."""
@@ -119,23 +150,24 @@ class Provider(BaseProvider):
 
             if link_target and link_target.get('short_answers', None):
                 # target found (could be the same as orig record)
-                answer = link_target['short_answers'][0]
+                answers = link_target['short_answers']
             else:
                 # recursion limit reached. or unhandled record format.
-                answer = ''
+                answers = []
 
-            if content and answer != content:
+            if content and content not in answers:
                 continue
 
-            processed_record = {
-                'type': record['type'],
-                'name': record['domain'],
-                'ttl': record['ttl'],
-                'content': answer,
-                #this id is useless unless your doing record linking. Lets return the original record identifier.
-                'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type'])
-            }
-            records.append(processed_record)
+            for answer in answers:
+                processed_record = {
+                    'type': record['type'],
+                    'name': record['domain'],
+                    'ttl': record['ttl'],
+                    'content': answer,
+                    #this id is useless unless your doing record linking. Lets return the original record identifier.
+                    'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type'])
+                }
+                records.append(processed_record)
 
         logger.debug('list_records: %s', records)
         return records
@@ -168,18 +200,31 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
-            records = self.list_records(type, name, content)
-            logger.debug('records: %s', records)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
-        payload = self._delete('/zones/{0}'.format(identifier))
+            name = self._full_name(name)
+            
+            record_set = self._get_record_set(name, type)
+            if record_set:
+                record_set_new = {
+                    'type': record_set['type'],
+                    'name': record_set['name'],
+                    'ttl': record_set['ttl'],
+                    'answers': []
+                }
 
-        # is always True at this point, if a non 200 response is returned an error is raised.
+                if content:
+                    for answer in record_set['answers']:
+                        if content not in answer['answer']:
+                            record_set_new['answers'].append(answer)
+
+                if len(record_set_new['answers']) > 0:
+                    self._post('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record_set_new)
+                else:
+                    self._delete('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
+        else:
+            self._delete('/zones/{0}'.format(identifier))
+        
         logger.debug('delete_record: %s', True)
         return True
-
 
     # Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):

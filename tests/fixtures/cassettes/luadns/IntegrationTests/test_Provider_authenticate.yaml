@@ -1,24 +1,26 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://api.luadns.com/v1/zones
   response:
-    body: {string: !!python/unicode '[{"id":39105,"name":"capsulecd.com","template_id":0,"synced":true,"queries_count":0,"records_count":10,"aliases_count":0,"redirects_count":0,"forwards_count":0}]'}
+    body: {string: !!python/unicode '[{"id":39105,"name":"capsulecd.com","template_id":0,"synced":true,"queries_count":0,"records_count":6,"aliases_count":0,"redirects_count":0,"forwards_count":0}]
+
+        '}
     headers:
-      cache-control: ['no-cache, no-store, must-revalidate']
+      cache-control: ['no-cache, private, max-age=0']
       connection: [keep-alive]
       content-length: ['161']
-      content-type: [application/json; charset=UTF-8]
-      date: ['Sat, 30 Jul 2016 19:06:15 GMT']
-      expires: ['Thu, 01 Jan 1970 00:00:00 GMT']
+      content-type: [application/json]
+      date: ['Tue, 20 Mar 2018 07:18:06 GMT']
+      expires: ['Thu, 01 Jan 1970 02:00:00 EET']
       keep-alive: [timeout=10]
       pragma: [no-cache]
       server: [nginx]

@@ -1,0 +1,283 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"zone":{"id":170389,"name":"capsulecd.com","group":"Default
+        Group","user-id":26963,"ttl":3600}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['96']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:54 GMT']
+      etag: ['"64759825f5fbcfb9ee3f1ac1c0819f88"']
+      server: [nginx]
+      set-cookie: [_passenger_route=1697826421; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1FB632A2DAFA326A2C02407F68C0AEFEF9286542B7B5AB062DDE4DBB44D319B80;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [f7ae071a3c387e179022038e8a9e74cf]
+      x-runtime: ['0.049993']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['2']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:55 GMT']
+      etag: ['"d751713988987e9331980363e24189ce"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [7a3ae40177b03dbb31954fa0dbeca7c4]
+      x-runtime: ['0.051291']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"zone_record": {"record_type": "TXT", "data": "challengetoken1",
+      "name": "_acme-challenge.deleterecordset"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['109']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pointhq.com/zones/170389/records
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"name":"_acme-challenge.deleterecordset.capsulecd.com.","data":"\"challengetoken1\"","id":1678605755,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['177']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:56 GMT']
+      etag: ['"53585b16c080fd19502270a4b96cd120"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [201 Created]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [1009c03dfc4e52aaf2e321340a6dcc3c]
+      x-runtime: ['0.090044']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: !!python/unicode '[{"zone_record":{"name":"_acme-challenge.deleterecordset.capsulecd.com.","data":"\"challengetoken1\"","id":1678605755,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['179']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:56 GMT']
+      etag: ['"bd126f28c02025a7c8fe38fa0ad65f0d"']
+      server: [nginx]
+      set-cookie: [_passenger_route=1697826421; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1FB632A2DAFA326A2C02407F68C0AEFEF9286542B7B5AB062DDE4DBB44D319B80;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [c78372fb08833e1f3543bfc3eb9ff16b]
+      x-runtime: ['0.049118']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"zone_record": {"record_type": "TXT", "data": "challengetoken2",
+      "name": "_acme-challenge.deleterecordset"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['109']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://pointhq.com/zones/170389/records
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"name":"_acme-challenge.deleterecordset.capsulecd.com.","data":"\"challengetoken2\"","id":1678605756,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['max-age=0, private, must-revalidate', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['177']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:57 GMT']
+      etag: ['"d815668544701502f9f6c9f5913bbe2e"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [201 Created]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [ce801f52660df1bb7ab576b9987ca041]
+      x-runtime: ['0.087362']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: !!python/unicode '[{"zone_record":{"name":"_acme-challenge.deleterecordset.capsulecd.com.","data":"\"challengetoken1\"","id":1678605755,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}},{"zone_record":{"name":"_acme-challenge.deleterecordset.capsulecd.com.","data":"\"challengetoken2\"","id":1678605756,"aux":null,"record_type":"TXT","ttl":3600,"zone_id":170389}}]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['357']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:58 GMT']
+      etag: ['"0abb4fc170a72826fa5c8d0a7cf69cac"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [8e4fffcabd24bb9c71f099592377b0f6]
+      x-runtime: ['0.056872']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://pointhq.com/zones/170389/records/1678605755
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"status":"OK"}}'}
+    headers:
+      cache-control: [no-cache, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['31']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:58 GMT']
+      server: [nginx]
+      set-cookie: [_passenger_route=1697826421; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1FB632A2DAFA326A2C02407F68C0AEFEF9286542B7B5AB062DDE4DBB44D319B80;PATH=/;MAX-AGE=3600]
+      status: [202 Accepted]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [3217f1f367dd1aaf411f0370be544db0]
+      x-runtime: ['0.068516']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 202, message: Accepted}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://pointhq.com/zones/170389/records/1678605756
+  response:
+    body: {string: !!python/unicode '{"zone_record":{"status":"OK"}}'}
+    headers:
+      cache-control: [no-cache, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['31']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:35:59 GMT']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [202 Accepted]
+      x-rack-cache: ['invalidate, pass']
+      x-request-id: [1315a6b33471158d1d05b2759901404b]
+      x-runtime: ['0.075689']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+    status: {code: 202, message: Accepted}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://pointhq.com/zones/170389/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['must-revalidate, private, max-age=0', max-age=3600, no-cache="set-cookie"]
+      connection: [keep-alive]
+      content-length: ['2']
+      content-type: [application/json]
+      date: ['Fri, 23 Mar 2018 06:36:00 GMT']
+      etag: ['"d751713988987e9331980363e24189ce"']
+      server: [nginx]
+      set-cookie: [_passenger_route=940398241; Path=/, AWSELB=7F9BF9B5028D24F72AB6FC4853D7E89FEFE964A037995DE72D38766FB5F397275FDAFAA7D1793130BF4EE137586FA70779F8E6C66D9B25AC5E01283C6B73F262A3C4C24ADD;PATH=/;MAX-AGE=3600]
+      status: [200 OK]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-rack-cache: [miss]
+      x-request-id: [a1208135104a41257cc37a5a1d8e6039]
+      x-runtime: ['0.055507']
+      x-ua-compatible: ['IE=Edge,chrome=1']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

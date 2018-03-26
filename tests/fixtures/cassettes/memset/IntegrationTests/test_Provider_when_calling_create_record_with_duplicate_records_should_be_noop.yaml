@@ -1,0 +1,212 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.zone_domain_info?domain=testzone.com
+  response:
+    body: {string: "{\n \"domain\": \"testzone.com\", \n \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.zone_info?id=cbceea86fe9c099f019e386488ead6d8
+  response:
+    body: {string: "{\n \"domains\": [\n  {\n   \"domain\": \"testzone.com\", \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\"\n  }\n ], \n \"records\": [\n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"docs.example.com\", \n   \"relative\": false, \n   \"record\": \"docs\",
+        \n   \"ttl\": 3600, \n   \"type\": \"CNAME\", \n   \"id\": \"e6a328a3d04b4fd86fac7112b1f3c225\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"127.0.0.1\", \n   \"relative\": false, \n   \"record\":
+        \"localhost\", \n   \"ttl\": 3600, \n   \"type\": \"A\", \n   \"id\": \"26f9fb49fd75c14850c3d491bda525f4\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken1\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.createrecordset\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\",
+        \n   \"id\": \"75857b3cd509647031dd00ac10ec2e14\"\n  }, \n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"challengetoken2\", \n   \"relative\": false, \n   \"record\": \"_acme-challenge.createrecordset\",
+        \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\": \"408fd57462f28db82e63b049da242ced\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.fqdn\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"c19b198802ea2828f406903fbe636afc\"\n  }, \n  {\n   \"priority\": 0, \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\": \"challengetoken\",
+        \n   \"relative\": false, \n   \"record\": \"_acme-challenge.full\", \n   \"ttl\":
+        3600, \n   \"type\": \"TXT\", \n   \"id\": \"5574c18d3d7d6148839e276961e55797\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.test\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"764f77fa8f23afd6fe98b4217be7caaa\"\n  }\n ], \n \"nickname\": \"testzone.com\",
+        \n \"id\": \"cbceea86fe9c099f019e386488ead6d8\", \n \"ttl\": 0\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.zone_record_create?type=TXT&record=_acme-challenge.noop&address=challengetoken&ttl=3600&zone_id=cbceea86fe9c099f019e386488ead6d8
+  response:
+    body: {string: "{\n \"priority\": 0, \n \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n \"address\": \"challengetoken\", \n \"relative\": false, \n \"record\":
+        \"_acme-challenge.noop\", \n \"ttl\": 3600, \n \"type\": \"TXT\", \n \"id\":
+        \"ca375b8e13269d85b0b2f556242ce6d9\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.reload
+  response:
+    body: {string: "{\n \"status\": \"NEW\", \n \"finished\": false, \n \"type\":
+        \"dns\", \n \"id\": \"7dc42656c19524eb5c3dbc5f07d6e835\", \n \"error\": false\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.zone_info?id=cbceea86fe9c099f019e386488ead6d8
+  response:
+    body: {string: "{\n \"domains\": [\n  {\n   \"domain\": \"testzone.com\", \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\"\n  }\n ], \n \"records\": [\n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"docs.example.com\", \n   \"relative\": false, \n   \"record\": \"docs\",
+        \n   \"ttl\": 3600, \n   \"type\": \"CNAME\", \n   \"id\": \"e6a328a3d04b4fd86fac7112b1f3c225\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"127.0.0.1\", \n   \"relative\": false, \n   \"record\":
+        \"localhost\", \n   \"ttl\": 3600, \n   \"type\": \"A\", \n   \"id\": \"26f9fb49fd75c14850c3d491bda525f4\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken1\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.createrecordset\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\",
+        \n   \"id\": \"75857b3cd509647031dd00ac10ec2e14\"\n  }, \n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"challengetoken2\", \n   \"relative\": false, \n   \"record\": \"_acme-challenge.createrecordset\",
+        \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\": \"408fd57462f28db82e63b049da242ced\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.fqdn\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"c19b198802ea2828f406903fbe636afc\"\n  }, \n  {\n   \"priority\": 0, \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\": \"challengetoken\",
+        \n   \"relative\": false, \n   \"record\": \"_acme-challenge.full\", \n   \"ttl\":
+        3600, \n   \"type\": \"TXT\", \n   \"id\": \"5574c18d3d7d6148839e276961e55797\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.noop\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"ca375b8e13269d85b0b2f556242ce6d9\"\n  }, \n  {\n   \"priority\": 0, \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\": \"challengetoken\",
+        \n   \"relative\": false, \n   \"record\": \"_acme-challenge.test\", \n   \"ttl\":
+        3600, \n   \"type\": \"TXT\", \n   \"id\": \"764f77fa8f23afd6fe98b4217be7caaa\"\n
+        \ }\n ], \n \"nickname\": \"testzone.com\", \n \"id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n \"ttl\": 0\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.memset.com/v1/json/dns.zone_info?id=cbceea86fe9c099f019e386488ead6d8
+  response:
+    body: {string: "{\n \"domains\": [\n  {\n   \"domain\": \"testzone.com\", \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\"\n  }\n ], \n \"records\": [\n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"docs.example.com\", \n   \"relative\": false, \n   \"record\": \"docs\",
+        \n   \"ttl\": 3600, \n   \"type\": \"CNAME\", \n   \"id\": \"e6a328a3d04b4fd86fac7112b1f3c225\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"127.0.0.1\", \n   \"relative\": false, \n   \"record\":
+        \"localhost\", \n   \"ttl\": 3600, \n   \"type\": \"A\", \n   \"id\": \"26f9fb49fd75c14850c3d491bda525f4\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken1\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.createrecordset\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\",
+        \n   \"id\": \"75857b3cd509647031dd00ac10ec2e14\"\n  }, \n  {\n   \"priority\":
+        0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\":
+        \"challengetoken2\", \n   \"relative\": false, \n   \"record\": \"_acme-challenge.createrecordset\",
+        \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\": \"408fd57462f28db82e63b049da242ced\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.fqdn\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"c19b198802ea2828f406903fbe636afc\"\n  }, \n  {\n   \"priority\": 0, \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\": \"challengetoken\",
+        \n   \"relative\": false, \n   \"record\": \"_acme-challenge.full\", \n   \"ttl\":
+        3600, \n   \"type\": \"TXT\", \n   \"id\": \"5574c18d3d7d6148839e276961e55797\"\n
+        \ }, \n  {\n   \"priority\": 0, \n   \"zone_id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n   \"address\": \"challengetoken\", \n   \"relative\": false, \n   \"record\":
+        \"_acme-challenge.noop\", \n   \"ttl\": 3600, \n   \"type\": \"TXT\", \n   \"id\":
+        \"ca375b8e13269d85b0b2f556242ce6d9\"\n  }, \n  {\n   \"priority\": 0, \n   \"zone_id\":
+        \"cbceea86fe9c099f019e386488ead6d8\", \n   \"address\": \"challengetoken\",
+        \n   \"relative\": false, \n   \"record\": \"_acme-challenge.test\", \n   \"ttl\":
+        3600, \n   \"type\": \"TXT\", \n   \"id\": \"764f77fa8f23afd6fe98b4217be7caaa\"\n
+        \ }\n ], \n \"nickname\": \"testzone.com\", \n \"id\": \"cbceea86fe9c099f019e386488ead6d8\",
+        \n \"ttl\": 0\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 22 Mar 2018 16:34:32 GMT']
+      Server: [nginx]
+      Transfer-Encoding: [chunked]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,150 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:30:59 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"created":1521590400000,"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":2052,"gtdEnabled":false,"nameServers":[{"fqdn":"ns1.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.45","ipv6":"2600:1806:511:210:1eaf::45"},{"fqdn":"ns2.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.46","ipv6":"2600:1806:511:210:1eaf::46"},{"fqdn":"ns3.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.47","ipv6":"2600:1806:511:210:1eaf::47"},{"fqdn":"ns4.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.48","ipv6":"2600:1806:511:210:1eaf::48"},{"fqdn":"ns5.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.49","ipv6":"2600:1806:511:210:1eaf::49"}],"pendingActionId":0,"updated":1521609889401,"processMulti":false,"activeThirdParties":[],"name":"capsulecd.com","id":878951}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:30:59 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=918037F346109FD5A1BB290079E865BA; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [91eecb51-a6bb-4be7-9273-a22ca999ff81]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['149']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.deleterecordinset",
+      "value": "challengetoken1", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['101']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:30:59 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/
+  response:
+    body: {string: !!python/unicode '{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.deleterecordinset","value":"\"challengetoken1\"","id":10169009,"type":"TXT"}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:30:59 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/10169009']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=60B57AE0075A095ADC4DDF0761544E30; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [06b3205f-dcf0-4a15-aba7-faefdabe650d]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['148']
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{"type": "TXT", "name": "_acme-challenge.deleterecordinset",
+      "value": "challengetoken2", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['101']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:31:00 GMT']
+    method: POST
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/
+  response:
+    body: {string: !!python/unicode '{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.deleterecordinset","value":"\"challengetoken2\"","id":10169010,"type":"TXT"}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:30:59 GMT']
+      location: ['http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/10169010']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=CF512EF543C00389707F0FAA8B0D88F8; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [7097c11d-4374-4eb1-8d02-532bcaf72129]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['147']
+    status: {code: 201, message: Created}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:31:00 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records?recordName=_acme-challenge.deleterecordinset&type=TXT
+  response:
+    body: {string: !!python/unicode '{"totalPages":1,"totalRecords":2,"data":[{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.deleterecordinset","value":"\"challengetoken2\"","id":10169010,"type":"TXT"},{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.deleterecordinset","value":"\"challengetoken1\"","id":10169009,"type":"TXT"}],"page":0}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:31:00 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=6B9D9E589646972A16B43AC51A57442D; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [c3f5ceb8-afc8-4949-a728-26b36c6cbd50]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['146']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:31:00 GMT']
+    method: DELETE
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records/10169009
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:31:00 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=BF354A755556154CA30166EC4906765F; Path=/V2.0; HttpOnly]
+      x-dnsme-requestid: [6bbf9c98-44b7-4e93-81f3-04d3f0f73e9d]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['145']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:31:01 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records?recordName=_acme-challenge.deleterecordinset&type=TXT
+  response:
+    body: {string: !!python/unicode '{"totalPages":1,"totalRecords":1,"data":[{"failover":false,"monitor":false,"sourceId":878951,"dynamicDns":false,"failed":false,"gtdLocation":"DEFAULT","hardLink":false,"ttl":3600,"source":1,"name":"_acme-challenge.deleterecordinset","value":"\"challengetoken2\"","id":10169010,"type":"TXT"}],"page":0}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:31:00 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=4343524701AD1041AE7A3F54C9260CF1; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [af74e410-9d7c-46b7-88a7-598cd1f3fce2]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['144']
+    status: {code: 200, message: OK}
+version: 1

@@ -44,11 +44,16 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):
+        # check if record already exists
+        existing_records = self.list_records(type, name, content)
+        if len(existing_records) == 1:
+            return True
+
         record = {
-                    'type': type,
-                    'name': self._relative_name(name),
-                    'content': content
-                }
+            'type': type,
+            'name': self._relative_name(name),
+            'content': content
+        }
         if self.options.get('ttl'):
             record['ttl'] = self.options.get('ttl')
         if self.options.get('priority'):
@@ -56,16 +61,7 @@ class Provider(BaseProvider):
         if self.options.get('regions'):
             record['regions'] = self.options.get('regions')
 
-        payload = {}
-        records = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params={
-            'name': record['name'], 
-            'type': type}
-        )
-        for cur_record in records:
-            if cur_record['content'] == content:
-                break
-        else:
-            payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
+        payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
 
         logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
@@ -94,6 +90,9 @@ class Provider(BaseProvider):
                 processed_record['priority'] = record['priority']
             records.append(processed_record)
 
+        if content:
+            records = [record for record in records if record['content'] == content]
+
         logger.debug('list_records: %s', records)
         return records
 
@@ -121,13 +120,17 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
-        payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier))
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), record_id))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
         logger.debug('delete_record: True')

@@ -38,7 +38,12 @@ class Provider(BaseProvider):
         }
         if self.options.get('ttl'):
             record['rrttl'] = self.options.get('ttl')
-        payload = self._get('/dnsAddRecord', record)
+        try:
+            payload = self._get('/dnsAddRecord', record)
+        except ValueError as err:
+            # noop if attempting to create record that already exists.
+            logger.debug('Ignoring error: {0}'.format(err))
+
         logger.debug('create_record: %s', True)
         return True
 
@@ -97,16 +102,19 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id
         }
+        
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            logger.debug('records: %s', records)
-            if len(records) == 1:
-                data['rrid'] = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
+            delete_record_id = [record['id'] for record in records]
         else:
-            data['rrid'] = identifier
-        payload = self._get('/dnsDeleteRecord', data)
+            delete_record_id.append(identifier)
+
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            data['rrid'] = record_id
+            payload = self._get('/dnsDeleteRecord', data)
 
         logger.debug('delete_record: %s', True)
         return True
@@ -127,7 +135,9 @@ class Provider(BaseProvider):
         # TODO: check if the response is an error using
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
         root = tree.getroot()
-        if root.find('reply').find('code').text != '300':
+        if root.find('reply').find('code').text == '280':
+            raise ValueError('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
+        elif root.find('reply').find('code').text != '300':
             raise Exception('An error occurred: {0}, {1}'.format(root.find('reply').find('detail').text, root.find('reply').find('code').text))
 
 

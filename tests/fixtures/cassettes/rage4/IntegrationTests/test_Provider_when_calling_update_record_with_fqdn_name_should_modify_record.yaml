@@ -7,21 +7,21 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://rage4.com/rapi/getdomainbyname/?name=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"id":57039,"name":"capsulecd.com","owner_email":"lexicon@mailinator.com","type":0,"subnet_mask":0,"default_ns1":"ns1.r4ns.com","default_ns2":"ns2.r4ns.net"}'}
+    body: {string: !!python/unicode '{"id":67787,"name":"capsulecd.com","owner_email":"lexicon@mailinator.com","type":0,"subnet_mask":0,"default_ns1":"ns1.r4ns.com","default_ns2":"ns2.r4ns.net","soa_refresh":10800,"soa_expiry":604800,"soa_retry":3600,"soa_nx":3600,"ns_ttl":3600}'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
-      content-length: ['157']
+      connection: [close]
+      content-length: ['242']
       content-type: [text/plain; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 06:39:27 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:20 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
-      x-powered-by: [Rage4]
+      x-powered-by: [GBSHouse]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -31,21 +31,45 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
-    method: POST
-    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&type=TXT&id=57039&name=orig.testfqdn.capsulecd.com&ttl=3600
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=orig.testfqdn.capsulecd.com
   response:
-    body: {string: !!python/unicode '{"status":true,"id":1954647,"error":""}'}
+    body: {string: !!python/unicode '[]'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['2']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:53:21 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://rage4.com/rapi/createrecord/?content=challengetoken&ttl=3600&type=TXT&id=67787&name=orig.testfqdn.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":true,"id":2863477,"error":""}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
       content-length: ['39']
       content-type: [text/plain; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 06:39:50 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:21 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
-      x-powered-by: [Rage4]
+      x-powered-by: [GBSHouse]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -55,21 +79,21 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://rage4.com/rapi/getrecords/?id=57039&name=orig.testfqdn.capsulecd.com
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=orig.testfqdn.capsulecd.com
   response:
-    body: {string: !!python/unicode '[{"id":1954647,"name":"orig.testfqdn.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":57039,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
+    body: {string: !!python/unicode '[{"id":2863477,"name":"orig.testfqdn.capsulecd.com","content":"challengetoken","type":"TXT","ttl":3600,"priority":1,"domain_id":67787,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
+      connection: [close]
       content-length: ['351']
       content-type: [text/plain; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 06:39:59 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:34 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
-      x-powered-by: [Rage4]
+      x-powered-by: [GBSHouse]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -79,21 +103,20 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: PUT
-    uri: https://rage4.com/rapi/updaterecord/?content=challengetoken&id=1954647&name=updated.testfqdn.capsulecd.com&ttl=3600
+    uri: https://rage4.com/rapi/updaterecord/?content=challengetoken&ttl=3600&id=2863477&name=updated.testfqdn.capsulecd.com
   response:
-    body: {string: !!python/unicode '{"status":true,"id":1954647,"error":""}'}
+    body: {string: !!python/unicode '{"status":true,"id":2863477,"error":""}'}
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
+      connection: [close]
       content-length: ['39']
       content-type: [text/plain; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 06:40:07 GMT']
+      date: ['Fri, 23 Mar 2018 06:53:34 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      transfer-encoding: [chunked]
-      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
-      x-powered-by: [Rage4]
+      x-powered-by: [GBSHouse]
     status: {code: 200, message: OK}
 version: 1

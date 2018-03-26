@@ -1,0 +1,230 @@
+interactions:
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [12a03d3b3192592f934d525388a8b4e7]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:18 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://www.cloudxns.net/api2/domain
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"Operate successfully","total":"1","data":[{"id":"89415","domain":"capsulecd.com.","status":"ok","level":"3","take_over_status":"Untaken
+        over","create_time":"2016-06-08 14:49:10","update_time":"2018-03-20 11:56:17","ttl":"600"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['249']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:19 GMT']
+      set-cookie: ['CloudXNS_TOKEN=34766c8c1808c0e3c6be4f104d5c8026; expires=Tue,
+          20-Mar-2018 13:56:19 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"format": "json", "login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "value": "challengetoken1", "line_id": 1, "host": "_acme-challenge.deleterecordset",
+      "ttl": 3600, "type": "TXT", "domain_id": "89415"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [d3ee778bd035a77f4aa53d729664e2c2]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:19 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['221']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://www.cloudxns.net/api2/record
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","record_id":[4223749]}'}
+    headers:
+      connection: [close]
+      content-length: ['52']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:20 GMT']
+      set-cookie: ['CloudXNS_TOKEN=eae629d24e117711b97a20374720f729; expires=Tue,
+          20-Mar-2018 13:56:20 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"format": "json", "login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "value": "challengetoken2", "line_id": 1, "host": "_acme-challenge.deleterecordset",
+      "ttl": 3600, "type": "TXT", "domain_id": "89415"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [e9011f1a96c9696b884aa4c168e916a0]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:20 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['221']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://www.cloudxns.net/api2/record
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","record_id":[4223751]}'}
+    headers:
+      connection: [close]
+      content-length: ['52']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:22 GMT']
+      set-cookie: ['CloudXNS_TOKEN=98b559150d1cf7c40894923f94b44e09; expires=Tue,
+          20-Mar-2018 13:56:21 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [d7d29a9602a6245c9400607935a55360]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:22 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://www.cloudxns.net/api2/record/89415?host_id=0&row_num=2000&offset=0
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"19","offset":0,"row_num":2000,"data":[{"record_id":"1373545","host_id":"1155553","host":"docs","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"docs.example.com.","ttl":"600","type":"CNAME","status":"ok","create_time":"2016-06-08
+        15:15:00","update_time":"2016-06-08 15:15:00"},{"record_id":"1373543","host_id":"1155551","host":"localhost","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"127.0.0.1","ttl":"600","type":"A","status":"ok","create_time":"2016-06-08
+        15:14:58","update_time":"2016-06-08 15:14:58"},{"record_id":"1373561","host_id":"1155569","host":"random.fqdntest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:15","update_time":"2016-06-08 15:15:15"},{"record_id":"1373563","host_id":"1155571","host":"random.fulltest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:17","update_time":"2016-06-08 15:15:17"},{"record_id":"1373565","host_id":"1155573","host":"random.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:19","update_time":"2016-06-08 15:15:19"},{"record_id":"1598051","host_id":"1368285","host":"ttl.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"ttlshouldbe3600\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2016-07-31
+        05:18:36","update_time":"2016-07-31 05:18:36"},{"record_id":"1598049","host_id":"1368283","host":"ttlrecord.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"ttlshouldbe500\"","ttl":"500","type":"TXT","status":"ok","create_time":"2016-07-31
+        05:00:05","update_time":"2016-07-31 05:00:05"},{"record_id":"1373567","host_id":"1155583","host":"updated.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:23","update_time":"2016-06-08 15:16:23"},{"record_id":"1373569","host_id":"1155585","host":"updated.testfqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:25","update_time":"2016-06-08 15:16:25"},{"record_id":"1373571","host_id":"1155587","host":"updated.testfull","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:28","update_time":"2016-06-08 15:16:28"},{"record_id":"4223741","host_id":"3612277","host":"_acme-challenge.createrecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken1\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:11","update_time":"2018-03-20 11:56:12"},{"record_id":"4223743","host_id":"3612277","host":"_acme-challenge.createrecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken2\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:11","update_time":"2018-03-20 11:56:12"},{"record_id":"4223747","host_id":"3612279","host":"_acme-challenge.deleterecordinset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken2\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:14","update_time":"2018-03-20 11:56:17"},{"record_id":"4223749","host_id":"3612281","host":"_acme-challenge.deleterecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken1\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:20","update_time":"2018-03-20 11:56:21"},{"record_id":"4223751","host_id":"3612281","host":"_acme-challenge.deleterecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken2\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:20","update_time":"2018-03-20 11:56:21"},{"record_id":"4221717","host_id":"3610593","host":"_acme-challenge.donothing","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-19
+        13:36:38","update_time":"2018-03-19 13:36:38"},{"record_id":"1373547","host_id":"1155555","host":"_acme-challenge.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:02","update_time":"2016-06-08 15:15:02"},{"record_id":"1373549","host_id":"1155557","host":"_acme-challenge.full","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:04","update_time":"2016-06-08 15:15:04"},{"record_id":"1373551","host_id":"1155559","host":"_acme-challenge.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:07","update_time":"2016-06-08 15:15:07"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['5668']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:23 GMT']
+      set-cookie: ['CloudXNS_TOKEN=909c374efeb791dc407b3d5aa3a8a583; expires=Tue,
+          20-Mar-2018 13:56:23 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [62d17cd5406f0a9f44868db5324c2951]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:23 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://www.cloudxns.net/api2/record/4223749/89415
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success"}'}
+    headers:
+      connection: [close]
+      content-length: ['30']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:24 GMT']
+      set-cookie: ['CloudXNS_TOKEN=8b6f098d00f58af96af381c45e5dded0; expires=Tue,
+          20-Mar-2018 13:56:24 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [866be9f2de080cfcf26e851504de316e]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:24 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://www.cloudxns.net/api2/record/4223751/89415
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success"}'}
+    headers:
+      connection: [close]
+      content-length: ['30']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:25 GMT']
+      set-cookie: ['CloudXNS_TOKEN=3bbff8775fa89d8a474a10c1d943f966; expires=Tue,
+          20-Mar-2018 13:56:25 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"login_token": "c34e4c5a884101c4c2be3737af8d3d08,81d216fcd15eeb53",
+      "format": "json"}'
+    headers:
+      API-FORMAT: [json]
+      API-HMAC: [dfc70b67fc121577c8a1b5bf3294b9f2]
+      API-KEY: [c34e4c5a884101c4c2be3737af8d3d08]
+      API-REQUEST-DATE: ['Mon Mar 19 20:56:25 2018']
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['86']
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://www.cloudxns.net/api2/record/89415?host_id=0&row_num=2000&offset=0
+  response:
+    body: {string: !!python/unicode '{"code":1,"message":"success","total":"17","offset":0,"row_num":2000,"data":[{"record_id":"1373545","host_id":"1155553","host":"docs","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"docs.example.com.","ttl":"600","type":"CNAME","status":"ok","create_time":"2016-06-08
+        15:15:00","update_time":"2016-06-08 15:15:00"},{"record_id":"1373543","host_id":"1155551","host":"localhost","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"127.0.0.1","ttl":"600","type":"A","status":"ok","create_time":"2016-06-08
+        15:14:58","update_time":"2016-06-08 15:14:58"},{"record_id":"1373561","host_id":"1155569","host":"random.fqdntest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:15","update_time":"2016-06-08 15:15:15"},{"record_id":"1373563","host_id":"1155571","host":"random.fulltest","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:17","update_time":"2016-06-08 15:15:17"},{"record_id":"1373565","host_id":"1155573","host":"random.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:19","update_time":"2016-06-08 15:15:19"},{"record_id":"1598051","host_id":"1368285","host":"ttl.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"ttlshouldbe3600\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2016-07-31
+        05:18:36","update_time":"2016-07-31 05:18:36"},{"record_id":"1598049","host_id":"1368283","host":"ttlrecord.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"ttlshouldbe500\"","ttl":"500","type":"TXT","status":"ok","create_time":"2016-07-31
+        05:00:05","update_time":"2016-07-31 05:00:05"},{"record_id":"1373567","host_id":"1155583","host":"updated.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:23","update_time":"2016-06-08 15:16:23"},{"record_id":"1373569","host_id":"1155585","host":"updated.testfqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:25","update_time":"2016-06-08 15:16:25"},{"record_id":"1373571","host_id":"1155587","host":"updated.testfull","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:16:28","update_time":"2016-06-08 15:16:28"},{"record_id":"4223741","host_id":"3612277","host":"_acme-challenge.createrecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken1\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:11","update_time":"2018-03-20 11:56:12"},{"record_id":"4223743","host_id":"3612277","host":"_acme-challenge.createrecordset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken2\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:11","update_time":"2018-03-20 11:56:12"},{"record_id":"4223747","host_id":"3612279","host":"_acme-challenge.deleterecordinset","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken2\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-20
+        11:56:14","update_time":"2018-03-20 11:56:17"},{"record_id":"4221717","host_id":"3610593","host":"_acme-challenge.donothing","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"3600","type":"TXT","status":"ok","create_time":"2018-03-19
+        13:36:38","update_time":"2018-03-19 13:36:38"},{"record_id":"1373547","host_id":"1155555","host":"_acme-challenge.fqdn","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:02","update_time":"2016-06-08 15:15:02"},{"record_id":"1373549","host_id":"1155557","host":"_acme-challenge.full","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:04","update_time":"2016-06-08 15:15:04"},{"record_id":"1373551","host_id":"1155559","host":"_acme-challenge.test","line_id":"1","line_zh":"\u5168\u7f51\u9ed8\u8ba4","line_en":"DEFAULT","mx":null,"value":"\"challengetoken\"","ttl":"600","type":"TXT","status":"ok","create_time":"2016-06-08
+        15:15:07","update_time":"2016-06-08 15:15:07"}]}'}
+    headers:
+      connection: [close]
+      content-length: ['5052']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 20 Mar 2018 03:56:26 GMT']
+      set-cookie: ['CloudXNS_TOKEN=ac1ed53504e8a74736a36d2e5d1896f0; expires=Tue,
+          20-Mar-2018 13:56:26 GMT; path=/']
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

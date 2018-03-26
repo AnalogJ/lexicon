@@ -22,3 +22,8 @@ class SoftLayerProviderTests(TestCase, IntegrationTests):
     #        'auth_api_key': 'bar'
     #        })
     #    return options
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

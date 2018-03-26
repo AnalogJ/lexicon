@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://rage4.com/rapi/getdomainbyname/?name=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"id":67787,"name":"capsulecd.com","owner_email":"lexicon@mailinator.com","type":0,"subnet_mask":0,"default_ns1":"ns1.r4ns.com","default_ns2":"ns2.r4ns.net","soa_refresh":10800,"soa_expiry":604800,"soa_retry":3600,"soa_nx":3600,"ns_ttl":3600}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['242']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:49:58 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=_acme-challenge.createrecordset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['2']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:50:11 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://rage4.com/rapi/createrecord/?content=challengetoken1&ttl=3600&type=TXT&id=67787&name=_acme-challenge.createrecordset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":true,"id":2863443,"error":""}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['39']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:50:11 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://rage4.com/rapi/getrecords/?id=67787&name=_acme-challenge.createrecordset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '[{"id":2863443,"name":"_acme-challenge.createrecordset.capsulecd.com","content":"challengetoken1","type":"TXT","ttl":3600,"priority":1,"domain_id":67787,"geo_region_id":0,"geo_lat":0.0,"geo_long":0.0,"failover_enabled":false,"failover_active":false,"failover_content":null,"failover_withdraw":false,"webhook_id":-1,"is_active":true,"udp_limit":false,"description":null}]'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['370']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:50:12 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://rage4.com/rapi/createrecord/?content=challengetoken2&ttl=3600&type=TXT&id=67787&name=_acme-challenge.createrecordset.capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"status":true,"id":2863445,"error":""}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['private, s-maxage=0']
+      connection: [close]
+      content-length: ['39']
+      content-type: [text/plain; charset=utf-8]
+      date: ['Fri, 23 Mar 2018 06:50:12 GMT']
+      server: [GBSHouse/2.0]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
+      x-powered-by: [GBSHouse]
+    status: {code: 200, message: OK}
+version: 1

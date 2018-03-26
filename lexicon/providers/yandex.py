@@ -103,16 +103,20 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist (I'll hope), do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            logger.debug('records: %s', records)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
-        payload = self._post('/del', {}, 'domain={0}&record_id={1}'.format(self.domain_id, identifier))
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            payload = self._post('/del', {}, 'domain={0}&record_id={1}'.format(self.domain_id, record_id))
 
-        return self._check_exitcode(payload, 'delete_record')
+        #return self._check_exitcode(payload, 'delete_record')
+        return True
 
     # Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):
@@ -138,10 +142,12 @@ class Provider(BaseProvider):
         else:
             return r.json()
 
-
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
             logger.debug('%s: %s', title, payload['success'])
+            return True
+        elif payload['error'] == 'record_exists':
+            logger.debug('%s: %s', title, True)
             return True
         else:
             logger.debug('%s: %s', title, payload['error'])

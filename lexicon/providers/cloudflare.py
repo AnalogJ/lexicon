@@ -42,7 +42,14 @@ class Provider(BaseProvider):
         data = {'type': type, 'name': self._full_name(name), 'content': content}
         if self.options.get('ttl'):
             data['ttl'] = self.options.get('ttl')
-        payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
+
+        payload = {'success': True}
+        try:
+            payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
+        except requests.exceptions.HTTPError as err:
+            already_exists = next((True for error in err.response.json()['errors'] if error['code'] == 81057), False)
+            if not already_exists:
+                raise
 
         logger.debug('create_record: %s', payload['success'])
         return payload['success']
@@ -96,18 +103,20 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
-            logger.debug("records: %s", records)
-            if len(records) == 1:
-                identifier = records[0]['id']
-            else:
-                raise Exception('Record identifier could not be found.')
-        payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier))
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
 
-        logger.debug('delete_record: %s', payload['success'])
-        return payload['success']
-
+        logger.debug('delete_record: %s', True)
+        return True
 
     # Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):

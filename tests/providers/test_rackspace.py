@@ -35,3 +35,8 @@ class RackspaceProviderTests(TestCase, IntegrationTests):
         })
         options['auth_token'] = None
         return options
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

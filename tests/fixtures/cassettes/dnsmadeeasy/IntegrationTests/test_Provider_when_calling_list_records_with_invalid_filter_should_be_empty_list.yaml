@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:29 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/name?domainname=capsulecd.com
+  response:
+    body: {string: !!python/unicode '{"created":1521590400000,"delegateNameServers":["dawn.ns.cloudflare.com.","owen.ns.cloudflare.com."],"folderId":2052,"gtdEnabled":false,"nameServers":[{"fqdn":"ns1.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.45","ipv6":"2600:1806:511:210:1eaf::45"},{"fqdn":"ns2.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.46","ipv6":"2600:1806:511:210:1eaf::46"},{"fqdn":"ns3.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.47","ipv6":"2600:1806:511:210:1eaf::47"},{"fqdn":"ns4.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.48","ipv6":"2600:1806:511:210:1eaf::48"},{"fqdn":"ns5.sandbox.dnsmadeeasy.com","ipv4":"208.80.120.49","ipv6":"2600:1806:511:210:1eaf::49"}],"pendingActionId":0,"updated":1521609889401,"processMulti":false,"activeThirdParties":[],"name":"capsulecd.com","id":878951}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:29 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=A5F0F16CD819E353CFF9EC31928E699F; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [05257940-5c70-4cce-87a1-e0c0943453eb]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['83']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      x-dnsme-requestDate: ['Wed, 21 Mar 2018 05:25:29 GMT']
+    method: GET
+    uri: http://api.sandbox.dnsmadeeasy.com/V2.0/dns/managed/878951/records?recordName=filter.thisdoesnotexist&type=TXT
+  response:
+    body: {string: !!python/unicode '{"totalPages":1,"totalRecords":0,"data":[],"page":0}'}
+    headers:
+      content-type: [application/json]
+      date: ['Wed, 21 Mar 2018 05:25:29 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=92211D9D0697E44067426BD58FABC6D4; Path=/V2.0; HttpOnly]
+      transfer-encoding: [chunked]
+      x-dnsme-requestid: [ea5e1166-4f4c-4b29-9938-7556c61994fc]
+      x-dnsme-requestlimit: ['150']
+      x-dnsme-requestsremaining: ['82']
+    status: {code: 200, message: OK}
+version: 1

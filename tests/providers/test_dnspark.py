@@ -15,12 +15,15 @@ class DnsParkProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['Authorization']
 
-    #TODO:
     @pytest.mark.skip(reason="domain no longer exists")
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         return
 
-    # TODO: this should be enabled
     @pytest.mark.skip(reason="regenerating auth keys required")
     def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
         return
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

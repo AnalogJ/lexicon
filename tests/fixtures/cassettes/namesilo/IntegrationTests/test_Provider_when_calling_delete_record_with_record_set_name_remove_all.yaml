@@ -1,0 +1,206 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/getDomainInfo?domain=capsulecdfake.com&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>getDomainInfo</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><created>2016-04-02</created><expires>2018-04-02</expires><status>Active</status><locked>Yes</locked><private>Yes</private><auto_renew>Yes</auto_renew><traffic_type>Parked</traffic_type><email_verification_required>No</email_verification_required><portfolio>N/A</portfolio><forward_url>N/A</forward_url><forward_type>N/A</forward_type><nameservers><nameserver
+        position="1">NS1.NAMESILO.COM</nameserver><nameserver position="2">NS2.NAMESILO.COM</nameserver></nameservers><contact_ids><registrant>1321</registrant><administrative>1321</administrative><technical>1321</technical><billing>1321</billing></contact_ids></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['788']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=8rvplkpnbs6u57d5teu0i9iki36gfnk7; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=_acme-challenge.deleterecordset&rrttl=3600&rrtype=TXT&rrvalue=challengetoken1&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsAddRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><record_id>1093363422701083c2e8bb6833663178</record_id></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['229']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=gndttfcu7ss5i87662vubhumf0kvnb0n; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsAddRecord?domain=capsulecdfake.com&rrhost=_acme-challenge.deleterecordset&rrttl=3600&rrtype=TXT&rrvalue=challengetoken2&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsAddRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><record_id>be5b71c36699624b76e12671a90d70b2</record_id></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['229']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=fd1n0pbecsp33tom96o75repfs1gl4cs; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsListRecords?domain=capsulecdfake.com&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsListRecords</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><resource_record><record_id>94e84ad42c54cbdcb04b8fd687b018ab</record_id><type>A</type><host>capsulecdfake.com</host><value>107.161.23.204</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>4e63e5777da5f7b93903999e653a9b64</record_id><type>A</type><host>capsulecdfake.com</host><value>192.161.187.200</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>0e3ce692491d7b7d55648c5772bfa873</record_id><type>A</type><host>capsulecdfake.com</host><value>209.141.38.71</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>b318260397dd3e024bedb73f3eeee938</record_id><type>A</type><host>localhost.capsulecdfake.com</host><value>127.0.0.1</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>f8bcfa159c3386ea456bb083036a10f5</record_id><type>CNAME</type><host>docs.capsulecdfake.com</host><value>docs.example.com</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>127343b7a5dbf264063e8a811f81f671</record_id><type>CNAME</type><host>www.capsulecdfake.com</host><value>parking.namesilo.com</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>fa0e471f4fa90492c408e48622472ea0</record_id><type>TXT</type><host>random.fqdntest.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>8262ed73b91378ddb4619b4bfa8cf0e9</record_id><type>TXT</type><host>random.fulltest.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>0be072e325c133a6404b50d4db16d4eb</record_id><type>TXT</type><host>random.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>fbdb16fc843289c9fb95191c45d5c418</record_id><type>TXT</type><host>ttl.fqdn.capsulecdfake.com</host><value>ttlshouldbe3600</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>cb67f7f2f3ca6c75e8da9e4635646ff3</record_id><type>TXT</type><host>ttlrecord.fqdn.capsulecdfake.com</host><value>ttlshouldbe500</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>17d0324d66c9429946eb51b6b5d47c15</record_id><type>TXT</type><host>updated.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>8d3545eb96823643a10ff7e52a1b7e00</record_id><type>TXT</type><host>updated.testfqdn.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>ea749f964ed0c55c0b7186c197811135</record_id><type>TXT</type><host>updated.testfull.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>9769d6359fa90a13fc320442f0534a70</record_id><type>TXT</type><host>_acme-challenge.createrecordset.capsulecdfake.com</host><value>challengetoken1</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>24050ef6ede7eb1667a9f324827b51cf</record_id><type>TXT</type><host>_acme-challenge.createrecordset.capsulecdfake.com</host><value>challengetoken2</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>dbef1345e1a40f91af74cd05839c6a8b</record_id><type>TXT</type><host>_acme-challenge.deleterecordinset.capsulecdfake.com</host><value>challengetoken2</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>1093363422701083c2e8bb6833663178</record_id><type>TXT</type><host>_acme-challenge.deleterecordset.capsulecdfake.com</host><value>challengetoken1</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>be5b71c36699624b76e12671a90d70b2</record_id><type>TXT</type><host>_acme-challenge.deleterecordset.capsulecdfake.com</host><value>challengetoken2</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>c14f740fb36bd86b8ddf34d935ac56ff</record_id><type>TXT</type><host>_acme-challenge.donothing.capsulecdfake.com</host><value>challengetoken</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>8bc1c2ab7721caa67c40464bc715dfd9</record_id><type>TXT</type><host>_acme-challenge.fqdn.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>74618129e89eaf753d104e49b2f2f55b</record_id><type>TXT</type><host>_acme-challenge.full.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>7ebc06ef3977aef104d2c4133b597bf4</record_id><type>TXT</type><host>_acme-challenge.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['5220']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=30lo3rav8oa486j40u641f60gvjvpjr8; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsDeleteRecord?domain=capsulecdfake.com&rrid=1093363422701083c2e8bb6833663178&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsDeleteRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['177']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=72pt1n99i61d1r0q19tb9cps9b110plk; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsDeleteRecord?domain=capsulecdfake.com&rrid=be5b71c36699624b76e12671a90d70b2&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsDeleteRecord</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['177']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=epcuhg1i3pi3pl8241qk7m7i5ivtkki2; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://sandbox.namesilo.com/api/dnsListRecords?domain=capsulecdfake.com&type=xml&version=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0"?>
+
+        <namesilo><request><operation>dnsListRecords</operation><ip>136.24.36.67</ip></request><reply><code>300</code><detail>success</detail><resource_record><record_id>94e84ad42c54cbdcb04b8fd687b018ab</record_id><type>A</type><host>capsulecdfake.com</host><value>107.161.23.204</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>4e63e5777da5f7b93903999e653a9b64</record_id><type>A</type><host>capsulecdfake.com</host><value>192.161.187.200</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>0e3ce692491d7b7d55648c5772bfa873</record_id><type>A</type><host>capsulecdfake.com</host><value>209.141.38.71</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>b318260397dd3e024bedb73f3eeee938</record_id><type>A</type><host>localhost.capsulecdfake.com</host><value>127.0.0.1</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>f8bcfa159c3386ea456bb083036a10f5</record_id><type>CNAME</type><host>docs.capsulecdfake.com</host><value>docs.example.com</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>127343b7a5dbf264063e8a811f81f671</record_id><type>CNAME</type><host>www.capsulecdfake.com</host><value>parking.namesilo.com</value><ttl>172816</ttl><distance>0</distance></resource_record><resource_record><record_id>fa0e471f4fa90492c408e48622472ea0</record_id><type>TXT</type><host>random.fqdntest.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>8262ed73b91378ddb4619b4bfa8cf0e9</record_id><type>TXT</type><host>random.fulltest.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>0be072e325c133a6404b50d4db16d4eb</record_id><type>TXT</type><host>random.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>fbdb16fc843289c9fb95191c45d5c418</record_id><type>TXT</type><host>ttl.fqdn.capsulecdfake.com</host><value>ttlshouldbe3600</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>cb67f7f2f3ca6c75e8da9e4635646ff3</record_id><type>TXT</type><host>ttlrecord.fqdn.capsulecdfake.com</host><value>ttlshouldbe500</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>17d0324d66c9429946eb51b6b5d47c15</record_id><type>TXT</type><host>updated.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>8d3545eb96823643a10ff7e52a1b7e00</record_id><type>TXT</type><host>updated.testfqdn.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>ea749f964ed0c55c0b7186c197811135</record_id><type>TXT</type><host>updated.testfull.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>9769d6359fa90a13fc320442f0534a70</record_id><type>TXT</type><host>_acme-challenge.createrecordset.capsulecdfake.com</host><value>challengetoken1</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>24050ef6ede7eb1667a9f324827b51cf</record_id><type>TXT</type><host>_acme-challenge.createrecordset.capsulecdfake.com</host><value>challengetoken2</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>dbef1345e1a40f91af74cd05839c6a8b</record_id><type>TXT</type><host>_acme-challenge.deleterecordinset.capsulecdfake.com</host><value>challengetoken2</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>c14f740fb36bd86b8ddf34d935ac56ff</record_id><type>TXT</type><host>_acme-challenge.donothing.capsulecdfake.com</host><value>challengetoken</value><ttl>3600</ttl><distance>0</distance></resource_record><resource_record><record_id>8bc1c2ab7721caa67c40464bc715dfd9</record_id><type>TXT</type><host>_acme-challenge.fqdn.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>74618129e89eaf753d104e49b2f2f55b</record_id><type>TXT</type><host>_acme-challenge.full.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record><resource_record><record_id>7ebc06ef3977aef104d2c4133b597bf4</record_id><type>TXT</type><host>_acme-challenge.test.capsulecdfake.com</host><value>challengetoken</value><ttl>7200</ttl><distance>0</distance></resource_record></reply></namesilo>
+
+        '}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['4750']
+      content-type: [text/xml]
+      date: ['Tue, 20 Mar 2018 07:23:09 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [nginx]
+      set-cookie: [PHPSESSID=6a9kuj1pcgaibfk3p418ij4chf3dqiq4; path=/; domain=dev.namesilo.com]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+      x-proxy-cache: [MISS]
+    status: {code: 200, message: OK}
+version: 1

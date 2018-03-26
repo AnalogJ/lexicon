@@ -110,13 +110,11 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-
-        record = self.list_records(type=type, name=name, content=content, id=identifier)
-        if record:
-            self.client.domains_dns_delHost(self.domain, self._convert_to_namecheap(record[0]))
-            return True
-        else:
-            return False
+        records = self.list_records(type=type, name=name, content=content, id=identifier)
+        for record in records:
+            self.client.domains_dns_delHost(self.domain, self._convert_to_namecheap(record))
+        
+        return True
 
     def _convert_to_namecheap(self, record):
         """ converts from lexicon format record to namecheap format record,

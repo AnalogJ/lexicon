@@ -117,12 +117,20 @@ class Provider(BaseProvider):
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
+        delete_record_id = []
         if not identifier:
-            identifier = self._find_record_identifier(type, name, content)
-
-        # Delete existing record by calling the ClouDNS API
-        payload = self._post('/dns/delete-record.json', {'domain-name': self.domain_id, 'record-id': identifier})
-        logger.debug('delete_record: %s', payload)
+            records = self.list_records(type, name, content)
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+        
+        logger.debug('delete_records: %s', delete_record_id)
+        
+        for record_id in delete_record_id:
+            # Delete existing record by calling the ClouDNS API
+            payload = self._post('/dns/delete-record.json', {'domain-name': self.domain_id, 'record-id': record_id})
+        
+        logger.debug('delete_record: %s', True)
 
         # Error handling is already covered by self._request
         return True

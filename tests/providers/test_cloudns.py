@@ -3,6 +3,7 @@ from lexicon.providers.cloudns import Provider
 from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 from unittest import TestCase
+import pytest
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -24,3 +25,9 @@ class CloudnsProviderTests(TestCase, IntegrationTests):
         cmd_options = super(CloudnsProviderTests, self)._test_options()
         cmd_options.update(env_auth_options(self.provider_name))
         return cmd_options
+
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

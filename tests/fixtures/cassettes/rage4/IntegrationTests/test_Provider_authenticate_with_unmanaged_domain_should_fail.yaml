@@ -1,13 +1,13 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
     uri: https://rage4.com/rapi/getdomainbyname/?name=thisisadomainidonotown.com
   response:
@@ -16,13 +16,12 @@ interactions:
     headers:
       access-control-allow-origin: ['*']
       cache-control: ['private, s-maxage=0']
+      connection: [close]
       content-length: ['84']
       content-type: [text/plain; charset=utf-8]
-      date: ['Wed, 30 Mar 2016 06:39:16 GMT']
+      date: ['Fri, 23 Mar 2018 06:49:28 GMT']
       server: [GBSHouse/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload;]
-      transfer-encoding: [chunked]
-      x-frame-options: ['ALLOW-FROM https://www.google.com/maps/d/embed?mid=zuJ4aNyO7vT4.kxxuYpgxSxwo']
-      x-powered-by: [Rage4]
+      x-powered-by: [GBSHouse]
     status: {code: 200, message: OK}
 version: 1

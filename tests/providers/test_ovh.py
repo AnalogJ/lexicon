@@ -2,6 +2,7 @@
 from unittest import TestCase
 from lexicon.providers.ovh import Provider
 from integration_tests import IntegrationTests
+import pytest
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
@@ -20,3 +21,8 @@ class OvhProviderTests(TestCase, IntegrationTests):
         cmd_options = super(OvhProviderTests, self)._test_options()
         cmd_options.update({'auth_entrypoint':'ovh-eu'})
         return cmd_options
+
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')
