@@ -183,7 +183,7 @@ You can also skip extended test suites by adding the following snipped:
 
 ## CODEOWNERS file
 
-Next, you should add yourself to the [CODEOWNERS file](https://github.com/AnalogJ/lexicon/blob/master/CODEOWNERS), in the root of the repo. Github will automatically ask [for you to review any PR's that modify your provider](https://blog.github.com/2017-07-06-introducing-code-owners/). More importantly, it's also my way of keeping track of who to ping when I need updated recordings as the test suites expand & change.
+Next, you should add yourself to the [CODEOWNERS file](https://github.com/AnalogJ/lexicon/blob/master/CODEOWNERS), in the root of the repo. It's my way of keeping track of who to ping when I need updated recordings as the test suites expand & change.
 
 ## Additional Notes
 
