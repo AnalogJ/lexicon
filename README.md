@@ -58,9 +58,11 @@ Potential providers are as follows. If you would like to contribute one, please 
 
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~
+- Constellix ([docs](https://api-dns-docs.constellix.com/))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
 - ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
+- FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
 - HostEurope
