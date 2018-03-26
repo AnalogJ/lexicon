@@ -3,6 +3,7 @@ from lexicon.providers.cloudns import Provider
 from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 from unittest import TestCase
+import pytest
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -24,3 +25,27 @@ class CloudnsProviderTests(TestCase, IntegrationTests):
         cmd_options = super(CloudnsProviderTests, self)._test_options()
         cmd_options.update(env_auth_options(self.provider_name))
         return cmd_options
+
+
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
+        return
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_list_records_should_handle_record_sets(self):
+        return
+
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_delete_record_with_record_set_name_remove_all(self):
+        return
+
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):
+        return
+
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop(self):
+        return
+
+    @pytest.mark.skip(reason="TODO: extended test suite, needs contributor to implement")
+    def test_Provider_when_calling_create_record_multiple_times_should_create_record_set(self):
+        return
