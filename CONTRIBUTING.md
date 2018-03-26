@@ -139,6 +139,8 @@ using the `LEXICON_FOO_TOKEN` environmental variable. Notice that only `--auth-*
 can be passed like this. All non-secret arguments should be specified in the `test_options`.
 See [powerdns test suite](https://github.com/AnalogJ/lexicon/blob/82fa5056df2122357af7f9bec94aebc58b247f91/tests/providers/test_powerdns.py#L18-L21) for an example.
 
+## Test recordings
+
 Now run the `py.test` suite again. It will automatically generate recordings for
 your provider:
 
@@ -179,6 +181,9 @@ You can also skip extended test suites by adding the following snipped:
             pytest.skip('Skipping extended suite')
 ```
 
+## CODEOWNERS file
+
+Next, you should add yourself to the CODEOWNERS file, in the root of the repo. Github will automatically ask [for you to review any PR's that modify your provider](https://blog.github.com/2017-07-06-introducing-code-owners/). More importantly, it's also my way of keeping track of who to ping when I need updated recordings as the test suites expand & change.
 
 ## Additional Notes
 
