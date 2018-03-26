@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones.json
+  response:
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-26T13:44:43+11:00","id":653,"name":"my-test.org","updated_at":"2018-03-26T13:44:43+11:00","user_id":348,"cdn_reference":624791005}}]'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:48:30 GMT']
+      ETag: ['"9882521221fa754b650a3428de7112cb"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=4e33c016856ff5a84c05e6eac4119ddc; path=/; HttpOnly]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [c536c5fdaac3011fdd99008166a206d1]
+      X-Runtime: ['0.138715']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"dns_record": {"name": "random.fulltest", "type": "TXT", "txt": "challengetoken",
+      "ttl": "3600"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['98']
+      Content-Type: [application/json]
+      Cookie: [_session_id=4e33c016856ff5a84c05e6eac4119ddc]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://dashboard.dynomesh.com.au/dns_zones/653/records.json
+  response:
+    body: {string: '{"dns_record":{"id":2797653,"name":"random.fulltest","ttl":"3600","txt":"challengetoken","type":"TXT"}}'}
+    headers:
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:48:31 GMT']
+      ETag: ['"3970a6dedc94a8b651b7f8e4cc27f5fd"']
+      Location: [/dns_zones/653/records]
+      Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=f6544ff08697689208359681e2f014c7; path=/; HttpOnly]
+      Status: [201 Created]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: ['invalidate, pass']
+      X-Request-Id: [2942253cfa3905af26d993a34c16c0af]
+      X-Runtime: ['3.742521']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 201, message: Created}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Cookie: [_session_id=f6544ff08697689208359681e2f014c7]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones/653/records.json
+  response:
+    body: {string: '{"dns_zone":{"created_at":"2018-03-26T13:44:43+11:00","id":653,"name":"my-test.org","updated_at":"2018-03-26T13:44:43+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2797632,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":52,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2797628,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2797629,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2797630,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2797631,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2797633,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2797634,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2797635,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797636,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797637,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797638,"name":"_acme-challenge.createrecordset","ttl":3600,"txt":"challengetoken1","type":"TXT"}},{"dns_record":{"id":2797639,"name":"_acme-challenge.createrecordset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797640,"name":"_acme-challenge.noop","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797646,"name":"_acme-challenge.deleterecordinset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797649,"name":"ttl.fqdn","ttl":3600,"txt":"ttlshouldbe3600","type":"TXT"}},{"dns_record":{"id":2797650,"name":"_acme-challenge.listrecordset","ttl":3600,"txt":"challengetoken1","type":"TXT"}},{"dns_record":{"id":2797651,"name":"_acme-challenge.listrecordset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797652,"name":"random.fqdntest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797653,"name":"random.fulltest","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":624791005}}'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:48:35 GMT']
+      ETag: ['"ed25a669866c30dadef9bf34be32cb8f"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [8f1b261828f6a0dea17dd7d420703dc0]
+      X-Runtime: ['3.006312']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1

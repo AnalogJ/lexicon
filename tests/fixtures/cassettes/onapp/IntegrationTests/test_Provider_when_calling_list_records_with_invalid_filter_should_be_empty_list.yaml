@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones.json
+  response:
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-26T13:44:43+11:00","id":653,"name":"my-test.org","updated_at":"2018-03-26T13:44:43+11:00","user_id":348,"cdn_reference":624791005}}]'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:48:38 GMT']
+      ETag: ['"9882521221fa754b650a3428de7112cb"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=606884b9b3d07111503d18e0a292e604; path=/; HttpOnly]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [0c021992e970ff111da0e9e0e4aa9ff5]
+      X-Runtime: ['0.130678']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Cookie: [_session_id=606884b9b3d07111503d18e0a292e604]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones/653/records.json
+  response:
+    body: {string: '{"dns_zone":{"created_at":"2018-03-26T13:44:43+11:00","id":653,"name":"my-test.org","updated_at":"2018-03-26T13:44:43+11:00","user_id":348,"records":{"SOA":[{"dns_record":{"expire":1209600,"hostmaster":"support@fleetssl.com","id":2797632,"minimum":1200,"name":"@","primaryNs":"ns1.dynomesh.net.au","refresh":1200,"retry":180,"serial":52,"ttl":86400,"type":"SOA"}}],"NS":[{"dns_record":{"hostname":"ns1.dynomesh.net.au","id":2797628,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns2.dynomesh.net.au","id":2797629,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns3.dynomesh.net.au","id":2797630,"name":"@","ttl":86400,"type":"NS"}},{"dns_record":{"hostname":"ns4.dynomesh.net.au","id":2797631,"name":"@","ttl":86400,"type":"NS"}}],"A":[{"dns_record":{"id":2797633,"ip":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"}}],"CNAME":[{"dns_record":{"hostname":"docs.example.com","id":2797634,"name":"docs","ttl":3600,"type":"CNAME"}}],"TXT":[{"dns_record":{"id":2797635,"name":"_acme-challenge.fqdn","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797636,"name":"_acme-challenge.full","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797637,"name":"_acme-challenge.test","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797638,"name":"_acme-challenge.createrecordset","ttl":3600,"txt":"challengetoken1","type":"TXT"}},{"dns_record":{"id":2797639,"name":"_acme-challenge.createrecordset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797640,"name":"_acme-challenge.noop","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797646,"name":"_acme-challenge.deleterecordinset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797649,"name":"ttl.fqdn","ttl":3600,"txt":"ttlshouldbe3600","type":"TXT"}},{"dns_record":{"id":2797650,"name":"_acme-challenge.listrecordset","ttl":3600,"txt":"challengetoken1","type":"TXT"}},{"dns_record":{"id":2797651,"name":"_acme-challenge.listrecordset","ttl":3600,"txt":"challengetoken2","type":"TXT"}},{"dns_record":{"id":2797652,"name":"random.fqdntest","ttl":3600,"txt":"challengetoken","type":"TXT"}},{"dns_record":{"id":2797653,"name":"random.fulltest","ttl":3600,"txt":"challengetoken","type":"TXT"}}]},"cdn_reference":624791005}}'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:48:39 GMT']
+      ETag: ['"ed25a669866c30dadef9bf34be32cb8f"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [ca85bc79324b9b1a72312705a3d96c9c]
+      X-Runtime: ['3.358370']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+version: 1

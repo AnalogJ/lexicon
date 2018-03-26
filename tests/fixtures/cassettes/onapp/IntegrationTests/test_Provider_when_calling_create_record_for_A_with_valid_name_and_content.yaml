@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://dashboard.dynomesh.com.au/dns_zones.json
+  response:
+    body: {string: '[{"dns_zone":{"created_at":"2018-01-23T13:10:10+11:00","id":643,"name":"zzzzzz.invalid","updated_at":"2018-01-23T13:10:10+11:00","user_id":348,"cdn_reference":172619460}},{"dns_zone":{"created_at":"2018-03-26T13:44:43+11:00","id":653,"name":"my-test.org","updated_at":"2018-03-26T13:44:43+11:00","user_id":348,"cdn_reference":624791005}}]'}
+    headers:
+      Cache-Control: ['must-revalidate, private, max-age=0']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:45:03 GMT']
+      ETag: ['"9882521221fa754b650a3428de7112cb"']
+      Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=0acf20bac42092c295267e652a00fd09; path=/; HttpOnly]
+      Status: [200 OK]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: [miss]
+      X-Request-Id: [ba50e1be863ecbe4c2bb8306b3c528cb]
+      X-Runtime: ['0.303532']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"dns_record": {"name": "localhost", "type": "A", "ip": "127.0.0.1", "ttl":
+      "3600"}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['84']
+      Content-Type: [application/json]
+      Cookie: [_session_id=0acf20bac42092c295267e652a00fd09]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://dashboard.dynomesh.com.au/dns_zones/653/records.json
+  response:
+    body: {string: '{"dns_record":{"id":2797633,"ip":"127.0.0.1","name":"localhost","ttl":"3600","type":"A"}}'}
+    headers:
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 26 Mar 2018 02:45:04 GMT']
+      ETag: ['"350b2e798d97641b4fde2d9a11291166"']
+      Location: [/dns_zones/653/records]
+      Server: [Apache/2.2.15 (CentOS)]
+      Set-Cookie: [_session_id=7db991b3ea9b4fe5dab78f91fe9013d8; path=/; HttpOnly]
+      Status: [201 Created]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Phusion Passenger 4.0.35]
+      X-Rack-Cache: ['invalidate, pass']
+      X-Request-Id: [cca7d60f3b6e5e05f66476b6454c7187]
+      X-Runtime: ['3.770022']
+      X-UA-Compatible: ['IE=Edge,chrome=1']
+    status: {code: 201, message: Created}
+version: 1
