@@ -19,13 +19,3 @@ class ZonomiProviderTests(TestCase, IntegrationTests):
     
     def _filter_query_parameters(self):
         return ['api_key']
-
-    # TODO: this should be enabled
-    @pytest.mark.skip(reason="The record identifier is based on the name, this needs disabled")
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
-        return
-
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')

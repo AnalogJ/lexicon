@@ -25,9 +25,3 @@ class CloudnsProviderTests(TestCase, IntegrationTests):
         cmd_options = super(CloudnsProviderTests, self)._test_options()
         cmd_options.update(env_auth_options(self.provider_name))
         return cmd_options
-
-
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')

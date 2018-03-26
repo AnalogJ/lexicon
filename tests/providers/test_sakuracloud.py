@@ -19,8 +19,3 @@ class SakruaCloudProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="record id is not exists")
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         return
-
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')
