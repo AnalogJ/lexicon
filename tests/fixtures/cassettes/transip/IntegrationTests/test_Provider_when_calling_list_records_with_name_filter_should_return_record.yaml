@@ -1,0 +1,398 @@
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
+      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    headers:
+      Connection: [close]
+      Content-Length: ['634']
+      Content-Type: [text/xml; charset=utf-8]
+      Host: [api.transip.nl]
+      Soapaction:
+      - !!binary |
+        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://api.transip.nl/soap/?service=DomainService
+  response:
+    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
+        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
+        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
+        SOAP-ENC:arrayType="ns1:DnsEntry[13]" xsi:type="ns1:ArrayOfDnsEntry"><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
+        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.fqdntest</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">random.fulltest</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">ttl.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">ttlshouldbe3600</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.deleterecordinset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.full</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken1</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.noop</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.test</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
+        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
+        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
+        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
+        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
+        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '}
+    headers:
+      Connection: [close]
+      Content-Length: ['7450']
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 28 Mar 2018 16:03:41 GMT']
+      Server: [Apache]
+    status: {code: 200, message: OK}
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
+      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    headers:
+      Connection: [close]
+      Content-Length: ['634']
+      Content-Type: [text/xml; charset=utf-8]
+      Host: [api.transip.nl]
+      Soapaction:
+      - !!binary |
+        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://api.transip.nl/soap/?service=DomainService
+  response:
+    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
+        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
+        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
+        SOAP-ENC:arrayType="ns1:DnsEntry[13]" xsi:type="ns1:ArrayOfDnsEntry"><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
+        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.fqdntest</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">random.fulltest</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">ttl.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">ttlshouldbe3600</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.deleterecordinset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.full</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken1</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.noop</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.test</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
+        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
+        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
+        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
+        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
+        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '}
+    headers:
+      Connection: [close]
+      Content-Length: ['7450']
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 28 Mar 2018 16:03:42 GMT']
+      Server: [Apache]
+    status: {code: 200, message: OK}
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:setDnsEntries><domainName
+      xsi:type="ns1:string">hurrdurr.nl</domainName><dnsEntries xsi:type="ns2:ArrayOfDnsEntry"
+      ns3:arrayType="ns2:DnsEntry[14]"><item xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">localhost</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">A</type><content
+      xsi:type="ns1:string">127.0.0.1</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">random.fqdntest</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">random.fulltest</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">ttl.fqdn</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">ttlshouldbe3600</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.createrecordset</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken1</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">_acme-challenge.createrecordset</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken2</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.deleterecordinset</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken2</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">_acme-challenge.fqdn</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.full</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">_acme-challenge.listrecordset</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken1</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.listrecordset</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken2</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">_acme-challenge.noop</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken</content></item><item
+      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.test</name><expire
+      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
+      xsi:type="ns1:string">challengetoken</content></item><item xsi:type="ns2:DnsEntry"><name
+      xsi:type="ns1:string">random.test</name><expire xsi:type="ns1:int">3600</expire><type
+      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken</content></item></dnsEntries></ns2:setDnsEntries></ns0:Body></SOAP-ENV:Envelope>
+    headers:
+      Connection: [close]
+      Content-Length: ['3895']
+      Content-Type: [text/xml; charset=utf-8]
+      Host: [api.transip.nl]
+      Soapaction:
+      - !!binary |
+        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjc2V0RG5zRW50cmllcyI=
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://api.transip.nl/soap/?service=DomainService
+  response:
+    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:setDnsEntriesResponse/></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '}
+    headers:
+      Connection: [close]
+      Content-Length: ['407']
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 28 Mar 2018 16:03:44 GMT']
+      Server: [Apache]
+    status: {code: 200, message: OK}
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
+      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    headers:
+      Connection: [close]
+      Content-Length: ['634']
+      Content-Type: [text/xml; charset=utf-8]
+      Host: [api.transip.nl]
+      Soapaction:
+      - !!binary |
+        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://api.transip.nl/soap/?service=DomainService
+  response:
+    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
+        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
+        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
+        SOAP-ENC:arrayType="ns1:DnsEntry[14]" xsi:type="ns1:ArrayOfDnsEntry"><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
+        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.fqdntest</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">random.fulltest</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.test</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">ttl.fqdn</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">ttlshouldbe3600</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken1</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.deleterecordinset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.fqdn</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.full</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.noop</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.test</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
+        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
+        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
+        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
+        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
+        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '}
+    headers:
+      Connection: [close]
+      Content-Length: ['7666']
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 28 Mar 2018 16:03:46 GMT']
+      Server: [Apache]
+    status: {code: 200, message: OK}
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
+      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    headers:
+      Connection: [close]
+      Content-Length: ['634']
+      Content-Type: [text/xml; charset=utf-8]
+      Host: [api.transip.nl]
+      Soapaction:
+      - !!binary |
+        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
+      User-Agent: [Python-urllib/3.6]
+    method: POST
+    uri: https://api.transip.nl/soap/?service=DomainService
+  response:
+    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
+        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
+        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
+        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
+        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
+        SOAP-ENC:arrayType="ns1:DnsEntry[14]" xsi:type="ns1:ArrayOfDnsEntry"><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
+        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.fqdntest</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">random.fulltest</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">random.test</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">ttl.fqdn</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">ttlshouldbe3600</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken1</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.createrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken2</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.deleterecordinset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.fqdn</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.full</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken1</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.listrecordset</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken2</content></item><item
+        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.noop</name><expire
+        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
+        xsi:type="xsd:string">challengetoken</content></item><item xsi:type="ns1:DnsEntry"><name
+        xsi:type="xsd:string">_acme-challenge.test</name><expire xsi:type="xsd:int">3600</expire><type
+        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
+        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
+        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
+        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
+        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
+        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '}
+    headers:
+      Connection: [close]
+      Content-Length: ['7666']
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 28 Mar 2018 16:03:47 GMT']
+      Server: [Apache]
+    status: {code: 200, message: OK}
+version: 1
