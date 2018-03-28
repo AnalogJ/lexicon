@@ -45,6 +45,20 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
+    """
+    ========================================================================
+    WARNING
+    ========================================================================
+    The Namecheap API does not add/update/delete a host but "gets" and
+    "sets" ALL hosts at once (a complete replacement). In their comments on
+    the API docs (https://www.namecheap.com/support/api/methods/domains-dns/set-hosts.aspx)
+    it appears that not all host types are handled by their system.
+
+    Their API only handles `[A, AAAA, CNAME, MX, MXE, TXT, URL, URL301, FRAME]`
+
+    If you have SRV record, it may get lost. Also records configured as
+    `A + DDNS` on their control panel will be downgrated to `A` records.
+    """
 
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
@@ -55,7 +69,7 @@ class Provider(BaseProvider):
             UserName=options.get('auth_username',''),
             ClientIP=options.get('auth_client_ip',''),
             sandbox=options.get('auth_sandbox', False),
-            debug=False
+            debug=False,
         )
         self.domain = self.options['domain']
         self.domain_id = None
@@ -228,7 +242,6 @@ class Provider(BaseProvider):
         records = self.list_records(type=type, name=name, content=content, id=identifier)
         for record in records:
             self.client.domains_dns_delHost(self.domain, self._convert_to_namecheap(record))
-        
         return True
 
     def _convert_to_namecheap(self, record):

@@ -64,7 +64,7 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
             LEXICON_NAMECHEAP_DOMAIN
         """
         env_domain = os.environ.get('LEXICON_NAMECHEAP_DOMAIN', None)
-        return env_domain or 'lexicontest.com'
+        return env_domain or 'example-aptise.com'
 
     def _filter_query_parameters(self):
         return ['ApiKey','UserName', 'ApiUser']
