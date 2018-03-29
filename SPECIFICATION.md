@@ -43,9 +43,13 @@ Create a record set with 1 record.
 
 ### Record set exists with same name and type
 Add the content of the new record to the record set.
+
 If service returns this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.1' ]}`
+
 and `create_record('example.com','A','127.0.0.2')` is called, modify to this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.1', '127.0.0.2' ]}`
 
 **NOTE** Existing data not modified
