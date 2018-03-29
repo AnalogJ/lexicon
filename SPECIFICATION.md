@@ -52,24 +52,38 @@ and `create_record('example.com','A','127.0.0.2')` is called, modify to this:
 
 ## list_record
 Read all records within a set and return them as individual records.
+
 If service returns this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.1', '127.0.0.2' ]}`
+
 Provider should return this:
+
 `[{'name':'example.com', 'type':'A', 'content': '127.0.0.1'},
 {'name':'example.com', 'type':'A', 'content': '127.0.0.2'}]`
 
 ## update_record
 Update only the record that matches the filter content.
+
 If current value is this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.1', '127.0.0.2' ]}`
+
 and `update_record('example.com','A','127.0.0.1','127.1.0.1')` is called, modify to this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.1.0.1', '127.0.0.2' ]}`
+
 **Do not modify/remove other records in the set**
 
 ## delete_record
 Remove only the record that matches the filters.
+
 If current value is this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.1', '127.0.0.2' ]}`
+
 and `delete_record('example.com','A','127.0.0.1')` is called, modify to this:
+
 `{'name':'example.com', 'type':'A', 'records':[ '127.0.0.2' ]}`
+
 **Remove the record set only if `content` is not specified or length of `records` become 0 after removing record**
