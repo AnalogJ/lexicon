@@ -135,16 +135,23 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
+    def _is_given_option(self, key):
+        fallback_fn = self.engine_overrides.get('fallbackFn', (lambda x: None))
+        return self.options[key] and self.options[key] != fallback_fn(key)
+
     def _build_authentication_data(self):
         if not self.options['auth_password']:
             raise Exception('No valid authentication data passed, expected: auth-password')
 
-        if self.options['auth_id']:
+        if self._is_given_option(self.options['auth_id']):
             return {'auth-id': self.options['auth_id'], 'auth-password': self.options['auth_password']}
-        elif self.options['auth_subid']:
+        elif self._is_given_option('auth_subid'):
             return {'sub-auth-id': self.options['auth_subid'], 'auth-password': self.options['auth_password']}
-        elif self.options['auth_subuser']:
+        elif self._is_given_option('auth_subuser'):
             return {'sub-auth-user': self.options['auth_subuser'], 'auth-password': self.options['auth_password']}
+        elif self.options['auth_id'] or self.options['auth_subid'] or self.options['auth_subuser']:
+            # All the options were passed with a fallback value, return an empty dictionary.
+            return {}
         else:
             raise Exception('No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser')
 

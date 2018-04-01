@@ -14,7 +14,7 @@ interactions:
       Connection: [Keep-Alive]
       Content-Length: ['71']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:09 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:11 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
@@ -29,14 +29,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=delete.testfull&type=TXT
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.deleterecordinset&type=TXT
   response:
     body: {string: '[]'}
     headers:
       Connection: [Keep-Alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:09 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:12 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
@@ -44,24 +44,24 @@ interactions:
       X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: domain-name=api-example.com&record-type=TXT&host=delete.testfull&record=challengetoken&ttl=3600&priority=placeholder_priority&weight=placeholder_weight&port=placeholder_port
+    body: domain-name=api-example.com&record-type=TXT&host=_acme-challenge.deleterecordinset&record=challengetoken1&ttl=3600&priority=placeholder_priority&weight=placeholder_weight&port=placeholder_port
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['294']
+      Content-Length: ['313']
       Content-Type: [application/x-www-form-urlencoded]
       User-Agent: [python-requests/2.18.4]
     method: POST
     uri: https://api.cloudns.net/dns/add-record.json
   response:
     body: {string: '{"status":"Success","statusDescription":"The record was added
-        successfully.","data":{"id":69469255}}'}
+        successfully.","data":{"id":69469257}}'}
     headers:
       Connection: [Keep-Alive]
       Content-Length: ['100']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:09 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:12 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
@@ -76,14 +76,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=delete.testfull&type=TXT
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.deleterecordinset&type=TXT
   response:
-    body: {string: '{"69469255":{"id":"69469255","type":"TXT","host":"delete.testfull","record":"challengetoken","ttl":"3600","status":1}}'}
+    body: {string: '{"69469257":{"id":"69469257","type":"TXT","host":"_acme-challenge.deleterecordinset","record":"challengetoken1","ttl":"3600","status":1}}'}
     headers:
       Connection: [Keep-Alive]
-      Content-Length: ['118']
+      Content-Length: ['137']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:10 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:12 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
@@ -91,7 +91,54 @@ interactions:
       X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: domain-name=api-example.com&record-id=69469255
+    body: domain-name=api-example.com&record-type=TXT&host=_acme-challenge.deleterecordinset&record=challengetoken2&ttl=3600&priority=placeholder_priority&weight=placeholder_weight&port=placeholder_port
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['313']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.cloudns.net/dns/add-record.json
+  response:
+    body: {string: '{"status":"Success","statusDescription":"The record was added
+        successfully.","data":{"id":69469258}}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['100']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:12 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.deleterecordinset&type=TXT
+  response:
+    body: {string: '{"69469257":{"id":"69469257","type":"TXT","host":"_acme-challenge.deleterecordinset","record":"challengetoken1","ttl":"3600","status":1},"69469258":{"id":"69469258","type":"TXT","host":"_acme-challenge.deleterecordinset","record":"challengetoken2","ttl":"3600","status":1}}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['273']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:12 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: domain-name=api-example.com&record-id=69469257
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -108,7 +155,7 @@ interactions:
       Connection: [Keep-Alive]
       Content-Length: ['79']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:10 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:13 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
@@ -123,14 +170,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=delete.testfull&type=TXT
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.deleterecordinset&type=TXT
   response:
-    body: {string: '[]'}
+    body: {string: '{"69469258":{"id":"69469258","type":"TXT","host":"_acme-challenge.deleterecordinset","record":"challengetoken2","ttl":"3600","status":1}}'}
     headers:
       Connection: [Keep-Alive]
-      Content-Length: ['2']
+      Content-Length: ['137']
       Content-Type: [application/json]
-      Date: ['Tue, 27 Mar 2018 19:24:10 GMT']
+      Date: ['Tue, 27 Mar 2018 19:24:13 GMT']
       Keep-Alive: [timeout=5]
       Server: [Apache]
       X-Content-Type-Options: [nosniff]
