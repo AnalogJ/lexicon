@@ -24,7 +24,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 # Get a list of all the providers
 current_filepath = path.join(here, 'lexicon', 'providers')
 providers = [path.splitext(f)[0] for f in listdir(current_filepath) if path.isfile(path.join(current_filepath, f))]
-providers = list(set(providers))
+providers = list(sorted(set(providers)))
 providers.remove('base')
 providers.remove('__init__')
 
