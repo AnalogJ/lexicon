@@ -71,24 +71,11 @@ class TransipProviderTests(TestCase, IntegrationTests):
         })
         return options
 
-    @classmethod
-    def setUpClass(cls):
-        cls.old_serializer = provider_vcr.serializer
-        provider_vcr.serializer = "json"
-
-    @classmethod
-    def tearDownClass(cls):
-        provider_vcr.serializer = cls.old_serializer
-
     def tearDown(self):
         os.unlink(self._fake_key)
 
     def _filter_headers(self):
         return ['Cookie']
-
-    def _cassette_path(self, fixture_subpath):
-        path = super(TransipProviderTests, self)._cassette_path(fixture_subpath)
-        return path.replace(".yaml", ".json")
 
     @pytest.mark.skip(reason="manipulating records by id is not supported")
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
