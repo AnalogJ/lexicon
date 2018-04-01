@@ -58,25 +58,25 @@ The current supported providers are:
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
-- ~~BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))~~
+- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
-- ~~Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/))~~ <sub>Unable to test, requires paid account</sub>
-- ~~EntryDNS ([docs](https://entrydns.net/help))~~ <sub>Unable to test, requires paid account</sub>
+- Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
+- EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
-- ~~Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py))~~ <sub>Unable to test, requires paid account</sub>
+- Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
 - HostEurope
-- ~~ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0))~~ <sub>Unable to test, requires paid account</sub>
+- ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
 - INWX ([docs](https://github.com/inwx/python2.7-client))
-- ~~Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html))~~ <sub>Unable to test, requires paid account</sub>
+- Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html)) :dollar: <sub>requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
-- ~~NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/))~~ <sub>Unable to test, requires paid account</sub>
+- NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/)) :dollar: <sub>requires paid account</sub>
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
-- ~~UltraDNS ([docs](https://restapi.ultradns.com/v1/docs))~~ <sub>Unable to test, requires paid account</sub>
-- ~~WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp))~~ <sub>Unable to test, requires paid account</sub>
+- UltraDNS ([docs](https://restapi.ultradns.com/v1/docs)) :dollar: <sub>requires paid account</sub>
+- WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
-- ~~Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api))~~ <sub>Unable to test, requires paid account</sub>
+- Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - __Any others I missed__
 
