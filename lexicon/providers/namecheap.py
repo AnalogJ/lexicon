@@ -167,27 +167,22 @@ class Provider(BaseProvider):
 
     def option_ttl(self):
         """
+        Parse the `options` for a TTL.
+        Used as a distinct function for documentation.
         via https://www.namecheap.com/support/api/methods/domains-dns/set-hosts.aspx
             Time to live for all record types.
             Possible values: any value between 60 to 60000
             Default Value: 1800
         if a TTL is submitted on the commandline:
-            this will parse and validate it
+            this will parse, but not validate it
         if no TTL is submitted:
-            it will be ignored allowing the server-side default
+            it will be ignored, allowing the server-side default
+        Please note:
+            Namecheap appears to have an internal cache on records; even with a
+            short TTL of 60 seconds, it may take 120 seconds for their DNS to
+            propagate.
         """
-        ttl_submitted = self.options.get('ttl', None)
-        if ttl_submitted is not None:
-            # if the ttl isn't an Int within a valid range,
-            # an exception will be raised
-            ttl_submitted = int(ttl_submitted)
-            if ttl_submitted > 60000:
-                raise ValueError("Namecheap TTL must between 60 and 60000")
-            elif ttl_submitted < 60:
-                raise ValueError("Namecheap TTL must between 60 and 60000")
-            # cast this to a string
-            ttl_submitted = "%s" % ttl_submitted
-        return ttl_submitted
+        return self.options.get('ttl', None)
         
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):

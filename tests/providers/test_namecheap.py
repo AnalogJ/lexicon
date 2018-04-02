@@ -24,7 +24,7 @@ A note about running these tests against the live environment
     Namecheap acts a little differently for "owned" vs "managed" domains, so a
     secondary test run must be done.
 
-To set this up:
+To set enable live testing against the actual API:
 
 * Create two (2) Sandbox accounts on Namecheap
 * Using the First Account:
