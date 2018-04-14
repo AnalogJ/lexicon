@@ -23,17 +23,17 @@ interactions:
         \n        <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\
         \n        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n       \
         \ <IsActive>false</IsActive>\r\n      </PremiumDnsSubscription>\r\n      <DnsDetails\
-        \ ProviderType=\"FREE\" IsUsingOurDNS=\"true\" HostCount=\"24\" EmailType=\"\
+        \ ProviderType=\"FREE\" IsUsingOurDNS=\"true\" HostCount=\"18\" EmailType=\"\
         FWD\" DynamicDNSStatus=\"false\" IsFailover=\"false\">\r\n        <Nameserver>dns1.registrar-servers.com</Nameserver>\r\
         \n        <Nameserver>dns2.registrar-servers.com</Nameserver>\r\n      </DnsDetails>\r\
         \n      <Modificationrights All=\"true\" />\r\n    </DomainGetInfoResult>\r\
         \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.031</ExecutionTime>\r\n</ApiResponse>"}
+        \n  <ExecutionTime>0.033</ExecutionTime>\r\n</ApiResponse>"}
     headers:
       cache-control: [private]
       content-length: ['1493']
       content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:42:52 GMT']
+      date: ['Mon, 26 Mar 2018 17:41:14 GMT']
       server: [Microsoft-IIS/8.5]
       vary: [Accept-Encoding]
       x-aspnet-version: [4.0.30319]
@@ -63,28 +63,11 @@ interactions:
         false\" />\r\n      <host HostId=\"524153\" Name=\"xxxx\" Type=\"CNAME\" Address=\"\
         parkingpage.namecheap.com.\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
         \" FriendlyName=\"CName Record\" IsActive=\"true\" IsDDNSEnabled=\"false\"\
-        \ />\r\n      <host HostId=\"524831\" Name=\"_acme-challenge.createrecordset\"\
-        \ Type=\"TXT\" Address=\"challengetoken1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \ />\r\n      <host HostId=\"524156\" Name=\"_acme-challenge.fqdn\" Type=\"\
+        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"60\" AssociatedAppTitle=\"\
         \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524832\" Name=\"_acme-challenge.createrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524839\" Name=\"_acme-challenge.deleterecordinset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524156\" Name=\"_acme-challenge.fqdn\" Type=\"TXT\" Address=\"\
+        \  <host HostId=\"524157\" Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"\
         challengetoken\" MXPref=\"10\" TTL=\"60\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524157\"\
-        \ Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
-        10\" TTL=\"60\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524842\" Name=\"_acme-challenge.listrecordset\"\
-        \ Type=\"TXT\" Address=\"challengetoken1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524843\" Name=\"_acme-challenge.listrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524833\" Name=\"_acme-challenge.noop\" Type=\"TXT\" Address=\"\
-        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
         \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524158\"\
         \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
         10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
@@ -122,24 +105,24 @@ interactions:
         \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"URL Record\"\
         \ IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\
         \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.878</ExecutionTime>\r\n</ApiResponse>"}
+        \n  <ExecutionTime>0.838</ExecutionTime>\r\n</ApiResponse>"}
     headers:
       cache-control: [private]
-      content-length: ['5215']
+      content-length: ['3987']
       content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:42:54 GMT']
+      date: ['Mon, 26 Mar 2018 17:41:16 GMT']
       server: [Microsoft-IIS/8.5]
       vary: [Accept-Encoding]
       x-aspnet-version: [4.0.30319]
       x-powered-by: [ASP.NET]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode 'RecordType21=TXT&HostId19=524164&RecordType20=TXT&RecordType23=TXT&MXPref24=10&IsDDNSEnabled21=false&IsActive10=true&IsDDNSEnabled18=false&IsDDNSEnabled19=false&AssociatedAppTitle11=&IsDDNSEnabled14=false&IsDDNSEnabled15=false&IsDDNSEnabled16=false&IsDDNSEnabled17=false&IsDDNSEnabled10=false&IsDDNSEnabled11=false&IsDDNSEnabled12=false&IsDDNSEnabled13=false&AssociatedAppTitle13=&IsDDNSEnabled20=false&AssociatedAppTitle14=&AssociatedAppTitle15=&AssociatedAppTitle16=&AssociatedAppTitle17=&RecordType18=TXT&RecordType19=TXT&IsDDNSEnabled23=false&RecordType10=TXT&RecordType11=TXT&RecordType12=TXT&RecordType13=TXT&RecordType14=TXT&RecordType15=TXT&RecordType16=TXT&RecordType17=TXT&HostId8=524157&HostId9=524842&IsDDNSEnabled24=false&FriendlyName6=&AssociatedAppTitle10=&HostId1=524154&HostId2=524155&HostId3=524153&HostId4=524831&HostId5=524832&HostId6=524839&HostId7=524156&IsDDNSEnabled22=false&MXPref23=10&HostId24=524160&HostId23=524173&HostId22=524171&HostId21=524167&HostId20=524165&RecordType6=TXT&RecordType7=TXT&RecordType4=TXT&RecordType5=TXT&RecordType2=CNAME&RecordType3=CNAME&RecordType1=A&RecordType8=TXT&RecordType9=TXT&FriendlyName1=&IsActive21=true&MXPref20=10&FriendlyName3=CName+Record&FriendlyName19=&FriendlyName18=&AssociatedAppTitle5=&FriendlyName11=&AssociatedAppTitle2=&FriendlyName13=&FriendlyName12=&FriendlyName15=&FriendlyName14=&FriendlyName17=&AssociatedAppTitle3=&HostId12=524158&HostId13=524168&HostId10=524843&HostId11=524833&HostId16=524170&HostId17=524172&IsDDNSEnabled8=false&IsDDNSEnabled9=false&IsDDNSEnabled6=false&IsDDNSEnabled7=false&IsDDNSEnabled4=false&IsDDNSEnabled5=false&IsDDNSEnabled2=false&IsDDNSEnabled3=false&IsDDNSEnabled1=false&RecordType22=TXT&Address8=challengetoken&Address9=challengetoken1&FriendlyName24=URL+Record&IsActive9=true&IsActive8=true&FriendlyName20=&MXPref21=10&FriendlyName22=&FriendlyName23=&IsActive3=true&IsActive2=true&IsActive1=true&IsActive7=true&IsActive6=true&IsActive5=true&IsActive4=true&TTL4=1800&Address22=challengetoken&AssociatedAppTitle23=&HostName12=_acme-challenge.test&HostName13=orig.nameonly.test&HostName10=_acme-challenge.listrecordset&HostName11=_acme-challenge.noop&HostName16=orig.testfqdn&HostName17=orig.testfull&HostName14=orig.nameonly.test&Address1=127.0.0.1&HostName18=random.fqdntest&HostName19=random.fulltest&MXPref5=10&FriendlyName21=&IsActive13=true&IsActive12=true&IsActive11=true&TTL3=1800&IsActive17=true&IsActive16=true&IsActive15=true&IsActive14=true&Address4=challengetoken1&IsActive19=true&IsActive18=true&MXPref2=10&MXPref1=10&Address7=challengetoken&TTL8=60&TTL9=1800&MXPref9=10&MXPref8=10&MXPref7=10&TTL1=60&TTL2=60&Address3=parkingpage.namecheap.com.&MXPref3=10&TTL5=1800&TTL6=1800&TTL7=60&TTL14=1800&RecordType24=URL&TTL24=1800&TTL23=1800&Address13=challengetoken&TTL21=1800&TTL20=1800&HostName24=yyy&TTL15=1800&TLD=com&FriendlyName10=&Address2=docs.example.com.&AssociatedAppTitle21=&AssociatedAppTitle20=&Address12=challengetoken&AssociatedAppTitle22=&AssociatedAppTitle24=&MXPref22=10&Address18=challengetoken&TTL22=1800&Address19=challengetoken&AssociatedAppTitle12=&MXPref13=10&MXPref12=10&MXPref11=10&MXPref10=10&MXPref17=10&MXPref16=10&MXPref15=10&MXPref14=10&RecordType25=TXT&MXPref19=10&MXPref18=10&HostName1=localhost&HostName2=docs&HostName3=xxxx&HostName4=_acme-challenge.createrecordset&HostName5=_acme-challenge.createrecordset&HostName6=_acme-challenge.deleterecordinset&HostName7=_acme-challenge.fqdn&HostName8=_acme-challenge.full&HostName9=_acme-challenge.listrecordset&Address10=challengetoken2&Address11=challengetoken&Address16=challengetoken&MXPref6=10&Address14=updated&Address15=challengetoken&TTL12=1800&TTL13=1800&HostName23=updated.testfull&HostName22=updated.testfqdn&HostName21=updated.test&HostName20=random.test&TTL10=1800&HostName25=random.test&Address17=challengetoken&IsActive22=true&TTL11=1800&Address5=challengetoken2&IsActive23=true&TTL16=1800&FriendlyName16=&IsActive20=true&TTL17=1800&AssociatedAppTitle6=&AssociatedAppTitle7=&AssociatedAppTitle4=&FriendlyName2=&FriendlyName5=&FriendlyName4=&FriendlyName7=&AssociatedAppTitle1=&FriendlyName9=&FriendlyName8=&HostName15=orig.test&AssociatedAppTitle8=&AssociatedAppTitle9=&Address6=challengetoken2&IsActive24=true&SLD=example-aptise&MXPref4=10&Address25=challengetoken&Address24=http%3A%2F%2Fwww.example-aptise.com%2F%3Ffrom%3D%40&Address23=challengetoken&TTL18=1800&Address21=challengetoken&Address20=challengetoken&AssociatedAppTitle18=&TTL19=1800&HostId14=524214&AssociatedAppTitle19=&HostId15=524166&HostId18=524163'
+    body: !!python/unicode 'IsActive10=true&IsDDNSEnabled18=false&AssociatedAppTitle11=&IsDDNSEnabled14=false&IsDDNSEnabled15=false&IsDDNSEnabled16=false&IsDDNSEnabled17=false&IsDDNSEnabled10=false&IsDDNSEnabled11=false&IsDDNSEnabled12=false&IsDDNSEnabled13=false&AssociatedAppTitle13=&AssociatedAppTitle14=&AssociatedAppTitle15=&AssociatedAppTitle16=&AssociatedAppTitle17=&RecordType18=URL&RecordType19=TXT&RecordType10=TXT&RecordType11=TXT&RecordType12=TXT&RecordType13=TXT&RecordType14=TXT&RecordType15=TXT&RecordType16=TXT&RecordType17=TXT&HostId8=524214&HostId9=524166&FriendlyName6=&AssociatedAppTitle10=&HostId1=524154&HostId2=524155&HostId3=524153&HostId4=524156&HostId5=524157&HostId6=524158&HostId7=524168&RecordType6=TXT&RecordType7=TXT&RecordType4=TXT&RecordType5=TXT&RecordType2=CNAME&RecordType3=CNAME&RecordType1=A&RecordType8=TXT&RecordType9=TXT&FriendlyName1=&FriendlyName3=CName+Record&FriendlyName18=URL+Record&AssociatedAppTitle5=&FriendlyName11=&AssociatedAppTitle2=&FriendlyName13=&FriendlyName12=&FriendlyName15=&FriendlyName14=&FriendlyName17=&AssociatedAppTitle3=&HostId12=524163&HostId13=524164&HostId10=524170&HostId11=524172&HostId16=524171&HostId17=524173&IsDDNSEnabled8=false&IsDDNSEnabled9=false&IsDDNSEnabled6=false&IsDDNSEnabled7=false&IsDDNSEnabled4=false&IsDDNSEnabled5=false&IsDDNSEnabled2=false&IsDDNSEnabled3=false&IsDDNSEnabled1=false&Address8=updated&Address9=challengetoken&IsActive9=true&IsActive8=true&IsActive3=true&IsActive2=true&IsActive1=true&IsActive7=true&IsActive6=true&IsActive5=true&IsActive4=true&TTL4=60&HostName12=random.fqdntest&HostName13=random.fulltest&HostName10=orig.testfqdn&HostName11=orig.testfull&HostName16=updated.testfqdn&HostName17=updated.testfull&HostName14=random.test&Address1=127.0.0.1&HostName18=yyy&HostName19=_acme-challenge.createrecordset&MXPref5=10&IsActive13=true&IsActive12=true&IsActive11=true&TTL3=1800&IsActive17=true&IsActive16=true&IsActive15=true&IsActive14=true&Address4=challengetoken&IsActive18=true&MXPref2=10&MXPref1=10&Address7=challengetoken&TTL8=1800&TTL9=1800&MXPref9=10&MXPref8=10&MXPref7=10&TTL1=60&TTL2=60&Address3=parkingpage.namecheap.com.&MXPref3=10&TTL5=60&TTL6=1800&TTL7=1800&TTL14=1800&Address13=challengetoken&TTL15=1800&TLD=com&FriendlyName10=&Address2=docs.example.com.&Address12=challengetoken&Address18=http%3A%2F%2Fwww.example-aptise.com%2F%3Ffrom%3D%40&Address19=challengetoken1&AssociatedAppTitle12=&MXPref13=10&MXPref12=10&MXPref11=10&MXPref10=10&MXPref17=10&MXPref16=10&MXPref15=10&MXPref14=10&MXPref18=10&HostName1=localhost&HostName2=docs&HostName3=xxxx&HostName4=_acme-challenge.fqdn&HostName5=_acme-challenge.full&HostName6=_acme-challenge.test&HostName7=orig.nameonly.test&HostName8=orig.nameonly.test&HostName9=orig.test&Address10=challengetoken&Address11=challengetoken&Address16=challengetoken&MXPref6=10&Address14=challengetoken&Address15=challengetoken&TTL12=1800&TTL13=1800&TTL10=1800&Address17=challengetoken&TTL11=1800&Address5=challengetoken&TTL16=1800&FriendlyName16=&TTL17=1800&AssociatedAppTitle6=&AssociatedAppTitle7=&AssociatedAppTitle4=&FriendlyName2=&FriendlyName5=&FriendlyName4=&FriendlyName7=&AssociatedAppTitle1=&FriendlyName9=&FriendlyName8=&HostName15=updated.test&AssociatedAppTitle8=&AssociatedAppTitle9=&Address6=challengetoken&SLD=example-aptise&MXPref4=10&TTL18=1800&AssociatedAppTitle18=&HostId14=524165&HostId15=524167&HostId18=524160'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['4527']
+      Content-Length: ['3356']
       Content-Type: [application/x-www-form-urlencoded]
       User-Agent: [python-requests/2.18.4]
     method: POST
@@ -151,13 +134,13 @@ interactions:
         \n  <CommandResponse Type=\"namecheap.domains.dns.setHosts\">\r\n    <DomainDNSSetHostsResult\
         \ Domain=\"example-aptise.com\" IsSuccess=\"true\">\r\n      <Warnings />\r\
         \n    </DomainDNSSetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
-        \n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\n  <ExecutionTime>0.952</ExecutionTime>\r\
+        \n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\n  <ExecutionTime>0.932</ExecutionTime>\r\
         \n</ApiResponse>"}
     headers:
       cache-control: [private]
       content-length: ['559']
       content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:42:55 GMT']
+      date: ['Mon, 26 Mar 2018 17:41:18 GMT']
       server: [Microsoft-IIS/8.5]
       vary: [Accept-Encoding]
       x-aspnet-version: [4.0.30319]
@@ -190,68 +173,84 @@ interactions:
         \ />\r\n      <host HostId=\"524831\" Name=\"_acme-challenge.createrecordset\"\
         \ Type=\"TXT\" Address=\"challengetoken1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
         \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524832\" Name=\"_acme-challenge.createrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524839\" Name=\"_acme-challenge.deleterecordinset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
         \  <host HostId=\"524156\" Name=\"_acme-challenge.fqdn\" Type=\"TXT\" Address=\"\
         challengetoken\" MXPref=\"10\" TTL=\"60\" AssociatedAppTitle=\"\" FriendlyName=\"\
         \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524157\"\
         \ Name=\"_acme-challenge.full\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
         10\" TTL=\"60\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524842\" Name=\"_acme-challenge.listrecordset\"\
-        \ Type=\"TXT\" Address=\"challengetoken1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524843\" Name=\"_acme-challenge.listrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524833\" Name=\"_acme-challenge.noop\" Type=\"TXT\" Address=\"\
-        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524158\"\
-        \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
-        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524168\" Name=\"orig.nameonly.test\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524158\" Name=\"_acme-challenge.test\"\
         \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
         \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524214\" Name=\"orig.nameonly.test\" Type=\"TXT\" Address=\"\
-        updated\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524166\"\
-        \ Name=\"orig.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\"\
+        \  <host HostId=\"524168\" Name=\"orig.nameonly.test\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524214\"\
+        \ Name=\"orig.nameonly.test\" Type=\"TXT\" Address=\"updated\" MXPref=\"10\"\
         \ TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524170\" Name=\"orig.testfqdn\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524166\" Name=\"orig.test\"\
         \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
         \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524172\" Name=\"orig.testfull\" Type=\"TXT\" Address=\"\
+        \  <host HostId=\"524170\" Name=\"orig.testfqdn\" Type=\"TXT\" Address=\"\
         challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524163\"\
-        \ Name=\"random.fqdntest\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524172\"\
+        \ Name=\"orig.testfull\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
         10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524164\" Name=\"random.fulltest\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524163\" Name=\"random.fqdntest\"\
         \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
         \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524165\" Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
-        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524167\" Name=\"\
-        updated.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
-        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
-        false\" />\r\n      <host HostId=\"524171\" Name=\"updated.testfqdn\" Type=\"\
-        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524173\" Name=\"updated.testfull\" Type=\"TXT\" Address=\"\
+        \  <host HostId=\"524164\" Name=\"random.fulltest\" Type=\"TXT\" Address=\"\
         challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524160\"\
-        \ Name=\"yyy\" Type=\"URL\" Address=\"http://www.example-aptise.com/?from=@\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"URL Record\"\
-        \ IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\
-        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.819</ExecutionTime>\r\n</ApiResponse>"}
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524165\"\
+        \ Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\"\
+        \ TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524167\" Name=\"updated.test\"\
+        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
+        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
+        \  <host HostId=\"524171\" Name=\"updated.testfqdn\" Type=\"TXT\" Address=\"\
+        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
+        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524173\"\
+        \ Name=\"updated.testfull\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
+        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524160\" Name=\"yyy\"\
+        \ Type=\"URL\" Address=\"http://www.example-aptise.com/?from=@\" MXPref=\"\
+        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"URL Record\" IsActive=\"\
+        true\" IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\n  </CommandResponse>\r\
+        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
+        \n  <ExecutionTime>0.729</ExecutionTime>\r\n</ApiResponse>"}
     headers:
       cache-control: [private]
-      content-length: ['5215']
+      content-length: ['4194']
       content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:42:57 GMT']
+      date: ['Mon, 26 Mar 2018 17:41:19 GMT']
+      server: [Microsoft-IIS/8.5]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode 'HostId19=524160&RecordType20=TXT&IsActive10=true&IsDDNSEnabled18=false&IsDDNSEnabled19=false&AssociatedAppTitle11=&IsDDNSEnabled14=false&IsDDNSEnabled15=false&IsDDNSEnabled16=false&IsDDNSEnabled17=false&IsDDNSEnabled10=false&IsDDNSEnabled11=false&IsDDNSEnabled12=false&IsDDNSEnabled13=false&AssociatedAppTitle13=&AssociatedAppTitle14=&AssociatedAppTitle15=&AssociatedAppTitle16=&AssociatedAppTitle17=&RecordType18=TXT&RecordType19=URL&RecordType10=TXT&RecordType11=TXT&RecordType12=TXT&RecordType13=TXT&RecordType14=TXT&RecordType15=TXT&RecordType16=TXT&RecordType17=TXT&HostId8=524168&HostId9=524214&FriendlyName6=&AssociatedAppTitle10=&HostId1=524154&HostId2=524155&HostId3=524153&HostId4=524831&HostId5=524156&HostId6=524157&HostId7=524158&RecordType6=TXT&RecordType7=TXT&RecordType4=TXT&RecordType5=TXT&RecordType2=CNAME&RecordType3=CNAME&RecordType1=A&RecordType8=TXT&RecordType9=TXT&FriendlyName1=&FriendlyName3=CName+Record&FriendlyName19=URL+Record&FriendlyName18=&AssociatedAppTitle5=&FriendlyName11=&AssociatedAppTitle2=&FriendlyName13=&FriendlyName12=&FriendlyName15=&FriendlyName14=&FriendlyName17=&AssociatedAppTitle3=&HostId12=524172&HostId13=524163&HostId10=524166&HostId11=524170&HostId16=524167&HostId17=524171&IsDDNSEnabled8=false&IsDDNSEnabled9=false&IsDDNSEnabled6=false&IsDDNSEnabled7=false&IsDDNSEnabled4=false&IsDDNSEnabled5=false&IsDDNSEnabled2=false&IsDDNSEnabled3=false&IsDDNSEnabled1=false&Address8=challengetoken&Address9=updated&IsActive9=true&IsActive8=true&IsActive3=true&IsActive2=true&IsActive1=true&IsActive7=true&IsActive6=true&IsActive5=true&IsActive4=true&TTL4=1800&HostName12=orig.testfull&HostName13=random.fqdntest&HostName10=orig.test&HostName11=orig.testfqdn&HostName16=updated.test&HostName17=updated.testfqdn&HostName14=random.fulltest&Address1=127.0.0.1&HostName18=updated.testfull&HostName19=yyy&MXPref5=10&IsActive13=true&IsActive12=true&IsActive11=true&TTL3=1800&IsActive17=true&IsActive16=true&IsActive15=true&IsActive14=true&Address4=challengetoken1&IsActive19=true&IsActive18=true&MXPref2=10&MXPref1=10&Address7=challengetoken&TTL8=1800&TTL9=1800&MXPref9=10&MXPref8=10&MXPref7=10&TTL1=60&TTL2=60&Address3=parkingpage.namecheap.com.&MXPref3=10&TTL5=60&TTL6=60&TTL7=1800&TTL14=1800&Address13=challengetoken&TTL15=1800&TLD=com&FriendlyName10=&Address2=docs.example.com.&Address12=challengetoken&Address18=challengetoken&Address19=http%3A%2F%2Fwww.example-aptise.com%2F%3Ffrom%3D%40&AssociatedAppTitle12=&MXPref13=10&MXPref12=10&MXPref11=10&MXPref10=10&MXPref17=10&MXPref16=10&MXPref15=10&MXPref14=10&MXPref19=10&MXPref18=10&HostName1=localhost&HostName2=docs&HostName3=xxxx&HostName4=_acme-challenge.createrecordset&HostName5=_acme-challenge.fqdn&HostName6=_acme-challenge.full&HostName7=_acme-challenge.test&HostName8=orig.nameonly.test&HostName9=orig.nameonly.test&Address10=challengetoken&Address11=challengetoken&Address16=challengetoken&MXPref6=10&Address14=challengetoken&Address15=challengetoken&TTL12=1800&TTL13=1800&HostName20=_acme-challenge.createrecordset&TTL10=1800&Address17=challengetoken&TTL11=1800&Address5=challengetoken&TTL16=1800&FriendlyName16=&TTL17=1800&AssociatedAppTitle6=&AssociatedAppTitle7=&AssociatedAppTitle4=&FriendlyName2=&FriendlyName5=&FriendlyName4=&FriendlyName7=&AssociatedAppTitle1=&FriendlyName9=&FriendlyName8=&HostName15=random.test&AssociatedAppTitle8=&AssociatedAppTitle9=&Address6=challengetoken&SLD=example-aptise&MXPref4=10&TTL18=1800&Address20=challengetoken2&AssociatedAppTitle18=&TTL19=1800&HostId14=524164&AssociatedAppTitle19=&HostId15=524165&HostId18=524173'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['3557']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.setHosts
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.sethosts</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.dns.setHosts\">\r\n    <DomainDNSSetHostsResult\
+        \ Domain=\"example-aptise.com\" IsSuccess=\"true\">\r\n      <Warnings />\r\
+        \n    </DomainDNSSetHostsResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\
+        \n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\n  <ExecutionTime>1.063</ExecutionTime>\r\
+        \n</ApiResponse>"}
+    headers:
+      cache-control: [private]
+      content-length: ['559']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Mon, 26 Mar 2018 17:41:20 GMT']
       server: [Microsoft-IIS/8.5]
       vary: [Accept-Encoding]
       x-aspnet-version: [4.0.30319]
