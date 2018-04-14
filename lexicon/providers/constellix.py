@@ -18,8 +18,8 @@ from .base import Provider as BaseProvider
 logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-api-key", help="specify the API key username used to authenticate")
-    subparser.add_argument("--auth-secret", help="specify secret key used authenticate=")
+    subparser.add_argument("--auth-username", help="specify the API key username used to authenticate")
+    subparser.add_argument("--auth-token", help="specify secret key used authenticate=")
 
 class Provider(BaseProvider):
 
@@ -40,6 +40,7 @@ class Provider(BaseProvider):
         for domain in payload:
             if domain['name'] == self.options['domain']:
                 self.domain_id = domain['id']
+                self.domain_details = domain
                 continue
 
         if not self.domain_id:
@@ -69,34 +70,36 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        filter = {}
-        if type:
-            filter['type'] = type
-        if name:
-            filter['recordName'] = self._relative_name(name)
-        payload = self._get('/domains/{0}/records/{1}/'.format(self.domain_id, type))
+        self._check_type(type)
+
+        # Oddly, Constellix supports API-level filtering for everything except LOC
+        # records, so we need to retrieve all records for LOC and filter based on type
+        # on our end.
+        if not type or type == 'LOC':
+            payload = self._get('/domains/{0}/records/'.format(self.domain_id))
+        else:
+            payload = self._get('/domains/{0}/records/{1}/'.format(self.domain_id, type))
 
         records = []
-        for record in payload:
+
+        for record in self._filter_records(payload, type=type, name=name, content=content):
             processed_record = {
                 'type': record['type'],
                 'name': '{0}.{1}'.format(record['name'], self.options['domain']),
                 'ttl': record['ttl'],
                 'content': record['value'],
                 'id': record['id']
-            }
+                }
 
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
-
-        if content:
-            records = [record for record in records if record['content'].lower() == content.lower()]
 
         logger.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
+        self._check_type(type)
 
         data = {
             'id': identifier,
@@ -118,6 +121,8 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        self._check_type(type)
+
         delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)
@@ -134,8 +139,26 @@ class Provider(BaseProvider):
         logger.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+    def _check_type(self, type=None):
+        # Constellix doesn't treat SOA as a separate record type, so we bail on SOA modificiations.
+        # It looks like it would be possible to fake SOA CRUD, so an area for possible future
+        # improvement
+
+        if type == 'SOA':
+            raise Exception('{0} record type is not supported in the Constellix Provider'.format(type))
+
+        return True
+
+
+    def _filter_records(self, records, type=None, name=None, content=None):
+        _records = []
+        for record in records:
+            if (not type or record['type'] == type) and \
+               (not name or record['name'] == self._full_name(name)) and \
+               (not content or record['content'] == content):
+                _records.append(record)
+        return _records
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
@@ -145,14 +168,14 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'x-cnsdns-apiKey': self.options['auth_api_key'],
+            'x-cnsdns-apiKey': self.options['auth_username'],
         }
         default_auth = None
 
         # Date string in epoch format
         request_date = str(int(time.time() * 1000))
 
-        hashed = hmac.new(self.options['auth_secret'], msg=request_date, digestmod=sha1)
+        hashed = hmac.new(self.options['auth_token'], msg=request_date, digestmod=sha1)
 
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())
