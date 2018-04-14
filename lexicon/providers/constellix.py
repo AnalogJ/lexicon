@@ -74,10 +74,10 @@ class Provider(BaseProvider):
             filter['type'] = type
         if name:
             filter['recordName'] = self._relative_name(name)
-        payload = self._get('/dns/managed/{0}/records'.format(self.domain_id), filter)
+        payload = self._get('/domains/{0}/records/{1}/'.format(self.domain_id, type))
 
         records = []
-        for record in payload['data']:
+        for record in payload:
             processed_record = {
                 'type': record['type'],
                 'name': '{0}.{1}'.format(record['name'], self.options['domain']),
