@@ -50,14 +50,13 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
         record = {
-            'type': type,
             'name': self._relative_name(name),
             'value': content,
             'ttl': self.options['ttl']
         }
         payload = {}
         try:
-            payload = self._post('/dns/managed/{0}/records/'.format(self.domain_id), record)
+            payload = self._post('/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
         except requests.exceptions.HTTPError as e:
             if e.response.status_code != 400:
                 raise
@@ -66,9 +65,9 @@ class Provider(BaseProvider):
         logger.debug('create_record: %s', 'name' in payload)
         return True
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
+
+    # Currently returns the first value for hosts where there may be multiple
+    # values.  Need to check to see how this is handled for other providers.
     def list_records(self, type=None, name=None, content=None):
         self._check_type(type)
 
@@ -82,17 +81,19 @@ class Provider(BaseProvider):
 
         records = []
 
-        for record in self._filter_records(payload, type=type, name=name, content=content):
+        for record in payload:
             processed_record = {
                 'type': record['type'],
                 'name': '{0}.{1}'.format(record['name'], self.options['domain']),
                 'ttl': record['ttl'],
-                'content': record['value'],
+                'content': record['roundRobin'][0]['value'],
                 'id': record['id']
                 }
 
             processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
+
+        records = self._filter_records(records, type=type, name=name, content=content)
 
         logger.debug('list_records: %s', records)
         return records
