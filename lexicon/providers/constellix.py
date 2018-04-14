@@ -29,7 +29,6 @@ class Provider(BaseProvider):
         self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dns.constellix.com/v1')
 
     def authenticate(self):
-
         try:
             payload = self._get('/domains/')
         except requests.exceptions.HTTPError as e:
@@ -37,13 +36,14 @@ class Provider(BaseProvider):
                 payload = {}
             else:
                 raise e
+    
+        for domain in payload:
+            if domain['name'] == self.options['domain']:
+                self.domain_id = domain['id']
+                continue
 
-        logger.debug("%s", payload)
-
-        if not payload or not payload['id']:
+        if not self.domain_id:
             raise Exception('No domain found')
-
-        self.domain_id = payload['id']
 
 
     # Create record. If record already exists with the same content, do nothing'
