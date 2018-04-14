@@ -1,32 +1,46 @@
 interactions:
 - request:
-    body: !!python/unicode '{"auth": {"RAX-KSKEY:apiKeyCredentials": {"username":
-      "foo", "apiKey": "bar"}}}'
+    body: !!python/unicode '{}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['116']
+      Content-Length: ['113']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: POST
     uri: https://identity.api.rackspacecloud.com/v2.0/tokens
   response:
-    body: {string: !!python/unicode '{"access":{"token":{"expires":"2018-02-01T15:14:57.079Z","RAX-AUTH:issued":"2018-01-31T15:03:00.079Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
+    body: {string: !!python/unicode '{"access":{"serviceCatalog":[{"endpoints":[{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"DFW"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"ORD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"SYD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"IAD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/cdn6.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"HKG"}],"name":"cloudFilesCDN","type":"rax:object-cdn"},{"endpoints":[{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"DFW"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"SYD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"ORD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"IAD"},{"tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","publicURL":"https:\/\/storage101.hkg1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","internalURL":"https:\/\/snet-storage101.hkg1.clouddrive.com\/v1\/MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","region":"HKG"}],"name":"cloudFiles","type":"object-store"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.autoscale.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"}],"name":"autoscale","type":"rax:autoscale"},{"endpoints":[{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","region":"SYD"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","region":"ORD"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/hkg.servers.api.rackspacecloud.com\/","versionInfo":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2","region":"HKG"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","region":"IAD"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","region":"DFW"}],"name":"cloudServersOpenStack","type":"compute"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.backup.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.backup.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.backup.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.backup.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.backup.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"IAD"}],"name":"cloudBackup","type":"rax:backup"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.blockstorage.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"IAD"}],"name":"cloudBlockStorage","type":"volume"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.loadbalancers.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"IAD"}],"name":"cloudLoadBalancers","type":"rax:load-balancer"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.databases.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"IAD"}],"name":"cloudDatabases","type":"rax:database"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/placeholder_auth_account"}],"name":"cloudDNS","type":"rax:dns"},{"endpoints":[{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.bigdata.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/ord.bigdata.api.rackspacecloud.com\/","versionInfo":"https:\/\/ord.bigdata.api.rackspacecloud.com\/v2","region":"ORD"},{"versionId":"1","tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.bigdata.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","versionList":"https:\/\/ord.bigdata.api.rackspacecloud.com\/","versionInfo":"https:\/\/ord.bigdata.api.rackspacecloud.com\/v1.0","region":"ORD"},{"versionId":"1","tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.bigdata.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","versionList":"https:\/\/iad.bigdata.api.rackspacecloud.com\/","versionInfo":"httpis:\/\/iad.bigdata.api.rackspacecloud.com\/v1.0","region":"IAD"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/","versionInfo":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/v2","region":"DFW"},{"versionId":"2","tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.bigdata.api.rackspacecloud.com\/v2\/placeholder_auth_account","versionList":"https:\/\/iad.bigdata.api.rackspacecloud.com\/","versionInfo":"https:\/\/iad.bigdata.api.rackspacecloud.com\/v2","region":"IAD"},{"versionId":"1","tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","versionList":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/","versionInfo":"https:\/\/dfw.bigdata.api.rackspacecloud.com\/v1.0","region":"DFW"}],"name":"cloudBigData","type":"rax:bigdata"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","internalURL":"https:\/\/snet-syd.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","internalURL":"https:\/\/snet-dfw.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","internalURL":"https:\/\/snet-iad.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","internalURL":"https:\/\/snet-hkg.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","internalURL":"https:\/\/snet-ord.queues.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"ORD"}],"name":"cloudQueues","type":"rax:queues"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.orchestration.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.orchestration.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.orchestration.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.orchestration.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.orchestration.api.rackspacecloud.com\/v1\/placeholder_auth_account","region":"HKG"}],"name":"cloudOrchestration","type":"orchestration"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.networks.api.rackspacecloud.com\/v2.0","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.networks.api.rackspacecloud.com\/v2.0","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.networks.api.rackspacecloud.com\/v2.0","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.networks.api.rackspacecloud.com\/v2.0","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.networks.api.rackspacecloud.com\/v2.0","region":"DFW"}],"name":"cloudNetworks","type":"network"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.images.api.rackspacecloud.com\/v2","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.images.api.rackspacecloud.com\/v2","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.images.api.rackspacecloud.com\/v2","region":"DFW"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.images.api.rackspacecloud.com\/v2","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.images.api.rackspacecloud.com\/v2","region":"HKG"}],"name":"cloudImages","type":"image"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/placeholder_auth_account"}],"name":"cloudMonitoring","type":"rax:monitor"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/identity.api.rackspacecloud.com\/v2.0","region":"DFW"}],"name":"Cloud
+        Auth Service","type":"identity"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/ord.feeds.api.rackspacecloud.com\/placeholder_auth_account","internalURL":"https:\/\/atom.prod.ord1.us.ci.rackspace.net\/placeholder_auth_account","region":"ORD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/syd.feeds.api.rackspacecloud.com\/placeholder_auth_account","internalURL":"https:\/\/atom.prod.syd2.us.ci.rackspace.net\/placeholder_auth_account","region":"SYD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/iad.feeds.api.rackspacecloud.com\/placeholder_auth_account","internalURL":"https:\/\/atom.prod.iad3.us.ci.rackspace.net\/placeholder_auth_account","region":"IAD"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/hkg.feeds.api.rackspacecloud.com\/placeholder_auth_account","internalURL":"https:\/\/atom.prod.hkg1.us.ci.rackspace.net\/placeholder_auth_account","region":"HKG"},{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/dfw.feeds.api.rackspacecloud.com\/placeholder_auth_account","internalURL":"https:\/\/atom.prod.dfw1.us.ci.rackspace.net\/placeholder_auth_account","region":"DFW"}],"name":"cloudFeeds","type":"rax:feeds"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/global.cdn.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","internalURL":"https:\/\/global.cdn.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"}],"name":"rackCDN","type":"rax:cdn"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/sites.api.rackspacecloud.com\/v1.0\/placeholder_auth_account","region":"DFW"}],"name":"cloudSites","type":"rax:sites"},{"endpoints":[{"tenantId":"placeholder_auth_account","publicURL":"https:\/\/global.metrics.api.rackspacecloud.com\/v2.0\/placeholder_auth_account","region":"IAD"}],"name":"cloudMetrics","type":"rax:cloudmetrics"}],"user":{"RAX-AUTH:sessionInactivityTimeout":"PT12H","RAX-AUTH:defaultRegion":"DFW","roles":[{"name":"cloudBackup:admin","description":"Admin
+        role for cloud backup access.","id":"10000290"},{"name":"identity:default","description":"Default
+        Role.","id":"2"},{"name":"ticketing:admin","description":"Ticketing Admin
+        role for Account user","id":"10000407"},{"name":"billing:admin","description":"Billing
+        Admin Access","id":"10000293"},{"name":"checkmate","description":"Checkmate
+        Access role","id":"10000150"},{"name":"object-store:default","tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","description":"A
+        Role that allows a user access to keystone Service methods","id":"5"},{"name":"compute:default","tenantId":"placeholder_auth_account","description":"A
+        Role that allows a user access to keystone Service methods","id":"6"},{"name":"identity:user-manage","description":"User
+        manage role","id":"7"},{"name":"object-store:admin","description":"Object
+        Store Admin Role for Account User","id":"10000256"},{"name":"identity:tenant-access","tenantId":"MossoCloudFS_c7bd7f81-bf86-4957-8d40-c4d7f13affb2","description":"A
+        role to grant visibility to a tenant","id":"10000411"},{"name":"identity:tenant-access","tenantId":"placeholder_auth_account","description":"A
+        role to grant visibility to a tenant","id":"10000411"},{"name":"admin","description":"Full
+        Access Admin Role for Account User","id":"10000258"},{"name":"rax_managed","description":"Rackspace
+        Managed Cloud Customer","id":"63"}],"name":"placeholder_auth_username","id":"324963","RAX-AUTH:domainId":"placeholder_auth_account"},"token":{"expires":"2018-03-27T20:49:14.131Z","RAX-AUTH:issued":"2018-03-26T20:44:05.131Z","RAX-AUTH:authenticatedBy":["APIKEY"],"id":"placeholder_auth_token","tenant":{"name":"placeholder_auth_account","id":"placeholder_auth_account"}}}}'}
     headers:
       connection: [keep-alive]
-      content-length: ['14511']
+      content-length: ['15096']
       content-security-policy: [default-src 'self']
       content-type: [application/json]
-      date: ['Wed, 31 Jan 2018 15:03:00 GMT']
+      date: ['Mon, 26 Mar 2018 20:44:05 GMT']
       server: [nginx]
       strict-transport-security: [max-age=15552000; includeSubDomains]
       vary: ['Accept, Accept-Encoding, X-Auth-Token']
       x-content-type-options: [nosniff]
       x-frame-options: [DENY]
-      x-node-id: [ord-06]
+      x-newrelic-app-data: [PxQCWVFVDwQTVVRTBAQAUlATGhE1AwE2QgNWEVlbQFtcC2VOchRAFgtba04QURYDbEsVDVxUWRVEGWZ8MTJDI0UWUAdWTF1RUhFcQXAxektGGgdPVk8IHQBWWVcDCQJRXB0bAk5EBlcDUVlSCFkFVFZXDFYBWBFOAldbEgM+]
+      x-node-id: [ord-03]
       x-tenant-id: ['placeholder_auth_account']
-      x-trans-id: [eyJyZXF1ZXN0SWQiOiI0Mjk2ODNhOC1iNTQ5LTRlMmQtOWVkNC01NDJlZGY4MTY2MDAiLCJvcmlnaW4iOm51bGx9]
+      x-trans-id: [eyJyZXF1ZXN0SWQiOiJkMGI1NmFjNS1jYTZlLTQ2MGUtOTI0Mi02MTJhYjFjMzk2OTAiLCJvcmlnaW4iOm51bGx9]
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -38,42 +52,42 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
     uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains?name=capsulecd.com
   response:
-    body: {string: !!python/unicode '{"domains":[{"name":"capsulecd.com","id":1234567,"emailAddress":"hostmaster@capsulecd.com","updated":"2018-01-31T15:02:58.000+0000","created":"2017-09-21T21:02:56.000+0000"}],"totalEntries":1}'}
+    body: {string: !!python/unicode '{"domains":[{"name":"capsulecd.com","id":6156121,"emailAddress":"test@example.com","updated":"2018-03-26T20:44:02.000+0000","created":"2018-03-26T13:53:55.000+0000"}],"totalEntries":1}'}
     headers:
-      content-length: ['211']
+      content-length: ['200']
       content-type: [application/json]
-      date: ['Wed, 31 Jan 2018 15:03:00 GMT']
+      date: ['Mon, 26 Mar 2018 20:44:05 GMT']
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
+      x-newrelic-app-data: [PxQEVVNRCBAIUFFRAQcVSkZmU1E2FAIMQwNbFlFXWm4cN1wSRTZWADdTRRcPAF1vHwcODxlDVgUPQkZSAQNNAVwNTQYWXFpBHQRJCB8CXA8JWVlPFAZLXEUWAgdEH3MJCVBfXRE0BhFfF0oBXWQbQFYRSwhUF1YmC1tWCAgQGh8ASlFOBx8FV1EABwpaUk9PAU4aB15aUVdSVgFTUgICU1EFFTw=]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"records": [{"data": "challengetoken", "type": "TXT",
+    body: !!python/unicode '{"records": [{"type": "TXT", "data": "challengetoken",
       "name": "random.test.capsulecd.com", "ttl": 3600}]}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['118']
+      Content-Length: ['106']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: POST
-    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/6156121/records
   response:
     body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
-        \"type\": \"TXT\", \"name\": \"random.test.capsulecd.com\", \"ttl\": 3600}]}","status":"RUNNING","verb":"POST","jobId":"c05ab745-a06d-4d17-b26f-37d2f7f122a9","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/c05ab745-a06d-4d17-b26f-37d2f7f122a9","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+        \"type\": \"TXT\", \"name\": \"random.test.capsulecd.com\", \"ttl\": 3600}]}","status":"RUNNING","verb":"POST","jobId":"a817ffd2-8e69-4ec4-aada-c37fbd821d7e","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/a817ffd2-8e69-4ec4-aada-c37fbd821d7e","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/6156121/records"}'}
     headers:
-      content-length: ['421']
+      content-length: ['409']
       content-type: [application/json]
-      date: ['Wed, 31 Jan 2018 15:03:00 GMT']
+      date: ['Mon, 26 Mar 2018 20:44:05 GMT']
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
+      x-newrelic-app-data: [PxQEVVNRCBAIUFFRAQcVSkZmU1E2FAIMQwNbFlFXWm4cN1wSRTZWADdTRRcPAF1vHwcODxlDVgUPQkZSAQNNAVwNTQYWXFpBHQRJCB8CXA8JWVlPFAZLXEUWAgdEH2UDB15EVxE0BhFfF0oBXWQbUUEAWBVUM1YBC0RTEi8NfFxdBQgMFR0HSFQdBh1SV1JUBlIMVQAUGQMfR1pTA1AHBFVUVQIAVQ1WVFRDPw==]
     status: {code: 202, message: Accepted}
 - request:
     body: null
@@ -83,19 +97,19 @@ interactions:
       Connection: [keep-alive]
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
-    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/c05ab745-a06d-4d17-b26f-37d2f7f122a9?showDetails=true
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/a817ffd2-8e69-4ec4-aada-c37fbd821d7e?showDetails=true
   response:
     body: {string: !!python/unicode '{"request":"{\"records\": [{\"data\": \"challengetoken\",
-        \"type\": \"TXT\", \"name\": \"random.test.capsulecd.com\", \"ttl\": 3600}]}","status":"COMPLETED","response":{"records":[{"name":"random.test.capsulecd.com","id":"TXT-1614070","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:03:01.000+0000","created":"2018-01-31T15:03:01.000+0000"}]},"verb":"POST","jobId":"c05ab745-a06d-4d17-b26f-37d2f7f122a9","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/c05ab745-a06d-4d17-b26f-37d2f7f122a9","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records"}'}
+        \"type\": \"TXT\", \"name\": \"random.test.capsulecd.com\", \"ttl\": 3600}]}","status":"COMPLETED","response":{"records":[{"name":"random.test.capsulecd.com","id":"TXT-1685062","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-03-26T20:44:06.000+0000","created":"2018-03-26T20:44:06.000+0000"}]},"verb":"POST","jobId":"a817ffd2-8e69-4ec4-aada-c37fbd821d7e","callbackUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/status/a817ffd2-8e69-4ec4-aada-c37fbd821d7e","requestUrl":"https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/6156121/records"}'}
     headers:
-      content-length: ['646']
+      content-length: ['622']
       content-type: [application/json]
-      date: ['Wed, 31 Jan 2018 15:03:01 GMT']
+      date: ['Mon, 26 Mar 2018 20:44:07 GMT']
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
+      x-newrelic-app-data: [PxQEVVNRCBAIUFFRAQcVSkZmU1E2FAIMQwNbFlFXWm4cN1wSRTZWADdTRRcPAF1vHxcVA0NERDpLSlxcAC8HWBA5CE8BWRlUbh4BHBw6A09dVxoHOxgMTh0/UU8OUBoAOUoCTk89U08JAxUEZUMATx4+CUwIAB4EOU0GUxseGBt3ITVLFR0HSFQdBh1SVltbBVoBVxQVBR4RAV9TU1dQUQAHBFhVVglSUkY8]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{}'
@@ -106,17 +120,17 @@ interactions:
       Content-Length: ['2']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-      X-Auth-Token: [!!python/unicode 'placeholder_auth_token']
     method: GET
-    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/1234567/records?per_page=100&type=TXT&name=random.test.capsulecd.com
+    uri: https://dns.api.rackspacecloud.com/v1.0/placeholder_auth_account/domains/6156121/records?per_page=100&type=TXT&name=random.test.capsulecd.com
   response:
-    body: {string: !!python/unicode '{"records":[{"name":"random.test.capsulecd.com","id":"TXT-1614070","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-01-31T15:03:01.000+0000","created":"2018-01-31T15:03:01.000+0000"}]}'}
+    body: {string: !!python/unicode '{"records":[{"name":"random.test.capsulecd.com","id":"TXT-1685062","type":"TXT","data":"challengetoken","ttl":3600,"updated":"2018-03-26T20:44:06.000+0000","created":"2018-03-26T20:44:06.000+0000"}]}'}
     headers:
-      content-length: ['211']
+      content-length: ['199']
       content-type: [application/json]
-      date: ['Wed, 31 Jan 2018 15:03:02 GMT']
+      date: ['Mon, 26 Mar 2018 20:44:07 GMT']
       server: [Jetty(8.0.y.z-SNAPSHOT)]
       via: [1.1 Repose (Repose/2.13.2)]
       x-api-version: [1.0.37]
+      x-newrelic-app-data: [PxQEVVNRCBAIUFFRAQcVSkZmU1E2FAIMQwNbFlFXWm4cN1wSRTZWADdTRRcPAF1vHwcODxlDVgUPQkZSAQNNAVwNTQYWXFpBHQRJCB8CXA8JWVlPFAZLXEUWAgdEH2UDB15EVxE0BhFfF0oBXWQbQFYRSwhUF1YwAVVYEwIQGh8ASlFOBx8FUF0JBAtUU09PAU4aBFoMBgpVUlsABwVVBwIGVkM7]
     status: {code: 200, message: OK}
 version: 1
