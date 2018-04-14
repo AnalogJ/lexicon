@@ -51,8 +51,10 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         record = {
             'name': self._relative_name(name),
-            'value': content,
-            'ttl': self.options['ttl']
+            'ttl': self.options['ttl'],
+            'roundRobin':
+                [{'disableFlag': False,
+                 'value': content}],
         }
         payload = {}
         try:
