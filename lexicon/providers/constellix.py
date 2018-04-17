@@ -84,16 +84,17 @@ class Provider(BaseProvider):
         records = []
 
         for record in payload:
-            processed_record = {
-                'type': record['type'],
-                'name': '{0}.{1}'.format(record['name'], self.options['domain']),
-                'ttl': record['ttl'],
-                'content': record['roundRobin'][0]['value'],
-                'id': record['id']
-                }
+            for rr in record['roundRobin']:
+                processed_record = {
+                    'type': record['type'],
+                    'name': '{0}.{1}'.format(record['name'], self.options['domain']),
+                    'ttl': record['ttl'],
+                    'content': rr['value'],
+                    'id': record['id']
+                    }
 
-            processed_record = self._clean_TXT_record(processed_record)
-            records.append(processed_record)
+                processed_record = self._clean_TXT_record(processed_record)
+                records.append(processed_record)
 
         records = self._filter_records(records, type=type, name=name, content=content)
 
@@ -104,19 +105,22 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
         self._check_type(type)
 
+        if not identifier:
+            existing = self._guess_record(type, name)
+            identifier = existing['id']
+
+        if not identifier:
+            raise Exception("No identifier provided")
+
         data = {
             'id': identifier,
             'ttl': self.options['ttl']
         }
 
-        if name:
-            data['name'] = self._relative_name(name)
         if content:
             data['value'] = content
-        if type:
-            data['type'] = type
 
-        payload = self._put('/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
+        payload = self._put('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
 
         logger.debug('update_record: %s', True)
         return True
@@ -162,6 +166,15 @@ class Provider(BaseProvider):
                (not content or record['content'] == content):
                 _records.append(record)
         return _records
+
+    def _guess_record(self, type, name=None, content=None):
+        records = self.list_records(type=type, name=name, content=content)
+        if len(records) == 1:
+            return records[0]
+        elif len(records) > 1:
+            raise Exception('Identifier was not provided and several existing records match the request for {0}/{1}'.format(type,name))
+        elif len(records) == 0:
+            raise Exception('Identifier was not provided and no existing records match the request for {0}/{1}'.format(type,name))    
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
