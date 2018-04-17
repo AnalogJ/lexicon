@@ -107,6 +107,7 @@ class Provider(BaseProvider):
 
         if not identifier:
             existing = self._guess_record(type, name)
+            logger.error(existing)
             identifier = existing['id']
 
         if not identifier:
@@ -114,11 +115,13 @@ class Provider(BaseProvider):
 
         data = {
             'id': identifier,
-            'ttl': self.options['ttl']
+            'ttl': self.options['ttl'],
+            'name': self._relative_name(name)
         }
 
         if content:
-            data['value'] = content
+            data['roundRobin'] =  [{'disableFlag': False,
+                                    'value': content}]
 
         payload = self._put('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
 
@@ -169,12 +172,11 @@ class Provider(BaseProvider):
 
     def _guess_record(self, type, name=None, content=None):
         records = self.list_records(type=type, name=name, content=content)
-        if len(records) == 1:
-            return records[0]
-        elif len(records) > 1:
-            raise Exception('Identifier was not provided and several existing records match the request for {0}/{1}'.format(type,name))
-        elif len(records) == 0:
+
+        if len(records) == 0:
             raise Exception('Identifier was not provided and no existing records match the request for {0}/{1}'.format(type,name))    
+        else:
+            return records[0]
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
