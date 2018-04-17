@@ -1,0 +1,123 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dns.constellix.com/v1/domains/
+  response:
+    body: {string: !!python/unicode '[{"id":23906,"name":"example.org","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010114,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-04-17T20:37:35Z","modifiedTs":"2018-04-17T20:38:08Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":12,"status":"ACTIVE","tags":[],"contactIds":[]},{"id":20063,"name":"actionkit.com","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010107,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-03-28T15:56:03Z","modifiedTs":"2018-04-15T03:39:50Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":6,"status":"ACTIVE","tags":null,"contactIds":[]},{"id":20064,"name":"dk.actionkit.com","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010103,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-03-28T15:56:03Z","modifiedTs":"2018-04-05T15:11:13Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":2,"status":"ACTIVE","tags":null,"contactIds":[]},{"id":20234,"name":"actionk.it","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010102,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-04-03T04:35:04Z","modifiedTs":"2018-04-03T04:35:05Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":1,"status":"ACTIVE","tags":null,"contactIds":[]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:38:09 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=211B00E9FF1E976F9D7E427E1AE2696E; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"roundRobin": [{"disableFlag": false, "value": "challengetoken"}],
+      "name": "delete.testfull", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['107']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.dns.constellix.com/v1/domains/23906/records/TXT/
+  response:
+    body: {string: !!python/unicode '[{"id":92019,"type":"TXT","recordType":"txt","name":"delete.testfull","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997490233,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:38:10 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=7388A7CD8099CF83AA57816F09739B2D; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dns.constellix.com/v1/domains/23906/records/TXT/
+  response:
+    body: {string: !!python/unicode '[{"id":92013,"type":"TXT","recordType":"txt","name":"_acme-challenge.createrecordset","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997479715,"value":[{"value":"\"challengetoken1\"","disableFlag":false},{"value":"\"challengetoken2\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken1\"","disableFlag":false},{"value":"\"challengetoken2\"","disableFlag":false}]},{"id":92010,"type":"TXT","recordType":"txt","name":"_acme-challenge.fqdn","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997474053,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92011,"type":"TXT","recordType":"txt","name":"_acme-challenge.full","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997475400,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92015,"type":"TXT","recordType":"txt","name":"_acme-challenge.noop","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997481111,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92012,"type":"TXT","recordType":"txt","name":"_acme-challenge.test","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997476718,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92019,"type":"TXT","recordType":"txt","name":"delete.testfull","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997490232,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:38:10 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=2A032777092AE2A3FF3D19C91E8BDB64; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: DELETE
+    uri: https://api.dns.constellix.com/v1/domains/23906/records/TXT/92019/
+  response:
+    body: {string: !!python/unicode '{"success":"Record  deleted successfully"}'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:38:11 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=E2B0118C950B93333415131EA29494D9; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dns.constellix.com/v1/domains/23906/records/TXT/
+  response:
+    body: {string: !!python/unicode '[{"id":92013,"type":"TXT","recordType":"txt","name":"_acme-challenge.createrecordset","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997479715,"value":[{"value":"\"challengetoken1\"","disableFlag":false},{"value":"\"challengetoken2\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken1\"","disableFlag":false},{"value":"\"challengetoken2\"","disableFlag":false}]},{"id":92010,"type":"TXT","recordType":"txt","name":"_acme-challenge.fqdn","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997474053,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92011,"type":"TXT","recordType":"txt","name":"_acme-challenge.full","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997475400,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92015,"type":"TXT","recordType":"txt","name":"_acme-challenge.noop","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997481111,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]},{"id":92012,"type":"TXT","recordType":"txt","name":"_acme-challenge.test","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997476718,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:38:11 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=1A46F3EF5DFD74B5E438E722526DE7E1; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+version: 1
