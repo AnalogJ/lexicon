@@ -24,7 +24,7 @@ import json
 import locale
 import logging
 import time
-from hashlib import sha1
+import hashlib
 
 import requests
 from builtins import bytes
@@ -228,7 +228,7 @@ class Provider(BaseProvider):
         # Date string in epoch format
         request_date = str(int(time.time() * 1000))
 
-        hashed = hmac.new(self.options['auth_token'], msg=request_date, digestmod=sha1)
+        hashed = hmac.new(self.options['auth_token'].encode('utf-8'), request_date.encode('utf-8'), digestmod=hashlib.sha1)
 
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())
