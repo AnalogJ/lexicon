@@ -7,7 +7,6 @@ import pytest
 # uniqueness across the service.  You'll need your own production credentials
 # and a unique domain name if you want to run these tests natively.
 class ConstellixProviderTests(TestCase, IntegrationTests):
-
     Provider = Provider
     provider_name = 'constellix'
     domain = 'example.org'
