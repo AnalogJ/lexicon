@@ -12,5 +12,5 @@ class ConstellixProviderTests(TestCase, IntegrationTests):
     domain = 'example.org'
 
     def _filter_headers(self):
-        return ['x-cnsdns-apiKey', 'x-cnsdns-hmac']
+        return ['x-cnsdns-apiKey', 'x-cnsdns-hmac', 'x-cnsdns-requestDate']
 
