@@ -1,3 +1,19 @@
+# The Constellix API has some limitations.  We try to paper over them here, but here's what you need to be
+# aware of:
+#
+#  1) SOA records are not first-class record types in the Constellix API, so are not supported.
+#  2) We expect all records to use the "Standard" record type, so failover, pools or round robin with
+#     failover are not supported.
+#  3) Because Constellix represents record sets as a single record with multiple values attached, not as 
+#     a set of separate records, create and delete operations end up becoming read/update operations when
+#     working with record sets.
+#
+#     Since these aren't atomic operations, it creates a small window where you could have data loss
+#     if multiple processes were trying to work with the same record set.
+#
+#     This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
+#     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
+
 from __future__ import absolute_import
 from __future__ import print_function
 
@@ -57,13 +73,22 @@ class Provider(BaseProvider):
                  'value': content}],
         }
         payload = {}
+
         try:
             payload = self._post('/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code != 400:
-                raise
+            # If there is already a record with that name, we need to do an update.
+            if e.response.status_code == 400:
+                existing_records = self.list_records(type=type, name=name)
+                new_content = [r['content'] for r in existing_records]
 
-                # http 400 is ok here, because the record probably already exists
+                # Only do the update if we are creating a record that doesn't already exist, otherwise
+                # Constellix will throw an error.
+                if content not in new_content:
+                    new_content.append(content)
+                    self.update_record(existing_records[0]['id'], type=type, name=name, content=new_content)
+            else:
+                raise
         logger.debug('create_record: %s', 'name' in payload)
         return True
 
@@ -105,10 +130,16 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
         self._check_type(type)
 
-        if not identifier:
-            existing = self._guess_record(type, name)
-            logger.error(existing)
-            identifier = existing['id']
+        if content and not isinstance(content, (list)):
+            content = [content]
+
+        if identifier and (not type or not name):
+            record = self.list_records(identifier=identifier)
+            type = record[0]['type']
+            name = record[0]['name']
+        elif not identifier:
+            record = self.list_records(type, name)
+            identifier = record[0]['id']
 
         if not identifier:
             raise Exception("No identifier provided")
@@ -119,9 +150,11 @@ class Provider(BaseProvider):
             'name': self._relative_name(name)
         }
 
-        if content:
-            data['roundRobin'] =  [{'disableFlag': False,
-                                    'value': content}]
+        data['roundRobin'] = []
+
+        for c in content:
+            data['roundRobin'].append({'disableFlag': False,
+                                       'value': c})
 
         payload = self._put('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
 
@@ -133,18 +166,23 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         self._check_type(type)
 
-        delete_record_id = []
-        if not identifier:
-            records = self.list_records(type, name, content)
-            delete_record_id = [record['id'] for record in records]
-        else:
-            # Constellix requires a type, so if we have naked identifier, we need to
-            # get the type before we can delete.
-            record = self.list_records(identifier=identifier)
-            type = record[0]['type']
-            delete_record_id.append(identifier)
-        
-        logger.debug('delete_records: %s', delete_record_id)
+        records = self.list_records(identifier=identifier, type=type, name=name)
+
+        # If we are filtering delete records by content and we are going to have
+        # at least one record left over after deleting, then this becomes an
+        # update operation.
+        if content:
+            current_content = set(r['content'] for r in records)
+            if content in current_content and len(current_content) > 1:
+                current_content.remove(content)
+                self.update_record(records[0]['id'], type=type, name=name, content=list(current_content))
+                return True
+
+        delete_record_id = set(record['id'] for record in records)
+
+        # We need a type to do a delete, so pull one from the first record if it's not supplied.
+        if not type:
+            type = records[0]['type']
         
         for record_id in delete_record_id:
             payload = self._delete('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, record_id))
@@ -174,14 +212,6 @@ class Provider(BaseProvider):
                (not content or record['content'] == content):
                 _records.append(record)
         return _records
-
-    def _guess_record(self, type, name=None, content=None):
-        records = self.list_records(type=type, name=name, content=content)
-
-        if len(records) == 0:
-            raise Exception('Identifier was not provided and no existing records match the request for {0}/{1}'.format(type,name))    
-        else:
-            return records[0]
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
