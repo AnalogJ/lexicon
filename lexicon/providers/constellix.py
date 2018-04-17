@@ -70,7 +70,7 @@ class Provider(BaseProvider):
 
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, type=None, name=None, content=None, identifier=None):
         self._check_type(type)
 
         # Oddly, Constellix supports API-level filtering for everything except LOC
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
                 processed_record = self._clean_TXT_record(processed_record)
                 records.append(processed_record)
 
-        records = self._filter_records(records, type=type, name=name, content=content)
+        records = self._filter_records(records, type=type, name=name, content=content, identifier=identifier)
 
         logger.debug('list_records: %s', records)
         return records
@@ -138,6 +138,10 @@ class Provider(BaseProvider):
             records = self.list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
+            # Constellix requires a type, so if we have naked identifier, we need to
+            # get the type before we can delete.
+            record = self.list_records(identifier=identifier)
+            type = record[0]['type']
             delete_record_id.append(identifier)
         
         logger.debug('delete_records: %s', delete_record_id)
@@ -161,10 +165,11 @@ class Provider(BaseProvider):
         return True
 
 
-    def _filter_records(self, records, type=None, name=None, content=None):
+    def _filter_records(self, records, type=None, name=None, content=None, identifier=None):
         _records = []
         for record in records:
-            if (not type or record['type'] == type) and \
+            if (not identifier or record['id'] == identifier) and \
+               (not type or record['type'] == type) and \
                (not name or record['name'] == self._full_name(name)) and \
                (not content or record['content'] == content):
                 _records.append(record)
@@ -207,4 +212,5 @@ class Provider(BaseProvider):
         # PUT and DELETE actions dont return valid json.
         if action == 'DELETE' or action == 'PUT':
             return r.text
+
         return r.json()
