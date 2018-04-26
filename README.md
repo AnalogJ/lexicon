@@ -58,7 +58,6 @@ The current supported providers are:
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
-- BuddyDNS ([docs](https://www.buddyns.com/support/api/v2/))
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
