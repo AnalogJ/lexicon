@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
+      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
+      \   <Login xmlns=\"http://subreg.cz/types\">\n    <login>placeholder_auth_username</login><password>placeholder_auth_password</password></Login>\n</soap:Body>\n</soap:Envelope>"
+    headers:
+      Connection: [close]
+      Content-Length: ['377']
+      Content-Type: [text/xml; charset="UTF-8"]
+      Host: [subreg.cz]
+      User-Agent: [Python-urllib/2.7]
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Login_Container><response><status>ok</status><data><ssid>123456789abcdef0123456789abcdef0</ssid></data></response></ns1:Login_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+'}
+    headers:
+      cache-control: [max-age=0]
+      connection: [close]
+      content-length: ['345']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Thu, 26 Apr 2018 21:39:43 GMT']
+      expires: ['Thu, 26 Apr 2018 21:39:43 GMT']
+      server: [Apache]
+      x-powered-by: [PHP/5.4.45-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
+      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
+      \   <Domains_List xmlns=\"http://subreg.cz/types\">\n    <ssid>123456789abcdef0123456789abcdef0</ssid></Domains_List>\n</soap:Body>\n</soap:Envelope>"
+    headers:
+      Connection: [close]
+      Content-Length: ['379']
+      Content-Type: [text/xml; charset="UTF-8"]
+      Host: [subreg.cz]
+      User-Agent: [Python-urllib/2.7]
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Domains_List_Container><response><status>ok</status><data><count>1</count><domains><name>oldium.net</name><expire>2023-10-20</expire><autorenew>0</autorenew></domains></data></response></ns1:Domains_List_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+'}
+    headers:
+      cache-control: [max-age=0]
+      connection: [close]
+      content-length: ['423']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Thu, 26 Apr 2018 21:39:43 GMT']
+      expires: ['Thu, 26 Apr 2018 21:39:43 GMT']
+      server: [Apache]
+      x-powered-by: [PHP/5.4.45-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
+      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
+      \   <Get_DNS_Zone xmlns=\"http://subreg.cz/types\">\n    <domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Get_DNS_Zone>\n</soap:Body>\n</soap:Envelope>"
+    headers:
+      Connection: [close]
+      Content-Length: ['406']
+      Content-Type: [text/xml; charset="UTF-8"]
+      Host: [subreg.cz]
+      User-Agent: [Python-urllib/2.7]
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.net</domain></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+'}
+    headers:
+      cache-control: [max-age=0]
+      connection: [close]
+      content-length: ['341']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Thu, 26 Apr 2018 21:39:44 GMT']
+      expires: ['Thu, 26 Apr 2018 21:39:44 GMT']
+      server: [Apache]
+      x-powered-by: [PHP/5.4.45-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
+      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
+      \   <Add_DNS_Record xmlns=\"http://subreg.cz/types\">\n    <record><type>A</type><name>localhost</name><content>127.0.0.1</content><ttl>3600</ttl><priority>placeholder_priority</priority></record><domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Add_DNS_Record>\n</soap:Body>\n</soap:Envelope>"
+    headers:
+      Connection: [close]
+      Content-Length: ['547']
+      Content-Type: [text/xml; charset="UTF-8"]
+      Host: [subreg.cz]
+      User-Agent: [Python-urllib/2.7]
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Add_DNS_Record_Container><response><status>ok</status><data/></response></ns1:Add_DNS_Record_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+'}
+    headers:
+      cache-control: [max-age=0]
+      connection: [close]
+      content-length: ['312']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Thu, 26 Apr 2018 21:39:44 GMT']
+      expires: ['Thu, 26 Apr 2018 21:39:44 GMT']
+      server: [Apache]
+      x-powered-by: [PHP/5.4.45-0+deb7u2]
+    status: {code: 200, message: OK}
+version: 1
