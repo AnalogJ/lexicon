@@ -156,8 +156,8 @@ and with Route 53 provider dependencies:
 Using the lexicon CLI is pretty simple:
 
     # setup provider environmental variables:
-    LEXICON_CLOUDFLARE_USERNAME="myusername@example.com"
-    LEXICON_CLOUDFLARE_TOKEN="cloudflare-api-token"
+    export LEXICON_CLOUDFLARE_USERNAME="myusername@example.com"
+    export LEXICON_CLOUDFLARE_TOKEN="cloudflare-api-token"
 
     # list all TXT records on cloudflare
     lexicon cloudflare list example.com TXT
