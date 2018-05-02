@@ -1,0 +1,51 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dns.constellix.com/v1/domains/
+  response:
+    body: {string: !!python/unicode '[{"id":23906,"name":"example.org","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010104,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-04-17T20:37:35Z","modifiedTs":"2018-04-17T20:37:52Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":2,"status":"ACTIVE","tags":[],"contactIds":[]},{"id":20063,"name":"actionkit.com","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010107,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-03-28T15:56:03Z","modifiedTs":"2018-04-15T03:39:50Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":6,"status":"ACTIVE","tags":null,"contactIds":[]},{"id":20064,"name":"dk.actionkit.com","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010103,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-03-28T15:56:03Z","modifiedTs":"2018-04-05T15:11:13Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":2,"status":"ACTIVE","tags":null,"contactIds":[]},{"id":20234,"name":"actionk.it","soa":{"primaryNameserver":"ns11.constellix.com.","email":"dns.constellix.com.","ttl":86400,"serial":2015010102,"refresh":43200,"retry":3600,"expire":1209600,"negCache":180},"createdTs":"2018-04-03T04:35:04Z","modifiedTs":"2018-04-03T04:35:05Z","typeId":1,"domainTags":[],"folder":null,"hasGtdRegions":false,"hasGeoIP":false,"nameserverGroup":1,"nameservers":["ns11.constellix.com.","ns21.constellix.com.","ns31.constellix.com.","ns41.constellix.net.","ns51.constellix.net.","ns61.constellix.net."],"note":"","version":1,"status":"ACTIVE","tags":null,"contactIds":[]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:37:53 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=EEBAD2F998A59AE6A3A0751877A66D73; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"roundRobin": [{"disableFlag": false, "value": "challengetoken"}],
+      "name": "_acme-challenge.fqdn", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['112']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.dns.constellix.com/v1/domains/23906/records/TXT/
+  response:
+    body: {string: !!python/unicode '[{"id":92010,"type":"TXT","recordType":"txt","name":"_acme-challenge.fqdn","recordOption":"roundRobin","noAnswer":false,"note":"","ttl":3600,"gtdRegion":1,"parentId":23906,"parent":"domain","source":"Domain","modifiedTs":1523997474054,"value":[{"value":"\"challengetoken\"","disableFlag":false}],"roundRobin":[{"value":"\"challengetoken\"","disableFlag":false}]}]'}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 17 Apr 2018 20:37:54 GMT']
+      requestlimitheader: ['300']
+      requestsremainingheader: ['299']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [JSESSIONID=DA5CE3084FDB8D8F48C034929D53F68F; Path=/; HttpOnly]
+      transfer-encoding: [chunked]
+      x-application-context: ['application:production']
+    status: {code: 200, message: OK}
+version: 1
