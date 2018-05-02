@@ -73,10 +73,6 @@ class Provider(BaseProvider):
                 resource_list = [resource for resource in resource_list if resource['target'] == content]
             
             for resource in resource_list:
-                record_name = self._full_name(resource['name'])
-                if record_name.startswith('.'):
-                    record_name = record_name[1:]
-                
                 processed_records.append({
                     'id': resource['id'],
                     'type': resource['type'],
