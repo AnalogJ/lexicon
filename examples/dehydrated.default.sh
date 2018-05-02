@@ -6,6 +6,7 @@ set -e
 set -u
 set -o pipefail
 
+export PROVIDER_UPDATE_DELAY=${PROVIDER_UPDATE_DELAY:-"30"}
 export PROVIDER=${PROVIDER:-"cloudflare"}
 
 function deploy_challenge {
@@ -14,8 +15,13 @@ function deploy_challenge {
     echo "deploy_challenge called: ${DOMAIN}, ${TOKEN_FILENAME}, ${TOKEN_VALUE}"
 
     lexicon $PROVIDER create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." --content="${TOKEN_VALUE}"
-
-    sleep 30
+    
+    DELAY_COUNTDOWN=$PROVIDER_UPDATE_DELAY
+    while [ $DELAY_COUNTDOWN -gt 0 ]; do
+        echo -ne "$DELAY_COUNTDOWN\033[0K\r"
+        sleep 1
+        : $((DELAY_COUNTDOWN--))
+    done
 
     # This hook is called once for every domain that needs to be
     # validated, including any alternative names you may have listed.
