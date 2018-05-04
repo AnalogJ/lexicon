@@ -37,6 +37,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Linode ([docs](https://www.linode.com/api/dns))
+- Linode v4 ([docs](https://developers.linode.com/v4))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
