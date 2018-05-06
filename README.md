@@ -26,6 +26,7 @@ The current supported providers are:
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
+- Constellix ([docs](https://api-dns-docs.constellix.com/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
@@ -59,7 +60,6 @@ The current supported providers are:
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
-- Constellix ([docs](https://api-dns-docs.constellix.com/))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
 - EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
