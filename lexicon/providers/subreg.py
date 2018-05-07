@@ -32,7 +32,7 @@ class Provider(BaseProvider):
 
     def authenticate(self):
         if not self.options['auth_username'] or not self.options['auth_password']:
-            raise Exception('No valid authentication data passed, expected: auth-password')
+            raise Exception('No valid authentication data passed, expected: auth-username and auth-password')
         response = self._request("Login",
                                  self.LOGIN_RESPONSE_TYPES,
                                  login=self.options['auth_username'],
