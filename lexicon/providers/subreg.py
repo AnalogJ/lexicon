@@ -91,7 +91,7 @@ class Provider(BaseProvider):
                 if 'ttl' in filtered_record:
                     record['ttl'] = filtered_record['ttl']
                 if 'priority' in filtered_record:
-                    record['priority'] = filtered_record['ttl']
+                    record['priority'] = filtered_record['priority']
                 records.append(record)
         return records
 
