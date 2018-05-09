@@ -2,6 +2,7 @@ import contextlib
 
 from builtins import object
 import lexicon.client
+import lexicon.common.exceptions as lexceptions
 from lexicon.common.options_handler import SafeOptions, env_auth_options
 
 import pytest
@@ -54,7 +55,7 @@ class IntegrationTests(object):
             options = self._test_options()
             options['domain'] = 'thisisadomainidonotown.com'
             provider = self.Provider(options, self._test_engine_overrides())
-            with pytest.raises(Exception):
+            with pytest.raises(lexceptions.DomainNotFoundError):
                 provider.authenticate()
 
     ###########################################################################
@@ -132,28 +133,13 @@ class IntegrationTests(object):
             assert records[0]['type'] == 'TXT'
             assert records[0]['name'] == 'random.fqdntest.{0}'.format(self.domain)
 
-    def test_Provider_when_calling_list_records_after_setting_ttl(self):
-        with self._test_fixture_recording('test_Provider_when_calling_list_records_after_setting_ttl'):
-            provider = self.Provider(self._test_options(), self._test_engine_overrides())
-            provider.authenticate()
-            assert provider.create_record('TXT',"ttl.fqdn.{0}.".format(self.domain),'ttlshouldbe3600')
-            records = provider.list_records('TXT','ttl.fqdn.{0}'.format(self.domain))
-            assert len(records) == 1
-            assert str(records[0]['ttl']) == str(3600)
-
-    @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
     def test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
         with self._test_fixture_recording('test_Provider_when_calling_list_records_should_return_empty_list_if_no_records_found'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
-            assert isinstance(provider.list_records(), list)
-
-    @pytest.mark.skip(reason="not sure how to test filtering across multiple providers")
-    def test_Provider_when_calling_list_records_with_arguments_should_filter_list(self):
-        with self._test_fixture_recording('test_Provider_when_calling_list_records_with_arguments_should_filter_list'):
-            provider = self.Provider(self._test_options(), self._test_engine_overrides())
-            provider.authenticate()
-            assert isinstance(provider.list_records(), list)
+            records = provider.list_records('TXT', 'non-existant', 'dummy-value')
+            assert isinstance(records, list)
+            assert len(records) == 0
 
     ###########################################################################
     # Provider.update_record()
@@ -162,32 +148,38 @@ class IntegrationTests(object):
         with self._test_fixture_recording('test_Provider_when_calling_update_record_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
-            assert provider.create_record('TXT','orig.test','challengetoken')
-            records = provider.list_records('TXT','orig.test')
-            assert provider.update_record(records[0].get('id', None),'TXT','updated.test','challengetoken')
-
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
-        with self._test_fixture_recording('test_Provider_when_calling_update_record_should_modify_record_name_specified'):
-            provider = self.Provider(self._test_options(), self._test_engine_overrides())
-            provider.authenticate()
-            assert provider.create_record('TXT','orig.nameonly.test','challengetoken')
-            assert provider.update_record(None,'TXT','orig.nameonly.test','updated')
+            name = 'update.test'
+            assert provider.create_record('TXT',name,'challengetoken')
+            records = provider.list_records('TXT',name)
+            assert provider.update_record(records[0].get('id', None),'TXT',name,'challengetoken','newtoken')
 
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
         with self._test_fixture_recording('test_Provider_when_calling_update_record_with_full_name_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
-            assert provider.create_record('TXT','orig.testfull.{0}'.format(self.domain),'challengetoken')
-            records = provider.list_records('TXT','orig.testfull.{0}'.format(self.domain))
-            assert provider.update_record(records[0].get('id', None),'TXT','updated.testfull.{0}'.format(self.domain),'challengetoken')
+            name = 'update.testfull.{0}'.format(self.domain)
+            assert provider.create_record('TXT',name,'challengetoken')
+            records = provider.list_records('TXT',name)
+            assert provider.update_record(records[0].get('id', None),'TXT',name,'challengetoken','newtoken')
 
     def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
         with self._test_fixture_recording('test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record'):
             provider = self.Provider(self._test_options(), self._test_engine_overrides())
             provider.authenticate()
-            assert provider.create_record('TXT','orig.testfqdn.{0}.'.format(self.domain),'challengetoken')
-            records = provider.list_records('TXT','orig.testfqdn.{0}.'.format(self.domain))
-            assert provider.update_record(records[0].get('id', None),'TXT','updated.testfqdn.{0}.'.format(self.domain),'challengetoken')
+            name = 'update.testfqdn.{0}'.format(self.domain)
+            assert provider.create_record('TXT',name,'challengetoken')
+            records = provider.list_records('TXT',name)
+            assert provider.update_record(records[0].get('id', None),'TXT',name,'challengetoken','newtoken')
+
+    def test_Provider_when_calling_update_record_with_non_existant_name_should_throw_error(self):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_non_existant_name_should_throw_error'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            name = 'update.notexist'
+            records = provider.list_records('TXT',name)
+            assert len(records) == 0
+            with pytest.raises(lexceptions.RecordNotFoundError):
+                provider.update_record(None,'TXT',name,'challengetoken','newtoken')
 
     ###########################################################################
     # Provider.delete_record()
@@ -293,7 +285,32 @@ class IntegrationTests(object):
             records = provider.list_records('TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain))
             assert len(records) == 1
 
+    @pytest.mark.ext_suite_1
+    def test_Provider_when_calling_update_record_with_record_set_should_leave_others_untouched(self):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_record_set_should_leave_others_untouched'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            name = "_acme-challenge.updaterecordinset.{0}.".format(self.domain)
+            assert provider.create_record('TXT',name,'challengetoken1')
+            assert provider.create_record('TXT',name,'challengetoken2')
 
+            records = provider.list_records('TXT', name,'challengetoken1')
+            assert provider.update_record(records[0]['id'],None,None,None,'newtoken1')
+            records = provider.list_records('TXT', name)
+            assert len(records) == 2
+
+    @pytest.mark.ext_suite_1
+    def test_Provider_when_calling_update_record_with_record_set_by_content_should_leave_others_untouched(self):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_record_set_by_content_should_leave_others_untouched'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            name = "_acme-challenge.updaterecordinsetbycontent.{0}.".format(self.domain)
+            assert provider.create_record('TXT',name,'challengetoken1')
+            assert provider.create_record('TXT',name,'challengetoken2')
+
+            assert provider.update_record(None,'TXT',name,'challengetoken1','newtoken1')
+            records = provider.list_records('TXT', name)
+            assert len(records) == 2
 
         # Private helpers, mimicing the auth_* options provided by the Client
 # http://stackoverflow.com/questions/6229073/how-to-make-a-python-dictionary-that-returns-key-for-keys-missing-from-the-dicti
