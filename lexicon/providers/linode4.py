@@ -42,7 +42,7 @@ class Provider(BaseProvider):
                 'name': name,
                 'type': type,
                 'target': content,
-                'ttl_sec': 0
+                'ttl_sec': options['ttl'] if options and 'ttl' in options else 0
             })
 
         return True
@@ -102,9 +102,12 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
         
         url = 'domains/{0}/records/{1}'.format(self.domain_id, identifier)
-        self._put(url, data={
-            'target': content if content else None
-        })
+        update_data={
+            'target': content
+        }
+        if options and 'ttl' in options:
+            update_data['ttl_sec'] = options['ttl']
+        self._put(url, data=update_data)
         
         return True
     

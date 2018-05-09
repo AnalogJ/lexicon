@@ -37,7 +37,7 @@ class Provider(BaseProvider):
                 'Name': self._relative_name(name),
                 'Type': type,
                 'Target': content,
-                'TTL_sec': 0
+                'TTL_sec': options['ttl'] if options and 'ttl' in options else 0
             })
 
         return True
@@ -80,12 +80,15 @@ class Provider(BaseProvider):
             return False
 
         logger.debug('update_record: %s', identifier)
-
-        self._get('domain.resource.update', query_params={
+        
+        query_params={
             'DomainID': self.domain_id,
             'ResourceID': identifier,
-            'Target': content if content else None
-        })
+            'Target': content
+        }
+        if options and 'ttl' in options:
+            query_params['TTL_sec'] = options['ttl']
+        self._get('domain.resource.update', query_params=query_params)
         
         return True
     

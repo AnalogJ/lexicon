@@ -326,6 +326,60 @@ class IntegrationTests(object):
             records = provider.list_records('TXT', name)
             assert len(records) == 2
 
+    ###########################################################################
+    # Extended Test Suite 2 - TTL
+    ###########################################################################
+    
+    @pytest.mark.ext_suite_2
+    def test_Provider_when_calling_create_record_with_ttl_should_set_ttl(self):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_with_ttl_should_set_ttl'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            
+            name = 'createrecord.ttl'
+            assert provider.create_record('TXT',name,'ttl-test',{'ttl' : self._ttl_valid()})
+            records = provider.list_records('TXT',name,'ttl-test')
+            assert len(records) == 1
+            assert records[0]['ttl'] == self._ttl_valid()
+
+    @pytest.mark.ext_suite_2
+    def test_Provider_when_calling_update_record_with_ttl_should_set_ttl(self):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_with_ttl_should_set_ttl'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            
+            name = 'updaterecord.ttl'
+            assert provider.create_record('TXT',name,'ttl-test')
+            records = provider.list_records('TXT',name,'ttl-test')
+            assert len(records) == 1
+            assert provider.update_record(records[0]['id'], None, None, None,'ttl-test',{'ttl' : self._ttl_valid()})
+            records = provider.list_records('TXT',name)
+            assert len(records) == 1
+            assert records[0]['ttl'] == self._ttl_valid()
+    
+    @pytest.mark.ext_suite_2
+    def test_Provider_when_calling_create_record_with_invalid_ttl_should_raise(self):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_with_invalid_ttl_should_raise'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            
+            name = 'createrecord.ttl-invalid'
+            with pytest.raises(lexceptions.InvalidTTLError):
+                provider.create_record('TXT',name,'ttl-test',{'ttl' : self._ttl_invalid()})
+
+    @pytest.mark.ext_suite_2
+    def test_Provider_when_calling_update_record_with_invalid_ttl_should_raise(self):
+        with self._test_fixture_recording('test_Provider_when_calling_create_record_with_invalid_ttl_should_raise'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            
+            name = 'updaterecord.ttl-invalid'
+            assert provider.create_record('TXT',name,'ttl-test')
+            records = provider.list_records('TXT',name,'ttl-test')
+            assert len(records) == 1
+            with pytest.raises(lexceptions.InvalidTTLError):
+                provider.update_record(records[0]['id'], None, None, None,'ttl-test',{'ttl' : self._ttl_invalid()})
+
         # Private helpers, mimicing the auth_* options provided by the Client
 # http://stackoverflow.com/questions/6229073/how-to-make-a-python-dictionary-that-returns-key-for-keys-missing-from-the-dicti
 
@@ -374,6 +428,11 @@ class IntegrationTests(object):
         return []
     def _filter_post_data_parameters(self):
         return []
+    
+    def _ttl_valid(self):
+        return 3600
+    def _ttl_invalid(self):
+        return 30
 
     #http://preshing.com/20110920/the-python-with-statement-by-example/
     #https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/
