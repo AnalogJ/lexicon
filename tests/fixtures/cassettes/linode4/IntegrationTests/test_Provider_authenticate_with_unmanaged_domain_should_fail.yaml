@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -12,33 +12,32 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains
   response:
-    body: {string: !!python/unicode '{"data": [], "page": 1, "pages": 1, "results":
-        0}'}
+    body: {string: '{"page": 1, "results": 0, "pages": 1, "data": []}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
           Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
+      Access-Control-Allow-Methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      Cache-Control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['49']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Wed, 02 May 2018 10:42:11 GMT']
-      retry-after: ['119']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_only']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['399']
-      x-ratelimit-reset: ['1525257851']
-      x-xss-protection: [1; mode=block]
+      Connection: [keep-alive]
+      Content-Length: ['49']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Wed, 09 May 2018 15:02:13 GMT']
+      Retry-After: ['119']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
+      X-Accepted-OAuth-Scopes: ['domains:read_only']
+      X-Content-Type-Options: [nosniff, nosniff]
+      X-Frame-Options: [DENY, DENY]
+      X-OAuth-Scopes: ['domains:read_write']
+      X-RateLimit-Limit: ['400']
+      X-RateLimit-Remaining: ['399']
+      X-RateLimit-Reset: ['1525878253']
+      X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

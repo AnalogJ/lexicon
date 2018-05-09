@@ -6,6 +6,7 @@ import logging
 
 import requests
 
+import lexicon.common.exceptions as lexceptions
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
@@ -30,9 +31,9 @@ class Provider(BaseProvider):
         if len(payload['data']) > 0:
             self.domain_id = payload['data'][0]['id']
         if self.domain_id == None:
-            raise Exception('Domain not found')
+            raise lexceptions.DomainNotFoundError()
 
-    def create_record(self, type, name, content):
+    def create_record(self, type, name, content, options=None):
         if len(self.list_records(type, name, content)) == 0:
             if name:
                 name = self._relative_name(name)
@@ -85,10 +86,12 @@ class Provider(BaseProvider):
         return processed_records
     
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, identifier, type=None, name=None, content_old=None, content=None, options=None):
         if not identifier:
-            resources = self.list_records(type, name, None)
+            resources = self.list_records(type, name, content_old)
             identifier = resources[0]['id'] if len(resources) > 0 else None
+            if not identifier:
+                raise lexceptions.RecordNotFoundError()
         
         logger.debug('update_record: %s', identifier)
         
@@ -97,8 +100,6 @@ class Provider(BaseProvider):
         
         url = 'domains/{0}/records/{1}'.format(self.domain_id, identifier)
         self._put(url, data={
-            'name': name.lower() if name else None,
-            'type': type if type else None,
             'target': content if content else None
         })
         

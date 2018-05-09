@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -11,19 +11,19 @@ interactions:
     method: GET
     uri: https://api.linode.com/api/?api_action=domain.list&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.list","DATA":[{"DOMAIN":"lexicon-example.com","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1047330,"SOA_EMAIL":"trinopoty@hotmail.com","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"}],"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.list","DATA":[{"DOMAIN":"cgdteraipur.ac.in","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":961923,"SOA_EMAIL":"webmaster@bluebanyan.co.in","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"},{"DOMAIN":"lexicon-test.com","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1067233,"SOA_EMAIL":"trinopoty@gmail.com","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"},{"DOMAIN":"matslawschool.ac.in","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1063562,"SOA_EMAIL":"webmaster@bluebanyan.co.in","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"},{"DOMAIN":"matsuniversity.ac.in","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":987562,"SOA_EMAIL":"webmaster@matsuniversity.ac.in","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"},{"DOMAIN":"minenext.com","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1011646,"SOA_EMAIL":"webmaster@bluebanyan.co.in","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"}],"ERRORARRAY":[]}'}
     headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Tue, 20 Mar 2018 11:55:10 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 14:59:06 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -32,21 +32,21 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/api/?DomainID=1047330&api_action=domain.resource.list&resultFormat=JSON
+    uri: https://api.linode.com/api/?DomainID=1067233&api_action=domain.resource.list&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154868,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154867,"TYPE":"A","NAME":"localhost"},{"TARGET":"updated","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154880,"TYPE":"TXT","NAME":"orig.nameonly.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154876,"TYPE":"TXT","NAME":"random.fqdntest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154877,"TYPE":"TXT","NAME":"random.fulltest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154878,"TYPE":"TXT","NAME":"random.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154879,"TYPE":"TXT","NAME":"updated.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154869,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154870,"TYPE":"TXT","NAME":"_acme-challenge.full"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154871,"TYPE":"TXT","NAME":"_acme-challenge.test"}],"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322023,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322022,"TYPE":"A","NAME":"localhost"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322049,"TYPE":"TXT","NAME":"random.fqdntest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322050,"TYPE":"TXT","NAME":"random.fulltest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322051,"TYPE":"TXT","NAME":"random.test"},{"TARGET":"newtoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322052,"TYPE":"TXT","NAME":"update.test"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322027,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322028,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322035,"TYPE":"TXT","NAME":"_acme-challenge.deleterecordinset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322024,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322025,"TYPE":"TXT","NAME":"_acme-challenge.full"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322039,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322040,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322029,"TYPE":"TXT","NAME":"_acme-challenge.noop"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322026,"TYPE":"TXT","NAME":"_acme-challenge.test"}],"ERRORARRAY":[]}'}
     headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Tue, 20 Mar 2018 11:55:12 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 14:59:08 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -55,21 +55,21 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/api/?DomainID=1047330&Name=orig.testfqdn&TTL_sec=0&Target=challengetoken&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
+    uri: https://api.linode.com/api/?DomainID=1067233&Name=update.testfqdn&TTL_sec=0&Target=challengetoken&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.create","DATA":{"ResourceID":9154881},"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.create","DATA":{"ResourceID":9322053},"ERRORARRAY":[]}'}
     headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Tue, 20 Mar 2018 11:55:14 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 14:59:09 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -78,21 +78,21 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/api/?DomainID=1047330&api_action=domain.resource.list&resultFormat=JSON
+    uri: https://api.linode.com/api/?DomainID=1067233&api_action=domain.resource.list&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154868,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154867,"TYPE":"A","NAME":"localhost"},{"TARGET":"updated","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154880,"TYPE":"TXT","NAME":"orig.nameonly.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154881,"TYPE":"TXT","NAME":"orig.testfqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154876,"TYPE":"TXT","NAME":"random.fqdntest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154877,"TYPE":"TXT","NAME":"random.fulltest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154878,"TYPE":"TXT","NAME":"random.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154879,"TYPE":"TXT","NAME":"updated.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154869,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154870,"TYPE":"TXT","NAME":"_acme-challenge.full"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1047330,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9154871,"TYPE":"TXT","NAME":"_acme-challenge.test"}],"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322023,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322022,"TYPE":"A","NAME":"localhost"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322049,"TYPE":"TXT","NAME":"random.fqdntest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322050,"TYPE":"TXT","NAME":"random.fulltest"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322051,"TYPE":"TXT","NAME":"random.test"},{"TARGET":"newtoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322052,"TYPE":"TXT","NAME":"update.test"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322053,"TYPE":"TXT","NAME":"update.testfqdn"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322027,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322028,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322035,"TYPE":"TXT","NAME":"_acme-challenge.deleterecordinset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322024,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322025,"TYPE":"TXT","NAME":"_acme-challenge.full"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322039,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322040,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322029,"TYPE":"TXT","NAME":"_acme-challenge.noop"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322026,"TYPE":"TXT","NAME":"_acme-challenge.test"}],"ERRORARRAY":[]}'}
     headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Tue, 20 Mar 2018 11:55:17 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 14:59:10 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -101,17 +101,17 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/api/?DomainID=1047330&Name=updated.testfqdn&ResourceID=9154881&Target=challengetoken&Type=TXT&api_action=domain.resource.update&resultFormat=JSON
+    uri: https://api.linode.com/api/?DomainID=1067233&ResourceID=9322053&Target=newtoken&api_action=domain.resource.update&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.update","DATA":{"ResourceID":9154881},"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.update","DATA":{"ResourceID":9322053},"ERRORARRAY":[]}'}
     headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Tue, 20 Mar 2018 11:55:21 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 14:59:12 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 version: 1
