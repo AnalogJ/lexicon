@@ -29,6 +29,10 @@ class Client(object):
         self.provider_name = cli_options.get('provider_name')
         self.options = env_auth_options(self.provider_name)
         self.options.update(cli_options)
+        
+        self.action_options = {}
+        if cli_options.get('ttl', None):
+            self.action_options['ttl'] = cli_options.get('ttl')
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
@@ -38,13 +42,13 @@ class Client(object):
         self.provider.authenticate()
 
         if self.action == 'create':
-            return self.provider.create_record(self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.create_record(self.options.get('type'), self.options.get('name'), self.options.get('content'), self.action_options)
 
         elif self.action == 'list':
             return self.provider.list_records(self.options.get('type'), self.options.get('name'), self.options.get('content'))
 
         elif self.action == 'update':
-            return self.provider.update_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.update_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content-old'), self.options.get('content'), self.action_options)
 
         elif self.action == 'delete':
             return self.provider.delete_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
