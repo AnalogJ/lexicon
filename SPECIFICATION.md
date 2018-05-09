@@ -1,7 +1,7 @@
 <h1>Provider Specification</h1>
 
 # General
-- **name** Clients should provide FQDN. Providers should handle both FQDN and relative names.
+- **name** Clients should provide FQDN. Providers should handle both FQDN and relative names. Providers should return FQDN.
 - **ttl** Reasonable default is 6 hours since it's supported by most services. Any service that does not support this must be explicitly mentioned somewhere.
 - **record** All provider/API records must be translated to the following format:
 ```
@@ -37,7 +37,9 @@
 - **TTL**
     - If not specified, do not modify ttl.
     - If set to `0`, reset to reasonable default.
-- **No Match** Throw exception?
+- **No Match** Throw exception
+- **NOTE** DO NOT support updating record name. Only update content.
+- **NONE** Return false for only name update.
 
 ## delete_record
 - **Normal Behaviour** Remove a record. Record to be deleted can be specified by providing id OR name, type and content. Return a boolean `True` if successful.

@@ -92,6 +92,9 @@ class Provider(BaseProvider):
             identifier = resources[0]['id'] if len(resources) > 0 else None
             if not identifier:
                 raise lexceptions.RecordNotFoundError()
+        elif identifier and name and (not content or content_old == content):
+            # Reject name updates
+            return False
         
         logger.debug('update_record: %s', identifier)
         

@@ -181,6 +181,20 @@ class IntegrationTests(object):
             with pytest.raises(lexceptions.RecordNotFoundError):
                 provider.update_record(None,'TXT',name,'challengetoken','newtoken')
 
+    def test_Provider_when_calling_update_record_should_not_update_name(self):
+        with self._test_fixture_recording('test_Provider_when_calling_update_record_should_not_update_name'):
+            provider = self.Provider(self._test_options(), self._test_engine_overrides())
+            provider.authenticate()
+            name = 'orig.update.testname'
+            assert provider.create_record('TXT',name,'challengetoken')
+            records = provider.list_records('TXT',name)
+            assert provider.update_record(records[0].get('id', None),'TXT','updated.update.testname','challengetoken','challengetoken') == False
+            assert provider.update_record(records[0].get('id', None),'TXT','updated.update.testname') == False
+            records = provider.list_records('TXT',name)
+            assert len(records) == 1
+            records = provider.list_records('TXT','updated.update.testname')
+            assert len(records) == 0
+
     ###########################################################################
     # Provider.delete_record()
     ###########################################################################
