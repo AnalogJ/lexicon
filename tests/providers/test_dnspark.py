@@ -14,3 +14,9 @@ class DnsParkProviderTests(TestCase, IntegrationTests):
     domain = 'capsulecd.com'
     def _filter_headers(self):
         return ['Authorization']
+
+    # TODO: the following skipped suite and fixtures should be enabled
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')

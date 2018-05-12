@@ -19,3 +19,10 @@ class ZonomiProviderTests(TestCase, IntegrationTests):
     
     def _filter_query_parameters(self):
         return ['api_key']
+
+
+    # TODO: the following skipped suite and fixtures should be enabled
+    @pytest.fixture(autouse=True)
+    def skip_suite(self, request):
+        if request.node.get_marker('ext_suite_1'):
+            pytest.skip('Skipping extended suite')
