@@ -10,7 +10,7 @@
     'type': string, // upper case, valid record type. eg. A, CNAME, TXT
     'name': string, // lowercase, FQDN. eg. test.record.example.com
     'ttl': integer, // positive integer, in seconds. eg. 3600
-    'content': string,
+    'content': string, //double quoted/escaped values should be unescaped. eg. "\"TXT content\"" should become "TXT content"
     'options': {
         'mx': { // MX options
             'priority': integer
