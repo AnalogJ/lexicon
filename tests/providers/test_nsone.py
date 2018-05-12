@@ -19,3 +19,7 @@ class Ns1ProviderTests(TestCase, IntegrationTests):
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         return
 
+    # TODO: the following skipped suite and fixtures should be enabled
+    @pytest.mark.skip(reason="new test, missing recording")
+    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+        return

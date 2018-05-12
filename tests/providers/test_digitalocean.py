@@ -18,3 +18,7 @@ class DigitalOceanProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         return
+
+    @pytest.mark.skip(reason="new test, missing recording")
+    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+        return
