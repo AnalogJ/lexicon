@@ -71,6 +71,7 @@ Potential providers are as follows. If you would like to contribute one, please 
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
 - INWX ([docs](https://github.com/inwx/python2.7-client))
 - Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html)) :dollar: <sub>requires paid account</sub>
+- Loopia ([docs](https://www.loopia.com/api/)) :dollar: <sub>requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/)) :dollar: <sub>requires paid account</sub>
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
