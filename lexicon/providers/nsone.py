@@ -66,6 +66,7 @@ class Provider(BaseProvider):
             record = {
                 'type': type,
                 'domain': name,
+                'ttl': self.options.get('ttl'),
                 'zone': self.domain_id,
                 'answers':[
                     {"answer": [content]}
