@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -12,40 +12,39 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains
   response:
-    body: {string: !!python/unicode '{"data": [{"expire_sec": 0, "axfr_ips": [], "id":
-        1065421, "domain": "lexicon-test.com", "description": "", "refresh_sec": 0,
-        "soa_email": "contact@lexicon.com", "group": "", "retry_sec": 0, "status":
-        "active", "type": "master", "ttl_sec": 0, "master_ips": []}], "page": 1, "pages":
-        1, "results": 1}'}
+    body: {string: '{"page": 1, "results": 1, "pages": 1, "data": [{"soa_email": "trinopoty@gmail.com",
+        "retry_sec": 0, "description": "", "expire_sec": 0, "axfr_ips": [], "type":
+        "master", "group": "", "id": 1067233, "status": "active", "domain": "lexicon-test.com",
+        "master_ips": [], "ttl_sec": 0, "refresh_sec": 0}]}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
           Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
+      Access-Control-Allow-Methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      Cache-Control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['299']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Wed, 02 May 2018 10:42:23 GMT']
-      retry-after: ['117']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_only']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['398']
-      x-ratelimit-reset: ['1525257861']
-      x-xss-protection: [1; mode=block]
+      Connection: [keep-alive]
+      Content-Length: ['299']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Wed, 09 May 2018 15:02:24 GMT']
+      Retry-After: ['108']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
+      X-Accepted-OAuth-Scopes: ['domains:read_only']
+      X-Content-Type-Options: [nosniff, nosniff]
+      X-Frame-Options: [DENY, DENY]
+      X-OAuth-Scopes: ['domains:read_write']
+      X-RateLimit-Limit: ['400']
+      X-RateLimit-Remaining: ['397']
+      X-RateLimit-Reset: ['1525878253']
+      X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -54,44 +53,44 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/v4/domains/1065421/records
+    uri: https://api.linode.com/v4/domains/1067233/records
   response:
-    body: {string: !!python/unicode '{"results": 2, "pages": 1, "data": [{"name":
-        "localhost", "id": 9295232, "weight": 0, "service": null, "type": "A", "ttl_sec":
-        0, "port": 0, "priority": 0, "target": "127.0.0.1", "protocol": null, "tag":
-        null}, {"name": "docs", "id": 9295233, "weight": 0, "service": null, "type":
-        "CNAME", "ttl_sec": 0, "port": 0, "priority": 0, "target": "docs.example.com",
-        "protocol": null, "tag": null}], "page": 1}'}
+    body: {string: '{"pages": 1, "results": 2, "data": [{"type": "A", "target": "127.0.0.1",
+        "ttl_sec": 0, "name": "localhost", "weight": 0, "id": 9322060, "tag": null,
+        "protocol": null, "service": null, "port": 0, "priority": 0}, {"type": "CNAME",
+        "target": "docs.example.com", "ttl_sec": 0, "name": "docs", "weight": 0, "id":
+        9322061, "tag": null, "protocol": null, "service": null, "port": 0, "priority":
+        0}], "page": 1}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
           Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
+      Access-Control-Allow-Methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      Cache-Control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['403']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Wed, 02 May 2018 10:42:25 GMT']
-      retry-after: ['76']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_only']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['396']
-      x-ratelimit-reset: ['1525257822']
-      x-xss-protection: [1; mode=block]
+      Connection: [keep-alive]
+      Content-Length: ['403']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Wed, 09 May 2018 15:02:25 GMT']
+      Retry-After: ['119']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
+      X-Accepted-OAuth-Scopes: ['domains:read_only']
+      X-Content-Type-Options: [nosniff, nosniff]
+      X-Frame-Options: [DENY, DENY]
+      X-OAuth-Scopes: ['domains:read_write']
+      X-RateLimit-Limit: ['400']
+      X-RateLimit-Remaining: ['399']
+      X-RateLimit-Reset: ['1525878265']
+      X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "name": "_acme-challenge.fqdn",
-      "target": "challengetoken"}'
+    body: '{"name": "_acme-challenge.fqdn", "type": "TXT", "target": "challengetoken",
+      "ttl_sec": 0}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -100,35 +99,35 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://api.linode.com/v4/domains/1065421/records
+    uri: https://api.linode.com/v4/domains/1067233/records
   response:
-    body: {string: !!python/unicode '{"id": 9295234, "target": "challengetoken", "service":
-        null, "protocol": null, "name": "_acme-challenge.fqdn", "ttl_sec": 0, "priority":
-        0, "tag": null, "port": 0, "weight": 0, "type": "TXT"}'}
+    body: {string: '{"type": "TXT", "target": "challengetoken", "ttl_sec": 0, "name":
+        "_acme-challenge.fqdn", "weight": 0, "id": 9322062, "tag": null, "protocol":
+        null, "service": null, "port": 0, "priority": 0}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
           Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['191']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Wed, 02 May 2018 10:42:26 GMT']
-      retry-after: ['82']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_write']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['397']
-      x-ratelimit-reset: ['1525257829']
-      x-xss-protection: [1; mode=block]
+      Access-Control-Allow-Methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      Cache-Control: ['private, max-age=60, s-maxage=60']
+      Connection: [keep-alive]
+      Content-Length: ['191']
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json]
+      Date: ['Wed, 09 May 2018 15:02:26 GMT']
+      Retry-After: ['104']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Vary: ['Authorization, X-Filter']
+      X-Accepted-OAuth-Scopes: ['domains:read_write']
+      X-Content-Type-Options: [nosniff, nosniff]
+      X-Frame-Options: [DENY, DENY]
+      X-OAuth-Scopes: ['domains:read_write']
+      X-RateLimit-Limit: ['400']
+      X-RateLimit-Remaining: ['395']
+      X-RateLimit-Reset: ['1525878251']
+      X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

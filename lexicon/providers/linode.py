@@ -6,6 +6,7 @@ import logging
 
 import requests
 
+import lexicon.common.exceptions as lexceptions
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
@@ -14,7 +15,7 @@ def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify api key used authenticate to DNS provider")
 
 class Provider(BaseProvider):
-    
+
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
@@ -27,20 +28,20 @@ class Provider(BaseProvider):
             if domain['DOMAIN'] == self.options['domain']:
                 self.domain_id = domain['DOMAINID']
         if self.domain_id == None:
-            raise Exception('Domain not found')
+            raise lexceptions.DomainNotFoundError()
 
-    def create_record(self, type, name, content):
+    def create_record(self, type, name, content, options=None):
         if len(self.list_records(type, name, content)) == 0:
             self._get('domain.resource.create', query_params={
                 'DomainID': self.domain_id,
                 'Name': self._relative_name(name),
                 'Type': type,
                 'Target': content,
-                'TTL_sec': 0
+                'TTL_sec': options['ttl'] if options and 'ttl' in options else 0
             })
 
         return True
-    
+
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
@@ -68,20 +69,26 @@ class Provider(BaseProvider):
         return processed_records
     
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, identifier, type=None, name=None, content_old=None, content=None, options=None):
         if not identifier:
-            resources = self.list_records(type, name, None)
+            resources = self.list_records(type, name, content_old)
             identifier = resources[0]['id'] if len(resources) > 0 else None
-        
+            if not identifier:
+                raise lexceptions.RecordNotFoundError()
+        elif identifier and name and (not content or content_old == content):
+            # Reject name updates
+            return False
+
         logger.debug('update_record: %s', identifier)
         
-        self._get('domain.resource.update', query_params={
+        query_params={
             'DomainID': self.domain_id,
             'ResourceID': identifier,
-            'Name': self._relative_name(name).lower() if name else None,
-            'Type': type if type else None,
-            'Target': content if content else None
-        })
+            'Target': content
+        }
+        if options and 'ttl' in options:
+            query_params['TTL_sec'] = options['ttl']
+        self._get('domain.resource.update', query_params=query_params)
         
         return True
     

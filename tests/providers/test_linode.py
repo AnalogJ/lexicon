@@ -11,7 +11,7 @@ class LinodeProviderTests(TestCase, IntegrationTests):
 
 	Provider = Provider
 	provider_name = 'linode'
-	domain = 'lexicon-example.com'
+	domain = 'lexicon-test.com'
 	def _filter_post_data_parameters(self):
 		return []
 
@@ -21,6 +21,13 @@ class LinodeProviderTests(TestCase, IntegrationTests):
 	def _filter_query_parameters(self):
 		return ['api_key']
 
-	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
-	def test_Provider_when_calling_list_records_after_setting_ttl(self):
-		return
+	def _ttl_valid(self):
+		return 3600
+
+	@pytest.mark.skip(reason="Linode does not return error")
+	def test_Provider_when_calling_create_record_with_invalid_ttl_should_raise(self):
+		pass
+
+	@pytest.mark.skip(reason="Linode does not return error")
+	def test_Provider_when_calling_update_record_with_invalid_ttl_should_raise(self):
+		pass

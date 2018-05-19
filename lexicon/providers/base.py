@@ -46,7 +46,7 @@ class Provider(object):
         raise NotImplementedError("Providers should implement this!")
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def create_record(self, type, name, content, options=None):
         raise NotImplementedError("Providers should implement this!")
 
     # List all records. Return an empty list if no records found
@@ -56,7 +56,7 @@ class Provider(object):
         raise NotImplementedError("Providers should implement this!")
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, identifier=None, type=None, name=None, content_old=None, content=None, options=None):
         raise NotImplementedError("Providers should implement this!")
 
     # Delete an existing record.

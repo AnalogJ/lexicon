@@ -16,10 +16,9 @@ interactions:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Type: [application/json;charset=UTF-8]
-      Date: ['Wed, 09 May 2018 14:57:19 GMT']
+      Date: ['Wed, 09 May 2018 15:52:49 GMT']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
-      Transfer-Encoding: [chunked]
       X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
@@ -34,15 +33,14 @@ interactions:
     method: GET
     uri: https://api.linode.com/api/?DomainID=1067233&api_action=domain.resource.list&resultFormat=JSON
   response:
-    body: {string: '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322023,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322022,"TYPE":"A","NAME":"localhost"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322024,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322025,"TYPE":"TXT","NAME":"_acme-challenge.full"}],"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.list","DATA":[],"ERRORARRAY":[]}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Type: [application/json;charset=UTF-8]
-      Date: ['Wed, 09 May 2018 14:57:20 GMT']
+      Date: ['Wed, 09 May 2018 15:52:50 GMT']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
-      Transfer-Encoding: [chunked]
       X-Powered-By: [Tiger Blood]
     status: {code: 200, message: OK}
 - request:
@@ -55,14 +53,36 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.linode.com/api/?DomainID=1067233&Name=_acme-challenge.test&TTL_sec=0&Target=challengetoken&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
+    uri: https://api.linode.com/api/?DomainID=1067233&Name=createrecord.ttl&TTL_sec=3600&Target=ttl-test&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
   response:
-    body: {string: '{"ACTION":"domain.resource.create","DATA":{"ResourceID":9322026},"ERRORARRAY":[]}'}
+    body: {string: '{"ACTION":"domain.resource.create","DATA":{"ResourceID":9322244},"ERRORARRAY":[]}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Type: [application/json;charset=UTF-8]
-      Date: ['Wed, 09 May 2018 14:57:22 GMT']
+      Date: ['Wed, 09 May 2018 15:52:52 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Powered-By: [Tiger Blood]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.linode.com/api/?DomainID=1067233&api_action=domain.resource.list&resultFormat=JSON
+  response:
+    body: {string: '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"ttl-test","TTL_SEC":3600,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9322244,"TYPE":"TXT","NAME":"createrecord.ttl"}],"ERRORARRAY":[]}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Wed, 09 May 2018 15:53:09 GMT']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
       Transfer-Encoding: [chunked]

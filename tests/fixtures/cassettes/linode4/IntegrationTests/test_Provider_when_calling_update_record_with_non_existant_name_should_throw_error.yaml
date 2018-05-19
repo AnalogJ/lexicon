@@ -12,10 +12,10 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains
   response:
-    body: {string: '{"page": 1, "results": 1, "pages": 1, "data": [{"soa_email": "trinopoty@gmail.com",
-        "retry_sec": 0, "description": "", "expire_sec": 0, "axfr_ips": [], "type":
-        "master", "group": "", "id": 1067233, "status": "active", "domain": "lexicon-test.com",
-        "master_ips": [], "ttl_sec": 0, "refresh_sec": 0}]}'}
+    body: {string: '{"data": [{"master_ips": [], "axfr_ips": [], "id": 1067233, "group":
+        "", "expire_sec": 0, "refresh_sec": 0, "soa_email": "trinopoty@gmail.com",
+        "retry_sec": 0, "domain": "lexicon-test.com", "description": "", "type": "master",
+        "ttl_sec": 0, "status": "active"}], "pages": 1, "results": 1, "page": 1}'}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -29,7 +29,7 @@ interactions:
       Content-Length: ['299']
       Content-Security-Policy: [default-src 'none']
       Content-Type: [application/json]
-      Date: ['Wed, 09 May 2018 15:04:17 GMT']
+      Date: ['Wed, 09 May 2018 15:04:58 GMT']
       Retry-After: ['119']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
@@ -40,7 +40,7 @@ interactions:
       X-OAuth-Scopes: ['domains:read_write']
       X-RateLimit-Limit: ['400']
       X-RateLimit-Remaining: ['399']
-      X-RateLimit-Reset: ['1525878377']
+      X-RateLimit-Reset: ['1525878418']
       X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -55,7 +55,7 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains/1067233/records
   response:
-    body: {string: '{"page": 1, "results": 12, "pages": 1, "data": [{"type": "A",
+    body: {string: '{"page": 1, "results": 17, "pages": 1, "data": [{"type": "A",
         "priority": 0, "tag": null, "target": "127.0.0.1", "name": "localhost", "port":
         0, "protocol": null, "weight": 0, "id": 9322060, "service": null, "ttl_sec":
         0}, {"type": "CNAME", "priority": 0, "tag": null, "target": "docs.example.com",
@@ -85,7 +85,18 @@ interactions:
         0, "id": 9322085, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority":
         0, "tag": null, "target": "challengetoken", "name": "random.fqdntest", "port":
         0, "protocol": null, "weight": 0, "id": 9322086, "service": null, "ttl_sec":
-        0}]}'}
+        0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken",
+        "name": "random.fulltest", "port": 0, "protocol": null, "weight": 0, "id":
+        9322087, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag":
+        null, "target": "challengetoken", "name": "random.test", "port": 0, "protocol":
+        null, "weight": 0, "id": 9322088, "service": null, "ttl_sec": 0}, {"type":
+        "TXT", "priority": 0, "tag": null, "target": "newtoken", "name": "update.test",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322089, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "newtoken",
+        "name": "update.testfqdn", "port": 0, "protocol": null, "weight": 0, "id":
+        9322090, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag":
+        null, "target": "newtoken", "name": "update.testfull", "port": 0, "protocol":
+        null, "weight": 0, "id": 9322091, "service": null, "ttl_sec": 0}]}'}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -96,11 +107,11 @@ interactions:
       Cache-Control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
       Connection: [keep-alive]
-      Content-Length: ['2387']
+      Content-Length: ['3301']
       Content-Security-Policy: [default-src 'none']
       Content-Type: [application/json]
-      Date: ['Wed, 09 May 2018 15:04:19 GMT']
-      Retry-After: ['117']
+      Date: ['Wed, 09 May 2018 15:05:00 GMT']
+      Retry-After: ['76']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
       Vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -109,50 +120,8 @@ interactions:
       X-Frame-Options: [DENY, DENY]
       X-OAuth-Scopes: ['domains:read_write']
       X-RateLimit-Limit: ['400']
-      X-RateLimit-Remaining: ['398']
+      X-RateLimit-Remaining: ['391']
       X-RateLimit-Reset: ['1525878377']
-      X-XSS-Protection: [1; mode=block]
-    status: {code: 200, message: OK}
-- request:
-    body: '{"name": "random.fulltest", "type": "TXT", "target": "challengetoken",
-      "ttl_sec": 0}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['84']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.linode.com/v4/domains/1067233/records
-  response:
-    body: {string: '{"type": "TXT", "target": "challengetoken", "ttl_sec": 0, "name":
-        "random.fulltest", "weight": 0, "id": 9322087, "tag": null, "protocol": null,
-        "service": null, "port": 0, "priority": 0}'}
-    headers:
-      Access-Control-Allow-Credentials: ['true']
-      Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
-          Accept, X-Filter']
-      Access-Control-Allow-Methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      Access-Control-Allow-Origin: ['*']
-      Access-Control-Expose-Headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      Cache-Control: ['private, max-age=60, s-maxage=60']
-      Connection: [keep-alive]
-      Content-Length: ['186']
-      Content-Security-Policy: [default-src 'none']
-      Content-Type: [application/json]
-      Date: ['Wed, 09 May 2018 15:04:20 GMT']
-      Retry-After: ['112']
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=31536000]
-      Vary: ['Authorization, X-Filter']
-      X-Accepted-OAuth-Scopes: ['domains:read_write']
-      X-Content-Type-Options: [nosniff, nosniff]
-      X-Frame-Options: [DENY, DENY]
-      X-OAuth-Scopes: ['domains:read_write']
-      X-RateLimit-Limit: ['400']
-      X-RateLimit-Remaining: ['398']
-      X-RateLimit-Reset: ['1525878373']
       X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -167,39 +136,48 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains/1067233/records
   response:
-    body: {string: '{"data": [{"id": 9322060, "name": "localhost", "tag": null, "port":
-        0, "priority": 0, "weight": 0, "target": "127.0.0.1", "type": "A", "service":
-        null, "ttl_sec": 0, "protocol": null}, {"id": 9322061, "name": "docs", "tag":
-        null, "port": 0, "priority": 0, "weight": 0, "target": "docs.example.com",
-        "type": "CNAME", "service": null, "ttl_sec": 0, "protocol": null}, {"id":
-        9322062, "name": "_acme-challenge.fqdn", "tag": null, "port": 0, "priority":
-        0, "weight": 0, "target": "challengetoken", "type": "TXT", "service": null,
-        "ttl_sec": 0, "protocol": null}, {"id": 9322063, "name": "_acme-challenge.full",
-        "tag": null, "port": 0, "priority": 0, "weight": 0, "target": "challengetoken",
-        "type": "TXT", "service": null, "ttl_sec": 0, "protocol": null}, {"id": 9322064,
-        "name": "_acme-challenge.test", "tag": null, "port": 0, "priority": 0, "weight":
-        0, "target": "challengetoken", "type": "TXT", "service": null, "ttl_sec":
-        0, "protocol": null}, {"id": 9322065, "name": "_acme-challenge.createrecordset",
-        "tag": null, "port": 0, "priority": 0, "weight": 0, "target": "challengetoken1",
-        "type": "TXT", "service": null, "ttl_sec": 0, "protocol": null}, {"id": 9322066,
-        "name": "_acme-challenge.createrecordset", "tag": null, "port": 0, "priority":
-        0, "weight": 0, "target": "challengetoken2", "type": "TXT", "service": null,
-        "ttl_sec": 0, "protocol": null}, {"id": 9322067, "name": "_acme-challenge.noop",
-        "tag": null, "port": 0, "priority": 0, "weight": 0, "target": "challengetoken",
-        "type": "TXT", "service": null, "ttl_sec": 0, "protocol": null}, {"id": 9322074,
-        "name": "_acme-challenge.deleterecordinset", "tag": null, "port": 0, "priority":
-        0, "weight": 0, "target": "challengetoken2", "type": "TXT", "service": null,
-        "ttl_sec": 0, "protocol": null}, {"id": 9322084, "name": "_acme-challenge.listrecordset",
-        "tag": null, "port": 0, "priority": 0, "weight": 0, "target": "challengetoken1",
-        "type": "TXT", "service": null, "ttl_sec": 0, "protocol": null}, {"id": 9322085,
-        "name": "_acme-challenge.listrecordset", "tag": null, "port": 0, "priority":
-        0, "weight": 0, "target": "challengetoken2", "type": "TXT", "service": null,
-        "ttl_sec": 0, "protocol": null}, {"id": 9322086, "name": "random.fqdntest",
-        "tag": null, "port": 0, "priority": 0, "weight": 0, "target": "challengetoken",
-        "type": "TXT", "service": null, "ttl_sec": 0, "protocol": null}, {"id": 9322087,
-        "name": "random.fulltest", "tag": null, "port": 0, "priority": 0, "weight":
-        0, "target": "challengetoken", "type": "TXT", "service": null, "ttl_sec":
-        0, "protocol": null}], "pages": 1, "results": 13, "page": 1}'}
+    body: {string: '{"page": 1, "results": 17, "pages": 1, "data": [{"type": "A",
+        "priority": 0, "tag": null, "target": "127.0.0.1", "name": "localhost", "port":
+        0, "protocol": null, "weight": 0, "id": 9322060, "service": null, "ttl_sec":
+        0}, {"type": "CNAME", "priority": 0, "tag": null, "target": "docs.example.com",
+        "name": "docs", "port": 0, "protocol": null, "weight": 0, "id": 9322061, "service":
+        null, "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target":
+        "challengetoken", "name": "_acme-challenge.fqdn", "port": 0, "protocol": null,
+        "weight": 0, "id": 9322062, "service": null, "ttl_sec": 0}, {"type": "TXT",
+        "priority": 0, "tag": null, "target": "challengetoken", "name": "_acme-challenge.full",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322063, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken",
+        "name": "_acme-challenge.test", "port": 0, "protocol": null, "weight": 0,
+        "id": 9322064, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority":
+        0, "tag": null, "target": "challengetoken1", "name": "_acme-challenge.createrecordset",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322065, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken2",
+        "name": "_acme-challenge.createrecordset", "port": 0, "protocol": null, "weight":
+        0, "id": 9322066, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority":
+        0, "tag": null, "target": "challengetoken", "name": "_acme-challenge.noop",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322067, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken2",
+        "name": "_acme-challenge.deleterecordinset", "port": 0, "protocol": null,
+        "weight": 0, "id": 9322074, "service": null, "ttl_sec": 0}, {"type": "TXT",
+        "priority": 0, "tag": null, "target": "challengetoken1", "name": "_acme-challenge.listrecordset",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322084, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken2",
+        "name": "_acme-challenge.listrecordset", "port": 0, "protocol": null, "weight":
+        0, "id": 9322085, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority":
+        0, "tag": null, "target": "challengetoken", "name": "random.fqdntest", "port":
+        0, "protocol": null, "weight": 0, "id": 9322086, "service": null, "ttl_sec":
+        0}, {"type": "TXT", "priority": 0, "tag": null, "target": "challengetoken",
+        "name": "random.fulltest", "port": 0, "protocol": null, "weight": 0, "id":
+        9322087, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag":
+        null, "target": "challengetoken", "name": "random.test", "port": 0, "protocol":
+        null, "weight": 0, "id": 9322088, "service": null, "ttl_sec": 0}, {"type":
+        "TXT", "priority": 0, "tag": null, "target": "newtoken", "name": "update.test",
+        "port": 0, "protocol": null, "weight": 0, "id": 9322089, "service": null,
+        "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag": null, "target": "newtoken",
+        "name": "update.testfqdn", "port": 0, "protocol": null, "weight": 0, "id":
+        9322090, "service": null, "ttl_sec": 0}, {"type": "TXT", "priority": 0, "tag":
+        null, "target": "newtoken", "name": "update.testfull", "port": 0, "protocol":
+        null, "weight": 0, "id": 9322091, "service": null, "ttl_sec": 0}]}'}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -210,11 +188,11 @@ interactions:
       Cache-Control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
       Connection: [keep-alive]
-      Content-Length: ['2575']
+      Content-Length: ['3301']
       Content-Security-Policy: [default-src 'none']
       Content-Type: [application/json]
-      Date: ['Wed, 09 May 2018 15:04:22 GMT']
-      Retry-After: ['26']
+      Date: ['Wed, 09 May 2018 15:05:01 GMT']
+      Retry-After: ['75']
       Server: [nginx]
       Strict-Transport-Security: [max-age=31536000]
       Vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -224,7 +202,7 @@ interactions:
       X-OAuth-Scopes: ['domains:read_write']
       X-RateLimit-Limit: ['400']
       X-RateLimit-Remaining: ['390']
-      X-RateLimit-Reset: ['1525878289']
+      X-RateLimit-Reset: ['1525878377']
       X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1
