@@ -30,13 +30,15 @@ class Provider(BaseProvider):
             location="https://subreg.cz/soap/cmd.php?soap_format=1",
             namespace="http://subreg.cz/types")
 
+    # Authenticate against provider,
+    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
+        """Logs-in the user and checks the domain name"""
         if not self.options['auth_username'] or not self.options['auth_password']:
             raise Exception('No valid authentication data passed, expected: auth-username and auth-password')
-        response = self._request("Login",
-                                 self.LOGIN_RESPONSE_TYPES,
-                                 login=self.options['auth_username'],
-                                 password=self.options['auth_password'])
+        response = self._request_login(self.options['auth_username'],
+                                       self.options['auth_password'])
         if 'ssid' in response:
             self.ssid = response['ssid']
             domains = self.domains_list()
@@ -49,74 +51,85 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, type, name, content):
+        """Creates a new unique record"""
         found = self.list_records(type, name, content)
         if len(found) > 0:
             return True
 
-        record = self._create_record(None, type, name, content,
-                                     self.options.get('ttl'),
-                                     self.options.get('priority'))
-        self._request("Add_DNS_Record",
-                      self.ADD_DNS_RECORD_RESPONSE_TYPES,
-                      domain=self.options['domain'],
-                      record=record)
+        record = self._create_request_record(None, type, name, content,
+                                             self.options['ttl'] if 'ttl' in self.options else None,
+                                             self.options['priority'] if 'priority' in self.options else None)
+
+        self._request_add_dns_record(record)
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        response = self._request("Get_DNS_Zone",
-                                 self.GET_DNS_ZONE_RESPONSE_TYPES,
-                                 domain=self.options['domain'])
-        records = list()
-        if 'records' in response:
-            relative_name = self._relative_name(name) if name else None
-            # Interpret empty string as None because pysimplesoap does so too
-            if relative_name == "":
-                relative_name = None
-
-            filtered_records = [record for record in response['records'] if
-                        (type is None or record['type'] == type) and
-                        (name is None or record['name'] == relative_name) and
-                        (content is None or ('content' in record and record['content'] == content))]
-            for filtered_record in filtered_records:
-                filtered_name = filtered_record['name'] if filtered_record['name'] else ""
-                record = dict()
-                record['id'] = filtered_record['id']
-                record['type'] = filtered_record['type']
-                record['name'] = self._full_name(filtered_name) if filtered_name else self.options['domain']
-                if 'content' in filtered_record:
-                    record['content'] = filtered_record['content']
-                if 'ttl' in filtered_record:
-                    record['ttl'] = filtered_record['ttl']
-                if 'priority' in filtered_record:
-                    record['priority'] = filtered_record['priority']
-                records.append(record)
-        return records
+        """Lists all records by the type, name and content"""
+        return self._list_records(identifier=None, type=type, name=name, content=content)
 
     # Update a record. Identifier must be specified.
-    # We are unable to update name in this way - not supported by Subreg
     def update_record(self, identifier, type=None, name=None, content=None):
+        """Updates a record. Name changes are allowed, but the record identifier will change"""
         if identifier is not None:
-            update_id = identifier
+            if name is not None:
+                records = self._list_records(identifier=identifier)
+                if len(records) == 1 and records[0]['name'] != self._full_name(name):
+                    # API does not allow us to update name directly
+                    self._update_record_with_name(records[0], type, name, content)
+                else:
+                    self._update_record(identifier, type, content)
+            else:
+                self._update_record(identifier, type, content)
         else:
-            record = self._guess_record(type, name)
-            update_id = record['id']
-
-        record = self._create_record(update_id, type, None, content,
-                                     self.options.get('ttl'),
-                                     self.options.get('priority'))
-        self._request("Modify_DNS_Record",
-                      self.MODIFY_DNS_RECORD_RESPONSE_TYPES,
-                      domain=self.options['domain'],
-                      record=record)
+            guessed_record = self._guess_record(type, name)
+            self._update_record(guessed_record['id'], type, content)
         return True
+
+    def _update_record(self, identifier, type, content):
+        """Updates existing record with no sub-domain name changes"""
+        record = self._create_request_record(identifier, type, None, content,
+                                             self.options['ttl'] if 'ttl' in self.options else None,
+                                             self.options['priority'] if 'priority' in self.options else None)
+
+        self._request_modify_dns_record(record)
+
+    def _update_record_with_name(self, old_record, type, new_name, content):
+        """Updates existing record and changes it's sub-domain name"""
+        new_type = type if type else old_record['type']
+
+        new_ttl = self.options['ttl'] if 'ttl' in self.options else None
+        if new_ttl is None and 'ttl' in old_record:
+            new_ttl = old_record['ttl']
+
+        new_priority = self.options['priority'] if 'priority' in self.options else None
+        if new_priority is None and 'priority' in old_record:
+            new_priority = old_record['priority']
+
+        new_content = content
+        if new_content is None and 'content' in old_record:
+            new_content = old_record['content']
+
+        record = self._create_request_record(None,
+                                             new_type,
+                                             new_name,
+                                             new_content,
+                                             new_ttl,
+                                             new_priority)
+
+        # This will be a different domain name, so no name collision should
+        # happen. First create a new entry and when it succeeds, delete the old
+        # one.
+        self._request_add_dns_record(record)
+        self._request_delete_dns_record_by_id(old_record['id'])
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
+        """Deletes an existing record"""
         to_delete_ids = list()
         if identifier:
             to_delete_ids.append(identifier)
@@ -125,42 +138,140 @@ class Provider(BaseProvider):
                 to_delete_ids.append(record["id"])
 
         for to_delete_id in to_delete_ids:
-            record = { 'id': to_delete_id }
-            self._request("Delete_DNS_Record",
-                          self.DELETE_DNS_RECORD_RESPONSE_TYPES,
-                          domain=self.options['domain'],
-                          record=record)
+            self._request_delete_dns_record_by_id(to_delete_id)
         return True
 
     # Get list of registered domains
     def domains_list(self):
-        response = self._request("Domains_List",
-                                 self.DOMAINS_LIST_RESPONSE_TYPES)
+        response = self._request_domains_list()
         return response['domains'] if 'domains' in response else list()
 
-    def _create_record(self, identifier, type, name, content, ttl, priority):
+    def _create_request_record(self, identifier, type, name, content, ttl, priority):
+        """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
-        if identifier:
+
+        # Mandatory content
+
+        # Just for update - not for creation
+        if identifier is not None:
             record['id'] = identifier
+
         record['type'] = type
-        if name:
+
+        # Just for creation - not for update
+        if name is not None:
             record['name'] = self._relative_name(name)
-        if content:
+
+        # Optional content
+        if content is not None:
             record['content'] = content
-        if ttl:
+        if ttl is not None:
             record['ttl'] = ttl
-        if priority:
-            record['priority'] = priority
+        if priority is not None:
+            record['prio'] = priority
         return record
 
+    def _create_response_record(self, response):
+        """Creates record for lexicon API calls"""
+        record = dict()
+        record['id'] = response['id']
+        record['type'] = response['type']
+        record['name'] = self._full_name(response['name'])
+        if 'content' in response:
+            record['content'] = response['content'] or ""
+        if 'ttl' in response:
+            record['ttl'] = response['ttl']
+        if 'prio' in response:
+            record['priority'] = response['prio']
+        return record
+
+    def _full_name(self, name):
+        """Returns full domain name of a sub-domain name"""
+        # Handle None and empty strings
+        if not name:
+            return self.options['domain']
+        else:
+            return super(Provider, self)._full_name(name)
+
+    def _relative_name(self, name):
+        """Returns sub-domain of a domain name"""
+        # Handle None and empty strings
+        if not name:
+            return None
+        else:
+            return super(Provider, self)._relative_name(name)
+
+    # List all records. Return an empty list if no records found
+    # identifier, type, name and content are used to filter records.
+    def _list_records(self, identifier=None, type=None, name=None, content=None):
+        """Lists all records by the specified criteria"""
+        response = self._request_get_dns_zone()
+        if 'records' in response:
+            # Interpret empty string as None because pysimplesoap does so too
+            content_check = content if content != "" else None
+            name_check = self._relative_name(name)
+
+            # Stringize the identifier to prevent any type differences
+            identifier_check = str(identifier)
+
+            filtered_records = [record for record in response['records'] if
+                        (identifier is None or str(record['id']) == identifier_check) and
+                        (type is None or record['type'] == type) and
+                        (name is None or record['name'] == name_check) and
+                        (content is None or ('content' in record and record['content'] == content_check))]
+            records = [self._create_response_record(filtered_record) for filtered_record in filtered_records]
+        else:
+            records = []
+        return records
+
     def _guess_record(self, type, name=None, content=None):
-        records = self.list_records(type=type, name=name, content=content)
+        """Tries to find existing unique record by type, name and content"""
+        records = self._list_records(identifier=None, type=type, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:
             raise Exception('Identifier was not provided and several existing records match the request for {0}/{1}'.format(type,name))
         else:
             raise Exception('Identifier was not provided and no existing records match the request for {0}/{1}'.format(type,name))
+
+    def _request_login(self, login, password):
+        """Sends Login request"""
+        return self._request("Login",
+                             self.LOGIN_RESPONSE_TYPES,
+                             login=login,
+                             password=password)
+
+    def _request_domains_list(self):
+        """Sends Domains_List request"""
+        return self._request("Domains_List",
+                             self.DOMAINS_LIST_RESPONSE_TYPES)
+
+    def _request_get_dns_zone(self):
+        """Sends Get_DNS_Zone request"""
+        return self._request("Get_DNS_Zone",
+                             self.GET_DNS_ZONE_RESPONSE_TYPES,
+                             domain=self.options['domain'])
+
+    def _request_add_dns_record(self, record):
+        """Sends Add_DNS_Record request"""
+        return self._request("Add_DNS_Record",
+                             self.ADD_DNS_RECORD_RESPONSE_TYPES,
+                             domain=self.options['domain'],
+                             record=record)
+
+    def _request_modify_dns_record(self, record):
+        """Sends Modify_DNS_Record request"""
+        return self._request("Modify_DNS_Record",
+                             self.MODIFY_DNS_RECORD_RESPONSE_TYPES,
+                             domain=self.options['domain'],
+                             record=record)
+
+    def _request_delete_dns_record_by_id(self, identifier):
+        """Sends Delete_DNS_Record request"""
+        return self._request("Delete_DNS_Record",
+                             self.DELETE_DNS_RECORD_RESPONSE_TYPES,
+                             domain=self.options['domain'],
+                             record={ 'id': identifier })
 
     def _request(self, command, response_types, **kwargs):
         """Make request parse response"""
@@ -196,6 +307,7 @@ class Provider(BaseProvider):
         else:
             raise Exception("No reponse tag found in SOAP response")
 
+    # Common error info response
     ERROR_INFO_TYPES = {
         "errormsg": str,
         "errorcode": {
@@ -203,6 +315,8 @@ class Provider(BaseProvider):
             "minor": int
             }
         }
+
+    # Login (authenticate) response
     LOGIN_RESPONSE_TYPES = {
         "status": str,
         "data": {
@@ -211,6 +325,7 @@ class Provider(BaseProvider):
         "error": ERROR_INFO_TYPES,
         }
 
+    # Get_DNS_Zone (list_records) response
     GET_DNS_ZONE_RESPONSE_TYPES = {
         "status": str,
         "data": {
@@ -227,24 +342,28 @@ class Provider(BaseProvider):
         "error": ERROR_INFO_TYPES,
         }
 
+    # Add_DNS_Zone (create_record) response
     ADD_DNS_RECORD_RESPONSE_TYPES = {
         "status": str,
         "data": {},
         "error": ERROR_INFO_TYPES,
         }
 
+    # Modify_DNS_Zone (update_record) response
     MODIFY_DNS_RECORD_RESPONSE_TYPES = {
         "status": str,
         "data": {},
         "error": ERROR_INFO_TYPES,
         }
 
+    # Delete_DNS_Zone (delete_record) response
     DELETE_DNS_RECORD_RESPONSE_TYPES = {
         "status": str,
         "data": {},
         "error": ERROR_INFO_TYPES,
         }
 
+    # Domains_List (domains_list) response
     DOMAINS_LIST_RESPONSE_TYPES = {
         "status": str,
         "data": {
