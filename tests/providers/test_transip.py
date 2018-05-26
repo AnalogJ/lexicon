@@ -71,24 +71,11 @@ class TransipProviderTests(TestCase, IntegrationTests):
         })
         return options
 
-    @classmethod
-    def setUpClass(cls):
-        cls.old_serializer = provider_vcr.serializer
-        provider_vcr.serializer = "json"
-
-    @classmethod
-    def tearDownClass(cls):
-        provider_vcr.serializer = cls.old_serializer
-
     def tearDown(self):
         os.unlink(self._fake_key)
 
     def _filter_headers(self):
         return ['Cookie']
-
-    def _cassette_path(self, fixture_subpath):
-        path = super(TransipProviderTests, self)._cassette_path(fixture_subpath)
-        return path.replace(".yaml", ".json")
 
     @pytest.mark.skip(reason="manipulating records by id is not supported")
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
@@ -97,13 +84,3 @@ class TransipProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="adding docs.example.com as a CNAME target will result in a RFC 1035 error")
     def test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
         return
-
-    # TODO: this should be enabled
-    @pytest.mark.skip(reason="regenerating auth keys required")
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
-        return
-
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')

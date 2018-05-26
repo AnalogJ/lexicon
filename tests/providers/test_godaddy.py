@@ -38,6 +38,7 @@ class GoDaddyProviderTests(TestCase, IntegrationTests):
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         return
 
+    # TODO: the following skipped suite and fixtures should be enabled
     @pytest.fixture(autouse=True)
     def skip_suite(self, request):
         if request.node.get_marker('ext_suite_1'):

@@ -18,7 +18,7 @@ class GandiProviderTests(TestCase, IntegrationTests):
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         return
 
-
+    # TODO: the following skipped suite and fixtures should be enabled
     @pytest.fixture(autouse=True)
     def skip_suite(self, request):
         if request.node.get_marker('ext_suite_1'):

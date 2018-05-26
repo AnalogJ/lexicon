@@ -9,17 +9,38 @@ interactions:
     method: GET
     uri: https://api.cloudns.net/dns/get-zone-info.json?domain-name=api-example.com
   response:
-    body: {string: !!python/unicode '{"status":"Failed","statusDescription":"Invalid
-        authentication, incorrect auth-id or auth-password."}'}
+    body: {string: '{"name":"api-example.com","type":"master","zone":"domain","status":"1"}'}
     headers:
-      connection: [Keep-Alive]
-      content-length: ['101']
-      content-type: [application/json]
-      date: ['Tue, 20 Mar 2018 11:25:27 GMT']
-      keep-alive: [timeout=5]
-      server: [Apache]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-xss-protection: [1; mode=block]
+      Connection: [Keep-Alive]
+      Content-Length: ['71']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:18 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=filter.thisdoesnotexist&type=TXT
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:18 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

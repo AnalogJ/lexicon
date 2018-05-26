@@ -1,0 +1,115 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/get-zone-info.json?domain-name=api-example.com
+  response:
+    body: {string: '{"name":"api-example.com","type":"master","zone":"domain","status":"1"}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['71']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:06 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.noop&type=TXT
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:06 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: domain-name=api-example.com&record-type=TXT&host=_acme-challenge.noop&record=challengetoken&ttl=3600&priority=placeholder_priority&weight=placeholder_weight&port=placeholder_port
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['299']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.cloudns.net/dns/add-record.json
+  response:
+    body: {string: '{"status":"Success","statusDescription":"The record was added
+        successfully.","data":{"id":69469252}}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['100']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:06 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.noop&type=TXT
+  response:
+    body: {string: '{"69469252":{"id":"69469252","type":"TXT","host":"_acme-challenge.noop","record":"challengetoken","ttl":"3600","status":1}}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['123']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:06 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.cloudns.net/dns/records.json?domain-name=api-example.com&host=_acme-challenge.noop&type=TXT
+  response:
+    body: {string: '{"69469252":{"id":"69469252","type":"TXT","host":"_acme-challenge.noop","record":"challengetoken","ttl":"3600","status":1}}'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['123']
+      Content-Type: [application/json]
+      Date: ['Tue, 27 Mar 2018 19:24:06 GMT']
+      Keep-Alive: [timeout=5]
+      Server: [Apache]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

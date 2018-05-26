@@ -8,57 +8,29 @@ interactions:
       Content-Length: ['0']
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getList&Page=1
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=thisisadomainidonotown.com
   response:
     body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getlist</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.getList\">\r\n    <DomainGetListResult>\r\
-        \n      <Domain ID=\"160248\" Name=\"dnscontrol.com\" User=\"sandypants\"\
-        \ Created=\"04/18/2017\" Expires=\"04/18/2018\" IsExpired=\"false\" IsLocked=\"\
-        false\" AutoRenew=\"false\" WhoisGuard=\"NOTPRESENT\" IsPremium=\"false\"\
-        \ IsOurDNS=\"true\" />\r\n      <Domain ID=\"261173\" Name=\"lexicontest.com\"\
-        \ User=\"sandypants\" Created=\"01/16/2018\" Expires=\"01/16/2019\" IsExpired=\"\
-        false\" IsLocked=\"false\" AutoRenew=\"false\" WhoisGuard=\"NOTPRESENT\" IsPremium=\"\
-        false\" IsOurDNS=\"true\" />\r\n    </DomainGetListResult>\r\n    <Paging>\r\
-        \n      <TotalItems>2</TotalItems>\r\n      <CurrentPage>1</CurrentPage>\r\
-        \n      <PageSize>20</PageSize>\r\n    </Paging>\r\n  </CommandResponse>\r\
-        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.016</ExecutionTime>\r\n</ApiResponse>"}
+        <ApiResponse Status=\"ERROR\" xmlns=\"http://api.namecheap.com/xml.response\"\
+        >\r\n  <Errors>\r\n    <Error Number=\"2030166\">Domain is invalid</Error>\r\
+        \n  </Errors>\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\
+        \n  <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult\
+        \ ID=\"0\" IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\
+        \n        <NumYears>0</NumYears>\r\n      </DomainDetails>\r\n      <LockDetails\
+        \ />\r\n      <Whoisguard>\r\n        <ID>0</ID>\r\n      </Whoisguard>\r\n\
+        \      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\
+        \n        <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\
+        \n        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n       \
+        \ <IsActive>false</IsActive>\r\n      </PremiumDnsSubscription>\r\n      <DnsDetails\
+        \ IsUsingOurDNS=\"false\" HostCount=\"0\" DynamicDNSStatus=\"false\" IsFailover=\"\
+        false\" />\r\n      <Modificationrights />\r\n    </DomainGetInfoResult>\r\
+        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
+        \n  <ExecutionTime>0.191</ExecutionTime>\r\n</ApiResponse>"}
     headers:
       cache-control: [private]
-      content-length: ['1053']
+      content-length: ['1189']
       content-type: [text/xml; charset=utf-8]
-      date: ['Wed, 17 Jan 2018 19:03:19 GMT']
-      server: [Microsoft-IIS/8.5]
-      vary: [Accept-Encoding]
-      x-aspnet-version: [4.0.30319]
-      x-powered-by: [ASP.NET]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getList&Page=2
-  response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getlist</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.getList\">\r\n    <DomainGetListResult\
-        \ />\r\n    <Paging>\r\n      <TotalItems>2</TotalItems>\r\n      <CurrentPage>2</CurrentPage>\r\
-        \n      <PageSize>20</PageSize>\r\n    </Paging>\r\n  </CommandResponse>\r\
-        \n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--8:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.019</ExecutionTime>\r\n</ApiResponse>"}
-    headers:
-      cache-control: [private]
-      content-length: ['580']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Wed, 17 Jan 2018 19:03:19 GMT']
+      date: ['Mon, 26 Mar 2018 17:40:58 GMT']
       server: [Microsoft-IIS/8.5]
       vary: [Accept-Encoding]
       x-aspnet-version: [4.0.30319]
