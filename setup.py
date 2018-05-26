@@ -38,6 +38,7 @@ setup(
 
     description='Manipulate DNS records on various DNS providers in a standardized/agnostic way',
     long_description=long_description,
+    long_description_content_type="text/markdown",
 
     # The project's main homepage.
     url='https://github.com/AnalogJ/lexicon',
