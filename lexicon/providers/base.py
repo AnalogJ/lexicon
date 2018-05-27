@@ -1,7 +1,7 @@
 from builtins import object
 
 from ..common.options_handler import SafeOptionsWithFallback
-
+import lexicon.common.records as DnsRecords
 
 class Provider(object):
 
@@ -46,23 +46,23 @@ class Provider(object):
         raise NotImplementedError("Providers should implement this!")
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def create_record(self, record):
         raise NotImplementedError("Providers should implement this!")
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, filter_record=None):
         raise NotImplementedError("Providers should implement this!")
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, filter_record, record):
         raise NotImplementedError("Providers should implement this!")
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def delete_record(self, filter_record):
         raise NotImplementedError("Providers should implement this!")
 
     #Helpers

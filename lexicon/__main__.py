@@ -21,12 +21,13 @@ def BaseProviderParser():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("action", help="specify the action to take", default='list', choices=['create', 'list', 'update', 'delete'])
     parser.add_argument("domain", help="specify the domain, supports subdomains as well")
-    parser.add_argument("type", help="specify the entry type", default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
+    parser.add_argument("type", help="specify the entry type", default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'TXT'])
 
     parser.add_argument("--name", help="specify the record name")
     parser.add_argument("--content", help="specify the record content")
+    parser.add_argument("--content-old", help="specify the old record content")
     parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
-    parser.add_argument("--priority", help="specify the record priority")
+    parser.add_argument("--mx-priority", help="specify the record priority for MX")
     parser.add_argument("--identifier", help="specify the record for update or delete actions")
     parser.add_argument("--log_level", help="specify the log level", default="DEBUG", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
     return parser

@@ -1,8 +1,12 @@
 from builtins import object
 import importlib
+import logging
 import os
 import tldextract
+import lexicon.common.records as DnsRecords
 from .common.options_handler import env_auth_options
+
+logger = logging.getLogger(__name__)
 
 #from providers import Example
 class Client(object):
@@ -37,17 +41,36 @@ class Client(object):
     def execute(self):
         self.provider.authenticate()
 
-        if self.action == 'create':
-            return self.provider.create_record(self.options.get('type'), self.options.get('name'), self.options.get('content'))
+        record_type = self.options.get('type')
+        record_type = record_type.upper().strip()
+        record = DnsRecords.RecordFactory.create_record(record_type,
+            name=self.options.get('name'),
+            content=self.options.get('content'),
+            ttl=self.options.get('ttl', None),
+            priority=self.options.get('mx-priority', 0))
+        if not record:
+            logger.error("Unknown record type: {0}".format(self.options.get('type')))
+            return
 
-        elif self.action == 'list':
-            return self.provider.list_records(self.options.get('type'), self.options.get('name'), self.options.get('content'))
-
-        elif self.action == 'update':
-            return self.provider.update_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
-
+        filter_record = None
+        if self.action == 'update':
+            filter_record = DnsRecords.RecordFactory.create_record(record.type,
+                id=self.options.get('identifier', None),
+                name=record.name,
+                content=self.options.get('content-old', None))
         elif self.action == 'delete':
-            return self.provider.delete_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            filter_record = record
+            filter_record.id = self.options.get('identifier', None)
+
+        if self.action == 'create':
+            return self.provider.create_record(record)
+        elif self.action == 'list':
+            filter_record = record
+            return self.provider.list_records(filter_record)
+        elif self.action == 'update':
+            return self.provider.update_record(filter_record, record)
+        elif self.action == 'delete':
+            return self.provider.delete_record(filter_record)
 
     def _validate(self, options):
         if not options.get('provider_name'):
