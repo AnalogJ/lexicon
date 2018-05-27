@@ -12,11 +12,11 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains
   response:
-    body: {string: !!python/unicode '{"pages": 1, "results": 1, "data": [{"retry_sec":
-        0, "ttl_sec": 0, "type": "master", "description": "", "status": "active",
-        "group": "", "expire_sec": 0, "refresh_sec": 0, "id": 1067233, "master_ips":
-        [], "domain": "lexicon-test.com", "soa_email": "trinopoty@gmail.com", "axfr_ips":
-        []}], "page": 1}'}
+    body: {string: !!python/unicode '{"pages": 1, "page": 1, "data": [{"description":
+        "", "domain": "lexicon-test.com", "group": "", "soa_email": "trinopoty@gmail.com",
+        "id": 1067233, "master_ips": [], "expire_sec": 0, "status": "active", "retry_sec":
+        0, "type": "master", "refresh_sec": 0, "axfr_ips": [], "ttl_sec": 0}], "results":
+        1}'}
     headers:
       access-control-allow-credentials: ['true']
       access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -30,8 +30,8 @@ interactions:
       content-length: ['299']
       content-security-policy: [default-src 'none']
       content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:05 GMT']
-      retry-after: ['107']
+      date: ['Sun, 27 May 2018 14:08:14 GMT']
+      retry-after: ['45']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -40,214 +40,8 @@ interactions:
       x-frame-options: [DENY, DENY]
       x-oauth-scopes: ['domains:read_write']
       x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['398']
-      x-ratelimit-reset: ['1527430013']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: GET
-    uri: https://api.linode.com/v4/domains/1067233/records
-  response:
-    body: {string: !!python/unicode '{"pages": 1, "page": 1, "data": [{"name": "localhost",
-        "target": "127.0.0.1", "id": 9701864, "weight": 0, "port": 0, "type": "A",
-        "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "docs", "target": "docs.example.com", "id": 9701865, "weight":
-        0, "port": 0, "type": "CNAME", "service": null, "tag": null, "protocol": null,
-        "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.fqdn", "target": "challengetoken",
-        "id": 9701866, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.full",
-        "target": "challengetoken", "id": 9701867, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "_acme-challenge.test", "target": "challengetoken", "id": 9701868,
-        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
-        null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.createrecordset",
-        "target": "challengetoken1", "id": 9701869, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "_acme-challenge.createrecordset", "target": "challengetoken2",
-        "id": 9701870, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.noop",
-        "target": "challengetoken", "id": 9701871, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}], "results": 8}'}
-    headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
-          Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
-          max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['1585']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:07 GMT']
-      retry-after: ['5']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_only']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['386']
-      x-ratelimit-reset: ['1527429913']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "name": "_acme-challenge.deleterecordinset",
-      "target": "challengetoken1"}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['103']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.linode.com/v4/domains/1067233/records
-  response:
-    body: {string: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "tag": null, "id":
-        9701876, "priority": 0, "port": 0, "weight": 0, "service": null, "name": "_acme-challenge.deleterecordinset",
-        "protocol": null, "target": "challengetoken1"}'}
-    headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
-          Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['205']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:10 GMT']
-      retry-after: ['77']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_write']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['396']
-      x-ratelimit-reset: ['1527429988']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: GET
-    uri: https://api.linode.com/v4/domains/1067233/records
-  response:
-    body: {string: !!python/unicode '{"pages": 1, "page": 1, "data": [{"name": "localhost",
-        "target": "127.0.0.1", "id": 9701864, "weight": 0, "port": 0, "type": "A",
-        "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "docs", "target": "docs.example.com", "id": 9701865, "weight":
-        0, "port": 0, "type": "CNAME", "service": null, "tag": null, "protocol": null,
-        "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.fqdn", "target": "challengetoken",
-        "id": 9701866, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.full",
-        "target": "challengetoken", "id": 9701867, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "_acme-challenge.test", "target": "challengetoken", "id": 9701868,
-        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
-        null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.createrecordset",
-        "target": "challengetoken1", "id": 9701869, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "_acme-challenge.createrecordset", "target": "challengetoken2",
-        "id": 9701870, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.noop",
-        "target": "challengetoken", "id": 9701871, "weight": 0, "port": 0, "type":
-        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
-        0}, {"name": "_acme-challenge.deleterecordinset", "target": "challengetoken1",
-        "id": 9701876, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}], "results": 9}'}
-    headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
-          Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
-          max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['1792']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:13 GMT']
-      retry-after: ['105']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_only']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['398']
-      x-ratelimit-reset: ['1527430019']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "name": "_acme-challenge.deleterecordinset",
-      "target": "challengetoken2"}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['103']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.linode.com/v4/domains/1067233/records
-  response:
-    body: {string: !!python/unicode '{"type": "TXT", "id": 9701877, "ttl_sec": 0,
-        "tag": null, "weight": 0, "target": "challengetoken2", "protocol": null, "priority":
-        0, "service": null, "port": 0, "name": "_acme-challenge.deleterecordinset"}'}
-    headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
-          Accept, X-Filter']
-      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
-      access-control-allow-origin: ['*']
-      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
-      cache-control: ['private, max-age=60, s-maxage=60']
-      connection: [keep-alive]
-      content-length: ['205']
-      content-security-policy: [default-src 'none']
-      content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:15 GMT']
-      retry-after: ['119']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      vary: ['Authorization, X-Filter']
-      x-accepted-oauth-scopes: ['domains:read_write']
-      x-content-type-options: [nosniff, nosniff]
-      x-frame-options: [DENY, DENY]
-      x-oauth-scopes: ['domains:read_write']
-      x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['399']
-      x-ratelimit-reset: ['1527430035']
+      x-ratelimit-remaining: ['389']
+      x-ratelimit-reset: ['1527430140']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -282,12 +76,33 @@ interactions:
         0, "name": "_acme-challenge.createrecordset"}, {"type": "TXT", "id": 9701871,
         "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken", "protocol":
         null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.noop"},
-        {"type": "TXT", "id": 9701876, "ttl_sec": 0, "tag": null, "weight": 0, "target":
-        "challengetoken1", "protocol": null, "priority": 0, "service": null, "port":
-        0, "name": "_acme-challenge.deleterecordinset"}, {"type": "TXT", "id": 9701877,
-        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken2", "protocol":
-        null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.deleterecordinset"}],
-        "results": 10}'}
+        {"type": "TXT", "id": 9701877, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.deleterecordinset"}, {"type": "TXT", "id": 9701880,
+        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken1", "protocol":
+        null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.listrecordset"},
+        {"type": "TXT", "id": 9701881, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.listrecordset"}, {"type": "TXT", "id": 9701882,
+        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken", "protocol":
+        null, "priority": 0, "service": null, "port": 0, "name": "random.fqdntest"},
+        {"type": "TXT", "id": 9701883, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "random.fulltest"}, {"type": "TXT", "id": 9701884, "ttl_sec": 0,
+        "tag": null, "weight": 0, "target": "challengetoken", "protocol": null, "priority":
+        0, "service": null, "port": 0, "name": "random.test"}, {"type": "TXT", "id":
+        9701885, "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "update.test"},
+        {"type": "TXT", "id": 9701886, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "update.testfqdn"}, {"type": "TXT", "id": 9701894, "ttl_sec": 0,
+        "tag": null, "weight": 0, "target": "challengetoken", "protocol": null, "priority":
+        0, "service": null, "port": 0, "name": "update.testfull"}, {"type": "TXT",
+        "id": 9701908, "ttl_sec": 0, "tag": null, "weight": 0, "target": "newtoken1",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.updaterecordinsetbycontent"},
+        {"type": "TXT", "id": 9701909, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.updaterecordinsetbycontent"}], "results": 19}'}
     headers:
       access-control-allow-credentials: ['true']
       access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -298,11 +113,11 @@ interactions:
       cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
       connection: [keep-alive]
-      content-length: ['2000']
+      content-length: ['3745']
       content-security-policy: [default-src 'none']
       content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:18 GMT']
-      retry-after: ['119']
+      date: ['Sun, 27 May 2018 14:08:17 GMT']
+      retry-after: ['75']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -311,23 +126,26 @@ interactions:
       x-frame-options: [DENY, DENY]
       x-oauth-scopes: ['domains:read_write']
       x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['399']
-      x-ratelimit-reset: ['1527430038']
+      x-ratelimit-remaining: ['395']
+      x-ratelimit-reset: ['1527430173']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "name": "_acme-challenge.updaterecordinset",
+      "target": "challengetoken1"}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['2']
+      Content-Length: ['103']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
-    method: DELETE
-    uri: https://api.linode.com/v4/domains/1067233/records/9701876
+    method: POST
+    uri: https://api.linode.com/v4/domains/1067233/records
   response:
-    body: {string: !!python/unicode '{}'}
+    body: {string: !!python/unicode '{"type": "TXT", "id": 9701910, "ttl_sec": 0,
+        "tag": null, "weight": 0, "target": "challengetoken1", "protocol": null, "priority":
+        0, "service": null, "port": 0, "name": "_acme-challenge.updaterecordinset"}'}
     headers:
       access-control-allow-credentials: ['true']
       access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -337,11 +155,11 @@ interactions:
       access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
       cache-control: ['private, max-age=60, s-maxage=60']
       connection: [keep-alive]
-      content-length: ['2']
+      content-length: ['205']
       content-security-policy: [default-src 'none']
       content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:20 GMT']
-      retry-after: ['119']
+      date: ['Sun, 27 May 2018 14:08:19 GMT']
+      retry-after: ['64']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       vary: ['Authorization, X-Filter']
@@ -350,8 +168,8 @@ interactions:
       x-frame-options: [DENY, DENY]
       x-oauth-scopes: ['domains:read_write']
       x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['399']
-      x-ratelimit-reset: ['1527430040']
+      x-ratelimit-remaining: ['396']
+      x-ratelimit-reset: ['1527430164']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 - request:
@@ -388,7 +206,34 @@ interactions:
         "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
         0}, {"name": "_acme-challenge.deleterecordinset", "target": "challengetoken2",
         "id": 9701877, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
-        null, "protocol": null, "priority": 0, "ttl_sec": 0}], "results": 9}'}
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.listrecordset",
+        "target": "challengetoken1", "id": 9701880, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.listrecordset", "target": "challengetoken2",
+        "id": 9701881, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "random.fqdntest",
+        "target": "challengetoken", "id": 9701882, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "random.fulltest", "target": "challengetoken", "id": 9701883,
+        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
+        null, "priority": 0, "ttl_sec": 0}, {"name": "random.test", "target": "challengetoken",
+        "id": 9701884, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "update.test",
+        "target": "challengetoken", "id": 9701885, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "update.testfqdn", "target": "challengetoken", "id": 9701886,
+        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
+        null, "priority": 0, "ttl_sec": 0}, {"name": "update.testfull", "target":
+        "challengetoken", "id": 9701894, "weight": 0, "port": 0, "type": "TXT", "service":
+        null, "tag": null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name":
+        "_acme-challenge.updaterecordinsetbycontent", "target": "newtoken1", "id":
+        9701908, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null,
+        "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.updaterecordinsetbycontent",
+        "target": "challengetoken2", "id": 9701909, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.updaterecordinset", "target": "challengetoken1",
+        "id": 9701910, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}], "results": 20}'}
     headers:
       access-control-allow-credentials: ['true']
       access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -399,11 +244,11 @@ interactions:
       cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
           max-age=60, s-maxage=60']
       connection: [keep-alive]
-      content-length: ['1792']
+      content-length: ['3952']
       content-security-policy: [default-src 'none']
       content-type: [application/json]
-      date: ['Sun, 27 May 2018 14:05:24 GMT']
-      retry-after: ['115']
+      date: ['Sun, 27 May 2018 14:08:22 GMT']
+      retry-after: ['37']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -412,8 +257,274 @@ interactions:
       x-frame-options: [DENY, DENY]
       x-oauth-scopes: ['domains:read_write']
       x-ratelimit-limit: ['400']
-      x-ratelimit-remaining: ['398']
-      x-ratelimit-reset: ['1527430040']
+      x-ratelimit-remaining: ['388']
+      x-ratelimit-reset: ['1527430140']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "name": "_acme-challenge.updaterecordinset",
+      "target": "challengetoken2"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['103']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: https://api.linode.com/v4/domains/1067233/records
+  response:
+    body: {string: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "tag": null, "id":
+        9701911, "priority": 0, "port": 0, "weight": 0, "service": null, "name": "_acme-challenge.updaterecordinset",
+        "protocol": null, "target": "challengetoken2"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+          Accept, X-Filter']
+      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      cache-control: ['private, max-age=60, s-maxage=60']
+      connection: [keep-alive]
+      content-length: ['205']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json]
+      date: ['Sun, 27 May 2018 14:08:25 GMT']
+      retry-after: ['50']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      vary: ['Authorization, X-Filter']
+      x-accepted-oauth-scopes: ['domains:read_write']
+      x-content-type-options: [nosniff, nosniff]
+      x-frame-options: [DENY, DENY]
+      x-oauth-scopes: ['domains:read_write']
+      x-ratelimit-limit: ['400']
+      x-ratelimit-remaining: ['395']
+      x-ratelimit-reset: ['1527430156']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.linode.com/v4/domains/1067233/records
+  response:
+    body: {string: !!python/unicode '{"page": 1, "pages": 1, "data": [{"type": "A",
+        "id": 9701864, "ttl_sec": 0, "tag": null, "weight": 0, "target": "127.0.0.1",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "localhost"},
+        {"type": "CNAME", "id": 9701865, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "docs.example.com", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "docs"}, {"type": "TXT", "id": 9701866, "ttl_sec": 0, "tag": null,
+        "weight": 0, "target": "challengetoken", "protocol": null, "priority": 0,
+        "service": null, "port": 0, "name": "_acme-challenge.fqdn"}, {"type": "TXT",
+        "id": 9701867, "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.full"},
+        {"type": "TXT", "id": 9701868, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.test"}, {"type": "TXT", "id": 9701869, "ttl_sec":
+        0, "tag": null, "weight": 0, "target": "challengetoken1", "protocol": null,
+        "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.createrecordset"},
+        {"type": "TXT", "id": 9701870, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.createrecordset"}, {"type": "TXT", "id": 9701871,
+        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken", "protocol":
+        null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.noop"},
+        {"type": "TXT", "id": 9701877, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.deleterecordinset"}, {"type": "TXT", "id": 9701880,
+        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken1", "protocol":
+        null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.listrecordset"},
+        {"type": "TXT", "id": 9701881, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.listrecordset"}, {"type": "TXT", "id": 9701882,
+        "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken", "protocol":
+        null, "priority": 0, "service": null, "port": 0, "name": "random.fqdntest"},
+        {"type": "TXT", "id": 9701883, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "random.fulltest"}, {"type": "TXT", "id": 9701884, "ttl_sec": 0,
+        "tag": null, "weight": 0, "target": "challengetoken", "protocol": null, "priority":
+        0, "service": null, "port": 0, "name": "random.test"}, {"type": "TXT", "id":
+        9701885, "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "update.test"},
+        {"type": "TXT", "id": 9701886, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "update.testfqdn"}, {"type": "TXT", "id": 9701894, "ttl_sec": 0,
+        "tag": null, "weight": 0, "target": "challengetoken", "protocol": null, "priority":
+        0, "service": null, "port": 0, "name": "update.testfull"}, {"type": "TXT",
+        "id": 9701908, "ttl_sec": 0, "tag": null, "weight": 0, "target": "newtoken1",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.updaterecordinsetbycontent"},
+        {"type": "TXT", "id": 9701909, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.updaterecordinsetbycontent"}, {"type": "TXT",
+        "id": 9701910, "ttl_sec": 0, "tag": null, "weight": 0, "target": "challengetoken1",
+        "protocol": null, "priority": 0, "service": null, "port": 0, "name": "_acme-challenge.updaterecordinset"},
+        {"type": "TXT", "id": 9701911, "ttl_sec": 0, "tag": null, "weight": 0, "target":
+        "challengetoken2", "protocol": null, "priority": 0, "service": null, "port":
+        0, "name": "_acme-challenge.updaterecordinset"}], "results": 21}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+          Accept, X-Filter']
+      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
+          max-age=60, s-maxage=60']
+      connection: [keep-alive]
+      content-length: ['4159']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json]
+      date: ['Sun, 27 May 2018 14:08:27 GMT']
+      retry-after: ['56']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
+      x-accepted-oauth-scopes: ['domains:read_only']
+      x-content-type-options: [nosniff, nosniff]
+      x-frame-options: [DENY, DENY]
+      x-oauth-scopes: ['domains:read_write']
+      x-ratelimit-limit: ['400']
+      x-ratelimit-remaining: ['395']
+      x-ratelimit-reset: ['1527430164']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"target": "newtoken1"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['23']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.linode.com/v4/domains/1067233/records/9701910
+  response:
+    body: {string: !!python/unicode '{"ttl_sec": 0, "type": "TXT", "tag": null, "id":
+        9701910, "priority": 0, "port": 0, "weight": 0, "service": null, "name": "_acme-challenge.updaterecordinset",
+        "protocol": null, "target": "newtoken1"}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+          Accept, X-Filter']
+      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      cache-control: ['private, max-age=60, s-maxage=60']
+      connection: [keep-alive]
+      content-length: ['199']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json]
+      date: ['Sun, 27 May 2018 14:08:30 GMT']
+      retry-after: ['45']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      vary: ['Authorization, X-Filter']
+      x-accepted-oauth-scopes: ['domains:read_write']
+      x-content-type-options: [nosniff, nosniff]
+      x-frame-options: [DENY, DENY]
+      x-oauth-scopes: ['domains:read_write']
+      x-ratelimit-limit: ['400']
+      x-ratelimit-remaining: ['394']
+      x-ratelimit-reset: ['1527430156']
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.linode.com/v4/domains/1067233/records
+  response:
+    body: {string: !!python/unicode '{"pages": 1, "page": 1, "data": [{"name": "localhost",
+        "target": "127.0.0.1", "id": 9701864, "weight": 0, "port": 0, "type": "A",
+        "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "docs", "target": "docs.example.com", "id": 9701865, "weight":
+        0, "port": 0, "type": "CNAME", "service": null, "tag": null, "protocol": null,
+        "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.fqdn", "target": "challengetoken",
+        "id": 9701866, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.full",
+        "target": "challengetoken", "id": 9701867, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.test", "target": "challengetoken", "id": 9701868,
+        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
+        null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.createrecordset",
+        "target": "challengetoken1", "id": 9701869, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.createrecordset", "target": "challengetoken2",
+        "id": 9701870, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.noop",
+        "target": "challengetoken", "id": 9701871, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.deleterecordinset", "target": "challengetoken2",
+        "id": 9701877, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.listrecordset",
+        "target": "challengetoken1", "id": 9701880, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.listrecordset", "target": "challengetoken2",
+        "id": 9701881, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "random.fqdntest",
+        "target": "challengetoken", "id": 9701882, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "random.fulltest", "target": "challengetoken", "id": 9701883,
+        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
+        null, "priority": 0, "ttl_sec": 0}, {"name": "random.test", "target": "challengetoken",
+        "id": 9701884, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag":
+        null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "update.test",
+        "target": "challengetoken", "id": 9701885, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "update.testfqdn", "target": "challengetoken", "id": 9701886,
+        "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null, "protocol":
+        null, "priority": 0, "ttl_sec": 0}, {"name": "update.testfull", "target":
+        "challengetoken", "id": 9701894, "weight": 0, "port": 0, "type": "TXT", "service":
+        null, "tag": null, "protocol": null, "priority": 0, "ttl_sec": 0}, {"name":
+        "_acme-challenge.updaterecordinsetbycontent", "target": "newtoken1", "id":
+        9701908, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null,
+        "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.updaterecordinsetbycontent",
+        "target": "challengetoken2", "id": 9701909, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}, {"name": "_acme-challenge.updaterecordinset", "target": "newtoken1", "id":
+        9701910, "weight": 0, "port": 0, "type": "TXT", "service": null, "tag": null,
+        "protocol": null, "priority": 0, "ttl_sec": 0}, {"name": "_acme-challenge.updaterecordinset",
+        "target": "challengetoken2", "id": 9701911, "weight": 0, "port": 0, "type":
+        "TXT", "service": null, "tag": null, "protocol": null, "priority": 0, "ttl_sec":
+        0}], "results": 21}'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
+          Accept, X-Filter']
+      access-control-allow-methods: ['HEAD, GET, OPTIONS, POST, PUT, DELETE']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status']
+      cache-control: ['private, max-age=0, s-maxage=0, no-cache, no-store', 'private,
+          max-age=60, s-maxage=60']
+      connection: [keep-alive]
+      content-length: ['4153']
+      content-security-policy: [default-src 'none']
+      content-type: [application/json]
+      date: ['Sun, 27 May 2018 14:08:33 GMT']
+      retry-after: ['26']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
+      x-accepted-oauth-scopes: ['domains:read_only']
+      x-content-type-options: [nosniff, nosniff]
+      x-frame-options: [DENY, DENY]
+      x-oauth-scopes: ['domains:read_write']
+      x-ratelimit-limit: ['400']
+      x-ratelimit-remaining: ['387']
+      x-ratelimit-reset: ['1527430140']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

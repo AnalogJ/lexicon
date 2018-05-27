@@ -12,11 +12,11 @@ interactions:
     method: GET
     uri: https://api.linode.com/v4/domains
   response:
-    body: {string: !!python/unicode '{"pages": 1, "page": 1, "data": [{"soa_email":
-        "contact@lexicon.com", "status": "active", "description": "", "refresh_sec":
-        0, "id": 1065421, "retry_sec": 0, "type": "master", "domain": "lexicon-test.com",
-        "ttl_sec": 0, "master_ips": [], "group": "", "axfr_ips": [], "expire_sec":
-        0}], "results": 1}'}
+    body: {string: !!python/unicode '{"pages": 1, "results": 1, "data": [{"retry_sec":
+        0, "ttl_sec": 0, "type": "master", "description": "", "status": "active",
+        "group": "", "expire_sec": 0, "refresh_sec": 0, "id": 1067233, "master_ips":
+        [], "domain": "lexicon-test.com", "soa_email": "trinopoty@gmail.com", "axfr_ips":
+        []}], "page": 1}'}
     headers:
       access-control-allow-credentials: ['true']
       access-control-allow-headers: ['Authorization, Origin, X-Requested-With, Content-Type,
@@ -30,8 +30,8 @@ interactions:
       content-length: ['299']
       content-security-policy: [default-src 'none']
       content-type: [application/json]
-      date: ['Wed, 02 May 2018 10:42:10 GMT']
-      retry-after: ['98']
+      date: ['Sun, 27 May 2018 14:02:43 GMT']
+      retry-after: ['107']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       vary: ['Authorization, X-Filter', 'Authorization, X-Filter']
@@ -41,7 +41,7 @@ interactions:
       x-oauth-scopes: ['domains:read_write']
       x-ratelimit-limit: ['400']
       x-ratelimit-remaining: ['398']
-      x-ratelimit-reset: ['1525257829']
+      x-ratelimit-reset: ['1527429871']
       x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1
