@@ -88,7 +88,7 @@ class Provider(BaseProvider):
         records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
 
         for record in records:
-            if record['type'].upper() == type.upper() and self._relative_name(record['name']).lower() == relative_name.lower() and record['data'] != content:
+            if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content:
                 record['data'] = content
                 break
         
@@ -102,19 +102,19 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         # No identifier is used with GoDaddy. 
         # We can rely only on type + name (which are then mandatory) to know which records need to be deleted.
-        if not type:
-            raise Exception('ERROR: type is required')
-        if not name:
-            raise Exception('ERROR: name is required')
+        if not type and not name and not content:
+            raise Exception('ERROR: at least one parameter among type, name and content is required')
 
         domain = self.options.get('domain')
         relative_name = self._relative_name(name)
 
-        # Retrieve existing data for given type and name, and filter out entries matching given content
-        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
-        filtered_records = [record for record in records if content and record['data'].lower() != content.lower()]
+        # Retrieve all records in the DNS zone
+        records = self._get('/domains/{0}/records'.format(domain))
 
-        # Synchronize data with expurged entries into DNS zone for given type and name
+        # Filter out all records which match the pattern
+        filtered_records = []
+
+        # Synchronize data with expurged entries into DNS zone
         self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), filtered_records)
 
         LOGGER.debug('delete_records: %s %s %s', type, name, content)
