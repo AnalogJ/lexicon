@@ -23,24 +23,8 @@ class Provider(BaseProvider):
         result = self._get('/domains/{0}'.format(domain))
         self.domain_id = result['domainId']
 
-    def create_record(self, type, name, content):
-        domain = self.options.get('domain')
-        ttl = self.options.get('ttl')
-
-        data = {'data': content}
-        if ttl:
-            data['ttl'] = ttl
-
-        self._put('/domains/{0}/records/{1}/{2}'
-                  .format(domain, type, self._relative_name(name)), [data])
-
-        LOGGER.debug('create_record: %s %s %s', type, name, content)
-
-        return True
-
     def list_records(self, type=None, name=None, content=None):
         domain = self.options.get('domain')
-        records = []
 
         url = '/domains/{0}/records'.format(domain)
         if type:
@@ -50,6 +34,7 @@ class Provider(BaseProvider):
 
         raws = self._get(url)
 
+        records = []
         for raw in raws:
             records.append({
                 'type': raw['type'],
@@ -65,51 +50,76 @@ class Provider(BaseProvider):
 
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
-        # With GoDaddy API, creating a record for given type and name is the same
-        #   than updating the record.
-        return self.create_record(type, name, content)
-
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def create_record(self, type, name, content):
         domain = self.options.get('domain')
+        relative_name = self._relative_name(name)
+        ttl = self.options.get('ttl')
 
+        # Retrieve existing data for given type and name, and append a new record
+        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
+
+        data = {'data': content}
+        if ttl:
+            data['ttl'] = ttl
+
+        records.append(data)
+
+        # Synchronize data with inserted record into DNS zone for given type and name
+        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
+
+        LOGGER.debug('create_record: %s %s %s', type, name, content)
+
+        return True
+
+    def update_record(self, identifier, type=None, name=None, content=None):
+        # No identifier is used with GoDaddy. 
+        # We can rely only on type + name (which are then mandatory) to get the relevant records.
+        # Furthermore, we cannot update all matching records, as it would lead to an error (two entries of same type + name cannot have the same content).
+        # So we search first matching record for type + name on which content is different, and we update it before synchronizing the DNS zone.
         if not type:
             raise Exception('ERROR: type is required')
         if not name:
             raise Exception('ERROR: name is required')
-        if not content:
-            raise Exception('ERROR: content is required')
 
-        # OK some explanations need to be done here.
-        # GoDaddy DNS API does not provide a direct way to delete a record (weird).
-        # However it provides a way to get and update all records of a zone.
-        # So :
-        #  - we get all the records,
-        #  - we filter the array to remove the record to be deleted,
-        #  - then we push back the filtered array to set the zone without the record to be deleted.
-        # And yes, we could limit the operation to a given type record (eg. TXT, there is an URL
-        #   for that), but GoDaddy refuses to push back an empty set of a given type (yep, you
-        #   cannot remove all your TXT with this URL, ultra weird).
-        # It is likely to happen during a DNS challenge, as all TXT should be removed at the end.
-        # So operating on all the zone avoid empty sets (there will always at least NS entries).
-        records = self._get('/domains/{0}/records'.format(domain))
-        to_insert = [record for record in records
-                     if record['type'].lower() != type.lower()
-                     or record['name'].lower() != self._relative_name(name).lower()
-                     or record['data'].lower() != content.lower()]
+        domain = self.options.get('domain')
+        relative_name = self._relative_name(name)
 
-        num_to_delete = len(records) - len(to_insert)
+        # Retrieve existing data for given type and name, and update matching records
+        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
 
-        if num_to_delete > 1:
-            raise Exception('ERROR: multiple records marked to be deleted')
+        for record in records:
+            if record['type'].upper() == type.upper() and self._relative_name(record['name']).lower() == relative_name.lower() and record['data'] != content:
+                record['data'] = content
+                break
+        
+        # Synchronize data with updated records into DNS zone for given type and name
+        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
 
-        print(to_insert)
+        LOGGER.debug('update_record: %s %s %s', type, name, content)
 
-        self._put('/domains/{0}/records'.format(domain), to_insert)
+        return True
 
-        LOGGER.debug('delete_record: %s', num_to_delete != 0)
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        # No identifier is used with GoDaddy. 
+        # We can rely only on type + name (which are then mandatory) to know which records need to be deleted.
+        if not type:
+            raise Exception('ERROR: type is required')
+        if not name:
+            raise Exception('ERROR: name is required')
 
-        return num_to_delete != 0
+        domain = self.options.get('domain')
+        relative_name = self._relative_name(name)
+
+        # Retrieve existing data for given type and name, and filter out entries matching given content
+        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
+        filtered_records = [record for record in records if content and record['data'].lower() != content.lower()]
+
+        # Synchronize data with expurged entries into DNS zone for given type and name
+        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), filtered_records)
+
+        LOGGER.debug('delete_records: %s %s %s', type, name, content)
+
+        return True
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if not data:
