@@ -73,9 +73,9 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, type=None, name=None, content=None):
         # No identifier is used with GoDaddy. 
-        # We can rely only on type + name (which are then mandatory) to get the relevant records.
+        # We can rely only on type/name to get the relevant records, both of them are required or we will could update to much records ...
         # Furthermore, we cannot update all matching records, as it would lead to an error (two entries of same type + name cannot have the same content).
-        # So we search first matching record for type + name on which content is different, and we update it before synchronizing the DNS zone.
+        # So we search first matching record for type/name on which content is different, and we update it before synchronizing the DNS zone.
         if not type:
             raise Exception('ERROR: type is required')
         if not name:
@@ -101,21 +101,37 @@ class Provider(BaseProvider):
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         # No identifier is used with GoDaddy. 
-        # We can rely only on type + name (which are then mandatory) to know which records need to be deleted.
-        if not type and not name and not content:
-            raise Exception('ERROR: at least one parameter among type, name and content is required')
-
+        # We can rely only on type/name/content to know which records need to be deleted.
         domain = self.options.get('domain')
-        relative_name = self._relative_name(name)
+        relative_name = None
+        if name:
+            relative_name = self._relative_name(name)
 
         # Retrieve all records in the DNS zone
         records = self._get('/domains/{0}/records'.format(domain))
 
         # Filter out all records which match the pattern
         filtered_records = []
+        for record in records:
+            if not type and not relative_name and not content:
+                filtered_records.append(record)
+            if type and not relative_name and not content and record['type'] != type:
+                filtered_records.append(record)
+            if not type and relative_name and not content and self._relative_name(record['name']) != relative_name:
+                filtered_records.append(record)
+            if not type and not relative_name and content and record['data'] != content:
+                filtered_records.append(record)
+            if type and relative_name and not content and (record['type'] != type or self._relative_name(record['name']) != relative_name):
+                filtered_records.append(record)
+            if type and not relative_name and content and (record['type'] != type or record['data'] != content):
+                filtered_records.append(record)
+            if not type and relative_name and content and (self._relative_name(record['name']) != relative_name or record['data'] != content):
+                filtered_records.append(record)
+            if type and relative_name and content and (record['type'] != type or self._relative_name(record['name']) != relative_name or record['data'] != content):
+                filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone
-        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), filtered_records)
+        self._put('/domains/{0}/records'.format(domain, type, relative_name), filtered_records)
 
         LOGGER.debug('delete_records: %s %s %s', type, name, content)
 
