@@ -103,6 +103,8 @@ class Provider(BaseProvider):
         if num_to_delete > 1:
             raise Exception('ERROR: multiple records marked to be deleted')
 
+        print(to_insert)
+
         self._put('/domains/{0}/records'.format(domain), to_insert)
 
         LOGGER.debug('delete_record: %s', num_to_delete != 0)
@@ -128,4 +130,9 @@ class Provider(BaseProvider):
                                   })
 
         result.raise_for_status()
-        return result.json()
+
+        try:
+            return result.json()
+        except ValueError:
+            # For some requests command (eg. PUT), GoDaddy will not return any json, just HTTP status
+            return None
