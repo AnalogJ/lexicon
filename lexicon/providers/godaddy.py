@@ -1,6 +1,7 @@
 import logging
 import requests
 import json
+import hashlib
 
 from .base import Provider as BaseProvider
 
@@ -10,6 +11,19 @@ def ProviderParser(subparser):
     subparser.add_argument('--auth-key', help='specify the key to access the API')
     subparser.add_argument('--auth-secret', help='specify the secret to access the API')
 
+# Implements the DNS GoDaddy provider.
+# Some general remarks about this provider, because it uses a weirdly designed API.
+# Indeed, there is no direct way to insert, update or delete a specific record. Furthermore, there is no unique identifier for a record.
+# Instead GoDaddy use a replace approach: for a given set of records (everything, or matching particular type and/or name),
+#   one can replace this set with the new set sent throught API.
+# With this approach:
+#   - adding a record consists in appending a record to the obtained set and call replace with the updated set,
+#   - updating a record consists in modifying a record in the obtained set and call replace with the updated set,
+#   - deleting a record consists in removing a record in the obtained set and call replace with the updated set.
+# In parallel, as said before, there is no unique identifier. This provider then implement a pseudo-identifier,
+#   to allow an easy update or delete using the '--identifier' lexicon parameter.
+# But you need to call the 'list' command just before executing and update/delete action, because identifier value
+#   is tied to the content of the record, and will change anytime something is changed in the record.
 class Provider(BaseProvider):
 
     def __init__(self, options, engine_overrides=None):
@@ -37,6 +51,7 @@ class Provider(BaseProvider):
         records = []
         for raw in raws:
             records.append({
+                'identifier': Provider._identifier(raw),
                 'type': raw['type'],
                 'name': self._full_name(raw['name']),
                 'ttl': raw['ttl'],
@@ -44,7 +59,7 @@ class Provider(BaseProvider):
             })
 
         if content:
-            records = [record for record in records if record['data'].lower() == content.lower()]
+            records = [record for record in records if record['data'] == content]
 
         LOGGER.debug('list_records: %s', records)
 
@@ -55,7 +70,7 @@ class Provider(BaseProvider):
         relative_name = self._relative_name(name)
         ttl = self.options.get('ttl')
 
-        # Retrieve existing data for given type and name, and append a new record
+        # Retrieve existing data for given type and name, and append a new record.
         records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
 
         data = {'data': content}
@@ -64,7 +79,7 @@ class Provider(BaseProvider):
 
         records.append(data)
 
-        # Synchronize data with inserted record into DNS zone for given type and name
+        # Synchronize data with inserted record into DNS zone for given type and name.
         self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
 
         LOGGER.debug('create_record: %s %s %s', type, name, content)
@@ -73,26 +88,34 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, type=None, name=None, content=None):
         # No identifier is used with GoDaddy. 
-        # We can rely only on type/name to get the relevant records, both of them are required or we will could update to much records ...
-        # Furthermore, we cannot update all matching records, as it would lead to an error (two entries of same type + name cannot have the same content).
-        # So we search first matching record for type/name on which content is different, and we update it before synchronizing the DNS zone.
-        if not type:
+        # We can rely either:
+        #   - only on type/name to get the relevant records, both of them are required or we will could update to much records ...,
+        #   - or by the pseudo-identifier provided
+        # Furthermore for type/name approach, we cannot update all matching records, as it would lead 
+        #   to an error (two entries of same type + name cannot have the same content).
+        # So for type/name approach, we search first matching record for type/name on which content is different, 
+        #   and we update it before synchronizing the DNS zone.
+        if not identifier and not type:
             raise Exception('ERROR: type is required')
-        if not name:
+        if not identifier and not name:
             raise Exception('ERROR: name is required')
 
         domain = self.options.get('domain')
         relative_name = self._relative_name(name)
 
-        # Retrieve existing data for given type and name, and update matching records
+        # Retrieve existing data for given type and name
         records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
 
+        # Get the record to update: 
+        #   - either explicitly by its identifier, 
+        #   - or the first matching by its type+name where content does not match (first match, see first method comment for explanation).
         for record in records:
-            if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content:
+            if ((identifier and Provider._identifier(record) == identifier) or
+                record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content):
                 record['data'] = content
                 break
         
-        # Synchronize data with updated records into DNS zone for given type and name
+        # Synchronize data with updated records into DNS zone for given type and name.
         self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
 
         LOGGER.debug('update_record: %s %s %s', type, name, content)
@@ -100,42 +123,55 @@ class Provider(BaseProvider):
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        # No identifier is used with GoDaddy. 
-        # We can rely only on type/name/content to know which records need to be deleted.
+        # For the LOL. GoDaddy does not accept an empty array when updating a particular set of records.
+        # It means that you cannot request to remove all records matching a particular type and/or name.
+        # Instead, we get ALL records in the DNS zone, update the set, and replace EVERYTHING in the DNS zone.
+        # You will always have at minimal NS/SRV entries in the array, otherwise your DNS zone is broken,
+        #   and updating the zone is the least of your problem ...
         domain = self.options.get('domain')
-        relative_name = None
-        if name:
-            relative_name = self._relative_name(name)
 
         # Retrieve all records in the DNS zone
         records = self._get('/domains/{0}/records'.format(domain))
 
-        # Filter out all records which match the pattern
-        filtered_records = []
-        for record in records:
-            if not type and not relative_name and not content:
-                filtered_records.append(record)
-            if type and not relative_name and not content and record['type'] != type:
-                filtered_records.append(record)
-            if not type and relative_name and not content and self._relative_name(record['name']) != relative_name:
-                filtered_records.append(record)
-            if not type and not relative_name and content and record['data'] != content:
-                filtered_records.append(record)
-            if type and relative_name and not content and (record['type'] != type or self._relative_name(record['name']) != relative_name):
-                filtered_records.append(record)
-            if type and not relative_name and content and (record['type'] != type or record['data'] != content):
-                filtered_records.append(record)
-            if not type and relative_name and content and (self._relative_name(record['name']) != relative_name or record['data'] != content):
-                filtered_records.append(record)
-            if type and relative_name and content and (record['type'] != type or self._relative_name(record['name']) != relative_name or record['data'] != content):
-                filtered_records.append(record)
+        relative_name = None
+        if name:
+            relative_name = self._relative_name(name)
 
-        # Synchronize data with expurged entries into DNS zone
+        # Filter out all records which match the pattern (either identifier, or some combination of type/name/content).
+        filtered_records = []
+        if identifier:
+            filtered_records = [record for record in records if Provider._identifier(record) != identifier]
+        else:
+            for record in records:
+                if ((not type and not relative_name and not content) or
+                    (type and not relative_name and not content and record['type'] != type) or
+                    (not type and relative_name and not content and self._relative_name(record['name']) != relative_name) or
+                    (not type and not relative_name and content and record['data'] != content) or
+                    (type and relative_name and not content and (record['type'] != type or self._relative_name(record['name']) != relative_name)) or
+                    (type and not relative_name and content and (record['type'] != type or record['data'] != content)) or
+                    (not type and relative_name and content and (self._relative_name(record['name']) != relative_name or record['data'] != content)) or
+                    (type and relative_name and content and (record['type'] != type or self._relative_name(record['name']) != relative_name or record['data'] != content))):
+                    filtered_records.append(record)
+
+        # Synchronize data with expurged entries into DNS zone.
         self._put('/domains/{0}/records'.format(domain, type, relative_name), filtered_records)
 
         LOGGER.debug('delete_records: %s %s %s', type, name, content)
 
         return True
+
+    # GoDaddy provides no identifier for a record, which is a problem where identifiers can be used (delete and update).
+    # To circumvent this, we implement a pseudo-identifier, which is basically a hash of type+name+content of a given record.
+    # It is far from perfect, as the identifier will change each time we change something in the record ...
+    # But at least, one can use 'lexicon godaddy list ...' then 'lexicon godaddy update --identifier ...' to modify specific record.
+    # However, 'lexicon godaddy list ...' should be called each time DNS zone had been changed to calculate new identifiers.
+    @staticmethod
+    def _identifier(record):
+        sha256 = hashlib.sha256()
+        sha256.update(record.get('type', ''))
+        sha256.update(record.get('name', ''))
+        sha256.update(record.get('data', ''))
+        return sha256.hexdigest()[0:7]
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if not data:
@@ -158,7 +194,8 @@ class Provider(BaseProvider):
         result.raise_for_status()
 
         try:
+            # Return the JSON body response if exists.
             return result.json()
         except ValueError:
-            # For some requests command (eg. PUT), GoDaddy will not return any json, just HTTP status
+            # For some requests command (eg. PUT), GoDaddy will not return any JSON, just an HTTP status without body.
             return None
