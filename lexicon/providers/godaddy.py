@@ -77,7 +77,7 @@ class Provider(BaseProvider):
 
         # Check if a record already matches given parameters
         for record in records:
-            if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content:
+            if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] == content:
                 LOGGER.debug('create_record (ignored, duplicate): %s %s %s', type, name, content)
                 return True
 
