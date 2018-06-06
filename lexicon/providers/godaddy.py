@@ -14,8 +14,8 @@ def ProviderParser(subparser):
 # Implements the DNS GoDaddy provider.
 # Some general remarks about this provider, because it uses a weirdly designed API.
 # Indeed, there is no direct way to insert, update or delete a specific record. Furthermore, there is no unique identifier for a record.
-# Instead GoDaddy use a replace approach: for a given set of records (everything, or matching particular type and/or name),
-#   one can replace this set with the new set sent throught API.
+# Instead GoDaddy use a replace approach: for a given set of records one can replace this set with a new set sent throught API.
+# For the sake of simplicity and consistency accoss the provider edit methods, the set will be always all records in the DNS zone.
 # With this approach:
 #   - adding a record consists in appending a record to the obtained set and call replace with the updated set,
 #   - updating a record consists in modifying a record in the obtained set and call replace with the updated set,
@@ -70,17 +70,18 @@ class Provider(BaseProvider):
         relative_name = self._relative_name(name)
         ttl = self.options.get('ttl')
 
-        # Retrieve existing data for given type and name, and append a new record.
-        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
+        # Retrieve existing data in DNS zone.
+        records = self._get('/domains/{0}/records'.format(domain))
 
-        data = {'data': content}
+        # Append a new entry corresponding to given parameters.
+        data = {'type': type, 'name': relative_name, 'data': content}
         if ttl:
             data['ttl'] = ttl
 
         records.append(data)
 
-        # Synchronize data with inserted record into DNS zone for given type and name.
-        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
+        # Synchronize data with inserted record into DNS zone.
+        self._put('/domains/{0}/records'.format(domain), records)
 
         LOGGER.debug('create_record: %s %s %s', type, name, content)
 
@@ -101,22 +102,24 @@ class Provider(BaseProvider):
             raise Exception('ERROR: name is required')
 
         domain = self.options.get('domain')
-        relative_name = self._relative_name(name)
+        relative_name = None
+        if name:
+            relative_name = self._relative_name(name)
 
-        # Retrieve existing data for given type and name
-        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name))
+        # Retrieve existing data in DNS zone.
+        records = self._get('/domains/{0}/records'.format(domain))
 
         # Get the record to update: 
         #   - either explicitly by its identifier, 
         #   - or the first matching by its type+name where content does not match (first match, see first method comment for explanation).
         for record in records:
             if ((identifier and Provider._identifier(record) == identifier) or
-                record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content):
+                (not identifier and record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content)):
                 record['data'] = content
                 break
         
-        # Synchronize data with updated records into DNS zone for given type and name.
-        self._put('/domains/{0}/records/{1}/{2}'.format(domain, type, relative_name), records)
+        # Synchronize data with updated records into DNS zone.
+        self._put('/domains/{0}/records'.format(domain), records)
 
         LOGGER.debug('update_record: %s %s %s', type, name, content)
 
@@ -154,7 +157,7 @@ class Provider(BaseProvider):
                     filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone.
-        self._put('/domains/{0}/records'.format(domain, type, relative_name), filtered_records)
+        self._put('/domains/{0}/records'.format(domain), filtered_records)
 
         LOGGER.debug('delete_records: %s %s %s', type, name, content)
 
@@ -168,9 +171,9 @@ class Provider(BaseProvider):
     @staticmethod
     def _identifier(record):
         sha256 = hashlib.sha256()
-        sha256.update(record.get('type', ''))
-        sha256.update(record.get('name', ''))
-        sha256.update(record.get('data', ''))
+        sha256.update(record.get('type', '').encode('utf-8'))
+        sha256.update(record.get('name', '').encode('utf-8'))
+        sha256.update(record.get('data', '').encode('utf-8'))
         return sha256.hexdigest()[0:7]
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
