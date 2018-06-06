@@ -9,9 +9,10 @@ import vcr
 import os
 
 # Configure VCR
+record_mode = 'new_episodes' if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true' else 'none'
 provider_vcr = vcr.VCR(
         cassette_library_dir='tests/fixtures/cassettes',
-        record_mode='new_episodes',
+        record_mode=record_mode,
         decode_compressed_response=True
 )
 
@@ -362,7 +363,8 @@ class IntegrationTests(object):
     #https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/
     @contextlib.contextmanager
     def _test_fixture_recording(self, test_name, recording_extension='yaml', recording_folder='IntegrationTests'):
-        with provider_vcr.use_cassette(self._cassette_path('{0}/{1}.{2}'.format(recording_folder, test_name, recording_extension)),
+        cassette_path = '{0}/{1}.{2}'.format(recording_folder, test_name, recording_extension)
+        with provider_vcr.use_cassette(self._cassette_path(cassette_path),
                                        filter_headers=self._filter_headers(),
                                        filter_query_parameters=self._filter_query_parameters(),
                                        filter_post_data_parameters=self._filter_post_data_parameters()):
