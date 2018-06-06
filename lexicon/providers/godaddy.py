@@ -4,6 +4,8 @@ import json
 import hashlib
 
 from .base import Provider as BaseProvider
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 LOGGER = logging.getLogger(__name__)
 
@@ -51,7 +53,7 @@ class Provider(BaseProvider):
         records = []
         for raw in raws:
             records.append({
-                'identifier': Provider._identifier(raw),
+                'id': Provider._identifier(raw),
                 'type': raw['type'],
                 'name': self._full_name(raw['name']),
                 'ttl': raw['ttl'],
@@ -72,6 +74,12 @@ class Provider(BaseProvider):
 
         # Retrieve existing data in DNS zone.
         records = self._get('/domains/{0}/records'.format(domain))
+
+        # Check if a record already matches given parameters
+        for record in records:
+            if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content:
+                LOGGER.debug('create_record (ignored, duplicate): %s %s %s', type, name, content)
+                return True
 
         # Append a new entry corresponding to given parameters.
         data = {'type': type, 'name': relative_name, 'data': content}
@@ -140,7 +148,7 @@ class Provider(BaseProvider):
         if name:
             relative_name = self._relative_name(name)
 
-        # Filter out all records which match the pattern (either identifier, or some combination of type/name/content).
+        # Filter out all records which matches the pattern (either identifier, or some combination of type/name/content).
         filtered_records = []
         if identifier:
             filtered_records = [record for record in records if Provider._identifier(record) != identifier]
@@ -182,7 +190,20 @@ class Provider(BaseProvider):
         if not query_params:
             query_params = {}
 
-        result = requests.request(action, self.api_endpoint + url,
+        # When editing DNS zone, API is unavailable for few seconds (until modifications are propagated)
+        # In this case, call to API will return 409 HTTP error.
+        # We use the Retry extension to retry the requests until we get a processable reponse (402 HTTP status, or an HTTP error != 409)
+        retries = Retry(
+            total=10,
+            backoff_factor=0.5,
+            status_forcelist=[409],
+            method_whitelist=frozenset(['GET', 'PUT', 'POST', 'DELETE', 'PATCH'])
+        )
+
+        session = requests.Session()
+        session.mount('https://', HTTPAdapter(max_retries=retries))
+
+        result = session.request(action, self.api_endpoint + url,
                                   params=query_params,
                                   data=json.dumps(data),
                                   headers={
