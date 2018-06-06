@@ -179,9 +179,9 @@ class Provider(BaseProvider):
     @staticmethod
     def _identifier(record):
         sha256 = hashlib.sha256()
-        sha256.update(record.get('type', '').encode('utf-8'))
-        sha256.update(record.get('name', '').encode('utf-8'))
-        sha256.update(record.get('data', '').encode('utf-8'))
+        sha256.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
+        sha256.update(('name=' + record.get('name', '') + ',').encode('utf-8'))
+        sha256.update(('data=' + record.get('data', '') + ',').encode('utf-8'))
         return sha256.hexdigest()[0:7]
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
