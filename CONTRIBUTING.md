@@ -35,7 +35,7 @@ You can test a specific provider using:
 
 	$ py.test tests/providers/test_foo.py
 
-__NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not againt the real DNS provider APIs.__
+_NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not againt the real DNS provider APIs._
 
 ## Adding a new DNS provider
 
