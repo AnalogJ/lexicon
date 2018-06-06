@@ -1,122 +1,406 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online
   response:
-    body: {string: !!python/unicode '{"domainId":1002111,"domain":"000.biz","status":"TRANSFERRED_OUT","expires":"2016-06-14T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":false,"transferProtected":false,"createdAt":"2015-06-15T13:10:43Z","authCode":"C36C3C6M26XE4DB5","subaccountId":"857256"}'}
+    body: {string: '{"domainId":270044166,"domain":"fullm3tal.online","status":"PENDING_DNS","expires":"2019-06-05T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":true,"renewDeadline":"2019-07-20T06:59:13Z","transferProtected":false,"createdAt":"2018-06-05T13:59:17Z","transferAwayEligibleAt":"2018-08-04T13:59:17Z"}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['329']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:10:28 GMT']
-      etag: [W/"149-Wv5RnvoMk5suL5kc+t99b36u7fY"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeAEsNUAJUBFJcAgJNRFAKChJIQ1MHAgUAUwcECldeAlVRUhpOXllYQVY4]
-      x-powered-by: [Express]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '[{"data": "challengetoken", "ttl": 3600}]'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
+      Cache-Control: ['max-age=0, no-cache, no-store']
       Connection: [keep-alive]
-      Content-Length: ['41']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
-    method: PUT
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/orig.test
-  response:
-    body: {string: !!python/unicode '{}'}
-    headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['2']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:10:31 GMT']
-      etag: [W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUxhbCAJVVhJIUU4GHw9QVgEPAFNXVlIAUghSCAoYEAFHFUMFUgtQUAUOVlAADQoAVENOUVBbFQFs]
-      x-powered-by: [Express]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:21:33 GMT']
+      ETag: [W/"619-0PkM2a+pZD8P/Bt482SV3MAH6b8"]
+      Expires: ['Wed, 06 Jun 2018 15:21:33 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding, 'Origin,Accept-Encoding']
+      X-DataCenter: [PHX3]
+      X-Powered-By: [Express]
+      X-Request-Id: [iTe1yw5xHRsRHk1aajaZhm]
+      content-length: ['1561']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/orig.test
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
   response:
-    body: {string: !!python/unicode '[{"type":"TXT","name":"orig.test","data":"challengetoken","ttl":3600}]'}
+    body: {string: '[{"data":"ns49.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns50.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"@","name":"www","ttl":3600,"type":"CNAME"},{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"challengetoken","name":"_acme-challenge.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.full","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.test","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.noop","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.deleterecordinset","ttl":3600,"type":"TXT"},{"data":"ttlshouldbe3600","name":"ttl.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.fqdntest","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.fulltest","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.test","ttl":3600,"type":"TXT"}]
+
+        '}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['70']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:10:32 GMT']
-      etag: [W/"46-65VQFKTsv2zzWQrOkPzrUPCuVic"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUwhOXA1ZXlVbQ04HHQdIVwgHAlBSUlUJThpVCBoYEAJTC1gJA1EDXQEFUl5QCBEcAgAORFRq]
-      x-powered-by: [Express]
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:34 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:34 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [i3Jqw7yAnb7mNgJJJK5wDX]
+      content-length: ['1485']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '[{"data": "challengetoken", "ttl": 3600}]'
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "orig.test", "data": "challengetoken",
+      "ttl": 3600}]'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['41']
+      Content-Length: ['1712']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
+      User-Agent: [python-requests/2.18.4]
     method: PUT
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/updated.test
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
   response:
-    body: {string: !!python/unicode '{}'}
+    body: {string: '{"code":"INACTIVE_DOMAIN","message":"The given domain is not eligible
+        to have its nameservers changed"}
+
+        '}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['2']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:10:35 GMT']
-      etag: [W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUxhbCAJVVhJIUU4FHwRfUAcHB1BXVU4SUBpOGllRC1cAD1BXBAdaUAUHQ0oFWV9DATw=]
-      x-powered-by: [Express]
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [close]
+      Content-Length: ['104']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:34 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:34 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [7Fxn5xPxBUNdVumbWgK66j]
+    status: {code: 409, message: Conflict}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "orig.test", "data": "challengetoken",
+      "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1712']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: '{"code":"INACTIVE_DOMAIN","message":"The given domain is not eligible
+        to have its nameservers changed"}
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [close]
+      Content-Length: ['104']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:35 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:35 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [5uCgGVMadgTVJT3sLbdv1F]
+    status: {code: 409, message: Conflict}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "orig.test", "data": "challengetoken",
+      "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1712']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: '{"code":"INACTIVE_DOMAIN","message":"The given domain is not eligible
+        to have its nameservers changed"}
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [close]
+      Content-Length: ['104']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:37 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:37 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [tHxUe987kuhGVHtygAQMRr]
+    status: {code: 409, message: Conflict}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "orig.test", "data": "challengetoken",
+      "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1712']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: '{"code":"INACTIVE_DOMAIN","message":"The given domain is not eligible
+        to have its nameservers changed"}
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [close]
+      Content-Length: ['104']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:40 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:40 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [nxT8WKH9ZumsXjwgew6ePr]
+    status: {code: 409, message: Conflict}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "orig.test", "data": "challengetoken",
+      "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1712']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/plain; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [koQAfkCtqHKGTn1R3wTfS3]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/orig.test
+  response:
+    body: {string: '[{"data":"challengetoken","name":"orig.test","ttl":3600,"type":"TXT"}]
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['71']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [u33pvwXABokFAgXsLWb4aQ]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: '[{"data":"ns49.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns50.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"@","name":"www","ttl":3600,"type":"CNAME"},{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"challengetoken","name":"_acme-challenge.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.full","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.test","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.noop","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.deleterecordinset","ttl":3600,"type":"TXT"},{"data":"ttlshouldbe3600","name":"ttl.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.fqdntest","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.fulltest","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"random.test","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"orig.test","ttl":3600,"type":"TXT"}]
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:45 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [qwy5MbzowNRb856423hMbm]
+      content-length: ['1554']
+    status: {code: 200, message: OK}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"data":
+      "challengetoken", "name": "_acme-challenge.fqdn", "ttl": 3600, "type": "TXT"},
+      {"data": "challengetoken", "name": "_acme-challenge.full", "ttl": 3600, "type":
+      "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test", "ttl": 3600,
+      "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
+      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fqdntest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.fulltest",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "random.test",
+      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "orig.test",
+      "ttl": 3600, "type": "TXT"}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1712']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/plain; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:21:48 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:48 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [eBwknz56imo7H6XKiDyqWW]
     status: {code: 200, message: OK}
 version: 1
