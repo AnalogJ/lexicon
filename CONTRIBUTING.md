@@ -35,6 +35,7 @@ You can test a specific provider using:
 
 	$ py.test tests/providers/test_foo.py
 
+__NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not againt the real DNS provider APIs.__
 
 ## Adding a new DNS provider
 
@@ -141,10 +142,12 @@ See [powerdns test suite](https://github.com/AnalogJ/lexicon/blob/82fa5056df2122
 
 ## Test recordings
 
-Now run the `py.test` suite again. It will automatically generate recordings for
-your provider:
+Now you need to run the `py.test` suite again, but in a different mode: the live tests mode. 
+In default test mode, tests are replayed from existing recordings. In live mode, tests are executed against the real DNS provider API, and recordings will automatically be generated for your provider.
 
-	py.test tests/providers/test_foo.py
+To execute the `py.test` suite using the live tests mode, execute py.test with the environment variable `LEXICON_LIVE_TESTS` set to `true` like below:
+
+	LEXICON_LIVE_TESTS=true py.test tests/providers/test_foo.py
 
 If any of the integration tests fail on your provider, you'll need to delete the recordings that were created,
 make your changes and then try again.
