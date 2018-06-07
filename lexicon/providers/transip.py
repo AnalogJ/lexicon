@@ -6,7 +6,14 @@ import logging
 from .base import Provider as BaseProvider
 
 try:
-    from transip.service.dns import DnsEntry
+    from transip.service.objects import DnsEntry
+except ImportError:
+    try: 
+        from transip.service.dns import DnsEntry
+    except ImportError:
+        pass
+
+try:
     from transip.service.domain import DomainService
 except ImportError:
     pass
