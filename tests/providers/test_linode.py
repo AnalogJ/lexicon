@@ -11,7 +11,7 @@ class LinodeProviderTests(TestCase, IntegrationTests):
 
 	Provider = Provider
 	provider_name = 'linode'
-	domain = 'lexicon-example.com'
+	domain = 'lexicon-test.com'
 	def _filter_post_data_parameters(self):
 		return []
 

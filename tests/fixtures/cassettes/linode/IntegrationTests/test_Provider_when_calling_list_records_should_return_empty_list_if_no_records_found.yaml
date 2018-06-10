@@ -16,7 +16,7 @@ interactions:
       access-control-allow-origin: ['*']
       connection: [keep-alive]
       content-type: [application/json;charset=UTF-8]
-      date: ['Sun, 27 May 2018 13:29:18 GMT']
+      date: ['Sun, 27 May 2018 13:31:55 GMT']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]
@@ -34,35 +34,12 @@ interactions:
     method: GET
     uri: https://api.linode.com/api/?DomainID=1067233&api_action=domain.resource.list&resultFormat=JSON
   response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701726,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701724,"TYPE":"A","NAME":"localhost"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701727,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"}],"ERRORARRAY":[]}'}
+    body: {string: !!python/unicode '{"ACTION":"domain.resource.list","DATA":[{"TARGET":"docs.example.com","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701726,"TYPE":"CNAME","NAME":"docs"},{"TARGET":"127.0.0.1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701724,"TYPE":"A","NAME":"localhost"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701732,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701733,"TYPE":"TXT","NAME":"_acme-challenge.createrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701742,"TYPE":"TXT","NAME":"_acme-challenge.deleterecordinset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701727,"TYPE":"TXT","NAME":"_acme-challenge.fqdn"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701729,"TYPE":"TXT","NAME":"_acme-challenge.full"},{"TARGET":"challengetoken1","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701745,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken2","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701746,"TYPE":"TXT","NAME":"_acme-challenge.listrecordset"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701735,"TYPE":"TXT","NAME":"_acme-challenge.noop"},{"TARGET":"challengetoken","TTL_SEC":0,"PORT":80,"DOMAINID":1067233,"PROTOCOL":"","PRIORITY":10,"TAG":"","WEIGHT":5,"RESOURCEID":9701731,"TYPE":"TXT","NAME":"_acme-challenge.test"}],"ERRORARRAY":[]}'}
     headers:
       access-control-allow-origin: ['*']
       connection: [keep-alive]
       content-type: [application/json;charset=UTF-8]
-      date: ['Sun, 27 May 2018 13:29:21 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-powered-by: [Tiger Blood]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: GET
-    uri: https://api.linode.com/api/?DomainID=1067233&Name=_acme-challenge.full&TTL_sec=0&Target=challengetoken&Type=TXT&api_action=domain.resource.create&resultFormat=JSON
-  response:
-    body: {string: !!python/unicode '{"ACTION":"domain.resource.create","DATA":{"ResourceID":9701729},"ERRORARRAY":[]}'}
-    headers:
-      access-control-allow-origin: ['*']
-      connection: [keep-alive]
-      content-type: [application/json;charset=UTF-8]
-      date: ['Sun, 27 May 2018 13:29:23 GMT']
+      date: ['Sun, 27 May 2018 13:31:57 GMT']
       server: [nginx]
       strict-transport-security: [max-age=31536000]
       transfer-encoding: [chunked]

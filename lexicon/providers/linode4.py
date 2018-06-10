@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import json
+import lexicon.common.records as DnsRecords
+import lexicon.common.exceptions as lexceptions
 import logging
 
 import requests
@@ -30,18 +32,17 @@ class Provider(BaseProvider):
         if len(payload['data']) > 0:
             self.domain_id = payload['data'][0]['id']
         if self.domain_id == None:
-            raise Exception('Domain not found')
+            raise lexceptions.DomainNotFoundError()
 
-    def create_record(self, type, name, content):
-        if len(self.list_records(type, name, content)) == 0:
-            if name:
-                name = self._relative_name(name)
-            
+    def create_record(self, record):
+        if len(self.list_records(record)) == 0:
+            name = self._relative_name(record.name)
+
             self._post('domains/{0}/records'.format(self.domain_id), data={
                 'name': name,
-                'type': type,
-                'target': content,
-                'ttl_sec': 0
+                'type': record.type,
+                'target': record.content,
+                'ttl_sec': record.ttl if record.ttl else 0
             })
 
         return True
@@ -49,73 +50,74 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, filter_record=None):
         resources_url = "domains/{0}/records".format(self.domain_id)
         
-        if name:
-            name = self._relative_name(name)
-        
         processed_records = []
-        
+
         payload = self._get(resources_url)
         for page in range(1, payload['pages'] + 1, 1):
             if page > 1:
                 payload = self._get(resources_url, query_params={
                     'page': page
                 })
-            
+
             resource_list = payload['data']
-            if type:
-                resource_list = [resource for resource in resource_list if resource['type'] == type]
-            if name:
-                resource_list = [resource for resource in resource_list if self._relative_name(resource['name']) == name]
-            if content:
-                resource_list = [resource for resource in resource_list if resource['target'] == content]
-            
+            if filter_record and filter_record.type:
+                resource_list = [resource for resource in resource_list if resource['type'] == filter_record.type]
+            if filter_record and filter_record.name:
+                cmp_name = self._relative_name(filter_record.name.lower())
+                resource_list = [resource for resource in resource_list if self._relative_name(resource['name']) == cmp_name]
+            if filter_record and filter_record.content:
+                resource_list = [resource for resource in resource_list if resource['target'] == filter_record.content]
+
             for resource in resource_list:
-                processed_records.append({
-                    'id': resource['id'],
-                    'type': resource['type'],
-                    'name': self._full_name(resource['name']),
-                    'ttl': resource['ttl_sec'],
-                    'content': resource['target']
-                })
-        
+                processed_records.append(DnsRecords.RecordFactory.create_record(
+                    resource['type'],
+                    id=resource['id'],
+                    name=self._full_name(resource['name']),
+                    content=resource['target'],
+                    ttl=resource['ttl_sec']))
+
+        processed_records = [record for record in processed_records if record is not None]
+
         logger.debug('list_records: %s', processed_records)
         return processed_records
     
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, filter_record, record):
+        identifier = filter_record.id
         if not identifier:
-            resources = self.list_records(type, name, None)
-            identifier = resources[0]['id'] if len(resources) > 0 else None
+            resources = self.list_records(filter_record)
+            identifier = resources[0].id if len(resources) > 0 else None
+
+        if not identifier:
+            raise lexceptions.RecordNotFoundError()
         
+        if not record.content:
+            return False
+
         logger.debug('update_record: %s', identifier)
-        
-        if name:
-            name = self._relative_name(name)
-        
+
         url = 'domains/{0}/records/{1}'.format(self.domain_id, identifier)
         self._put(url, data={
-            'name': name.lower() if name else None,
-            'type': type if type else None,
-            'target': content if content else None
+            'target': record.content
         })
         
         return True
     
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def delete_record(self, filter_record):
         delete_resource_id = []
-        if not identifier:
-            resources = self.list_records(type, name, content)
-            delete_resource_id = [resource['id'] for resource in resources]
+        if not filter_record.id:
+            resources = self.list_records(filter_record)
+            delete_resource_id = [resource.id for resource in resources]
         else:
-            delete_resource_id.append(identifier)
-        
+            delete_resource_id.append(filter_record.id)
+
         logger.debug('delete_records: %s', delete_resource_id)
-        
+
         for resource_id in delete_resource_id:
             self._delete('domains/{0}/records/{1}'.format(
                 self.domain_id,
