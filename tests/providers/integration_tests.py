@@ -21,7 +21,7 @@ provider_vcr = vcr.VCR(
 def _vcr_integration_test(decorated):
     @wraps(decorated)
     def wrapper(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{1}.yaml'.format(decorated.__name__)),
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{0}.yaml'.format(decorated.__name__)),
                                         filter_headers=self._filter_headers(),
                                         filter_query_parameters=self._filter_query_parameters(),
                                         filter_post_data_parameters=self._filter_post_data_parameters()):
