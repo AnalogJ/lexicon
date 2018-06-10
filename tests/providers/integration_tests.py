@@ -25,7 +25,7 @@ def _vcr_integration_test(decorated):
                                         filter_headers=self._filter_headers(),
                                         filter_query_parameters=self._filter_query_parameters(),
                                         filter_post_data_parameters=self._filter_post_data_parameters()):
-            decorated()
+            decorated(self)
     return wrapper
 
 """
