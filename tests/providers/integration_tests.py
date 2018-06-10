@@ -20,12 +20,12 @@ provider_vcr = vcr.VCR(
 # Prepare custom decorator
 def _vcr_integration_test(decorated):
     @wraps(decorated)
-    def wrapper(*args, **kwargs):
-        with provider_vcr.use_cassette(args[0]._cassette_path('IntegrationTests/{1}.yaml'.format(decorated.__name__)),
-                                        filter_headers=args[0]._filter_headers(),
-                                        filter_query_parameters=args[0]._filter_query_parameters(),
-                                        filter_post_data_parameters=args[0]._filter_post_data_parameters()):
-            decorated(*args, **kwargs)
+    def wrapper(self):
+        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{1}.yaml'.format(decorated.__name__)),
+                                        filter_headers=self._filter_headers(),
+                                        filter_query_parameters=self._filter_query_parameters(),
+                                        filter_post_data_parameters=self._filter_post_data_parameters()):
+            decorated(self)
     return wrapper
 
 """
