@@ -1,0 +1,59 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online
+  response:
+    body: {string: '{"domainId":270044166,"domain":"fullm3tal.online","status":"PENDING_DNS","expires":"2019-06-05T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":true,"renewDeadline":"2019-07-20T06:59:13Z","transferProtected":false,"createdAt":"2018-06-05T13:59:17Z","transferAwayEligibleAt":"2018-08-04T13:59:17Z"}'}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:21:20 GMT']
+      ETag: [W/"619-0PkM2a+pZD8P/Bt482SV3MAH6b8"]
+      Expires: ['Wed, 06 Jun 2018 15:21:20 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding, 'Origin,Accept-Encoding']
+      X-DataCenter: [PHX3]
+      X-Powered-By: [Express]
+      X-Request-Id: [k7bBY323jcV4wR1XAehnXA]
+      content-length: ['1561']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/filter.thisdoesnotexist
+  response:
+    body: {string: '[]
+
+        '}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['3']
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:21:20 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:21:20 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [grqoR1AhVt9Grh5HqcXsCr]
+    status: {code: 200, message: OK}
+version: 1

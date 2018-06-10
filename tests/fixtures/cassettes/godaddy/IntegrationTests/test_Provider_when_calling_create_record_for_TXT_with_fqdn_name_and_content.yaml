@@ -1,62 +1,92 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
+      User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online
   response:
-    body: {string: !!python/unicode '{"domainId":1002111,"domain":"000.biz","status":"TRANSFERRED_OUT","expires":"2016-06-14T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":false,"transferProtected":false,"createdAt":"2015-06-15T13:10:43Z","authCode":"C36C3C6M26XE4DB5","subaccountId":"857256"}'}
+    body: {string: '{"domainId":270044166,"domain":"fullm3tal.online","status":"PENDING_DNS","expires":"2019-06-05T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":true,"renewDeadline":"2019-07-20T06:59:13Z","transferProtected":false,"createdAt":"2018-06-05T13:59:17Z","transferAwayEligibleAt":"2018-08-04T13:59:17Z"}'}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['329']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:07:37 GMT']
-      etag: [W/"149-Wv5RnvoMk5suL5kc+t99b36u7fY"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJJH1nH0sXUxhVWAsFWFhATVwHDV0DUQwaFAQeBksIUAdRBFFXAgFYX1oBCglRTUAEAw5ESBNXA1QEUAAFV11VAV5QAhFJXwBdElY/]
-      x-powered-by: [Express]
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:18:54 GMT']
+      ETag: [W/"619-0PkM2a+pZD8P/Bt482SV3MAH6b8"]
+      Expires: ['Wed, 06 Jun 2018 15:18:54 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding, 'Origin,Accept-Encoding']
+      X-DataCenter: [PHX3]
+      X-Powered-By: [Express]
+      X-Request-Id: [e4ETsSyUqoVVGn3Wtsc5mT]
+      content-length: ['1561']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '[{"data": "challengetoken", "ttl": 3600}]'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['41']
+      Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.11.1]
-    method: PUT
-    uri: https://api.ote-godaddy.com/v1/domains/000.biz/records/TXT/_acme-challenge.fqdn
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
   response:
-    body: {string: !!python/unicode '{}'}
+    body: {string: '[{"data":"ns49.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns50.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"@","name":"www","ttl":3600,"type":"CNAME"},{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"}]
+
+        '}
     headers:
-      access-control-allow-credentials: ['true']
-      access-control-allow-headers: ['Authorization,Content-Type,Cookie,X-Currency-Id,X-Delegate-Id,X-Market-Id,X-Private-Label-Id,X-Request-Id,X-Shopper-Id']
-      access-control-allow-origin: ['*']
-      connection: [Keep-Alive]
-      content-length: ['2']
-      content-type: [application/json; charset=utf-8]
-      date: ['Sat, 17 Jun 2017 10:07:40 GMT']
-      etag: [W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"]
-      keep-alive: ['timeout=15, max=100']
-      server: [Apache/2.4.6 (CentOS)]
-      transfer-encoding: [chunked]
-      vary: ['Origin,Accept-Encoding']
-      via: [1.1 domain.api.int.ote-godaddy.com, 1.1 api.ote-godaddy.com]
-      x-newrelic-app-data: [PxQPUVdRCwcTVlRUBwEFV1wTGhE1AwE2QgNWEVlbQFtcCxYkSRFBBxdFXRJJM21nH0sXUxhVWAsFWFhATVwHDV0DUQwXSlFRXBddEh5bRxsUUxhbCAJVVhJIUU4FHwdSXQIOAFZTWk4SUBpOGgkAAANTAVcEUVADVQRRUURPXlJcFwQ/]
-      x-powered-by: [Express]
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 06 Jun 2018 15:18:54 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:18:54 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      Vary: [Accept-Encoding]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [giHgr7QhLuZZqNCpbQ3VVH]
+      content-length: ['417']
+    status: {code: 200, message: OK}
+- request:
+    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
+      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
+      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
+      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"type":
+      "TXT", "name": "_acme-challenge.fqdn", "data": "challengetoken", "ttl": 3600}]'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['551']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: PUT
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: ['max-age=0, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/plain; charset=utf-8]
+      Date: ['Wed, 06 Jun 2018 15:18:56 GMT']
+      Expires: ['Wed, 06 Jun 2018 15:18:56 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
+      X-DataCenter: [PHX3]
+      X-Request-Id: [pjYzskgeTMeYTyyBSGhViU]
     status: {code: 200, message: OK}
 version: 1

@@ -10,9 +10,10 @@ import vcr
 import os
 
 # Configure VCR
+record_mode = 'new_episodes' if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true' else 'none'
 provider_vcr = vcr.VCR(
         cassette_library_dir='tests/fixtures/cassettes',
-        record_mode='new_episodes',
+        record_mode=record_mode,
         decode_compressed_response=True
 )
 
