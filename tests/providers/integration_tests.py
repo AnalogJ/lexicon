@@ -336,6 +336,7 @@ class IntegrationTests(object):
     def _construct_authenticated_provider(self):
         provider = self.Provider(self._test_options(), self._test_engine_overrides())
         provider.authenticate()
+        return provider
 
     # Optional. Used to identify the test variant, if any.
     provider_variant = None
