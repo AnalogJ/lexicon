@@ -1,0 +1,467 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/auth/time
+  response:
+    body: {string: '1528723183'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:43 GMT']
+      Keep-Alive: ['timeout=15, max=100']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76ef.30430.6208]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723183']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/
+  response:
+    body: {string: '["pacalis.net"]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:43 GMT']
+      Keep-Alive: ['timeout=15, max=99']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76ef.17983.1817]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723183']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/status
+  response:
+    body: {string: '{"warnings":null,"errors":null,"isDeployed":true}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:43 GMT']
+      Keep-Alive: ['timeout=15, max=98']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76ef.17983.4245]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723183']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record?fieldType=TXT&subDomain=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:43 GMT']
+      Keep-Alive: ['timeout=15, max=97']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76ef.29148.7863]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"fieldType": "TXT", "subDomain": "_acme-challenge.deleterecordset", "target":
+      "challengetoken1", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['110']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723183']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record
+  response:
+    body: {string: '{"target":"challengetoken1","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659798,"subDomain":"_acme-challenge.deleterecordset"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:43 GMT']
+      Keep-Alive: ['timeout=15, max=96']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76ef.17983.2645]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723183']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/refresh
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=95']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.15492.5269]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record?fieldType=TXT&subDomain=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[1553659798]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=94']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.8609.3899]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659798
+  response:
+    body: {string: '{"target":"challengetoken1","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659798,"subDomain":"_acme-challenge.deleterecordset"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=93']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.8609.7528]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"fieldType": "TXT", "subDomain": "_acme-challenge.deleterecordset", "target":
+      "challengetoken2", "ttl": 3600}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['110']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record
+  response:
+    body: {string: '{"target":"challengetoken2","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659800,"subDomain":"_acme-challenge.deleterecordset"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=92']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.15492.0170]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/refresh
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=91']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.29148.1163]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record?fieldType=TXT&subDomain=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[1553659798,1553659800]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=90']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.29309.6289]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659798
+  response:
+    body: {string: '{"target":"challengetoken1","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659798,"subDomain":"_acme-challenge.deleterecordset"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=89']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.11854.0608]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659800
+  response:
+    body: {string: '{"target":"challengetoken2","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659800,"subDomain":"_acme-challenge.deleterecordset"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=88']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.30430.0183]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: DELETE
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659798
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=87']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.1649.5752]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: DELETE
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659800
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=86']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.11854.7515]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: POST
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/refresh
+  response:
+    body: {string: 'null'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=85']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.11854.2897]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+      X-Ovh-Timestamp: ['1528723184']
+    method: GET
+    uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record?fieldType=TXT&subDomain=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [no-cache]
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 11 Jun 2018 13:19:44 GMT']
+      Keep-Alive: ['timeout=15, max=84']
+      Server: [Apache]
+      Transfer-Encoding: [chunked]
+      X-OVH-QUERYID: [FR.ws-1.5b1e76f0.11854.9408]
+      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
+          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
+          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
+          involved. You want to challenge yourself? Join us! http://ovh.jobs']
+    status: {code: 200, message: OK}
+version: 1
