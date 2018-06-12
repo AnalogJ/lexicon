@@ -38,10 +38,11 @@ class Provider(BaseProvider):
 
     def authenticate(self):
         if (self.protocol == 'RPC'):
-            return self.rpc_helper.authenticate()
-
-        self._get('/domains/{0}'.format(self.options['domain']))
-        self.domain_id = self.options['domain'].lower()
+            domain_id = self.rpc_helper.authenticate()
+            self.domain_id = domain_id
+        else:
+            self._get('/domains/{0}'.format(self.options['domain']))
+            self.domain_id = self.options['domain'].lower()
 
     def create_record(self, type, name, content):
         if (self.protocol == 'RPC'):
@@ -51,8 +52,7 @@ class Provider(BaseProvider):
         current_values = [record['content'] for record in self.list_records(type=type, name=name)]
         if current_values != [content]:
             # a change is necessary
-            url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id, self._relative_name(name),
-                                                        type)
+            url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id, self._relative_name(name), type)
             if current_values:
                 record = {'rrset_values': current_values + [content]}
                 self._put(url, record)
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, type=None, name=None, content=None):
         if (self.protocol == 'RPC'):
-            return self.rpc_helper.update_record(type, name, content)
+            return self.rpc_helper.update_record(identifier, type, name, content)
 
         data = {}
         if type:
@@ -137,7 +137,7 @@ class Provider(BaseProvider):
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if (self.protocol == 'RPC'):
-            return self.rpc_helper.delete_record(type, name, content)
+            return self.rpc_helper.delete_record(identifier, type, name, content)
 
         remove_count = 0
         if not identifier:
@@ -218,6 +218,7 @@ class GandiRPCSubProvider(object):
         try:
             payload = self._api.domain.info(self._api_key, self._domain)
             self._zone_id = payload['zone_id']
+            return payload['id']
         except xmlrpclib.Fault as err:
             raise Exception("Failed to authenticate: '{0}'".format(err))
 
