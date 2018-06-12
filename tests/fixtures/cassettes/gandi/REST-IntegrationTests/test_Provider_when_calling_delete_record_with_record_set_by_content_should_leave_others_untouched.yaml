@@ -1,0 +1,273 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca
+  response:
+    body: {string: '{"zone_uuid": "d26f3afc-6e6a-11e8-a212-00163ee24379", "domain_keys_href":
+        "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/keys", "fqdn": "reachfactory.ca",
+        "zone_href": "https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379",
+        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records",
+        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records",
+        "domain_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca"}'}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['531']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:18 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:18 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:18 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"code": 404, "message": "Can''t find the DNS record _acme-challenge.deleterecordinset/TXT
+        in the zone", "object": "dns-record", "cause": "Not Found"}'}
+    headers:
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['149']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"rrset_values": ["challengetoken1"], "rrset_ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['56']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: POST
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"message": "DNS Record Created"}'}
+    headers:
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['33']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Location: ['https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records/_acme-challenge.deleterecordinset/TXT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"rrset_type": "TXT", "rrset_ttl": 3600, "rrset_name": "_acme-challenge.deleterecordinset",
+        "rrset_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken1\""]}'}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['252']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"rrset_values": ["challengetoken1", "challengetoken2"]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['56']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: PUT
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"message": "DNS Record Created"}'}
+    headers:
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['33']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:19 GMT']
+      Location: ['https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records/_acme-challenge.deleterecordinset/TXT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"rrset_type": "TXT", "rrset_ttl": 10800, "rrset_name": "_acme-challenge.deleterecordinset",
+        "rrset_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken1\"", "\"challengetoken2\""]}'}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['276']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"rrset_values": ["challengetoken2"]}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['37']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: PUT
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"message": "DNS Record Created"}'}
+    headers:
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['33']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Location: ['https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records/_acme-challenge.deleterecordinset/TXT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body: {string: '{"rrset_type": "TXT", "rrset_ttl": 10800, "rrset_name": "_acme-challenge.deleterecordinset",
+        "rrset_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken2\""]}'}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['253']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Expires: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Last-Modified: ['Tue, 12 Jun 2018 22:05:20 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000;]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [DENY]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1
