@@ -21,16 +21,6 @@ class GandiRPCProviderTests(TestCase, IntegrationTests):
         cmd_options['api_protocol'] = 'rpc'
         return cmd_options
 
-    @pytest.mark.skip(reason="can not set ttl when creating/updating records")
-    def test_Provider_when_calling_list_records_after_setting_ttl(self):
-        return
-
-    # TODO: the following skipped suite and fixtures should be enabled
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')
-
 class GandiRESTProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider

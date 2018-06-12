@@ -447,7 +447,7 @@ interactions:
       Age: ['0']
       Connection: [keep-alive]
       Content-Type: [text/xml; charset=utf-8]
-      Date: ['Tue, 12 Jun 2018 22:48:14 GMT']
+      Date: ['Tue, 12 Jun 2018 22:48:31 GMT']
       Server: [Apache]
       Vary: [Accept-Encoding]
       Via: ['1.1 varnish-v4, 1.1 varnish-v4']
@@ -460,71 +460,7 @@ interactions:
 
       <methodCall>
 
-      <methodName>domain.zone.version.new</methodName>
-
-      <params>
-
-      <param>
-
-      <value><string>placeholder_auth_token</string></value>
-
-      </param>
-
-      <param>
-
-      <value><int>3386538</int></value>
-
-      </param>
-
-      </params>
-
-      </methodCall>
-
-      '
-    headers:
-      Accept-Encoding: [gzip]
-      Content-Length: ['242']
-      Content-Type: [text/xml]
-      User-Agent: [Python-xmlrpc/3.6]
-    method: POST
-    uri: https://rpc.gandi.net/xmlrpc/
-  response:
-    body: {string: '<?xml version=''1.0''?>
-
-        <methodResponse>
-
-        <params>
-
-        <param>
-
-        <value><int>4</int></value>
-
-        </param>
-
-        </params>
-
-        </methodResponse>
-
-        '}
-    headers:
-      Accept-Ranges: [bytes]
-      Age: ['0']
-      Connection: [keep-alive]
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Tue, 12 Jun 2018 22:48:14 GMT']
-      Server: [Apache]
-      Vary: [Accept-Encoding]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-      content-length: ['121']
-    status: {code: 200, message: OK}
-- request:
-    body: '<?xml version=''1.0''?>
-
-      <methodCall>
-
-      <methodName>domain.zone.record.add</methodName>
+      <methodName>domain.zone.record.list</methodName>
 
       <params>
 
@@ -542,7 +478,7 @@ interactions:
 
       <param>
 
-      <value><int>4</int></value>
+      <value><int>0</int></value>
 
       </param>
 
@@ -562,23 +498,7 @@ interactions:
 
       <name>name</name>
 
-      <value><string>_acme-challenge.fqdn</string></value>
-
-      </member>
-
-      <member>
-
-      <name>value</name>
-
-      <value><string>challengetoken</string></value>
-
-      </member>
-
-      <member>
-
-      <name>ttl</name>
-
-      <value><int>3600</int></value>
+      <value><string>filter.thisdoesnotexist</string></value>
 
       </member>
 
@@ -593,7 +513,7 @@ interactions:
       '
     headers:
       Accept-Encoding: [gzip]
-      Content-Length: ['652']
+      Content-Length: ['504']
       Content-Type: [text/xml]
       User-Agent: [Python-xmlrpc/3.6]
     method: POST
@@ -607,49 +527,9 @@ interactions:
 
         <param>
 
-        <value><struct>
+        <value><array><data>
 
-        <member>
-
-        <name>name</name>
-
-        <value><string>_acme-challenge.fqdn</string></value>
-
-        </member>
-
-        <member>
-
-        <name>type</name>
-
-        <value><string>TXT</string></value>
-
-        </member>
-
-        <member>
-
-        <name>id</name>
-
-        <value><string>3264446307</string></value>
-
-        </member>
-
-        <member>
-
-        <name>value</name>
-
-        <value><string>"challengetoken"</string></value>
-
-        </member>
-
-        <member>
-
-        <name>ttl</name>
-
-        <value><int>3600</int></value>
-
-        </member>
-
-        </struct></value>
+        </data></array></value>
 
         </param>
 
@@ -663,82 +543,12 @@ interactions:
       Age: ['0']
       Connection: [keep-alive]
       Content-Type: [text/xml; charset=utf-8]
-      Date: ['Tue, 12 Jun 2018 22:48:14 GMT']
+      Date: ['Tue, 12 Jun 2018 22:48:32 GMT']
       Server: [Apache]
       Vary: [Accept-Encoding]
       Via: ['1.1 varnish-v4, 1.1 varnish-v4']
       X-Cache: [MISS]
       X-Cache-Hits: ['0']
-      content-length: ['522']
-    status: {code: 200, message: OK}
-- request:
-    body: '<?xml version=''1.0''?>
-
-      <methodCall>
-
-      <methodName>domain.zone.version.set</methodName>
-
-      <params>
-
-      <param>
-
-      <value><string>placeholder_auth_token</string></value>
-
-      </param>
-
-      <param>
-
-      <value><int>3386538</int></value>
-
-      </param>
-
-      <param>
-
-      <value><int>4</int></value>
-
-      </param>
-
-      </params>
-
-      </methodCall>
-
-      '
-    headers:
-      Accept-Encoding: [gzip]
-      Content-Length: ['287']
-      Content-Type: [text/xml]
-      User-Agent: [Python-xmlrpc/3.6]
-    method: POST
-    uri: https://rpc.gandi.net/xmlrpc/
-  response:
-    body: {string: '<?xml version=''1.0''?>
-
-        <methodResponse>
-
-        <params>
-
-        <param>
-
-        <value><boolean>1</boolean></value>
-
-        </param>
-
-        </params>
-
-        </methodResponse>
-
-        '}
-    headers:
-      Accept-Ranges: [bytes]
-      Age: ['0']
-      Connection: [keep-alive]
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Tue, 12 Jun 2018 22:48:14 GMT']
-      Server: [Apache]
-      Vary: [Accept-Encoding]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-      content-length: ['129']
+      content-length: ['138']
     status: {code: 200, message: OK}
 version: 1

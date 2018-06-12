@@ -165,7 +165,7 @@ class Provider(BaseProvider):
                     # remove the complete record (possibly with multiple values)
                     self._delete(url)
                     remove_count += 1
-                    
+
             if remove_count == 0:
                 raise Exception('Record identifier could not be found.')
         else:
@@ -288,7 +288,7 @@ class GandiRPCSubProvider(object):
             else:
                 raise Exception('Record identifier could not be found')
 
-        identifier = int(identifier)
+        identifier = str(identifier)
         version = None
 
         # Gandi doesn't allow you to edit records on the active zone file.
@@ -346,7 +346,7 @@ class GandiRPCSubProvider(object):
         else:
             opts['type'] = type.upper()
             opts['name'] = self._relative_name(name)
-            opts["value"] = self._txt_encode(content) if opts['type'] == 'TXT' else content
+            opts['value'] = self._txt_encode(content) if opts['type'] == 'TXT' else content
 
         records = self._api.domain.zone.record.list(self._api_key, self._zone_id, 0, opts)
         if len(records) == 1:
@@ -374,10 +374,14 @@ class GandiRPCSubProvider(object):
 
     @staticmethod
     def _txt_encode(val):
+        if not val:
+            return None
         return ''.join(['"', val.replace('\\', '\\\\').replace('"', '\\"'), '"'])
 
     @staticmethod
     def _txt_decode(val):
+        if not val:
+            return None
         if len(val) > 1 and val[0:1] == '"':
             val = val[1:-1].replace('" "', '').replace('\\"', '"').replace('\\\\', '\\')
         return val
