@@ -15,19 +15,19 @@ LOGGER = logging.getLogger(__name__)
 def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
     subparser.add_argument('--auth-token', help="specify Gandi API key")
-    subparser.add_argument('--auth-protocol', help="specify Gandi API protocol to use (RPC or REST, RPC by default if not specified)")
+    subparser.add_argument('--api-protocol', help="specify Gandi API protocol to use (rcp or rest, rpc by default if not specified)")
 
 class Provider(BaseProvider):
 
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options)
         self.default_ttl = 3600
-        self.protocol = self.options.get('auth_protocol', 'RPC')
+        self.protocol = self.options.get('api_protocol', 'rpc')
 
-        if (self.protocol != 'RPC' and self.protocol != 'REST'):
-            raise ValueError("Invalid auth protocol specified, should be 'RPC' or 'REST'")
+        if (self.protocol != 'rpc' and self.protocol != 'rest'):
+            raise ValueError("Invalid API protocol specified, should be 'rpc' or 'rest'")
 
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             self.rpc_helper = GandiRPCSubProvider(self.options['auth_token'], 
                                                   self.options.get('api_endpoint', 'https://rpc.gandi.net/xmlrpc/'), 
                                                   self.options['domain'].lower(),
@@ -37,7 +37,7 @@ class Provider(BaseProvider):
             self.api_endpoint = self.options.get('api_endpoint', 'https://dns.api.gandi.net/api/v5')
 
     def authenticate(self):
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
             self.domain_id = self.options['domain'].lower()
 
     def create_record(self, type, name, content):
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             return self.rpc_helper.create_record(type, self._relative_name(name), 
                                                  content, self.options.get('ttl') or self.default_ttl)
 
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         return True
 
     def list_records(self, type=None, name=None, content=None):
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             return self.rpc_helper.list_records(type, name, content)
 
         try:
@@ -81,19 +81,20 @@ class Provider(BaseProvider):
             else:
                 query_results = self._get('/domains/{0}/records'.format(self.domain_id))
                 if type is not None:
-                    query_results = [item for item in query_results if item['type'] == type]
+                    query_results = [item for item in query_results if item['rrset_type'] == type]
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 query_results = []
             else:
                 raise
+
         # convert records with multiple values into single-value records
         records = []
         for query_result in query_results:
             for value in query_result['rrset_values']:
                 record = {
                     'type': query_result['rrset_type'],
-                    'name': self._fqdn_name(query_result['rrset_name']),
+                    'name': self._full_name(query_result['rrset_name']),
                     'ttl': query_result['rrset_ttl'],
                     'content': value,
                     'id': query_result['rrset_name'],
@@ -108,7 +109,7 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             return self.rpc_helper.update_record(identifier, type, name, content)
 
         data = {}
@@ -136,11 +137,11 @@ class Provider(BaseProvider):
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        if (self.protocol == 'RPC'):
+        if (self.protocol == 'rpc'):
             return self.rpc_helper.delete_record(identifier, type, name, content)
 
-        remove_count = 0
         if not identifier:
+            remove_count = 0
             # get all matching (by type and name) records - ignore 'content' for now
             records = self.list_records(type=type, name=name)
             for current_type in set(record['type'] for record in records):
@@ -164,10 +165,11 @@ class Provider(BaseProvider):
                     # remove the complete record (possibly with multiple values)
                     self._delete(url)
                     remove_count += 1
+                    
+            if remove_count == 0:
+                raise Exception('Record identifier could not be found.')
         else:
             self._delete('/domains/{0}/records/{1}'.format(self.domain_id, identifier))
-        if remove_count == 0:
-            raise Exception('Record identifier could not be found.')
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
