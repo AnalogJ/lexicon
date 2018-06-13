@@ -1,0 +1,744 @@
+interactions:
+- request:
+    body: '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>placeholder_auth_token</string></value>
+
+      </param>
+
+      <param>
+
+      <value><string>reachlike.ca</string></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['241']
+      Content-Type: [text/xml]
+      User-Agent: [Python-xmlrpc/3.6]
+    method: POST
+    uri: https://rpc.gandi.net/xmlrpc/
+  response:
+    body: {string: '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><struct>
+
+        <member>
+
+        <name>entity_id</name>
+
+        <value><string>badc90d0-cfbc-11e7-a050-00163ec31f40</string></value>
+
+        </member>
+
+        <member>
+
+        <name>date_updated</name>
+
+        <value><dateTime.iso8601>20180613T12:03:58</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>date_delete</name>
+
+        <value><dateTime.iso8601>20190820T01:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>can_tld_lock</name>
+
+        <value><boolean>1</boolean></value>
+
+        </member>
+
+        <member>
+
+        <name>is_premium</name>
+
+        <value><boolean>0</boolean></value>
+
+        </member>
+
+        <member>
+
+        <name>is_special_price</name>
+
+        <value><boolean>0</boolean></value>
+
+        </member>
+
+        <member>
+
+        <name>date_hold_begin</name>
+
+        <value><dateTime.iso8601>20190706T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>date_registry_end</name>
+
+        <value><dateTime.iso8601>20190706T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>authinfo_expiration_date</name>
+
+        <value><dateTime.iso8601>20190605T10:53:06</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>contacts</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>owner</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PG5332-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>1508037</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>admin</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PG5332-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>1508037</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>bill</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PG5332-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>1508037</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>tech</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>handle</name>
+
+        <value><string>PG5332-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>1508037</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>reseller</name>
+
+        <value><nil/></value></member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>nameservers</name>
+
+        <value><array><data>
+
+        <value><string>a.dns.gandi.net</string></value>
+
+        <value><string>b.dns.gandi.net</string></value>
+
+        <value><string>c.dns.gandi.net</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_restore_end</name>
+
+        <value><dateTime.iso8601>20190919T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>3084498</int></value>
+
+        </member>
+
+        <member>
+
+        <name>authinfo</name>
+
+        <value><string>6gtmbKuvtk</string></value>
+
+        </member>
+
+        <member>
+
+        <name>status</name>
+
+        <value><array><data>
+
+        <value><string>serverTransferProhibited</string></value>
+
+        <value><string>clientTransferProhibited</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>tags</name>
+
+        <value><array><data>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_hold_end</name>
+
+        <value><dateTime.iso8601>20190820T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>services</name>
+
+        <value><array><data>
+
+        <value><string>gandidns</string></value>
+
+        </data></array></value>
+
+        </member>
+
+        <member>
+
+        <name>date_pending_delete_end</name>
+
+        <value><dateTime.iso8601>20190919T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>zone_id</name>
+
+        <value><int>3386877</int></value>
+
+        </member>
+
+        <member>
+
+        <name>date_renew_begin</name>
+
+        <value><dateTime.iso8601>20120101T00:00:00</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>fqdn</name>
+
+        <value><string>reachlike.ca</string></value>
+
+        </member>
+
+        <member>
+
+        <name>autorenew</name>
+
+        <value><struct>
+
+        <member>
+
+        <name>product_id</name>
+
+        <value><int>3084498</int></value>
+
+        </member>
+
+        <member>
+
+        <name>duration</name>
+
+        <value><int>1</int></value>
+
+        </member>
+
+        <member>
+
+        <name>contact</name>
+
+        <value><string>PG5332-GANDI</string></value>
+
+        </member>
+
+        <member>
+
+        <name>active</name>
+
+        <value><boolean>1</boolean></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><int>288232</int></value>
+
+        </member>
+
+        <member>
+
+        <name>product_type_id</name>
+
+        <value><int>1</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </member>
+
+        <member>
+
+        <name>date_registry_creation</name>
+
+        <value><dateTime.iso8601>20120706T11:41:46</dateTime.iso8601></value>
+
+        </member>
+
+        <member>
+
+        <name>tld</name>
+
+        <value><string>ca</string></value>
+
+        </member>
+
+        <member>
+
+        <name>date_created</name>
+
+        <value><dateTime.iso8601>20120706T13:41:47</dateTime.iso8601></value>
+
+        </member>
+
+        </struct></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+        '}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Connection: [keep-alive]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 13 Jun 2018 10:04:28 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      content-length: ['4378']
+    status: {code: 200, message: OK}
+- request:
+    body: '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.version.new</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>placeholder_auth_token</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>3386877</int></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['242']
+      Content-Type: [text/xml]
+      User-Agent: [Python-xmlrpc/3.6]
+    method: POST
+    uri: https://rpc.gandi.net/xmlrpc/
+  response:
+    body: {string: '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><int>3</int></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+        '}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Connection: [keep-alive]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 13 Jun 2018 10:04:28 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      content-length: ['121']
+    status: {code: 200, message: OK}
+- request:
+    body: '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.record.add</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>placeholder_auth_token</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>3386877</int></value>
+
+      </param>
+
+      <param>
+
+      <value><int>3</int></value>
+
+      </param>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>CNAME</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>docs</string></value>
+
+      </member>
+
+      <member>
+
+      <name>value</name>
+
+      <value><string>docs.example.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>ttl</name>
+
+      <value><int>3600</int></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['640']
+      Content-Type: [text/xml]
+      User-Agent: [Python-xmlrpc/3.6]
+    method: POST
+    uri: https://rpc.gandi.net/xmlrpc/
+  response:
+    body: {string: '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><struct>
+
+        <member>
+
+        <name>name</name>
+
+        <value><string>docs</string></value>
+
+        </member>
+
+        <member>
+
+        <name>type</name>
+
+        <value><string>CNAME</string></value>
+
+        </member>
+
+        <member>
+
+        <name>id</name>
+
+        <value><string>3264968145</string></value>
+
+        </member>
+
+        <member>
+
+        <name>value</name>
+
+        <value><string>docs.example.com</string></value>
+
+        </member>
+
+        <member>
+
+        <name>ttl</name>
+
+        <value><int>3600</int></value>
+
+        </member>
+
+        </struct></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+        '}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Connection: [keep-alive]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 13 Jun 2018 10:04:28 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      content-length: ['508']
+    status: {code: 200, message: OK}
+- request:
+    body: '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.zone.version.set</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>placeholder_auth_token</string></value>
+
+      </param>
+
+      <param>
+
+      <value><int>3386877</int></value>
+
+      </param>
+
+      <param>
+
+      <value><int>3</int></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['287']
+      Content-Type: [text/xml]
+      User-Agent: [Python-xmlrpc/3.6]
+    method: POST
+    uri: https://rpc.gandi.net/xmlrpc/
+  response:
+    body: {string: '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <params>
+
+        <param>
+
+        <value><boolean>1</boolean></value>
+
+        </param>
+
+        </params>
+
+        </methodResponse>
+
+        '}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Connection: [keep-alive]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 13 Jun 2018 10:04:28 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      content-length: ['129']
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,81 @@
+interactions:
+- request:
+    body: '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><string>placeholder_auth_token</string></value>
+
+      </param>
+
+      <param>
+
+      <value><string>thisisadomainidonotown.com</string></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['255']
+      Content-Type: [text/xml]
+      User-Agent: [Python-xmlrpc/3.6]
+    method: POST
+    uri: https://rpc.gandi.net/xmlrpc/
+  response:
+    body: {string: '<?xml version=''1.0''?>
+
+        <methodResponse>
+
+        <fault>
+
+        <value><struct>
+
+        <member>
+
+        <name>faultCode</name>
+
+        <value><int>510042</int></value>
+
+        </member>
+
+        <member>
+
+        <name>faultString</name>
+
+        <value><string>Error on object : OBJECT_DOMAIN (CAUSE_NOTFOUND) [Domain ''thisisadomainidonotown.com''
+        doesn''t exist.]</string></value>
+
+        </member>
+
+        </struct></value>
+
+        </fault>
+
+        </methodResponse>
+
+        '}
+    headers:
+      Accept-Ranges: [bytes]
+      Age: ['0']
+      Connection: [keep-alive]
+      Content-Type: [text/xml; charset=utf-8]
+      Date: ['Wed, 13 Jun 2018 10:04:27 GMT']
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
+      X-Cache: [MISS]
+      X-Cache-Hits: ['0']
+      content-length: ['361']
+    status: {code: 200, message: OK}
+version: 1
