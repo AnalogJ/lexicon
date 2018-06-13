@@ -344,27 +344,25 @@ class GandiRPCSubProvider(object):
         if identifier is not None:
             opts['id'] = identifier
         else:
-            opts['type'] = type.upper()
-            opts['name'] = self._relative_name(name)
-            opts['value'] = self._txt_encode(content) if opts['type'] == 'TXT' else content
+            if not type and not name and not content:
+                raise ValueError('Error, at least one parameter from type, name or content must be set')
+            if type:
+                opts['type'] = type.upper()
+            if name:
+                opts['name'] = self._relative_name(name)
+            if content:
+                opts['value'] = self._txt_encode(content) if opts['type'] == 'TXT' else content
 
         records = self._api.domain.zone.record.list(self._api_key, self._zone_id, 0, opts)
-        if len(records) == 1:
-            rec = records[0]
-            del rec['id']
 
+        if len(records):
             try:
                 version = self._api.domain.zone.version.new(self._api_key, self._zone_id)
-                cnt = self._api.domain.zone.record.delete(self._api_key, self._zone_id, version, rec)
-                if cnt != 1:
-                    raise self.GandiInternalError("expected one deleted record")
-
+                for record in records:
+                    del record['id']
+                    self._api.domain.zone.record.delete(self._api_key, self._zone_id, version, record)
                 self._api.domain.zone.version.set(self._api_key, self._zone_id, version)
                 ret = True
-
-            except self.GandiInternalError:
-                pass
-
             finally:
                 if not ret and version is not None:
                     self._api.domain.zone.version.delete(self._api_key, self._zone_id, version)
