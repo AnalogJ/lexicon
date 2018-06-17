@@ -72,6 +72,12 @@ class Provider(BaseProvider):
         domain = self.options.get('domain')
         ttl = self.options.get('ttl')
 
+        records = self.list_records(type, name, content)
+        for record in records:
+            if record['type'] == type and self._relative_name(record['name']) == self._relative_name(name) and record['content'] == content:
+                LOGGER.debug('create_record (ignored, duplicate): %s %s %s', type, name, content)
+                return True
+
         data = {
             'fieldType': type,
             'subDomain': self._relative_name(name),
