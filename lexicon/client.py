@@ -30,6 +30,10 @@ class Client(object):
         self.options = env_auth_options(self.provider_name)
         self.options.update(cli_options)
 
+        contents = self.options.get('content', None)
+        if contents is not None and len(contents) > 0:
+            self.options.update({'content': (contents if len(contents) > 1 else contents[0])})
+
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
         self.provider = provider_class(self.options)
