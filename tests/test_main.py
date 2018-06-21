@@ -32,3 +32,11 @@ def test_MainParser_without_args():
     baseparser = lexicon.__main__.MainParser()
     with pytest.raises(SystemExit):
         baseparser.parse_args([])
+
+def test_MainParser_with_multi_contents():
+    baseparser = lexicon.__main__.MainParser()
+    parsed = baseparser.parse_args(['cloudflare','create','capsulecd.com','A','--content','127.0.0.1','--content','127.0.0.2'])
+    assert type(parsed.content) is list
+    assert len(parsed.content) == 2
+    assert parsed.content[0] == '127.0.0.1'
+    assert parsed.content[1] == '127.0.0.2'

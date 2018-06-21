@@ -150,6 +150,32 @@ def test_Client_parse_env_with_auth_keys(monkeypatch):
     assert client.options.get('auth_token') == 'test-token'
     assert client.options.get('auth_username') == 'test-username@example.com'
 
+def test_Client_normalize_one_content_arg():
+    options = {
+        'provider_name':'base',
+        'action': 'create',
+        'domain': 'example.com',
+        'type': 'A',
+        'content': ['127.0.0.1']
+    }
+    client = lexicon.client.Client(options)
 
+    assert type(client.options['content']) is str
+    assert client.options['content'] == '127.0.0.1'
+
+def test_Client_normalize_multi_content_args():
+    options = {
+        'provider_name':'base',
+        'action': 'create',
+        'domain': 'example.com',
+        'type': 'A',
+        'content': ['127.0.0.1', '127.0.0.2']
+    }
+    client = lexicon.client.Client(options)
+
+    assert type(client.options['content']) is list
+    assert len(client.options['content']) == 2
+    assert client.options['content'][0] == '127.0.0.1'
+    assert client.options['content'][1] == '127.0.0.2'
 
 #TODO: add tests for Provider loading?

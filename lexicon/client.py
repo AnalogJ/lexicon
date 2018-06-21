@@ -30,6 +30,8 @@ class Client(object):
         self.options = env_auth_options(self.provider_name)
         self.options.update(cli_options)
 
+        # Transform list of content with one element to a plain string to keep backward
+        # compatibility with older provider plugins
         contents = self.options.get('content', None)
         if contents is not None and len(contents) > 0:
             self.options.update({'content': (contents if len(contents) > 1 else contents[0])})
