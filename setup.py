@@ -91,7 +91,7 @@ setup(
         'namecheap': ['PyNamecheap'],
         'route53': ['boto3'],
         'softlayer': ['SoftLayer'],
-        'subreg': ['pysimplesoap'],
+        'subreg': ['zeep'],
         'transip': ['transip>=0.3.0'],
     },
 

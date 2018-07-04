@@ -10,7 +10,7 @@ import collections
 from .base import Provider as BaseProvider
 
 try:
-    import pysimplesoap # Optional dependency
+    import zeep # Optional dependency
 except:
     pass
 
@@ -26,9 +26,8 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.ssid = None
 
-        self.api = pysimplesoap.client.SoapClient(
-            location="https://subreg.cz/soap/cmd.php?soap_format=1",
-            namespace="http://subreg.cz/types")
+        client = zeep.Client("https://subreg.cz/wsdl")
+        self.api = client.service
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
@@ -42,10 +41,10 @@ class Provider(BaseProvider):
         if 'ssid' in response:
             self.ssid = response['ssid']
             domains = self.domains_list()
-            if any(domain['name'] == self.options['domain'] for domain in domains):
+            if any((domain['name'] == self.options['domain'] for domain in domains)):
                 self.domain_id = self.options['domain']
             else:
-                raise Exception("Unknown domain")
+                raise Exception("Unknown domain {}".format(self.options['domain']))
         else:
             raise Exception("No SSID provided by server")
 
@@ -195,11 +194,12 @@ class Provider(BaseProvider):
 
     def _relative_name(self, name):
         """Returns sub-domain of a domain name"""
-        # Handle None and empty strings
+        # Handle None and empty strings as None
         if not name:
             return None
         else:
-            return super(Provider, self)._relative_name(name)
+            subdomain = super(Provider, self)._relative_name(name)
+            return subdomain if subdomain else None
 
     # List all records. Return an empty list if no records found
     # identifier, type, name and content are used to filter records.
@@ -207,12 +207,12 @@ class Provider(BaseProvider):
         """Lists all records by the specified criteria"""
         response = self._request_get_dns_zone()
         if 'records' in response:
-            # Interpret empty string as None because pysimplesoap does so too
+            # Interpret empty string as None because zeep does so too
             content_check = content if content != "" else None
             name_check = self._relative_name(name)
 
             # Stringize the identifier to prevent any type differences
-            identifier_check = str(identifier)
+            identifier_check = str(identifier) if identifier is not None else None
 
             filtered_records = [record for record in response['records'] if
                         (identifier is None or str(record['id']) == identifier_check) and
@@ -237,52 +237,44 @@ class Provider(BaseProvider):
     def _request_login(self, login, password):
         """Sends Login request"""
         return self._request("Login",
-                             self.LOGIN_RESPONSE_TYPES,
                              login=login,
                              password=password)
 
     def _request_domains_list(self):
         """Sends Domains_List request"""
-        return self._request("Domains_List",
-                             self.DOMAINS_LIST_RESPONSE_TYPES)
+        return self._request("Domains_List")
 
     def _request_get_dns_zone(self):
         """Sends Get_DNS_Zone request"""
         return self._request("Get_DNS_Zone",
-                             self.GET_DNS_ZONE_RESPONSE_TYPES,
                              domain=self.options['domain'])
 
     def _request_add_dns_record(self, record):
         """Sends Add_DNS_Record request"""
         return self._request("Add_DNS_Record",
-                             self.ADD_DNS_RECORD_RESPONSE_TYPES,
                              domain=self.options['domain'],
                              record=record)
 
     def _request_modify_dns_record(self, record):
         """Sends Modify_DNS_Record request"""
         return self._request("Modify_DNS_Record",
-                             self.MODIFY_DNS_RECORD_RESPONSE_TYPES,
                              domain=self.options['domain'],
                              record=record)
 
     def _request_delete_dns_record_by_id(self, identifier):
         """Sends Delete_DNS_Record request"""
         return self._request("Delete_DNS_Record",
-                             self.DELETE_DNS_RECORD_RESPONSE_TYPES,
                              domain=self.options['domain'],
                              record={ 'id': identifier })
 
-    def _request(self, command, response_types, **kwargs):
+    def _request(self, command, **kwargs):
         """Make request parse response"""
         args = dict(kwargs)
         if self.ssid:
             args['ssid'] = self.ssid
         method = getattr(self.api, command)
-        raw_response = method(**args)
-        response = self._parse_response(raw_response, response_types)
+        response = method(**args)
         self.response = response
-        self.raw_response = raw_response
         if response and 'status' in response:
             if response['status'] == 'error':
                 raise SubregError(
@@ -295,87 +287,6 @@ class Provider(BaseProvider):
             else:
                 raise Exception("Invalid status found in SOAP response")
         raise Exception('Invalid response')
-
-    def _parse_response(self, response, response_types):
-        """Recursively parse response"""
-        if hasattr(response, 'response'):
-            expected_response_types = {
-                "response": response_types
-                }
-            parsed = response.response.unmarshall(expected_response_types)
-            return parsed['response']
-        else:
-            raise Exception("No reponse tag found in SOAP response")
-
-    # Common error info response
-    ERROR_INFO_TYPES = {
-        "errormsg": str,
-        "errorcode": {
-            "major": int,
-            "minor": int
-            }
-        }
-
-    # Login (authenticate) response
-    LOGIN_RESPONSE_TYPES = {
-        "status": str,
-        "data": {
-            "ssid": str
-            },
-        "error": ERROR_INFO_TYPES,
-        }
-
-    # Get_DNS_Zone (list_records) response
-    GET_DNS_ZONE_RESPONSE_TYPES = {
-        "status": str,
-        "data": {
-            "domain": str,
-            "records": [{
-                "id": int,
-                "name": str,
-                "type": str,
-                "content": str,
-                "prio": int,
-                "ttl": int
-                }]
-            },
-        "error": ERROR_INFO_TYPES,
-        }
-
-    # Add_DNS_Zone (create_record) response
-    ADD_DNS_RECORD_RESPONSE_TYPES = {
-        "status": str,
-        "data": {},
-        "error": ERROR_INFO_TYPES,
-        }
-
-    # Modify_DNS_Zone (update_record) response
-    MODIFY_DNS_RECORD_RESPONSE_TYPES = {
-        "status": str,
-        "data": {},
-        "error": ERROR_INFO_TYPES,
-        }
-
-    # Delete_DNS_Zone (delete_record) response
-    DELETE_DNS_RECORD_RESPONSE_TYPES = {
-        "status": str,
-        "data": {},
-        "error": ERROR_INFO_TYPES,
-        }
-
-    # Domains_List (domains_list) response
-    DOMAINS_LIST_RESPONSE_TYPES = {
-        "status": str,
-        "data": {
-            "count": int,
-            "domains": [{
-                "name": str,
-                "expire": str,
-                "autorenew": int
-                }]
-            },
-        "error": ERROR_INFO_TYPES,
-        }
 
 class SubregError(Exception):
     def __init__(self, major, minor, message):
