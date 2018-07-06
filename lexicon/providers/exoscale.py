@@ -68,7 +68,6 @@ class Provider(BaseProvider):
         An empty list is returned if no records are found.
         """
 
-        # XXX implement filtering upstream
         filter = {}
         if type:
             filter["record_type"] = type
@@ -83,12 +82,6 @@ class Provider(BaseProvider):
         records = []
         for r in payload:
             record = r["record"]
-            # XXX remove manual filtering
-            if type and record["record_type"] != type:
-                continue
-
-            if name and record["name"] != name:
-                continue
 
             if content and record["content"] != content:
                 continue
