@@ -1,0 +1,78 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://api.zeit.co/v2/domains/fullm3tal.tech
+  response:
+    body: {string: '{"uid":"QmYcB61KpbGpwQCXMMeQdBHnWwfGgMhyKAQChi49r1z96H","created":"2018-07-06T10:14:44.579Z","boughtAt":"2018-07-06T10:14:42.835Z","expiresAt":"2019-07-06T10:14:42.835Z","isExternal":false,"serviceType":"zeit.world","verified":true,"aliases":[],"certs":[]}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 12:19:47 GMT']
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains;]
+      Transfer-Encoding: [chunked]
+      X-RateLimit-Limit: ['120']
+      X-RateLimit-Remaining: ['112']
+      X-RateLimit-Reset: ['1530879616']
+      cache-control: [max-age=0]
+      content-length: ['256']
+      server: [now]
+      x-now-trace: [bru1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://api.zeit.co/v2/domains/fullm3tal.tech/records
+  response:
+    body: {string: '{"records":[{"id":"rec_b1460de631a663292f4b2278","slug":"","name":"","type":"CAA","value":"0
+        issue \"letsencrypt.org\"","creator":"system","created":1530879587375,"updated":1530879587375},{"id":"rec_31fbb67eb28c7a982f0dd3f2","slug":"","name":"","type":"ALIAS","value":"alias.zeit.co.","creator":"system","created":1530879587375,"updated":1530879587375},{"id":"rec_157cf4c0511743425b501238","slug":"","name":"*","type":"CNAME","value":"alias.zeit.co.","creator":"system","created":1530879587375,"updated":1530879587375},{"id":"rec_f3e39bb8af59a712ea327fa4","slug":"www.fullm3tal.tech.-address","name":"www","type":"CNAME","value":"alias.zeit.co.","creator":"rx5Jv1UNgWHvquEx7wuQYFBp","created":1530872104052,"updated":1530872104052},{"id":"rec_ddf5e9a319a473522b341dd4","slug":"fullm3tal.tech.-mx-10-mail.awesome-now.us","name":"","type":"MX","value":"mail.awesome-now.us.","mxPriority":"10","creator":"rx5Jv1UNgWHvquEx7wuQYFBp","created":1530872160208,"updated":1530872160208},{"id":"rec_3ad5b36b581093a0aecb06be","slug":"localhost.fullm3tal.tech.-address-127.0.0.1","name":"localhost","type":"A","value":"127.0.0.1","creator":"rx5Jv1UNgWHvquEx7wuQYFBp","created":1530879574550,"updated":1530879574550},{"id":"rec_50e1e3f7a3340796fd88c4f7","slug":"docs.fullm3tal.tech.-address","name":"docs","type":"CNAME","value":"docs.example.com.","creator":"rx5Jv1UNgWHvquEx7wuQYFBp","created":1530879580209,"updated":1530879580209},{"id":"rec_04d6f47d84e36ec80ad5c30b","slug":"_acme-challenge.fqdn.fullm3tal.tech.-text-41f55c2548","name":"_acme-challenge.fqdn","type":"TXT","value":"challengetoken","creator":"rx5Jv1UNgWHvquEx7wuQYFBp","created":1530879583967,"updated":1530879583967}]}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 12:19:47 GMT']
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains;]
+      Transfer-Encoding: [chunked]
+      cache-control: [max-age=0]
+      content-length: ['1675']
+      server: [now]
+      x-now-trace: [bru1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.full", "value": "challengetoken"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['74']
+      User-Agent: [python-requests/2.19.0]
+    method: POST
+    uri: https://api.zeit.co/v2/domains/fullm3tal.tech/records
+  response:
+    body: {string: '{"uid":"rec_15f16abe85661018b3272a53"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 12:19:52 GMT']
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains;]
+      Transfer-Encoding: [chunked]
+      cache-control: [max-age=0]
+      content-length: ['38']
+      server: [now]
+      x-now-trace: [bru1]
+    status: {code: 200, message: OK}
+version: 1
