@@ -55,6 +55,7 @@ The current supported providers are:
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Vultr ([docs](https://www.vultr.com/api/))
+- Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
@@ -76,7 +77,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs)) :dollar: <sub>requires paid account</sub>
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
-- Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - __Any others I missed__
