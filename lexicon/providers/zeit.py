@@ -43,7 +43,7 @@ class Provider(BaseProvider):
         if type:
             raw_records = [raw_record for raw_record in raw_records if raw_record['type'] == type]
         if name:
-            raw_records = [raw_record for raw_record in raw_records if raw_record['name'] == name]
+            raw_records = [raw_record for raw_record in raw_records if raw_record['name'] == self._relative_name(name)]
         if content:
             raw_records = [raw_record for raw_record in raw_records if raw_record['value'] == content]
         
@@ -52,7 +52,7 @@ class Provider(BaseProvider):
             records.append({
                 'id': raw_record['id'],
                 'type': raw_record['type'],
-                'name': raw_record['name'],
+                'name': self._full_name(raw_record['name']),
                 'content': raw_record['value']
             })
 
@@ -61,6 +61,12 @@ class Provider(BaseProvider):
         return records
 
     def create_record(self, type, name, content):
+        # We ignore creation if a record already exists for given type/name/content
+        records = self.list_records(type, name, content)
+        if records:
+            LOGGER.debug('create_record (ignored, duplicate): %s', records[0]['id'])
+            return True
+        
         data = {
             'type': type,
             'name': self._relative_name(name),
@@ -78,34 +84,38 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, type=None, name=None, content=None):
         # Zeit do not allow to update a record, only add or remove.
-        # So we get the corresponding record by id, dump or update its content and insert it as a new record.
+        # So we get the corresponding record, dump or update its content and insert it as a new record.
         # Then we remove the old record.
-        if not identifier:
-            raise Exception('Identifier is mandatory for update operations.')
+        records = []
+        if identifier:
+            records = self.list_records()
+            records = [record for record in records if record['id'] == identifier]
+        else:
+            records = self.list_records(type, name)
         
-        records = self.list_records()
-        records_to_update = [record for record in records if record['id'] == identifier]
-
-        if not records_to_update:
+        if not records:
             raise Exception('No record found for identifer: {0}'.format(identifier))
+
+        if len(records) > 1:
+            LOGGER.warn('Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(records[0]['id']))
 
         data = {
             'type': type,
-            'name': name,
+            'name': self._relative_name(name),
             'value': content
         }
 
         if not type:
-            data['type'] = records_to_update[0]['type']
+            data['type'] = records[0]['type']
         if not name:
-            data['name'] = records_to_update[0]['name']
+            data['name'] = self._relative_name(records[0]['name'])
         if not content:
-            data['value'] = records_to_update[0]['content']
+            data['value'] = records[0]['content']
 
         result = self._post('/{0}/records'.format(self.options['domain']), data)
-        self._delete('/{0}/records/{1}'.format(self.options['domain'], records_to_update[0]['id']))
+        self._delete('/{0}/records/{1}'.format(self.options['domain'], records[0]['id']))
 
-        LOGGER.debug('update_record: %s => %s', records_to_update[0]['id'], result['uid'])
+        LOGGER.debug('update_record: %s => %s', records[0]['id'], result['uid'])
 
         return True
 
