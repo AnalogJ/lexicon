@@ -101,6 +101,12 @@ class Provider(BaseProvider):
 
         data = {}
 
+        if identifier == None:
+            records = self.list_records(type, name, content)
+            identifiers = [record["id"] for record in records]
+        else:
+            identifiers = [identifier]
+
         if name:
             data['name'] = self._relative_name(name)
         if content:
@@ -112,10 +118,12 @@ class Provider(BaseProvider):
         if self.options.get('regions'):
             data['regions'] = self.options.get('regions')
 
-        payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier), data)
+        for identifier in identifiers:
+            payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier), data)
+            logger.debug('update_record: %s', identifier)
 
-        logger.debug('update_record: %s', 'id' in payload)
-        return 'id' in payload
+        logger.debug('update_record: %s', True)
+        return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -126,9 +134,9 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
             payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), record_id))
 
@@ -165,7 +173,7 @@ class Provider(BaseProvider):
         r.raise_for_status()  # if the request fails for any reason, throw an error.
         if r.text and r.json()['data'] == None:
             raise Exception('No data returned')
-        
+
         return r.json()['data'] if r.text else None
 
     def _patch(self, url='/', data=None, query_params=None):
