@@ -43,6 +43,12 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
+    # We need serveral parameters, which are available in the JSON file provided 
+    #   by Google when associating a private key to the relevant service account.
+    # So this JSON file is the natural input to configure the provider.
+    # It can be provided as a path to the JSON file, or as its content encoded
+    #   in base64, which is a suitable portable way in particular for Docker containers.
+    # In both cases the content is loaded as bytes, on loaded in a private instance variable.
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
@@ -61,6 +67,13 @@ class Provider(BaseProvider):
         if not self._service_account_info['client_email'] or not self._service_account_info['private_key'] or not self._service_account_info['project_id']:
             raise Exception('Invalid service account info (missing either client_email/private_key/project_id key).')
     
+    # We have a real authentication here, which uses the OAuth protocol:
+    #   - a JWT token is forged with the Google Cloud DNS access claims, using the service account info loaded by the constructor,
+    #   - this JWT token is signed by a PKCS1v15 signature using the RSA private key associated to the service account,
+    #   - this JWT token is then submitted to the Google API, which returns an access token
+    #   - this access token will be used for every future HTTP request to the Google Cloud DNS API to authenticate the user.
+    #   - finally we make a first authenticated request to retrieve the managed zone id, which will also be used on future requests.
+    # This access token has a default lifetime of 10 minutes, but is used only for the current Lexicon operation, so it should be sufficient.
     def authenticate(self):
         jwt_header = {
             'alg': 'RS256',
@@ -120,6 +133,14 @@ class Provider(BaseProvider):
 
         self.domain_id = targetedManagedZoneIds[0]
 
+    # List all records for the given type/name/content.
+    # It is quite straight forward to request data, the biggest operation is to convert
+    #   the stacked multivalued RecordSets into Lexicon monovalued entries.
+    # Plese not that we could provide type and name to the API to make the filtering, 
+    #   but providing the type makes the name mandatory with the Google Cloud DNS API, and
+    #   name is not always available (we can ask for every TXT record for example). So to stick to
+    #   the most general case, its preferable to always get all records and be free to filter
+    #   the way we want afterwards.
     def list_records(self, type=None, name=None, content=None):
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
 
@@ -148,6 +169,11 @@ class Provider(BaseProvider):
 
         return records
 
+    # Create the record with provided type, name and content.
+    # Because of the way this API is constructed, it is quite complex in fact.
+    # Indeed we need to know if there is already a RecordSet for the type/name pair, and update
+    #   or create accordingly the RecordSet. Furthermore, we need first to delete the old RecordSet
+    #   if it exists, to replace it with the RecordSet containing the new content we want.
     def create_record(self, type, name, content):
         if not type or not name or not content:
             raise Exception('Error, type, name and content are mandatory to create a record.')
@@ -194,6 +220,14 @@ class Provider(BaseProvider):
 
         return True
 
+    # Update a record for the given identifier or type/name pair with the given content if provided.
+    # Again because of the API specification, updating is even more complex than creating, as we need
+    #   to take into account every RecordSet that should be destroyed then recreated.
+    # As all the hard work has been done on list_record, create_record and delete_record, we use a
+    #   combination of these three methods to obtain the state we want.
+    # Even if this make the operation very costly regarding the number of requests to do, it allows
+    #   the implementation to be way more readable (without that, it would take grossly the size of 
+    #   the three quoted methods).
     def update_record(self, identifier, type=None, name=None, content=None):
         if not identifier and (not type or not name):
             raise Exception('Error, identifier or type+name parameters are required.')
@@ -229,25 +263,18 @@ class Provider(BaseProvider):
 
         return True
 
-    def _find_rrset_to_update_by_identifier(self, identifier):
-        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
-
-        for rrset in results['rrsets']:
-            for rrdata in rrset['rrdatas']:
-                record = {
-                    'type': rrset['type'], 
-                    'name': self._full_name(rrset['name']), 
-                    'content': rrdata
-                }
-
-                self._clean_TXT_record(record)
-                record_identifier = Provider._identifier(record)
-
-                if (identifier == record_identifier):
-                    return rrset
-
-        return None
-
+    # Delete a record for the given identifier or the given type/name/content.
+    # Really complex to do, because a lot of RecordSets can be updated (so destroyed and recreated)
+    #   depending on the given condition (eg. with content alone, every record could be inspected).
+    # There is mainly to cases:
+    #   - either an association of one or more between type, name and content is given
+    #   - either an identifier is given, and we extract the type + name + content to process as the first case.
+    # Anyway, we will need to parse every RecordSet available, and for each of them which match the conditions:
+    #   - mark as deletion the existing RecordSet
+    #   - remove the targeted content from the RecordSet
+    #   - mark as addition the update RecordSet with the subset of rrdatas if rrdatas is not empty
+    #   - do not mark as additions RecordSets whose rrdatas subset become empty: 
+    #       for this type/name pair, all RecordSet needs to go away.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
 
@@ -265,7 +292,9 @@ class Provider(BaseProvider):
 
         return True
 
-
+    # Calculate the changes to do based on the record to remove identified by its identifier.
+    # This implementation find the corresponding record, and use its type + name + value to
+    #   delegate the processing to _process_records_to_delete_by_parameters.
     def _process_records_to_delete_by_identifier(self, results, identifier):
         for rrset in results['rrsets']:
             for rrdata in rrset['rrdatas']:
@@ -283,6 +312,9 @@ class Provider(BaseProvider):
 
         return None
 
+    # Calculate the changes to do based on the records to remove identified by type/name/content.
+    # Additions and deletions are registered accordingly in the changes, and RecordSet with empty
+    #   rrdatas after its subset are not marked in additions to be completly removed from the DNS zone.
     def _process_records_to_delete_by_parameters(self, results, type=None, name=None, content=None):
         rrsets_to_modify = results['rrsets']
 
@@ -322,6 +354,8 @@ class Provider(BaseProvider):
 
         return changes
 
+    # With Google Cloud DNS API, content of CNAME entries must be FQDN (with a trailing dot),
+    #   and content of TXT entries must be quoted. This static method ensures that.
     @staticmethod
     def _normalize_content(type, content):
         if type == 'TXT':
@@ -331,6 +365,11 @@ class Provider(BaseProvider):
         
         return content
 
+    # Google Cloud DNS API does not provide identifier for RecordSets.
+    # So we need to calculate our own identifier at runtime.
+    # It is based on a SHA256 hash with the most relevant parameters of a record: type, name and content.
+    # Note that the identifier is calculated on a Lexicon monovalued entry, not a Google stacked multivalued RecordSet,
+    #   to make it usable during Lexicon calls to updates and deletions.
     @staticmethod
     def _identifier(record):
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
@@ -340,6 +379,10 @@ class Provider(BaseProvider):
 
         return binascii.hexlify(digest.finalize()).decode('utf-8')[0:7]
 
+    # The request, when authenticated, is really standard:
+    #   the request body is encoded as application/json for POST (so the use of 'json' config instead of 'data' in request),
+    #   the body response is also encoded as application/json for GET and POST,
+    #   and the request headers must contain the access token in the 'Authorization' field.
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         request = requests.request(action, 
                                    'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(self._service_account_info['project_id'], url), 
