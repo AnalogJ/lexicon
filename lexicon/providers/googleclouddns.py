@@ -118,6 +118,7 @@ class Provider(BaseProvider):
                     'ttl': rrset['ttl'],
                     'content': rrdata
                 }
+                self._clean_TXT_record(record)
                 record['id'] = Provider._identifier(record)
                 records.append(record)
 
@@ -136,7 +137,7 @@ class Provider(BaseProvider):
         if not type or not name or not content:
             raise Exception('Error, type, name and content are mandatory to create a record.')
 
-        identifier = Provider._identifier({'type': type, 'name': name, 'content': content})
+        identifier = Provider._identifier({'type': type, 'name': self._full_name(name), 'content': content})
 
         query_params = {
             'type': type,
@@ -144,40 +145,159 @@ class Provider(BaseProvider):
         }
 
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id), query_params=query_params)
-        
-        if not results['rrsets']:
-            rrset = {
-                'kind': 'dns#resourceRecordSet',
-                'name': self._fqdn_name(name),
-                'type': type,
-                'rrdatas': [ content ]
-            }
-        else:
+
+        rrdatas = []
+        changes = {}
+        if results['rrsets']:
             rrset = results['rrsets'][0]
             for rrdata in rrset['rrdatas']:
                 if rrdata == content:
                     LOGGER.debug('create_record (ignored, duplicate): %s', identifier)
                     return True
 
-            deletion_action = {
-                'deletions': [ rrset ]
-            }
-            self._post('/managedZones/{0}/changes'.format(self.domain_id), data=deletion_action)
-            
-            rrset = results['rrsets'][0].copy()
-            rrset['rrdatas'].append(content)
+            changes['deletions'] = [{
+                'name': rrset['name'],
+                'type': rrset['type'],
+                'ttl': rrset['ttl'],
+                'rrdatas': rrset['rrdatas'].copy()
+            }]
 
-        if self.options.get('ttl'):
-            rrset['ttl'] = self.options.get('ttl')
+            rrdatas = rrset['rrdatas'].copy()
 
-        addition_action = {
-            'additions': [ rrset ]
-        }
-        self._post('/managedZones/{0}/changes'.format(self.domain_id), data=addition_action)
+        rrdatas.append('"{0}"'.format(content) if type == 'CNAME' else content)
+
+        changes['additions'] = [{
+            'name': self._fqdn_name(name),
+            'type': type,
+            'ttl': self.options.get('ttl'),
+            'rrdatas': rrdatas
+        }]
+
+        self._post('/managedZones/{0}/changes'.format(self.domain_id), data=changes)
 
         LOGGER.debug('create_record: %s', identifier)
 
         return True
+
+    def update_record(self, identifier, type=None, name=None, content=None):
+        if not identifier:
+            raise Exception('Error, identifier is required.')
+
+        records = self.list_records()
+        records_to_update = [record for record in records if record['id'] == identifier]
+
+        if not records_to_update:
+            raise Exception('Error, could not find a record for given identifier: {0}'.format(identifier))
+
+        original_level = LOGGER.getEffectiveLevel()
+        LOGGER.setLevel(logging.WARNING)
+        self.delete_record(identifier)
+
+        new_record = {
+            'type': type if type else records_to_update[0]['type'], 
+            'name': name if name else records_to_update[0]['name'], 
+            'content': content if content else records_to_update[0]['content']
+        }
+
+        self.create_record(new_record['type'], new_record['name'], new_record['content'])
+        LOGGER.setLevel(original_level)
+
+        LOGGER.debug('update_record: %s => %s', identifier, Provider._identifier(new_record))
+
+        return True
+
+    def _find_rrset_to_update_by_identifier(self, identifier):
+        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
+
+        for rrset in results['rrsets']:
+            for rrdata in rrset['rrdatas']:
+                record = {
+                    'type': rrset['type'], 
+                    'name': self._full_name(rrset['name']), 
+                    'content': rrdata
+                }
+
+                self._clean_TXT_record(record)
+                record_identifier = Provider._identifier(record)
+
+                if (identifier == record_identifier):
+                    return rrset
+
+        return None
+
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
+
+        if identifier:
+            changes = self._process_records_to_delete_by_identifier(results, identifier)
+        else:
+            changes = self._process_records_to_delete_by_parameters(results, type, name, content)
+
+        if not changes:
+            raise Exception('Could not find existing record matching the given parameters.')
+
+        self._post('/managedZones/{0}/changes'.format(self.domain_id), data=changes)
+
+        LOGGER.debug('delete_records: %s %s %s %s', identifier, type, name, content)
+
+        return True
+
+
+    def _process_records_to_delete_by_identifier(self, results, identifier):
+        for rrset in results['rrsets']:
+            for rrdata in rrset['rrdatas']:
+                record = {
+                    'type': rrset['type'], 
+                    'name': self._full_name(rrset['name']), 
+                    'content': rrdata
+                }
+
+                self._clean_TXT_record(record)
+                record_identifier = Provider._identifier(record)
+
+                if identifier == record_identifier:
+                    return self._process_records_to_delete_by_parameters(results, record['type'], record['name'], record['content'])
+
+        return None
+
+    def _process_records_to_delete_by_parameters(self, results, type=None, name=None, content=None):
+        rrsets_to_modify = results['rrsets']
+
+        if type:
+            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if rrset['type'] == type]
+        if name:
+            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if rrset['name'] == self._fqdn_name(name)]
+        if content:
+            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if ('"{0}"'.format(content) if rrset['type'] == 'TXT' else content) in rrset['rrdatas']]
+
+        changes = {
+            'additions': [], 
+            'deletions': []
+        }
+
+        for rrset_to_modify in rrsets_to_modify:
+            changes['deletions'].append({
+                'name': rrset_to_modify['name'],
+                'type': rrset_to_modify['type'],
+                'ttl': rrset_to_modify['ttl'],
+                'rrdatas': rrset_to_modify['rrdatas'].copy()
+            })
+
+            if content:
+                new_rrdatas = rrset_to_modify['rrdatas'].copy()
+                new_rrdatas.remove('"{0}"'.format(content) if rrset_to_modify['type'] == 'TXT' else content)
+                if new_rrdatas:
+                    changes['additions'].append({
+                        'name': rrset_to_modify['name'],
+                        'type': rrset_to_modify['type'],
+                        'ttl': rrset_to_modify['ttl'],
+                        'rrdatas': new_rrdatas
+                    })
+
+        if not changes['additions'] and not changes['deletions']:
+            return None
+
+        return changes
 
     @staticmethod
     def _identifier(record):
@@ -189,7 +309,6 @@ class Provider(BaseProvider):
         return binascii.hexlify(digest.finalize()).decode('utf-8')[0:7]
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
-        print(json.dumps(data))
         request = requests.request(action, 
                                    'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(self._service_account_info['project_id'], url), 
                                    params=None if not query_params else query_params,
@@ -197,8 +316,6 @@ class Provider(BaseProvider):
                                    headers={
                                        'Authorization': 'Bearer {0}'.format(self._token),
                                        'Content-type': 'application/json'})
-        
-        print (request.json())
 
         request.raise_for_status()
         return request.json()
