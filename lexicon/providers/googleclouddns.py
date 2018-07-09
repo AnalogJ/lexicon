@@ -15,6 +15,21 @@ from .base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
+# Implements the Google Cloud DNS provider.
+# This API is quite complicated to use, as it used some unique concepts compared to other providers.
+# First of all, it uses a full-fledged OAuth2 authentication, involving signing a JWT and retrieve a Bearer token.
+# This hard work is done in the authenticate() process, using the strong and well known "cryptography" package.
+# Second, Google Cloud DNS API contains this really particular patterns:
+#   - all records of the same type and name are stacked together in a RecordSet representation, 
+#       which contains in the rrdatas array all current values for this type/name pair, including
+#       explictly monovalued entries like A or CNAME.
+#   - modifications can only done through a create/delete pattern: there is no way to update a record
+#   - more importantly, this approach extends to all values of a given type/name pair: it means that adding/removing
+#       a new value to a TXT entry requires to delete all values of this entry, then recreate it with all 
+#       values desired (the old ones plus the new one for adding, the old ones minus the removed one for removing)
+# So all the hard work in this provider, appart from the authentication process, is to convert the Lexicon monovalued
+#   entries representation to/from the Google multivalued and stacked representation 
+#   through create/update/list/delete processes.
 def ProviderParser(subparser):
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
