@@ -151,7 +151,7 @@ class Provider(BaseProvider):
         if results['rrsets']:
             rrset = results['rrsets'][0]
             for rrdata in rrset['rrdatas']:
-                if rrdata == content:
+                if rrdata == Provider._normalize_content(rrset['type'], content):
                     LOGGER.debug('create_record (ignored, duplicate): %s', identifier)
                     return True
 
@@ -163,8 +163,8 @@ class Provider(BaseProvider):
             }]
 
             rrdatas = rrset['rrdatas'].copy()
-
-        rrdatas.append('"{0}"'.format(content) if type == 'CNAME' else content)
+        
+        rrdatas.append(Provider._normalize_content(type, content))
 
         changes['additions'] = [{
             'name': self._fqdn_name(name),
@@ -180,18 +180,26 @@ class Provider(BaseProvider):
         return True
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        if not identifier:
-            raise Exception('Error, identifier is required.')
+        if not identifier and (not type or not name):
+            raise Exception('Error, identifier or type+name parameters are required.')
 
-        records = self.list_records()
-        records_to_update = [record for record in records if record['id'] == identifier]
+        if identifier:
+            records = self.list_records()
+            records_to_update = [record for record in records if record['id'] == identifier]
+        else:
+            records_to_update = self.list_records(type=type, name=name)
 
         if not records_to_update:
             raise Exception('Error, could not find a record for given identifier: {0}'.format(identifier))
 
+        if len(records_to_update) > 1:
+            LOGGER.warn('Warning, multiple records found for given parameters, only first one will be updated: %s', records_to_update)
+
+        record_identifier = records_to_update[0]['id']
+
         original_level = LOGGER.getEffectiveLevel()
         LOGGER.setLevel(logging.WARNING)
-        self.delete_record(identifier)
+        self.delete_record(record_identifier)
 
         new_record = {
             'type': type if type else records_to_update[0]['type'], 
@@ -202,7 +210,7 @@ class Provider(BaseProvider):
         self.create_record(new_record['type'], new_record['name'], new_record['content'])
         LOGGER.setLevel(original_level)
 
-        LOGGER.debug('update_record: %s => %s', identifier, Provider._identifier(new_record))
+        LOGGER.debug('update_record: %s => %s', record_identifier, Provider._identifier(new_record))
 
         return True
 
@@ -300,6 +308,15 @@ class Provider(BaseProvider):
         return changes
 
     @staticmethod
+    def _normalize_content(type, content):
+        if type == 'TXT':
+            return '"{0}"'.format(content)
+        if type == 'CNAME':
+            return '{0}.'.format(content) if not content.endswith('.') else content
+        
+        return content
+
+    @staticmethod
     def _identifier(record):
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
         digest.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
@@ -316,6 +333,8 @@ class Provider(BaseProvider):
                                    headers={
                                        'Authorization': 'Bearer {0}'.format(self._token),
                                        'Content-type': 'application/json'})
+
+        print(request.json())
 
         request.raise_for_status()
         return request.json()
