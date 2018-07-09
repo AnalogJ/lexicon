@@ -200,10 +200,10 @@ class Provider(BaseProvider):
                 'name': rrset['name'],
                 'type': rrset['type'],
                 'ttl': rrset['ttl'],
-                'rrdatas': rrset['rrdatas'].copy()
+                'rrdatas': rrset['rrdatas'][:]
             }]
 
-            rrdatas = rrset['rrdatas'].copy()
+            rrdatas = rrset['rrdatas'][:]
         
         rrdatas.append(Provider._normalize_content(type, content))
 
@@ -335,11 +335,11 @@ class Provider(BaseProvider):
                 'name': rrset_to_modify['name'],
                 'type': rrset_to_modify['type'],
                 'ttl': rrset_to_modify['ttl'],
-                'rrdatas': rrset_to_modify['rrdatas'].copy()
+                'rrdatas': rrset_to_modify['rrdatas'][:]
             })
 
             if content:
-                new_rrdatas = rrset_to_modify['rrdatas'].copy()
+                new_rrdatas = rrset_to_modify['rrdatas'][:]
                 new_rrdatas.remove('"{0}"'.format(content) if rrset_to_modify['type'] == 'TXT' else content)
                 if new_rrdatas:
                     changes['additions'].append({
