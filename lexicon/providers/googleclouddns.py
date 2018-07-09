@@ -19,7 +19,7 @@ def ProviderParser(subparser):
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
         This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
-        You can create a new service account and download its info through this url: 
+        You can create a new service account, associate a private key, and download its info through this url: 
         https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2'''
     subparser.add_argument('--auth-service-account-info', help='''
         specify the service account info in the Google JSON format: 
@@ -329,12 +329,8 @@ class Provider(BaseProvider):
         request = requests.request(action, 
                                    'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(self._service_account_info['project_id'], url), 
                                    params=None if not query_params else query_params,
-                                   data=None if not data else json.dumps(data),
-                                   headers={
-                                       'Authorization': 'Bearer {0}'.format(self._token),
-                                       'Content-type': 'application/json'})
-
-        print(request.json())
+                                   json=None if not data else data,
+                                   headers={'Authorization': 'Bearer {0}'.format(self._token)})
 
         request.raise_for_status()
         return request.json()
