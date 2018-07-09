@@ -36,6 +36,7 @@ The current supported providers are:
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
+- Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - Linode ([docs](https://www.linode.com/api/dns))
 - Linode v4 ([docs](https://developers.linode.com/v4))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
@@ -64,7 +65,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
 - EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
-- Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
 - HostEurope
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
