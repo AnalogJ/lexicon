@@ -68,6 +68,7 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
+- Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
