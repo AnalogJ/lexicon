@@ -1,8 +1,9 @@
 <p align="center">
   <a href="https://github.com/AnalogJ/lexicon">
-  <img width="300" alt="lexicon_view" src="https://rawgit.com/AnalogJ/lexicon/master/logo.svg">
+  <img width="300" alt="lexicon_view" src="https://github.com/AnalogJ/lexicon/blob/master/logo.svg">
   </a>
 </p>
+
 
 
 # lexicon
