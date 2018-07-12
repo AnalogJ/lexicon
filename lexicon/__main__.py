@@ -30,9 +30,9 @@ def BaseProviderParser():
     parser.add_argument("--priority", help="specify the record priority")
     parser.add_argument("--identifier", help="specify the record for update or delete actions")
     parser.add_argument("--log_level", help="specify the log level", default="ERROR", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
-    parser.add_argument("--quiet", help="If set, do not print command result on stdout", action='store_true')
-    parser.add_argument("--json", help="If set, return print command on stdout as a json string", action='store_true')
-    parser.add_argument("--no-headers", help="If set, return print command without table headers", action='store_true')
+    parser.add_argument("--quiet", help="do not print results", action='store_true')
+    parser.add_argument("--json", help="print results as a json string", action='store_true')
+    parser.add_argument("--no-headers", help="remove table headers from the printed results", action='store_true')
     return parser
 
 def MainParser():
@@ -109,13 +109,13 @@ def main():
     logging.basicConfig(stream=sys.stdout, level=log_level, format='%(message)s')
 
     logger.debug('Arguments: %s', parsed_args)
-    client = Client(parsed_args.__dict__)
+    client = Client(vars(parsed_args))
     
     output = client.execute()
 
-    if not parsed_args.__dict__['quiet']:
-        if not parsed_args.__dict__['json']:
-            print_json_result(logger, output, parsed_args.__dict__['no_headers'])
+    if not parsed_args.quiet:
+        if not parsed_args.json:
+            print_json_result(logger, output, parsed_args.no_headers)
         else:
             try:
                 print(json.dumps(output))
