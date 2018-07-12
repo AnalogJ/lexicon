@@ -29,7 +29,7 @@ def BaseProviderParser():
     parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
     parser.add_argument("--priority", help="specify the record priority")
     parser.add_argument("--identifier", help="specify the record for update or delete actions")
-    parser.add_argument("--log_level", help="specify the log level", default="INFO", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
+    parser.add_argument("--log_level", help="specify the log level", default="ERROR", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
     parser.add_argument("--quiet", help="If set, do not print command result on stdout", action='store_true')
     parser.add_argument("--json", help="If set, return print command on stdout as a json string", action='store_true')
     parser.add_argument("--no-headers", help="If set, return print command without table headers", action='store_true')
