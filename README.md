@@ -216,7 +216,8 @@ There is an included example Dockerfile that can be used to automatically genera
 - [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
 ## Contributing Changes.
-If the DNS provider you use is not already available, please consider contributing by opening a pull request.
+If the DNS provider you use is not already available, please consider contributing by opening a pull request and
+following the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md)
 
 ## License
 - MIT
