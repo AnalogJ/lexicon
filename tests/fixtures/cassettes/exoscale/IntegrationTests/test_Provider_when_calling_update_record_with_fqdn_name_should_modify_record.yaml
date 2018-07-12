@@ -1,0 +1,115 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com
+  response:
+    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2018-07-06T08:55:12Z","token":"004b1d549f133893658ef67a2950dfd5","id":384572,"whois_protected":false,"created_at":"2018-07-06T08:55:12Z","auto_renew":false}}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 09:00:12 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [d00ff42a-76b5-4cb8-aa87-ad3e265a7271]
+      content-length: ['310']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.testfqdn
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 09:00:13 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [4ca668aa-5953-4522-a6c9-3ec8fa93bc95]
+      content-length: ['2']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"record": {"record_type": "TXT", "name": "orig.testfqdn", "content": "challengetoken",
+      "ttl": 3600}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['101']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records
+  response:
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.testfqdn","updated_at":"2018-07-06T09:00:13Z","ttl":3600,"id":14197236,"domain_id":384572,"created_at":"2018-07-06T09:00:13Z","prio":null}}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 09:00:13 GMT']
+      ETag: [W/"fd0bea489723d2925c455a878a3e1ab7"]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [9e14c73d-5808-4467-bbe0-f6f6a7033016]
+      content-length: ['210']
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.testfqdn
+  response:
+    body: {string: '[{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.testfqdn","updated_at":"2018-07-06T09:00:13Z","ttl":3600,"id":14197236,"domain_id":384572,"created_at":"2018-07-06T09:00:13Z","prio":null}}]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 09:00:14 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [d00ff42a-76b5-4cb8-aa87-ad3e265a7271]
+      content-length: ['212']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "updated.testfqdn", "content": "challengetoken", "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['70']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: PUT
+    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records/14197236
+  response:
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken","name":"updated.testfqdn","updated_at":"2018-07-06T09:00:15Z","ttl":3600,"id":14197236,"domain_id":null,"created_at":"2018-07-06T09:00:13Z","prio":null}}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 06 Jul 2018 09:00:15 GMT']
+      ETag: [W/"4f09c66e3c4943531ff761ca9d1146f2"]
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [d00ff42a-76b5-4cb8-aa87-ad3e265a7271]
+      content-length: ['211']
+    status: {code: 200, message: OK}
+version: 1
