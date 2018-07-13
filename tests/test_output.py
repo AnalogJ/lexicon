@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import sys
 import importlib
 import logging
+import json
 import lexicon.__main__
 
 from types import ModuleType
@@ -40,12 +41,12 @@ def test_output_function_outputs_json_as_table_with_no_header(capsys):
     assert_correct_output(capsys, expected_output_lines)
 
 def test_output_function_outputs_json_as_json_string(capsys):
-    expected_output_lines = [
-        '[{"id": "fake-id", "type": "TXT", "name": "fake.example.com", "content": "fake", "ttl": 3600}, {"id": "fake2-id", "type": "TXT", "name": "fake2.example.com", "content": "fake2", "ttl": 3600}]'
-    ]
-
     lexicon.__main__.handle_output(data, 'JSON')
-    assert_correct_output(capsys, expected_output_lines)
+
+    out, _ = capsys.readouterr()
+    json_data = json.loads(out)
+
+    assert json_data == data
 
 def test_output_function_output_nothing_when_quiet(capsys):
     expected_output_lines = []
