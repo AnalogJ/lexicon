@@ -1,70 +1,70 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
     uri: https://api.sandbox.dnsimple.com/v2/accounts
   response:
-    body: {string: !!python/unicode '{"data":[{"id":762,"email":"lexicontest@mailinator.com","plan_identifier":"dnsimple-professional","created_at":"2018-03-23T04:57:08Z","updated_at":"2018-03-23T04:57:35Z"}]}'}
+    body: {string: '{"data":[{"id":731,"email":"yoan.blanc@exoscale.ch","plan_identifier":"dnsimple-business","created_at":"2018-02-20T06:44:26Z","updated_at":"2018-02-20T06:47:12Z"}]}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['172']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:34:51 GMT']
-      etag: [W/"41f6b179fd60416d261e24db13a6b843"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1899']
-      x-ratelimit-reset: ['1521784778']
-      x-request-id: [14d1b13e-f952-451d-9be2-25dd1f9acae9]
-      x-runtime: ['0.020600']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:37:58 GMT']
+      ETag: [W/"72de87500fef8e7f6ff19729e509d6a3"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2257']
+      X-RateLimit-Reset: ['1531117888']
+      X-Request-Id: [11c668e7-da41-4ed1-a783-cbcd7d69a2c4]
+      X-Runtime: ['0.008075']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['164']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/762/domains?name_like=thisisadomainidonotown.com
+    uri: https://api.sandbox.dnsimple.com/v2/731/domains?name_like=thisisadomainidonotown.com
   response:
-    body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
+    body: {string: '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:37:58 GMT']
+      ETag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2256']
+      X-RateLimit-Reset: ['1531117887']
+      X-Request-Id: [a0b580b7-791a-4bf0-ba85-4fa47422e432]
+      X-Runtime: ['0.013527']
+      X-XSS-Protection: [1; mode=block]
       content-length: ['91']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:34:52 GMT']
-      etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1898']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [b0422f7a-4262-442a-81c9-1eadb99b0161]
-      x-runtime: ['0.025471']
-      x-xss-protection: [1; mode=block]
     status: {code: 200, message: OK}
 version: 1

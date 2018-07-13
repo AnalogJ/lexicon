@@ -1,240 +1,172 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
     uri: https://api.sandbox.dnsimple.com/v2/accounts
   response:
-    body: {string: !!python/unicode '{"data":[{"id":762,"email":"lexicontest@mailinator.com","plan_identifier":"dnsimple-professional","created_at":"2018-03-23T04:57:08Z","updated_at":"2018-03-23T04:57:35Z"}]}'}
+    body: {string: '{"data":[{"id":731,"email":"yoan.blanc@exoscale.ch","plan_identifier":"dnsimple-business","created_at":"2018-02-20T06:44:26Z","updated_at":"2018-02-20T06:47:12Z"}]}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['172']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:26 GMT']
-      etag: [W/"41f6b179fd60416d261e24db13a6b843"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1813']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [cd265e94-e219-4396-8672-9a4cae785dd8]
-      x-runtime: ['0.019429']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:38:54 GMT']
+      ETag: [W/"72de87500fef8e7f6ff19729e509d6a3"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2181']
+      X-RateLimit-Reset: ['1531117887']
+      X-Request-Id: [42f37580-e8ea-4769-9c09-8ddecd2b9545]
+      X-Runtime: ['0.015331']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['164']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/762/domains?name_like=lexicontest.com
+    uri: https://api.sandbox.dnsimple.com/v2/731/domains?name_like=lexicontest.us
   response:
-    body: {string: !!python/unicode '{"data":[{"id":39243,"account_id":762,"registrant_id":null,"name":"lexicontest.com","unicode_name":"lexicontest.com","token":"Xq3UtdK2VXBM23CE0w3xNDQkigc8VnWj","state":"hosted","auto_renew":false,"private_whois":false,"expires_on":null,"created_at":"2018-03-23T04:58:39Z","updated_at":"2018-03-23T04:58:39Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    body: {string: '{"data":[{"id":57894,"account_id":731,"registrant_id":null,"name":"lexicontest.us","unicode_name":"lexicontest.us","state":"hosted","auto_renew":false,"private_whois":false,"expires_on":null,"created_at":"2018-07-09T05:29:54Z","updated_at":"2018-07-09T05:29:54Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['390']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:26 GMT']
-      etag: [W/"3c522308175b5c6e8cebe22bd408c32a"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1812']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [2c24c05a-95df-4a05-9bd9-31f567ba0dbf]
-      x-runtime: ['0.023221']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:38:55 GMT']
+      ETag: [W/"04f25ecf6f530c2d8d38ef8bdbb24738"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2180']
+      X-RateLimit-Reset: ['1531117888']
+      X-Request-Id: [303594e6-ca26-4b44-a360-a13c489fa971]
+      X-Runtime: ['0.013869']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['345']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=_acme-challenge.listrecordset
+    uri: https://api.sandbox.dnsimple.com/v2/731/zones/lexicontest.us/records?type=TXT&name=_acme-challenge.listrecordset
   response:
-    body: {string: !!python/unicode '{"data":[],"pagination":{"current_page":1,"per_page":30,"total_entries":0,"total_pages":1}}'}
+    body: {string: '{"data":[{"id":502878,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:41Z","updated_at":"2018-07-09T05:32:41Z"},{"id":502879,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken2","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:43Z","updated_at":"2018-07-09T05:32:43Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":2,"total_pages":1}}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['91']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:26 GMT']
-      etag: [W/"0605e329ddd741bf0b60c52b68e9846b"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1811']
-      x-ratelimit-reset: ['1521784778']
-      x-request-id: [d4e4762a-9fd8-4584-9457-1862311bb333]
-      x-runtime: ['0.033056']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:38:55 GMT']
+      ETag: [W/"07ca7dc4a13018fefb83afdf4545793b"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2179']
+      X-RateLimit-Reset: ['1531117887']
+      X-Request-Id: [744659da-22fb-4987-bdef-94adfbb78fac]
+      X-Runtime: ['0.021064']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['650']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"priority": "placeholder_priority", "name": "_acme-challenge.listrecordset",
-      "content": "challengetoken1", "regions": ["global"], "ttl": 3600, "type": "TXT"}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['158']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.sandbox.dnsimple.com/v2762/zones/lexicontest.com/records
-  response:
-    body: {string: !!python/unicode '{"data":{"id":362814,"zone_id":"lexicontest.com","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:27Z","updated_at":"2018-03-23T05:35:27Z"}}'}
-    headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:27 GMT']
-      etag: [W/"6d003e0f351d0166a7555cb990246612"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1810']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [ba613542-a72c-4a4a-a916-86adfd69c68a]
-      x-runtime: ['0.089202']
-      x-xss-protection: [1; mode=block]
-    status: {code: 201, message: Created}
-- request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=_acme-challenge.listrecordset
+    uri: https://api.sandbox.dnsimple.com/v2/731/zones/lexicontest.us/records?type=TXT&name=_acme-challenge.listrecordset
   response:
-    body: {string: !!python/unicode '{"data":[{"id":362814,"zone_id":"lexicontest.com","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:27Z","updated_at":"2018-03-23T05:35:27Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":1,"total_pages":1}}'}
+    body: {string: '{"data":[{"id":502878,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:41Z","updated_at":"2018-07-09T05:32:41Z"},{"id":502879,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken2","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:43Z","updated_at":"2018-07-09T05:32:43Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":2,"total_pages":1}}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['371']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:27 GMT']
-      etag: [W/"63f83ad8a0eaa4f5c9c704c61f3bd6c6"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1809']
-      x-ratelimit-reset: ['1521784778']
-      x-request-id: [6eb1b187-31a3-4055-bc90-63c3a249cc67]
-      x-runtime: ['0.035458']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:38:56 GMT']
+      ETag: [W/"07ca7dc4a13018fefb83afdf4545793b"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2178']
+      X-RateLimit-Reset: ['1531117887']
+      X-Request-Id: [9062ddea-bac2-4437-9e7a-00428d7008dc]
+      X-Runtime: ['0.030041']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['650']
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"priority": "placeholder_priority", "name": "_acme-challenge.listrecordset",
-      "content": "challengetoken2", "regions": ["global"], "ttl": 3600, "type": "TXT"}'
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['158']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.sandbox.dnsimple.com/v2762/zones/lexicontest.com/records
-  response:
-    body: {string: !!python/unicode '{"data":{"id":362815,"zone_id":"lexicontest.com","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken2","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:28Z","updated_at":"2018-03-23T05:35:28Z"}}'}
-    headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:28 GMT']
-      etag: [W/"b3eb6b8e25bf7305e0b1ade815b0121c"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1808']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [aa4d63fb-2457-48df-ae41-6565955f640f]
-      x-runtime: ['0.093907']
-      x-xss-protection: [1; mode=block]
-    status: {code: 201, message: Created}
-- request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.19.1]
     method: GET
-    uri: https://api.sandbox.dnsimple.com/v2/762/zones/lexicontest.com/records?type=TXT&name=_acme-challenge.listrecordset
+    uri: https://api.sandbox.dnsimple.com/v2/731/zones/lexicontest.us/records?type=TXT&name=_acme-challenge.listrecordset
   response:
-    body: {string: !!python/unicode '{"data":[{"id":362814,"zone_id":"lexicontest.com","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:27Z","updated_at":"2018-03-23T05:35:27Z"},{"id":362815,"zone_id":"lexicontest.com","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken2","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-03-23T05:35:28Z","updated_at":"2018-03-23T05:35:28Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":2,"total_pages":1}}'}
+    body: {string: '{"data":[{"id":502878,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken1","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:41Z","updated_at":"2018-07-09T05:32:41Z"},{"id":502879,"zone_id":"lexicontest.us","parent_id":null,"name":"_acme-challenge.listrecordset","content":"challengetoken2","ttl":3600,"priority":null,"type":"TXT","regions":["global"],"system_record":false,"created_at":"2018-07-09T05:32:43Z","updated_at":"2018-07-09T05:32:43Z"}],"pagination":{"current_page":1,"per_page":30,"total_entries":2,"total_pages":1}}'}
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['652']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 23 Mar 2018 05:35:28 GMT']
-      etag: [W/"df43d1d41c147bbab90009030d616983"]
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-download-options: [noopen]
-      x-frame-options: [DENY]
-      x-permitted-cross-domain-policies: [none]
-      x-ratelimit-limit: ['2400']
-      x-ratelimit-remaining: ['1807']
-      x-ratelimit-reset: ['1521784779']
-      x-request-id: [75375f68-9b32-4a7a-a4cf-150fa6e23523]
-      x-runtime: ['0.028968']
-      x-xss-protection: [1; mode=block]
+      Cache-Control: ['max-age=0, private, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 09 Jul 2018 05:38:57 GMT']
+      ETag: [W/"07ca7dc4a13018fefb83afdf4545793b"]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=31536000]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-Download-Options: [noopen]
+      X-Frame-Options: [DENY]
+      X-Permitted-Cross-Domain-Policies: [none]
+      X-RateLimit-Limit: ['2400']
+      X-RateLimit-Remaining: ['2177']
+      X-RateLimit-Reset: ['1531117887']
+      X-Request-Id: [4a98c810-11d1-4bba-9f42-3ab8bfbd674e]
+      X-Runtime: ['0.028012']
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['650']
     status: {code: 200, message: OK}
 version: 1
