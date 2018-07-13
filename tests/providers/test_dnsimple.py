@@ -11,7 +11,7 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'dnsimple'
-    domain = 'lexicontest.com'
+    domain = 'lexicontest.us'
 
     def _test_engine_overrides(self):
         overrides = super(DnsimpleProviderTests, self)._test_engine_overrides()
@@ -26,7 +26,3 @@ class DnsimpleProviderTests(TestCase, IntegrationTests):
 
     def _filter_headers(self):
         return ['Authorization','set-cookie','X-Dnsimple-OTP']
-
-    @pytest.mark.skip(reason="new test, missing recording")
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
-        return

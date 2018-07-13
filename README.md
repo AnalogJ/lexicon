@@ -1,12 +1,20 @@
+<p align="center">
+  <a href="https://github.com/AnalogJ/lexicon">
+  <img width="300" alt="lexicon_view" src="https://github.com/AnalogJ/lexicon/blob/master/logo.svg">
+  </a>
+</p>
+
+
+
+# lexicon
+Manipulate DNS records on various DNS providers in a standardized/agnostic way.
+
 [![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
 [![PyPI](https://img.shields.io/pypi/pyversions/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
 [![GitHub license](https://img.shields.io/github/license/AnalogJ/lexicon.svg)](https://github.com/AnalogJ/lexicon/blob/master/LICENSE)
-
-# lexicon
-Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 ## Introduction
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a standardized way.
@@ -56,10 +64,12 @@ The current supported providers are:
 - Transip ([docs](https://www.transip.nl/transip/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Vultr ([docs](https://www.vultr.com/api/))
+- Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
+- Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
@@ -76,7 +86,6 @@ Potential providers are as follows. If you would like to contribute one, please 
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs)) :dollar: <sub>requires paid account</sub>
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
-- Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - __Any others I missed__
@@ -208,10 +217,13 @@ There is an included example Dockerfile that can be used to automatically genera
 - [ ] Get a list of Letsencrypt clients, and create hook files for them ([letsencrypt clients](https://github.com/letsencrypt/letsencrypt/wiki/Links))
 
 ## Contributing Changes.
-If the DNS provider you use is not already available, please consider contributing by opening a pull request.
+If the DNS provider you use is not already available, please consider contributing by opening a pull request and
+following the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md)
 
 ## License
-MIT
+- MIT
+- [Logo: transform by Mike Rowe from the Noun Project](https://thenounproject.com/term/transform/397964)
+
 
 ## References
 
