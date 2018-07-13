@@ -20,19 +20,19 @@ logger = logging.getLogger(__name__)
 
 def BaseProviderParser():
     parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("action", help="specify the action to take", default='list', choices=['create', 'list', 'update', 'delete'])
-    parser.add_argument("domain", help="specify the domain, supports subdomains as well")
-    parser.add_argument("type", help="specify the entry type", default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
+    parser.add_argument('action', help='specify the action to take', default='list', choices=['create', 'list', 'update', 'delete'])
+    parser.add_argument('domain', help='specify the domain, supports subdomains as well')
+    parser.add_argument('type', help='specify the entry type', default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
 
-    parser.add_argument("--name", help="specify the record name")
-    parser.add_argument("--content", help="specify the record content")
-    parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
-    parser.add_argument("--priority", help="specify the record priority")
-    parser.add_argument("--identifier", help="specify the record for update or delete actions")
-    parser.add_argument("--log_level", help="specify the log level", default="ERROR", choices=["CRITICAL","ERROR","WARNING","INFO","DEBUG","NOTSET"])
-    parser.add_argument("--quiet", help="do not print results", action='store_true')
-    parser.add_argument("--json", help="print results as a json string", action='store_true')
-    parser.add_argument("--no-headers", help="remove table headers from the printed results", action='store_true')
+    parser.add_argument('--name', help='specify the record name')
+    parser.add_argument('--content', help='specify the record content')
+    parser.add_argument('--ttl', type=int, help='specify the record time-to-live')
+    parser.add_argument('--priority', help='specify the record priority')
+    parser.add_argument('--identifier', help='specify the record for update or delete actions')
+    parser.add_argument('--log_level', help='specify the log level', default='ERROR', choices=['CRITICAL','ERROR','WARNING','INFO','DEBUG','NOTSET'])
+    parser.add_argument('--output', 
+                        help='specify the type of output: by default a formatted table (TABLE), a formatted table without header (TABLE-NO-HEADER), a JSON string (JSON) or no output (QUIET)',
+                        default='TABLE', choices=['TABLE', 'TABLE-NO-HEADER', 'JSON', 'QUIET'])
     return parser
 
 def MainParser():
@@ -47,11 +47,11 @@ def MainParser():
 
     parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
     try:
-        version = pkg_resources.get_distribution("dns-lexicon").version
+        version = pkg_resources.get_distribution('dns-lexicon').version
     except pkg_resources.DistributionNotFound:
         version = 'unknown'
-    parser.add_argument('--version', help="show the current version of lexicon", action='version', version='%(prog)s {0}'.format(version))
-    parser.add_argument('--delegated', help="specify the delegated domain")
+    parser.add_argument('--version', help='show the current version of lexicon', action='version', version='%(prog)s {0}'.format(version))
+    parser.add_argument('--delegated', help='specify the delegated domain')
     subparsers = parser.add_subparsers(dest='provider_name', help='specify the DNS provider to use')
     subparsers.required = True
 
@@ -64,13 +64,13 @@ def MainParser():
 
     return parser
 
-# Print returned JSON into a nice table for command line usage
-def print_json_result(logger, output=None, without_header=None):
+# Convert returned JSON into a nice table for command line usage
+def generate_table_result(logger, output=None, without_header=None):
     try:
         _ = (entry for entry in output)
     except:
         logger.debug('Command output is not iterable, and then cannot be printed with --quiet parameter not enabled.')
-        return
+        return None
 
     array = [[row['id'], row['type'], row['name'], row['content'], row['ttl']] for row in output]
 
@@ -87,20 +87,37 @@ def print_json_result(logger, output=None, without_header=None):
             if width > columnWidths[idx]:
                 columnWidths[idx] = width
 
-    # Add a "nice" separator
+    # Add a 'nice' separator
     if not without_header:
         array.insert(1, ['-' * columnWidths[idx] for idx in range(len(columnWidths))])
 
     # Construct table to be printed
-    print_table = []
+    table = []
     for row in array:
         rowList = []
         for idx, col in enumerate(row):
             rowList.append(str(col).ljust(columnWidths[idx]))
-        print_table.append(' '.join(rowList))
+        table.append(' '.join(rowList))
 
-    # Print table
-    print('\n'.join(print_table))
+    # Return table
+    return '\n'.join(table)
+
+# Print the relevant output for given output_type
+def handle_output(results, output_type):
+    if not output_type == 'QUIET':
+        if not output_type == 'JSON':
+            table = generate_table_result(logger, results, output_type == 'TABLE-NO-HEADER')
+            if table:
+                print(table)
+        else:
+            try:
+                _ = (entry for entry in results)
+                json_str = json.dumps(results)
+                if json_str:
+                    print(json_str)
+            except:
+                logger.debug('Output is not a JSON, and then cannot be printed with --output=JSON parameter.')
+                pass
 
 # Dynamically determine all the providers available.
 def main():
@@ -111,17 +128,9 @@ def main():
     logger.debug('Arguments: %s', parsed_args)
     client = Client(vars(parsed_args))
     
-    output = client.execute()
+    results = client.execute()
 
-    if not parsed_args.quiet:
-        if not parsed_args.json:
-            print_json_result(logger, output, parsed_args.no_headers)
-        else:
-            try:
-                print(json.dumps(output))
-            except:
-                logger.debug('Output is not a JSON, and then cannot be printed with --json parameter enabled.')
-                pass
+    handle_output(results, parsed_args.output)
 
 if __name__ == '__main__':
     main()

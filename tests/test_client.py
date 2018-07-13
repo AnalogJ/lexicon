@@ -1,6 +1,7 @@
 import lexicon.client
 import pytest
 import os
+
 def test_Client_init():
     options = {
         'provider_name':'base',

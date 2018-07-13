@@ -9,7 +9,6 @@ def test_BaseProviderParser():
     assert parsed.type == 'TXT'
     assert parsed.ttl == None
 
-
 def test_BaseProviderParser_without_domain():
     baseparser = lexicon.__main__.BaseProviderParser()
     with pytest.raises(SystemExit):
