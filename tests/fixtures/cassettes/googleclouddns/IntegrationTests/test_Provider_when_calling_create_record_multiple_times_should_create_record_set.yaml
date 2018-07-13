@@ -1,0 +1,197 @@
+interactions:
+- request:
+    body: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=assertion_placeholder
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['773']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.0]
+    method: POST
+    uri: https://www.googleapis.com/oauth2/v4/token
+  response:
+    body: {string: "{\n \"access_token\": \"access_token_placeholder\"\
+        ,\n \"token_type\": \"Bearer\",\n \"expires_in\": 3600\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="43,42,41,39,35"']
+      Cache-Control: ['no-cache, no-store, max-age=0, must-revalidate']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:51 GMT']
+      Expires: ['Mon, 01 Jan 1990 00:00:00 GMT']
+      Pragma: [no-cache]
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['199']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://content.googleapis.com/dns/v1/projects/named-archway-209418/managedZones
+  response:
+    body: {string: "{\n \"kind\": \"dns#managedZonesListResponse\",\n \"managedZones\"\
+        : [\n  {\n   \"kind\": \"dns#managedZone\",\n   \"name\": \"fullm3tal-tk\"\
+        ,\n   \"dnsName\": \"fullm3tal.tk.\",\n   \"description\": \"\",\n   \"id\"\
+        : \"699036609868956548\",\n   \"nameServers\": [\n    \"ns-cloud-c1.googledomains.com.\"\
+        ,\n    \"ns-cloud-c2.googledomains.com.\",\n    \"ns-cloud-c3.googledomains.com.\"\
+        ,\n    \"ns-cloud-c4.googledomains.com.\"\n   ],\n   \"creationTime\": \"\
+        2018-07-06T18:42:27.476Z\",\n   \"dnssecConfig\": {\n    \"kind\": \"dns#managedZoneDnsSecConfig\"\
+        ,\n    \"state\": \"off\",\n    \"defaultKeySpecs\": [\n     {\n      \"kind\"\
+        : \"dns#dnsKeySpec\",\n      \"keyType\": \"keySigning\",\n      \"algorithm\"\
+        : \"rsasha256\",\n      \"keyLength\": 2048\n     },\n     {\n      \"kind\"\
+        : \"dns#dnsKeySpec\",\n      \"keyType\": \"zoneSigning\",\n      \"algorithm\"\
+        : \"rsasha256\",\n      \"keyLength\": 1024\n     }\n    ],\n    \"nonExistence\"\
+        : \"nsec3\"\n   }\n  }\n ]\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="43,42,41,39,35"']
+      Cache-Control: ['private, max-age=0, must-revalidate, no-transform']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:51 GMT']
+      Expires: ['Mon, 09 Jul 2018 13:19:51 GMT']
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['857']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://content.googleapis.com/dns/v1/projects/named-archway-209418/managedZones/699036609868956548/rrsets?type=TXT&name=_acme-challenge.createrecordset.fullm3tal.tk.
+  response:
+    body: {string: "{\n \"kind\": \"dns#resourceRecordSetsListResponse\",\n \"rrsets\"\
+        : []\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="43,42,41,39,35"']
+      Cache-Control: ['private, max-age=0, must-revalidate, no-transform']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:52 GMT']
+      Expires: ['Mon, 09 Jul 2018 13:19:52 GMT']
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['65']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"additions": [{"name": "_acme-challenge.createrecordset.fullm3tal.tk.",
+      "type": "TXT", "ttl": 3600, "rrdatas": ["\"challengetoken1\""]}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['138']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: POST
+    uri: https://content.googleapis.com/dns/v1/projects/named-archway-209418/managedZones/699036609868956548/changes
+  response:
+    body: {string: "{\n \"kind\": \"dns#change\",\n \"additions\": [\n  {\n   \"kind\"\
+        : \"dns#resourceRecordSet\",\n   \"name\": \"_acme-challenge.createrecordset.fullm3tal.tk.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": 3600,\n   \"rrdatas\": [\n    \"\\\"\
+        challengetoken1\\\"\"\n   ]\n  }\n ],\n \"startTime\": \"2018-07-09T13:19:52.273Z\"\
+        ,\n \"id\": \"217\",\n \"status\": \"pending\"\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="43,42,41,39,35"']
+      Cache-Control: ['no-cache, no-store, max-age=0, must-revalidate']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:52 GMT']
+      Expires: ['Mon, 01 Jan 1990 00:00:00 GMT']
+      Pragma: [no-cache]
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['309']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: GET
+    uri: https://content.googleapis.com/dns/v1/projects/named-archway-209418/managedZones/699036609868956548/rrsets?type=TXT&name=_acme-challenge.createrecordset.fullm3tal.tk.
+  response:
+    body: {string: "{\n \"kind\": \"dns#resourceRecordSetsListResponse\",\n \"rrsets\"\
+        : [\n  {\n   \"kind\": \"dns#resourceRecordSet\",\n   \"name\": \"_acme-challenge.createrecordset.fullm3tal.tk.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": 3600,\n   \"rrdatas\": [\n    \"\\\"\
+        challengetoken1\\\"\"\n   ]\n  }\n ]\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="43,42,41,39,35"']
+      Cache-Control: ['private, max-age=0, must-revalidate, no-transform']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:52 GMT']
+      Expires: ['Mon, 09 Jul 2018 13:19:52 GMT']
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['252']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"deletions": [{"name": "_acme-challenge.createrecordset.fullm3tal.tk.",
+      "type": "TXT", "ttl": 3600, "rrdatas": ["\"challengetoken1\""]}], "additions":
+      [{"name": "_acme-challenge.createrecordset.fullm3tal.tk.", "type": "TXT", "ttl":
+      3600, "rrdatas": ["\"challengetoken1\"", "\"challengetoken2\""]}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['299']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.19.0]
+    method: POST
+    uri: https://content.googleapis.com/dns/v1/projects/named-archway-209418/managedZones/699036609868956548/changes
+  response:
+    body: {string: "{\n \"kind\": \"dns#change\",\n \"additions\": [\n  {\n   \"kind\"\
+        : \"dns#resourceRecordSet\",\n   \"name\": \"_acme-challenge.createrecordset.fullm3tal.tk.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": 3600,\n   \"rrdatas\": [\n    \"\\\"\
+        challengetoken1\\\"\",\n    \"\\\"challengetoken2\\\"\"\n   ]\n  }\n ],\n\
+        \ \"deletions\": [\n  {\n   \"kind\": \"dns#resourceRecordSet\",\n   \"name\"\
+        : \"_acme-challenge.createrecordset.fullm3tal.tk.\",\n   \"type\": \"TXT\"\
+        ,\n   \"ttl\": 3600,\n   \"rrdatas\": [\n    \"\\\"challengetoken1\\\"\"\n\
+        \   ]\n  }\n ],\n \"startTime\": \"2018-07-09T13:19:52.980Z\",\n \"id\": \"\
+        218\",\n \"status\": \"pending\"\n}\n"}
+    headers:
+      Alt-Svc: ['quic=":443"; ma=2592000; v="44,43,39,35"']
+      Cache-Control: ['no-cache, no-store, max-age=0, must-revalidate']
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Mon, 09 Jul 2018 13:19:53 GMT']
+      Expires: ['Mon, 01 Jan 1990 00:00:00 GMT']
+      Pragma: [no-cache]
+      Server: [GSE]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin, X-Origin]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [SAMEORIGIN]
+      X-XSS-Protection: [1; mode=block]
+      content-length: ['541']
+    status: {code: 200, message: OK}
+version: 1
