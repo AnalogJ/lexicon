@@ -46,7 +46,7 @@ def lexicon_client():
     return importlib.import_module('lexicon.client')
 
 def test_unknown_provider_raises_error(lexicon_client):
-    with pytest.raises(ModuleNotFoundError):
+    with pytest.raises(ImportError):
         lexicon_client.Client({'action': 'list', 'provider_name': 'unknownprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
 
 def test_missing_required_client_config_parameter_raises_error(lexicon_client):
