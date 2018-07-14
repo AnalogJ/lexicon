@@ -70,7 +70,7 @@ The current supported providers are:
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
-Potential providers are as follows. If you would like to contribute one, please open a pull request.
+Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
 
 - Aliyun.com
 - Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
