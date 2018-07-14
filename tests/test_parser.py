@@ -8,7 +8,7 @@ def test_BaseProviderParser():
     assert parsed.domain == 'capsulecd.com'
     assert parsed.type == 'TXT'
     assert parsed.ttl == None
-
+    assert parsed.output == 'TABLE'
 
 def test_BaseProviderParser_without_domain():
     baseparser = lexicon.__main__.BaseProviderParser()
@@ -27,6 +27,7 @@ def test_MainParser():
     assert parsed.action == 'list'
     assert parsed.domain == 'capsulecd.com'
     assert parsed.type == 'TXT'
+    assert parsed.output == 'TABLE'
 
 def test_MainParser_without_args():
     baseparser = lexicon.__main__.MainParser()
