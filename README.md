@@ -41,7 +41,9 @@ The current supported providers are:
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
+- ExoScale
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
+- Gehirn
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
@@ -53,6 +55,7 @@ The current supported providers are:
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
+- Online
 - OVH ([docs](https://api.ovh.com/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
@@ -62,32 +65,48 @@ The current supported providers are:
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Subreg ([docs](https://subreg.cz/manual/))
 - Transip ([docs](https://www.transip.nl/transip/api/))
-- Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Vultr ([docs](https://www.vultr.com/api/))
+- Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, please open a pull request.
 
+- Aliyun.com
 - Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
+- cyon.ch
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
+- Dynu
+- DirectAdmin
 - EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
 - HostEurope
+- Hurricane Electric DNS
+- Infoblox NIOS
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
 - INWX ([docs](https://github.com/inwx/python2.7-client))
+- ISPConfig
+- InternetX autoDNS ([docs](https://internetx.com))
+- Knot DNS
+- KingHost
 - Liquidweb ([docs](https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html)) :dollar: <sub>requires paid account</sub>
 - Loopia ([docs](https://www.loopia.com/api/)) :dollar: <sub>requires paid account</sub>
 - Mythic Beasts([docs](https://www.mythic-beasts.com/support/api/primary))
 - NFSN (NearlyFreeSpeech) ([docs](https://api.nearlyfreespeech.net/)) :dollar: <sub>requires paid account</sub>
 - RFC2136 ([docs](https://en.wikipedia.org/wiki/Dynamic_DNS))
+- Servercow ([docs](https://servercow.de))
+- selectel.com
+- TELE3 ([docs](https://www.tele3.cz))
 - UltraDNS ([docs](https://restapi.ultradns.com/v1/docs)) :dollar: <sub>requires paid account</sub>
+- UnoEuro API
+- VSCALE
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
+- Zilore ([docs](https://zilore.com))
 - __Any others I missed__
 
 ## Setup
