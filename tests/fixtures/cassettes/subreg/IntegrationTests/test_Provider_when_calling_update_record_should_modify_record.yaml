@@ -1,105 +1,1422 @@
 interactions:
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Login xmlns=\"http://subreg.cz/types\">\n    <login>placeholder_auth_username</login><password>placeholder_auth_password</password></Login>\n</soap:Body>\n</soap:Envelope>"
+    body: null
     headers:
-      Connection: [close]
-      Content-Length: ['406']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
+    method: GET
+    uri: https://subreg.cz/wsdl
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\"?>\n\t\t<definitions name=\"SubregCz\"\n\t\t\ttargetNamespace=\"http://subreg.cz/wsdl\"\n\t\t\txmlns:tn=\"http://subreg.cz/wsdl\"\n\t\t\txmlns:ns=\"http://subreg.cz/types\"\n\t\t\txmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\t\t\txmlns:soap=\"http://schemas.xmlsoap.org/wsdl/soap/\"\n\t\t\txmlns=\"http://schemas.xmlsoap.org/wsdl/\">\n\t\t<types>\n\t\t<xs:schema\n\t\t\ttargetNamespace=\"http://subreg.cz/types\"\n\t\t\txmlns=\"http://subreg.cz/types\">\n\t\t\n\t\t\t<xs:complexType
+        name=\"Login_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element name=\"status\"
+        type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\" type=\"Login_Data\"
+        minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\" type=\"Error_Info\"
+        minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Login_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Login_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Login\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"login\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"password\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Login_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Domain_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Check_Domain_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Check_Domain_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Check_Domain_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Domain_Params\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"lang_info\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Check_Domain\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"params\" type=\"Check_Domain_Params\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Domain_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"amount\" type=\"xs:decimal\"/>\n\t\t\n\t\t\t<xs:element name=\"amount_with_trustee\"
+        type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"premium\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"currency\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Domain_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"avail\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"existing_claim_id\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"price\"
+        type=\"Check_Domain_Price\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Info_Domain_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Domain_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Info_Domain_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Domain\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Contacts\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"admin\" type=\"Info_Domain_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"Info_Domain_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"bill\" type=\"Info_Domain_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Dsdata\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tag\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"alg\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"digest_type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"digest\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Options\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"nsset\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"keyset\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"dsdata\" type=\"Info_Domain_Dsdata\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"keygroup\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"quarantined\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"domain\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"contacts\"
+        type=\"Info_Domain_Contacts\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"hosts\"
+        type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registrant\" type=\"Info_Domain_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"exDate\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"crDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"trDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"upDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"authid\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"status\"
+        type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"rgp\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"autorenew\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"premium\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"price\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"whoisproxy\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"options\" type=\"Info_Domain_Options\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Info_Domain_CZ_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Domain_CZ_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Info_Domain_CZ_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Domain_CZ\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Contacts\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"admin\" type=\"Info_Domain_CZ_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"Info_Domain_CZ_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"bill\" type=\"Info_Domain_CZ_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Dsdata\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tag\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"alg\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"digest_type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"digest\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Options\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"nsset\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"keyset\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"dsdata\" type=\"Info_Domain_CZ_Dsdata\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"keygroup\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"quarantined\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"domain\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"contacts\"
+        type=\"Info_Domain_CZ_Contacts\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"hosts\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registrant\" type=\"Info_Domain_CZ_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"exDate\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"crDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"trDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"upDate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"status\"
+        type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"rgp\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"autorenew\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"whoisproxy\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"options\" type=\"Info_Domain_CZ_Options\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Domains_List_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Domains_List_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Domains_List_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Domains_List_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Domains_List\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Domains_List_Domain\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"expire\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"autorenew\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Domains_List_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"count\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"domains\"
+        type=\"Domains_List_Domain\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_Autorenew_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Set_Autorenew_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_Autorenew_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Set_Autorenew_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_Autorenew\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"autorenew\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_Autorenew_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Create_Contact_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Create_Contact_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Create_Contact_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Create_Contact_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Create_Contact_Params\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"regid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"notify_email\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"vat\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ident_type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ident_number\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"disclose\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Create_Contact_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"surname\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"org\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"street\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"city\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"pc\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"sp\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"cc\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"phone\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"fax\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"email\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"params\"
+        type=\"Create_Contact_Params\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Create_Contact\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"contact\"
+        type=\"Create_Contact_Contact\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Create_Contact_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"contactid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Update_Contact_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Update_Contact_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Update_Contact_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Update_Contact_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Update_Contact_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"surname\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"org\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"street\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"city\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"pc\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"sp\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"cc\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"phone\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"fax\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"email\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Update_Contact\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"contact\"
+        type=\"Update_Contact_Contact\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Update_Contact_Order\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"register\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"orderid\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Update_Contact_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"orders\" type=\"Update_Contact_Order\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Contact_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Info_Contact_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Contact_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Info_Contact_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Contact_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Contact\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"contact\"
+        type=\"Info_Contact_Contact\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Contact_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"surname\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"org\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"street\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"city\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"pc\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"sp\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"cc\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"phone\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"fax\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"email\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Contacts_List_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Contacts_List_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Contacts_List_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Contacts_List_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Contacts_List\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Contacts_List_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"surname\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"org\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"street\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"city\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"pc\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"sp\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"cc\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"email\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"phone\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"fax\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Contacts_List_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"contacts\" type=\"Contacts_List_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"count\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Object_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Check_Object_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Check_Object_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Check_Object_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Check_Object\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"object\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Check_Object_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"avail\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Info_Object_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Object_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Info_Object_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Object\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"object\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"org\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"street\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"city\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"pc\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"sp\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"cc\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"email\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"phone\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"fax\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"vat\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"notify_email\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ident_type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ident_number\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"clID\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"hidden\"
+        type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"statuses\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Ns\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"host\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"ip\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Nsset\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ns\" type=\"Info_Object_Ns\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"clID\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Dnskey\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"flags\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"protocol\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"alg\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"pubKey\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Keyset\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"dnskey\" type=\"Info_Object_Dnskey\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"clID\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Object_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"contact\" type=\"Info_Object_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"nsset\" type=\"Info_Object_Nsset\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"keyset\" type=\"Info_Object_Keyset\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Make_Order_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Make_Order_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Make_Order_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Contacts\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"admin\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"billing\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Host\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"hostname\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"ipv4\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"ipv6\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Ns\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"hosts\" type=\"Make_Order_Host\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"nsset\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_New\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"registrant\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"admin\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"tech\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"billing\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ns\" type=\"Make_Order_Ns\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Dsdata\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tag\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"alg\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"digest_type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"digest\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Param\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"dsdata\" type=\"Make_Order_Dsdata\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"param\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"value\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Params\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"period\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registrant\" type=\"Make_Order_Contact\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"contacts\" type=\"Make_Order_Contacts\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ns\" type=\"Make_Order_Ns\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"new\" type=\"Make_Order_New\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registry\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"authid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"params\" type=\"Make_Order_Param\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"newowner\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"reason\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"nicd\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"password\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"hostname\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ipv4\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ipv6\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"dnstemp\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"statuses\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"autorenew\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Order\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"domain\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"object\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"params\"
+        type=\"Make_Order_Params\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Make_Order\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"order\"
+        type=\"Make_Order_Order\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"orderid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Order_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Info_Order_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Order_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Info_Order_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Info_Order\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"order\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Order_Order\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"errorcode\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"lastupdate\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"message\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"payed\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"amount\"
+        type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Order_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"order\" type=\"Info_Order_Order\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Credit_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_Credit_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Credit_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_Credit_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Credit\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Credit_Credit\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"amount\" type=\"xs:decimal\"/>\n\t\t\n\t\t\t<xs:element name=\"threshold\"
+        type=\"xs:decimal\"/>\n\t\t\n\t\t\t<xs:element name=\"currency\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Credit_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"credit\" type=\"Get_Credit_Credit\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Accountings_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_Accountings_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Accountings_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_Accountings_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Accountings\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"from\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"to\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Accountings_Accounting\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"date\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"text\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"order\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"sum\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"credit\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Accountings_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"count\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"from\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"to\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"accounting\" type=\"Get_Accountings_Accounting\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Client_Payment_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Client_Payment_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Client_Payment_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Client_Payment_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Client_Payment\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"username\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"amount\" type=\"xs:decimal\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"currency\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Client_Payment_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Credit_Correction_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Credit_Correction_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Credit_Correction_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Credit_Correction_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Credit_Correction\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"username\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"amount\" type=\"xs:decimal\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"reason\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Credit_Correction_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Pricelist_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Pricelist_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Pricelist_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Pricelist\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"value\"
+        type=\"xs:decimal\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Value\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"value\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"description\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Param\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"param\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"desc\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"required\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"error_code\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"values\"
+        type=\"Pricelist_Value\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Pricelist\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"promo\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"promoexp\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"country\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"continent\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"minyear\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"maxyear\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"minyear_renew\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"maxyear_renew\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"local_presence\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"prices\" type=\"Pricelist_Price\"
+        minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element name=\"statuses\"
+        type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"params\" type=\"Pricelist_Param\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Pricelist_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"pricelist\" type=\"Pricelist_Pricelist\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Prices_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element name=\"status\"
+        type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\" type=\"Prices_Data\"
+        minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\" type=\"Error_Info\"
+        minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Prices_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Prices_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Prices\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Prices_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"value\"
+        type=\"xs:decimal\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Prices_Value\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"value\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"description\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Prices_Param\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"param\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"desc\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"required\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"error_code\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"values\"
+        type=\"Prices_Value\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Prices_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"country\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"continent\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"minyear\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"maxyear\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"local_presence\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"prices\" type=\"Prices_Price\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"statuses\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"params\" type=\"Prices_Param\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Pricelist_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_Pricelist_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Pricelist_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_Pricelist_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Pricelist\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"pricelist\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Pricelist_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"value\"
+        type=\"xs:decimal\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Pricelist_Pricelist\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"currency\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"prices\" type=\"Get_Pricelist_Price\"
+        minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Pricelist_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"pricelist\" type=\"Get_Pricelist_Pricelist\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_Prices_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Set_Prices_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_Prices_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Set_Prices_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_Prices_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"value\"
+        type=\"xs:decimal\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_Prices\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"pricelist\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"currency\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"prices\"
+        type=\"Set_Prices_Price\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_Prices_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Download_Document_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Download_Document_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Download_Document_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Download_Document_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Download_Document\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Download_Document_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"filetype\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"account\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"document\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Upload_Document_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Upload_Document_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Upload_Document_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Upload_Document_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Upload_Document\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"name\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"document\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"filetype\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Upload_Document_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"List_Documents_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"List_Documents_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"List_Documents_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"List_Documents_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"List_Documents\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"List_Documents_Document\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"filetype\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"account\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"orderid\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"List_Documents_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"documents\" type=\"List_Documents_Document\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Users_List_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Users_List_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Users_List_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Users_List_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Users_List\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Users_List_User\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"username\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"credit\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"currency\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"billing_name\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"billing_street\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"billing_city\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"billing_pc\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"billing_country\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"company_id\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"company_vat\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"email\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"phone\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"last_login\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Users_List_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"count\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"users\"
+        type=\"Users_List_User\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Anycast_ADD_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Anycast_ADD_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Anycast_ADD_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Anycast_ADD_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Anycast_ADD_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"server\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Anycast_ADD_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Anycast_Remove_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Anycast_Remove_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Anycast_Remove_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Anycast_Remove_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Anycast_Remove_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"server\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Anycast_Remove_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Zone_Record\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"content\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"prio\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"ttl\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"domain\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"records\"
+        type=\"Get_DNS_Zone_Record\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Add_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Add_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Add_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Add_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Add_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"template\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Add_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Delete_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Delete_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Delete_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Delete_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Delete_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Delete_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Set_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Set_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_DNS_Zone_Record\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"type\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"content\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"prio\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"ttl\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Set_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"records\" type=\"Set_DNS_Zone_Record\"
+        minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Set_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Add_DNS_Record_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Add_DNS_Record_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Add_DNS_Record_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Add_DNS_Record_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Add_DNS_Record_Record\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"type\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"content\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"prio\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"ttl\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Add_DNS_Record\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"record\" type=\"Add_DNS_Record_Record\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Add_DNS_Record_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Modify_DNS_Record_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Modify_DNS_Record_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Modify_DNS_Record_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Modify_DNS_Record_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Modify_DNS_Record_Record\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"content\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"prio\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ttl\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Modify_DNS_Record\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"record\" type=\"Modify_DNS_Record_Record\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Modify_DNS_Record_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Delete_DNS_Record_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Delete_DNS_Record_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Delete_DNS_Record_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Delete_DNS_Record_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Delete_DNS_Record_Record\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Delete_DNS_Record\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"record\" type=\"Delete_DNS_Record_Record\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Delete_DNS_Record_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"POLL_Get_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"POLL_Get_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"POLL_Get_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"POLL_Get_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"POLL_Get\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"POLL_Get_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"count\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"date\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"id\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"orderid\"
+        type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"orderstatus\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"message\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"errorcode\"
+        type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"POLL_Ack_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"POLL_Ack_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"POLL_Ack_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"POLL_Ack_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"POLL_Ack\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"id\" type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"POLL_Ack_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"OIB_Search_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"OIB_Search_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"OIB_Search_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"OIB_Search_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"OIB_Search\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"oib\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"OIB_Search_Domain\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"type\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"typedesc\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"OIB_Search_Type\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"typedesc\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"used\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"maximum\" type=\"xs:integer\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"OIB_Search_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"domains\" type=\"OIB_Search_Domain\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"types\" type=\"OIB_Search_Type\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Certificate_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_Certificate_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Certificate_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_Certificate_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Certificate\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"orderid\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Certificate_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"certificate\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"expire\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Redirects_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_Redirects_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Redirects_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_Redirects_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_Redirects\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_Redirects_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"web\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"email\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"In_Subreg_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"In_Subreg_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"In_Subreg_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"In_Subreg_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"In_Subreg\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"In_Subreg_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"myaccount\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Sign_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Sign_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Sign_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Sign_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Sign_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Sign_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Unsign_DNS_Zone_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Unsign_DNS_Zone_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Unsign_DNS_Zone_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Unsign_DNS_Zone_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Unsign_DNS_Zone\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Unsign_DNS_Zone_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Info_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_DNS_Info_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_DNS_Info_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_DNS_Info_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_DNS_Info\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"domain\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"dnstype\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Info_Anydata\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"data\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Info_Dn\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"nameserver\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"anydata\" type=\"Get_DNS_Info_Anydata\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"nslist\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"soaid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_DNS_Info_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"in_zone\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"dnssec\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"dns\" type=\"Get_DNS_Info_Dn\"
+        minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Special_Pricelist_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Special_Pricelist_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element
+        name=\"error\" type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Special_Pricelist_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Special_Pricelist_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Special_Pricelist\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Special_Pricelist_Price\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"register\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"renew\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"transfer\" type=\"xs:decimal\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Special_Pricelist_Pricelist\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"currency\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"dateto\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"prices\" type=\"Special_Pricelist_Price\"
+        minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Special_Pricelist_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"pricelist\" type=\"Special_Pricelist_Pricelist\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_TLD_Info_Response\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t<xs:element
+        name=\"status\" type=\"xs:string\"/>\n\t\t\t\t\t<xs:element name=\"data\"
+        type=\"Get_TLD_Info_Data\" minOccurs=\"0\" />\n\t\t\t\t\t<xs:element name=\"error\"
+        type=\"Error_Info\" minOccurs=\"0\" />\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_TLD_Info_Container\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t<xs:element
+        name=\"response\" type=\"Get_TLD_Info_Response\"/>\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:element
+        name=\"Get_TLD_Info\">\n\t\t\t\t<xs:complexType>\n\t\t\t\t\t<xs:sequence>\n\t\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"ssid\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"tld\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t\t</xs:sequence>\n\t\t\t\t</xs:complexType>\n\t\t\t</xs:element>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_TLD_Info_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"type\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"cnt\" type=\"xs:integer\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_TLD_Info_Option\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"value\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_TLD_Info_Param\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"param\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"desc\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"required\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"options\" type=\"Get_TLD_Info_Option\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Get_TLD_Info_Data\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"periodsCreate\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"periodsRenew\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"transfer\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"trade\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"idn\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"trustee\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"ns\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"contacts\" type=\"Get_TLD_Info_Contact\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"params\" type=\"Get_TLD_Info_Param\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Error_Codes\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"major\" type=\"xs:integer\"/>\n\t\t\n\t\t\t<xs:element name=\"minor\"
+        type=\"xs:integer\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Error_Info\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"errormsg\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"errorcode\"
+        type=\"Error_Codes\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"subregid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registryid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Info_Domain_CZ_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"subregid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"registryid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Contact_New\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"name\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"surname\"
+        type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"org\" type=\"xs:string\"
+        minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element name=\"street\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"city\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"pc\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"sp\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"cc\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element name=\"phone\" type=\"xs:string\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"fax\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"email\" type=\"xs:string\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t\t<xs:complexType
+        name=\"Make_Order_Contact\">\n\t\t\t\t<xs:sequence>\n\t\t\t\t\t\n\t\t\t<xs:element
+        name=\"id\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"regid\" type=\"xs:string\" minOccurs=\"0\"/>\n\t\t\n\t\t\t<xs:element
+        name=\"new\" type=\"Make_Order_Contact_New\" minOccurs=\"0\"/>\n\t\t\n\t\t\t\t</xs:sequence>\n\t\t\t</xs:complexType>\n\t\t\n\t\t</xs:schema>\n\t\t</types>\n\t\t\n\t\t\t<message
+        name=\"Login_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Login\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Login_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Login_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Check_Domain_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Check_Domain\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Check_Domain_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Check_Domain_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Info_Domain_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Info_Domain\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Info_Domain_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Info_Domain_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Info_Domain_CZ_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Info_Domain_CZ\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Info_Domain_CZ_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Info_Domain_CZ_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Domains_List_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Domains_List\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Domains_List_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Domains_List_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Set_Autorenew_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Set_Autorenew\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Set_Autorenew_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Set_Autorenew_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Create_Contact_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Create_Contact\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Create_Contact_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Create_Contact_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Update_Contact_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Update_Contact\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Update_Contact_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Update_Contact_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Info_Contact_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Info_Contact\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Info_Contact_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Info_Contact_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Contacts_List_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Contacts_List\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Contacts_List_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Contacts_List_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Check_Object_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Check_Object\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Check_Object_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Check_Object_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Info_Object_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Info_Object\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Info_Object_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Info_Object_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Make_Order_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Make_Order\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Make_Order_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Make_Order_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Info_Order_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Info_Order\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Info_Order_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Info_Order_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_Credit_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_Credit\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_Credit_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_Credit_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_Accountings_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_Accountings\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_Accountings_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_Accountings_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Client_Payment_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Client_Payment\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Client_Payment_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Client_Payment_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Credit_Correction_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Credit_Correction\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Credit_Correction_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Credit_Correction_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Pricelist_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Pricelist\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Pricelist_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Pricelist_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Prices_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Prices\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Prices_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Prices_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_Pricelist_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_Pricelist\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_Pricelist_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_Pricelist_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Set_Prices_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Set_Prices\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Set_Prices_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Set_Prices_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Download_Document_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Download_Document\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Download_Document_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Download_Document_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Upload_Document_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Upload_Document\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Upload_Document_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Upload_Document_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"List_Documents_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:List_Documents\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"List_Documents_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:List_Documents_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Users_List_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Users_List\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Users_List_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Users_List_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Anycast_ADD_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Anycast_ADD_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Anycast_ADD_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Anycast_ADD_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Anycast_Remove_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Anycast_Remove_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Anycast_Remove_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Anycast_Remove_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Add_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Add_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Add_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Add_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Delete_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Delete_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Delete_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Delete_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Set_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Set_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Set_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Set_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Add_DNS_Record_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Add_DNS_Record\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Add_DNS_Record_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Add_DNS_Record_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Modify_DNS_Record_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Modify_DNS_Record\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Modify_DNS_Record_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Modify_DNS_Record_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Delete_DNS_Record_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Delete_DNS_Record\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Delete_DNS_Record_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Delete_DNS_Record_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"POLL_Get_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:POLL_Get\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"POLL_Get_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:POLL_Get_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"POLL_Ack_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:POLL_Ack\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"POLL_Ack_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:POLL_Ack_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"OIB_Search_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:OIB_Search\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"OIB_Search_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:OIB_Search_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_Certificate_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_Certificate\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_Certificate_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_Certificate_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_Redirects_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_Redirects\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_Redirects_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_Redirects_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"In_Subreg_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:In_Subreg\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"In_Subreg_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:In_Subreg_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Sign_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Sign_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Sign_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Sign_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Unsign_DNS_Zone_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Unsign_DNS_Zone\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Unsign_DNS_Zone_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Unsign_DNS_Zone_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_DNS_Info_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_DNS_Info\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_DNS_Info_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_DNS_Info_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Special_Pricelist_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Special_Pricelist\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Special_Pricelist_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Special_Pricelist_Container\" />\n\t\t\t</message>\n\t\t\n\t\t\t<message
+        name=\"Get_TLD_Info_Message\">\n\t\t\t\t<part name=\"parameters\" element=\"ns:Get_TLD_Info\"
+        />\n\t\t\t</message>\n\t\t\t<message name=\"Get_TLD_Info_Response_Message\">\n\t\t\t\t<part
+        name=\"parameters\" element=\"ns:Get_TLD_Info_Container\" />\n\t\t\t</message>\n\t\t\n\t\t<portType
+        name=\"SubregCz\">\n\t\t\n\t\t\t<operation name=\"Login\">\n\t\t\t\t<input
+        message=\"tn:Login_Message\" />\n\t\t\t\t<output message=\"tn:Login_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Check_Domain\">\n\t\t\t\t<input
+        message=\"tn:Check_Domain_Message\" />\n\t\t\t\t<output message=\"tn:Check_Domain_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Info_Domain\">\n\t\t\t\t<input
+        message=\"tn:Info_Domain_Message\" />\n\t\t\t\t<output message=\"tn:Info_Domain_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Info_Domain_CZ\">\n\t\t\t\t<input
+        message=\"tn:Info_Domain_CZ_Message\" />\n\t\t\t\t<output message=\"tn:Info_Domain_CZ_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Domains_List\">\n\t\t\t\t<input
+        message=\"tn:Domains_List_Message\" />\n\t\t\t\t<output message=\"tn:Domains_List_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Set_Autorenew\">\n\t\t\t\t<input
+        message=\"tn:Set_Autorenew_Message\" />\n\t\t\t\t<output message=\"tn:Set_Autorenew_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Create_Contact\">\n\t\t\t\t<input
+        message=\"tn:Create_Contact_Message\" />\n\t\t\t\t<output message=\"tn:Create_Contact_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Update_Contact\">\n\t\t\t\t<input
+        message=\"tn:Update_Contact_Message\" />\n\t\t\t\t<output message=\"tn:Update_Contact_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Info_Contact\">\n\t\t\t\t<input
+        message=\"tn:Info_Contact_Message\" />\n\t\t\t\t<output message=\"tn:Info_Contact_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Contacts_List\">\n\t\t\t\t<input
+        message=\"tn:Contacts_List_Message\" />\n\t\t\t\t<output message=\"tn:Contacts_List_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Check_Object\">\n\t\t\t\t<input
+        message=\"tn:Check_Object_Message\" />\n\t\t\t\t<output message=\"tn:Check_Object_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Info_Object\">\n\t\t\t\t<input
+        message=\"tn:Info_Object_Message\" />\n\t\t\t\t<output message=\"tn:Info_Object_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Make_Order\">\n\t\t\t\t<input
+        message=\"tn:Make_Order_Message\" />\n\t\t\t\t<output message=\"tn:Make_Order_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Info_Order\">\n\t\t\t\t<input
+        message=\"tn:Info_Order_Message\" />\n\t\t\t\t<output message=\"tn:Info_Order_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_Credit\">\n\t\t\t\t<input
+        message=\"tn:Get_Credit_Message\" />\n\t\t\t\t<output message=\"tn:Get_Credit_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_Accountings\">\n\t\t\t\t<input
+        message=\"tn:Get_Accountings_Message\" />\n\t\t\t\t<output message=\"tn:Get_Accountings_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Client_Payment\">\n\t\t\t\t<input
+        message=\"tn:Client_Payment_Message\" />\n\t\t\t\t<output message=\"tn:Client_Payment_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Credit_Correction\">\n\t\t\t\t<input
+        message=\"tn:Credit_Correction_Message\" />\n\t\t\t\t<output message=\"tn:Credit_Correction_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Pricelist\">\n\t\t\t\t<input
+        message=\"tn:Pricelist_Message\" />\n\t\t\t\t<output message=\"tn:Pricelist_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Prices\">\n\t\t\t\t<input
+        message=\"tn:Prices_Message\" />\n\t\t\t\t<output message=\"tn:Prices_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_Pricelist\">\n\t\t\t\t<input
+        message=\"tn:Get_Pricelist_Message\" />\n\t\t\t\t<output message=\"tn:Get_Pricelist_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Set_Prices\">\n\t\t\t\t<input
+        message=\"tn:Set_Prices_Message\" />\n\t\t\t\t<output message=\"tn:Set_Prices_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Download_Document\">\n\t\t\t\t<input
+        message=\"tn:Download_Document_Message\" />\n\t\t\t\t<output message=\"tn:Download_Document_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Upload_Document\">\n\t\t\t\t<input
+        message=\"tn:Upload_Document_Message\" />\n\t\t\t\t<output message=\"tn:Upload_Document_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"List_Documents\">\n\t\t\t\t<input
+        message=\"tn:List_Documents_Message\" />\n\t\t\t\t<output message=\"tn:List_Documents_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Users_List\">\n\t\t\t\t<input
+        message=\"tn:Users_List_Message\" />\n\t\t\t\t<output message=\"tn:Users_List_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Anycast_ADD_Zone\">\n\t\t\t\t<input
+        message=\"tn:Anycast_ADD_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Anycast_ADD_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Anycast_Remove_Zone\">\n\t\t\t\t<input
+        message=\"tn:Anycast_Remove_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Anycast_Remove_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Get_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Get_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Add_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Add_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Add_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Delete_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Delete_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Delete_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Set_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Set_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Set_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Add_DNS_Record\">\n\t\t\t\t<input
+        message=\"tn:Add_DNS_Record_Message\" />\n\t\t\t\t<output message=\"tn:Add_DNS_Record_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Modify_DNS_Record\">\n\t\t\t\t<input
+        message=\"tn:Modify_DNS_Record_Message\" />\n\t\t\t\t<output message=\"tn:Modify_DNS_Record_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Delete_DNS_Record\">\n\t\t\t\t<input
+        message=\"tn:Delete_DNS_Record_Message\" />\n\t\t\t\t<output message=\"tn:Delete_DNS_Record_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"POLL_Get\">\n\t\t\t\t<input
+        message=\"tn:POLL_Get_Message\" />\n\t\t\t\t<output message=\"tn:POLL_Get_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"POLL_Ack\">\n\t\t\t\t<input
+        message=\"tn:POLL_Ack_Message\" />\n\t\t\t\t<output message=\"tn:POLL_Ack_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"OIB_Search\">\n\t\t\t\t<input
+        message=\"tn:OIB_Search_Message\" />\n\t\t\t\t<output message=\"tn:OIB_Search_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_Certificate\">\n\t\t\t\t<input
+        message=\"tn:Get_Certificate_Message\" />\n\t\t\t\t<output message=\"tn:Get_Certificate_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_Redirects\">\n\t\t\t\t<input
+        message=\"tn:Get_Redirects_Message\" />\n\t\t\t\t<output message=\"tn:Get_Redirects_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"In_Subreg\">\n\t\t\t\t<input
+        message=\"tn:In_Subreg_Message\" />\n\t\t\t\t<output message=\"tn:In_Subreg_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Sign_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Sign_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Sign_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Unsign_DNS_Zone\">\n\t\t\t\t<input
+        message=\"tn:Unsign_DNS_Zone_Message\" />\n\t\t\t\t<output message=\"tn:Unsign_DNS_Zone_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_DNS_Info\">\n\t\t\t\t<input
+        message=\"tn:Get_DNS_Info_Message\" />\n\t\t\t\t<output message=\"tn:Get_DNS_Info_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Special_Pricelist\">\n\t\t\t\t<input
+        message=\"tn:Special_Pricelist_Message\" />\n\t\t\t\t<output message=\"tn:Special_Pricelist_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t\t<operation name=\"Get_TLD_Info\">\n\t\t\t\t<input
+        message=\"tn:Get_TLD_Info_Message\" />\n\t\t\t\t<output message=\"tn:Get_TLD_Info_Response_Message\"
+        />\n\t\t\t</operation>\n\t\t\n\t\t</portType>\n\t\t<binding name=\"SubregCzBinding\"
+        type=\"tn:SubregCz\">\n\t\t\t<soap:binding style=\"document\" transport=\"http://schemas.xmlsoap.org/soap/http\"
+        />\n\t\t\n\t\t\t<operation name=\"Login\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Login\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Check_Domain\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Check_Domain\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Info_Domain\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Info_Domain\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Info_Domain_CZ\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Info_Domain_CZ\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Domains_List\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Domains_List\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Set_Autorenew\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Set_Autorenew\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Create_Contact\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Create_Contact\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Update_Contact\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Update_Contact\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Info_Contact\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Info_Contact\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Contacts_List\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Contacts_List\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Check_Object\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Check_Object\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Info_Object\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Info_Object\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Make_Order\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Make_Order\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Info_Order\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Info_Order\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_Credit\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_Credit\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_Accountings\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_Accountings\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Client_Payment\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Client_Payment\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Credit_Correction\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Credit_Correction\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Pricelist\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Pricelist\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Prices\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Prices\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_Pricelist\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_Pricelist\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Set_Prices\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Set_Prices\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Download_Document\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Download_Document\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Upload_Document\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Upload_Document\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"List_Documents\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#List_Documents\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Users_List\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Users_List\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Anycast_ADD_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Anycast_ADD_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Anycast_Remove_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Anycast_Remove_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Add_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Add_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Delete_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Delete_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Set_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Set_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Add_DNS_Record\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Add_DNS_Record\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Modify_DNS_Record\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Modify_DNS_Record\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Delete_DNS_Record\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Delete_DNS_Record\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"POLL_Get\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#POLL_Get\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"POLL_Ack\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#POLL_Ack\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"OIB_Search\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#OIB_Search\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_Certificate\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_Certificate\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_Redirects\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_Redirects\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"In_Subreg\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#In_Subreg\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Sign_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Sign_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Unsign_DNS_Zone\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Unsign_DNS_Zone\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_DNS_Info\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_DNS_Info\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Special_Pricelist\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Special_Pricelist\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t\t<operation
+        name=\"Get_TLD_Info\">\n\t\t\t\t<soap:operation soapAction=\"http://subreg.cz/wsdl#Get_TLD_Info\"
+        />\n\t\t\t\t<input>\n\t\t\t\t\t<soap:body use=\"literal\" />\n\t\t\t\t</input>\n\t\t\t\t<output>\n\t\t\t\t\t<soap:body
+        use=\"literal\" />\n\t\t\t\t</output>\n\t\t\t</operation>\n\t\t\n\t\t</binding>\n\t\t<service
+        name=\"SubregCzService\">\n\t\t\t<documentation>Subreg.CZ domain name services</documentation>\n\t\t\t<port
+        name=\"SubregCz\" binding=\"tn:SubregCzBinding\">\n\t\t\t\t<soap:address location=\"https://subreg.cz/soap/cmd.php?soap_format=1\"
+        />\n\t\t\t</port>\n\t\t</service>\n\t\t</definitions>\n\t\n"}
+    headers:
+      cache-control: [max-age=0]
+      connection: [Keep-Alive]
+      content-type: [text/xml]
+      date: ['Thu, 12 Jul 2018 07:47:20 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:20 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      transfer-encoding: [chunked]
+      x-powered-by: [PHP/5.4.45-0+deb7u2]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Login
+      xmlns:ns0="http://subreg.cz/types"><login>placeholder_auth_username</login><password>placeholder_auth_password</password></ns0:Login></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['312']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Login"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
 
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Login_Container><response><status>ok</status><data><ssid>123456789abcdef0123456789abcdef0</ssid></data></response></ns1:Login_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Login_Container><response><status>ok</status><data><ssid>68ebb34ed0330ac938d37af590af75fc</ssid></data></response></ns1:Login_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['345']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:30 GMT']
-      expires: ['Tue, 15 May 2018 21:08:30 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      keep-alive: ['timeout=15, max=99']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Domains_List xmlns=\"http://subreg.cz/types\">\n    <ssid>123456789abcdef0123456789abcdef0</ssid></Domains_List>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Domains_List
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid></ns0:Domains_List></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['379']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['285']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Domains_List"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
 
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Domains_List_Container><response><status>ok</status><data><count>1</count><domains><name>oldium.net</name><expire>2023-10-20</expire><autorenew>0</autorenew></domains></data></response></ns1:Domains_List_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Domains_List_Container><response><status>ok</status><data><count>1</count><domains><name>oldium.xyz</name><expire>2023-06-29</expire><autorenew>0</autorenew></domains></data></response></ns1:Domains_List_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['423']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:30 GMT']
-      expires: ['Tue, 15 May 2018 21:08:30 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      keep-alive: ['timeout=15, max=98']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Get_DNS_Zone xmlns=\"http://subreg.cz/types\">\n    <domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Get_DNS_Zone>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['406']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['312']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Get_DNS_Zone"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
 
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.net</domain><records><id>3854792</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854791</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854810</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854811</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854812</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854807</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854796</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854797</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854804</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854793</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854794</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854809</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854808</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854798</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854795</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>3964703</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964702</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964721</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964722</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964723</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964718</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964707</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964708</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964715</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964704</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964705</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964720</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964719</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964709</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964706</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['2529']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:30 GMT']
-      expires: ['Tue, 15 May 2018 21:08:30 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      keep-alive: ['timeout=15, max=97']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Add_DNS_Record xmlns=\"http://subreg.cz/types\">\n    <record><type>TXT</type><name>orig.test</name><content>challengetoken</content><ttl>3600</ttl></record><domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Add_DNS_Record>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Add_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain><record><name>orig.test</name><type>TXT</type><content>challengetoken</content><ttl>3600</ttl></record></ns0:Add_DNS_Record></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['513']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['419']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Add_DNS_Record"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
@@ -111,85 +1428,94 @@ interactions:
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['312']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:30 GMT']
-      expires: ['Tue, 15 May 2018 21:08:30 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:21 GMT']
+      keep-alive: ['timeout=15, max=96']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Get_DNS_Zone xmlns=\"http://subreg.cz/types\">\n    <domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Get_DNS_Zone>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['406']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['312']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Get_DNS_Zone"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
 
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.net</domain><records><id>3854792</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854791</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854813</id><name>orig.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854810</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854811</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854812</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854807</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854796</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854797</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854804</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854793</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854794</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854809</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854808</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854798</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854795</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>3964703</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964702</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964724</id><name>orig.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964721</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964722</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964723</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964718</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964707</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964708</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964715</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964704</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964705</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964720</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964719</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964709</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964706</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['2664']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:31 GMT']
-      expires: ['Tue, 15 May 2018 21:08:31 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:22 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:22 GMT']
+      keep-alive: ['timeout=15, max=95']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Get_DNS_Zone xmlns=\"http://subreg.cz/types\">\n    <domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Get_DNS_Zone>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['406']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['312']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Get_DNS_Zone"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
     body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?>
 
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.net</domain><records><id>3854792</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854791</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854813</id><name>orig.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854810</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854811</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854812</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854807</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854796</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854797</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854804</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854793</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854794</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854809</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854808</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854798</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3854795</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>3964703</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964702</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964724</id><name>orig.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964721</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964722</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964723</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964718</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964707</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964708</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964715</id><name>_acme-challenge.deleterecordinset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964704</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964705</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964720</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964719</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964709</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>3964706</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['2664']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:31 GMT']
-      expires: ['Tue, 15 May 2018 21:08:31 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:22 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:22 GMT']
+      keep-alive: ['timeout=15, max=94']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Add_DNS_Record xmlns=\"http://subreg.cz/types\">\n    <record><type>TXT</type><name>updated.test</name><content>challengetoken</content><ttl>3600</ttl><prio>0</prio></record><domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Add_DNS_Record>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Add_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain><record><name>updated.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></record></ns0:Add_DNS_Record></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['530']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['436']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Add_DNS_Record"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
@@ -201,25 +1527,28 @@ interactions:
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['312']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:31 GMT']
-      expires: ['Tue, 15 May 2018 21:08:31 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:23 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:23 GMT']
+      keep-alive: ['timeout=15, max=93']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soap:Envelope
-      xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n<soap:Header/>\n<soap:Body>\n
-      \   <Delete_DNS_Record xmlns=\"http://subreg.cz/types\">\n    <record><id>3854813</id></record><domain>oldium.net</domain><ssid>123456789abcdef0123456789abcdef0</ssid></Delete_DNS_Record>\n</soap:Body>\n</soap:Envelope>"
+    body: !!python/unicode '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Delete_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>68ebb34ed0330ac938d37af590af75fc</ssid><domain>oldium.xyz</domain><record><id>3964724</id></record></ns0:Delete_DNS_Record></soap-env:Body></soap-env:Envelope>'
     headers:
-      Connection: [close]
-      Content-Length: ['449']
-      Content-Type: [text/xml; charset="UTF-8"]
-      Host: [subreg.cz]
-      User-Agent: [Python-urllib/2.7]
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['355']
+      Content-Type: [text/xml; charset=utf-8]
+      SOAPAction: ['"http://subreg.cz/wsdl#Delete_DNS_Record"']
+      User-Agent: [Zeep/2.5.0 (www.python-zeep.org)]
     method: POST
     uri: https://subreg.cz/soap/cmd.php?soap_format=1
   response:
@@ -231,11 +1560,12 @@ interactions:
 '}
     headers:
       cache-control: [max-age=0]
-      connection: [close]
+      connection: [Keep-Alive]
       content-length: ['311']
       content-type: [text/xml; charset=utf-8]
-      date: ['Tue, 15 May 2018 21:08:31 GMT']
-      expires: ['Tue, 15 May 2018 21:08:31 GMT']
+      date: ['Thu, 12 Jul 2018 07:47:23 GMT']
+      expires: ['Thu, 12 Jul 2018 07:47:23 GMT']
+      keep-alive: ['timeout=15, max=92']
       server: [Apache]
       x-powered-by: [PHP/5.4.45-0+deb7u2]
     status: {code: 200, message: OK}
