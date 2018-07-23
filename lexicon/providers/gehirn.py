@@ -314,7 +314,7 @@ class Provider(BaseProvider):
             query_string = json.dumps(query_params)
 
         r = requests.request(action, self.api_endpoint + url, params=query_string,
-                             data=json.dumps(data),
+                             data=json.dumps(data) if data else None,
                              headers=default_headers,
                              auth=default_auth)
         try:
