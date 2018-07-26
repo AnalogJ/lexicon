@@ -123,13 +123,13 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
             # Delete existing record by calling the ClouDNS API
             payload = self._post('/dns/delete-record.json', {'domain-name': self.domain_id, 'record-id': record_id})
-        
+
         logger.debug('delete_record: %s', True)
 
         # Error handling is already covered by self._request
@@ -143,7 +143,7 @@ class Provider(BaseProvider):
         if not self.options['auth_password']:
             raise Exception('No valid authentication data passed, expected: auth-password')
 
-        if self._is_given_option(self.options['auth_id']):
+        if self._is_given_option('auth_id'):
             return {'auth-id': self.options['auth_id'], 'auth-password': self.options['auth_password']}
         elif self._is_given_option('auth_subid'):
             return {'sub-auth-id': self.options['auth_subid'], 'auth-password': self.options['auth_password']}
