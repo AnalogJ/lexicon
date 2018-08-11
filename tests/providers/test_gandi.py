@@ -18,7 +18,7 @@ class GandiRPCProviderTests(TestCase, IntegrationTests):
 
     def _test_options(self):
         cmd_options = super(GandiRPCProviderTests, self)._test_options()
-        cmd_options['api_protocol'] = 'rpc'
+        cmd_options['auth_api_protocol'] = 'rpc'
         return cmd_options
 
 class GandiRESTProviderTests(TestCase, IntegrationTests):
@@ -33,6 +33,6 @@ class GandiRESTProviderTests(TestCase, IntegrationTests):
 
     def _test_options(self):
         cmd_options = super(GandiRESTProviderTests, self)._test_options()
-        cmd_options['api_protocol'] = 'rest'
+        cmd_options['auth_api_protocol'] = 'rest'
         return cmd_options
 

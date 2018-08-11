@@ -30,6 +30,7 @@ import logging
 import requests
 
 from builtins import object
+from argparse import SUPPRESS
 from .base import Provider as BaseProvider
 
 try:
@@ -42,7 +43,8 @@ LOGGER = logging.getLogger(__name__)
 def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
     subparser.add_argument('--auth-token', help="specify Gandi API key")
-    subparser.add_argument('--api-protocol', help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+    subparser.add_argument('--auth-api-protocol', help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+    subparser.add_argument('--api-protocol', help=SUPPRESS)
 
 class Provider(BaseProvider):
     """Provide Gandi LiveDNS API implementation of Lexicon Provider interface.
@@ -53,7 +55,12 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options)
         self.default_ttl = 3600
-        self.protocol = self.options.get('api_protocol', 'rpc')
+        # Handle protocol
+        if self.options.get('api_protocol'):
+            self.protocol = self.options.get('api_protocol')
+            LOGGER.warn('Option --api-protocol is deprecated, use --auth-api-protocol instead.')
+        else:
+            self.protocol = self.options.get('auth_api_protocol', 'rpc')
 
         if (self.protocol != 'rpc' and self.protocol != 'rest'):
             raise ValueError("Invalid API protocol specified, should be 'rpc' or 'rest'")
