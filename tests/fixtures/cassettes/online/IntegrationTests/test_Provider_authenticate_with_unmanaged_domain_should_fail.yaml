@@ -7,16 +7,17 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/
+    uri: https://api.online.net/api/v1/domain/thisisadomainidonotown.com/version
   response:
-    body: {string: !!python/unicode '[{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}]'}
+    body: {string: !!python/unicode '{"error":"Domain not found","code":7}'}
     headers:
-      allow: [GET]
+      allow: ['GET, POST']
       cache-control: [no-cache]
-      content-length: ['3476']
+      content-length: ['37']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:00 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:41 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
-    status: {code: 200, message: OK}
+      vary: [Accept-Encoding]
+    status: {code: 404, message: Not Found}
 version: 1
