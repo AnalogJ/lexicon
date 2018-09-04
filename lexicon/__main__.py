@@ -72,7 +72,12 @@ def generate_table_result(logger, output=None, without_header=None):
         logger.debug('Command output is not iterable, and then cannot be printed with --quiet parameter not enabled.')
         return None
 
-    array = [[row['id'], row['type'], row['name'], row['content'], row['ttl']] for row in output]
+    array = [[
+        row.get('id', ''), 
+        row.get('type', ''), 
+        row.get('name', ''), 
+        row.get('content', ''), 
+        row.get('ttl', '')] for row in output]
 
     # Insert header (insert before calculating the max width of each column to take headers size into account)
     if not without_header:
