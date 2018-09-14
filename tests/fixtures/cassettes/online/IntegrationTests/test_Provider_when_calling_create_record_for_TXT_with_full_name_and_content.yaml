@@ -7,15 +7,17 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version
   response:
-    body: {string: !!python/unicode '[{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}]'}
+    body: {string: !!python/unicode '[{"uuid_ref":"22e06ec0-f497-4885-81d3-65123fd5110b","name":"Zone
+        Automatic Lexicon A","creation_date":"2018-08-17T09:27:40+02:00","domain":{"$ref":"\/api\/v1\/domain\/capsulecd.com"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version\/22e06ec0-f497-4885-81d3-65123fd5110b\/zone"},"active":true},{"uuid_ref":"63399517-91d2-476d-ae3e-3be26d93b4bc","name":"Zone
+        Automatic Lexicon B","creation_date":"2018-08-17T09:27:46+02:00","domain":{"$ref":"\/api\/v1\/domain\/capsulecd.com"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version\/63399517-91d2-476d-ae3e-3be26d93b4bc\/zone"},"active":false},{"uuid_ref":"2136313e-6249-43fc-afb4-8b9e2dad8bf7","name":"Unicorn_DAdBVO9y","creation_date":"2018-08-16T16:25:53+02:00","domain":{"$ref":"\/api\/v1\/domain\/capsulecd.com"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version\/2136313e-6249-43fc-afb4-8b9e2dad8bf7\/zone"},"active":false}]'}
     headers:
-      allow: [GET]
+      allow: ['GET, POST']
       cache-control: [no-cache]
-      content-length: ['3476']
+      content-length: ['880']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:13 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:54 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
     status: {code: 200, message: OK}
@@ -27,43 +29,20 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/223549/version
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/22e06ec0-f497-4885-81d3-65123fd5110b/zone
   response:
-    body: {string: !!python/unicode '[{"uuid_ref":"9ec06ed7-1672-41e3-b05c-00d6295085d2","name":"Zone
-        Automatic Lexicon A","creation_date":"2018-06-22T00:38:59+02:00","domain":{"$ref":"\/api\/v1\/domain\/223549"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/version\/9ec06ed7-1672-41e3-b05c-00d6295085d2\/zone"},"active":true},{"uuid_ref":"a5f1be65-1854-4b7c-86b9-7d84e3ed0130","name":"Zone
-        Automatic Lexicon B","creation_date":"2018-06-22T00:39:05+02:00","domain":{"$ref":"\/api\/v1\/domain\/223549"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/version\/a5f1be65-1854-4b7c-86b9-7d84e3ed0130\/zone"},"active":false},{"uuid_ref":"5ec71ab7-61f7-4939-bbda-2759bde55d5c","name":"NyanCat_YMTuca7H","creation_date":"2018-06-11T04:05:30+02:00","domain":{"$ref":"\/api\/v1\/domain\/223549"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/version\/5ec71ab7-61f7-4939-bbda-2759bde55d5c\/zone"},"active":false}]'}
+    body: {string: !!python/unicode '[{"id":3958412,"name":"www.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958413,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958414,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958415,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}}]'}
     headers:
       allow: ['GET, POST']
       cache-control: [no-cache]
-      content-length: ['856']
+      content-length: ['1152']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:13 GMT']
-      server: [nginx]
-      transfer-encoding: [chunked]
-      vary: [Accept-Encoding]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
-    method: GET
-    uri: https://api.online.net/api/v1/domain/223549/version/9ec06ed7-1672-41e3-b05c-00d6295085d2/zone
-  response:
-    body: {string: !!python/unicode '[{"id":3767979,"name":"capsulecd.com.","data":"62.210.16.23","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767980,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767981,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767982,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}}]'}
-    headers:
-      allow: ['GET, POST']
-      cache-control: [no-cache]
-      content-length: ['1119']
-      content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:14 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:55 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode 'capsulecd.com. 86400 IN A 62.210.16.23
+    body: !!python/unicode 'www.capsulecd.com. 86400 IN A 127.0.0.1
 
       localhost.capsulecd.com. 3600 IN A 127.0.0.1
 
@@ -76,18 +55,18 @@ interactions:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['200']
+      Content-Length: ['201']
       Content-Type: [text/plain]
       User-Agent: [python-requests/2.18.4]
     method: PUT
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone_from_bind
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone_from_bind
   response:
     body: {string: !!python/unicode ''}
     headers:
       allow: [PUT]
       cache-control: [no-cache]
       content-type: [text/html; charset=UTF-8]
-      date: ['Thu, 21 Jun 2018 22:39:14 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:55 GMT']
       server: [nginx]
     status: {code: 204, message: No Content}
 - request:
@@ -98,15 +77,15 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone
   response:
-    body: {string: !!python/unicode '[{"id":3767987,"name":"capsulecd.com.","data":"62.210.16.23","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767988,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767989,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767990,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}}]'}
+    body: {string: !!python/unicode '[{"id":3958420,"name":"www.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958421,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958422,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958423,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}}]'}
     headers:
       allow: ['GET, POST']
       cache-control: [no-cache]
-      content-length: ['1119']
+      content-length: ['1152']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:14 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:56 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
     status: {code: 200, message: OK}
@@ -121,15 +100,15 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone
   response:
-    body: {string: !!python/unicode '{"id":3767991,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}}'}
+    body: {string: !!python/unicode '{"id":3958424,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}}'}
     headers:
       allow: ['GET, POST']
       cache-control: [no-cache]
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:15 GMT']
-      location: [/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone/3767991]
+      date: ['Fri, 17 Aug 2018 07:27:56 GMT']
+      location: [/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone/3958424]
       server: [nginx]
       transfer-encoding: [chunked]
     status: {code: 302, message: Moved Temporarily}
@@ -141,17 +120,18 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone/3767991
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone/3958424
   response:
-    body: {string: !!python/unicode '{"id":3767991,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}}'}
+    body: {string: !!python/unicode '{"id":3958424,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}}'}
     headers:
       allow: ['DELETE, PATCH, GET']
       cache-control: [no-cache]
-      content-length: ['298']
+      content-length: ['306']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:15 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:56 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -162,14 +142,14 @@ interactions:
       Content-Length: ['0']
       User-Agent: [python-requests/2.18.4]
     method: PATCH
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/enable
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/enable
   response:
     body: {string: !!python/unicode ''}
     headers:
       allow: [PATCH]
       cache-control: [no-cache]
       content-type: [text/html; charset=UTF-8]
-      date: ['Thu, 21 Jun 2018 22:39:16 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:57 GMT']
       server: [nginx]
     status: {code: 204, message: No Content}
 - request:
@@ -180,20 +160,20 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.online.net/api/v1/domain/223549/version/a5f1be65-1854-4b7c-86b9-7d84e3ed0130/zone
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/63399517-91d2-476d-ae3e-3be26d93b4bc/zone
   response:
-    body: {string: !!python/unicode '[{"id":3767987,"name":"capsulecd.com.","data":"62.210.16.23","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767988,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767989,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767990,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}},{"id":3767991,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/223549\/version"},"zone":{"$ref":"\/api\/v1\/domain\/223549\/zone"}}}]'}
+    body: {string: !!python/unicode '[{"id":3958420,"name":"www.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":86400,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958421,"name":"localhost.capsulecd.com.","data":"127.0.0.1","type":"A","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958422,"name":"docs.capsulecd.com.","data":"docs.example.com.capsulecd.com.","type":"CNAME","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958423,"name":"_acme-challenge.fqdn.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}},{"id":3958424,"name":"_acme-challenge.full.capsulecd.com.","data":"\u0022challengetoken\u0022","type":"TXT","ttl":3600,"domain":{"id":223549,"name":"capsulecd.com","dnssec":false,"external":false,"versions":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/version"},"zone":{"$ref":"\/api\/v1\/domain\/capsulecd.com\/zone"}}}]'}
     headers:
       allow: ['GET, POST']
       cache-control: [no-cache]
-      content-length: ['1418']
+      content-length: ['1459']
       content-type: [application/json]
-      date: ['Thu, 21 Jun 2018 22:39:16 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:57 GMT']
       server: [nginx]
       transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode 'capsulecd.com. 86400 IN A 62.210.16.23
+    body: !!python/unicode 'www.capsulecd.com. 86400 IN A 127.0.0.1
 
       localhost.capsulecd.com. 3600 IN A 127.0.0.1
 
@@ -208,18 +188,18 @@ interactions:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['262']
+      Content-Length: ['263']
       Content-Type: [text/plain]
       User-Agent: [python-requests/2.18.4]
     method: PUT
-    uri: https://api.online.net/api/v1/domain/223549/version/9ec06ed7-1672-41e3-b05c-00d6295085d2/zone_from_bind
+    uri: https://api.online.net/api/v1/domain/capsulecd.com/version/22e06ec0-f497-4885-81d3-65123fd5110b/zone_from_bind
   response:
     body: {string: !!python/unicode ''}
     headers:
       allow: [PUT]
       cache-control: [no-cache]
       content-type: [text/html; charset=UTF-8]
-      date: ['Thu, 21 Jun 2018 22:39:16 GMT']
+      date: ['Fri, 17 Aug 2018 07:27:57 GMT']
       server: [nginx]
     status: {code: 204, message: No Content}
 version: 1
