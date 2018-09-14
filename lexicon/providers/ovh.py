@@ -11,7 +11,6 @@ LOGGER = logging.getLogger(__name__)
 ENDPOINTS = {
     'ovh-eu': 'https://eu.api.ovh.com/1.0',
     'ovh-ca': 'https://ca.api.ovh.com/1.0',
-    'ovh-us': 'https://api.ovhcloud.com/1.0',
     'kimsufi-eu': 'https://eu.api.kimsufi.com/1.0',
     'kimsufi-ca': 'https://ca.api.kimsufi.com/1.0',
     'soyoustart-eu': 'https://eu.api.soyoustart.com/1.0',
@@ -49,7 +48,6 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.endpoint_api = ENDPOINTS.get(self.options.get('auth_entrypoint'))
 
-    def authenticate(self):
         # All requests will be done in one HTTPS session
         self.session = requests.Session()
 
@@ -57,7 +55,7 @@ class Provider(BaseProvider):
         server_time = self.session.get('{0}/auth/time'.format(self.endpoint_api)).json()
         self.time_delta = server_time - int(time.time())
 
-        # Get domain and status
+    def authenticate(self):
         domain = self.options.get('domain')
 
         domains = self._get('/domain/zone/')
