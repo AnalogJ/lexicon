@@ -25,24 +25,12 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.zone_name = 'Zone Automatic Lexicon '
-        self.domain_id = None
         self.passive_zone = None
         self.active_zone = None
+        self.domain_id = self.options['domain']
         self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.online.net/api/v1')
 
     def authenticate(self):
-        payload = self._get('/domain/')
-        domain = self.options['domain']
-        did = None
-        for row in payload:
-            if row['name'] == domain:
-                did = row['id']
-                break
-
-        if did is None:
-            raise Exception('No domain found')
-
-        self.domain_id = did
         self.init_zones()
 
     def list_zones(self):
