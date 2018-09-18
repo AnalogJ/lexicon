@@ -1,0 +1,338 @@
+interactions:
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>domain</name>
+
+      <value><string>lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>user</name>
+
+      <value><string>user@fakedomain.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>pass</name>
+
+      <value><string>fakepassword</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['433']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://api.ote.domrobot.com/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>code</name><value><int>1000</int></value></member><member><name>msg</name><value><string>Command
+        completed successfully</string></value></member><member><name>resData</name><value><struct><member><name>roId</name><value><int>30078</int></value></member><member><name>domain</name><value><string>lexicon-testrunner.com</string></value></member><member><name>domain-ace</name><value><string>lexicon-testrunner.com</string></value></member><member><name>withPrivacy</name><value><string/></value></member><member><name>period</name><value><string>1Y</string></value></member><member><name>crDate</name><value><dateTime.iso8601>2018-09-18T15:45:59+00:00</dateTime.iso8601></value></member><member><name>exDate</name><value><dateTime.iso8601>2019-09-18T15:45:59+00:00</dateTime.iso8601></value></member><member><name>reDate</name><value><dateTime.iso8601>2019-09-17T15:45:59+00:00</dateTime.iso8601></value></member><member><name>upDate</name><value><dateTime.iso8601>2018-09-18T15:45:59+00:00</dateTime.iso8601></value></member><member><name>transferLock</name><value><int>1</int></value></member><member><name>status</name><value><string>OK</string></value></member><member><name>authCode</name><value><string>g6G2jmRbPf</string></value></member><member><name>renewalMode</name><value><string>AUTORENEW</string></value></member><member><name>transferMode</name><value><string>DEFAULT</string></value></member><member><name>registrant</name><value><int>1135959</int></value></member><member><name>admin</name><value><int>1135959</int></value></member><member><name>tech</name><value><int>1</int></value></member><member><name>billing</name><value><int>1</int></value></member><member><name>ns</name><value><array><data><value><string>ns.ote.inwx.de</string></value><value><string>ns2.ote.inwx.de</string></value></data></array></value></member><member><name>registrantVerificationStatus</name><value><string>NONE</string></value></member><member><name>verificationStatus</name><value><string>ACTIVE</string></value></member></struct></value></member><member><name>svTRID</name><value><string>20180918-1831122-ote</string></value></member><member><name>runtime</name><value><double>0.087200</double></value></member></struct></value></param></params></methodResponse>'}
+    headers:
+      connection: [close]
+      content-length: ['2360']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Tue, 18 Sep 2018 16:17:06 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>nameserver.createRecord</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>content</name>
+
+      <value><string>challengetoken1</string></value>
+
+      </member>
+
+      <member>
+
+      <name>domain</name>
+
+      <value><string>lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>_acme-challenge.listrecordset.lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>ttl</name>
+
+      <value><int>3600</int></value>
+
+      </member>
+
+      <member>
+
+      <name>pass</name>
+
+      <value><string>fakepassword</string></value>
+
+      </member>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>TXT</string></value>
+
+      </member>
+
+      <member>
+
+      <name>user</name>
+
+      <value><string>user@fakedomain.com</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['795']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://api.ote.domrobot.com/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>code</name><value><int>2302</int></value></member><member><name>msg</name><value><string>Object
+        exists</string></value></member><member><name>svTRID</name><value><string>20180918-1831125-ote</string></value></member><member><name>runtime</name><value><double>0.073100</double></value></member></struct></value></param></params></methodResponse>'}
+    headers:
+      connection: [close]
+      content-length: ['442']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Tue, 18 Sep 2018 16:17:06 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>nameserver.createRecord</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>content</name>
+
+      <value><string>challengetoken2</string></value>
+
+      </member>
+
+      <member>
+
+      <name>domain</name>
+
+      <value><string>lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>_acme-challenge.listrecordset.lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>ttl</name>
+
+      <value><int>3600</int></value>
+
+      </member>
+
+      <member>
+
+      <name>pass</name>
+
+      <value><string>fakepassword</string></value>
+
+      </member>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>TXT</string></value>
+
+      </member>
+
+      <member>
+
+      <name>user</name>
+
+      <value><string>user@fakedomain.com</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['795']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://api.ote.domrobot.com/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>code</name><value><int>2302</int></value></member><member><name>msg</name><value><string>Object
+        exists</string></value></member><member><name>svTRID</name><value><string>20180918-1831128-ote</string></value></member><member><name>runtime</name><value><double>0.070000</double></value></member></struct></value></param></params></methodResponse>'}
+    headers:
+      connection: [close]
+      content-length: ['442']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Tue, 18 Sep 2018 16:17:06 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>nameserver.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>domain</name>
+
+      <value><string>lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>pass</name>
+
+      <value><string>fakepassword</string></value>
+
+      </member>
+
+      <member>
+
+      <name>type</name>
+
+      <value><string>TXT</string></value>
+
+      </member>
+
+      <member>
+
+      <name>name</name>
+
+      <value><string>_acme-challenge.listrecordset.lexicon-testrunner.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>user</name>
+
+      <value><string>user@fakedomain.com</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['632']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://api.ote.domrobot.com/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>code</name><value><int>1000</int></value></member><member><name>msg</name><value><string>Command
+        completed successfully</string></value></member><member><name>resData</name><value><struct><member><name>roId</name><value><int>2238</int></value></member><member><name>domain</name><value><string>lexicon-testrunner.com</string></value></member><member><name>type</name><value><string>MASTER</string></value></member><member><name>cleanup</name><value><struct><member><name>status</name><value><string>OK</string></value></member><member><name>tstamp</name><value><int>0</int></value></member></struct></value></member><member><name>count</name><value><int>2</int></value></member><member><name>record</name><value><array><data><value><struct><member><name>id</name><value><int>16842</int></value></member><member><name>name</name><value><string>_acme-challenge.listrecordset.lexicon-testrunner.com</string></value></member><member><name>type</name><value><string>TXT</string></value></member><member><name>content</name><value><string>challengetoken1</string></value></member><member><name>ttl</name><value><int>3600</int></value></member><member><name>prio</name><value><int>0</int></value></member></struct></value><value><struct><member><name>id</name><value><int>16845</int></value></member><member><name>name</name><value><string>_acme-challenge.listrecordset.lexicon-testrunner.com</string></value></member><member><name>type</name><value><string>TXT</string></value></member><member><name>content</name><value><string>challengetoken2</string></value></member><member><name>ttl</name><value><int>3600</int></value></member><member><name>prio</name><value><int>0</int></value></member></struct></value></data></array></value></member></struct></value></member><member><name>svTRID</name><value><string>20180918-1831131-ote</string></value></member><member><name>runtime</name><value><double>0.072100</double></value></member></struct></value></param></params></methodResponse>'}
+    headers:
+      connection: [close]
+      content-length: ['2077']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Tue, 18 Sep 2018 16:17:06 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

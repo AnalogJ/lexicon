@@ -1,0 +1,66 @@
+interactions:
+- request:
+    body: !!python/unicode '<?xml version=''1.0''?>
+
+      <methodCall>
+
+      <methodName>domain.info</methodName>
+
+      <params>
+
+      <param>
+
+      <value><struct>
+
+      <member>
+
+      <name>domain</name>
+
+      <value><string>thisisadomainidonotown.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>user</name>
+
+      <value><string>user@fakedomain.com</string></value>
+
+      </member>
+
+      <member>
+
+      <name>pass</name>
+
+      <value><string>fakepassword</string></value>
+
+      </member>
+
+      </struct></value>
+
+      </param>
+
+      </params>
+
+      </methodCall>
+
+      '
+    headers:
+      Accept-Encoding: [gzip]
+      Content-Length: ['437']
+      Content-Type: [text/xml]
+      User-Agent: [xmlrpclib.py/1.0.1 (by www.pythonware.com)]
+    method: POST
+    uri: https://api.ote.domrobot.com/xmlrpc/
+  response:
+    body: {string: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>code</name><value><int>2303</int></value></member><member><name>msg</name><value><string>Object
+        does not exist</string></value></member><member><name>svTRID</name><value><string>20180918-1830945-ote</string></value></member><member><name>runtime</name><value><double>0.056800</double></value></member></struct></value></param></params></methodResponse>'}
+    headers:
+      connection: [close]
+      content-length: ['450']
+      content-type: [text/xml; charset=utf-8]
+      date: ['Tue, 18 Sep 2018 16:16:50 GMT']
+      server: [Apache/2.4.25 (Debian)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
