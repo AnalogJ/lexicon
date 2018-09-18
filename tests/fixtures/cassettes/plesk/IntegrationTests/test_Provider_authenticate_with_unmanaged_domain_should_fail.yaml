@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<site>\n\t\t<get>\n\t\t\t<filter>\n\t\t\t\t<name>thisisadomainidonotown.com</name>\n\
+      \t\t\t</filter>\n\t\t\t<dataset></dataset>\n\t\t</get>\n\t</site>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['183']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <site>\n    <get>\n      <result>\n      \
+        \  <status>error</status>\n        <errcode>1013</errcode>\n        <errtext>Site\
+        \ does not exist</errtext>\n        <filter-id>thisisadomainidonotown.com</filter-id>\n\
+        \      </result>\n    </get>\n  </site>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['315']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:30:33 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:30:33 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:30:33 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+version: 1

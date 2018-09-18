@@ -1,0 +1,579 @@
+interactions:
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<site>\n\t\t<get>\n\t\t\t<filter>\n\t\t\t\t<name>lexicon-test.com</name>\n\
+      \t\t\t</filter>\n\t\t\t<dataset></dataset>\n\t\t</get>\n\t</site>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['173']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <site>\n    <get>\n      <result>\n      \
+        \  <status>ok</status>\n        <filter-id>lexicon-test.com</filter-id>\n\
+        \        <id>71</id>\n        <data/>\n      </result>\n    </get>\n  </site>\n\
+        </packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['259']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:03 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:03 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:03 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<get_rec>\n\t\t\t<filter>\n\t\t\t\t<site-id>71</site-id>\n\t\t\t\
+      </filter>\n\t\t</get_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['148']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <get_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4836</id>\n        <data>\n       \
+        \   <site-id>71</site-id>\n          <type>A</type>\n          <host>ipv4.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4837</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>v=spf1 +a +mx\
+        \ -all</value>\n          <opt/>\n        </data>\n      </result>\n     \
+        \ <result>\n        <status>ok</status>\n        <id>4838</id>\n        <data>\n\
+        \          <site-id>71</site-id>\n          <type>PTR</type>\n          <host>83.169.2.56</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt>24</opt>\n   \
+        \     </data>\n      </result>\n      <result>\n        <status>ok</status>\n\
+        \        <id>4839</id>\n        <data>\n          <site-id>71</site-id>\n\
+        \          <type>CNAME</type>\n          <host>ftp.lexicon-test.com.</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4840</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>www.lexicon-test.com.</host>\n          <value>lexicon-test.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4841</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>mail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4842</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>MX</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>mail.lexicon-test.com.</value>\n\
+        \          <opt>10</opt>\n        </data>\n      </result>\n      <result>\n\
+        \        <status>ok</status>\n        <id>4843</id>\n        <data>\n    \
+        \      <site-id>71</site-id>\n          <type>A</type>\n          <host>webmail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4844</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>83.169.2.56</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4845</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>NS</type>\n          <host>lexicon-test.com.</host>\n\
+        \          <value>ns2.quasispace.de.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4846</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>NS</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>ns2.hans.hosteurope.de.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4847</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>localhost.lexicon-test.com.</host>\n\
+        \          <value>127.0.0.1</value>\n          <opt/>\n        </data>\n \
+        \     </result>\n      <result>\n        <status>ok</status>\n        <id>4848</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>docs.lexicon-test.com.</host>\n          <value>docs.example.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4849</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>_acme-challenge.fqdn.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4850</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.full.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4851</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.test.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4852</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4853</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4854</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.noop.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4860</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.deleterecordinset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4863</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4864</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4865</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.fqdntest.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4866</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>random.fulltest.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4867</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.test.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4869</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.test.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4872</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>updated.testfqdn.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4874</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.testfull.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4890</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>localhot.lexicon-test.com.</host>\n          <value>127.0.0.1</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4928</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>orig.nameonly.test.lexicon-test.com.</host>\n\
+        \          <value>updated</value>\n          <opt/>\n        </data>\n   \
+        \   </result>\n    </get_rec>\n  </dns>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['8606']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:04 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<add_rec>\n\t\t\t<site-id>71</site-id>\n\t\t\t<type>TXT</type>\n\
+      \t\t\t<host>orig.testfull</host>\n\t\t\t<value>challengetoken</value>\n\t\t\t\
+      <opt></opt>\n\t\t</add_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['220']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <add_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4930</id>\n      </result>\n    </add_rec>\n\
+        \  </dns>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['203']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:04 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<get_rec>\n\t\t\t<filter>\n\t\t\t\t<site-id>71</site-id>\n\t\t\t\
+      </filter>\n\t\t</get_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['148']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <get_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4836</id>\n        <data>\n       \
+        \   <site-id>71</site-id>\n          <type>A</type>\n          <host>ipv4.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4837</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>v=spf1 +a +mx\
+        \ -all</value>\n          <opt/>\n        </data>\n      </result>\n     \
+        \ <result>\n        <status>ok</status>\n        <id>4838</id>\n        <data>\n\
+        \          <site-id>71</site-id>\n          <type>PTR</type>\n          <host>83.169.2.56</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt>24</opt>\n   \
+        \     </data>\n      </result>\n      <result>\n        <status>ok</status>\n\
+        \        <id>4839</id>\n        <data>\n          <site-id>71</site-id>\n\
+        \          <type>CNAME</type>\n          <host>ftp.lexicon-test.com.</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4840</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>www.lexicon-test.com.</host>\n          <value>lexicon-test.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4841</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>mail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4842</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>MX</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>mail.lexicon-test.com.</value>\n\
+        \          <opt>10</opt>\n        </data>\n      </result>\n      <result>\n\
+        \        <status>ok</status>\n        <id>4843</id>\n        <data>\n    \
+        \      <site-id>71</site-id>\n          <type>A</type>\n          <host>webmail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4844</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>83.169.2.56</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4845</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>NS</type>\n          <host>lexicon-test.com.</host>\n\
+        \          <value>ns2.quasispace.de.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4846</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>NS</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>ns2.hans.hosteurope.de.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4847</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>localhost.lexicon-test.com.</host>\n\
+        \          <value>127.0.0.1</value>\n          <opt/>\n        </data>\n \
+        \     </result>\n      <result>\n        <status>ok</status>\n        <id>4848</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>docs.lexicon-test.com.</host>\n          <value>docs.example.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4849</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>_acme-challenge.fqdn.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4850</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.full.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4851</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.test.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4852</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4853</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4854</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.noop.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4860</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.deleterecordinset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4863</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4864</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4865</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.fqdntest.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4866</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>random.fulltest.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4867</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.test.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4869</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.test.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4872</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>updated.testfqdn.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4874</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.testfull.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4890</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>localhot.lexicon-test.com.</host>\n          <value>127.0.0.1</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4928</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>orig.nameonly.test.lexicon-test.com.</host>\n\
+        \          <value>updated</value>\n          <opt/>\n        </data>\n   \
+        \   </result>\n      <result>\n        <status>ok</status>\n        <id>4930</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>orig.testfull.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n    </get_rec>\n  </dns>\n\
+        </packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['8889']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:04 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:04 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<get_rec>\n\t\t\t<filter>\n\t\t\t\t<id>4930</id>\n\t\t\t</filter>\n\
+      \t\t</get_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['140']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <get_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4930</id>\n        <data>\n       \
+        \   <site-id>71</site-id>\n          <type>TXT</type>\n          <host>orig.testfull.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n    </get_rec>\n  </dns>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['405']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:05 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:05 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:05 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<del_rec>\n\t\t\t<filter>\n\t\t\t\t<id>4930</id>\n\t\t\t</filter>\n\
+      \t\t</del_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['140']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <del_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4930</id>\n      </result>\n    </del_rec>\n\
+        \  </dns>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['203']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:05 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:05 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:05 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<packet>\n\
+      \t<dns>\n\t\t<get_rec>\n\t\t\t<filter>\n\t\t\t\t<site-id>71</site-id>\n\t\t\t\
+      </filter>\n\t\t</get_rec>\n\t</dns>\n</packet>"
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aW90LXBsYXlncm91bmQ6ZTd5X2ZCNzk=]
+      Connection: [keep-alive]
+      Content-Length: ['148']
+      Content-type: [text/xml]
+      HTTP_PRETTY_PRINT: ['TRUE']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://quasispace.de:8443/enterprise/control/agent.php
+  response:
+    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <packet version=\"1.6.9.1\">\n  <dns>\n    <get_rec>\n      <result>\n   \
+        \     <status>ok</status>\n        <id>4836</id>\n        <data>\n       \
+        \   <site-id>71</site-id>\n          <type>A</type>\n          <host>ipv4.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4837</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>v=spf1 +a +mx\
+        \ -all</value>\n          <opt/>\n        </data>\n      </result>\n     \
+        \ <result>\n        <status>ok</status>\n        <id>4838</id>\n        <data>\n\
+        \          <site-id>71</site-id>\n          <type>PTR</type>\n          <host>83.169.2.56</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt>24</opt>\n   \
+        \     </data>\n      </result>\n      <result>\n        <status>ok</status>\n\
+        \        <id>4839</id>\n        <data>\n          <site-id>71</site-id>\n\
+        \          <type>CNAME</type>\n          <host>ftp.lexicon-test.com.</host>\n\
+        \          <value>lexicon-test.com.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4840</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>www.lexicon-test.com.</host>\n          <value>lexicon-test.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4841</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>mail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4842</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>MX</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>mail.lexicon-test.com.</value>\n\
+        \          <opt>10</opt>\n        </data>\n      </result>\n      <result>\n\
+        \        <status>ok</status>\n        <id>4843</id>\n        <data>\n    \
+        \      <site-id>71</site-id>\n          <type>A</type>\n          <host>webmail.lexicon-test.com.</host>\n\
+        \          <value>83.169.2.56</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4844</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>83.169.2.56</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4845</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>NS</type>\n          <host>lexicon-test.com.</host>\n\
+        \          <value>ns2.quasispace.de.</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4846</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>NS</type>\n\
+        \          <host>lexicon-test.com.</host>\n          <value>ns2.hans.hosteurope.de.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4847</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>A</type>\n          <host>localhost.lexicon-test.com.</host>\n\
+        \          <value>127.0.0.1</value>\n          <opt/>\n        </data>\n \
+        \     </result>\n      <result>\n        <status>ok</status>\n        <id>4848</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>CNAME</type>\n\
+        \          <host>docs.lexicon-test.com.</host>\n          <value>docs.example.com.</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4849</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>_acme-challenge.fqdn.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4850</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.full.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4851</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.test.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4852</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4853</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.createrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4854</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.noop.lexicon-test.com.</host>\n         \
+        \ <value>challengetoken</value>\n          <opt/>\n        </data>\n     \
+        \ </result>\n      <result>\n        <status>ok</status>\n        <id>4860</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.deleterecordinset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4863</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken1</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4864</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>_acme-challenge.listrecordset.lexicon-test.com.</host>\n\
+        \          <value>challengetoken2</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4865</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.fqdntest.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4866</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>random.fulltest.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4867</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>random.test.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4869</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.test.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4872</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>TXT</type>\n\
+        \          <host>updated.testfqdn.lexicon-test.com.</host>\n          <value>challengetoken</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4874</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>updated.testfull.lexicon-test.com.</host>\n\
+        \          <value>challengetoken</value>\n          <opt/>\n        </data>\n\
+        \      </result>\n      <result>\n        <status>ok</status>\n        <id>4890</id>\n\
+        \        <data>\n          <site-id>71</site-id>\n          <type>A</type>\n\
+        \          <host>localhot.lexicon-test.com.</host>\n          <value>127.0.0.1</value>\n\
+        \          <opt/>\n        </data>\n      </result>\n      <result>\n    \
+        \    <status>ok</status>\n        <id>4928</id>\n        <data>\n        \
+        \  <site-id>71</site-id>\n          <type>TXT</type>\n          <host>orig.nameonly.test.lexicon-test.com.</host>\n\
+        \          <value>updated</value>\n          <opt/>\n        </data>\n   \
+        \   </result>\n    </get_rec>\n  </dns>\n</packet>\n"}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [keep-alive]
+      content-length: ['8606']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 21 Aug 2018 08:31:06 GMT']
+      expires: ['Mon, 26 Jul 1990 05:00:00 GMT']
+      last-modified: ['Tue, 21 Aug 2018 08:31:05 GMT']
+      p3p: [CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"]
+      pragma: [no-cache]
+      server: [sw-cp-server]
+      set-cookie: ['locale=en-US; expires=Wed, 21-Aug-2019 08:31:06 GMT; Max-Age=31536000;
+          path=/; secure; HttpOnly']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+version: 1
