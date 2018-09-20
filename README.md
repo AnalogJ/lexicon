@@ -58,6 +58,7 @@ The current supported providers are:
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
 - Online
 - OVH ([docs](https://api.ovh.com/))
+- Plesk ([docs](https://docs.plesk.com/en-US/onyx/api-rpc/about-xml-api.28709/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
