@@ -47,6 +47,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
 - Linode v4 ([docs](https://developers.linode.com/v4))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
@@ -57,6 +58,7 @@ The current supported providers are:
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
 - Online
 - OVH ([docs](https://api.ovh.com/))
+- Plesk ([docs](https://docs.plesk.com/en-US/onyx/api-rpc/about-xml-api.28709/))
 - PointHQ ([docs](https://pointhq.com/api/docs))
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
@@ -87,7 +89,6 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - Hurricane Electric DNS
 - Infoblox NIOS
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
-- INWX ([docs](https://github.com/inwx/python2.7-client))
 - ISPConfig
 - InternetX autoDNS ([docs](https://internetx.com))
 - Knot DNS
