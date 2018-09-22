@@ -22,6 +22,14 @@ jobs:
     <<: *shared
     docker:
       - image: python:3.4-slim
+  "python-3.5":
+    <<: *shared
+    docker:
+      - image: python:3.5-slim
+  "python-3.6":
+    <<: *shared
+    docker:
+      - image: python:3.6-slim
   "python-3.7":
     <<: *shared
     docker:
@@ -33,4 +41,6 @@ workflows:
     jobs:
       - "python-2.7"
       - "python-3.4"
+      - "python-3.5"
+      - "python-3.6"
       - "python-3.7"
