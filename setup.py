@@ -94,6 +94,7 @@ setup(
         'subreg': ['zeep'],
         'transip': ['transip>=0.3.0'],
         'plesk': ['xmltodict'],
+        'henet': ['beautifulsoup4'],
     },
 
     # To provide executable scripts, use entry points in preference to the
