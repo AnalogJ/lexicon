@@ -1,0 +1,811 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://dns.he.net/
+  response:
+    body: {string: !!python/unicode "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0\
+        \ Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"\
+        >\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\" xml:lang=\"\
+        en-US\">\n<head>\n<title>Hurricane Electric Hosted DNS</title>\n<link rel=\"\
+        stylesheet\" type=\"text/css\" href=\"/include/css/edit_dns.css\" />\n<link\
+        \ rel=\"stylesheet\" type=\"text/css\" href=\"/include/css/style.css\" media=\"\
+        screen, print\" />\n<!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"\
+        /include/js/jqdt/media/css/jquery.dataTables.css\" /> -->\n<script src=\"\
+        /include/js/jquery-1.4.2.min.js\" type=\"text/javascript\"></script>\n<script\
+        \ src=\"/include/js/jquery.jeditable.mini.js\" type=\"text/javascript\"></script>\n\
+        <script src=\"/include/js/jquery.json-2.2.min.js\" type=\"text/javascript\"\
+        ></script>\n<script src=\"/include/js/admin_system.test.js?13009429509\" type=\"\
+        text/javascript\"></script>\n<script src=\"/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js\"\
+        \ type=\"text/javascript\"></script>\n<script src=\"/include/js/jqdt/media/js/jquery.dataTables.js\"\
+        \ type=\"text/javascript\"></script>\n\n\n<link rel=\"stylesheet\" type=\"\
+        text/css\" href=\"/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css\"\
+        \ />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"\
+        \ />\n<script type=\"text/javascript\">\n\n$(document).ready(function() {\t\
+        \n\t\t//if close button is clicked\n\t\t$('.window .close').click(function\
+        \ (e) {\n\t\t//Cancel the link behavior\n\t\t\te.preventDefault();\n\t\t$('#mask,\
+        \ .window').hide();\n\t\t});\n\t\t\t\n\t\t//hide the all of the element with\
+        \ class msg_body\n\t\t$(\".toggle\").hide();\n\t\t//toggle the componenet\
+        \ with class msg_body\n\t\t$(\".toggle_head\").click(function()\n\t\t{\n\t\
+        \t  $(this).next(\".toggle\").slideToggle(100);\n\t\t});\n\t\t// Set up the\
+        \ tabs. \n\t\t\n\t\t$(function() {\n\t\t\t$(\"#tabs\").tabs();\n\t\t});\n\t\
+        \t$('#tabs ul li a').click(function () {location.hash = $(this).attr('href');});\
+        \ \n  //if mask is clicked\n  $('#mask').click(function () {\n   $(this).hide();\n\
+        \   $('.window').hide();\n  });  \t\t\t\n  $('#dialog_incomplete').dialog({\
+        \ autoOpen: false, title: 'What is an incomplete prefix?' });\n  $('#dialog_imported').dialog({\
+        \ autoOpen: false, title: 'What is an imported prefix?' });\n  $('#dialog_additional').dialog({\
+        \ autoOpen: false, title: 'What is an additional prefix?' });\n  $('#dialog_inactive').dialog({\
+        \ autoOpen: false, title: 'What is an inactive prefix?' });\n  $('#dialog_active_domains').dialog({\
+        \ autoOpen: false, title: 'What is an active domain?' });\n  $('#dialog_slave_domains').dialog({\
+        \ autoOpen: false, title: 'What is an slave domain?' });\n  $('input[title]').inputHints();\n\
+        \t  $(\"#raw_zone_toggle\").toggle(\n\tfunction () { $(\"#raw_zone\").show(\"\
+        slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/collapse.gif');\n\
+        \t\t }, function () { $(\"#raw_zone\").hide(\"slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/expand.gif');\
+        \ });\n\n$('#domains_table').dataTable({ \"bFilter\" : false, \"bPaginate\"\
+        :false, \"bInfo\":false, \"bStateSave\":true });\n\n});\n</script>\n\n</head>\n\
+        <body><div id=\"mask\"></div>\n\t<div id=\"page_center\">\n\t\t<div id=\"\
+        header\">\n\t\t\t<a href=\"http://he.net/\"><img src=\"/include/images/helogo.gif\"\
+        \ alt=\"Hurricane Electric Internet Services\" /></a><br />\n\t\t</div>\n\n\
+        \t\t<div class=\"sidebar\" id=\"navigation\">\n\t\t\t<div class=\"block\"\
+        ><div class=\"caption\">Free DNS Login</div>\n<form name=\"login\" method=\"\
+        post\" enctype=\"application/x-www-form-urlencoded\" action=\"/\">\n<ul class=\"\
+        menu\">\n\t\t\t<li class=\"heavy\">\n    \t\t<label style=\"margin-bottom:0;\
+        \ padding-bottom:0;\">Username</label><input style=\"width: 140px;\" type=\"\
+        text\" name=\"email\" /><br />\n\t\t\t</li>\n\t\t\t<li>\n    \t\t<label style=\"\
+        margin-bottom:0; padding-bottom:0;\">Password</label><input style=\"width:\
+        \ 140px;\" type=\"password\" name=\"pass\"/>\n    \t\t</li>\n    \t\t<li>&nbsp;</li>\n\
+        \    \t\t<li>\n    \t\t<input id=\"_loginbutton\" style=\"color: #fff; background:\
+        \ green;\" type=\"submit\" name=\"submit\" value=\"Login!\"/>\n    \t\t<input\
+        \ style=\"color: #fff; background: blue;\" onclick=\"location.href='http://ipv6.he.net/certification/register.php'\"\
+        \ type=\"button\" value=\"Register!\"/>\n    \t\t  </li>\n</ul>\n</form></div>\n\
+        \t\t\t\n\t\t\t\t\t\t\n      \n\t\t\t<div class=\"block\">\n\t\t\t\t<div class=\"\
+        caption\">Quick Links</div>\n\t\t\t\t<div class=\"content\">\n\t\t\t\t\t<a\
+        \ href=\"http://ipv6.he.net/certification/\">Certification</a><br />\n\n\t\
+        \t\t\t\t<a href=\"http://www.tunnelbroker.net/\">Tunnelbroker</a><br />\n\t\
+        \t\t\t\t<a href=\"http://dns.he.net/\">Free DNS</a><br />\n\t\t\t\t\t<a href=\"\
+        http://www.tunnelbroker.net/forums/\">Forums</a><br />\n\t\t\t\t\t<a href=\"\
+        http://ipv6.he.net/certification/faq.php\">FAQ</a><br />\n\t\t\t\t\t<a href=\"\
+        http://ipv6.he.net/presentations.php\">Video Presentations</a><br />\n\t\t\
+        \t\t\t<a href=\"http://networktools.he.net\">Mobile Network Apps</a><br />\n\
+        \t\t\t\t\t<!-- <a href=\"usage/index.php\">Usage Statistics</a><br /> -->\n\
+        \n\t\t\t\t\t<!-- <a href=\"status.php\">Tunnel Server Status</a> <br /> -->\n\
+        \t\t\t\t\t<a href=\"http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg\"\
+        >Network Map</a><br />\n\t\t\t\t\t<a href=\"http://lg.he.net\">Looking Glass</a>\
+        \ (v4/v6)<br />\n\t\t\t\t\t<a href=\"telnet://route-server.he.net\">Route\
+        \ Server</a> (telnet)<br />\n\n\t\t\t\t\t<a href=\"http://bgp.he.net/ipv6-progress-report.cgi\"\
+        >Global IPv6 Report</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/bgpview/bgp.html\"\
+        >IPv6 BGP View</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"block\"\
+        >\n\t\t\t\t<div class=\"caption\">Services</div>\n\t\t\t\t<div class=\"content\"\
+        >\n\n\t\t\t\t\t<a href=\"http://he.net/ip_transit.html\">Transit</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/colocation.html\">Colocation</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/dedicated_server.html\">Dedicated Servers</a>\n\
+        \t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\t\t\n\t\t<div id=\"content\">\n\t\
+        \t\t<div class=\"block\">\t\t\t\t<div class=\"caption\" >Hurricane Electric\
+        \ Free DNS Management</div><div style=\"margin-left: 1em;\">\n  <h1>\n  Free\
+        \ DNS service\n  </h1>\n<p>\nWelcome to the Hurricane Electric Free DNS Hosting\
+        \ portal.\nThis tool will allow you to easily manage and maintain your<br\
+        \ /> forward and reverse DNS.\n</p>\n<p>\n  The <span style=\"color: red;\"\
+        >Open Beta</span> has been expanded and now includes our<a href=\"http://ipv6.he.net\"\
+        > IPv6 certification or tunnelbroker account holders</a>,\n <a href=\"http://he.net/colocation.html\"\
+        >Colocation customers</a> and those with <a href=\"http://he.net/ip_transit.html\"\
+        >Transit</a> services from us.\n  If you do not have an account, you can sign\
+        \ up for a free one <a href=\"http://IPv6.he.net/certification/register.php\"\
+        >here</a> or by clicking on the \n    <input style=\"color: #fff; background:\
+        \ blue;\" onclick=\"location.href='http://ipv6.he.net/certification/register.php'\"\
+        \ type=\"button\" value=\"Register!\"/>\n     button to the left.  For those\
+        \ with existing admin.he.net accounts, please contact Support <a href=\"mailto:support@he.net\"\
+        >&lt;support@he.net&gt;</a> and\n\t request a password.\n</p>\n<p>\n  <h4>Features</h4>\n\
+        \  <ul>\n    <li>Dualstack: Supports queries via both IPv4 and native IPv6.</li>\n\
+        \    <li>Support for A, AAAA, CNAME, CAA, MX, NS, TXT, SRV, SSHFP, SPF, RP,\
+        \ NAPTR, HINFO, LOC and PTR records.</li>\n    <li>Smart mode IPv4 and IPv6\
+        \ reverse zones simplifies reverse zones.</li>\n\t<li>Slave support</li>\n\
+        \    <li>Multiple reverse zone formats: Standard, RFC 4183, RFC 2317, DeGroot.</li>\n\
+        \    <li>Geographically diverse servers.</li>\n    <li>Sanity checking for\
+        \ delegation for both forward and reverse zones.</li>\n    <li>Basic syntax\
+        \ checking for fields.</li>\n    <li>Multiple domains per account.</li>\n\
+        \  </ul>\n</p>\n<p>\n  <h4>Recent Additions</h4><br />\n\n  CAA Record Support\n\
+        \t<ul>\n\t\t<li><span style=\"font-weight: bold;\">We've added the CAA record\
+        \ type!</span><br />\n\t\t\tAfter many requests, we have completed the backend\
+        \ upgrades required to enable the\n\t\t\tCAA record type.\n\t\t</li>\n\t</ul><br\
+        \ />\n\n  <h4>Dynamic DNS Additions</h4><br />\n\n  Dynamic DNS 'Checkip'\
+        \ Service\n\t<ul>\n\t\t<li><span style=\"font-weight: bold;\">We've added\
+        \ the Dynamic DNS 'Checkip' service!</span><br />\n\t\t\tWe've received requests\
+        \ for a checkip service.  To bring us in line with some of the other dyndns\
+        \ services, we've added\n\t\t\tthis to the dns.he.net family of services.\
+        \  To access the service just point your web browser or other web client to<br\
+        \ />\n\t\t\t<a href=\"http://checkip.dns.he.net\" target=\"_new\">http://checkip.dns.he.net</a>\
+        \ \n\t\t</li>\n\t</ul><br />\n\n  Dynamic DNS Support\n\t<ul>\n\t\t<li><span\
+        \ style=\"font-weight: bold;\">We've added Dynamic DNS support!</span><br\
+        \ />\n\t\t\tWe're working on smoothing out how it's represented in the UI\
+        \ and writing something that resembles documentation, but thought we'd\n\t\
+        \t\tpush out what we have so it can get a little use.  It's a pretty basic\
+        \ implementation and should work well for most applications.\n\t\t\tIt works\
+        \ with 'ddclient' (or dyndns compatible clients), and with any of the command\
+        \ line examples.\n\t\t\tWe'll update this page when the documentation is ready.\
+        \ (we're hoping to have it written soon...).  If you have any feedback on\
+        \ this\n\t\t\tnew feature, please send them along to <a href=\"mailto:dnsadmin@he.net\"\
+        \ style=\"font-size: 12px; font-style: italic\">&lt;dnsadmin@he.net&gt;</a>\n\
+        \t\t</li>\n\t</ul>\n\t\t\t<br />\n\t\t\tHere are a few examples to get you\
+        \ started (manual testing)<br />\n\t\t\t<br />\n\t\t\t<div style=\"border:\
+        \ 1px solid black; background: #def; padding: 3px; margin-right: 1em; font-size:\
+        \ 10px;\">\n<pre>\nhttp://[your domain name]:[your password]@dyn.dns.he.net/nic/update?hostname=[your\
+        \ domain name]\n\nAutodetect my IPv4/IPv6 address:\n% curl -4 \"http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com\"\
+        \t\t\t\t\t\n% curl -6 \"http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com\"\
+        \t\t\t\t\t\n\nSpecify my IPv4/IPv6 address:\n% curl \"http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com&myip=192.168.0.1\"\
+        \t\t\t\t\t\n% curl \"http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com&myip=2001:db8:beef:cafe::1\"\
+        \n</pre>\n</div>\n<br />\nHere are a couple more examples that allow sending\
+        \ the password in the URL<br /><br />\n<div style=\"border: 1px solid black;\
+        \ background: #def; padding: 3px; margin-right: 1em; font-size: 10px;\">\n\
+        <span style=\"font-weight: bold;\">Note: The username is also the hostname.\
+        \ The password is sent using 'password='. This skips HTTP basic auth.</span><br\
+        \ />\n<pre>\nAuthentication and Updating using GET\n% curl \"https://dyn.dns.he.net/nic/update?hostname=dyn.example.com&password=password&myip=192.168.0.1\"\
+        \n% curl \"https://dyn.dns.he.net/nic/update?hostname=dyn.example.com&password=password&myip=2001:db8:beef:cafe::1\"\
+        \n\nAuthentication and Updating using a POST\n% curl \"https://dyn.dns.he.net/nic/update\"\
+        \ -d \"hostname=dyn.example.com\" -d \"password=password\" -d \"myip=192.168.0.1\"\
+        \n% curl \"https://dyn.dns.he.net/nic/update\" -d \"hostname=dyn.example.com\"\
+        \ -d \"password=password\" -d \"myip=2001:db8:beef:cafe::1\"\n</pre>\n\t\t\
+        \t</div>\n\t\t<br />\n\t\t\t<span style=\"font-weight: bold;\">Things to note\
+        \ about the dynamic DNS support:</span><br />\n\t\t\t<ul>\n\t\t\t<li>Your\
+        \ \"username\" is going to be the name of the record that has been tagged\
+        \ dynamic.  ie You marked the A record for dyn.example.com as \n\t\t\t\tdynamic.\
+        \  Your username will be \"dyn.example.com\"</li>\n\t\t\t<li>You can tag an\
+        \ A or AAAA record by editing it once you have selected the zone. (check the\
+        \ box).</li>\n\t\t\t<li>Once you have \"activated\" the record to be dynamic,\
+        \ you will need to generate a key (or password if you prefer) for it.\n\t\t\
+        \t(click on the <img src=\"/include/images/generate.gif\" alt=\"generate\"\
+        \ /> icon) to generate the key for the dynamic record.</li>\n\t\t\t<li>If\
+        \ you have tagged both an A and AAAA record to be dynamic, you will see the\
+        \ icon twice, it is only necessary to generate one key as it is\n\t\t\tbound\
+        \ to the name of the record and not the name/type.  (see the part up above\
+        \ where we mention that we're still working on the UI part... :) .)</li>\n\
+        \t\t\t<li>When making updates, you will need to make a separate update for\
+        \ ipv4 and ipv6.  We may add an additional \"myipv6=\" option in the future.</li>\n\
+        \t\t\t</ul>\n\t\t<br />\n\t<br />\n  Additional Troubleshooting Tools:\n\t\
+        <ul>\n\t\t<li><span style=\"font-weight: bold;\">Secondary domains that disallow\
+        \ AXFR's will be deactivated until they have been validated.</span><br />\n\
+        \t\t\tYou can validate the domain by selecting it from the \"Slave domains\
+        \ for this account.\" (click on the (i)nformation icon)\n\t\t\tThis will attempt\
+        \ to pull the zone from the specified nameserver(s).  If it is successful,\
+        \ it will validate the domain and will start listening to your nameservers\n\
+        \t\t\tNOTIFY packets as well as making periodic checks (depending on your\
+        \ TTL).\n\t\t</li>\n\t\t<li>\n\t\t\t<span style=\"font-weight: bold;\">We've\
+        \ added a small collapsable panel on each of the domain specific pages.</span>\
+        \ (edit zone, slave information, etc)<br /> \n\t\t\tClick on the \"[+] Raw\
+        \ Zone\" to expand the panel. This will give you the raw AXFR output for the\
+        \ domain.\n\t\t</li><br />\n\t\t<li>\n\t\t\t<span style=\"font-weight: bold;\"\
+        >Do you have some tools that you'd like to see?  Send us your suggestions!</span>\n\
+        \t\t</li>\n\t</ul>\n\t<br />\n</p>\n<p>\n\n<h4>Upcoming Features!</h4>\n \
+        \ We've received some fantastic suggestions from our Open Beta users.  We're\
+        \ looking into implementing:\n  <ul>\n\t<li>Expanding our DDNS service to\
+        \ support TXT records</li>\n\t<li>Bind Zone Import/Export</li>\n\t<li>DNSSEC\
+        \ - We are exploring this now</li>\n  </ul>\n  <br />\n  Keep the feedback\
+        \ coming in!<br /><br />\n\n  Thanks!<br />\n  DNS Administrator<br />\n \
+        \ <a href=\"mailto:dnsadmin@he.net\" style=\"font-size: 12px; font-style:\
+        \ italic\">&lt;dnsadmin@he.net&gt;</a>\n</p><br />\n<small style=\"color:\
+        \ #999;\">Updated 07.20.2017 - dnsadmin@he.net</small>\n</div>\n<br />\n</div>\n\
+        </div>\n\t\t<div id=\"footer\">\n\t\t\t\t<address id=\"footer_left\">Hurricane\
+        \ Electric<br />760 Mission Court<br />Fremont, CA  94539</address>\n\t\t\t\
+        \t<span id=\"footer_right\">Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br\
+        \ />Comments? <a href=\"mailto:info@he.net\">info@he.net</a></span>\n\n\t\t\
+        \t\t<span id=\"footer_center\"><br />Copyright &copy; Hurricane Electric.<br\
+        \ />All Rights Reserved 0.005716</span>\n\t\t</div>\n\t</div>\n\t\n\t<pre>\t\
+        </pre>\n<script type=\"text/javascript\">\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount',\
+        \ 'UA-24281877-1']);\n  _gaq.push(['_setDomainName', '.he.net']);\n  _gaq.push(['_trackPageview']);\n\
+        \n  (function() {\n    var ga = document.createElement('script'); ga.type\
+        \ = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol\
+        \ ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var\
+        \ s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga,\
+        \ s);\n  })();\n</script>\n\t</body>\n</html>\n"}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['14322']
+      content-type: [text/html; charset=utf-8]
+      date: ['Sun, 23 Sep 2018 03:51:01 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.18 (Ubuntu)]
+      set-cookie: ['CGISESSID=338af25935f32cc6cf86576aef02edcf; path=/; expires=Sun,
+          23-Sep-2018 15:51:01 GMT']
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode ''
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['30']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://dns.he.net/
+  response:
+    body: {string: !!python/unicode "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0\
+        \ Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"\
+        >\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\" xml:lang=\"\
+        en-US\">\n<head>\n<title>Hurricane Electric Hosted DNS</title>\n<link rel=\"\
+        stylesheet\" type=\"text/css\" href=\"/include/css/edit_dns.css\" />\n<link\
+        \ rel=\"stylesheet\" type=\"text/css\" href=\"/include/css/style.css\" media=\"\
+        screen, print\" />\n<!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"\
+        /include/js/jqdt/media/css/jquery.dataTables.css\" /> -->\n<script src=\"\
+        /include/js/jquery-1.4.2.min.js\" type=\"text/javascript\"></script>\n<script\
+        \ src=\"/include/js/jquery.jeditable.mini.js\" type=\"text/javascript\"></script>\n\
+        <script src=\"/include/js/jquery.json-2.2.min.js\" type=\"text/javascript\"\
+        ></script>\n<script src=\"/include/js/admin_system.test.js?13009429509\" type=\"\
+        text/javascript\"></script>\n<script src=\"/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js\"\
+        \ type=\"text/javascript\"></script>\n<script src=\"/include/js/jqdt/media/js/jquery.dataTables.js\"\
+        \ type=\"text/javascript\"></script>\n\n\n<link rel=\"stylesheet\" type=\"\
+        text/css\" href=\"/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css\"\
+        \ />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"\
+        \ />\n<script type=\"text/javascript\">\n\n$(document).ready(function() {\t\
+        \n\t\t//if close button is clicked\n\t\t$('.window .close').click(function\
+        \ (e) {\n\t\t//Cancel the link behavior\n\t\t\te.preventDefault();\n\t\t$('#mask,\
+        \ .window').hide();\n\t\t});\n\t\t\t\n\t\t//hide the all of the element with\
+        \ class msg_body\n\t\t$(\".toggle\").hide();\n\t\t//toggle the componenet\
+        \ with class msg_body\n\t\t$(\".toggle_head\").click(function()\n\t\t{\n\t\
+        \t  $(this).next(\".toggle\").slideToggle(100);\n\t\t});\n\t\t// Set up the\
+        \ tabs. \n\t\t\n\t\t$(function() {\n\t\t\t$(\"#tabs\").tabs();\n\t\t});\n\t\
+        \t$('#tabs ul li a').click(function () {location.hash = $(this).attr('href');});\
+        \ \n  //if mask is clicked\n  $('#mask').click(function () {\n   $(this).hide();\n\
+        \   $('.window').hide();\n  });  \t\t\t\n  $('#dialog_incomplete').dialog({\
+        \ autoOpen: false, title: 'What is an incomplete prefix?' });\n  $('#dialog_imported').dialog({\
+        \ autoOpen: false, title: 'What is an imported prefix?' });\n  $('#dialog_additional').dialog({\
+        \ autoOpen: false, title: 'What is an additional prefix?' });\n  $('#dialog_inactive').dialog({\
+        \ autoOpen: false, title: 'What is an inactive prefix?' });\n  $('#dialog_active_domains').dialog({\
+        \ autoOpen: false, title: 'What is an active domain?' });\n  $('#dialog_slave_domains').dialog({\
+        \ autoOpen: false, title: 'What is an slave domain?' });\n  $('input[title]').inputHints();\n\
+        \t  $(\"#raw_zone_toggle\").toggle(\n\tfunction () { $(\"#raw_zone\").show(\"\
+        slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/collapse.gif');\n\
+        \t\t }, function () { $(\"#raw_zone\").hide(\"slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/expand.gif');\
+        \ });\n\n$('#domains_table').dataTable({ \"bFilter\" : false, \"bPaginate\"\
+        :false, \"bInfo\":false, \"bStateSave\":true });\n\n});\n</script>\n\n</head>\n\
+        <body><div id=\"mask\"></div>\n\t<div id=\"page_center\">\n\t\t<div id=\"\
+        header\">\n\t\t\t<a href=\"http://he.net/\"><img src=\"/include/images/helogo.gif\"\
+        \ alt=\"Hurricane Electric Internet Services\" /></a><br />\n\t\t</div>\n\n\
+        \t\t<div class=\"sidebar\" id=\"navigation\">\n\t\t\t<div class=\"block\"\
+        ><div class=\"caption\">Account Menu</div>\n\t\t\t\t<ul class=\"menu\">\n\t\
+        \t\t\t\t\t\t<li class=\"heavy\">Welcome<br />Old Chuck</li>\t\t\t\t\t\t\t\
+        <li>Origin <a href=\"http://ipv6.he.net/\">ipv6.he.net</a></li>\t\t\t\t\t\t\
+        \t<li><a id=\"_tlogout\" href=\"/?action=logout\" class=\"heavy\">Logout</a></li>\n\
+        \t\t\t\t</ul></div>\n\t\t\t\n\t\t\t\n\t\t\t<div class=\"block\">\n\t\t\t\t\
+        <div class=\"caption\">Zone Functions</div>\n\t\t\t\t<ul class=\"menu\">\n\
+        \t\t\t\t  \n          <li><a href=\"#\" onclick=\"launchWindow('#add_zone');\"\
+        \ >Add a new domain</a></li>\n          <!-- <li><a href=\"#\" onclick=\"\
+        launchWindow('#add_bind_zone');\" >Add raw zone</a></li> -->\n          <li><a\
+        \ href=\"#\" onclick=\"launchWindow('#add_slave');\" >Add a new slave</a></li>\n\
+        \          <li><a href=\"#\" onclick=\"launchWindow('#add_reverse');\" >Add\
+        \ a new reverse</a></li>\n          \n          <!-- <li><a href=\"/?action=dig&menu=diagzone\"\
+        \ class=\"heavy\">Troubleshoot zones</a></li>\n          <li><a href=\"/?action=report&menu=report\"\
+        \ class=\"heavy\">Zone report</a></li>\n          <li><a href=\"/?action=exportzones&menu=export\"\
+        \ class=\"heavy\">Export zones</a></li>\n          <li><a href=\"/?action=importzones&menu=import\"\
+        \ class=\"heavy\">Import zones</a></li> -->\n\t\t\t\t</ul>\n\t\t\t</div>\n\
+        \t\t\t\n      \n\t\t\t<div class=\"block\">\n\t\t\t\t<div class=\"caption\"\
+        >Quick Links</div>\n\t\t\t\t<div class=\"content\">\n\t\t\t\t\t<a href=\"\
+        http://ipv6.he.net/certification/\">Certification</a><br />\n\n\t\t\t\t\t\
+        <a href=\"http://www.tunnelbroker.net/\">Tunnelbroker</a><br />\n\t\t\t\t\t\
+        <a href=\"http://dns.he.net/\">Free DNS</a><br />\n\t\t\t\t\t<a href=\"http://www.tunnelbroker.net/forums/\"\
+        >Forums</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/certification/faq.php\"\
+        >FAQ</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/presentations.php\"\
+        >Video Presentations</a><br />\n\t\t\t\t\t<a href=\"http://networktools.he.net\"\
+        >Mobile Network Apps</a><br />\n\t\t\t\t\t<!-- <a href=\"usage/index.php\"\
+        >Usage Statistics</a><br /> -->\n\n\t\t\t\t\t<!-- <a href=\"status.php\">Tunnel\
+        \ Server Status</a> <br /> -->\n\t\t\t\t\t<a href=\"http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg\"\
+        >Network Map</a><br />\n\t\t\t\t\t<a href=\"http://lg.he.net\">Looking Glass</a>\
+        \ (v4/v6)<br />\n\t\t\t\t\t<a href=\"telnet://route-server.he.net\">Route\
+        \ Server</a> (telnet)<br />\n\n\t\t\t\t\t<a href=\"http://bgp.he.net/ipv6-progress-report.cgi\"\
+        >Global IPv6 Report</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/bgpview/bgp.html\"\
+        >IPv6 BGP View</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"block\"\
+        >\n\t\t\t\t<div class=\"caption\">Services</div>\n\t\t\t\t<div class=\"content\"\
+        >\n\n\t\t\t\t\t<a href=\"http://he.net/ip_transit.html\">Transit</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/colocation.html\">Colocation</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/dedicated_server.html\">Dedicated Servers</a>\n\
+        \t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\t\t\n\t\t<div id=\"content\">\n\t\
+        \t\t<div class=\"block\">\t\t\t\t<div class=\"caption\" >Hurricane Electric\
+        \ Free DNS Management</div><style type=\"text/css\">\nA:link {text-decoration:\
+        \ none; color: #000}\nA:visited {text-decoration: none; color: #000}\nA:active\
+        \ {text-decoration: none; color: #000}\nA:hover {text-decoration: underline;\
+        \ color: #0000ff}\n\n.generic_table tr:hover {\nbackground: #ccc;\n}\n\n.generic_table\
+        \ td\n{\nborder-width: 1px 1px 0 0;\nborder-style: solid;\nmargin: 0;\npadding:\
+        \ 1px;\n}\n\n.generic_table th\n{\nbackground: #ccc;\nborder-width: 0 1px\
+        \ 0 0;\nborder-style: solid;\nmargin: 0;\npadding: 4px;\nfont-size: 80%;\n\
+        }\n\n.generic_table\n{\nborder-width: 1px 0px 1px 1px;\nborder-style: solid;\n\
+        width: 100%;\n}\n\n</style>\n<div id=\"hosteddns\">\n\n\n<span style=\"display:\
+        \ none;\">\n<form action=\"/index.cgi\" method=\"post\" name=\"remove_domain\"\
+        >\n<input type=\"hidden\" name=\"account\" value=\"v65ba6e2f29578c5.99117794\"\
+        />\n<input id=\"delete_id\" type=\"hidden\" name=\"delete_id\" value=\"\"\
+        \ />\n<input type=\"hidden\" name=\"remove_domain\" value=\"1\" /></form>\n\
+        </span><div style=\"border: 1px solid black; padding:5px 10px;\" class=\"\
+        dns_add window\" id=\"add_zone\">\n<form action=\"/index.cgi\" method=\"post\"\
+        \ name=\"add_zone\">\n<input type=\"hidden\" name=\"action\" value=\"add_zone\"\
+        \ />\t\n<span style=\"display: none;\"><input type=\"hidden\" name=\"retmain\"\
+        \ value=\"0\" /></span>\nPlease enter the domain name in the space provided.\
+        \  For rDNS associated with this account, please use the rDNS options located\
+        \ below or enter the fully qualified in-addr.arpa/ip6.arpa zone below.\n<br\
+        \ />\n<br />\n<span style=\"font-size: 20px;\">Domain Name </span><br /><input\
+        \ id=\"_name\" type=\"text\" style=\"width: 445px; font-size: 20px;\" name=\"\
+        add_domain\" class=\"defaultText\" title=\"example.com\" /><br /><br />\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Domain!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div>\n<!-- slave -->\n<div style=\"border: 1px solid black;\
+        \ padding:5px 10px;\" class=\"dns_add window\" id=\"add_slave\">\n<form action=\"\
+        /index.cgi\" method=\"post\" name=\"add_slave\">\n<input type=\"hidden\" name=\"\
+        action\" value=\"add_slave\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nPlease enter the domain name\
+        \ in the space below.  Enter the masters that we should pull from in the spaces\
+        \ provided below.<br /><br />\n<div style=\"font-weight: bold;\">Please allow\
+        \ zone transfers from slave.dns.he.net (216.218.133.2/2001:470:600::2).<br\
+        \ />\n<ul style=\"background: #fee; margin: 5px; border: 1px solid #f00; color:\
+        \ #f00;\">\n<li>Using the slave feature with DNSSEC signed zones may have\
+        \ unpredictable results.</li>\n<li>Not all DNSSEC record types are supported.</li>\n\
+        <li>Very large zones will not be permitted.</li>\n</ul>\n</div>\n<br />\n\
+        <span style=\"font-size: 20px;\">Domain Name </span><br/><input type=\"text\"\
+        \ style=\"width: 445px; font-size: 20px;\" name=\"add_slave\" class=\"defaultText\"\
+        \ title=\"example.com\" /><br /><br />\n<fieldset>\n  <legend>Masters that\
+        \ allow us to pull updates for this domain<span style=\"font-size: 10px;\"\
+        > (You need at least one)</span></legend>\n    <span style=\"font-size: 14px;\"\
+        >Master #1 </span><br /><input type=\"text\" style=\"width: 425px; font-size:\
+        \ 14px;\" name=\"master1\" class=\"defaultText\" title=\"ns1.example.com\"\
+        \ /><br />\n    <span style=\"font-size: 14px;\">Master #2 </span><br /><input\
+        \ type=\"text\" style=\"width: 425px; font-size: 14px;\" name=\"master2\"\
+        \ class=\"defaultText\" title=\"ns2.example.com\" /><br />\n    <span style=\"\
+        font-size: 14px;\">Master #3 </span><br /><input type=\"text\" style=\"width:\
+        \ 425px; font-size: 14px;\" name=\"master3\" class=\"defaultText\" title=\"\
+        ns3.example.com\" /><br />\n    <!-- <span style=\"font-size: 14px;\">Master\
+        \ #4 </span><br /><input type=\"text\" style=\"width: 425px; font-size: 14px;\"\
+        \ name=\"master4\" class=\"defaultText\" title=\"ns4.example.com\" /><br />\n\
+        \    <span style=\"font-size: 14px;\">Master #5 </span><br /><input type=\"\
+        text\" style=\"width: 425px; font-size: 14px;\" name=\"master5\" class=\"\
+        defaultText\" title=\"ns5.example.com\" /><br /> -->\n</fieldset>\n<br />\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Slave!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div>\n<!-- Display Zone-->\n<div style=\"border: 1px solid\
+        \ black; padding:5px 10px;\" class=\"dns_add window\" id=\"dumped_zone\">\n\
+        </div>\n<!-- bulk -->\n<div style=\"border: 1px solid black; padding:5px 10px;\"\
+        \ class=\"dns_add window\" id=\"add_bind_zone\">\n<form action=\"/index.cgi\"\
+        \ method=\"post\" name=\"add_bind_zone\">\n<input type=\"hidden\" name=\"\
+        menu\" value=\"add_bind_zone\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nPlease enter the domain name\
+        \ in the space below.  Paste the zone in the textbox below.<br />\n<br />\n\
+        <span style=\"font-size: 20px;\">Domain Name </span><input type=\"text\" style=\"\
+        width: 445px; font-size: 20px;\" name=\"domain_name\" class=\"defaultText\"\
+        \ title=\"example.com\" /><br /><br />\n    <span style=\"font-size: 14px;\"\
+        >Raw Zone</span><br />\n<textarea name=\"raw_zone\" style=\"font-size: 10px;\
+        \ width: 445px;\" rows=\"12\" >\n</textarea>\n<br />\n<input style=\"color:\
+        \ #fff; background: green;\" type=\"submit\" name=\"submit\" value=\"Add Zone!\"\
+        />\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\" value=\"Cancel\"\
+        \ id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\" />\n</form>\n\
+        </div>\n<!-- reverse -->\n<div style=\"border: 1px solid black; padding:5px\
+        \ 10px;\" class=\"dns_add window\" id=\"add_reverse\">\n<form action=\"/index.cgi\"\
+        \ method=\"post\" name=\"add_reverse\">\n<input type=\"hidden\" name=\"action\"\
+        \ value=\"add_reverse\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nTo manage a reverse zone\
+        \ using the simplified method, please provide the prefix in the box below.\
+        \  IPv6 will be handed as a standard ip6.arpa zone. \nIPv4 can be handled\
+        \ using a variety of methods.  Select one from the list below.\n<br />\n<br\
+        \ />\n<span style=\"font-size: 20px;\">Prefix </span><br /><input type=\"\
+        text\" style=\"width: 445px; font-size: 14px;\" name=\"add_reverse\" class=\"\
+        defaultText\" title=\"2001:470:c0ff:ee::/64 or 10.10.1.0/24\" /><br />\n<br\
+        \ />\n<fieldset>  \n<legend>Reverse Method (IPv4 only)</legend>\n<input type='checkbox'\
+        \ name='method' value='rfc4183' class='unique'><span style=\"font-size: 14px;\"\
+        \ /> RFC4183 </span><img src=\"/include/images/help.png\" style=\"cursor:\
+        \ help;\" alt=\"help\" /><br />\n<input type='checkbox' name='method' value='rfc2317'\
+        \ class='unique'><span style=\"font-size: 14px;\" /> RFC2317 </span><img src=\"\
+        /include/images/help.png\" style=\"cursor: help;\" alt=\"help\" /><br />\n\
+        <input type='checkbox' name='method' value='degroot' class='unique'><span\
+        \ style=\"font-size: 14px;\" /> DeGroot </span><img src=\"/include/images/help.png\"\
+        \ style=\"cursor: help;\" alt=\"help\" /><br />\n<input type='checkbox' name='method'\
+        \ value='standard' class='unique'><span style=\"font-size: 14px;\" /> Standard\
+        \ (for blocks on octet boundaries) </span><img src=\"/include/images/help.png\"\
+        \ style=\"cursor: help;\" alt=\"help\" /><br />\n</fieldset>\n<br />\n<script>$('input.unique').click(function()\
+        \ { $('input.unique:checked').not(this).removeAttr('checked'); });</script>\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Prefix!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div><!-- START -->\n<div id=\"tabs\">\n\t<ul style=\"font-size:\
+        \ 62.5%\">\n\t\t<li><a href=\"#tabs-standard\">Zone Management</a></li>\n\t\
+        \t<li><a href=\"#tabs-advanced\" style=\"color: red;\">Advanced</a></li>\t\
+        \t\n\t</ul>\n<div id=\"tabs-standard\">\n<!-- Start slave table -->\n\n\n\
+        <!-- End slave table -->\n<!-- Start domain panel--><br />\n\n<table width=\"\
+        100%\" id=\"domains_table\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n\t<!-- <thead><tr><th></th><th></th><th>Active domains\
+        \ for this account<img src=\"/include/images/help.png\" onclick=\"$('#dialog_active_domains').dialog('open')\"\
+        \ style=\"cursor: help;\" alt=\"help\" /></th></tr></thead><tbody> -->\n\t\
+        <thead><tr><th><img src=\"/include/images/link_go.png\" alt=\"Open Link\"\
+        /></th><th><img src=\"/include/images/pencil.png\" alt=\"Edit\" /></th><th>Active\
+        \ domains for this account</th><th><img src=\"/include/images/delete.png\"\
+        \ alt=\"Delete\" /></th></thead><tbody>\t<tr>\n\t\t<td style=\"cursor: pointer;\"\
+        >\n\t\t\t<img class=\"Tips\"\n\t\t        title=\"Open URL::Open lexicontest.com\
+        \ in a new window.\"\n\t\t        alt=\"go\" src=\"/include/images/link_go.png\"\
+        \n\t\t\tonclick=\"window.open('http://lexicontest.com','lexicontest.com')\"\
+        \ />\n\t\t</td>\t\t<td style=\"cursor: pointer;\">\n\t\t\t<img class=\"Tips\"\
+        \n\t\t        title=\"Edit Zone::Use this option to edit the zonefile.  You\
+        \ would use this if you wanted to add or remove subdomains, etc\"\n\t\t  \
+        \      alt=\"edit\" src=\"/include/images/pencil.png\" name=\"lexicontest.com\"\
+        \n\t\t\tonclick=\"javascript:document.location.href='?hosted_dns_zoneid=784067&menu=edit_zone&hosted_dns_editzone'\"\
+        \n\t\t\t/>\t\t</td>\n\t\t<td width=\"100%\" class=\"\" style=\"padding-left:\
+        \ 3px;\">\n\t\t\t<span>lexicontest.com</span>\n\t\t</td>\n\t\t<td style=\"\
+        cursor: pointer;\">\n\t\t\t<img class=\"Tips\"\n\t\t\ttitle=\"Using this option\
+        \ will PERMANENTLY remove the zone from your account.\"\n\t\t\talt=\"delete\"\
+        \  onclick=\"delete_dom(this);\" name=\"lexicontest.com\" value=\"784067\"\
+        \ src=\"/include/images/delete.png\" />\n\t\t</td>\n\t</tr>\n</tbody>\n</table><!--\
+        \ End Domain panel-->\n<br />\n<table width=\"100%\" class=\"generic_table\"\
+        \ border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\n  <div style=\"background-color:#ccc;\
+        \ height: 20px;\">\n          <div style=\"width:2%;\n    height: 20px; background-color:#5b93bf;\
+        \ border-right:1px #fff solid;\"></div>\n          <div style=\"margin-top:-20px;\
+        \ color:#000; margin-left: 4px;\">Domains 1/50      </div>\n      <div style=\"\
+        text-align:right; margin-top:-20px; color:#000; padding-right:4px;\">2%</div>\n\
+        \  </div>\n</table>\n</div> <!-- end tab-standard-->\n<div id=\"tabs-advanced\"\
+        >\n\t<table width=\"100%\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n\t\t<tr><th colspan=\"4\">Active arpa zones for this\
+        \ account (advanced)</th></tr>\n      </td>\n    </tr>    <tr><td colspan=\"\
+        4\" style=\"color: red; text-align: center;\">You have no arpa zones configured\
+        \ for this account.  Add some using the links to the left.</td></tr>\t</table>\n\
+        \  <br />\n  <table width=\"100%\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n    <div style=\"background-color:#ccc; height: 20px;\"\
+        >\n            <div style=\"width:2%;\n      height: 20px; background-color:#5b93bf;\
+        \ border-right:1px #fff solid;\"></div>\n            <div style=\"margin-top:-20px;\
+        \ color:#000; margin-left: 4px;\">Domains 1/50        </div>\n        <div\
+        \ style=\"text-align:right; margin-top:-20px; color:#000; padding-right:4px;\"\
+        >2%</div>\n    </div>\n  </table>\n</div> <!-- end tab #1 -->\n<!-- Start\
+        \ help dialog -->\n<div id=\"dialog_incomplete\">\n  Prefixes tagged as 'Incomplete'\
+        \ are correctly delegated, but have not yet been activated.  To activate them\
+        \ simply click on\n  the entry.  This will automatically create the correct\
+        \ zone file and bring you to the maintenance interface.  If you have other\
+        \ prefixes that are\n  associated with your account, but do not appear here,\
+        \ please return to the <a href=\"http://ipv6.he.net\" class=\"heavy\">IPv6.he.net</a>\
+        \ \n  interface and re-delegate them. If you do not wish to use the simplified\
+        \ maintenance interface, you may edit the zone directly.\n  To do this, click\
+        \ on the zone under the 'Advanced' tab.<br /><br />\n</div>\n<div id=\"dialog_imported\"\
+        >\n  Prefixes within this section were delegated to ns1, ns2, ns3, ns4 and\
+        \ ns5.he.net from within the tunnelbroker interface and have been imported\
+        \ here.\n  They are ready for you to use.\n</div>\n<div id=\"dialog_additional\"\
+        >\n  Prefixes within this section have been delegated to ns1, ns2, ns3, ns4\
+        \ and ns5.he.net and were entered manually by you.\n</div>\n<div id=\"dialog_inactive\"\
+        >\n  Prefixes within this section have been allocated to your account and\
+        \ delegated to ns1, ns2, ns3, ns4 and ns5.he.net from the admin.he.net \n\
+        \  administration portal.  They are ready to use.  Click on the 'edit' icon\
+        \ to build the reverse zone and begin adding entries.\n</div>\n<div id=\"\
+        dialog_active_domains\">\n  Domains within this section have been entered\
+        \ manually by you are are ready to edit.\n</div>\n<div id=\"dialog_slave_domains\"\
+        >\n  Domains within this section are not editable.  We pull the zone from\
+        \ the nameservers specified when you made the entry.  Should you decide to\n\
+        \  change the nameservers, you will need to delete the zone, and recreate\
+        \ it with new nameservers.  <a href=\"http://en.wikipedia.org/wiki/Lame_delegation\"\
+        \ target=\"_new\">Lame delegations</a>\n  will be culled from time to time.\
+        \  Please make sure your domains have been correctly delegated.\n</div>\n\
+        <!-- end -->\n  <div style=\"padding: 3px; border: 1px solid black; background:\
+        \ #eee; font-size: 11px;\">\n  <span style=\"font-weight: bold; text-transform:\
+        \ uppercase;\">notes:</span><br />\n    At this time, we are limiting the\
+        \ free service to 50 zones which includes your reverse zones (if any).<br\
+        \ />\n    Questions or comments regarding this tool should be directed to\
+        \ <a href=\"mailto:support@he.net\" style=\"font-style: italic;\">support@he.net</a>.<br\
+        \ />\n    Bugs or feature requests should be directed to <a href=\"mailto:dnsadmin@he.net\"\
+        \ style=\"font-style: italic;\">dnsadmin@he.net</a>.<br />\n    Our TOS/AUP\
+        \ is now online. <a href=\"/tos.html\" target=\"_new\">click for our Terms\
+        \ of Service</a>.\n    </div>\n</div>\n</div>\n</div>\n</div>\n\t\t<div id=\"\
+        footer\">\n\t\t\t\t<address id=\"footer_left\">Hurricane Electric<br />760\
+        \ Mission Court<br />Fremont, CA  94539</address>\n\t\t\t\t<span id=\"footer_right\"\
+        >Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a href=\"\
+        mailto:info@he.net\">info@he.net</a></span>\n\n\t\t\t\t<span id=\"footer_center\"\
+        ><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.361172</span>\n\
+        \t\t</div>\n\t</div>\n\t\n\t<pre>\t</pre>\n<script type=\"text/javascript\"\
+        >\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-24281877-1']);\n\
+        \  _gaq.push(['_setDomainName', '.he.net']);\n  _gaq.push(['_trackPageview']);\n\
+        \n  (function() {\n    var ga = document.createElement('script'); ga.type\
+        \ = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol\
+        \ ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var\
+        \ s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga,\
+        \ s);\n  })();\n</script>\n\t</body>\n</html>\n"}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['20284']
+      content-type: [text/html; charset=utf-8]
+      date: ['Sun, 23 Sep 2018 03:51:01 GMT']
+      keep-alive: ['timeout=5, max=99']
+      server: [Apache/2.4.18 (Ubuntu)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://dns.he.net/
+  response:
+    body: {string: !!python/unicode "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0\
+        \ Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"\
+        >\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\" xml:lang=\"\
+        en-US\">\n<head>\n<title>Hurricane Electric Hosted DNS</title>\n<link rel=\"\
+        stylesheet\" type=\"text/css\" href=\"/include/css/edit_dns.css\" />\n<link\
+        \ rel=\"stylesheet\" type=\"text/css\" href=\"/include/css/style.css\" media=\"\
+        screen, print\" />\n<!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"\
+        /include/js/jqdt/media/css/jquery.dataTables.css\" /> -->\n<script src=\"\
+        /include/js/jquery-1.4.2.min.js\" type=\"text/javascript\"></script>\n<script\
+        \ src=\"/include/js/jquery.jeditable.mini.js\" type=\"text/javascript\"></script>\n\
+        <script src=\"/include/js/jquery.json-2.2.min.js\" type=\"text/javascript\"\
+        ></script>\n<script src=\"/include/js/admin_system.test.js?13009429509\" type=\"\
+        text/javascript\"></script>\n<script src=\"/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js\"\
+        \ type=\"text/javascript\"></script>\n<script src=\"/include/js/jqdt/media/js/jquery.dataTables.js\"\
+        \ type=\"text/javascript\"></script>\n\n\n<link rel=\"stylesheet\" type=\"\
+        text/css\" href=\"/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css\"\
+        \ />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"\
+        \ />\n<script type=\"text/javascript\">\n\n$(document).ready(function() {\t\
+        \n\t\t//if close button is clicked\n\t\t$('.window .close').click(function\
+        \ (e) {\n\t\t//Cancel the link behavior\n\t\t\te.preventDefault();\n\t\t$('#mask,\
+        \ .window').hide();\n\t\t});\n\t\t\t\n\t\t//hide the all of the element with\
+        \ class msg_body\n\t\t$(\".toggle\").hide();\n\t\t//toggle the componenet\
+        \ with class msg_body\n\t\t$(\".toggle_head\").click(function()\n\t\t{\n\t\
+        \t  $(this).next(\".toggle\").slideToggle(100);\n\t\t});\n\t\t// Set up the\
+        \ tabs. \n\t\t\n\t\t$(function() {\n\t\t\t$(\"#tabs\").tabs();\n\t\t});\n\t\
+        \t$('#tabs ul li a').click(function () {location.hash = $(this).attr('href');});\
+        \ \n  //if mask is clicked\n  $('#mask').click(function () {\n   $(this).hide();\n\
+        \   $('.window').hide();\n  });  \t\t\t\n  $('#dialog_incomplete').dialog({\
+        \ autoOpen: false, title: 'What is an incomplete prefix?' });\n  $('#dialog_imported').dialog({\
+        \ autoOpen: false, title: 'What is an imported prefix?' });\n  $('#dialog_additional').dialog({\
+        \ autoOpen: false, title: 'What is an additional prefix?' });\n  $('#dialog_inactive').dialog({\
+        \ autoOpen: false, title: 'What is an inactive prefix?' });\n  $('#dialog_active_domains').dialog({\
+        \ autoOpen: false, title: 'What is an active domain?' });\n  $('#dialog_slave_domains').dialog({\
+        \ autoOpen: false, title: 'What is an slave domain?' });\n  $('input[title]').inputHints();\n\
+        \t  $(\"#raw_zone_toggle\").toggle(\n\tfunction () { $(\"#raw_zone\").show(\"\
+        slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/collapse.gif');\n\
+        \t\t }, function () { $(\"#raw_zone\").hide(\"slow\");\n\t\t\t$('#raw_zone_toggle').attr('src','/include/images/expand.gif');\
+        \ });\n\n$('#domains_table').dataTable({ \"bFilter\" : false, \"bPaginate\"\
+        :false, \"bInfo\":false, \"bStateSave\":true });\n\n});\n</script>\n\n</head>\n\
+        <body><div id=\"mask\"></div>\n\t<div id=\"page_center\">\n\t\t<div id=\"\
+        header\">\n\t\t\t<a href=\"http://he.net/\"><img src=\"/include/images/helogo.gif\"\
+        \ alt=\"Hurricane Electric Internet Services\" /></a><br />\n\t\t</div>\n\n\
+        \t\t<div class=\"sidebar\" id=\"navigation\">\n\t\t\t<div class=\"block\"\
+        ><div class=\"caption\">Account Menu</div>\n\t\t\t\t<ul class=\"menu\">\n\t\
+        \t\t\t\t\t\t<li class=\"heavy\">Welcome<br />Old Chuck</li>\t\t\t\t\t\t\t\
+        <li>Origin <a href=\"http://ipv6.he.net/\">ipv6.he.net</a></li>\t\t\t\t\t\t\
+        \t<li><a id=\"_tlogout\" href=\"/?action=logout\" class=\"heavy\">Logout</a></li>\n\
+        \t\t\t\t</ul></div>\n\t\t\t\n\t\t\t\n\t\t\t<div class=\"block\">\n\t\t\t\t\
+        <div class=\"caption\">Zone Functions</div>\n\t\t\t\t<ul class=\"menu\">\n\
+        \t\t\t\t  \n          <li><a href=\"#\" onclick=\"launchWindow('#add_zone');\"\
+        \ >Add a new domain</a></li>\n          <!-- <li><a href=\"#\" onclick=\"\
+        launchWindow('#add_bind_zone');\" >Add raw zone</a></li> -->\n          <li><a\
+        \ href=\"#\" onclick=\"launchWindow('#add_slave');\" >Add a new slave</a></li>\n\
+        \          <li><a href=\"#\" onclick=\"launchWindow('#add_reverse');\" >Add\
+        \ a new reverse</a></li>\n          \n          <!-- <li><a href=\"/?action=dig&menu=diagzone\"\
+        \ class=\"heavy\">Troubleshoot zones</a></li>\n          <li><a href=\"/?action=report&menu=report\"\
+        \ class=\"heavy\">Zone report</a></li>\n          <li><a href=\"/?action=exportzones&menu=export\"\
+        \ class=\"heavy\">Export zones</a></li>\n          <li><a href=\"/?action=importzones&menu=import\"\
+        \ class=\"heavy\">Import zones</a></li> -->\n\t\t\t\t</ul>\n\t\t\t</div>\n\
+        \t\t\t\n      \n\t\t\t<div class=\"block\">\n\t\t\t\t<div class=\"caption\"\
+        >Quick Links</div>\n\t\t\t\t<div class=\"content\">\n\t\t\t\t\t<a href=\"\
+        http://ipv6.he.net/certification/\">Certification</a><br />\n\n\t\t\t\t\t\
+        <a href=\"http://www.tunnelbroker.net/\">Tunnelbroker</a><br />\n\t\t\t\t\t\
+        <a href=\"http://dns.he.net/\">Free DNS</a><br />\n\t\t\t\t\t<a href=\"http://www.tunnelbroker.net/forums/\"\
+        >Forums</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/certification/faq.php\"\
+        >FAQ</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/presentations.php\"\
+        >Video Presentations</a><br />\n\t\t\t\t\t<a href=\"http://networktools.he.net\"\
+        >Mobile Network Apps</a><br />\n\t\t\t\t\t<!-- <a href=\"usage/index.php\"\
+        >Usage Statistics</a><br /> -->\n\n\t\t\t\t\t<!-- <a href=\"status.php\">Tunnel\
+        \ Server Status</a> <br /> -->\n\t\t\t\t\t<a href=\"http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg\"\
+        >Network Map</a><br />\n\t\t\t\t\t<a href=\"http://lg.he.net\">Looking Glass</a>\
+        \ (v4/v6)<br />\n\t\t\t\t\t<a href=\"telnet://route-server.he.net\">Route\
+        \ Server</a> (telnet)<br />\n\n\t\t\t\t\t<a href=\"http://bgp.he.net/ipv6-progress-report.cgi\"\
+        >Global IPv6 Report</a><br />\n\t\t\t\t\t<a href=\"http://ipv6.he.net/bgpview/bgp.html\"\
+        >IPv6 BGP View</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"block\"\
+        >\n\t\t\t\t<div class=\"caption\">Services</div>\n\t\t\t\t<div class=\"content\"\
+        >\n\n\t\t\t\t\t<a href=\"http://he.net/ip_transit.html\">Transit</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/colocation.html\">Colocation</a><br />\n\
+        \t\t\t\t\t<a href=\"http://he.net/dedicated_server.html\">Dedicated Servers</a>\n\
+        \t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\t\t\n\t\t<div id=\"content\">\n\t\
+        \t\t<div class=\"block\">\t\t\t\t<div class=\"caption\" >Hurricane Electric\
+        \ Free DNS Management</div><style type=\"text/css\">\nA:link {text-decoration:\
+        \ none; color: #000}\nA:visited {text-decoration: none; color: #000}\nA:active\
+        \ {text-decoration: none; color: #000}\nA:hover {text-decoration: underline;\
+        \ color: #0000ff}\n\n.generic_table tr:hover {\nbackground: #ccc;\n}\n\n.generic_table\
+        \ td\n{\nborder-width: 1px 1px 0 0;\nborder-style: solid;\nmargin: 0;\npadding:\
+        \ 1px;\n}\n\n.generic_table th\n{\nbackground: #ccc;\nborder-width: 0 1px\
+        \ 0 0;\nborder-style: solid;\nmargin: 0;\npadding: 4px;\nfont-size: 80%;\n\
+        }\n\n.generic_table\n{\nborder-width: 1px 0px 1px 1px;\nborder-style: solid;\n\
+        width: 100%;\n}\n\n</style>\n<div id=\"hosteddns\">\n\n\n<span style=\"display:\
+        \ none;\">\n<form action=\"/index.cgi\" method=\"post\" name=\"remove_domain\"\
+        >\n<input type=\"hidden\" name=\"account\" value=\"v65ba6e2f29578c5.99117794\"\
+        />\n<input id=\"delete_id\" type=\"hidden\" name=\"delete_id\" value=\"\"\
+        \ />\n<input type=\"hidden\" name=\"remove_domain\" value=\"1\" /></form>\n\
+        </span><div style=\"border: 1px solid black; padding:5px 10px;\" class=\"\
+        dns_add window\" id=\"add_zone\">\n<form action=\"/index.cgi\" method=\"post\"\
+        \ name=\"add_zone\">\n<input type=\"hidden\" name=\"action\" value=\"add_zone\"\
+        \ />\t\n<span style=\"display: none;\"><input type=\"hidden\" name=\"retmain\"\
+        \ value=\"0\" /></span>\nPlease enter the domain name in the space provided.\
+        \  For rDNS associated with this account, please use the rDNS options located\
+        \ below or enter the fully qualified in-addr.arpa/ip6.arpa zone below.\n<br\
+        \ />\n<br />\n<span style=\"font-size: 20px;\">Domain Name </span><br /><input\
+        \ id=\"_name\" type=\"text\" style=\"width: 445px; font-size: 20px;\" name=\"\
+        add_domain\" class=\"defaultText\" title=\"example.com\" /><br /><br />\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Domain!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div>\n<!-- slave -->\n<div style=\"border: 1px solid black;\
+        \ padding:5px 10px;\" class=\"dns_add window\" id=\"add_slave\">\n<form action=\"\
+        /index.cgi\" method=\"post\" name=\"add_slave\">\n<input type=\"hidden\" name=\"\
+        action\" value=\"add_slave\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nPlease enter the domain name\
+        \ in the space below.  Enter the masters that we should pull from in the spaces\
+        \ provided below.<br /><br />\n<div style=\"font-weight: bold;\">Please allow\
+        \ zone transfers from slave.dns.he.net (216.218.133.2/2001:470:600::2).<br\
+        \ />\n<ul style=\"background: #fee; margin: 5px; border: 1px solid #f00; color:\
+        \ #f00;\">\n<li>Using the slave feature with DNSSEC signed zones may have\
+        \ unpredictable results.</li>\n<li>Not all DNSSEC record types are supported.</li>\n\
+        <li>Very large zones will not be permitted.</li>\n</ul>\n</div>\n<br />\n\
+        <span style=\"font-size: 20px;\">Domain Name </span><br/><input type=\"text\"\
+        \ style=\"width: 445px; font-size: 20px;\" name=\"add_slave\" class=\"defaultText\"\
+        \ title=\"example.com\" /><br /><br />\n<fieldset>\n  <legend>Masters that\
+        \ allow us to pull updates for this domain<span style=\"font-size: 10px;\"\
+        > (You need at least one)</span></legend>\n    <span style=\"font-size: 14px;\"\
+        >Master #1 </span><br /><input type=\"text\" style=\"width: 425px; font-size:\
+        \ 14px;\" name=\"master1\" class=\"defaultText\" title=\"ns1.example.com\"\
+        \ /><br />\n    <span style=\"font-size: 14px;\">Master #2 </span><br /><input\
+        \ type=\"text\" style=\"width: 425px; font-size: 14px;\" name=\"master2\"\
+        \ class=\"defaultText\" title=\"ns2.example.com\" /><br />\n    <span style=\"\
+        font-size: 14px;\">Master #3 </span><br /><input type=\"text\" style=\"width:\
+        \ 425px; font-size: 14px;\" name=\"master3\" class=\"defaultText\" title=\"\
+        ns3.example.com\" /><br />\n    <!-- <span style=\"font-size: 14px;\">Master\
+        \ #4 </span><br /><input type=\"text\" style=\"width: 425px; font-size: 14px;\"\
+        \ name=\"master4\" class=\"defaultText\" title=\"ns4.example.com\" /><br />\n\
+        \    <span style=\"font-size: 14px;\">Master #5 </span><br /><input type=\"\
+        text\" style=\"width: 425px; font-size: 14px;\" name=\"master5\" class=\"\
+        defaultText\" title=\"ns5.example.com\" /><br /> -->\n</fieldset>\n<br />\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Slave!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div>\n<!-- Display Zone-->\n<div style=\"border: 1px solid\
+        \ black; padding:5px 10px;\" class=\"dns_add window\" id=\"dumped_zone\">\n\
+        </div>\n<!-- bulk -->\n<div style=\"border: 1px solid black; padding:5px 10px;\"\
+        \ class=\"dns_add window\" id=\"add_bind_zone\">\n<form action=\"/index.cgi\"\
+        \ method=\"post\" name=\"add_bind_zone\">\n<input type=\"hidden\" name=\"\
+        menu\" value=\"add_bind_zone\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nPlease enter the domain name\
+        \ in the space below.  Paste the zone in the textbox below.<br />\n<br />\n\
+        <span style=\"font-size: 20px;\">Domain Name </span><input type=\"text\" style=\"\
+        width: 445px; font-size: 20px;\" name=\"domain_name\" class=\"defaultText\"\
+        \ title=\"example.com\" /><br /><br />\n    <span style=\"font-size: 14px;\"\
+        >Raw Zone</span><br />\n<textarea name=\"raw_zone\" style=\"font-size: 10px;\
+        \ width: 445px;\" rows=\"12\" >\n</textarea>\n<br />\n<input style=\"color:\
+        \ #fff; background: green;\" type=\"submit\" name=\"submit\" value=\"Add Zone!\"\
+        />\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\" value=\"Cancel\"\
+        \ id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\" />\n</form>\n\
+        </div>\n<!-- reverse -->\n<div style=\"border: 1px solid black; padding:5px\
+        \ 10px;\" class=\"dns_add window\" id=\"add_reverse\">\n<form action=\"/index.cgi\"\
+        \ method=\"post\" name=\"add_reverse\">\n<input type=\"hidden\" name=\"action\"\
+        \ value=\"add_reverse\" />\n<span style=\"display: none;\"><input type=\"\
+        hidden\" name=\"retmain\" value=\"0\" /></span>\nTo manage a reverse zone\
+        \ using the simplified method, please provide the prefix in the box below.\
+        \  IPv6 will be handed as a standard ip6.arpa zone. \nIPv4 can be handled\
+        \ using a variety of methods.  Select one from the list below.\n<br />\n<br\
+        \ />\n<span style=\"font-size: 20px;\">Prefix </span><br /><input type=\"\
+        text\" style=\"width: 445px; font-size: 14px;\" name=\"add_reverse\" class=\"\
+        defaultText\" title=\"2001:470:c0ff:ee::/64 or 10.10.1.0/24\" /><br />\n<br\
+        \ />\n<fieldset>  \n<legend>Reverse Method (IPv4 only)</legend>\n<input type='checkbox'\
+        \ name='method' value='rfc4183' class='unique'><span style=\"font-size: 14px;\"\
+        \ /> RFC4183 </span><img src=\"/include/images/help.png\" style=\"cursor:\
+        \ help;\" alt=\"help\" /><br />\n<input type='checkbox' name='method' value='rfc2317'\
+        \ class='unique'><span style=\"font-size: 14px;\" /> RFC2317 </span><img src=\"\
+        /include/images/help.png\" style=\"cursor: help;\" alt=\"help\" /><br />\n\
+        <input type='checkbox' name='method' value='degroot' class='unique'><span\
+        \ style=\"font-size: 14px;\" /> DeGroot </span><img src=\"/include/images/help.png\"\
+        \ style=\"cursor: help;\" alt=\"help\" /><br />\n<input type='checkbox' name='method'\
+        \ value='standard' class='unique'><span style=\"font-size: 14px;\" /> Standard\
+        \ (for blocks on octet boundaries) </span><img src=\"/include/images/help.png\"\
+        \ style=\"cursor: help;\" alt=\"help\" /><br />\n</fieldset>\n<br />\n<script>$('input.unique').click(function()\
+        \ { $('input.unique:checked').not(this).removeAttr('checked'); });</script>\n\
+        <input style=\"color: #fff; background: green;\" type=\"submit\" name=\"submit\"\
+        \ value=\"Add Prefix!\"/>\n<input class=\"close\" name=\"hosted_dns_addrecord_cancel\"\
+        \ value=\"Cancel\" id=\"btn_cancel\" onclick=\"addPanelClose()\" type=\"reset\"\
+        \ />\n</form>\n</div><!-- START -->\n<div id=\"tabs\">\n\t<ul style=\"font-size:\
+        \ 62.5%\">\n\t\t<li><a href=\"#tabs-standard\">Zone Management</a></li>\n\t\
+        \t<li><a href=\"#tabs-advanced\" style=\"color: red;\">Advanced</a></li>\t\
+        \t\n\t</ul>\n<div id=\"tabs-standard\">\n<!-- Start slave table -->\n\n\n\
+        <!-- End slave table -->\n<!-- Start domain panel--><br />\n\n<table width=\"\
+        100%\" id=\"domains_table\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n\t<!-- <thead><tr><th></th><th></th><th>Active domains\
+        \ for this account<img src=\"/include/images/help.png\" onclick=\"$('#dialog_active_domains').dialog('open')\"\
+        \ style=\"cursor: help;\" alt=\"help\" /></th></tr></thead><tbody> -->\n\t\
+        <thead><tr><th><img src=\"/include/images/link_go.png\" alt=\"Open Link\"\
+        /></th><th><img src=\"/include/images/pencil.png\" alt=\"Edit\" /></th><th>Active\
+        \ domains for this account</th><th><img src=\"/include/images/delete.png\"\
+        \ alt=\"Delete\" /></th></thead><tbody>\t<tr>\n\t\t<td style=\"cursor: pointer;\"\
+        >\n\t\t\t<img class=\"Tips\"\n\t\t        title=\"Open URL::Open lexicontest.com\
+        \ in a new window.\"\n\t\t        alt=\"go\" src=\"/include/images/link_go.png\"\
+        \n\t\t\tonclick=\"window.open('http://lexicontest.com','lexicontest.com')\"\
+        \ />\n\t\t</td>\t\t<td style=\"cursor: pointer;\">\n\t\t\t<img class=\"Tips\"\
+        \n\t\t        title=\"Edit Zone::Use this option to edit the zonefile.  You\
+        \ would use this if you wanted to add or remove subdomains, etc\"\n\t\t  \
+        \      alt=\"edit\" src=\"/include/images/pencil.png\" name=\"lexicontest.com\"\
+        \n\t\t\tonclick=\"javascript:document.location.href='?hosted_dns_zoneid=784067&menu=edit_zone&hosted_dns_editzone'\"\
+        \n\t\t\t/>\t\t</td>\n\t\t<td width=\"100%\" class=\"\" style=\"padding-left:\
+        \ 3px;\">\n\t\t\t<span>lexicontest.com</span>\n\t\t</td>\n\t\t<td style=\"\
+        cursor: pointer;\">\n\t\t\t<img class=\"Tips\"\n\t\t\ttitle=\"Using this option\
+        \ will PERMANENTLY remove the zone from your account.\"\n\t\t\talt=\"delete\"\
+        \  onclick=\"delete_dom(this);\" name=\"lexicontest.com\" value=\"784067\"\
+        \ src=\"/include/images/delete.png\" />\n\t\t</td>\n\t</tr>\n</tbody>\n</table><!--\
+        \ End Domain panel-->\n<br />\n<table width=\"100%\" class=\"generic_table\"\
+        \ border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\n  <div style=\"background-color:#ccc;\
+        \ height: 20px;\">\n          <div style=\"width:2%;\n    height: 20px; background-color:#5b93bf;\
+        \ border-right:1px #fff solid;\"></div>\n          <div style=\"margin-top:-20px;\
+        \ color:#000; margin-left: 4px;\">Domains 1/50      </div>\n      <div style=\"\
+        text-align:right; margin-top:-20px; color:#000; padding-right:4px;\">2%</div>\n\
+        \  </div>\n</table>\n</div> <!-- end tab-standard-->\n<div id=\"tabs-advanced\"\
+        >\n\t<table width=\"100%\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n\t\t<tr><th colspan=\"4\">Active arpa zones for this\
+        \ account (advanced)</th></tr>\n      </td>\n    </tr>    <tr><td colspan=\"\
+        4\" style=\"color: red; text-align: center;\">You have no arpa zones configured\
+        \ for this account.  Add some using the links to the left.</td></tr>\t</table>\n\
+        \  <br />\n  <table width=\"100%\" class=\"generic_table\" border=\"1\" cellpadding=\"\
+        0\" cellspacing=\"0\">\n    <div style=\"background-color:#ccc; height: 20px;\"\
+        >\n            <div style=\"width:2%;\n      height: 20px; background-color:#5b93bf;\
+        \ border-right:1px #fff solid;\"></div>\n            <div style=\"margin-top:-20px;\
+        \ color:#000; margin-left: 4px;\">Domains 1/50        </div>\n        <div\
+        \ style=\"text-align:right; margin-top:-20px; color:#000; padding-right:4px;\"\
+        >2%</div>\n    </div>\n  </table>\n</div> <!-- end tab #1 -->\n<!-- Start\
+        \ help dialog -->\n<div id=\"dialog_incomplete\">\n  Prefixes tagged as 'Incomplete'\
+        \ are correctly delegated, but have not yet been activated.  To activate them\
+        \ simply click on\n  the entry.  This will automatically create the correct\
+        \ zone file and bring you to the maintenance interface.  If you have other\
+        \ prefixes that are\n  associated with your account, but do not appear here,\
+        \ please return to the <a href=\"http://ipv6.he.net\" class=\"heavy\">IPv6.he.net</a>\
+        \ \n  interface and re-delegate them. If you do not wish to use the simplified\
+        \ maintenance interface, you may edit the zone directly.\n  To do this, click\
+        \ on the zone under the 'Advanced' tab.<br /><br />\n</div>\n<div id=\"dialog_imported\"\
+        >\n  Prefixes within this section were delegated to ns1, ns2, ns3, ns4 and\
+        \ ns5.he.net from within the tunnelbroker interface and have been imported\
+        \ here.\n  They are ready for you to use.\n</div>\n<div id=\"dialog_additional\"\
+        >\n  Prefixes within this section have been delegated to ns1, ns2, ns3, ns4\
+        \ and ns5.he.net and were entered manually by you.\n</div>\n<div id=\"dialog_inactive\"\
+        >\n  Prefixes within this section have been allocated to your account and\
+        \ delegated to ns1, ns2, ns3, ns4 and ns5.he.net from the admin.he.net \n\
+        \  administration portal.  They are ready to use.  Click on the 'edit' icon\
+        \ to build the reverse zone and begin adding entries.\n</div>\n<div id=\"\
+        dialog_active_domains\">\n  Domains within this section have been entered\
+        \ manually by you are are ready to edit.\n</div>\n<div id=\"dialog_slave_domains\"\
+        >\n  Domains within this section are not editable.  We pull the zone from\
+        \ the nameservers specified when you made the entry.  Should you decide to\n\
+        \  change the nameservers, you will need to delete the zone, and recreate\
+        \ it with new nameservers.  <a href=\"http://en.wikipedia.org/wiki/Lame_delegation\"\
+        \ target=\"_new\">Lame delegations</a>\n  will be culled from time to time.\
+        \  Please make sure your domains have been correctly delegated.\n</div>\n\
+        <!-- end -->\n  <div style=\"padding: 3px; border: 1px solid black; background:\
+        \ #eee; font-size: 11px;\">\n  <span style=\"font-weight: bold; text-transform:\
+        \ uppercase;\">notes:</span><br />\n    At this time, we are limiting the\
+        \ free service to 50 zones which includes your reverse zones (if any).<br\
+        \ />\n    Questions or comments regarding this tool should be directed to\
+        \ <a href=\"mailto:support@he.net\" style=\"font-style: italic;\">support@he.net</a>.<br\
+        \ />\n    Bugs or feature requests should be directed to <a href=\"mailto:dnsadmin@he.net\"\
+        \ style=\"font-style: italic;\">dnsadmin@he.net</a>.<br />\n    Our TOS/AUP\
+        \ is now online. <a href=\"/tos.html\" target=\"_new\">click for our Terms\
+        \ of Service</a>.\n    </div>\n</div>\n</div>\n</div>\n</div>\n\t\t<div id=\"\
+        footer\">\n\t\t\t\t<address id=\"footer_left\">Hurricane Electric<br />760\
+        \ Mission Court<br />Fremont, CA  94539</address>\n\t\t\t\t<span id=\"footer_right\"\
+        >Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a href=\"\
+        mailto:info@he.net\">info@he.net</a></span>\n\n\t\t\t\t<span id=\"footer_center\"\
+        ><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.030084</span>\n\
+        \t\t</div>\n\t</div>\n\t\n\t<pre>\t</pre>\n<script type=\"text/javascript\"\
+        >\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-24281877-1']);\n\
+        \  _gaq.push(['_setDomainName', '.he.net']);\n  _gaq.push(['_trackPageview']);\n\
+        \n  (function() {\n    var ga = document.createElement('script'); ga.type\
+        \ = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol\
+        \ ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var\
+        \ s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga,\
+        \ s);\n  })();\n</script>\n\t</body>\n</html>\n"}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['20284']
+      content-type: [text/html; charset=utf-8]
+      date: ['Sun, 23 Sep 2018 03:51:02 GMT']
+      keep-alive: ['timeout=5, max=98']
+      server: [Apache/2.4.18 (Ubuntu)]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

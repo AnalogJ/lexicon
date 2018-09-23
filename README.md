@@ -47,6 +47,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- Hurricane Electric DNS
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
 - Linode v4 ([docs](https://developers.linode.com/v4))
@@ -86,7 +87,6 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
 - HostEurope
-- Hurricane Electric DNS
 - Infoblox NIOS
 - ironDNS ([docs](https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0)) :dollar: <sub>requires paid account</sub>
 - ISPConfig
