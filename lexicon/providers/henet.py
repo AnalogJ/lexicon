@@ -1,18 +1,25 @@
 from __future__ import absolute_import
 from __future__ import print_function
-from __future__ import print_function
 import re, logging
 from sys import stderr
 from os import environ
 from time import sleep
 from requests import Session
-from bs4 import BeautifulSoup
+# Due to optional requirement
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+   pass
 
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
+    subparser.description = """A provider for Hurricane Electric DNS.
+        NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
+              YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
+        """
     subparser.add_argument(
         '--auth-username',
         help='Specify username used to authenticate'
@@ -36,9 +43,6 @@ class Provider(BaseProvider):
 
     def authenticate(self):
         """
-        Login to Hurricane Electric and return a session that has the cookie
-        NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
-              YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS LIBRARY.
         """
         # Create the session GET the login page to retrieve a session cookie
         self.session = Session()    
