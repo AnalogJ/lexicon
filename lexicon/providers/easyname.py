@@ -61,9 +61,33 @@ class Provider(BaseProvider):
         loginxtoken_field = html.find('input', {'id': 'loginxtoken'})
         if loginxtoken_field is None:
             errmsg = ('Could not find loginxtoken.'
-                      'Provider needs revisioning most probably')
+                      'Provider needs revisioning most probably.')
             logger.warning(errmsg)
             raise RuntimeError(errmsg)
 
 
         loginxtoken = loginxtoken_field['value']
+        # Try to login with the CSRF Token (loginxtoken)
+        login_response = self.session.post(
+           self.URLS['login'],
+            data={
+                'username':     self.options.get('auth_username',''),
+                'password':     self.options.get('auth_password',''),
+                'submit':       'submit',
+                'loginxtoken':  loginxtoken,
+            }
+        )
+
+        if not login_response.ok:
+            errmsg = ('Easyname errors on our login attempt. '
+                      'Please try again or open an issue on GitHub.')
+            logger.warning(errmsg)
+            raise RuntimeError(errmsg)
+
+        # Error if the p containing the error message is found
+        html = BeautifulSoup(login_response.content, 'html.parser')
+        if html.find('p', {'class': 'feedback-message__text'}) is not None:
+            errmsg = ('Easyname login failed, check EASYNAME_USER '
+                      'and EASYNAME_PASS.')
+            logger.warning(errmsg)
+            raise ValueError(errmsg)
