@@ -27,7 +27,8 @@ class Provider(BaseProvider):
     """
 
     URLS = {
-        'login': 'https://my.easyname.com/en/login'
+        'login': 'https://my.easyname.com/en/login',
+        'overview': 'https://my.easyname.com/hosting/view-user.php'
     }
 
 
@@ -73,11 +74,5 @@ class Provider(BaseProvider):
         logger.debug(login_response)
         assert login_response.status_code == 200, \
                'Could not login due to a network error.'
-
-        # Error if the p containing the error message is found
-        html = BeautifulSoup(login_response.content, 'html.parser')
-        if html.find('p', {'class': 'feedback-message__text'}) is not None:
-            errmsg = ('Easyname login failed, check EASYNAME_USER '
-                      'and EASYNAME_PASS.')
-            logger.warning(errmsg)
-            raise ValueError(errmsg)
+        assert login_response.url == self.URLS['overview'], \
+               'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
