@@ -40,49 +40,39 @@ class Provider(BaseProvider):
         """
         Authenticates against Easyname website and try to find out the domain
         id.
+        Easyname uses a CSRF token in its login form, so two requests are
+        neccessary to actually login.
 
         Returns:
           bool: True if domain id was found.
 
         Raises:
-          RuntimeError: When a request returns unexpected or unknown data.
+          AssertionError: When a request returns unexpected or unknown data.
           ValueError: When login data is wrong or the domain does not exist.
         """
-        # Create the session GET the login page to retrieve the loginxtoken
         home_response = self.session.get(self.URLS['login'])
-
-        if not home_response.ok:
-            errmsg = ('Could not load Easyname. '
-                      'Please try again or open an issue on GitHub.')
-            logger.warning(errmsg)
-            raise RuntimeError(errmsg)
+        logger.debug(home_response)
+        assert home_response.status_code == 200, \
+               'Could not load Easyname login page.'
 
         html = BeautifulSoup(home_response.content, 'html.parser')
-        loginxtoken_field = html.find('input', {'id': 'loginxtoken'})
-        if loginxtoken_field is None:
-            errmsg = ('Could not find loginxtoken.'
-                      'Provider needs revisioning most probably.')
-            logger.warning(errmsg)
-            raise RuntimeError(errmsg)
+        logger.debug(html)
+        csrf_token_field = html.find('input', {'id': 'loginxtoken'})
+        assert csrf_token_field is not None, 'Could not find login token.'
 
-
-        loginxtoken = loginxtoken_field['value']
-        # Try to login with the CSRF Token (loginxtoken)
+        csrf_token = csrf_token_field['value']
         login_response = self.session.post(
            self.URLS['login'],
             data={
                 'username':     self.options.get('auth_username',''),
                 'password':     self.options.get('auth_password',''),
-                'submit':       'submit',
-                'loginxtoken':  loginxtoken,
+                'submit':       '',
+                'loginxtoken':  csrf_token,
             }
         )
-
-        if not login_response.ok:
-            errmsg = ('Easyname errors on our login attempt. '
-                      'Please try again or open an issue on GitHub.')
-            logger.warning(errmsg)
-            raise RuntimeError(errmsg)
+        logger.debug(login_response)
+        assert login_response.status_code == 200, \
+               'Could not login due to a network error.'
 
         # Error if the p containing the error message is found
         html = BeautifulSoup(login_response.content, 'html.parser')
