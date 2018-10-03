@@ -28,6 +28,7 @@ class Provider(BaseProvider):
 
     URLS = {
         'login': 'https://my.easyname.com/en/login',
+        'domain_list': 'https://my.easyname.com/domains',
         'overview': 'https://my.easyname.com/hosting/view-user.php'
     }
 
@@ -35,6 +36,7 @@ class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
         super(Provider, self).__init__(options, engine_overrides)
         self.session = Session()
+        self.domain_id = None
 
 
     def authenticate(self):
@@ -76,3 +78,48 @@ class Provider(BaseProvider):
                'Could not login due to a network error.'
         assert login_response.url == self.URLS['overview'], \
                'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
+
+        # We are logged in, so get the domain list
+        zones_response = self.session.get(self.URLS['domain_list'])
+        logger.debug(zones_response)
+        assert zones_response.status_code == 200, \
+               'Could not retrieve domain list due to a network error.'
+
+        html = BeautifulSoup(zones_response.content, 'html.parser')
+        logger.debug(html)
+        domain_table = html.find('table', {'id': 'cp_domain_table'})
+        assert domain_table is not None, 'Could not find domain table'
+
+        # (Sub)domains can either be managed in their own zones or by the
+        # zones of their parent (sub)domains. Iterate over all subdomains
+        # (starting with the deepest one) and see if there is an own zone
+        # for it.
+        domain = self.options.get('domain','')
+        domain_text = None
+        subdomains = domain.split('.')
+        while True:
+            domain = '.'.join(subdomains)
+            logger.debug('Check if {} has own zone'.format(domain))
+            domain_text = domain_table.find(string=domain)
+            if domain_text is not None or len(subdomains) < 3:
+                break;
+            subdomains.pop(0)
+
+        assert domain_text is not None, \
+               'The domain does not exist on Easyname.'
+
+        try:
+            # Hierarchy: TR > TD > SPAN > Domain Text
+            tr = domain_text.parent.parent.parent
+            td = tr.find('td', {'class': 'td_2'})
+            link = td.find('a')['href']
+            domain_id = link.rsplit('/',1)[-1]
+        except Exception, e:
+            errmsg = ('Cannot get the domain id even though the domain seems '
+                      'to exist ({}).'.format(e))
+            logger.warning(errmsg)
+            raise AssertionError(errmsg)
+
+        self.domain_id = domain_id
+        logger.debug("Easyname domain ID: {}".format(self.domain_id))
+        return True
