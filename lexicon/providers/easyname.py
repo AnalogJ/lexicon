@@ -53,6 +53,18 @@ class Provider(BaseProvider):
           AssertionError: When a request returns unexpected or unknown data.
           ValueError: When login data is wrong or the domain does not exist.
         """
+        csrf_token = self._get_csrf_token()
+        self._login(csrf_token)
+
+        domain_text_element = self._get_domain_text_of_authoritative_zone()
+        self.domain_id = self._get_domain_id(domain_text_element)
+        logger.debug("Easyname domain ID: {}".format(self.domain_id))
+
+        return True
+
+
+    def _get_csrf_token(self):
+        """Return the CSRF Token of easyname login form."""
         home_response = self.session.get(self.URLS['login'])
         logger.debug(home_response)
         assert home_response.status_code == 200, \
@@ -62,8 +74,11 @@ class Provider(BaseProvider):
         logger.debug(html)
         csrf_token_field = html.find('input', {'id': 'loginxtoken'})
         assert csrf_token_field is not None, 'Could not find login token.'
+        return csrf_token_field['value']
 
-        csrf_token = csrf_token_field['value']
+
+    def _login(self, csrf_token):
+        """Attempt to login session on easyname."""
         login_response = self.session.post(
            self.URLS['login'],
             data={
@@ -79,6 +94,9 @@ class Provider(BaseProvider):
         assert login_response.url == self.URLS['overview'], \
                'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
 
+
+    def _get_domain_text_of_authoritative_zone(self):
+        """Get the authoritative name zone."""
         # We are logged in, so get the domain list
         zones_response = self.session.get(self.URLS['domain_list'])
         logger.debug(zones_response)
@@ -107,10 +125,14 @@ class Provider(BaseProvider):
 
         assert domain_text is not None, \
                'The domain does not exist on Easyname.'
+        return domain_text
 
+
+    def _get_domain_id(self, domain_text_element):
+        """Return the easyname id of the domain."""
         try:
             # Hierarchy: TR > TD > SPAN > Domain Text
-            tr = domain_text.parent.parent.parent
+            tr = domain_text_element.parent.parent.parent
             td = tr.find('td', {'class': 'td_2'})
             link = td.find('a')['href']
             domain_id = link.rsplit('/',1)[-1]
@@ -119,7 +141,3 @@ class Provider(BaseProvider):
                       'to exist ({}).'.format(e))
             logger.warning(errmsg)
             raise AssertionError(errmsg)
-
-        self.domain_id = domain_id
-        logger.debug("Easyname domain ID: {}".format(self.domain_id))
-        return True
