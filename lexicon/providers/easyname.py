@@ -30,7 +30,8 @@ class Provider(BaseProvider):
         'login': 'https://my.easyname.com/en/login',
         'domain_list': 'https://my.easyname.com/domains',
         'overview': 'https://my.easyname.com/hosting/view-user.php',
-        'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}'
+        'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
+        'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}'
     }
 
 
@@ -62,6 +63,42 @@ class Provider(BaseProvider):
         logger.debug('Easyname domain ID: {}'.format(self.domain_id))
 
         return True
+
+
+    def create_record(self, type, name, content):
+        """
+        Create a new DNS entry in the domain zone if it does not already exist.
+
+        Args:
+          type (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
+          name (str): The name of the new DNS entry, e.g the domain for which a
+                      MX entry shall be valid.
+          content (str): The content of the new DNS entry, e.g. the mail server
+                         hostname for a MX entry.
+
+        Returns:
+          bool: True if the record was created successfully, False otherwise.
+        """
+        logger.debug('Creating record with name {}'.format(name))
+        if self._is_duplicate_record(type, name, content):
+            return True
+
+        data = self._get_post_data_to_create_dns_entry(type, name, content)
+        create_response = self.session.post(
+            self.URLS['dns_create_entry'].format(self.domain_id),
+            data=data
+        )
+        self._log('Create DNS entry', create_response)
+
+        # Pull a list of records and check for ours
+        was_success = len(self.list_records(type, name, content)) > 0
+        if was_success:
+            msg = 'Successfully added record {}'
+        else:
+            msg = 'Failed to add record {}'
+
+        logger.info(msg.format(name))
+        return was_success
 
 
     def list_records(self, type=None, name=None, content=None):
@@ -118,6 +155,41 @@ class Provider(BaseProvider):
         records = self._filter_records(records, type, name, content)
         logger.debug('Final records ({}): {}'.format(len(records), records))
         return records
+
+
+    def _get_post_data_to_create_dns_entry(self, type, name, content):
+        """
+        Build and return the post date that is needed to create a DNS entry.
+        """
+        data={
+            'id': '',
+            'action': 'save',
+            'name': name,
+            'type': type,
+            'content': content,
+            'prio': '10',
+            'ttl': '360',
+            'commit': ''
+        }
+        ttl = self.options.get('ttl')
+        if ttl and ttl > 360:
+            data['ttl'] = str(ttl)
+
+        prio = self.options.get('priority')
+        if prio and prio > 0:
+            data['prio'] = str(prio)
+
+        return data
+
+
+    def _is_duplicate_record(self, type, name, content):
+        """Check if DNS entry already exists."""
+        records = self.list_records(type, name, content)
+        is_duplicate = len(records) >= 1
+        if is_duplicate:
+            logger.info('Duplicate record {} {} {}, NOOP'.\
+                        format(type, name, content))
+        return is_duplicate
 
 
     def _get_dns_entry_trs(self):
