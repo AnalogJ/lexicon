@@ -2,8 +2,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 import logging
 
-from requests import Session
-from bs4 import BeautifulSoup
+from requests import Session, Response
+from bs4 import BeautifulSoup, Tag
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
 
         domain_text_element = self._get_domain_text_of_authoritative_zone()
         self.domain_id = self._get_domain_id(domain_text_element)
-        logger.debug("Easyname domain ID: {}".format(self.domain_id))
+        logger.debug('Easyname domain ID: {}'.format(self.domain_id))
 
         return True
 
@@ -66,12 +66,12 @@ class Provider(BaseProvider):
     def _get_csrf_token(self):
         """Return the CSRF Token of easyname login form."""
         home_response = self.session.get(self.URLS['login'])
-        logger.debug(home_response)
+        self._log('Home', home_response)
         assert home_response.status_code == 200, \
                'Could not load Easyname login page.'
 
         html = BeautifulSoup(home_response.content, 'html.parser')
-        logger.debug(html)
+        self._log('Home', html)
         csrf_token_field = html.find('input', {'id': 'loginxtoken'})
         assert csrf_token_field is not None, 'Could not find login token.'
         return csrf_token_field['value']
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
                 'loginxtoken':  csrf_token,
             }
         )
-        logger.debug(login_response)
+        self._log('Login', login_response)
         assert login_response.status_code == 200, \
                'Could not login due to a network error.'
         assert login_response.url == self.URLS['overview'], \
@@ -99,12 +99,12 @@ class Provider(BaseProvider):
         """Get the authoritative name zone."""
         # We are logged in, so get the domain list
         zones_response = self.session.get(self.URLS['domain_list'])
-        logger.debug(zones_response)
+        self._log('Zone', zones_response)
         assert zones_response.status_code == 200, \
                'Could not retrieve domain list due to a network error.'
 
         html = BeautifulSoup(zones_response.content, 'html.parser')
-        logger.debug(html)
+        self._log('Zone', html)
         domain_table = html.find('table', {'id': 'cp_domain_table'})
         assert domain_table is not None, 'Could not find domain table'
 
@@ -141,3 +141,15 @@ class Provider(BaseProvider):
                       'to exist ({}).'.format(e))
             logger.warning(errmsg)
             raise AssertionError(errmsg)
+
+
+    def _log(self, name, element):
+        """
+        Log Response and Tag elements. Do nothing if elements is none of them.
+        """
+        if isinstance(element, Response):
+            logger.debug('{} response: URL={} Code={}'.format(name,
+                         element.url, element.status_code))
+
+        elif isinstance(element, Tag) or isinstance(element, BeautifulSoup):
+            logger.debug('{} HTML:\n{}'.format(name, element))
