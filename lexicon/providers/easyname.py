@@ -29,7 +29,8 @@ class Provider(BaseProvider):
     URLS = {
         'login': 'https://my.easyname.com/en/login',
         'domain_list': 'https://my.easyname.com/domains',
-        'overview': 'https://my.easyname.com/hosting/view-user.php'
+        'overview': 'https://my.easyname.com/hosting/view-user.php',
+        'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}'
     }
 
 
@@ -61,6 +62,111 @@ class Provider(BaseProvider):
         logger.debug('Easyname domain ID: {}'.format(self.domain_id))
 
         return True
+
+
+    def list_records(self, type=None, name=None, content=None):
+        """
+        Filter and list DNS entries of domain zone on Easyname.
+        Easyname shows each entry in a HTML table row and each attribute on a
+        table column.
+
+        Args:
+          type (str): Filter by DNS type (e.g. A, TXT, MX, etc)
+          name (str): Filter by the name of the DNS entry, e.g the domain for
+                      which a MX entry shall be valid.
+          content (str): Filter by the content of the DNS entry, e.g. the mail
+                         server hostname for a MX entry.
+
+        Returns:
+          list: A list of DNS entries. A DNS entry is an object with DNS
+                attribute names as keys (e.g. name, content, priority, etc)
+                and additionally an id.
+
+        Raises:
+          AssertionError: When a request returns unexpected or unknown data.
+        """
+        records = []
+        rows = self._get_dns_entry_trs()
+
+        for no, row in enumerate(rows):
+            self._log('DNS list entry', row)
+            try:
+                rec = {}
+                if row.has_attr('ondblclick'):
+                    rec['id'] = int(row['ondblclick'].split('id=')[1].split("'")[0])
+                else:
+                    rec['id'] = -no
+
+                columns = row.find_all('td')
+                rec['name'] = (columns[0].string or '').strip()
+                rec['type'] = (columns[1].contents[1] or '').strip()
+                rec['content'] = (columns[2].string or '').strip()
+                rec['priority'] = (columns[3].string or '').strip()
+                rec['ttl'] = (columns[4].string or '').strip()
+
+                if len(rec['priority']) > 0:
+                    rec['priority'] = int(rec['priority'])
+
+                if len(rec['ttl']) > 0:
+                    rec['ttl'] = int(rec['ttl'])
+            except Exception, e:
+                errmsg = 'Cannot parse DNS entry ({}).'.format(e)
+                logger.warning(errmsg)
+                raise AssertionError(errmsg)
+            records.append(rec)
+
+        records = self._filter_records(records, type, name, content)
+        logger.debug('Final records ({}): {}'.format(len(records), records))
+        return records
+
+
+    def _get_dns_entry_trs(self):
+        """
+        Return the TR elements holding the DNS entries.
+        """
+        dns_list_response = self.session.get(
+            self.URLS['dns'].format(self.domain_id))
+        self._log('DNS list', dns_list_response)
+        assert dns_list_response.status_code == 200, \
+               'Could not load DNS entries.'
+
+        html = BeautifulSoup(dns_list_response.content, 'html.parser')
+        self._log('DNS list', html)
+        dns_table = html.find('table', {'id': 'cp_domains_dnseintraege'})
+        assert dns_table is not None, 'Could not find DNS entry table'
+
+        def _is_zone_tr(elm):
+            has_ondblclick = elm.has_attr('ondblclick')
+            has_class = elm.has_attr('class')
+            return elm.name.lower() == 'tr' and (has_class or has_ondblclick)
+
+        rows = dns_table.findAll(_is_zone_tr)
+        assert rows is not None and len(rows) > 0, \
+               'Could not find any DNS entries'
+        return rows
+
+
+    def _filter_records(self, records, type=None, name=None, content=None):
+        """
+        Filter dns entries based on type, name or content.
+        """
+        if len(records) < 1: return records
+        if type is not None:
+            logger.debug('Filtering {} records by type: {}'.\
+                         format(len(records), type))
+            records = [record for record in records if record['type'] == type]
+        if name is not None:
+            logger.debug('Filtering {} records by name: {}'.\
+                         format(len(records), name))
+            if name.endswith('.'):
+                name = name[:-1]
+            records = [record for record in records if name == record['name'] ]
+        if content is not None:
+            logger.debug('Filtering {} records by content: {}'.\
+                         format(len(records), content.lower()))
+            records = [record for record in records if
+                       record['content'].lower() == content.lower()]
+        return records
 
 
     def _get_csrf_token(self):
@@ -136,6 +242,7 @@ class Provider(BaseProvider):
             td = tr.find('td', {'class': 'td_2'})
             link = td.find('a')['href']
             domain_id = link.rsplit('/',1)[-1]
+            return domain_id
         except Exception, e:
             errmsg = ('Cannot get the domain id even though the domain seems '
                       'to exist ({}).'.format(e))
