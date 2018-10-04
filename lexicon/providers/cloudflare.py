@@ -1,15 +1,15 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['cloudflare.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify email address used to authenticate")
@@ -18,6 +18,7 @@ def ProviderParser(subparser):
 class Provider(BaseProvider):
 
     def __init__(self, options, engine_overrides=None):
+        print(options)
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
         self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.cloudflare.com/client/v4')

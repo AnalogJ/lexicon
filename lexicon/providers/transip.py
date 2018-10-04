@@ -1,9 +1,8 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     from transip.service.objects import DnsEntry
@@ -20,6 +19,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = []
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username used to authenticate")

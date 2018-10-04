@@ -11,7 +11,7 @@ import json
 
 import pkg_resources
 
-from .client import Client
+from lexicon.client import Client
 
 #based off https://docs.python.org/2/howto/argparse.html
 
@@ -131,6 +131,7 @@ def main():
     logging.basicConfig(stream=sys.stdout, level=log_level, format='%(message)s')
 
     logger.debug('Arguments: %s', parsed_args)
+
     client = Client(vars(parsed_args))
     
     results = client.execute()

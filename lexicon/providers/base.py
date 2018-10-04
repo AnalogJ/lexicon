@@ -1,6 +1,8 @@
+from __future__ import absolute_import
+
 from builtins import object
 
-from ..common.options_handler import SafeOptionsWithFallback
+from lexicon.common.options_handler import SafeOptionsWithFallback
 
 
 class Provider(object):

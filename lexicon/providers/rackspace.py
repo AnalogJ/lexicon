@@ -1,7 +1,6 @@
 """Rackspace provider implementation"""
 
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
@@ -9,9 +8,11 @@ import time
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['rackspacecloud.com']
 
 def _async_request_completed(payload):
     """Looks into an async response payload to see if the requested job has finished."""

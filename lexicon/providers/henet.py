@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from __future__ import print_function
+
 import re, logging
 from sys import stderr
 from os import environ
@@ -11,9 +11,11 @@ try:
 except ImportError:
    pass
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['he.net']
 
 def ProviderParser(subparser):
     subparser.description = """A provider for Hurricane Electric DNS.

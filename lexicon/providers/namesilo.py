@@ -1,15 +1,15 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 from xml.etree import ElementTree
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['namesilo.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify key used authenticate")

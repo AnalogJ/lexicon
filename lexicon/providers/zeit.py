@@ -4,9 +4,11 @@ import requests
 import json
 import logging
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['zeit.world']
 
 def ProviderParser(subparser):
     subparser.description = '''

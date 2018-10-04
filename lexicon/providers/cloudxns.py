@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
 
@@ -11,12 +10,13 @@ import time
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 from urllib.parse import urlencode
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['cloudxns.net']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify API-KEY used authenticate to DNS provider")

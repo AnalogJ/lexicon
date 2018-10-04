@@ -15,7 +15,6 @@
 #     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 
 from __future__ import absolute_import
-from __future__ import print_function
 
 import base64
 import contextlib
@@ -29,9 +28,11 @@ import hashlib
 import requests
 from builtins import bytes
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['constellix.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify the API key username used to authenticate")
