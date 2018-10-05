@@ -93,30 +93,15 @@ def ProviderParser(subparser):
         '''
     subparser.add_argument("--mapping-override", metavar="[DOMAIN]:[PROVIDER], ...", help="comma separated list of elements in the form of [DOMAIN]:[PROVIDER] to authoritatively map a particular domain to a particular provider")
 
-    # Explore the arguments available for every provider
+    # Explore and load the arguments available for every provider
     for provider in AVAILABLE_PROVIDERS:
         parser = argparse.ArgumentParser(add_help=False)
         provider.ProviderParser(parser)
 
-        for action in parser._option_string_actions.values():
-            config = vars(action)
-
-            flags = [re.sub(r'^--(.*)$', r'--{0}-\1'.format(provider.__name__), option) for option in config['option_strings']]
-            config['dest'] = 'auto_{0}_{1}'.format(provider.__name__, config['dest'])
-
-            config['action'] = 'store'
-            config['action'] = 'store_true' if isinstance(action, argparse._StoreTrueAction) else config['action']
-            config['action'] = 'store_false' if isinstance(action, argparse._StoreFalseAction) else config['action']
-            config['action'] = 'store_const' if isinstance(action, argparse._StoreConstAction) else config['action']
-
-            if not config['action']:
-                raise ValueError('Error, could not parse an argument for provider {0}: {1} {2}'.format(provider.__name__, flags, config))
-
-            del config['container'], config['option_strings']
-            if config['action'] != 'store':
-                del config['nargs'], config['type'], config['choices']
-
-            subparser.add_argument(*flags, **config)
+        for action in parser._actions:
+            action.option_strings = [re.sub(r'^--(.*)$', r'--{0}-\1'.format(provider.__name__), option) for option in action.option_strings]
+            action.dest = 'auto_{0}_{1}'.format(provider.__name__, action.dest)
+            subparser._add_action(action)
 
 class Provider(object):
     """
