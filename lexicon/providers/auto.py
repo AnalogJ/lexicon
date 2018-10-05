@@ -23,10 +23,10 @@ LOGGER = logging.getLogger(__name__)
 
 def _get_available_providers():
     available_providers = []
-    for importer, modname, _ in pkgutil.iter_modules(providers.__path__):
+    for _, modname, _ in pkgutil.iter_modules(providers.__path__):
         if modname != 'base' and modname != 'auto':
             try:
-                available_providers.append(importer.find_module(modname).load_module(modname))
+                available_providers.append(importlib.import_module('lexicon.providers.' + modname))
             except ImportError:
                 LOGGER.warn('Warning, the provider {0} cannot be loaded due to missing optional dependencies.'
                             .format(modname))
