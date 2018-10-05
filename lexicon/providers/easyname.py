@@ -31,7 +31,8 @@ class Provider(BaseProvider):
         'domain_list': 'https://my.easyname.com/domains',
         'overview': 'https://my.easyname.com/hosting/view-user.php',
         'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
-        'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}'
+        'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
+        'dns_delete_entry': 'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'
     }
 
 
@@ -99,6 +100,37 @@ class Provider(BaseProvider):
 
         logger.info(msg.format(name))
         return was_success
+
+
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        """
+        Delete one or more DNS entries in the domain zone that match the given
+        criteria.
+
+        Args:
+          identifier (str): An ID to match against DNS entry easyname IDs.
+          type (str): A DNS type (e.g. A, TXT, MX, etc) to match against DNS
+                      entry types.
+          name (str): A name to match against DNS entry names.
+          content (str): A content to match against a DNS entry contents.
+
+        Returns:
+          bool: True if the record(s) were deleted successfully, False
+                otherwise.
+        """
+        success_url = self.URLS['dns'].format(self.domain_id)
+        record_ids = self._get_matching_dns_entry_ids(identifier, type,
+                                                      name, content)
+        logger.debug('Record IDs to delete: {}'.format(record_ids))
+
+        success = True
+        for rec_id in record_ids:
+            delete_response = self.session.get(
+                self.URLS['dns_delete_entry'].format(self.domain_id, rec_id))
+            self._log('Delete DNS entry {}'.format(rec_id), delete_response)
+            success = success and delete_response.url == success_url
+
+        return success
 
 
     def list_records(self, type=None, name=None, content=None):
@@ -190,6 +222,18 @@ class Provider(BaseProvider):
             logger.info('Duplicate record {} {} {}, NOOP'.\
                         format(type, name, content))
         return is_duplicate
+
+
+    def _get_matching_dns_entry_ids(self, identifier=None, type=None,
+                                    name=None, content=None):
+        """Return a list of DNS entries that match the given criteria."""
+        record_ids = []
+        if not identifier:
+            records = self.list_records(type, name, content)
+            record_ids = [record['id'] for record in records]
+        else:
+            record_ids.append(identifier)
+        return record_ids
 
 
     def _get_dns_entry_trs(self):
