@@ -8,10 +8,12 @@ import logging
 import os
 import sys
 import json
+import pkgutil
 
 import pkg_resources
 
 from lexicon.client import Client
+from lexicon import providers as providers_package
 
 #based off https://docs.python.org/2/howto/argparse.html
 
@@ -36,13 +38,10 @@ def BaseProviderParser():
     return parser
 
 def MainParser():
-    current_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'providers')
-    providers = [os.path.splitext(f)[0] for f in os.listdir(current_filepath) if os.path.isfile(os.path.join(current_filepath, f))]
-    providers = list(set(providers))
-    providers.remove('base')
-    providers.remove('__init__')
-    providers = [x for x in providers if not x.startswith('.')]
-
+    providers = []
+    for _, modname, _ in pkgutil.iter_modules(providers_package.__path__):
+        if modname != 'base':
+            providers.append(modname)
     providers = sorted(providers)
 
     parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
