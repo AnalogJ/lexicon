@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         return True
 
 
-    def create_record(self, type, name, content):
+    def create_record(self, type, name, content, id=None):
         """
         Create a new DNS entry in the domain zone if it does not already exist.
 
@@ -76,6 +76,8 @@ class Provider(BaseProvider):
                       MX entry shall be valid.
           content (str): The content of the new DNS entry, e.g. the mail server
                          hostname for a MX entry.
+          id (str): The easyname id of a DNS entry. Use to overwrite an
+                    existing entry.
 
         Returns:
           bool: True if the record was created successfully, False otherwise.
@@ -84,7 +86,8 @@ class Provider(BaseProvider):
         if self._is_duplicate_record(type, name, content):
             return True
 
-        data = self._get_post_data_to_create_dns_entry(type, name, content)
+        data = self._get_post_data_to_create_dns_entry(type, name, content, id)
+        logger.debug('Create DNS data: {}'.format(data))
         create_response = self.session.post(
             self.URLS['dns_create_entry'].format(self.domain_id),
             data=data
@@ -133,7 +136,48 @@ class Provider(BaseProvider):
         return success
 
 
-    def list_records(self, type=None, name=None, content=None):
+    def update_record(self, identifier, type=None, name=None, content=None):
+        """
+        Update a DNS entry identified by identifier or name in the domain zone.
+        Any non given argument will leave the current value of the DNS entry.
+
+        Args:
+          identifier (str): The easyname id of the DNS entry to update.
+          type (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
+          name (str): The name of the new DNS entry, e.g the domain for which a
+                      MX entry shall be valid.
+          content (str): The content of the new DNS entry, e.g. the mail server
+                         hostname for a MX entry.
+
+        Returns:
+          bool: True if the record was updated successfully, False otherwise.
+
+        Raises:
+          AssertionError: When a request returns unexpected or unknown data.
+        """
+        if identifier is not None:
+            identifier = int(identifier)
+            records = self.list_records(id=identifier)
+        else:
+            records = self.list_records(name=name, type=type)
+        logger.debug('Records to update ({}): {}'.format(
+                     len(records), records))
+        assert len(records) > 0, 'No record found to update'
+        success = True
+
+        for record in records:
+            name = name if name is not None else record['name']
+            type = type if type is not None else record['type']
+            content = content if content is not None \
+                                        else record['content']
+            success = success and self.create_record(type,
+                                                     name,
+                                                     content,
+                                                     record['id'])
+        return success
+
+
+    def list_records(self, type=None, name=None, content=None, id=None):
         """
         Filter and list DNS entries of domain zone on Easyname.
         Easyname shows each entry in a HTML table row and each attribute on a
@@ -145,6 +189,7 @@ class Provider(BaseProvider):
                       which a MX entry shall be valid.
           content (str): Filter by the content of the DNS entry, e.g. the mail
                          server hostname for a MX entry.
+          id (str): Filter by the easyname id of the DNS entry.
 
         Returns:
           list: A list of DNS entries. A DNS entry is an object with DNS
@@ -184,23 +229,31 @@ class Provider(BaseProvider):
                 raise AssertionError(errmsg)
             records.append(rec)
 
-        records = self._filter_records(records, type, name, content)
+        records = self._filter_records(records, type, name, content, id)
         logger.debug('Final records ({}): {}'.format(len(records), records))
         return records
 
 
-    def _get_post_data_to_create_dns_entry(self, type, name, content):
+    def _get_post_data_to_create_dns_entry(self, type, name, content, id=None):
         """
         Build and return the post date that is needed to create a DNS entry.
         """
+        is_update = id is not None
+        if is_update:
+            records = self.list_records(id=id)
+            assert len(records) == 1, 'ID is not unique or does not exist'
+            record = records[0]
+            logger.debug('Create post data to update record: {}'.\
+                         format(record))
+
         data={
-            'id': '',
+            'id': str(id) if is_update else '',
             'action': 'save',
             'name': name,
             'type': type,
             'content': content,
-            'prio': '10',
-            'ttl': '360',
+            'prio': str(record['priority']) if is_update else '10',
+            'ttl': str(record['ttl']) if is_update else '360',
             'commit': ''
         }
         ttl = self.options.get('ttl')
@@ -262,11 +315,15 @@ class Provider(BaseProvider):
         return rows
 
 
-    def _filter_records(self, records, type=None, name=None, content=None):
+    def _filter_records(self, records, type=None, name=None, content=None, id=None):
         """
         Filter dns entries based on type, name or content.
         """
         if len(records) < 1: return records
+        if id is not None:
+            logger.debug('Filtering {} records by id: {}'.\
+                         format(len(records), id))
+            records = [record for record in records if record['id'] == id]
         if type is not None:
             logger.debug('Filtering {} records by type: {}'.\
                          format(len(records), type))
