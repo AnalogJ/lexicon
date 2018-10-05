@@ -22,11 +22,11 @@ from lexicon.common.options_handler import env_auth_options
 LOGGER = logging.getLogger(__name__)
 
 def _get_available_providers():
-    available_providers = []
+    available_providers = {}
     for _, modname, _ in pkgutil.iter_modules(providers.__path__):
         if modname != 'base' and modname != 'auto':
             try:
-                available_providers.append(importlib.import_module('lexicon.providers.' + modname))
+                available_providers[modname] = importlib.import_module('lexicon.providers.' + modname)
             except ImportError:
                 LOGGER.warn('Warning, the provider {0} cannot be loaded due to missing optional dependencies.'
                             .format(modname))
@@ -62,18 +62,18 @@ def _relevant_provider_for_domain(domain):
     nameserver_domains = _get_ns_records_domains_for_domain(domain)
     relevant_providers = []
 
-    for provider in AVAILABLE_PROVIDERS:
-        ns_domains = provider.NAMESERVER_DOMAINS
+    for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
+        ns_domains = provider_module.NAMESERVER_DOMAINS
         
         # Test plain domain string comparison
         if set([ns_domain for ns_domain in ns_domains if isinstance(ns_domain, six.string_types)]) & nameserver_domains:
-            relevant_providers.append(provider)
+            relevant_providers.append((provider_name, provider_module))
             continue
 
         # Test domains regexp matching
         for ns_domain in ns_domains:
             if hasattr(ns_domain, 'match') and [nameserver_domain for nameserver_domain in nameserver_domains if ns_domain.match(nameserver_domain)]:
-                relevant_providers.append(provider)
+                relevant_providers.append((provider_name, provider_module))
                 continue
 
     if not relevant_providers:
@@ -96,13 +96,13 @@ def ProviderParser(subparser):
     subparser.add_argument("--mapping-override", metavar="[DOMAIN]:[PROVIDER], ...", help="comma separated list of elements in the form of [DOMAIN]:[PROVIDER] to authoritatively map a particular domain to a particular provider")
 
     # Explore and load the arguments available for every provider into the 'auto' provider.
-    for provider in AVAILABLE_PROVIDERS:
+    for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
         parser = argparse.ArgumentParser(add_help=False)
-        provider.ProviderParser(parser)
+        provider_module.ProviderParser(parser)
 
         for action in parser._actions:
-            action.option_strings = [re.sub(r'^--(.*)$', r'--{0}-\1'.format(provider.__name__), option) for option in action.option_strings]
-            action.dest = 'auto_{0}_{1}'.format(provider.__name__, action.dest)
+            action.option_strings = [re.sub(r'^--(.*)$', r'--{0}-\1'.format(provider_name), option) for option in action.option_strings]
+            action.dest = 'auto_{0}_{1}'.format(provider_name, action.dest)
             subparser._add_action(action)
 
 # Take care of the fact that this provider extends object, not BaseProvider !
@@ -145,20 +145,20 @@ class Provider(object):
             provider = [element for element in AVAILABLE_PROVIDERS if element.__name__ == override_provider][0]
             LOGGER.info('Provider authoritatively mapped for domain %s: %s.', self.domain, provider.__name__)
         else:
-            provider = _relevant_provider_for_domain(self.domain)
-            LOGGER.info('Provider discovered for domain %s: %s.', self.domain, provider.__name__)
+            (provider_name, provider_module) = _relevant_provider_for_domain(self.domain)
+            LOGGER.info('Provider discovered for domain %s: %s.', self.domain, provider_name)
 
-        new_options = env_auth_options(provider.__name__)
+        new_options = env_auth_options(provider_name)
         for key, value in self.options.items():
-            target_prefix = 'auto_{0}_'.format(provider.__name__)
+            target_prefix = 'auto_{0}_'.format(provider_name)
             if key.startswith(target_prefix):
                 new_options[re.sub('^{0}'.format(target_prefix), '', key)] = value
             if not key.startswith('auto_'):
                 new_options[key] = value
 
-        new_options['provider_name'] = provider.__name__
+        new_options['provider_name'] = provider_name
 
-        self.delegate = provider.Provider(new_options, self.engine_overrides)
+        self.delegate = provider_module.Provider(new_options, self.engine_overrides)
         self.delegate.authenticate()
 
     def __getattr__(self, attr_name):
