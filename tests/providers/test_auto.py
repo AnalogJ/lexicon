@@ -1,7 +1,8 @@
 # Test for one implementation of the interface
 import socket
-from unittest import TestCase, mock
+from unittest import TestCase
 
+import mock
 import pytest
 
 from lexicon.providers.auto import Provider
