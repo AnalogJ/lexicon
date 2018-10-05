@@ -234,6 +234,10 @@ class Provider(BaseProvider):
         return records
 
 
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        pass
+
+
     def _get_post_data_to_create_dns_entry(self, type, name, content, id=None):
         """
         Build and return the post date that is needed to create a DNS entry.
