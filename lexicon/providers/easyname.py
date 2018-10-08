@@ -76,7 +76,7 @@ class Provider(BaseProvider):
                       MX entry shall be valid.
           content (str): The content of the new DNS entry, e.g. the mail server
                          hostname for a MX entry.
-          id (str): The easyname id of a DNS entry. Use to overwrite an
+          [id] (str): The easyname id of a DNS entry. Use to overwrite an
                     existing entry.
 
         Returns:
@@ -111,11 +111,11 @@ class Provider(BaseProvider):
         criteria.
 
         Args:
-          identifier (str): An ID to match against DNS entry easyname IDs.
-          type (str): A DNS type (e.g. A, TXT, MX, etc) to match against DNS
+          [identifier] (str): An ID to match against DNS entry easyname IDs.
+          [type] (str): A DNS type (e.g. A, TXT, MX, etc) to match against DNS
                       entry types.
-          name (str): A name to match against DNS entry names.
-          content (str): A content to match against a DNS entry contents.
+          [name] (str): A name to match against DNS entry names.
+          [content] (str): A content to match against a DNS entry contents.
 
         Returns:
           bool: True if the record(s) were deleted successfully, False
@@ -143,11 +143,11 @@ class Provider(BaseProvider):
 
         Args:
           identifier (str): The easyname id of the DNS entry to update.
-          type (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
-          name (str): The name of the new DNS entry, e.g the domain for which a
-                      MX entry shall be valid.
-          content (str): The content of the new DNS entry, e.g. the mail server
-                         hostname for a MX entry.
+          [type] (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
+          [name] (str): The name of the new DNS entry, e.g the domain for which
+                        a MX entry shall be valid.
+          [content] (str): The content of the new DNS entry, e.g. the mail
+                           server hostname for a MX entry.
 
         Returns:
           bool: True if the record was updated successfully, False otherwise.
@@ -184,12 +184,12 @@ class Provider(BaseProvider):
         table column.
 
         Args:
-          type (str): Filter by DNS type (e.g. A, TXT, MX, etc)
-          name (str): Filter by the name of the DNS entry, e.g the domain for
+          [type] (str): Filter by DNS type (e.g. A, TXT, MX, etc)
+          [name] (str): Filter by the name of the DNS entry, e.g the domain for
                       which a MX entry shall be valid.
-          content (str): Filter by the content of the DNS entry, e.g. the mail
-                         server hostname for a MX entry.
-          id (str): Filter by the easyname id of the DNS entry.
+          [content] (str): Filter by the content of the DNS entry, e.g. the
+                           mail server hostname for a MX entry.
+          [id] (str): Filter by the easyname id of the DNS entry.
 
         Returns:
           list: A list of DNS entries. A DNS entry is an object with DNS
