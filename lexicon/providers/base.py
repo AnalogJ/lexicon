@@ -6,7 +6,7 @@ from ..common.options_handler import SafeOptionsWithFallback
 class Provider(object):
 
     """
-    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implmented
+    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implemented
     Providers follow a standard ducktype. All standardized options will be provided here as defaults, but can be overwritten
     by environmental variables and cli arguments.
 
