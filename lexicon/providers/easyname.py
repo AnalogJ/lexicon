@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 import logging
+import sys
 
 from requests import Session, Response
 from bs4 import BeautifulSoup, Tag
@@ -40,6 +41,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(options, engine_overrides)
         self.session = Session()
         self.domain_id = None
+        self._records = None
 
 
     def authenticate(self):
@@ -92,6 +94,7 @@ class Provider(BaseProvider):
             self.URLS['dns_create_entry'].format(self.domain_id),
             data=data
         )
+        self._invalidate_records_cache()
         self._log('Create DNS entry', create_response)
 
         # Pull a list of records and check for ours
@@ -130,6 +133,7 @@ class Provider(BaseProvider):
         for rec_id in record_ids:
             delete_response = self.session.get(
                 self.URLS['dns_delete_entry'].format(self.domain_id, rec_id))
+            self._invalidate_records_cache()
             self._log('Delete DNS entry {}'.format(rec_id), delete_response)
             success = success and delete_response.url == success_url
 
@@ -199,43 +203,53 @@ class Provider(BaseProvider):
         Raises:
           AssertionError: When a request returns unexpected or unknown data.
         """
-        records = []
-        rows = self._get_dns_entry_trs()
+        if self._records is None:
+            records = []
+            rows = self._get_dns_entry_trs()
 
-        for no, row in enumerate(rows):
-            self._log('DNS list entry', row)
-            try:
-                rec = {}
-                if row.has_attr('ondblclick'):
-                    rec['id'] = int(row['ondblclick'].split('id=')[1].split("'")[0])
-                else:
-                    rec['id'] = -no
+            for no, row in enumerate(rows):
+                self._log('DNS list entry', row)
+                try:
+                    rec = {}
+                    if row.has_attr('ondblclick'):
+                        rec['id'] = int(row['ondblclick'].split('id=')[1].split("'")[0])
+                    else:
+                        rec['id'] = -no
 
-                columns = row.find_all('td')
-                rec['name'] = (columns[0].string or '').strip()
-                rec['type'] = (columns[1].contents[1] or '').strip()
-                rec['content'] = (columns[2].string or '').strip()
-                rec['priority'] = (columns[3].string or '').strip()
-                rec['ttl'] = (columns[4].string or '').strip()
+                    columns = row.find_all('td')
+                    rec['name'] = (columns[0].string or '').strip()
+                    rec['type'] = (columns[1].contents[1] or '').strip()
+                    rec['content'] = (columns[2].string or '').strip()
+                    rec['priority'] = (columns[3].string or '').strip()
+                    rec['ttl'] = (columns[4].string or '').strip()
 
-                if len(rec['priority']) > 0:
-                    rec['priority'] = int(rec['priority'])
+                    if len(rec['priority']) > 0:
+                        rec['priority'] = int(rec['priority'])
 
-                if len(rec['ttl']) > 0:
-                    rec['ttl'] = int(rec['ttl'])
-            except Exception, e:
-                errmsg = 'Cannot parse DNS entry ({}).'.format(e)
-                logger.warning(errmsg)
-                raise AssertionError(errmsg)
-            records.append(rec)
+                    if len(rec['ttl']) > 0:
+                        rec['ttl'] = int(rec['ttl'])
+                except Exception, e:
+                    errmsg = 'Cannot parse DNS entry ({}).'.format(e)
+                    logger.warning(errmsg)
+                    raise AssertionError(errmsg)
+                records.append(rec)
+            self._records = records
 
-        records = self._filter_records(records, type, name, content, id)
+        records = self._filter_records(self._records, type, name, content, id)
         logger.debug('Final records ({}): {}'.format(len(records), records))
         return records
 
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         pass
+
+
+    def _invalidate_records_cache(self):
+        """
+        Invalidate DNS entries cache such that list_records will do a new
+        request to retrieve DNS entries.
+        """
+        self._records = None
 
 
     def _get_post_data_to_create_dns_entry(self, type, name, content, id=None):
