@@ -18,7 +18,6 @@ def ProviderParser(subparser):
 class Provider(BaseProvider):
 
     def __init__(self, options, engine_overrides=None):
-        print(options)
         super(Provider, self).__init__(options, engine_overrides)
         self.domain_id = None
         self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.cloudflare.com/client/v4')

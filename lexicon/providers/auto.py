@@ -19,7 +19,7 @@ import sys
 from lexicon import providers
 from lexicon.common.options_handler import env_auth_options
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 def _get_available_providers():
     available_providers = {}
@@ -28,7 +28,7 @@ def _get_available_providers():
             try:
                 available_providers[modname] = importlib.import_module('lexicon.providers.' + modname)
             except ImportError:
-                LOGGER.warn('Warning, the provider {0} cannot be loaded due to missing optional dependencies.'
+                logger.warn('Warning, the provider {0} cannot be loaded due to missing optional dependencies.'
                             .format(modname))
 
     return available_providers
@@ -81,7 +81,7 @@ def _relevant_provider_for_domain(domain):
                          'Found nameservers domains are {1}'.format(domain, nameserver_domains))
 
     if len(relevant_providers) > 1:
-        LOGGER.warn('Warning, multiple DNS providers have been found for given domain {0}, first one will be used: {1} '
+        logger.warn('Warning, multiple DNS providers have been found for given domain {0}, first one will be used: {1} '
                     'This may indicate a misconfiguration in one or more provider.'
                     .format(domain, relevant_providers))
 
@@ -123,7 +123,7 @@ class Provider(object):
     """
     def __init__(self, options, engine_overrides=None):
         self.domain = options.get('domain')
-        self.delegate = None
+        self.proxy_provider = None
         self.options = options
         self.engine_overrides = engine_overrides
 
@@ -143,10 +143,10 @@ class Provider(object):
         override_provider = mapping_override_processed.get(self.domain)
         if override_provider:
             provider = [element for element in AVAILABLE_PROVIDERS if element.__name__ == override_provider][0]
-            LOGGER.info('Provider authoritatively mapped for domain %s: %s.', self.domain, provider.__name__)
+            logger.info('Provider authoritatively mapped for domain %s: %s.', self.domain, provider.__name__)
         else:
             (provider_name, provider_module) = _relevant_provider_for_domain(self.domain)
-            LOGGER.info('Provider discovered for domain %s: %s.', self.domain, provider_name)
+            logger.info('Provider discovered for domain %s: %s.', self.domain, provider_name)
 
         new_options = env_auth_options(provider_name)
         for key, value in self.options.items():
@@ -158,16 +158,16 @@ class Provider(object):
 
         new_options['provider_name'] = provider_name
 
-        self.delegate = provider_module.Provider(new_options, self.engine_overrides)
-        self.delegate.authenticate()
+        self.proxy_provider = provider_module.Provider(new_options, self.engine_overrides)
+        self.proxy_provider.authenticate()
 
     def __getattr__(self, attr_name):
         """
         Delegate any call to any parameter/method to the underlying provider.
         Method authenticate() must have been called before.
         """
-        if not self.delegate:
+        if not self.proxy_provider:
             raise ValueError('The \'auto\' provider requires its authenticate method '
                              'to be called before any subsequent parameter/method call.')
 
-        return getattr(self.delegate, attr_name)
+        return getattr(self.proxy_provider, attr_name)
