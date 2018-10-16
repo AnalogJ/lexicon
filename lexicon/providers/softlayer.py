@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username used to authenticate")
-    subparser.add_argument("--auth-api-key", help="specify API private key to authenticate")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-api-key", help="specify API private key for authentication")
 
 class Provider(BaseProvider):
 

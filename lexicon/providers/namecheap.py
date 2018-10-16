@@ -18,14 +18,14 @@ logger = logging.getLogger(__name__)
 def ProviderParser(subparser):
     subparser.add_argument(
         '--auth-token',
-        help='specify api token used to authenticate'
+        help='specify api token for authentication'
     )
     
     # earlier versions of the API expected the email address here
     # now they appear to want the username.
     subparser.add_argument(
         '--auth-username',
-        help='specify username used to authenticate'
+        help='specify username for authentication'
     )
 
     # FIXME What is the client IP used for?

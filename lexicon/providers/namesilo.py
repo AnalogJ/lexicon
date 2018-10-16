@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify key used authenticate")
+    subparser.add_argument("--auth-token", help="specify key for authentication")
 
 
 class Provider(BaseProvider):

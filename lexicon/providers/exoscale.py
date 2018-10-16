@@ -14,10 +14,10 @@ HOUR = 3600
 
 def ProviderParser(subparser):
     subparser.add_argument(
-        "--auth-key", help="specify API key used to authenticate"
+        "--auth-key", help="specify API key for authentication"
     )
     subparser.add_argument(
-        "--auth-secret", help="specify API secret used to authenticate"
+        "--auth-secret", help="specify API secret for authentication"
     )
 
 

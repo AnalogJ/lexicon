@@ -22,8 +22,8 @@ logger = logging.getLogger(__name__)
 plesk_url_suffix = "/enterprise/control/agent.php"
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify user used authenticate")
-    subparser.add_argument("--auth-password", help="specify password used authenticate")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-password", help="specify password for authentication")
     subparser.add_argument('--plesk-server', help="specify URL to the Plesk Web UI, including the port")
 
 class Provider(BaseProvider):
