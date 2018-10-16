@@ -23,7 +23,7 @@ class ConfigurationResolver(object):
         $ from lexicon.config import Config
         $ config = Config()
         $ config.withEnv().withConfigFile()
-        $ print(config.get('lexicon:delegate'))
+        $ print(config.get('lexicon:delegated'))
         $ print(config.get('lexicon:cloudflare:auth_token))
 
     Config can get parameters for Lexicon and providers from:
@@ -43,7 +43,7 @@ class ConfigurationResolver(object):
         """
         Get the value of the given config parameter key. Key must be correctly scoped for Lexicon, and
         optionally for the DNS provider for which the parameter is consumed. For instance:
-            * config.get('lexicon:delegate') will get the delegate config parameter for Lexicon
+            * config.get('lexicon:delegated') will get the delegated config parameter for Lexicon
             * config.get('lexicon:cloudflare:auth_token') will get 
             the auth_token config parameter consumed by cloudflare DNS provider.
 
@@ -112,8 +112,8 @@ class ConfigurationResolver(object):
 
         Typical format is:
             $ cat lexicon.yml
-            # Will define properties 'lexicon:delegate' and 'lexicon:cloudflare:auth_token'
-            delegate: 'onedelegate'
+            # Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
+            delegated: 'onedelegated'
             cloudflare:
             auth_token: SECRET_TOKEN
 
@@ -208,7 +208,7 @@ class EnvironmentConfigFeeder(ConfigFeeder):
         environment_variable_legacy = re.sub(r'(.*)_AUTH_(.*)', r'\1_\2', environment_variable).upper()
         value = self._parameters.get(environment_variable_legacy, None)
         if value:
-            LOGGER.warn('Warning: Use of environment variable {0} is deprecated. Try {1} instead.'
+            LOGGER.warning('Warning: Use of environment variable {0} is deprecated. Try {1} instead.'
             .format(environment_variable_legacy, environment_variable))
             return value
 
