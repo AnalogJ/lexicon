@@ -39,6 +39,13 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
+        existing_record = self.list_records(type, name, content)
+        if len(existing_record) > 0:
+            # Do nothing if the record already exists.
+            # The creation call can fail for a variety of reasons, so
+            # the safest thing to do is check if the record already exists
+            return True
+
         self._do_create(type, name, content)
         logger.debug('create_record: %s', True)
         return True
@@ -51,7 +58,7 @@ class Provider(BaseProvider):
         if type is not None:
             params['type'] = type
         if name is not None:
-            params['name'] = name
+            params['name'] = self._relative_name(name)
         if content is not None:
             params['data'] = content
 
@@ -59,7 +66,7 @@ class Provider(BaseProvider):
         records = self._post(url, params)
         records = [{
             'type': r['type'],
-            'name': r['name'],
+            'name': self._full_name(r['name']),
             'ttl': r['ttl'],
             'content': r['data'],
             'id': hashlib.sha1(''.join([r['type'], r['name'], r['data']]).encode('utf-8')).hexdigest()
@@ -71,13 +78,18 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def update_record(self, identifier, type=None, name=None, content=None):
-        matching_records = self.list_records(type, name)
-        if len(matching_records) > 0 and identifier is None:
-            raise ValueError('Too many matching records. Try specifying an identifier.')
+        if identifier is not None:
+            records = self.list_records()
+            to_delete = next((r for r in records if r['id'] == identifier), None)
+            if to_delete is None:
+                raise ValueError('No record with that identifier.')
+        else:
+            # Check name and type
+            matching_records = self.list_records(type=type, name=name)
+            if len(matching_records) > 1:
+                raise ValueError('More than one record exists with that type and name. Try specifying an identifier.')
+            to_delete = matching_records[0]
 
-        to_delete = next((r for r in matching_records if r['id'] == identifier), None)
-        if to_delete is None:
-            raise ValueError('No record with that identifier.')
         self._do_delete(to_delete['type'], to_delete['name'], to_delete['content'])
         self._do_create(type, name, content)
         logger.debug('update_record: %s', True)
@@ -86,11 +98,22 @@ class Provider(BaseProvider):
     # Delete an existing record
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        self._do_delete(type, name, content)
+        matching_records = self.list_records(type, name, content)        
+        if identifier is not None:
+            to_delete = next((r for r in matching_records if r['id'] == identifier), None)
+            if to_delete is None:
+                raise ValueError('No record with that identifier.')
+            to_delete = [to_delete]
+        else:
+            to_delete = matching_records
+
+        for d in to_delete:
+            self._do_delete(d['type'], d['name'], d['content'])
+
         logger.debug('delete_record: %s', True)
         return True
 
-    def _do_create(self, type=None, name=None, content=None):
+    def _do_create(self, type, name, content):
         record = {
             'name': self._relative_name(name),
             'type': type,
@@ -106,7 +129,7 @@ class Provider(BaseProvider):
     def _do_delete(self, type=None, name=None, content=None):
         url = '/dns/{0}/removeRR'.format(self.domain_id)
         record = {
-            'name': name,
+            'name': self._relative_name(name),
             'type': type,
             'data': content
         }
