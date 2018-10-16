@@ -2,7 +2,9 @@ import contextlib
 
 from builtins import object
 from functools import wraps
-from lexicon.common.options_handler import SafeOptions, env_auth_options
+
+from lexicon.providers.base import Provider as BaseProvider
+from lexicon.config import ConfigFeeder, DictConfigFeeder, ConfigurationResolver
 
 import pytest
 import vcr
@@ -27,6 +29,26 @@ def _vcr_integration_test(decorated):
                                         filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
     return wrapper
+
+class EngineOverridesConfigFeeder(ConfigFeeder):
+    
+    def __init__(self, engine_overrides):
+        super(EngineOverridesConfigFeeder, self).__init__()
+        self.engine_overrides = engine_overrides
+        print(engine_overrides)
+
+    def feed(self, config_parameter):
+        config_parameter = config_parameter.split(':')[-1]
+
+        value = self.engine_overrides.get(config_parameter)
+        if value:
+            return value
+        
+        fallbackFn = self.engine_overrides.get('fallbackFn')
+        if fallbackFn:
+            return fallbackFn(config_parameter)
+
+        return None
 
 """
 https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
@@ -53,6 +75,12 @@ Extended test suites can be skipped by adding the following snippet to the test_
 
 """
 class IntegrationTests(object):
+
+    def __init__(self):
+        self.Provider = BaseProvider
+        self.domain = None
+        self.provider_name = None
+
     ###########################################################################
     # Provider.authenticate()
     ###########################################################################
@@ -63,9 +91,9 @@ class IntegrationTests(object):
 
     @_vcr_integration_test
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
-        options = self._test_options()
-        options['domain'] = 'thisisadomainidonotown.com'
-        provider = self.Provider(options, self._test_engine_overrides())
+        config = self._test_config()
+        config.add_config_feeder(DictConfigFeeder({'domain', 'thisisadomainidonotown.com'}), 0)
+        provider = self.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
 
@@ -282,23 +310,20 @@ class IntegrationTests(object):
     # Private helpers, mimicing the auth_* options provided by the Client
     # http://stackoverflow.com/questions/6229073/how-to-make-a-python-dictionary-that-returns-key-for-keys-missing-from-the-dicti
 
-    """
-    This method lets you set options that are passed into the Provider. see lexicon/providers/base.py for a full list
-    of options available. In general you should not need to override this method. Just override `self.domain`
+    def _test_config(self):
+        """
+        This method lets you set options that are passed into the Provider. see lexicon/providers/base.py for a full list
+        of options available. In general you should not need to override this method. Just override `self.domain`
 
-    Any parameters that you expect to be passed to the provider via the cli, like --auth_username and --auth_token, will
-    be present during the tests, with a 'placeholder_' prefix.
+        Any parameters that you expect to be passed to the provider via the cli, like --auth_username and --auth_token, will
+        be present during the tests, with a 'placeholder_' prefix.
 
-    options['auth_password'] == 'placeholder_auth_password'
-    options['auth_username'] == 'placeholder_auth_username'
-    options['unique_provider_option'] == 'placeholder_unique_provider_option'
+        options['auth_password'] == 'placeholder_auth_password'
+        options['auth_username'] == 'placeholder_auth_username'
+        options['unique_provider_option'] == 'placeholder_unique_provider_option'
 
-    """
-    def _test_options(self):
-        cmd_options = SafeOptions()
-        cmd_options['domain'] = self.domain
-        cmd_options.update(env_auth_options(self.provider_name))
-        return cmd_options
+        """
+        return ConfigurationResolver().with_dict({'domain': self.domain}).with_env().with_config_feeder(EngineOverridesConfigFeeder(self._test_engine_overrides()))
 
     """
     This method lets you override engine options. You must ensure the `fallbackFn` is defined, so your override might look like:
@@ -334,7 +359,7 @@ class IntegrationTests(object):
     Construct a new provider, and authenticate it against the target DNS provider API.
     """
     def _construct_authenticated_provider(self):
-        provider = self.Provider(self._test_options(), self._test_engine_overrides())
+        provider = self.Provider(self._test_config())
         provider.authenticate()
         return provider
 

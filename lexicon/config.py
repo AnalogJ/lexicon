@@ -22,7 +22,7 @@ class ConfigurationResolver(object):
         # then from a configuration file named '/my/path/to/lexicon.yml'.
         $ from lexicon.config import Config
         $ config = Config()
-        $ config.withEnv().withConfigFile()
+        $ config.with_env().with_config_file()
         $ print(config.resolve('lexicon:delegated'))
         $ print(config.resolve('lexicon:cloudflare:auth_token))
 
@@ -59,26 +59,26 @@ class ConfigurationResolver(object):
 
         return None
 
-    def addConfigFeeder(self, config_feeder, position = None):
-        self._config_feeders.insert(position if position else len(self._config_feeders), config_feeder)
+    def add_config_feeder(self, config_feeder, position = None):
+        self._config_feeders.insert(position if position is not None else len(self._config_feeders), config_feeder)
 
-    def withConfigFeeder(self, config_feeder):
+    def with_config_feeder(self, config_feeder):
         """
         Configure current resolver to use the provided ConfigFeeder instance to be used as a source.
         See documentation of ConfigFeeder to see how to implement correctly a ConfigFeeder.
         """
-        self.addConfigFeeder(config_feeder)
+        self.add_config_feeder(config_feeder)
         return self
 
-    def withEnv(self):
+    def with_env(self):
         """
         Configure current resolver to use available environment variables as a source.
         Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]' 
         will be taken into account.
         """
-        return self.withConfigFeeder(EnvironmentConfigFeeder())
+        return self.with_config_feeder(EnvironmentConfigFeeder())
 
-    def withArgs(self, argparse_namespace):
+    def with_args(self, argparse_namespace):
         """
         Configure current resolver to use a Namespace object given by a ArgParse instance
         using arg_parse() as a source. This method is typically used to allow a ConfigurationResolver
@@ -89,9 +89,9 @@ class ConfigurationResolver(object):
         be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token present
         in the given Namespace object will be returned.
         """
-        return self.withConfigFeeder(ArgsConfigFeeder(argparse_namespace))
+        return self.with_config_feeder(ArgsConfigFeeder(argparse_namespace))
 
-    def withDict(self, dict_object):
+    def with_dict(self, dict_object):
         """
         Configure current resolver to use the given dict object, scoped to lexicon namespace.
         
@@ -104,9 +104,9 @@ class ConfigurationResolver(object):
             }
             => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
         """
-        return self.withConfigFeeder(DictConfigFeeder(dict_object))
+        return self.with_config_feeder(DictConfigFeeder(dict_object))
 
-    def withConfigFile(self, file_path):
+    def with_config_file(self, file_path):
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for Lexicon and any DNS provider.
@@ -118,9 +118,9 @@ class ConfigurationResolver(object):
             cloudflare:
             auth_token: SECRET_TOKEN
         """
-        return self.withConfigFeeder(FileConfigFeeder(file_path))
+        return self.with_config_feeder(FileConfigFeeder(file_path))
 
-    def withProviderConfigFile(self, provider_name, file_path):
+    def with_provider_config_file(self, provider_name, file_path):
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for a DNS provider exclusively.
@@ -134,16 +134,16 @@ class ConfigurationResolver(object):
         NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
         by default, with [provider] equals to the given provider_name parameter.
         """
-        return self.withConfigFeeder(ProviderFileConfigFeeder(provider_name, file_path))
+        return self.with_config_feeder(ProviderFileConfigFeeder(provider_name, file_path))
 
-    def withConfigDir(self, dir_path):
+    def with_config_dir(self, dir_path):
         """
         Configure current resolver to use every valid YAML configuration files available in the
         given directory path. To be taken into account, a configuration file must conform to the
         following naming convention:
-            * 'lexicon.yml' for a global Lexicon config file (see withConfigFile doc)
+            * 'lexicon.yml' for a global Lexicon config file (see with_config_file doc)
             * 'lexicon_[provider].yml' for a DNS provider specific configuration file, with
-            [provider] equals to the DNS provider name (see withProviderConfigFile doc)
+            [provider] equals to the DNS provider name (see with_provider_config_file doc)
 
         Example:
             $ ls /etc/lexicon
@@ -166,16 +166,16 @@ class ConfigurationResolver(object):
                         lexicon_config_files.append(path)
 
         for lexicon_provider_config_file in lexicon_provider_config_files:
-            self.withProviderConfigFile(lexicon_provider_config_file[0], lexicon_provider_config_file[1])
+            self.with_provider_config_file(lexicon_provider_config_file[0], lexicon_provider_config_file[1])
 
         for lexicon_config_file in lexicon_config_files:
-            self.withConfigFile(lexicon_config_file)
+            self.with_config_file(lexicon_config_file)
 
         return self
 
-    def withLegacyDict(self, legacy_dict_object):
+    def with_legacy_dict(self, legacy_dict_object):
         LOGGER.warning('Legacy configuration object has been used to load the ConfigurationResolver.')
-        return self.withConfigFeeder(LegacyDictConfigFeeder(legacy_dict_object))
+        return self.with_config_feeder(LegacyDictConfigFeeder(legacy_dict_object))
 
 class ConfigFeeder(object):
     """
@@ -275,8 +275,9 @@ class LegacyDictConfigFeeder(DictConfigFeeder):
     def __init__(self, dict_object):
         provider_name = dict_object.get('provider_name')
         if not provider_name:
-            raise ValueError('Error, provider_name is not defined, so LegacyDictConfigFeeder ',
-                             'cannot scope correctly the provider specific options.')
+            raise AttributeError('Error, key provider_name is not defined.'
+                                 'LegacyDictConfigFeeder cannot scope correctly '
+                                 'the provider specific options.')
 
         generic_parameters = [
             'domain', 'action', 'provider_name', 'delegated', 'identifier', 'type' , 'name',
@@ -295,7 +296,7 @@ class LegacyDictConfigFeeder(DictConfigFeeder):
         super(LegacyDictConfigFeeder, self).__init__(refactor_dict_object)
 
 def non_interactive_config_resolver():
-    return ConfigurationResolver().withEnv().withConfigDir(os.getcwd())
+    return ConfigurationResolver().with_env().with_config_dir(os.getcwd())
 
 def legacy_config_resolver(legacy_dict):
     """
@@ -305,4 +306,4 @@ def legacy_config_resolver(legacy_dict):
     This function create a resolve that respect the expected behavior, by using the relevant
     ConfigFeeders, and we add the config files from working directory.
     """
-    return ConfigurationResolver().withLegacyDict(legacy_dict).withEnv().withConfigDir(os.getcwd())
+    return ConfigurationResolver().with_legacy_dict(legacy_dict).with_env().with_config_dir(os.getcwd())

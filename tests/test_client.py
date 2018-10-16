@@ -2,9 +2,25 @@ import lexicon.client
 import pytest
 import os
 
-def test_Client_init():
+from lexicon.config import ConfigurationResolver
+
+def test_Client_basic_init():
     options = {
-        'provider_name':'base',
+        'provider_name': 'base',
+        'action': 'list',
+        'domain': 'example.com',
+        'type': 'TXT'
+    }
+    client = lexicon.client.Client(ConfigurationResolver().with_dict(options))
+
+    assert client.provider_name == options['provider_name']
+    assert client.action == options['action']
+    assert client.config.resolve('lexicon:domain') == options['domain']
+    assert client.config.resolve('lexicon:type') == options['type']
+
+def test_Client_legacy_init():
+    options = {
+        'provider_name': 'base',
         'action': 'list',
         'domain': 'example.com',
         'type': 'TXT'
@@ -13,8 +29,8 @@ def test_Client_init():
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == options['domain']
-    assert client.options['type'] == options['type']
+    assert client.config.resolve('lexicon:domain') == options['domain']
+    assert client.config.resolve('lexicon:type') == options['type']
 
 def test_Client_init_when_domain_includes_subdomain_should_strip():
     options = {
@@ -27,8 +43,8 @@ def test_Client_init_when_domain_includes_subdomain_should_strip():
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == 'example.com'
-    assert client.options['type'] == options['type']
+    assert client.config.resolve('lexicon:domain') == 'example.com'
+    assert client.config.resolve('lexicon:type') == options['type']
 
 def test_Client_init_with_delegated_domain_name():
     options = {
@@ -42,8 +58,8 @@ def test_Client_init_with_delegated_domain_name():
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == "sub.example.com"
-    assert client.options['type'] == options['type']
+    assert client.config.resolve('lexicon:domain') == "sub.example.com"
+    assert client.config.resolve('lexicon:type') == options['type']
 
 def test_Client_init_with_delegated_domain_fqdn():
     options = {
@@ -57,8 +73,8 @@ def test_Client_init_with_delegated_domain_fqdn():
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == "sub.example.com"
-    assert client.options['type'] == options['type']
+    assert client.config.resolve('lexicon:domain') == "sub.example.com"
+    assert client.config.resolve('lexicon:type') == options['type']
 
 def test_Client_init_with_same_delegated_domain_fqdn():
     options = {
@@ -72,8 +88,8 @@ def test_Client_init_with_same_delegated_domain_fqdn():
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == "example.com"
-    assert client.options['type'] == options['type']
+    assert client.config.resolve('lexicon:domain') == "example.com"
+    assert client.config.resolve('lexicon:type') == options['type']
 
 def test_Client_init_when_missing_provider_should_fail():
     options = {
@@ -127,10 +143,10 @@ def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == 'example.com'
-    assert client.options['type'] == options['type']
-    assert client.options.get('auth_token') == None
-    assert client.options.get('auth_username') == None
+    assert client.config.resolve('lexicon:domain') == 'example.com'
+    assert client.config.resolve('lexicon:type') == options['type']
+    assert client.config.resolve('lexicon:cloudflare:auth_token') == None
+    assert client.config.resolve('lexicon:cloudflare:auth_username') == None
 
 def test_Client_parse_env_with_auth_keys(monkeypatch):
     monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN','test-token')
@@ -146,11 +162,9 @@ def test_Client_parse_env_with_auth_keys(monkeypatch):
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']
-    assert client.options['domain'] == 'example.com'
-    assert client.options['type'] == options['type']
-    assert client.options.get('auth_token') == 'test-token'
-    assert client.options.get('auth_username') == 'test-username@example.com'
-
-
+    assert client.config.resolve('lexicon:domain') == 'example.com'
+    assert client.config.resolve('lexicon:type') == options['type']
+    assert client.config.resolve('lexicon:cloudflare:auth_token') == 'test-token'
+    assert client.config.resolve('lexicon:cloudflare:auth_username') == 'test-username@example.com'
 
 #TODO: add tests for Provider loading?

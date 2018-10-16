@@ -1,6 +1,9 @@
+from __future__ import absolute_import
+
 from builtins import object
 
-from ..common.options_handler import SafeOptionsWithFallback
+from lexicon.config import ConfigurationResolver
+from lexicon.config import legacy_config_resolver
 
 
 class Provider(object):
@@ -31,13 +34,21 @@ class Provider(object):
     :param provider_env_cli_options: is a SafeOptions object that contains all the options for this provider, merged from CLI and Env variables.
     :param engine_overrides: is an empty dict under runtime conditions, only used for testing (eg. overriding api_endpoint to point to sandbox url) see tests/providers/integration_tests.py
     """
-    def __init__(self, provider_env_cli_options, engine_overrides=None):
-        self.provider_name = 'example',
-        self.engine_overrides = engine_overrides or {}
+    def __init__(self, config, engine_overrides=None):
+        if not isinstance(config, ConfigurationResolver):
+            # If config is a plain dict, we are in a legacy situation.
+            # To protect the Provider API, the legacy dict is handled in a
+            # correctly defined ConfigurationResolver.
+            self.config = legacy_config_resolver(config)
+        else:
+            self.config = config
 
-        base_options = SafeOptionsWithFallback({'ttl': 3600}, engine_overrides.get('fallbackFn') if engine_overrides else None)
-        base_options.update(provider_env_cli_options)
-        self.options = base_options
+        # Default ttl
+        self.config.with_dict({'ttl': 3600})
+
+        self.provider_name = self.config.resolve('lexicon:provider_name') or self.config.resolve('lexicon:provider')
+        self.domain = self.config.resolve('lexicon:domain')
+        self.domain_id = None
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
@@ -84,22 +95,22 @@ class Provider(object):
     def _fqdn_name(self, record_name):
         record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
         #check if the record_name is fully specified
-        if not record_name.endswith(self.options['domain']):
-            record_name = "{0}.{1}".format(record_name, self.options['domain'])
+        if not record_name.endswith(self.domain):
+            record_name = "{0}.{1}".format(record_name, self.domain)
         return "{0}.".format(record_name) #return the fqdn name
 
     def _full_name(self, record_name):
         record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
         #check if the record_name is fully specified
-        if not record_name.endswith(self.options['domain']):
-            record_name = "{0}.{1}".format(record_name, self.options['domain'])
+        if not record_name.endswith(self.domain):
+            record_name = "{0}.{1}".format(record_name, self.domain)
         return record_name
 
     def _relative_name(self, record_name):
         record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
         #check if the record_name is fully specified
-        if record_name.endswith(self.options['domain']):
-            record_name = record_name[:-len(self.options['domain'])]
+        if record_name.endswith(self.domain):
+            record_name = record_name[:-len(self.domain)]
             record_name = record_name.rstrip('.')
         return record_name
 
@@ -108,3 +119,9 @@ class Provider(object):
             # some providers have quotes around the TXT records, so we're going to remove those extra quotes
             record['content'] = record['content'][1:-1]
         return record
+
+    def _get_lexicon_option(self, option):
+        return self.config.resolve('lexicon:{0}'.format(option))
+
+    def _get_provider_option(self, option):
+        return self.config.resolve('lexicon:{0}:{1}'.format(self.provider_name, option))
