@@ -11,7 +11,7 @@ class ConfigurationResolver(object):
     from various sources with a precedence order. Sources and their priority are configured 
     by calling the with* methods of this object, in the decreasing priority order.
 
-    A configuration parameter can be retrieved using the get() method. The configuration parameter
+    A configuration parameter can be retrieved using the resolve() method. The configuration parameter
     key needs to conform to a namespace, whose delimeters is ':'. Two namespaces will be used in 
     the context of Lexicon:
         * the parameters relevant for Lexicon itself: 'lexicon:global_parameter'
@@ -23,10 +23,10 @@ class ConfigurationResolver(object):
         $ from lexicon.config import Config
         $ config = Config()
         $ config.withEnv().withConfigFile()
-        $ print(config.get('lexicon:delegated'))
-        $ print(config.get('lexicon:cloudflare:auth_token))
+        $ print(config.resolve('lexicon:delegated'))
+        $ print(config.resolve('lexicon:cloudflare:auth_token))
 
-    Config can get parameters for Lexicon and providers from:
+    Config can resolve parameters for Lexicon and providers from:
         * environment variables
         * arguments parsed by ArgParse library
         * YAML configuration files, generic or specific to a provider
@@ -40,12 +40,12 @@ class ConfigurationResolver(object):
         super(ConfigurationResolver, self).__init__()
         self._config_feeders = []
 
-    def get(self, config_key):
+    def resolve(self, config_key):
         """
-        Get the value of the given config parameter key. Key must be correctly scoped for Lexicon, and
+        Resolve the value of the given config parameter key. Key must be correctly scoped for Lexicon, and
         optionally for the DNS provider for which the parameter is consumed. For instance:
-            * config.get('lexicon:delegated') will get the delegated config parameter for Lexicon
-            * config.get('lexicon:cloudflare:auth_token') will get 
+            * config.resolve('lexicon:delegated') will get the delegated config parameter for Lexicon
+            * config.resolve('lexicon:cloudflare:auth_token') will get 
             the auth_token config parameter consumed by cloudflare DNS provider.
 
         Value is resolved against each configured source, and value from the highest priority source
@@ -59,12 +59,15 @@ class ConfigurationResolver(object):
 
         return None
 
+    def addConfigFeeder(self, config_feeder, position = None):
+        self._config_feeders.insert(position if position else len(self._config_feeders), config_feeder)
+
     def withConfigFeeder(self, config_feeder):
         """
         Configure current resolver to use the provided ConfigFeeder instance to be used as a source.
         See documentation of ConfigFeeder to see how to implement correctly a ConfigFeeder.
         """
-        self._config_feeders.append(config_feeder)
+        self.addConfigFeeder(config_feeder)
         return self
 
     def withEnv(self):
@@ -170,6 +173,10 @@ class ConfigurationResolver(object):
 
         return self
 
+    def withLegacyDict(self, legacy_dict_object):
+        LOGGER.warning('Legacy configuration object has been used to load the ConfigurationResolver.')
+        return self.withConfigFeeder(LegacyDictConfigFeeder(legacy_dict_object))
+
 class ConfigFeeder(object):
     """
     Base class to implement a configuration source for ResolverConfig.
@@ -262,3 +269,40 @@ class ProviderFileConfigFeeder(FileConfigFeeder):
         super(ProviderFileConfigFeeder, self).__init__(file_path)
         # Scope the loaded config file into provider namespace
         self._parameters = {provider_name: self._parameters}
+
+class LegacyDictConfigFeeder(DictConfigFeeder):
+
+    def __init__(self, dict_object):
+        provider_name = dict_object.get('provider_name')
+        if not provider_name:
+            raise ValueError('Error, provider_name is not defined, so LegacyDictConfigFeeder ',
+                             'cannot scope correctly the provider specific options.')
+
+        generic_parameters = [
+            'domain', 'action', 'provider_name', 'delegated', 'identifier', 'type' , 'name',
+            'content', 'ttl', 'priority', 'log_level', 'output']
+
+        provider_options = {}
+        refactor_dict_object = {}
+        refactor_dict_object[provider_name] = provider_options
+
+        for (key, value) in dict_object.items():
+            if key not in generic_parameters:
+                provider_options[key] = value
+            else:
+                refactor_dict_object[key] = value
+
+        super(LegacyDictConfigFeeder, self).__init__(refactor_dict_object)
+
+def non_interactive_config_resolver():
+    return ConfigurationResolver().withEnv().withConfigDir(os.getcwd())
+
+def legacy_config_resolver(legacy_dict):
+    """
+    With the old legacy approach, we juste got a plain configuration dict object.
+    Custom logic was to enrich this configuration with env variables.
+
+    This function create a resolve that respect the expected behavior, by using the relevant
+    ConfigFeeders, and we add the config files from working directory.
+    """
+    return ConfigurationResolver().withLegacyDict(legacy_dict).withEnv().withConfigDir(os.getcwd())

@@ -10,10 +10,10 @@ def test_environment_resolution():
 
     config = ConfigurationResolver().withEnv()
 
-    assert config.get('lexicon:delegated') == 'TEST1'
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:cloudflare:auth_username') == 'TEST3'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:cloudflare:auth_username') == 'TEST3'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_argparse_resolution():
     parser = MainParser()
@@ -21,9 +21,9 @@ def test_argparse_resolution():
 
     config = ConfigurationResolver().withArgs(data)
 
-    assert config.get('lexicon:delegated') == 'TEST1'
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_dict_resolution():
     dict_object = {
@@ -35,28 +35,28 @@ def test_dict_resolution():
 
     config = ConfigurationResolver().withDict(dict_object)
 
-    assert config.get('lexicon:delegated') == 'TEST1'
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_config_lexicon_file_resolution(tmpdir):
     lexicon_file = tmpdir.join('lexicon.yml')
     lexicon_file.write('delegated: TEST1\ncloudflare:\n  auth_token: TEST2')
 
-    config = ConfigurationResolver().withConfigFile(lexicon_file)
+    config = ConfigurationResolver().withConfigFile(str(lexicon_file))
 
-    assert config.get('lexicon:delegated') == 'TEST1'
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_provider_config_lexicon_file_resolution(tmpdir):
     provider_file = tmpdir.join('lexicon_cloudflare.yml')
     provider_file.write('auth_token: TEST2')
 
-    config = ConfigurationResolver().withProviderConfigFile('cloudflare', provider_file)
+    config = ConfigurationResolver().withProviderConfigFile('cloudflare', str(provider_file))
 
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_provider_config_dir_resolution(tmpdir):
     lexicon_file = tmpdir.join('lexicon.yml')
@@ -64,12 +64,12 @@ def test_provider_config_dir_resolution(tmpdir):
     lexicon_file.write('delegated: TEST1\ncloudflare:\n  auth_token: TEST2')
     provider_file.write('auth_username: TEST3')
 
-    config = ConfigurationResolver().withConfigDir(tmpdir)
+    config = ConfigurationResolver().withConfigDir(str(tmpdir))
 
-    assert config.get('lexicon:delegated') == 'TEST1'
-    assert config.get('lexicon:cloudflare:auth_token') == 'TEST2'
-    assert config.get('lexicon:cloudflare:auth_username') == 'TEST3'
-    assert config.get('lexicon:nonexistent') is None
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:cloudflare:auth_username') == 'TEST3'
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_generic_config_feeder_resolution():
     class GenericConfigFeeder(ConfigFeeder):
@@ -79,8 +79,22 @@ def test_generic_config_feeder_resolution():
 
     config = ConfigurationResolver().withConfigFeeder(GenericConfigFeeder())
 
-    assert config.get('lexicon:cloudflare:auth_username') == 'TEST1'
-    assert config.get('lexicon:nonexistent') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_username') == 'TEST1'
+    assert config.resolve('lexicon:nonexistent') == 'TEST1'
+
+def test_legacy_dict_config_resolution():
+    legacy_config = {
+        'delegated': 'TEST1',
+        'auth_token': 'TEST2',
+        'provider_name': 'cloudflare'
+    }
+
+    config = ConfigurationResolver().withLegacyDict(legacy_config)
+
+    assert config.resolve('lexicon:delegated') == 'TEST1'
+    assert config.resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert config.resolve('lexicon:auth_token') is None
+    assert config.resolve('lexicon:nonexistent') is None
 
 def test_prioritized_resolution(tmpdir):
     lexicon_file = tmpdir.join('lexicon.yml')
@@ -88,5 +102,5 @@ def test_prioritized_resolution(tmpdir):
 
     os.environ['LEXICON_CLOUDFLARE_AUTH_TOKEN'] = 'TEST2'
 
-    assert ConfigurationResolver().withConfigFile(lexicon_file).withEnv().get('lexicon:cloudflare:auth_token') == 'TEST1'
-    assert ConfigurationResolver().withEnv().withConfigFile(lexicon_file).get('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert ConfigurationResolver().withConfigFile(lexicon_file).withEnv().resolve('lexicon:cloudflare:auth_token') == 'TEST1'
+    assert ConfigurationResolver().withEnv().withConfigFile(lexicon_file).resolve('lexicon:cloudflare:auth_token') == 'TEST2'
