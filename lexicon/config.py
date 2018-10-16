@@ -35,6 +35,7 @@ class ConfigurationResolver(object):
     Each parameter will be resolved against each source, and value from the higher priority source
     is returned. If a parameter could not be resolve by any source, then None will be returned.
     """
+
     def __init__(self):
         super(ConfigurationResolver, self).__init__()
         self._config_feeders = []
@@ -87,7 +88,36 @@ class ConfigurationResolver(object):
         """
         return self.withConfigFeeder(ArgsConfigFeeder(argparse_namespace))
 
-    def withProviderConfigFile(self, provider_name, file_path = None):
+    def withDict(self, dict_object):
+        """
+        Configure current resolver to use the given dict object, scoped to lexicon namespace.
+        
+        Example of valid dict object for lexicon:
+            {
+                'delegated': 'onedelegated',
+                'cloudflare': {
+                    'auth_token': 'SECRET_TOKEN'
+                }
+            }
+            => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
+        """
+        return self.withConfigFeeder(DictConfigFeeder(dict_object))
+
+    def withConfigFile(self, file_path):
+        """
+        Configure current resolver to use a YAML configuration file specified on the given path.
+        This file provides configuration parameters for Lexicon and any DNS provider.
+
+        Typical format is:
+            $ cat lexicon.yml
+            # Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
+            delegated: 'onedelegated'
+            cloudflare:
+            auth_token: SECRET_TOKEN
+        """
+        return self.withConfigFeeder(FileConfigFeeder(file_path))
+
+    def withProviderConfigFile(self, provider_name, file_path):
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for a DNS provider exclusively.
@@ -101,27 +131,7 @@ class ConfigurationResolver(object):
         NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
         by default, with [provider] equals to the given provider_name parameter.
         """
-        if not file_path:
-            file_path = '/etc/lexicon/lexicon_{0}.yml'.format(provider_name)
         return self.withConfigFeeder(ProviderFileConfigFeeder(provider_name, file_path))
-
-    def withConfigFile(self, file_path = None):
-        """
-        Configure current resolver to use a YAML configuration file specified on the given path.
-        This file provides configuration parameters for Lexicon and any DNS provider.
-
-        Typical format is:
-            $ cat lexicon.yml
-            # Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
-            delegated: 'onedelegated'
-            cloudflare:
-            auth_token: SECRET_TOKEN
-
-        NB: If file_path is not specified, '/etc/lexicon/lexicon.yml' will be taken by default.
-        """
-        if not file_path:
-            file_path = '/etc/lexicon/lexicon.yml'
-        return self.withConfigFeeder(FileConfigFeeder(file_path))
 
     def withConfigDir(self, dir_path):
         """
@@ -136,16 +146,12 @@ class ConfigurationResolver(object):
             $ ls /etc/lexicon
             lexicon.yml # global Lexicon configuration file
             lexicon_cloudflare.yml # specific configuration file for clouflare DNS provder
-
-        NB: If dir_path is not specified, '/etc/lexicon' will be taken by default.
         """
-        if not dir_path:
-            dir_path = '/etc/lexicon'
-
         lexicon_provider_config_files = []
         lexicon_config_files = []
 
         for path in os.listdir(dir_path):
+            path = os.path.join(dir_path, path)
             if os.path.isfile(path):
                 basename = os.path.basename(path)
                 search = re.search(r'^lexicon(?:_(\w+)|)\.yml$', basename)
@@ -169,8 +175,6 @@ class ConfigFeeder(object):
     Base class to implement a configuration source for ResolverConfig.
     The relevant method to override is feed(self, config_parameter).
     """
-    def __init__(self):
-        super(ConfigFeeder, self).__init__()
 
     def feed(self, config_parameter):
         """
@@ -228,35 +232,33 @@ class ArgsConfigFeeder(ConfigFeeder):
 
         return self._parameters.get(splitted_config_key[-1], None)
 
-class FileConfigFeeder(ConfigFeeder):
+class DictConfigFeeder(ConfigFeeder):
 
-    def __init__(self, file_path):
-        super(FileConfigFeeder, self).__init__()
-        with open(file_path, 'r') as stream:
-            self._parameters = yaml.load(stream)
+    def __init__(self, dict_object):
+        super(DictConfigFeeder, self).__init__()
+        self._parameters = dict_object
 
     def feed(self, config_key):
-        cursor = self._parameters or {}
         splitted_config_key = config_key.split(':')
-        # Note that we ignore 'lexicon:' in the iteration, as the config file is already scoped to lexicon.
+        # Note that we ignore 'lexicon:' in the iteration,
+        # as the dict object is already scoped to lexicon.
+        cursor = self._parameters
         for current in splitted_config_key[1:-1]:
             cursor = cursor.get(current, {})
 
         return cursor.get(splitted_config_key[-1], None)
 
+class FileConfigFeeder(DictConfigFeeder):
+
+    def __init__(self, file_path):
+        with open(file_path, 'r') as stream:
+            yaml_object = yaml.load(stream) or {}
+
+        super(FileConfigFeeder, self).__init__(yaml_object)
+
 class ProviderFileConfigFeeder(FileConfigFeeder):
 
     def __init__(self, provider_name, file_path):
         super(ProviderFileConfigFeeder, self).__init__(file_path)
-        self.provider_name = provider_name
-
-    def feed(self, config_key):
-        # We should get a config_key scoped for the current provider.
-        # If not, there is nothing to return from this Feeder.
-        # Otherwise, we assume that all parameters in current self._parameters are already
-        # scoped to the provider, so we can safely remove 'provider:' namespace from the key.
-        search = re.search(r'^(.*):{0}:(.*)$'.format(self.provider_name), config_key)
-        if search:
-            return super(ProviderFileConfigFeeder, self).feed('{0}:{1}'.format(search.group(1), search.group(2)))
-
-        return None
+        # Scope the loaded config file into provider namespace
+        self._parameters = {provider_name: self._parameters}
