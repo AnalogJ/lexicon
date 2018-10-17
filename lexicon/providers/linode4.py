@@ -15,16 +15,16 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
     
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.linode.com/v4/')
+        self.api_endpoint = 'https://api.linode.com/v4/'
 
     def authenticate(self):
         self.domain_id = None
         payload = self._get('domains', query_params={
             'filter': {
-                'domain': self.options['domain']
+                'domain': self.domain
             }
         })
         if len(payload['data']) > 0:
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer {0}'.format(self.options.get('auth_token'))
+            'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))
         }
         
         request_filter = query_params['filter'] if 'filter' in query_params else None

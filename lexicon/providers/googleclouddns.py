@@ -49,16 +49,16 @@ class Provider(BaseProvider):
     # It can be provided as a path to the JSON file, or as its content encoded
     #   in base64, which is a suitable portable way in particular for Docker containers.
     # In both cases the content is loaded as bytes, on loaded in a private instance variable.
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
         self._token = None
 
-        if self.options['auth_service_account_info'].startswith('file::'):
-            with open(self.options['auth_service_account_info'].replace('file::', ''), 'rb') as file:
+        if self._get_provider_option('auth_service_account_info').startswith('file::'):
+            with open(self._get_provider_option('auth_service_account_info').replace('file::', ''), 'rb') as file:
                 service_account_info_bytes = file.read()
-        elif self.options['auth_service_account_info'].startswith('base64::'):
-            service_account_info_bytes = b64decode(self.options['auth_service_account_info'].replace('base64::', ''))
+        elif self._get_provider_option('auth_service_account_info').startswith('base64::'):
+            service_account_info_bytes = b64decode(self._get_provider_option('auth_service_account_info').replace('base64::', ''))
         else:
             raise Exception('Invalid value passed to --auth-service-account-info, should be a path prefixed with \'file::\' or a base64 value prefixed by \'base64::\'.')
 
@@ -120,16 +120,16 @@ class Provider(BaseProvider):
         post_result = auth_request.json()
 
         if not post_result['access_token']:
-            raise Exception('Error, could not grant RW access on the Google Cloud DNS API for user: {0}'.format(self.options['auth_email']))
+            raise Exception('Error, could not grant RW access on the Google Cloud DNS API for user: {0}'.format(self._get_provider_option('auth_email')))
 
         self._token = post_result['access_token']
 
         results = self._get('/managedZones')
 
-        targetedManagedZoneIds = [managedZone['id'] for managedZone in results['managedZones'] if managedZone['dnsName'] == '{0}.'.format(self.options['domain'])]
+        targetedManagedZoneIds = [managedZone['id'] for managedZone in results['managedZones'] if managedZone['dnsName'] == '{0}.'.format(self.domain)]
 
         if not targetedManagedZoneIds:
-            raise Exception('Error, domain {0} is not registered for this project'.format(self.options['domain']))
+            raise Exception('Error, domain {0} is not registered for this project'.format(self.domain))
 
         self.domain_id = targetedManagedZoneIds[0]
 
@@ -210,7 +210,7 @@ class Provider(BaseProvider):
         changes['additions'] = [{
             'name': self._fqdn_name(name),
             'type': type,
-            'ttl': self.options.get('ttl'),
+            'ttl': self._get_lexicon_option('ttl'),
             'rrdatas': rrdatas
         }]
 

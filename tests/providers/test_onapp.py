@@ -11,7 +11,5 @@ class OnappProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['Authorization']
 
-    def _test_options(self):
-        options = super(OnappProviderTests, self)._test_options()
-        options.update({'auth_server':'https://dashboard.dynomesh.com.au'})
-        return options
+    def _test_parameters_overrides(self):
+        return {'auth_server':'https://dashboard.dynomesh.com.au'}

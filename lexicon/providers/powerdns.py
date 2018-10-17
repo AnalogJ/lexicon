@@ -41,10 +41,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
-        self.api_endpoint = self.options.get('pdns_server')
+        self.api_endpoint = self._get_provider_option('pdns_server')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -52,25 +52,25 @@ class Provider(BaseProvider):
         if not self.api_endpoint.endswith("/api/v1"):
             self.api_endpoint += "/api/v1"
 
-        self.server_id = self.options.get('pdns_server_id')
+        self.server_id = self._get_provider_option('pdns_server_id')
         if self.server_id is None:
             self.server_id = 'localhost'
 
         self.api_endpoint += "/servers/" + self.server_id
 
-        self.api_key = self.options.get('auth_token')
+        self.api_key = self._get_provider_option('auth_token')
         assert self.api_key is not None
 
         self._zone_data = None
 
     def zone_data(self):
         if self._zone_data is None:
-            self._zone_data = self._get('/zones/' + self.options['domain']).json()
+            self._zone_data = self._get('/zones/' + self.domain).json()
         return self._zone_data
 
     def authenticate(self):
         self.zone_data()
-        self.domain_id = self.options['domain']
+        self.domain_id = self.domain
 
     def _make_identifier(self, type, name, content):
         return "{}/{}={}".format(type, name, content)
@@ -130,7 +130,7 @@ class Provider(BaseProvider):
                 'name': name,
                 'type': type,
                 'records': [],
-                'ttl': self.options.get('ttl', 600),
+                'ttl': self._get_lexicon_option('ttl') or 600,
                 'changetype': 'REPLACE'
             }
 
@@ -148,7 +148,7 @@ class Provider(BaseProvider):
         request = {'rrsets': [update_data]}
         logger.debug('request: %s', request)
 
-        self._patch('/zones/' + self.options['domain'], data=request)
+        self._patch('/zones/' + self.domain, data=request)
         self._zone_data = None
         return True
 
@@ -181,7 +181,7 @@ class Provider(BaseProvider):
         request = {'rrsets': [update_data]}
         logger.debug('request: %s', request)
 
-        self._patch('/zones/' + self.options['domain'], data=request)
+        self._patch('/zones/' + self.domain, data=request)
         self._zone_data = None
         return True
 

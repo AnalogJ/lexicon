@@ -23,21 +23,21 @@ def ProviderParser(subparser):
 #   - update uses list + delete + add: we get the list of all records, find record for given identifier, then insert a new record and delete the old record.
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://api.zeit.co/v2/domains'
 
     def authenticate(self):
-        result = self._get('/{0}'.format(self.options['domain']))
+        result = self._get('/{0}'.format(self.domain))
 
         if not result['uid']:
-            raise Exception('Error, domain {0} not found'.format(self.options['domain']))
+            raise Exception('Error, domain {0} not found'.format(self.domain))
 
         self.domain_id = result['uid']
 
     def list_records(self, type=None, name=None, content=None):
-        result = self._get('/{0}/records'.format(self.options['domain']))
+        result = self._get('/{0}/records'.format(self.domain))
 
         raw_records = result['records']
         if type:
@@ -73,7 +73,7 @@ class Provider(BaseProvider):
             'value': content
         }
 
-        result = self._post('/{0}/records'.format(self.options['domain']), data)
+        result = self._post('/{0}/records'.format(self.domain), data)
 
         if not result['uid']:
             raise Exception('Error occured when inserting the new record.')
@@ -112,8 +112,8 @@ class Provider(BaseProvider):
         if not content:
             data['value'] = records[0]['content']
 
-        result = self._post('/{0}/records'.format(self.options['domain']), data)
-        self._delete('/{0}/records/{1}'.format(self.options['domain'], records[0]['id']))
+        result = self._post('/{0}/records'.format(self.domain), data)
+        self._delete('/{0}/records/{1}'.format(self.domain, records[0]['id']))
 
         LOGGER.debug('update_record: %s => %s', records[0]['id'], result['uid'])
 
@@ -130,7 +130,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete('/{0}/records/{1}'.format(self.options['domain'], delete_record_id))
+            self._delete('/{0}/records/{1}'.format(self.domain, delete_record_id))
 
         LOGGER.debug('delete_record: %s', True)
 
@@ -145,7 +145,7 @@ class Provider(BaseProvider):
         request = requests.request(action, self.api_endpoint + url, 
                                    params=query_params,
                                    data=json.dumps(data),
-                                   headers={'Authorization': 'Bearer {0}'.format(self.options.get('auth_token'))})
+                                   headers={'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))})
 
         request.raise_for_status()
         return request.json()

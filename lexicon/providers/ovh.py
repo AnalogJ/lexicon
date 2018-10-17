@@ -32,22 +32,22 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
         # Handling missing required parameters
-        if not self.options.get('auth_entrypoint'):
+        if not self._get_provider_option('auth_entrypoint'):
             raise Exception('Error, entrypoint is not defined')
-        if not self.options.get('auth_application_key'):
+        if not self._get_provider_option('auth_application_key'):
             raise Exception('Error, application key is not defined')
-        if not self.options.get('auth_application_secret'):
+        if not self._get_provider_option('auth_application_secret'):
             raise Exception('Error, application secret is not defined')
-        if not self.options.get('auth_consumer_key'):
+        if not self._get_provider_option('auth_consumer_key'):
             raise Exception('Error, consumer key is not defined')
 
         # Construct DNS OVH environment
         self.domain_id = None
-        self.endpoint_api = ENDPOINTS.get(self.options.get('auth_entrypoint'))
+        self.endpoint_api = ENDPOINTS.get(self._get_provider_option('auth_entrypoint'))
 
     def authenticate(self):
         # All requests will be done in one HTTPS session
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         self.time_delta = server_time - int(time.time())
 
         # Get domain and status
-        domain = self.options.get('domain')
+        domain = self.domain
 
         domains = self._get('/domain/zone/')
         if domain not in domains:
@@ -71,8 +71,8 @@ class Provider(BaseProvider):
         self.domain_id = domain
 
     def create_record(self, type, name, content):
-        domain = self.options.get('domain')
-        ttl = self.options.get('ttl')
+        domain = self.domain
+        ttl = self._get_lexicon_option('ttl')
 
         records = self.list_records(type, name, content)
         for record in records:
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
         return True
 
     def list_records(self, type=None, name=None, content=None):
-        domain = self.options.get('domain')
+        domain = self.domain
         records = []
 
         params = {}
@@ -126,7 +126,7 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        domain = self.options.get('domain')
+        domain = self.domain
 
         if not identifier:
             records = self.list_records(type, name)
@@ -151,7 +151,7 @@ class Provider(BaseProvider):
         return True
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        domain = self.options.get('domain')
+        domain = self.domain
 
         delete_record_id = []
         if not identifier:
@@ -183,8 +183,8 @@ class Provider(BaseProvider):
         # Get correctly sync time
         now = str(int(time.time()) + self.time_delta)
 
-        headers['X-Ovh-Application'] = self.options.get('auth_application_key')
-        headers['X-Ovh-Consumer'] = self.options.get('auth_consumer_key')
+        headers['X-Ovh-Application'] = self._get_provider_option('auth_application_key')
+        headers['X-Ovh-Consumer'] = self._get_provider_option('auth_consumer_key')
         headers['X-Ovh-Timestamp'] = now
 
         request = requests.Request(action, target, data=body, params=query_params, headers=headers)
@@ -193,8 +193,8 @@ class Provider(BaseProvider):
         # Build OVH API signature for the current request
         signature = hashlib.sha1()
         signature.update('+'.join([
-            self.options.get('auth_application_secret'),
-            self.options.get('auth_consumer_key'),
+            self._get_provider_option('auth_application_secret'),
+            self._get_provider_option('auth_consumer_key'),
             action.upper(),
             prepared_request.url,
             body,

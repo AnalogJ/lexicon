@@ -17,14 +17,14 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://dnsapi.cn')
+        self.api_endpoint = 'https://dnsapi.cn'
 
     def authenticate(self):
 
-        payload = self._post('/Domain.Info', {'domain':self.options['domain']})
+        payload = self._post('/Domain.Info', {'domain':self.domain})
 
         if payload['status']['code'] != '1':
             raise Exception(payload['status']['message'])
@@ -41,8 +41,8 @@ class Provider(BaseProvider):
             'record_line': '默认',
             'value': content
         }
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
 
         payload = self._post('/Record.Create', record)
 
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
     def list_records(self, type=None, name=None, content=None):
         filter = {}
 
-        payload = self._post('/Record.List', {'domain':self.options['domain']})
+        payload = self._post('/Record.List', {'domain':self.domain})
         logger.debug('payload: %s', payload)
         records = []
         for record in payload['records']:
@@ -93,8 +93,8 @@ class Provider(BaseProvider):
             'record_line': '默认',
             'value': content
         }
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
         logger.debug('data: %s', data)
         payload = self._post('/Record.Modify', data)
         logger.debug('payload: %s', payload)
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
-        data['login_token'] = self.options['auth_username'] + ',' + self.options['auth_token']
+        data['login_token'] = self._get_provider_option('auth_username') + ',' + self._get_provider_option('auth_token')
         data['format'] = 'json'
         if query_params is None:
             query_params = {}

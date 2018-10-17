@@ -28,19 +28,19 @@ def ProviderParser(subparser):
 #   is tied to the content of the record, and will change anytime something is changed in the record.
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.godaddy.com/v1')
+        self.api_endpoint = 'https://api.godaddy.com/v1'
 
     def authenticate(self):
-        domain = self.options.get('domain')
+        domain = self.domain
 
         result = self._get('/domains/{0}'.format(domain))
         self.domain_id = result['domainId']
 
     def list_records(self, type=None, name=None, content=None):
-        domain = self.options.get('domain')
+        domain = self.domain
 
         url = '/domains/{0}/records'.format(domain)
         if type:
@@ -68,9 +68,9 @@ class Provider(BaseProvider):
         return records
 
     def create_record(self, type, name, content):
-        domain = self.options.get('domain')
+        domain = self.domain
         relative_name = self._relative_name(name)
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
 
         # Retrieve existing data in DNS zone.
         records = self._get('/domains/{0}/records'.format(domain))
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
         if not identifier and not name:
             raise Exception('ERROR: name is required')
 
-        domain = self.options.get('domain')
+        domain = self.domain
         relative_name = None
         if name:
             relative_name = self._relative_name(name)
@@ -139,7 +139,7 @@ class Provider(BaseProvider):
         # Instead, we get ALL records in the DNS zone, update the set, and replace EVERYTHING in the DNS zone.
         # You will always have at minimal NS/SRV entries in the array, otherwise your DNS zone is broken,
         #   and updating the zone is the least of your problem ...
-        domain = self.options.get('domain')
+        domain = self.domain
 
         # Retrieve all records in the DNS zone
         records = self._get('/domains/{0}/records'.format(domain))
@@ -211,8 +211,8 @@ class Provider(BaseProvider):
                                       'Accept': 'application/json',
                                       # GoDaddy use a key/secret pair to authenticate
                                       'Authorization': 'sso-key {0}:{1}'.format(
-                                          self.options.get('auth_key'),
-                                          self.options.get('auth_secret'))
+                                          self._get_provider_option('auth_key'),
+                                          self._get_provider_option('auth_secret'))
                                   })
 
         result.raise_for_status()

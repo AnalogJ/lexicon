@@ -16,19 +16,19 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.nsone.net/v1')
+        self.api_endpoint = 'https://api.nsone.net/v1'
 
     def authenticate(self):
 
-        payload = self._get('/zones/{0}'.format(self.options['domain']))
+        payload = self._get('/zones/{0}'.format(self.domain))
 
         if not payload['id']:
             raise Exception('No domain found')
 
-        self.domain_id = self.options['domain']
+        self.domain_id = self.domain
 
     def _get_record_set(self, name, type):
         try:
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
             record = {
                 'type': type,
                 'domain': name,
-                'ttl': self.options.get('ttl'),
+                'ttl': self._get_lexicon_option('ttl'),
                 'zone': self.domain_id,
                 'answers':[
                     {"answer": [content]}
@@ -236,7 +236,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-NSONE-Key': self.options['auth_token']
+            'X-NSONE-Key': self._get_provider_option('auth_token')
         }
         default_auth = None
 

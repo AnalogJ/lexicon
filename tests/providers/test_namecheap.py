@@ -70,11 +70,10 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
         return ['ApiKey','UserName', 'ApiUser']
 
     def _test_options(self):
-        options = super(NamecheapProviderTests, self)._test_options()
-        options.update({'auth_sandbox':True})
-        options.update({'auth_client_ip':'127.0.0.1'})
-        options.update(env_auth_options(self.provider_name))
-        return options
+        return {
+            'auth_sandbox': True,
+            'auth_client_ip': '127.0.0.1'
+        }
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_Provider_when_calling_list_records_after_setting_ttl(self):

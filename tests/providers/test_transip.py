@@ -57,18 +57,18 @@ class TransipProviderTests(TestCase, IntegrationTests):
     # Disable setUp and tearDown, and set a real username and key in
     # provider_opts to execute real calls
 
-    def _test_options(self):
-        options = super(TransipProviderTests, self)._test_options()
+    def _test_parameters_overrides(self):
         (_fake_fd, _fake_key) = mkstemp()
         _fake_file = os.fdopen(_fake_fd, 'wb', 1024)
         _fake_file.write(FAKE_KEY)
         _fake_file.close()
         self._fake_key = _fake_key
 
-        options.update({
+        options = {
             'auth_username': 'foo',
             'auth_api_key': _fake_key
-        })
+        }
+
         return options
 
     def tearDown(self):

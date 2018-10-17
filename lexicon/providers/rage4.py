@@ -17,14 +17,14 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://rage4.com/rapi')
+        self.api_endpoint = 'https://rage4.com/rapi'
 
     def authenticate(self):
 
-        payload = self._get('/getdomainbyname/', {'name': self.options['domain']})
+        payload = self._get('/getdomainbyname/', {'name': self.domain})
 
         if not payload['id']:
             raise Exception('No domain found')
@@ -44,8 +44,8 @@ class Provider(BaseProvider):
             'content': content,
             'type': type
         }
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
 
         payload = {}
         try:
@@ -99,8 +99,8 @@ class Provider(BaseProvider):
             data['name'] = self._full_name(name)
         if content:
             data['content'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
         # if type:
         #     raise 'Type updating is not supported by this provider.'
 
@@ -140,7 +140,7 @@ class Provider(BaseProvider):
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
-        default_auth = requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options['auth_token'])
+        default_auth = requests.auth.HTTPBasicAuth(self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),

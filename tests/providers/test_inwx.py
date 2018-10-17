@@ -10,8 +10,8 @@ class InwxProviderTests(TestCase, IntegrationTests):
     provider_name = 'inwx'
     domain = 'lexicon-testrunner.com'
 
-    def _test_options(self):
-        cmd_options = super(InwxProviderTests, self)._test_options()
-        # set testing endpoint to inwx ote service
-        cmd_options['endpoint'] = 'https://api.ote.domrobot.com/xmlrpc/'
-        return cmd_options
+    def _test_parameters_overrides(self):
+        return {
+            'endpoint': 'https://api.ote.domrobot.com/xmlrpc/'
+        }
+

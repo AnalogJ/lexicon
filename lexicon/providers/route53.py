@@ -79,16 +79,16 @@ class RecordSetPaginator(object):
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
-    def __init__(self, options, engine_overrides=None):
+    def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
-        super(Provider, self).__init__(options, engine_overrides)
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.private_zone = options.get('private_zone', None)
+        self.private_zone = self._get_provider_option('private_zone')
         # instantiate the client
         self.r53_client = boto3.client(
             'route53',
-            aws_access_key_id=self.options.get('auth_access_key', self.options.get('auth_username')),
-            aws_secret_access_key=self.options.get('auth_access_secret', self.options.get('auth_token'))
+            aws_access_key_id=self._get_provider_option('auth_access_key') or self._get_provider_option('auth_username'),
+            aws_secret_access_key=self._get_provider_option('auth_access_secret') or self._get_provider_option('auth_token')
         )
 
     def filter_zone(self, hz):
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
             if hz['Config']['PrivateZone'] != self.str2bool(self.private_zone):
                 return False
 
-        if hz['Name'] != '{0}.'.format(self.options['domain']):
+        if hz['Name'] != '{0}.'.format(self.domain):
             return False
 
         return True
@@ -120,7 +120,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
     def _change_record_sets(self, action, type, name, content):
-        ttl = self.options['ttl']
+        ttl = self._get_lexicon_option('ttl')
         value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
         try:
             self.r53_client.change_resource_record_sets(

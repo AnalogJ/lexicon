@@ -15,16 +15,16 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
     
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.linode.com/api/')
+        self.api_endpoint = 'https://api.linode.com/api/'
 
     def authenticate(self):
         self.domain_id = None
         payload = self._get('domain.list')
         for domain in payload['DATA']:
-            if domain['DOMAIN'] == self.options['domain']:
+            if domain['DOMAIN'] == self.domain:
                 self.domain_id = domain['DOMAINID']
         if self.domain_id == None:
             raise Exception('Domain not found')
@@ -116,7 +116,7 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
         
-        query_params['api_key'] = self.options.get('auth_token')
+        query_params['api_key'] = self._get_provider_option('auth_token')
         query_params['resultFormat'] = 'JSON'
         query_params['api_action'] = url
         

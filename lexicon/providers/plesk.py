@@ -28,10 +28,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
-        self.api_endpoint = self.options.get('plesk_server')
+        self.api_endpoint = self._get_provider_option('plesk_server')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -39,15 +39,15 @@ class Provider(BaseProvider):
         if not self.api_endpoint.endswith(plesk_url_suffix):
             self.api_endpoint += plesk_url_suffix
 
-        self.site_name = self.options.get('domain')
+        self.site_name = self.domain
         assert self.site_name is not None
 
         self.domain_id = None
 
-        self.username = self.options.get('auth_username')
+        self.username = self._get_provider_option('auth_username')
         assert self.username is not None
 
-        self.password = self.options.get('auth_password')
+        self.password = self._get_provider_option('auth_password')
         assert self.password is not None
 
     def __simple_request(self, type, operation, req):

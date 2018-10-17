@@ -50,35 +50,35 @@ class Provider(BaseProvider):
     Note that this implementation will delegates its call to GandiRPCSubProvider
     if RPC protocol is used.
     """
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.default_ttl = 3600
-        self.protocol = self.options.get('api_protocol', 'rpc')
+        self.protocol = self._get_provider_option('api_protocol') or 'rpc'
 
         if (self.protocol != 'rpc' and self.protocol != 'rest'):
             raise ValueError("Invalid API protocol specified, should be 'rpc' or 'rest'")
 
         if (self.protocol == 'rpc'):
-            self.rpc_helper = GandiRPCSubProvider(self.options['auth_token'], 
-                                                  self.options.get('api_endpoint', 'https://rpc.gandi.net/xmlrpc/'), 
-                                                  self.options['domain'].lower(),
+            self.rpc_helper = GandiRPCSubProvider(self._get_provider_option('auth_token'), 
+                                                  self._get_provider_option('api_endpoint') or 'https://rpc.gandi.net/xmlrpc/', 
+                                                  self.domain.lower(),
                                                   self._relative_name,
                                                   self._full_name)
         else:
-            self.api_endpoint = self.options.get('api_endpoint', 'https://dns.api.gandi.net/api/v5')
+            self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://dns.api.gandi.net/api/v5'
 
     def authenticate(self):
         if (self.protocol == 'rpc'):
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
-            self._get('/domains/{0}'.format(self.options['domain']))
-            self.domain_id = self.options['domain'].lower()
+            self._get('/domains/{0}'.format(self.domain))
+            self.domain_id = self.domain.lower()
 
     def create_record(self, type, name, content):
         if (self.protocol == 'rpc'):
             return self.rpc_helper.create_record(type, self._relative_name(name), 
-                                                 content, self.options.get('ttl') or self.default_ttl)
+                                                 content, self._get_lexicon_option('ttl') or self.default_ttl)
 
         current_values = [record['content'] for record in self.list_records(type=type, name=name)]
         if current_values != [content]:
@@ -90,8 +90,8 @@ class Provider(BaseProvider):
             else:
                 record = {'rrset_values': [content]}
                 # add the ttl, if this is a new record
-                if self.options.get('ttl'):
-                    record['rrset_ttl'] = self.options.get('ttl')
+                if self._get_lexicon_option('ttl'):
+                    record['rrset_ttl'] = self._get_lexicon_option('ttl')
                 self._post(url, record)
         LOGGER.debug('create_record: %s', True)
         return True
@@ -226,7 +226,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-Api-Key': self.options.get('auth_token')
+            'X-Api-Key': self._get_provider_option('auth_token')
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url

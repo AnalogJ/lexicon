@@ -20,13 +20,13 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.cloudns.net')
+        self.api_endpoint = 'https://api.cloudns.net'
 
     def authenticate(self):
-        payload = self._get('/dns/get-zone-info.json', {'domain-name': self.options['domain']})
+        payload = self._get('/dns/get-zone-info.json', {'domain-name': self.domain})
         self.domain_id = payload['name']
         logger.debug('authenticate: %s', payload)
 
@@ -43,14 +43,14 @@ class Provider(BaseProvider):
             'host': self._relative_name(name),
             'record': content
         }
-        if self.options['ttl']:
-            params['ttl'] = self.options['ttl']
-        if self.options['priority']:
-            params['priority'] = self.options['priority']
-        if self.options['weight']:
-            params['weight'] = self.options['weight']
-        if self.options['port']:
-            params['port'] = self.options['port']
+        if self._get_lexicon_option('ttl'):
+            params['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            params['priority'] = self._get_lexicon_option('priority')
+        if self._get_provider_option('weight'):
+            params['weight'] = self._get_lexicon_option('weight')
+        if self._get_provider_option('port'):
+            params['port'] = self._get_lexicon_option('port')
 
         # Add new record by calling the ClouDNS API
         payload = self._post('/dns/add-record.json', params)
@@ -99,14 +99,14 @@ class Provider(BaseProvider):
             params['host'] = self._relative_name(name)
         if content:
             params['record'] = content
-        if self.options.get('ttl'):
-            params['ttl'] = self.options.get('ttl')
-        if self.options['priority']:
-            params['priority'] = self.options['priority']
-        if self.options['weight']:
-            params['weight'] = self.options['weight']
-        if self.options['port']:
-            params['port'] = self.options['port']
+        if self._get_lexicon_option('ttl'):
+            params['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            params['priority'] = self._get_lexicon_option('priority')
+        if self._get_provider_option('weight'):
+            params['weight'] = self._get_provider_option('weight')
+        if self._get_provider_option('port'):
+            params['port'] = self._get_provider_option('port')
 
         # Update existing record by calling the ClouDNS API
         payload = self._post('/dns/mod-record.json', params)
@@ -135,21 +135,17 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def _is_given_option(self, key):
-        fallback_fn = self.engine_overrides.get('fallbackFn', (lambda x: None))
-        return self.options[key] and self.options[key] != fallback_fn(key)
-
     def _build_authentication_data(self):
-        if not self.options['auth_password']:
+        if not self._get_provider_option('auth_password'):
             raise Exception('No valid authentication data passed, expected: auth-password')
 
-        if self._is_given_option('auth_id'):
-            return {'auth-id': self.options['auth_id'], 'auth-password': self.options['auth_password']}
-        elif self._is_given_option('auth_subid'):
-            return {'sub-auth-id': self.options['auth_subid'], 'auth-password': self.options['auth_password']}
-        elif self._is_given_option('auth_subuser'):
-            return {'sub-auth-user': self.options['auth_subuser'], 'auth-password': self.options['auth_password']}
-        elif self.options['auth_id'] or self.options['auth_subid'] or self.options['auth_subuser']:
+        if self._get_provider_option('auth_id'):
+            return {'auth-id': self._get_provider_option('auth_id'), 'auth-password': self._get_provider_option('auth_password')}
+        elif self._get_provider_option('auth_subid'):
+            return {'sub-auth-id': self._get_provider_option('auth_subid'), 'auth-password': self._get_provider_option('auth_password')}
+        elif self._get_provider_option('auth_subuser'):
+            return {'sub-auth-user': self._get_provider_option('auth_subuser'), 'auth-password': self._get_provider_option('auth_password')}
+        elif self._get_provider_option('auth_id') or self._get_provider_option('auth_subid') or self._get_provider_option('auth_subuser'):
             # All the options were passed with a fallback value, return an empty dictionary.
             return {}
         else:

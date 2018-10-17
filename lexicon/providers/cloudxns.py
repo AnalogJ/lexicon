@@ -24,16 +24,16 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://www.cloudxns.net/api2')
+        self.api_endpoint = 'https://www.cloudxns.net/api2'
 
     def authenticate(self):
 
         payload = self._get('/domain')
         for record in payload['data']:
-            if record['domain'] == self.options['domain']+'.':
+            if record['domain'] == self.domain+'.':
                 self.domain_id = record['id']
                 break
 
@@ -50,8 +50,8 @@ class Provider(BaseProvider):
             'type': type,
             'line_id': 1,
         }
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
 
         try:
             payload = self._post('/record', record)
@@ -111,8 +111,8 @@ class Provider(BaseProvider):
             'value': content,
             'type': type
         }
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
 
         payload = self._put('/record/' + identifier, data)
 
@@ -143,7 +143,7 @@ class Provider(BaseProvider):
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
-        data['login_token'] = self.options['auth_username'] + ',' + self.options['auth_token']
+        data['login_token'] = self._get_provider_option('auth_username') + ',' + self._get_provider_option('auth_token')
         data['format'] = 'json'
         if query_params:
             query_string = '?' + urlencode(query_params)
@@ -156,9 +156,9 @@ class Provider(BaseProvider):
             data = ''
         date = time.strftime('%a %b %d %H:%M:%S %Y', time.localtime())
         default_headers = {
-            'API-KEY': self.options['auth_username'],
+            'API-KEY': self._get_provider_option('auth_username'),
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self.options['auth_username'],self.api_endpoint, url, query_string, data, date, self.options['auth_token']).encode('utf-8')).hexdigest(),
+            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self._get_provider_option('auth_username'),self.api_endpoint, url, query_string, data, date, self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
             'API-FORMAT':'json'
         }
         default_auth = None

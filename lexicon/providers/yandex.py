@@ -20,24 +20,24 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://pddimp.yandex.ru/api2/admin/dns')
+        self.api_endpoint = 'https://pddimp.yandex.ru/api2/admin/dns'
 
     def authenticate(self):
-        payload = self._get('/list?domain={0}'.format(self.options['domain']))
+        payload = self._get('/list?domain={0}'.format(self.domain))
         if payload['success'] != "ok":
             raise Exception('No domain found')
-        self.domain_id = self.options['domain']
+        self.domain_id = self.domain
 
     def create_record(self, type, name, content):
         if (type == 'CNAME') or (type == 'MX') or (type == 'NS'):
             content = content.rstrip('.') + '.' # make sure a the data is always a FQDN for CNAMe.
 
         querystring = 'domain={0}&type={1}&subdomain={2}&content={3}'.format(self.domain_id, type, self._relative_name(name), content)
-        if self.options.get('ttl'):
-            querystring += "&ttl={0}".format(self.options.get('ttl'))
+        if self._get_lexicon_option('ttl'):
+            querystring += "&ttl={0}".format(self._get_lexicon_option('ttl'))
 
         payload = self._post('/add', {},querystring)
 
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'PddToken': self.options.get('auth_token')
+            'PddToken': self._get_provider_option('auth_token')
         }
 
         if not url.startswith(self.api_endpoint):

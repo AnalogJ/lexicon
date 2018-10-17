@@ -16,15 +16,15 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.digitalocean.com/v2')
+        self.api_endpoint = 'https://api.digitalocean.com/v2'
 
     def authenticate(self):
 
-        payload = self._get('/domains/{0}'.format(self.options['domain']))
-        self.domain_id = self.options['domain']
+        payload = self._get('/domains/{0}'.format(self.domain))
+        self.domain_id = self.domain
 
     def create_record(self, type, name, content):
         # check if record already exists
@@ -125,7 +125,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer {0}'.format(self.options.get('auth_token'))
+            'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url

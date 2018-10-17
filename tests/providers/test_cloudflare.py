@@ -18,6 +18,3 @@ class CloudflareProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="new test, missing recording")
     def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
         return
-
-    def _test_parameters_overrides(self):
-        return {'api_endpoint': 'https://api.cloudflare.com/client/v4'}

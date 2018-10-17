@@ -21,8 +21,8 @@ def ProviderParser(subparser):
     subparser.add_argument("--auth-password", help="specify password used to authenticate")
 
 class Provider(BaseProvider):
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
         self.ssid = None
 
@@ -34,17 +34,17 @@ class Provider(BaseProvider):
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
         """Logs-in the user and checks the domain name"""
-        if not self.options['auth_username'] or not self.options['auth_password']:
+        if not self._get_provider_option('auth_username') or not self._get_provider_option('auth_password'):
             raise Exception('No valid authentication data passed, expected: auth-username and auth-password')
-        response = self._request_login(self.options['auth_username'],
-                                       self.options['auth_password'])
+        response = self._request_login(self._get_provider_option('auth_username'),
+                                       self._get_provider_option('auth_password'))
         if 'ssid' in response:
             self.ssid = response['ssid']
             domains = self.domains_list()
-            if any((domain['name'] == self.options['domain'] for domain in domains)):
-                self.domain_id = self.options['domain']
+            if any((domain['name'] == self.domain for domain in domains)):
+                self.domain_id = self.domain
             else:
-                raise Exception("Unknown domain {}".format(self.options['domain']))
+                raise Exception("Unknown domain {}".format(self.domain))
         else:
             raise Exception("No SSID provided by server")
 
@@ -56,8 +56,8 @@ class Provider(BaseProvider):
             return True
 
         record = self._create_request_record(None, type, name, content,
-                                             self.options['ttl'] if 'ttl' in self.options else None,
-                                             self.options['priority'] if 'priority' in self.options else None)
+                                             self._get_lexicon_option('ttl'),
+                                             self._get_lexicon_option('priority'))
 
         self._request_add_dns_record(record)
         return True
@@ -90,8 +90,8 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, type, content):
         """Updates existing record with no sub-domain name changes"""
         record = self._create_request_record(identifier, type, None, content,
-                                             self.options['ttl'] if 'ttl' in self.options else None,
-                                             self.options['priority'] if 'priority' in self.options else None)
+                                             self._get_lexicon_option('ttl'),
+                                             self._get_lexicon_option('priority'))
 
         self._request_modify_dns_record(record)
 
@@ -99,11 +99,11 @@ class Provider(BaseProvider):
         """Updates existing record and changes it's sub-domain name"""
         new_type = type if type else old_record['type']
 
-        new_ttl = self.options['ttl'] if 'ttl' in self.options else None
+        new_ttl = self._get_lexicon_option('ttl')
         if new_ttl is None and 'ttl' in old_record:
             new_ttl = old_record['ttl']
 
-        new_priority = self.options['priority'] if 'priority' in self.options else None
+        new_priority = self._get_lexicon_option('priority')
         if new_priority is None and 'priority' in old_record:
             new_priority = old_record['priority']
 
@@ -188,7 +188,7 @@ class Provider(BaseProvider):
         """Returns full domain name of a sub-domain name"""
         # Handle None and empty strings
         if not name:
-            return self.options['domain']
+            return self.domain
         else:
             return super(Provider, self)._full_name(name)
 
@@ -247,24 +247,24 @@ class Provider(BaseProvider):
     def _request_get_dns_zone(self):
         """Sends Get_DNS_Zone request"""
         return self._request("Get_DNS_Zone",
-                             domain=self.options['domain'])
+                             domain=self.domain)
 
     def _request_add_dns_record(self, record):
         """Sends Add_DNS_Record request"""
         return self._request("Add_DNS_Record",
-                             domain=self.options['domain'],
+                             domain=self.domain,
                              record=record)
 
     def _request_modify_dns_record(self, record):
         """Sends Modify_DNS_Record request"""
         return self._request("Modify_DNS_Record",
-                             domain=self.options['domain'],
+                             domain=self.domain,
                              record=record)
 
     def _request_delete_dns_record_by_id(self, identifier):
         """Sends Delete_DNS_Record request"""
         return self._request("Delete_DNS_Record",
-                             domain=self.options['domain'],
+                             domain=self.domain,
                              record={ 'id': identifier })
 
     def _request(self, command, **kwargs):

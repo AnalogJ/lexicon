@@ -19,11 +19,11 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
         self.account_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dnsimple.com/v2')
+        self.api_endpoint = 'https://api.dnsimple.com/v2'
 
     def authenticate(self):
 
@@ -33,13 +33,13 @@ class Provider(BaseProvider):
             raise Exception('No account id found')
 
         for account in payload:
-            dompayload = self._get('/{0}/domains'.format(account['id']), query_params={'name_like': self.options.get('domain')})
+            dompayload = self._get('/{0}/domains'.format(account['id']), query_params={'name_like': self.domain})
             if len(dompayload) > 0 and dompayload[0]['id']:
                 self.account_id = account['id']
                 self.domain_id = dompayload[0]['id']
 
         if not self.account_id:
-            raise Exception('No domain found like {}'.format(self.options.get('domain')))
+            raise Exception('No domain found like {}'.format(self.domain))
 
 
     # Create record. If record already exists with the same content, do nothing
@@ -54,14 +54,14 @@ class Provider(BaseProvider):
             'name': self._relative_name(name),
             'content': content
         }
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
-        if self.options.get('priority'):
-            record['priority'] = self.options.get('priority')
-        if self.options.get('regions'):
-            record['regions'] = self.options.get('regions')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            record['priority'] = self._get_lexicon_option('priority')
+        if self._get_provider_option('regions'):
+            record['regions'] = self._get_provider_option('regions')
 
-        payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
+        payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
 
         logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
@@ -75,13 +75,13 @@ class Provider(BaseProvider):
             filter['type'] = type
         if name:
             filter['name'] = self._relative_name(name)
-        payload = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), query_params=filter)
+        payload = self._get('/{0}/zones/{1}/records'.format(self.account_id, self.domain), query_params=filter)
 
         records = []
         for record in payload:
             processed_record = {
                 'type': record['type'],
-                'name': '{}'.format(self.options.get('domain')) if record['name'] == "" else '{0}.{1}'.format(record['name'],self.options.get('domain')),
+                'name': '{}'.format(self.domain) if record['name'] == "" else '{0}.{1}'.format(record['name'],self.domain),
                 'ttl': record['ttl'],
                 'content': record['content'],
                 'id': record['id']
@@ -111,15 +111,15 @@ class Provider(BaseProvider):
             data['name'] = self._relative_name(name)
         if content:
             data['content'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
-        if self.options.get('priority'):
-            data['priority'] = self.options.get('priority')
-        if self.options.get('regions'):
-            data['regions'] = self.options.get('regions')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            data['priority'] = self._get_lexicon_option('priority')
+        if self._get_provider_option('regions'):
+            data['regions'] = self._get_provider_option('regions')
 
         for identifier in identifiers:
-            payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), identifier), data)
+            payload = self._patch('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, identifier), data)
             logger.debug('update_record: %s', identifier)
 
         logger.debug('update_record: %s', True)
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
         logger.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.options.get('domain'), record_id))
+            payload = self._delete('/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, record_id))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
         logger.debug('delete_record: True')
@@ -157,12 +157,12 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        if self.options.get('auth_token'):
-            default_headers['Authorization'] = "Bearer {0}".format(self.options.get('auth_token'))
-        elif self.options.get('auth_username') and self.options.get('auth_password'):
-            default_auth = (self.options.get('auth_username'),self.options.get('auth_password'))
-            if self.options.get('auth_2fa'):
-                default_headers['X-Dnsimple-OTP'] = self.options.get('auth_2fa')
+        if self._get_provider_option('auth_token'):
+            default_headers['Authorization'] = "Bearer {0}".format(self._get_provider_option('auth_token'))
+        elif self._get_provider_option('auth_username') and self._get_provider_option('auth_password'):
+            default_auth = (self._get_provider_option('auth_username'),self._get_provider_option('auth_password'))
+            if self._get_provider_option('auth_2fa'):
+                default_headers['X-Dnsimple-OTP'] = self._get_provider_option('auth_2fa')
         else:
             raise Exception('No valid authentication mechanism found')
 
