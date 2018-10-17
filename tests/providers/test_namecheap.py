@@ -1,6 +1,5 @@
 # Test for one implementation of the interface
 from lexicon.providers.namecheap import Provider
-from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
