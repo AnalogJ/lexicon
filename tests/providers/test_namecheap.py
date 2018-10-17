@@ -69,7 +69,7 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
     def _filter_query_parameters(self):
         return ['ApiKey','UserName', 'ApiUser']
 
-    def _test_options(self):
+    def _test_parameters_overrides(self):
         return {
             'auth_sandbox': True,
             'auth_client_ip': '127.0.0.1'

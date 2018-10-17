@@ -20,7 +20,7 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://www.namesilo.com/api'
+        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://www.namesilo.com/api'
 
     def authenticate(self):
 
