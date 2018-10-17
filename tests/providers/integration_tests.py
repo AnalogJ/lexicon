@@ -48,9 +48,11 @@ class FallbackConfigFeeder(ConfigFeeder):
         self.fallback_fn = fallback_fn
 
     def feed(self, config_parameter):
-        # We extract the key from existing namespace.
-        config_parameter = config_parameter.split(':')[-1]
-        return self.fallback_fn(config_parameter)
+        config_parameter = config_parameter.split(':')
+        if not config_parameter[-2] == 'lexicon':
+            return self.fallback_fn(config_parameter[-1])
+
+        return None
 
 """
 https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
@@ -362,7 +364,7 @@ class IntegrationTests(object):
 
     def _test_fallback_fn(self):
         """
-        This method gives a fallback lambda for any parameter that have not been resolved.
+        This method gives a fallback lambda for any provider parameter that have not been resolved.
         By default it will return 'placeholder_[parameter_name]' for a particular parameter
         (eg. placeholder_auth_token for auth_token).
         """

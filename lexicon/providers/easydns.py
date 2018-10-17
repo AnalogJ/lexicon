@@ -21,7 +21,7 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://rest.easydns.net'
+        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://rest.easydns.net'
 
     def authenticate(self):
 

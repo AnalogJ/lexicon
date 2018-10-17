@@ -25,3 +25,6 @@ class ZonomiProviderTests(TestCase, IntegrationTests):
     def skip_suite(self, request):
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
+
+    def _test_parameters_overrides(self):
+        return {'auth_entrypoint': 'zonomi'}

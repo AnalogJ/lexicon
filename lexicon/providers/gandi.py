@@ -60,12 +60,12 @@ class Provider(BaseProvider):
 
         if (self.protocol == 'rpc'):
             self.rpc_helper = GandiRPCSubProvider(self._get_provider_option('auth_token'), 
-                                                  self._get_provider_option('api_endpoint') or 'https://rpc.gandi.net/xmlrpc/', 
+                                                  'https://rpc.gandi.net/xmlrpc/', 
                                                   self.domain.lower(),
                                                   self._relative_name,
                                                   self._full_name)
         else:
-            self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://dns.api.gandi.net/api/v5'
+            self.api_endpoint = 'https://dns.api.gandi.net/api/v5'
 
     def authenticate(self):
         if (self.protocol == 'rpc'):

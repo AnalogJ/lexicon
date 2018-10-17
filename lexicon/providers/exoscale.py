@@ -24,9 +24,7 @@ def ProviderParser(subparser):
 class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.api_endpoint = self.engine_overrides.get(
-            "api_endpoint", "https://api.exoscale.ch/dns"
-        )
+        self.api_endpoint = 'https://api.exoscale.ch/dns'
 
     def authenticate(self):
         """An innocent call to check that the credentials are okay."""
@@ -124,7 +122,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             record["ttl"] = self._get_lexicon_option('ttl')
         if self._get_lexicon_option('priority'):
-            record["prio"] = _get_lexicon_option('priority')
+            record["prio"] = self._get_lexicon_option('priority')
 
         logger.debug("update_records: %s", identifiers)
 
