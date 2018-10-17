@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 from builtins import object
 
-from lexicon.config import ConfigurationResolver
+from lexicon.config import ConfigResolver
 from lexicon.config import legacy_config_resolver
 
 
@@ -35,10 +35,10 @@ class Provider(object):
     :param engine_overrides: is an empty dict under runtime conditions, only used for testing (eg. overriding api_endpoint to point to sandbox url) see tests/providers/integration_tests.py
     """
     def __init__(self, config, engine_overrides=None):
-        if not isinstance(config, ConfigurationResolver):
+        if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
-            # correctly defined ConfigurationResolver.
+            # correctly defined ConfigResolver.
             self.config = legacy_config_resolver(config)
         else:
             self.config = config

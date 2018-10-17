@@ -12,7 +12,7 @@ import json
 import pkg_resources
 
 from lexicon.client import Client
-from lexicon.config import ConfigurationResolver
+from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
 
 #based off https://docs.python.org/2/howto/argparse.html
@@ -92,7 +92,7 @@ def main():
     #   * from the command line
     #   * from the environment variables
     #   * from lexicon configuration files in working directory
-    config = ConfigurationResolver()
+    config = ConfigResolver()
     config.with_args(parsed_args).with_env().with_config_dir(os.getcwd())
 
     client = Client(config)

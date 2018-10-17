@@ -4,7 +4,7 @@ from builtins import object
 from functools import wraps
 
 from lexicon.providers.base import Provider as BaseProvider
-from lexicon.config import ConfigFeeder, DictConfigFeeder, ConfigurationResolver
+from lexicon.config import ConfigSource, DictConfigSource, ConfigResolver
 
 import pytest
 import vcr
@@ -30,24 +30,24 @@ def _vcr_integration_test(decorated):
             decorated(self)
     return wrapper
 
-class EngineOverrideConfigFeeder(ConfigFeeder):
+class EngineOverrideConfigSource(ConfigSource):
     
     def __init__(self, overrides):
-        super(EngineOverrideConfigFeeder, self).__init__()
+        super(EngineOverrideConfigSource, self).__init__()
         self.overrides = overrides
 
-    def feed(self, config_parameter):
+    def resolve(self, config_parameter):
         # We extract the key from existing namespace.
         config_parameter = config_parameter.split(':')[-1]
         return self.overrides.get(config_parameter)
 
-class FallbackConfigFeeder(ConfigFeeder):
+class FallbackConfigSource(ConfigSource):
     
     def __init__(self, fallback_fn):
-        super(FallbackConfigFeeder, self).__init__()
+        super(FallbackConfigSource, self).__init__()
         self.fallback_fn = fallback_fn
 
-    def feed(self, config_parameter):
+    def resolve(self, config_parameter):
         config_parameter = config_parameter.split(':')
         if not config_parameter[-2] == 'lexicon':
             return self.fallback_fn(config_parameter[-1])
@@ -96,7 +96,7 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
         config = self._test_config()
-        config.add_config_feeder(DictConfigFeeder({'domain': 'thisisadomainidonotown.com'}), 0)
+        config.add_config_feeder(DictConfigSource({'domain': 'thisisadomainidonotown.com'}), 0)
         provider = self.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
@@ -316,7 +316,7 @@ class IntegrationTests(object):
 
     def _test_config(self):
         """
-        This method construct a ConfigurationResolver suitable for tests. 
+        This method construct a ConfigResolver suitable for tests. 
         This will resolve any parameters required by Lexicon or the provider in the following order:
             * parameters that matches the ones provided by _test_parameters_overrides
             * parameters that matches existing environment variables at the time of test execution
@@ -336,17 +336,17 @@ class IntegrationTests(object):
         You can change this behavior by overriding _test_fallback_fn().
 
         """
-        config = ConfigurationResolver()
+        config = ConfigResolver()
         # First we load the overrides
         overrides = self._test_parameters_overrides()
         overrides['domain'] = self.domain
-        config.with_config_feeder(EngineOverrideConfigFeeder(overrides))
+        config.with_config_feeder(EngineOverrideConfigSource(overrides))
         
         # Then we get environment variables
         config.with_env()
         
         # And finally we provide the fallback function
-        config.with_config_feeder(FallbackConfigFeeder(self._test_fallback_fn()))
+        config.with_config_feeder(FallbackConfigSource(self._test_fallback_fn()))
 
         return config
 

@@ -2,7 +2,7 @@ import lexicon.client
 import pytest
 import os
 
-from lexicon.config import ConfigurationResolver
+from lexicon.config import ConfigResolver
 
 def test_Client_basic_init():
     options = {
@@ -11,7 +11,7 @@ def test_Client_basic_init():
         'domain': 'example.com',
         'type': 'TXT'
     }
-    client = lexicon.client.Client(ConfigurationResolver().with_dict(options))
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options['provider_name']
     assert client.action == options['action']

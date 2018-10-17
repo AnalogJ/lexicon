@@ -5,7 +5,7 @@ import yaml
 
 LOGGER = logging.getLogger(__name__)
 
-class ConfigurationResolver(object):
+class ConfigResolver(object):
     """
     Highly customizable configuration resolver object, that gets configuration parameters
     from various sources with a precedence order. Sources and their priority are configured 
@@ -30,14 +30,14 @@ class ConfigurationResolver(object):
         * environment variables
         * arguments parsed by ArgParse library
         * YAML configuration files, generic or specific to a provider
-        * any object implementing the underlying ConfigFeeder class
+        * any object implementing the underlying ConfigSource class
 
     Each parameter will be resolved against each source, and value from the higher priority source
     is returned. If a parameter could not be resolve by any source, then None will be returned.
     """
 
     def __init__(self):
-        super(ConfigurationResolver, self).__init__()
+        super(ConfigResolver, self).__init__()
         self._config_feeders = []
 
     def resolve(self, config_key):
@@ -53,7 +53,7 @@ class ConfigurationResolver(object):
         from any source.
         """
         for config_feeder in self._config_feeders:
-            value = config_feeder.feed(config_key)
+            value = config_feeder.resolve(config_key)
             if value:
                 return value
 
@@ -64,8 +64,8 @@ class ConfigurationResolver(object):
 
     def with_config_feeder(self, config_feeder):
         """
-        Configure current resolver to use the provided ConfigFeeder instance to be used as a source.
-        See documentation of ConfigFeeder to see how to implement correctly a ConfigFeeder.
+        Configure current resolver to use the provided ConfigSource instance to be used as a source.
+        See documentation of ConfigSource to see how to implement correctly a ConfigSource.
         """
         self.add_config_feeder(config_feeder)
         return self
@@ -76,12 +76,12 @@ class ConfigurationResolver(object):
         Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]' 
         will be taken into account.
         """
-        return self.with_config_feeder(EnvironmentConfigFeeder())
+        return self.with_config_feeder(EnvironmentConfigSource())
 
     def with_args(self, argparse_namespace):
         """
         Configure current resolver to use a Namespace object given by a ArgParse instance
-        using arg_parse() as a source. This method is typically used to allow a ConfigurationResolver
+        using arg_parse() as a source. This method is typically used to allow a ConfigResolver
         to get parameters from the command line.
 
         It is assumed that the argument parser have already checked that provided arguments are
@@ -89,7 +89,7 @@ class ConfigurationResolver(object):
         be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token present
         in the given Namespace object will be returned.
         """
-        return self.with_config_feeder(ArgsConfigFeeder(argparse_namespace))
+        return self.with_config_feeder(ArgsConfigSource(argparse_namespace))
 
     def with_dict(self, dict_object):
         """
@@ -104,7 +104,7 @@ class ConfigurationResolver(object):
             }
             => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
         """
-        return self.with_config_feeder(DictConfigFeeder(dict_object))
+        return self.with_config_feeder(DictConfigSource(dict_object))
 
     def with_config_file(self, file_path):
         """
@@ -118,7 +118,7 @@ class ConfigurationResolver(object):
             cloudflare:
             auth_token: SECRET_TOKEN
         """
-        return self.with_config_feeder(FileConfigFeeder(file_path))
+        return self.with_config_feeder(FileConfigSource(file_path))
 
     def with_provider_config_file(self, provider_name, file_path):
         """
@@ -134,7 +134,7 @@ class ConfigurationResolver(object):
         NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
         by default, with [provider] equals to the given provider_name parameter.
         """
-        return self.with_config_feeder(ProviderFileConfigFeeder(provider_name, file_path))
+        return self.with_config_feeder(ProviderFileConfigSource(provider_name, file_path))
 
     def with_config_dir(self, dir_path):
         """
@@ -174,36 +174,37 @@ class ConfigurationResolver(object):
         return self
 
     def with_legacy_dict(self, legacy_dict_object):
-        LOGGER.warning('Legacy configuration object has been used to load the ConfigurationResolver.')
-        return self.with_config_feeder(LegacyDictConfigFeeder(legacy_dict_object))
+        LOGGER.warning('Legacy configuration object has been used to load the ConfigResolver.')
+        return self.with_config_feeder(LegacyDictConfigSource(legacy_dict_object))
 
-class ConfigFeeder(object):
+class ConfigSource(object):
     """
-    Base class to implement a configuration source for ResolverConfig.
-    The relevant method to override is feed(self, config_parameter).
+    Base class to implement a configuration source for a ConfigResolver.
+    The relevant method to override is resolve(self, config_parameter).
     """
 
-    def feed(self, config_parameter):
+    def resolve(self, config_parameter):
         """
         Using the given config_parameter value (in the form of 'lexicon:config_key' or 
         'lexicon:[provider]:config_key'), try to get the associated value.
 
         None must be returned if no value could be found.
 
-        Must be implemented by each ConfigFeeder concrete child class.
+        Must be implemented by each ConfigSource concrete child class.
         """
-        raise NotImplementedError('The method feed must be implemented in the concret sub-classes.')
+        raise NotImplementedError('The method resolve(config_parameter) '
+                                  'must be implemented in the concret sub-classes.')
 
-class EnvironmentConfigFeeder(ConfigFeeder):
+class EnvironmentConfigSource(ConfigSource):
 
     def __init__(self):
-        super(EnvironmentConfigFeeder, self).__init__()
+        super(EnvironmentConfigSource, self).__init__()
         self._parameters = {}
         for (key, value) in os.environ.items():
             if key.startswith('LEXICON_'):
                 self._parameters[key] = value
 
-    def feed(self, config_parameter):
+    def resolve(self, config_parameter):
         # First try, with a direct conversion of the config_parameter: 
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_AUTH_MY_CONFIG
         #   * lexicon:provider:my_other_config => LEXICON_PROVIDER_AUTH_MY_OTHER_CONFIG
@@ -225,13 +226,13 @@ class EnvironmentConfigFeeder(ConfigFeeder):
 
         return None
 
-class ArgsConfigFeeder(ConfigFeeder):
+class ArgsConfigSource(ConfigSource):
 
     def __init__(self, namespace):
-        super(ArgsConfigFeeder, self).__init__()
+        super(ArgsConfigSource, self).__init__()
         self._parameters = vars(namespace)
 
-    def feed(self, config_key):
+    def resolve(self, config_key):
         # We assume here that the namespace provided has already done its job,
         # by validating that all given parameters are relevant for Lexicon or the current provider.
         # So we ignore the namespaces 'lexicon:' and 'lexicon:provider' in given config key.
@@ -239,13 +240,13 @@ class ArgsConfigFeeder(ConfigFeeder):
 
         return self._parameters.get(splitted_config_key[-1], None)
 
-class DictConfigFeeder(ConfigFeeder):
+class DictConfigSource(ConfigSource):
 
     def __init__(self, dict_object):
-        super(DictConfigFeeder, self).__init__()
+        super(DictConfigSource, self).__init__()
         self._parameters = dict_object
 
-    def feed(self, config_key):
+    def resolve(self, config_key):
         splitted_config_key = config_key.split(':')
         # Note that we ignore 'lexicon:' in the iteration,
         # as the dict object is already scoped to lexicon.
@@ -255,28 +256,28 @@ class DictConfigFeeder(ConfigFeeder):
 
         return cursor.get(splitted_config_key[-1], None)
 
-class FileConfigFeeder(DictConfigFeeder):
+class FileConfigSource(DictConfigSource):
 
     def __init__(self, file_path):
         with open(file_path, 'r') as stream:
             yaml_object = yaml.load(stream) or {}
 
-        super(FileConfigFeeder, self).__init__(yaml_object)
+        super(FileConfigSource, self).__init__(yaml_object)
 
-class ProviderFileConfigFeeder(FileConfigFeeder):
+class ProviderFileConfigSource(FileConfigSource):
 
     def __init__(self, provider_name, file_path):
-        super(ProviderFileConfigFeeder, self).__init__(file_path)
+        super(ProviderFileConfigSource, self).__init__(file_path)
         # Scope the loaded config file into provider namespace
         self._parameters = {provider_name: self._parameters}
 
-class LegacyDictConfigFeeder(DictConfigFeeder):
+class LegacyDictConfigSource(DictConfigSource):
 
     def __init__(self, dict_object):
         provider_name = dict_object.get('provider_name')
         if not provider_name:
             raise AttributeError('Error, key provider_name is not defined.'
-                                 'LegacyDictConfigFeeder cannot scope correctly '
+                                 'LegacyDictConfigSource cannot scope correctly '
                                  'the provider specific options.')
 
         generic_parameters = [
@@ -293,10 +294,14 @@ class LegacyDictConfigFeeder(DictConfigFeeder):
             else:
                 refactor_dict_object[key] = value
 
-        super(LegacyDictConfigFeeder, self).__init__(refactor_dict_object)
+        super(LegacyDictConfigSource, self).__init__(refactor_dict_object)
 
 def non_interactive_config_resolver():
-    return ConfigurationResolver().with_env().with_config_dir(os.getcwd())
+    """
+    Create a typical config resolver in a non-interactive context (eg. lexicon used as a library).
+    Configuration will be resolved againts env variables and lexicon config files in working dir.
+    """
+    return ConfigResolver().with_env().with_config_dir(os.getcwd())
 
 def legacy_config_resolver(legacy_dict):
     """
@@ -304,6 +309,6 @@ def legacy_config_resolver(legacy_dict):
     Custom logic was to enrich this configuration with env variables.
 
     This function create a resolve that respect the expected behavior, by using the relevant
-    ConfigFeeders, and we add the config files from working directory.
+    ConfigSources, and we add the config files from working directory.
     """
-    return ConfigurationResolver().with_legacy_dict(legacy_dict).with_env().with_config_dir(os.getcwd())
+    return ConfigResolver().with_legacy_dict(legacy_dict).with_env().with_config_dir(os.getcwd())

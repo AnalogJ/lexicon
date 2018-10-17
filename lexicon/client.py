@@ -4,7 +4,7 @@ import importlib
 import os
 import tldextract
 
-from lexicon.config import ConfigurationResolver, DictConfigFeeder
+from lexicon.config import ConfigResolver, DictConfigSource
 from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
 
 # From providers import Example
@@ -13,8 +13,8 @@ class Client(object):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
             self.config = non_interactive_config_resolver()
-        elif not isinstance(config, ConfigurationResolver):
-            # If config is not a ConfigurationResolver, we are in a legacy situation.
+        elif not isinstance(config, ConfigResolver):
+            # If config is not a ConfigResolver, we are in a legacy situation.
             # We protect this part of the Client API.
             self.config = legacy_config_resolver(config)
         else:
@@ -43,7 +43,7 @@ class Client(object):
         self.action = self.config.resolve('lexicon:action')
         self.provider_name = self.config.resolve('lexicon:provider_name') or self.config.resolve('lexicon:provider')
 
-        self.config.add_config_feeder(DictConfigFeeder(runtime_config), 0)
+        self.config.add_config_feeder(DictConfigSource(runtime_config), 0)
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
