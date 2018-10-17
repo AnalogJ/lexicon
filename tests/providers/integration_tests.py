@@ -30,25 +30,27 @@ def _vcr_integration_test(decorated):
             decorated(self)
     return wrapper
 
-class EngineOverridesConfigFeeder(ConfigFeeder):
+class EngineOverrideConfigFeeder(ConfigFeeder):
     
-    def __init__(self, engine_overrides):
-        super(EngineOverridesConfigFeeder, self).__init__()
-        self.engine_overrides = engine_overrides
-        print(engine_overrides)
+    def __init__(self, overrides):
+        super(EngineOverrideConfigFeeder, self).__init__()
+        self.overrides = overrides
 
     def feed(self, config_parameter):
+        # We extract the key from existing namespace.
         config_parameter = config_parameter.split(':')[-1]
+        return self.overrides.get(config_parameter)
 
-        value = self.engine_overrides.get(config_parameter)
-        if value:
-            return value
-        
-        fallbackFn = self.engine_overrides.get('fallbackFn')
-        if fallbackFn:
-            return fallbackFn(config_parameter)
+class FallbackConfigFeeder(ConfigFeeder):
+    
+    def __init__(self, fallback_fn):
+        super(FallbackConfigFeeder, self).__init__()
+        self.fallback_fn = fallback_fn
 
-        return None
+    def feed(self, config_parameter):
+        # We extract the key from existing namespace.
+        config_parameter = config_parameter.split(':')[-1]
+        return self.fallback_fn(config_parameter)
 
 """
 https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
@@ -92,7 +94,7 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
         config = self._test_config()
-        config.add_config_feeder(DictConfigFeeder({'domain', 'thisisadomainidonotown.com'}), 0)
+        config.add_config_feeder(DictConfigFeeder({'domain': 'thisisadomainidonotown.com'}), 0)
         provider = self.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
@@ -312,8 +314,15 @@ class IntegrationTests(object):
 
     def _test_config(self):
         """
-        This method lets you set options that are passed into the Provider. see lexicon/providers/base.py for a full list
-        of options available. In general you should not need to override this method. Just override `self.domain`
+        This method construct a ConfigurationResolver suitable for tests. 
+        This will resolve any parameters required by Lexicon or the provider in the following order:
+            * parameters that matches the ones provided by _test_parameters_overrides
+            * parameters that matches existing environment variables at the time of test execution
+            * parameters processed throught the lambda provided by _test_fallback_fn.
+
+        See lexicon/providers/base.py for a full list of parameters available. 
+        You should not override this method. Just override `self.domain`, or use _test_parameters_overrides()
+        to configure specific parameters for the tests.
 
         Any parameters that you expect to be passed to the provider via the cli, like --auth_username and --auth_token, will
         be present during the tests, with a 'placeholder_' prefix.
@@ -322,43 +331,60 @@ class IntegrationTests(object):
         options['auth_username'] == 'placeholder_auth_username'
         options['unique_provider_option'] == 'placeholder_unique_provider_option'
 
+        You can change this behavior by overriding _test_fallback_fn().
+
         """
-        return ConfigurationResolver().with_dict({'domain': self.domain}).with_env().with_config_feeder(EngineOverridesConfigFeeder(self._test_engine_overrides()))
+        config = ConfigurationResolver()
+        # First we load the overrides
+        overrides = self._test_parameters_overrides()
+        overrides['domain'] = self.domain
+        config.with_config_feeder(EngineOverrideConfigFeeder(overrides))
+        
+        # Then we get environment variables
+        config.with_env()
+        
+        # And finally we provide the fallback function
+        config.with_config_feeder(FallbackConfigFeeder(self._test_fallback_fn()))
 
-    """
-    This method lets you override engine options. You must ensure the `fallbackFn` is defined, so your override might look like:
+        return config
 
-        def _test_engine_overrides(self):
-            overrides = super(DnsmadeeasyProviderTests, self)._test_engine_overrides()
-            overrides.update({'api_endpoint': 'http://api.sandbox.dnsmadeeasy.com/V2.0'})
-            return overrides
+    def _test_parameters_overrides(self):
+        """
+        This method gives an object whose keys are some provider or lexicon parameters expected during a test.
+        If a parameter match on of the key during a test, the associated value will be used authoritatively.
+        
+        Example:
+        {'auth_token': 'AUTH_TOKEN'} => if the provider require to use auth_token, its value will be always AUTH_TOKEN.
 
-    In general you should not need to override this method unless you need to override a provider setting only during testing.
-    Like `api_endpoint`.
-    """
-    def _test_engine_overrides(self):
-        overrides = {
-            'fallbackFn': (lambda x: 'placeholder_' + x)
-        }
-        return overrides
+        By default no value is overriden.
+        """
+        return {}
 
-    """
-    A path customized for the provider's fixture.
-    The default path is, for example:
-        {provider}/IntegrationTests
-    but if the test is a `provider_variant`, the path is customized to the variant:
-        {provider}/{variant_name}-IntegrationTests
-    """
+    def _test_fallback_fn(self):
+        """
+        This method gives a fallback lambda for any parameter that have not been resolved.
+        By default it will return 'placeholder_[parameter_name]' for a particular parameter
+        (eg. placeholder_auth_token for auth_token).
+        """
+        return lambda x: 'placeholder_' + x
+
     def _cassette_path(self, fixture_subpath):
+        """
+        A path customized for the provider's fixture.
+        The default path is, for example:
+            {provider}/IntegrationTests
+        but if the test is a `provider_variant`, the path is customized to the variant:
+            {provider}/{variant_name}-IntegrationTests
+        """
         if self.provider_variant:
             return "{0}/{1}-{2}".format(self.provider_name, self.provider_variant, fixture_subpath)
         else:
             return "{0}/{1}".format(self.provider_name, fixture_subpath)
 
-    """
-    Construct a new provider, and authenticate it against the target DNS provider API.
-    """
     def _construct_authenticated_provider(self):
+        """
+        Construct a new provider, and authenticate it against the target DNS provider API.
+        """
         provider = self.Provider(self._test_config())
         provider.authenticate()
         return provider
