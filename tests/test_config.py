@@ -102,5 +102,5 @@ def test_prioritized_resolution(tmpdir):
 
     os.environ['LEXICON_CLOUDFLARE_AUTH_TOKEN'] = 'TEST2'
 
-    assert ConfigurationResolver().with_config_file(lexicon_file).with_env().resolve('lexicon:cloudflare:auth_token') == 'TEST1'
-    assert ConfigurationResolver().with_env().with_config_file(lexicon_file).resolve('lexicon:cloudflare:auth_token') == 'TEST2'
+    assert ConfigurationResolver().with_config_file(str(lexicon_file)).with_env().resolve('lexicon:cloudflare:auth_token') == 'TEST1'
+    assert ConfigurationResolver().with_env().with_config_file(str(lexicon_file)).resolve('lexicon:cloudflare:auth_token') == 'TEST2'
