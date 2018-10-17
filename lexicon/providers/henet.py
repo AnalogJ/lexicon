@@ -22,11 +22,11 @@ def ProviderParser(subparser):
         """
     subparser.add_argument(
         '--auth-username',
-        help='Specify username used to authenticate'
+        help='specify username for authentication'
     )
     subparser.add_argument(
         '--auth-password',
-        help='Specify password used to authenticate',
+        help='specify password for authentication',
     )
 
 

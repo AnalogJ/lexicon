@@ -15,8 +15,8 @@ from .base import Provider as BaseProvider
 logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-api-key", help="specify API key to authenticate")
-    subparser.add_argument("--auth-secret-key", help="specify the secret key to authenticate")
+    subparser.add_argument("--auth-api-key", help="specify API key for authentication")
+    subparser.add_argument("--auth-secret-key", help="specify the secret key for authentication")
 
 class Provider(BaseProvider):
 

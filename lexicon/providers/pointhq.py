@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify email address used to authenticate")
-    subparser.add_argument("--auth-token", help="specify token used authenticate")
+    subparser.add_argument("--auth-username", help="specify email address for authentication")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
 
 class Provider(BaseProvider):
 

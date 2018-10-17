@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
     subparser.add_argument(
-        "--auth-token", help="specify access token used authenticate to DNS provider")
+        "--auth-token", help="specify access token for authentication")
     subparser.add_argument(
-        "--auth-secret", help="specify asscess secret used authenticate to DNS provider")
+        "--auth-secret", help="specify access secret for authentication")
 
 
 class Provider(BaseProvider):

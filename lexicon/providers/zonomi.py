@@ -36,7 +36,7 @@ APIENTRYPOINT = {
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token used authenticate")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
     subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[
         'zonomi', 'rimuhosting' ])
 

@@ -17,8 +17,8 @@ except:
 logger = logging.getLogger(__name__)
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify user name used to authenticate")
-    subparser.add_argument("--auth-password", help="specify password used to authenticate")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-password", help="specify password for authentication")
 
 class Provider(BaseProvider):
     def __init__(self, options, engine_overrides=None):
