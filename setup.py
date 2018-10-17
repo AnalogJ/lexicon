@@ -101,7 +101,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'lexicon=lexicon.__main__:main',
+            'lexicon=lexicon.cli:main',
         ],
     },
     test_suite='tests'

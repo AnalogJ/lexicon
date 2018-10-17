@@ -1,11 +1,9 @@
 from __future__ import absolute_import
 
-from builtins import object
 import importlib
 import os
 import tldextract
 
-from lexicon.common.options_handler import env_auth_options
 from lexicon.config import ConfigurationResolver, DictConfigFeeder
 from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
 

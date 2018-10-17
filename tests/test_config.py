@@ -1,7 +1,7 @@
 import os
 
 from lexicon.config import ConfigurationResolver, ConfigFeeder
-from lexicon.__main__ import MainParser
+from lexicon.parser import generate_cli_main_parser
 
 def test_environment_resolution():
     os.environ['LEXICON_DELEGATED'] = 'TEST1'
@@ -16,7 +16,7 @@ def test_environment_resolution():
     assert config.resolve('lexicon:nonexistent') is None
 
 def test_argparse_resolution():
-    parser = MainParser()
+    parser = generate_cli_main_parser()
     data = parser.parse_args(['--delegated', 'TEST1', 'cloudflare', 'create', 'example.com', 'TXT', '--auth-token', 'TEST2'])
 
     config = ConfigurationResolver().with_args(data)

@@ -4,7 +4,8 @@ import sys
 import importlib
 import logging
 import json
-import lexicon.__main__
+
+from lexicon import cli
 
 from types import ModuleType
 from lexicon.providers.base import Provider as BaseProvider
@@ -28,7 +29,7 @@ def test_output_function_outputs_json_as_table(capsys):
         'fake2-id TXT  fake2.example.com fake2   3600',
     ]
 
-    lexicon.__main__.handle_output(data, 'TABLE')
+    cli.handle_output(data, 'TABLE')
     assert_correct_output(capsys, expected_output_lines)
 
 def test_output_function_outputs_json_as_table_with_no_header(capsys):
@@ -37,11 +38,11 @@ def test_output_function_outputs_json_as_table_with_no_header(capsys):
         'fake2-id TXT fake2.example.com fake2 3600',
     ]
 
-    lexicon.__main__.handle_output(data, 'TABLE-NO-HEADER')
+    cli.handle_output(data, 'TABLE-NO-HEADER')
     assert_correct_output(capsys, expected_output_lines)
 
 def test_output_function_outputs_json_as_json_string(capsys):
-    lexicon.__main__.handle_output(data, 'JSON')
+    cli.handle_output(data, 'JSON')
 
     out, _ = capsys.readouterr()
     json_data = json.loads(out)
@@ -51,17 +52,17 @@ def test_output_function_outputs_json_as_json_string(capsys):
 def test_output_function_output_nothing_when_quiet(capsys):
     expected_output_lines = []
 
-    lexicon.__main__.handle_output(data, 'QUIET')
+    cli.handle_output(data, 'QUIET')
     assert_correct_output(capsys, expected_output_lines)
 
 def test_output_function_outputs_nothing_with_not_a_json_data(capsys):
     expected_output_lines = []
 
-    lexicon.__main__.handle_output(True, 'TABLE')
+    cli.handle_output(True, 'TABLE')
     assert_correct_output(capsys, expected_output_lines)
 
-    lexicon.__main__.handle_output(True, 'TABLE-NO-HEADER')
+    cli.handle_output(True, 'TABLE-NO-HEADER')
     assert_correct_output(capsys, expected_output_lines)
 
-    lexicon.__main__.handle_output(True, 'JSON')
+    cli.handle_output(True, 'JSON')
     assert_correct_output(capsys, expected_output_lines)

@@ -1,8 +1,11 @@
-import lexicon.__main__
+from __future__ import absolute_import
+
 import pytest
 
-def test_BaseProviderParser():
-    baseparser = lexicon.__main__.BaseProviderParser()
+from lexicon.parser import generate_base_provider_parser, generate_cli_main_parser
+
+def test_base_provider_parser():
+    baseparser = generate_base_provider_parser()
     parsed = baseparser.parse_args(['list','capsulecd.com','TXT'])
     assert parsed.action == 'list'
     assert parsed.domain == 'capsulecd.com'
@@ -10,18 +13,18 @@ def test_BaseProviderParser():
     assert parsed.ttl == None
     assert parsed.output == 'TABLE'
 
-def test_BaseProviderParser_without_domain():
-    baseparser = lexicon.__main__.BaseProviderParser()
+def test_base_provider_parser_without_domain():
+    baseparser = generate_base_provider_parser()
     with pytest.raises(SystemExit):
         baseparser.parse_args(['list'])
 
-def test_BaseProviderParser_without_options():
-    baseparser = lexicon.__main__.BaseProviderParser()
+def test_base_provider_parser_without_options():
+    baseparser = generate_base_provider_parser()
     with pytest.raises(SystemExit):
         baseparser.parse_args([])
 
-def test_MainParser():
-    baseparser = lexicon.__main__.MainParser()
+def test_cli_main_parser():
+    baseparser = generate_cli_main_parser()
     parsed = baseparser.parse_args(['cloudflare','list','capsulecd.com','TXT'])
     assert parsed.provider_name == 'cloudflare'
     assert parsed.action == 'list'
@@ -29,7 +32,7 @@ def test_MainParser():
     assert parsed.type == 'TXT'
     assert parsed.output == 'TABLE'
 
-def test_MainParser_without_args():
-    baseparser = lexicon.__main__.MainParser()
+def test_cli_main_parser_without_args():
+    baseparser = generate_cli_main_parser()
     with pytest.raises(SystemExit):
         baseparser.parse_args([])
