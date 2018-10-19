@@ -84,6 +84,7 @@ class Provider(BaseProvider):
         Returns:
           bool: True if the record was created successfully, False otherwise.
         """
+        name = self._relative_name(name) if name is not None else name
         logger.debug('Creating record with name {}'.format(name))
         if self._is_duplicate_record(type, name, content):
             return True
@@ -203,6 +204,7 @@ class Provider(BaseProvider):
         Raises:
           AssertionError: When a request returns unexpected or unknown data.
         """
+        name = self._full_name(name) if name is not None else name
         if self._records is None:
             records = []
             rows = self._get_dns_entry_trs()
