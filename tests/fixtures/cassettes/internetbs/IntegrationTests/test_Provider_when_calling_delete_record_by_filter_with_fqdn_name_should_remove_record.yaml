@@ -1,0 +1,164 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://api.internet.bs/Domain/List?ResponseFormat=json&searchTermFilter=world-of-ysera.com
+  response:
+    body: {string: !!python/unicode '{"transactid":"405e0fe5028e5e895f7c3ed40c3c6176","status":"SUCCESS","domaincount":1,"domain":["world-of-ysera.com"]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['116']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=uk6tak8itbtnq00b9jhmom6eu3; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://api.internet.bs/Domain/DnsRecord/List?Domain=world-of-ysera.com&FilterType=TXT&ResponseFormat=json
+  response:
+    body: {string: !!python/unicode '{"transactid":"593087946dca6ea0576a08f1efe50f3c","status":"SUCCESS","total_records":7,"records":[{"name":"_amazonses.world-of-ysera.com","value":"PzgAAEOkx5B0XyMk16yC9S4UsBvJcW94ST+YtTte+ng=","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.fqdn.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.full.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.test.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken1","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken2","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.noop.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['842']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=pck3stf3dt415leuvcfhncd883; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://api.internet.bs/Domain/DnsRecord/Add?FullRecordName=delete.testfqdn.world-of-ysera.com&ResponseFormat=json&Ttl=3600&Type=TXT&Value=challengetoken
+  response:
+    body: {string: !!python/unicode '{"transactid":"62b5a22a979a1c571d7a96b322c432a9","status":"SUCCESS"}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['68']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=vllcqmqg0njol80kkou7vifd96; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://api.internet.bs/Domain/DnsRecord/List?Domain=world-of-ysera.com&FilterType=TXT&ResponseFormat=json
+  response:
+    body: {string: !!python/unicode '{"transactid":"9942fd68a5a9437a4894c477d2049689","status":"SUCCESS","total_records":8,"records":[{"name":"_amazonses.world-of-ysera.com","value":"PzgAAEOkx5B0XyMk16yC9S4UsBvJcW94ST+YtTte+ng=","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.fqdn.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.full.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.test.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken1","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken2","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.noop.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"delete.testfqdn.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['937']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=mibnh6no57bcg8i8gu8ud75cp5; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://api.internet.bs/Domain/DnsRecord/Remove?FullRecordName=delete.testfqdn.world-of-ysera.com&ResponseFormat=json&Type=TXT&Value=challengetoken
+  response:
+    body: {string: !!python/unicode '{"transactid":"a44ce0c768aa9c19768cd08b50cb977a","status":"SUCCESS"}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['68']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=kbbe3od98em9q7q38kfh3e0cm0; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://api.internet.bs/Domain/DnsRecord/List?Domain=world-of-ysera.com&FilterType=TXT&ResponseFormat=json
+  response:
+    body: {string: !!python/unicode '{"transactid":"537cb71f0e31712c3991e4d3ed28617f","status":"SUCCESS","total_records":7,"records":[{"name":"_amazonses.world-of-ysera.com","value":"PzgAAEOkx5B0XyMk16yC9S4UsBvJcW94ST+YtTte+ng=","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.fqdn.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.full.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.test.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken1","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.createrecordset.world-of-ysera.com","value":"challengetoken2","ttl":3600,"type":"TXT"},{"name":"_acme-challenge.noop.world-of-ysera.com","value":"challengetoken","ttl":3600,"type":"TXT"}]}'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      connection: [close]
+      content-length: ['842']
+      content-type: [text/javascript; charset=utf-8]
+      date: ['Sun, 18 Nov 2018 16:19:27 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      pragma: [no-cache]
+      server: [Apache]
+      set-cookie: [INTBSSEID=50hn8gk3q40slf2h3h1dmpvto4; path=/; domain=internetbs.net;
+          secure; HttpOnly, 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly', 'IBS=NIqpub1d0HIyQhTzAaHhPl2%2BLL%2Bzd%2FlNqH%2FMRap5DJh24tpSNbD4E6X%2BBixtjV1lfcyS9m%2BxWG3%2B02Hj6TL9vZemlyj6l%2B%2BmwCJBbQUSm6odZWnj5ujg8a59aCxQBchWYmwHMVxlQNPnLWW%2BcGSjwxOSBMV2W%2BJQ3WkD%2FEPmoZUjcSZlWkT6La60gXwVImAFo3%2BJD4MoEoQpU%2FXsjqyYL4UaQNKT8BUSY%2Bgr2HaDYFA%3D;
+          expires=Wed, 15-Nov-2028 16:19:27 GMT; path=/; secure; httponly']
+    status: {code: 200, message: OK}
+version: 1
