@@ -230,7 +230,7 @@ class Provider(BaseProvider):
 
                     if len(rec['ttl']) > 0:
                         rec['ttl'] = int(rec['ttl'])
-                except Exception, e:
+                except Exception as e:
                     errmsg = 'Cannot parse DNS entry ({}).'.format(e)
                     logger.warning(errmsg)
                     raise AssertionError(errmsg)
@@ -436,7 +436,7 @@ class Provider(BaseProvider):
             link = td.find('a')['href']
             domain_id = link.rsplit('/',1)[-1]
             return domain_id
-        except Exception, e:
+        except Exception as e:
             errmsg = ('Cannot get the domain id even though the domain seems '
                       'to exist ({}).'.format(e))
             logger.warning(errmsg)
