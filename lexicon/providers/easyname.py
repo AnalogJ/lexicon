@@ -4,7 +4,6 @@ import logging
 import sys
 
 from requests import Session, Response
-from bs4 import BeautifulSoup, Tag
 from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
@@ -313,6 +312,7 @@ class Provider(BaseProvider):
         """
         Return the TR elements holding the DNS entries.
         """
+        from bs4 import BeautifulSoup
         dns_list_response = self.session.get(
             self.URLS['dns'].format(self.domain_id))
         self._log('DNS list', dns_list_response)
@@ -364,6 +364,7 @@ class Provider(BaseProvider):
 
     def _get_csrf_token(self):
         """Return the CSRF Token of easyname login form."""
+        from bs4 import BeautifulSoup
         home_response = self.session.get(self.URLS['login'])
         self._log('Home', home_response)
         assert home_response.status_code == 200, \
@@ -397,6 +398,7 @@ class Provider(BaseProvider):
     def _get_domain_text_of_authoritative_zone(self):
         """Get the authoritative name zone."""
         # We are logged in, so get the domain list
+        from bs4 import BeautifulSoup
         zones_response = self.session.get(self.URLS['domain_list'])
         self._log('Zone', zones_response)
         assert zones_response.status_code == 200, \
@@ -447,6 +449,7 @@ class Provider(BaseProvider):
         """
         Log Response and Tag elements. Do nothing if elements is none of them.
         """
+        from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
             logger.debug('{} response: URL={} Code={}'.format(name,
                          element.url, element.status_code))
