@@ -2,3 +2,8 @@
 engine_cmd_test: 'tox -e basic,py27'
 engine_disable_lint: true
 mgr_keep_lock_file: true
+
+
+compile_step:
+  pre:
+  - apt-get install dnsutils
