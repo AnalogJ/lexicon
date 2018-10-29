@@ -122,7 +122,15 @@ class Provider(BaseProvider):
 
     def _change_record_sets(self, action, type, name, content):
         ttl = self.options['ttl']
-        value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
+        ResourceRecords=[]
+        if(isinstance(content,list)):
+            for i in content:
+                value = '"{0}"'.format(i) if type in ['TXT', 'SPF'] else i
+                ResourceRecords.append({'Value': value})
+        else:
+            value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
+            ResourceRecords.append({'Value': value})
+        
         try:
             self.r53_client.change_resource_record_sets(
                 HostedZoneId=self.domain_id,
@@ -137,11 +145,7 @@ class Provider(BaseProvider):
                                 'Name': self._fqdn_name(name),
                                 'Type': type,
                                 'TTL': ttl if ttl is not None else 300,
-                                'ResourceRecords': [
-                                    {
-                                        'Value': value
-                                    }
-                                ]
+                                'ResourceRecords': ResourceRecords
                             }
                         }
                     ]
@@ -153,7 +157,14 @@ class Provider(BaseProvider):
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
-        return self._change_record_sets('CREATE', type, name, content)
+        existing_records = self.list_records(type,name)
+        if existing_records:
+            if (isinstance(existing_records[0]['content'],list)):
+                return self._change_record_sets('UPSERT', type, name, existing_records[0]['content']+[content])
+            else:
+                return self._change_record_sets('UPSERT', type, name, [existing_records[0]['content']] + [content])
+        else:
+            return self._change_record_sets('CREATE', type, name, content)
 
     def update_record(self, identifier=None, type=None, name=None, content=None):
         """Update a record from the hosted zone."""
@@ -161,7 +172,18 @@ class Provider(BaseProvider):
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         """Delete a record from the hosted zone."""
-        return self._change_record_sets('DELETE', type, name, content)
+        existing_records = self.list_records(type,name)
+        if existing_records:
+            if (isinstance(existing_records[0]['content'],list)):
+                # multiple values in record, just remove one value
+                existing_records[0]['content'].remove(content)
+                return self._change_record_sets('UPSERT', type, name, existing_records[0]['content'])
+            else:
+                # if only one record exist, remove whole record
+                return self._change_record_sets('DELETE', type, name, content)
+        else:
+            # you should probably not delete non existing record, but for sure
+            return self._change_record_sets('DELETE', type, name, content)
 
     def _format_content(self, type, content):
         return content[1:-1] if type in ['TXT', 'SPF'] else content
