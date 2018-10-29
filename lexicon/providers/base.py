@@ -9,7 +9,7 @@ from lexicon.config import legacy_config_resolver
 class Provider(object):
 
     """
-    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implmented
+    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implemented
     Providers follow a standard ducktype. All standardized options will be provided here as defaults, but can be overwritten
     by environmental variables and cli arguments.
 
@@ -31,10 +31,9 @@ class Provider(object):
     auth_password
     ...
 
-    :param provider_env_cli_options: is a SafeOptions object that contains all the options for this provider, merged from CLI and Env variables.
-    :param engine_overrides: is an empty dict under runtime conditions, only used for testing (eg. overriding api_endpoint to point to sandbox url) see tests/providers/integration_tests.py
+    :param provider_env_cli_options: is a ConfigResolver object that contains all the options for this provider, merged from CLI and Env variables.
     """
-    def __init__(self, config, engine_overrides=None):
+    def __init__(self, config):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a

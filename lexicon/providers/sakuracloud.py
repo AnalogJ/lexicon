@@ -1,22 +1,21 @@
 from __future__ import absolute_import
-from __future__ import print_function
-
 import json
 import logging
 
 import requests
 from requests.auth import HTTPBasicAuth
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
 def ProviderParser(subparser):
     subparser.add_argument(
-        "--auth-token", help="specify access token used authenticate to DNS provider")
+        "--auth-token", help="specify access token for authentication")
     subparser.add_argument(
-        "--auth-secret", help="specify asscess secret used authenticate to DNS provider")
+        "--auth-secret", help="specify access secret for authentication")
 
 
 class Provider(BaseProvider):

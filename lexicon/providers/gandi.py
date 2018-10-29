@@ -25,12 +25,14 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
+from __future__ import absolute_import
+
 import json
 import logging
 import requests
 
 from builtins import object
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import xmlrpclib
@@ -38,6 +40,8 @@ except ImportError:
     import xmlrpc.client as xmlrpclib
 
 LOGGER = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['gandi.net']
 
 def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""

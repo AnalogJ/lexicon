@@ -1,13 +1,17 @@
+from __future__ import absolute_import
+
 import logging
 import requests
 import json
 import hashlib
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 LOGGER = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['godaddy.com']
 
 def ProviderParser(subparser):
     subparser.add_argument('--auth-key', help='specify the key to access the API')

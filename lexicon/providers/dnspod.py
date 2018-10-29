@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['dnsapi.cn']
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify api id used to authenticate")
-    subparser.add_argument("--auth-token", help="specify token used authenticate to DNS provider")
+    subparser.add_argument("--auth-username", help="specify api id for authentication")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
 
 class Provider(BaseProvider):
 

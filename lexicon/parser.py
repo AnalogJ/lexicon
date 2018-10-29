@@ -1,7 +1,11 @@
 import argparse
 import importlib
-import pkg_resources
+import pkgutil
 import os
+
+import pkg_resources
+
+from lexicon import providers as providers_package
 
 def generate_base_provider_parser():
     parser = argparse.ArgumentParser(add_help=False)
@@ -21,13 +25,10 @@ def generate_base_provider_parser():
     return parser
 
 def generate_cli_main_parser():
-    current_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'providers')
-    providers = [os.path.splitext(f)[0] for f in os.listdir(current_filepath) if os.path.isfile(os.path.join(current_filepath, f))]
-    providers = list(set(providers))
-    providers.remove('base')
-    providers.remove('__init__')
-    providers = [x for x in providers if not x.startswith('.')]
-
+    providers = []
+    for _, modname, _ in pkgutil.iter_modules(providers_package.__path__):
+        if modname != 'base':
+            providers.append(modname)
     providers = sorted(providers)
 
     parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
@@ -44,7 +45,7 @@ def generate_cli_main_parser():
         provider_module = importlib.import_module('lexicon.providers.' + provider)
         provider_parser = getattr(provider_module, 'ProviderParser')
 
-        subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider), parents=[generate_base_provider_parser()])
+        subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider), parents=[BaseProviderParser()])
         provider_parser(subparser)
 
     return parser

@@ -11,9 +11,11 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from base64 import urlsafe_b64encode, b64decode
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['googledomains.com']
 
 # Implements the Google Cloud DNS provider.
 # This API is quite complicated to use, as it used some unique concepts compared to other providers.

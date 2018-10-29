@@ -25,6 +25,7 @@ def _vcr_integration_test(decorated):
     def wrapper(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{0}.yaml'.format(decorated.__name__)),
                                         filter_headers=self._filter_headers(),
+                                        before_record_response=self._filter_response,
                                         filter_query_parameters=self._filter_query_parameters(),
                                         filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
@@ -96,7 +97,7 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
         config = self._test_config()
-        config.add_config_feeder(DictConfigSource({'domain': 'thisisadomainidonotown.com'}), 0)
+        config.add_config_source(DictConfigSource({'domain': 'thisisadomainidonotown.com'}), 0)
         provider = self.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
@@ -340,13 +341,13 @@ class IntegrationTests(object):
         # First we load the overrides
         overrides = self._test_parameters_overrides()
         overrides['domain'] = self.domain
-        config.with_config_feeder(EngineOverrideConfigSource(overrides))
+        config.with_config_source(EngineOverrideConfigSource(overrides))
         
         # Then we get environment variables
         config.with_env()
         
         # And finally we provide the fallback function
-        config.with_config_feeder(FallbackConfigSource(self._test_fallback_fn()))
+        config.with_config_source(FallbackConfigSource(self._test_fallback_fn()))
 
         return config
 
@@ -400,3 +401,17 @@ class IntegrationTests(object):
         return []
     def _filter_post_data_parameters(self):
         return []
+    def _filter_response(self, response):
+        """Filter any sensitive data out of the providers response. `response`
+        is a Python object with the same structure as all the response sections
+        in the YAML recordings at tests/fixtures/cassets/[provider]. For the
+        sake of sparing you some time the most important values are:
+
+        response['body']['string']: Contains the HTML or JSON response.
+        response['headers']: An object whose keys are HTTP header names
+                             e.g. response['headers']['content-length'].
+        response['status']: An object that contains 'code' and 'message'
+                            subkeys representing the HTTP status code and
+                            status message.
+        """
+        return response

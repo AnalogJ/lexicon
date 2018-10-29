@@ -1,13 +1,12 @@
 """Provide support to Lexicon for Subreg.cz DNS changes."""
 
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 
 import collections
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import zeep # Optional dependency
@@ -16,9 +15,11 @@ except:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['subreg.cz']
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify user name used to authenticate")
-    subparser.add_argument("--auth-password", help="specify password used to authenticate")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-password", help="specify password for authentication")
 
 class Provider(BaseProvider):
     def __init__(self, config):

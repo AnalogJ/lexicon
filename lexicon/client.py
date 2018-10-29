@@ -43,7 +43,7 @@ class Client(object):
         self.action = self.config.resolve('lexicon:action')
         self.provider_name = self.config.resolve('lexicon:provider_name') or self.config.resolve('lexicon:provider')
 
-        self.config.add_config_feeder(DictConfigSource(runtime_config), 0)
+        self.config.add_config_source(DictConfigSource(runtime_config), 0)
 
         provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')

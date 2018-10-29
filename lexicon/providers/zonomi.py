@@ -1,11 +1,10 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 from xml.etree import ElementTree
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +12,8 @@ APIENTRYPOINT = {
         'zonomi': 'https://zonomi.com/app',
         'rimuhosting' : 'https://rimuhosting.com'
 }
+
+NAMESERVER_DOMAINS = ['zonomi.com']
 
 # Lexicon Zonomi and Rimuhosting Provider
 #
@@ -34,7 +35,7 @@ APIENTRYPOINT = {
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token used authenticate")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
     subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[
         'zonomi', 'rimuhosting' ])
 

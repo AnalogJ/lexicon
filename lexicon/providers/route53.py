@@ -1,10 +1,10 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
+import re
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import boto3 #optional dep
@@ -14,17 +14,18 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
 def ProviderParser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
-    subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY used to authenticate")
-    subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET used authenticate")
-    subparser.add_argument("--private-zone", help="indicates what kind of hosted zone to use, if true, use only private zones, if false, use only public zones")
+    subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY for authentication")
+    subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET for authentication")
+    subparser.add_argument("--private-zone", help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
 
     #TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
-    subparser.add_argument("--auth-username", help="alternative way to specify ACCESS_KEY used to authenticate")
-    subparser.add_argument("--auth-token", help="alternative way to specify ACCESS_SECRET used authenticate")
+    subparser.add_argument("--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
+    subparser.add_argument("--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
 
 
 class RecordSetPaginator(object):

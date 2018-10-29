@@ -38,7 +38,7 @@ class ConfigResolver(object):
 
     def __init__(self):
         super(ConfigResolver, self).__init__()
-        self._config_feeders = []
+        self._config_sources = []
 
     def resolve(self, config_key):
         """
@@ -52,22 +52,22 @@ class ConfigResolver(object):
         is returned. None will be returned if the given config parameter key could not be resolved
         from any source.
         """
-        for config_feeder in self._config_feeders:
-            value = config_feeder.resolve(config_key)
+        for config_source in self._config_sources:
+            value = config_source.resolve(config_key)
             if value:
                 return value
 
         return None
 
-    def add_config_feeder(self, config_feeder, position = None):
-        self._config_feeders.insert(position if position is not None else len(self._config_feeders), config_feeder)
+    def add_config_source(self, config_source, position = None):
+        self._config_sources.insert(position if position is not None else len(self._config_sources), config_source)
 
-    def with_config_feeder(self, config_feeder):
+    def with_config_source(self, config_source):
         """
         Configure current resolver to use the provided ConfigSource instance to be used as a source.
         See documentation of ConfigSource to see how to implement correctly a ConfigSource.
         """
-        self.add_config_feeder(config_feeder)
+        self.add_config_source(config_source)
         return self
 
     def with_env(self):
@@ -76,7 +76,7 @@ class ConfigResolver(object):
         Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]' 
         will be taken into account.
         """
-        return self.with_config_feeder(EnvironmentConfigSource())
+        return self.with_config_source(EnvironmentConfigSource())
 
     def with_args(self, argparse_namespace):
         """
@@ -89,7 +89,7 @@ class ConfigResolver(object):
         be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token present
         in the given Namespace object will be returned.
         """
-        return self.with_config_feeder(ArgsConfigSource(argparse_namespace))
+        return self.with_config_source(ArgsConfigSource(argparse_namespace))
 
     def with_dict(self, dict_object):
         """
@@ -104,7 +104,7 @@ class ConfigResolver(object):
             }
             => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
         """
-        return self.with_config_feeder(DictConfigSource(dict_object))
+        return self.with_config_source(DictConfigSource(dict_object))
 
     def with_config_file(self, file_path):
         """
@@ -118,7 +118,7 @@ class ConfigResolver(object):
             cloudflare:
             auth_token: SECRET_TOKEN
         """
-        return self.with_config_feeder(FileConfigSource(file_path))
+        return self.with_config_source(FileConfigSource(file_path))
 
     def with_provider_config_file(self, provider_name, file_path):
         """
@@ -134,7 +134,7 @@ class ConfigResolver(object):
         NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
         by default, with [provider] equals to the given provider_name parameter.
         """
-        return self.with_config_feeder(ProviderFileConfigSource(provider_name, file_path))
+        return self.with_config_source(ProviderFileConfigSource(provider_name, file_path))
 
     def with_config_dir(self, dir_path):
         """
@@ -175,7 +175,7 @@ class ConfigResolver(object):
 
     def with_legacy_dict(self, legacy_dict_object):
         LOGGER.warning('Legacy configuration object has been used to load the ConfigResolver.')
-        return self.with_config_feeder(LegacyDictConfigSource(legacy_dict_object))
+        return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
 class ConfigSource(object):
     """

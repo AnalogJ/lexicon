@@ -77,7 +77,7 @@ def test_generic_config_feeder_resolution():
         def resolve(self, config_key):
             return 'TEST1'
 
-    config = ConfigResolver().with_config_feeder(GenericConfigSource())
+    config = ConfigResolver().with_config_source(GenericConfigSource())
 
     assert config.resolve('lexicon:cloudflare:auth_username') == 'TEST1'
     assert config.resolve('lexicon:nonexistent') == 'TEST1'

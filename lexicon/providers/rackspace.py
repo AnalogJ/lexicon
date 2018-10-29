@@ -1,7 +1,6 @@
 """Rackspace provider implementation"""
 
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
@@ -9,9 +8,11 @@ import time
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['rackspacecloud.com']
 
 def _async_request_completed(payload):
     """Looks into an async response payload to see if the requested job has finished."""
@@ -22,10 +23,10 @@ def _async_request_completed(payload):
     return False
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-account", help="specify account number used to authenticate")
-    subparser.add_argument("--auth-username", help="specify username used to authenticate. Only used if --auth-token is empty.")
-    subparser.add_argument("--auth-api-key", help="specify api key used to authenticate. Only used if --auth-token is empty.")
-    subparser.add_argument("--auth-token", help="specify token used authenticate. If empty, the username and api key will be used to create a token.")
+    subparser.add_argument("--auth-account", help="specify account number for authentication")
+    subparser.add_argument("--auth-username", help="specify username for authentication. Only used if --auth-token is empty.")
+    subparser.add_argument("--auth-api-key", help="specify api key for authentication. Only used if --auth-token is empty.")
+    subparser.add_argument("--auth-token", help="specify token for authentication. If empty, the username and api key will be used to create a token.")
     subparser.add_argument("--sleep-time", type=float, default=1, help="number of seconds to wait between update requests.")
 
 class Provider(BaseProvider):
