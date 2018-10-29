@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import logging
 
 import requests
@@ -8,7 +10,7 @@ try:
 except ImportError:
     pass
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +22,8 @@ logger = logging.getLogger(__name__)
 #
 
 plesk_url_suffix = "/enterprise/control/agent.php"
+
+NAMESERVER_DOMAINS = []
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username for authentication")

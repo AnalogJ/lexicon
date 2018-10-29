@@ -1,10 +1,12 @@
+from __future__ import absolute_import
+
 import json
 import hashlib
 import time
 import logging
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -17,6 +19,8 @@ ENDPOINTS = {
     'soyoustart-eu': 'https://eu.api.soyoustart.com/1.0',
     'soyoustart-ca': 'https://ca.api.soyoustart.com/1.0',
 }
+
+NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 
 def ProviderParser(subparser):
     subparser.description = '''

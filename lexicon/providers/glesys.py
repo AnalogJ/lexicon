@@ -1,12 +1,12 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
+NAMESERVER_DOMAINS = ['glesys.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username (CL12345)")

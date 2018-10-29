@@ -1,10 +1,10 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
+import re
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import boto3 #optional dep
@@ -14,6 +14,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
 def ProviderParser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
