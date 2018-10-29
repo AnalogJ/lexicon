@@ -1,15 +1,14 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
-import time
-
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = ['conoha.io']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-region", help="specify region. If empty, region `tyo1` will be used.")
