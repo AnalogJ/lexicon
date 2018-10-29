@@ -23,6 +23,7 @@ def _vcr_integration_test(decorated):
     def wrapper(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{0}.yaml'.format(decorated.__name__)),
                                         filter_headers=self._filter_headers(),
+                                        before_record_response=self._filter_response,
                                         filter_query_parameters=self._filter_query_parameters(),
                                         filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
@@ -347,3 +348,17 @@ class IntegrationTests(object):
         return []
     def _filter_post_data_parameters(self):
         return []
+    def _filter_response(self, response):
+        """Filter any sensitive data out of the providers response. `response`
+        is a Python object with the same structure as all the response sections
+        in the YAML recordings at tests/fixtures/cassets/[provider]. For the
+        sake of sparing you some time the most important values are:
+
+        response['body']['string']: Contains the HTML or JSON response.
+        response['headers']: An object whose keys are HTTP header names
+                             e.g. response['headers']['content-length'].
+        response['status']: An object that contains 'code' and 'message'
+                            subkeys representing the HTTP status code and
+                            status message.
+        """
+        return response
