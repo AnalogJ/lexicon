@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains?name=narusejun.com.
+  response:
+    body: {string: "{\n  \"domains\": [\n    {\n      \"created_at\": \"2018-10-29T06:35:32.000000\"\
+        ,\n      \"description\": null,\n      \"email\": \"postmaster@example.org\"\
+        ,\n      \"gslb\": 0,\n      \"id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n      \"name\": \"narusejun.com.\",\n      \"serial\": 1540794969,\n  \
+        \    \"ttl\": 3600,\n      \"updated_at\": \"2018-10-29T06:36:08.000000\"\n\
+        \    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['349']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:08 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-47397110-dc0c-4ad7-a35d-cbabad9b83fe]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "_acme-challenge.createrecordset.narusejun.com.", "type": "TXT",
+      "data": "challengetoken1", "priority": null, "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['131']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records
+  response:
+    body: {string: "{\n  \"created_at\": \"2018-10-29T06:36:08.000000\",\n  \"data\"\
+        : \"challengetoken1\",\n  \"description\": null,\n  \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n  \"gslb_check\": null,\n  \"gslb_region\": null,\n  \"gslb_weight\": null,\n\
+        \  \"id\": \"74600914-cb00-419a-82d1-d3210515fd5d\",\n  \"name\": \"_acme-challenge.createrecordset.narusejun.com.\"\
+        ,\n  \"priority\": null,\n  \"ttl\": 3600,\n  \"type\": \"TXT\",\n  \"updated_at\"\
+        : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['405']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:09 GMT']
+      Location: ['http://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records/74600914-cb00-419a-82d1-d3210515fd5d']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-382a38ea-3fee-409a-84c3-6c00387d8aca]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "_acme-challenge.createrecordset.narusejun.com.", "type": "TXT",
+      "data": "challengetoken2", "priority": null, "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['131']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records
+  response:
+    body: {string: "{\n  \"created_at\": \"2018-10-29T06:36:09.000000\",\n  \"data\"\
+        : \"challengetoken2\",\n  \"description\": null,\n  \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n  \"gslb_check\": null,\n  \"gslb_region\": null,\n  \"gslb_weight\": null,\n\
+        \  \"id\": \"a9300b11-0bfc-4066-9eb6-42f1403bf9d9\",\n  \"name\": \"_acme-challenge.createrecordset.narusejun.com.\"\
+        ,\n  \"priority\": null,\n  \"ttl\": 3600,\n  \"type\": \"TXT\",\n  \"updated_at\"\
+        : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['405']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:09 GMT']
+      Location: ['http://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records/a9300b11-0bfc-4066-9eb6-42f1403bf9d9']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-8c5a4644-e2d7-4f56-9cd3-6b8094265ec6]
+    status: {code: 200, message: OK}
+version: 1

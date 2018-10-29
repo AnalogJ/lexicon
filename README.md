@@ -34,6 +34,7 @@ The current supported providers are:
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
+- ConoHa ([docs](https://www.conoha.jp/docs/))
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
