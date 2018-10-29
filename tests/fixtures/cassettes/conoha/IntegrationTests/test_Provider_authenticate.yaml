@@ -1,0 +1,28 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains?name=narusejun.com.
+  response:
+    body: {string: "{\n  \"domains\": [\n    {\n      \"created_at\": \"2018-10-29T06:35:32.000000\"\
+        ,\n      \"description\": null,\n      \"email\": \"postmaster@example.org\"\
+        ,\n      \"gslb\": 0,\n      \"id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n      \"name\": \"narusejun.com.\",\n      \"serial\": 1540794933,\n  \
+        \    \"ttl\": 3600,\n      \"updated_at\": \"2018-10-29T06:35:33.000000\"\n\
+        \    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['349']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:05 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-84bb36f7-4317-4a54-ac38-8468a5244857]
+    status: {code: 200, message: OK}
+version: 1
