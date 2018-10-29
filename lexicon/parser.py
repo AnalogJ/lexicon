@@ -45,7 +45,7 @@ def generate_cli_main_parser():
         provider_module = importlib.import_module('lexicon.providers.' + provider)
         provider_parser = getattr(provider_module, 'ProviderParser')
 
-        subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider), parents=[BaseProviderParser()])
+        subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider), parents=[generate_base_provider_parser()])
         provider_parser(subparser)
 
     return parser

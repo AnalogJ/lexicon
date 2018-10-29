@@ -141,6 +141,7 @@ class Provider(object):
         be delegated to that provider.
         """
         mapping_override = self.config.resolve('lexicon:auto:mapping_override')
+        print(mapping_override)
         mapping_override_processed = {}
         if mapping_override:
             for one_mapping in mapping_override.split(','):
