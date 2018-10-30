@@ -6,7 +6,7 @@ shared: &shared
         name: Install required runtime dependencies
         command: |
           apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
           pip install --upgrade tox
     - checkout
     - run:

@@ -1,16 +1,15 @@
 from __future__ import absolute_import
-from __future__ import print_function
-
 import json
 import logging
 
 import requests
 from requests.auth import HTTPBasicAuth
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
 def ProviderParser(subparser):
     subparser.add_argument(
@@ -35,8 +34,7 @@ class Provider(BaseProvider):
                 "Name": self.options['domain']
             }
         }
-        payload = self._get(
-            '/commonserviceitem'.format(self.options['domain']), query_params=query_params)
+        payload = self._get('/commonserviceitem', query_params=query_params)
 
         for item in payload["CommonServiceItems"]:
             if item["Status"]["Zone"] == self.options['domain']:
