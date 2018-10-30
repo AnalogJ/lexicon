@@ -52,21 +52,21 @@ class Client(object):
     def execute(self):
         self.provider.authenticate()
         identifier = self.config.resolve('lexicon:identifier')
-        type = self.config.resolve('lexicon:type')
+        record_type = self.config.resolve('lexicon:type')
         name = self.config.resolve('lexicon:name')
         content = self.config.resolve('lexicon:content')
 
         if self.action == 'create':
-            return self.provider.create_record(type, name, content)
+            return self.provider.create_record(record_type, name, content)
 
         elif self.action == 'list':
-            return self.provider.list_records(type, name, content)
+            return self.provider.list_records(record_type, name, content)
 
         elif self.action == 'update':
-            return self.provider.update_record(identifier, type, name, content)
+            return self.provider.update_record(identifier, record_type, name, content)
 
         elif self.action == 'delete':
-            return self.provider.delete_record(identifier, type, name, content)
+            return self.provider.delete_record(identifier, record_type, name, content)
 
     def _validate_config(self):
         if not self.config.resolve('lexicon:provider_name'):
