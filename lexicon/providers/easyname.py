@@ -424,6 +424,11 @@ class Provider(BaseProvider):
                 break;
             subdomains.pop(0)
 
+        # Update domain to equal the zone's domain. This is important if we are
+        # handling a subdomain that has no zone of itself. If we do not do
+        # this, self._relative_name will strip also a part of the subdomain
+        # away.
+        self.options['domain'] = domain
         assert domain_text is not None, \
                'The domain does not exist on Easyname.'
         return domain_text
