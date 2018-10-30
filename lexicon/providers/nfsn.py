@@ -10,7 +10,7 @@ import time
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 from urllib.parse import urlencode
 
