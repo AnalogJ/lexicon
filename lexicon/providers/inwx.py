@@ -1,9 +1,8 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import xmlrpclib
@@ -12,12 +11,13 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['inwx.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username",
-                           help="specify username used to authenticate")
+                           help="specify username for authentication")
     subparser.add_argument("--auth-password",
-                           help="specify password used to authenticate")
+                           help="specify password for authentication")
 
 
 class Provider(BaseProvider):

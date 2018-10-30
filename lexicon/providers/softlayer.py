@@ -1,9 +1,8 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import logging
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import SoftLayer
@@ -12,10 +11,11 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['softlayer.com']
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username used to authenticate")
-    subparser.add_argument("--auth-api-key", help="specify API private key to authenticate")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-api-key", help="specify API private key for authentication")
 
 class Provider(BaseProvider):
 

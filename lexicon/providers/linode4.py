@@ -1,17 +1,18 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['linode.com']
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify api key used authenticate to DNS provider")
+    subparser.add_argument("--auth-token", help="specify api key for authentication")
 
 class Provider(BaseProvider):
     

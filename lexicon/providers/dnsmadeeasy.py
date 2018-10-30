@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import contextlib
 import hmac
@@ -12,14 +11,15 @@ from hashlib import sha1
 import requests
 from builtins import bytes
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['dnsmadeeasy']
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username used to authenticate")
-    subparser.add_argument("--auth-token", help="specify token used authenticate=")
+    subparser.add_argument("--auth-username", help="specify username for authentication")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
 
 class Provider(BaseProvider):
 

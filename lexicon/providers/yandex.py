@@ -1,12 +1,11 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'
@@ -14,6 +13,7 @@ __contact__ = 'https://github.com/kharkevich'
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['yandex.com']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")

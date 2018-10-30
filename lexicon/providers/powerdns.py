@@ -1,12 +1,11 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +31,10 @@ logger = logging.getLogger(__name__)
 #   This is why the _clean_content and _unclean_content methods exist, to convert
 #   back and forth between the format PowerDNS expects, and the format Lexicon uses
 
+NAMESERVER_DOMAINS = []
 
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token used authenticate")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
     subparser.add_argument("--pdns-server-id", help="Server ID to interact with")
 

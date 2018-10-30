@@ -1,23 +1,22 @@
 from __future__ import absolute_import
-from __future__ import print_function
-
 import logging
 
 import requests
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
 HOUR = 3600
 
+NAMESERVER_DOMAINS = ['exoscale.ch']
 
 def ProviderParser(subparser):
     subparser.add_argument(
-        "--auth-key", help="specify API key used to authenticate"
+        "--auth-key", help="specify API key for authentication"
     )
     subparser.add_argument(
-        "--auth-secret", help="specify API secret used to authenticate"
+        "--auth-secret", help="specify API secret for authentication"
     )
 
 

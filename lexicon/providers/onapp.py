@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 import json
 import logging
@@ -7,9 +6,11 @@ import logging
 import requests
 from requests.auth import HTTPBasicAuth
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
+
+NAMESERVER_DOMAINS = []
 
 def ProviderParser(subparser):
     subparser.description = '''
