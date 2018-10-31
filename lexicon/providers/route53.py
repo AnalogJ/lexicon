@@ -149,7 +149,7 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as e:
-            logger.debug(e.message, exc_info=True)
+            logger.debug(str(e), exc_info=True)
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
