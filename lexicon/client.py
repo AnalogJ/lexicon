@@ -1,11 +1,13 @@
+"""Client class in Lexicon that execute the effective logic on DNS records"""
 from builtins import object
 import importlib
-import os
+
 import tldextract
 from .common.options_handler import env_auth_options
 
 #from providers import Example
 class Client(object):
+    """Client class in Lexicon that execute the effective logic on DNS records"""
     def __init__(self, cli_options):
         #validate options
         self._validate(cli_options)
@@ -35,19 +37,34 @@ class Client(object):
         self.provider = provider_class(self.options)
 
     def execute(self):
+        """Execute provided configuration in class constructor to the DNS records"""
         self.provider.authenticate()
 
         if self.action == 'create':
-            return self.provider.create_record(self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.create_record(
+                self.options.get('type'), 
+                self.options.get('name'), 
+                self.options.get('content'))
 
         elif self.action == 'list':
-            return self.provider.list_records(self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.list_records(
+                self.options.get('type'), 
+                self.options.get('name'), 
+                self.options.get('content'))
 
         elif self.action == 'update':
-            return self.provider.update_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.update_record(
+                self.options.get('identifier'), 
+                self.options.get('type'), 
+                self.options.get('name'), 
+                self.options.get('content'))
 
         elif self.action == 'delete':
-            return self.provider.delete_record(self.options.get('identifier'), self.options.get('type'), self.options.get('name'), self.options.get('content'))
+            return self.provider.delete_record(
+                self.options.get('identifier'), 
+                self.options.get('type'), 
+                self.options.get('name'), 
+                self.options.get('content'))
 
     def _validate(self, options):
         if not options.get('provider_name'):
@@ -58,4 +75,3 @@ class Client(object):
             raise AttributeError('domain')
         if not options.get('type'):
             raise AttributeError('type')
-
