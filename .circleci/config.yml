@@ -3,7 +3,7 @@ version: 2
 dependencies: &install_dependencies
   command: |
     apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils gcc
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
     pip install --upgrade tox
   name: Install required runtime dependencies
   

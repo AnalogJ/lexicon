@@ -8,7 +8,6 @@ import tempfile
 import stat
 
 from pylint import lint
-from pygit2 import clone_repository
 
 REPO_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -19,13 +18,13 @@ def get_pylint_upstream_master_note():
     """
     sys.stdout.write('Preparing a temporary local repository for upstream ...\n')
     worktree_dir = tempfile.mkdtemp()
-    os.rmdir(worktree_dir)
 
     score = None
-    repo = None
 
     try:
-        repo = clone_repository('https://github.com/AnalogJ/lexicon.git', worktree_dir)
+        subprocess.call('git clone --depth 1 https://github.com/AnalogJ/lexicon.git {0}'
+                        .format(worktree_dir), shell=True)
+
         sys.stdout.write('Executing pylint on upstream master '
                          'to calculate pylint global note diff ...\n')
         command = ('{0} -c "import sys; from pylint.lint import Run; '
@@ -36,8 +35,6 @@ def get_pylint_upstream_master_note():
                                          cwd=worktree_dir, universal_newlines=True)
         score = float(stdout.strip().split('\n')[-1])
     finally:
-        if repo:
-            repo.free()
         def del_rw(_, name, __):
             os.chmod(name, stat.S_IWRITE)
             os.remove(name)
