@@ -62,6 +62,9 @@ def quality_gate(stats, upstream_master_note):
         quality_errors.append('Quality gate failure: pylint global note is '
                               'decreasing compared to master: {0} => {1}\n'
                               .format(upstream_master_note, stats['global_note']))
+    else:
+        sys.stdout.write('Info: pylint global is increasing or stable compared to master: '
+                         '{0} => {1}'.format(upstream_master_note, stats['global_note']))
 
     if quality_errors:
         for quality_error in quality_errors:
