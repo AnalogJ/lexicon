@@ -13,7 +13,7 @@ from pylint import lint
 REPO_DIR = os.path.dirname(os.path.dirname(__file__))
 
 def get_pylint_upstream_master_note():
-    sys.stdout.write('Prepare a temporary repository for upstream ...\n')
+    sys.stdout.write('Preparing a temporary local repository for upstream ...\n')
     worktree_dir = tempfile.mkdtemp()
 
     score = None
@@ -21,7 +21,7 @@ def get_pylint_upstream_master_note():
     try:
         subprocess.call('git clone --depth 1 https://github.com/AnalogJ/lexicon.git {0}'.format(worktree_dir))
 
-        sys.stdout.write('Execute pylint on upstream master to calculate score diff ...\n')
+        sys.stdout.write('Executing pylint on upstream master to calculate pylint global note diff ...\n')
         command = '{0} -c "import sys; from pylint.lint import Run; results = Run([\'lexicon\', \'tests\'], do_exit=False); sys.stdout.write(str(results.linter.stats[\'global_note\']));"'.format(sys.executable)
         stdout = subprocess.check_output(command, shell=True, cwd=worktree_dir, universal_newlines=True)
         score = float(stdout.strip().split('\n')[-1])
@@ -57,7 +57,7 @@ def quality_gate(stats, upstream_master_note):
 def main():
     upstream_master_note = get_pylint_upstream_master_note()
 
-    sys.stdout.write('Execute pylint on current branch ...\n')
+    sys.stdout.write('Executing pylint on current branch ...\n')
     results = lint.Run([os.path.join(REPO_DIR, 'lexicon'), os.path.join(REPO_DIR, 'tests'), '--persistent=n'], do_exit=False)
 
     stats = results.linter.stats
