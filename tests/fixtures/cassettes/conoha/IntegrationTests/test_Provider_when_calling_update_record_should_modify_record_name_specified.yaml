@@ -1,0 +1,233 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains?name=narusejun.com.
+  response:
+    body: {string: "{\n  \"domains\": [\n    {\n      \"created_at\": \"2018-10-29T06:35:32.000000\"\
+        ,\n      \"description\": null,\n      \"email\": \"postmaster@example.org\"\
+        ,\n      \"gslb\": 0,\n      \"id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n      \"name\": \"narusejun.com.\",\n      \"serial\": 1540795001,\n  \
+        \    \"ttl\": 3600,\n      \"updated_at\": \"2018-10-29T06:36:30.000000\"\n\
+        \    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['349']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:31 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-4e6fe4b5-03e3-4448-ad77-f34bc5a3005e]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "orig.nameonly.test.narusejun.com.", "type": "TXT", "data": "challengetoken",
+      "priority": null, "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['117']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records
+  response:
+    body: {string: "{\n  \"created_at\": \"2018-10-29T06:36:31.000000\",\n  \"data\"\
+        : \"challengetoken\",\n  \"description\": null,\n  \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n  \"gslb_check\": null,\n  \"gslb_region\": null,\n  \"gslb_weight\": null,\n\
+        \  \"id\": \"c1614188-bb51-4df6-a2b9-aaee53741c5f\",\n  \"name\": \"orig.nameonly.test.narusejun.com.\"\
+        ,\n  \"priority\": null,\n  \"ttl\": 3600,\n  \"type\": \"TXT\",\n  \"updated_at\"\
+        : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['391']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:31 GMT']
+      Location: ['http://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records/c1614188-bb51-4df6-a2b9-aaee53741c5f']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-38ace082-d301-4434-bcd0-d9605c61430f]
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records
+  response:
+    body: {string: "{\n  \"records\": [\n    {\n      \"created_at\": \"2018-10-29T06:35:33.000000\"\
+        ,\n      \"data\": \"ns-a1.conoha.io.\",\n      \"description\": null,\n \
+        \     \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"36f7bcfc-3b24-4fda-8fef-52375bcd2fb2\",\n      \"name\": \"narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": null,\n      \"type\": \"NS\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:35:33.000000\"\
+        ,\n      \"data\": \"ns-a2.conoha.io.\",\n      \"description\": null,\n \
+        \     \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"a9f03e55-998c-4caa-8f79-92caffb7a184\",\n      \"name\": \"narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": null,\n      \"type\": \"NS\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:35:33.000000\"\
+        ,\n      \"data\": \"ns-a3.conoha.io.\",\n      \"description\": null,\n \
+        \     \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"f07379bb-6f9b-446c-bd57-fddbe4af0273\",\n      \"name\": \"narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": null,\n      \"type\": \"NS\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:05.000000\"\
+        ,\n      \"data\": \"127.0.0.1\",\n      \"description\": null,\n      \"\
+        domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"19001df2-2c25-4c2c-91e6-a4565c240df9\",\n      \"name\": \"localhost.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"A\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:06.000000\"\
+        ,\n      \"data\": \"docs.example.com.\",\n      \"description\": null,\n\
+        \      \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"\
+        gslb_check\": null,\n      \"gslb_region\": null,\n      \"gslb_weight\":\
+        \ null,\n      \"id\": \"0e890b18-f92d-4ea6-85dd-e14ae2fc0fed\",\n      \"\
+        name\": \"docs.narusejun.com.\",\n      \"priority\": null,\n      \"ttl\"\
+        : 3600,\n      \"type\": \"CNAME\",\n      \"updated_at\": null\n    },\n\
+        \    {\n      \"created_at\": \"2018-10-29T06:36:06.000000\",\n      \"data\"\
+        : \"challengetoken\",\n      \"description\": null,\n      \"domain_id\":\
+        \ \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\": null,\n\
+        \      \"gslb_region\": null,\n      \"gslb_weight\": null,\n      \"id\"\
+        : \"3bf97a34-e959-4727-90db-4c77ff3e81ed\",\n      \"name\": \"_acme-challenge.fqdn.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:07.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"108ccb5e-0f90-4228-a6f0-8ea74d1ec1d8\",\n      \"name\": \"_acme-challenge.full.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:08.000000\"\
+        ,\n      \"data\": \"challengetoken1\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"74600914-cb00-419a-82d1-d3210515fd5d\",\n      \"name\": \"_acme-challenge.createrecordset.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:08.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"7a8993fd-2b77-41a8-99b9-d6edab68a43b\",\n      \"name\": \"_acme-challenge.test.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:09.000000\"\
+        ,\n      \"data\": \"challengetoken2\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"a9300b11-0bfc-4066-9eb6-42f1403bf9d9\",\n      \"name\": \"_acme-challenge.createrecordset.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:10.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"913e3bdc-1e58-4434-8f8e-d502932fd1b4\",\n      \"name\": \"_acme-challenge.noop.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:19.000000\"\
+        ,\n      \"data\": \"challengetoken2\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"43669305-ce26-4abc-acc5-27d815718284\",\n      \"name\": \"_acme-challenge.deleterecordinset.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:23.000000\"\
+        ,\n      \"data\": \"ttlshouldbe3600\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"2af7bf7e-dcac-4bba-bb6f-e1e7799bf7a9\",\n      \"name\": \"ttl.fqdn.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:24.000000\"\
+        ,\n      \"data\": \"challengetoken1\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"a4c22409-d663-49a2-9799-ee13d39c9066\",\n      \"name\": \"_acme-challenge.listrecordset.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:25.000000\"\
+        ,\n      \"data\": \"challengetoken2\",\n      \"description\": null,\n  \
+        \    \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"a1617152-1b08-4904-b4ff-d26fb05397c1\",\n      \"name\": \"_acme-challenge.listrecordset.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:26.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"491849f6-43f8-47a0-9c8d-fc94398034af\",\n      \"name\": \"random.fqdntest.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:26.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"603f725d-ff27-4478-bfb8-f37789492555\",\n      \"name\": \"random.fulltest.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:28.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"f9be4710-6d71-49f0-9a7c-2a72a39fa7c1\",\n      \"name\": \"random.test.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": null\n    },\n    {\n      \"created_at\": \"2018-10-29T06:36:29.000000\"\
+        ,\n      \"data\": \"challengetoken\",\n      \"description\": null,\n   \
+        \   \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\"\
+        : null,\n      \"gslb_region\": null,\n      \"gslb_weight\": null,\n    \
+        \  \"id\": \"42cf6657-0e80-4e53-97a8-2c1f3d7bf3f6\",\n      \"name\": \"updated.test.narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": 3600,\n      \"type\": \"TXT\"\
+        ,\n      \"updated_at\": \"2018-10-29T06:36:30.000000\"\n    },\n    {\n \
+        \     \"created_at\": \"2018-10-29T06:36:31.000000\",\n      \"data\": \"\
+        challengetoken\",\n      \"description\": null,\n      \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n      \"gslb_check\": null,\n      \"gslb_region\": null,\n      \"gslb_weight\"\
+        : null,\n      \"id\": \"c1614188-bb51-4df6-a2b9-aaee53741c5f\",\n      \"\
+        name\": \"orig.nameonly.test.narusejun.com.\",\n      \"priority\": null,\n\
+        \      \"ttl\": 3600,\n      \"type\": \"TXT\",\n      \"updated_at\": null\n\
+        \    },\n    {\n      \"created_at\": \"2018-10-29T06:36:31.000000\",\n  \
+        \    \"data\": \"ns-a1.conoha.io. postmaster.example.org. 1540795002 3600\
+        \ 600 86400 3600\",\n      \"description\": null,\n      \"domain_id\": \"\
+        b5174df6-cc7f-484e-a09d-859027bad1c8\",\n      \"gslb_check\": null,\n   \
+        \   \"gslb_region\": null,\n      \"gslb_weight\": null,\n      \"id\": \"\
+        f483bc46-b7a9-4b90-a3d4-98870f491efa\",\n      \"name\": \"narusejun.com.\"\
+        ,\n      \"priority\": null,\n      \"ttl\": null,\n      \"type\": \"SOA\"\
+        ,\n      \"updated_at\": null\n    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['9565']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:31 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-8f32b83c-d294-4449-b735-a04b59112135]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "orig.nameonly.test.narusejun.com.", "type": "TXT", "data": "updated",
+      "priority": null, "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['110']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: PUT
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records/c1614188-bb51-4df6-a2b9-aaee53741c5f
+  response:
+    body: {string: "{\n  \"created_at\": \"2018-10-29T06:36:31.000000\",\n  \"data\"\
+        : \"updated\",\n  \"description\": null,\n  \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n  \"gslb_check\": null,\n  \"gslb_region\": null,\n  \"gslb_weight\": null,\n\
+        \  \"id\": \"c1614188-bb51-4df6-a2b9-aaee53741c5f\",\n  \"name\": \"orig.nameonly.test.narusejun.com.\"\
+        ,\n  \"priority\": null,\n  \"ttl\": 3600,\n  \"type\": \"TXT\",\n  \"updated_at\"\
+        : \"2018-10-29T06:36:32.000000\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['408']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:32 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-22c2106c-2306-495a-8361-5c6c6c61c932]
+    status: {code: 200, message: OK}
+version: 1

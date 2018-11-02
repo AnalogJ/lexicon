@@ -1,0 +1,56 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains?name=narusejun.com.
+  response:
+    body: {string: "{\n  \"domains\": [\n    {\n      \"created_at\": \"2018-10-29T06:35:32.000000\"\
+        ,\n      \"description\": null,\n      \"email\": \"postmaster@example.org\"\
+        ,\n      \"gslb\": 0,\n      \"id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n      \"name\": \"narusejun.com.\",\n      \"serial\": 1540794965,\n  \
+        \    \"ttl\": 3600,\n      \"updated_at\": \"2018-10-29T06:36:05.000000\"\n\
+        \    }\n  ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['349']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:06 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-e9d99c30-fffe-4af2-9ca1-6204bf2cdfd5]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "docs.narusejun.com.", "type": "CNAME", "data": "docs.example.com.",
+      "priority": null, "ttl": 3600}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['108']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: POST
+    uri: https://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records
+  response:
+    body: {string: "{\n  \"created_at\": \"2018-10-29T06:36:06.000000\",\n  \"data\"\
+        : \"docs.example.com.\",\n  \"description\": null,\n  \"domain_id\": \"b5174df6-cc7f-484e-a09d-859027bad1c8\"\
+        ,\n  \"gslb_check\": null,\n  \"gslb_region\": null,\n  \"gslb_weight\": null,\n\
+        \  \"id\": \"0e890b18-f92d-4ea6-85dd-e14ae2fc0fed\",\n  \"name\": \"docs.narusejun.com.\"\
+        ,\n  \"priority\": null,\n  \"ttl\": 3600,\n  \"type\": \"CNAME\",\n  \"updated_at\"\
+        : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['382']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:06 GMT']
+      Location: ['http://dns-service.tyo1.conoha.io/v1/domains/b5174df6-cc7f-484e-a09d-859027bad1c8/records/0e890b18-f92d-4ea6-85dd-e14ae2fc0fed']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-f39bc5a5-d995-4018-9c29-180dd8327278]
+    status: {code: 200, message: OK}
+version: 1
