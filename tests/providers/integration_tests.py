@@ -66,11 +66,13 @@ class IntegrationTests(object):
 
         assert hasattr(module, 'ProviderParser')
         assert hasattr(module, 'Provider')
-        assert hasattr(module, 'NAMESERVER_DOMAINS')
+        if self.provider_name != 'auto':
+            assert hasattr(module, 'NAMESERVER_DOMAINS')
 
         assert callable(module.ProviderParser)
         assert callable(module.Provider)
-        assert isinstance(module.NAMESERVER_DOMAINS, list)
+        if self.provider_name != 'auto':
+            assert isinstance(module.NAMESERVER_DOMAINS, list)
 
     ###########################################################################
     # Provider.authenticate()
