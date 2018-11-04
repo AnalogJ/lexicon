@@ -1,5 +1,6 @@
 import contextlib
 
+from importlib import import_module
 from builtins import object
 from functools import wraps
 from lexicon.common.options_handler import SafeOptions, env_auth_options
@@ -54,6 +55,23 @@ Extended test suites can be skipped by adding the following snippet to the test_
 
 """
 class IntegrationTests(object):
+
+    ###########################################################################
+    # Provider module shape
+    ###########################################################################
+    def test_provider_module_shape(self):
+        module = import_module(
+            'lexicon.providers.{0}'.format(
+                self.provider_name))
+
+        assert hasattr(module, 'ProviderParser')
+        assert hasattr(module, 'Provider')
+        assert hasattr(module, 'NAMESERVER_DOMAINS')
+
+        assert callable(module.ProviderParser)
+        assert callable(module.Provider)
+        assert isinstance(module.NAMESERVER_DOMAINS, list)
+
     ###########################################################################
     # Provider.authenticate()
     ###########################################################################
