@@ -42,6 +42,7 @@ The current supported providers are:
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
+- Easyname ([docs](https://www.easyname.com/en))
 - ExoScale
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
 - Gehirn
@@ -56,6 +57,7 @@ The current supported providers are:
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- NFSN (NearlyFreeSpeech)
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
 - Online
