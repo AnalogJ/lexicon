@@ -1,0 +1,145 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[{"name":"","type":"NS","data":"ns.phx5.nearlyfreespeech.net.","ttl":86400,"scope":"system"},{"name":"","type":"NS","data":"ns.phx7.nearlyfreespeech.net.","ttl":86400,"scope":"system"},{"name":"docs","type":"CNAME","data":"docs.example.com","ttl":3600,"scope":"member"},{"name":"localhost","type":"A","data":"127.0.0.1","ttl":3600,"scope":"member"},{"name":"random.fqdntest","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"random.fulltest","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"random.test","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"ttl.fqdn","type":"TXT","data":"ttlshouldbe3600","ttl":3600,"scope":"member"},{"name":"updated.test","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.createrecordset","type":"TXT","data":"challengetoken1","ttl":3600,"scope":"member"},{"name":"_acme-challenge.createrecordset","type":"TXT","data":"challengetoken2","ttl":3600,"scope":"member"},{"name":"_acme-challenge.deleterecordinset","type":"TXT","data":"challengetoken2","ttl":3600,"scope":"member"},{"name":"_acme-challenge.fqdn","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.full","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.listrecordset","type":"TXT","data":"challengetoken1","ttl":3600,"scope":"member"},{"name":"_acme-challenge.listrecordset","type":"TXT","data":"challengetoken2","ttl":3600,"scope":"member"},{"name":"_acme-challenge.noop","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.test","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"}]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['1727']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:19 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663919']
+    status: {code: 200, message: OK}
+- request:
+    body: type=TXT&name=orig.nameonly.test&data=challengetoken
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['52']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['2']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:19 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663919']
+    status: {code: 200, message: OK}
+- request:
+    body: name=orig.nameonly.test&type=TXT&data=challengetoken&ttl=3600
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['61']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/addRR
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['0']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:20 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663920']
+    status: {code: 200, message: OK}
+- request:
+    body: type=TXT&name=orig.nameonly.test
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['32']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[{"name":"orig.nameonly.test","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"}]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['96']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:23 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663923']
+    status: {code: 200, message: OK}
+- request:
+    body: name=orig.nameonly.test&type=TXT&data=challengetoken
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['52']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/removeRR
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['0']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:23 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663923']
+    status: {code: 200, message: OK}
+- request:
+    body: name=orig.nameonly.test&type=TXT&data=updated&ttl=3600
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['54']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/addRR
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['0']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:25:26 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663926']
+    status: {code: 200, message: OK}
+version: 1
