@@ -8,6 +8,8 @@ from .base import Provider as BaseProvider
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['easyname.eu']
+
 def ProviderParser(subparser):
     subparser.description = """A provider for Easyname DNS."""
     subparser.add_argument(
