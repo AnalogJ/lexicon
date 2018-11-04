@@ -38,8 +38,8 @@ class Provider(BaseProvider):
     }
 
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.session = Session()
         self.domain_id = None
         self._records = None
@@ -277,11 +277,11 @@ class Provider(BaseProvider):
             'ttl': str(record['ttl']) if is_update else '360',
             'commit': ''
         }
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
         if ttl and ttl > 360:
             data['ttl'] = str(ttl)
 
-        prio = self.options.get('priority')
+        prio = self._get_lexicon_option('priority')
         if prio and prio > 0:
             data['prio'] = str(prio)
 
@@ -384,8 +384,8 @@ class Provider(BaseProvider):
         login_response = self.session.post(
            self.URLS['login'],
             data={
-                'username':     self.options.get('auth_username',''),
-                'password':     self.options.get('auth_password',''),
+                'username':     self._get_provider_option('auth_username') or '',
+                'password':     self._get_provider_option('auth_password') or '',
                 'submit':       '',
                 'loginxtoken':  csrf_token,
             }
@@ -415,7 +415,7 @@ class Provider(BaseProvider):
         # zones of their parent (sub)domains. Iterate over all subdomains
         # (starting with the deepest one) and see if there is an own zone
         # for it.
-        domain = self.options.get('domain','')
+        domain = self.domain or ''
         domain_text = None
         subdomains = domain.split('.')
         while True:
@@ -430,7 +430,7 @@ class Provider(BaseProvider):
         # handling a subdomain that has no zone of itself. If we do not do
         # this, self._relative_name will strip also a part of the subdomain
         # away.
-        self.options['domain'] = domain
+        self.domain = domain
         assert domain_text is not None, \
                'The domain does not exist on Easyname.'
         return domain_text

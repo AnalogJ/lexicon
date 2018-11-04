@@ -28,15 +28,15 @@ SALT_SHAKER = string.ascii_letters + string.digits
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.nearlyfreespeech.net')
+        self.api_endpoint = 'https://api.nearlyfreespeech.net'
         self.shortname = None
 
     def authenticate(self):
-        self._post('/dns/{0}/listRRs'.format(self.options['domain']))
-        self.domain_id = self.options['domain']
+        self._post('/dns/{0}/listRRs'.format(self.domain))
+        self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
@@ -121,8 +121,9 @@ class Provider(BaseProvider):
             'data': content
         }
 
-        if 'ttl' in self.options:
-            record['ttl'] = self.options['ttl']
+        ttl = self._get_lexicon_option('ttl')
+        if ttl:
+            record['ttl'] = ttl
 
         self._post('/dns/{0}/addRR'.format(self.domain_id), record)
         return True
@@ -147,9 +148,9 @@ class Provider(BaseProvider):
 
         timestamp = str(int(time.time()))
         salt = ''.join(random.choice(SALT_SHAKER) for _ in range(16))
-        hash_items = [self.options['auth_username'], timestamp, salt, self.options['auth_token'], url, hashed_body]
+        hash_items = [self._get_provider_option('auth_username'), timestamp, salt, self._get_provider_option('auth_token'), url, hashed_body]
         auth_hash = hashlib.sha1(';'.join(hash_items).encode('utf-8')).hexdigest()
-        auth_value = ';'.join([self.options['auth_username'], timestamp, salt, auth_hash])
+        auth_value = ';'.join([self._get_provider_option('auth_username'), timestamp, salt, auth_hash])
         auth_header = {
             'X-NFSN-Authentication': auth_value
         }
