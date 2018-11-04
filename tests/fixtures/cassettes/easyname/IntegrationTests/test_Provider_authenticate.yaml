@@ -1,0 +1,127 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://my.easyname.com/en/login
+  response:
+    body: {string: "<html><body><form action=\"https://my.easyname.com/en/login\"
+        enctype=\"application/x-www-form-urlencoded\" method=\"post\"><div class=\"FrontForm\">\n<div><div
+        class=\"Label\" id=\"username-label\"><label class=\"required\" for=\"username\">Email
+        address</label></div>\n<div class=\"inputField\">\n<input class=\"textfield\"
+        id=\"username\" name=\"username\" placeholder=\"Email address\" tabindex=\"1\"
+        type=\"text\" value=\"\"/><span class=\"fieldError\" id=\"usernameError\"
+        style=\"display: none;\"><span></span></span></div></div>\n<div><div class=\"Label\"
+        id=\"password-label\"><label class=\"required\" for=\"password\">Password</label></div>\n<div
+        class=\"inputField\">\n<input class=\"textfield\" id=\"password\" name=\"password\"
+        placeholder=\"Password\" tabindex=\"2\" type=\"password\" value=\"\"/><span
+        class=\"fieldError\" id=\"passwordError\" style=\"display: none;\"><span></span></span></div></div>\n<div
+        class=\"submitButton\"><div class=\"Label\" id=\"submit-label\"></div>\n<div>\n<button
+        class=\"submit btn-blue ladda-button\" id=\"submit\" name=\"submit\" tabindex=\"3\"
+        type=\"submit\">Login</button><span class=\"fieldError\" id=\"submitError\"
+        style=\"display: none;\"><span></span></span></div></div>\n<tr><td class=\"Label\"
+        id=\"loginxtoken-label\">\_</td>\n<td>\n<input id=\"loginxtoken\" name=\"loginxtoken\"
+        type=\"hidden\" value=\"7f58405d81c2b8f82ffa618b8b2d28a1\"/><span class=\"fieldError\"
+        id=\"loginxtokenError\" style=\"display: none;\"><span></span></span></td></tr></div></form></body></html>"}
+    headers:
+      cache-control: [nocache]
+      connection: [Keep-Alive]
+      content-length: ['96691']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 23 Oct 2018 11:06:24 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      keep-alive: ['timeout=3, max=512']
+      pragma: [no-cache]
+      server: [Apache]
+      strict-transport-security: [max-age=2592000]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode submit=&loginxtoken=7f58405d81c2b8f82ffa618b8b2d28a1
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['154']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://my.easyname.com/en/login
+  response:
+    body: {string: !!python/unicode <html><body></body></html>}
+    headers:
+      cache-control: [nocache]
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 23 Oct 2018 11:06:25 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      keep-alive: ['timeout=3, max=511']
+      location: ['https://my.easyname.com/hosting/view-user.php']
+      pragma: [no-cache]
+      server: [Apache]
+      strict-transport-security: [max-age=2592000]
+      transfer-encoding: [chunked]
+      vary: [Accept-Encoding]
+    status: {code: 302, message: Found}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://my.easyname.com/hosting/view-user.php
+  response:
+    body: {string: !!python/unicode <html><body></body></html>}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate']
+      connection: [Keep-Alive]
+      content-length: ['16114']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 23 Oct 2018 11:06:26 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      keep-alive: ['timeout=3, max=510']
+      pragma: [no-cache]
+      server: [Apache]
+      strict-transport-security: [max-age=2592000]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://my.easyname.com/domains
+  response:
+    body: {string: !!python/unicode '<html><body><table id="cp_domain_table"><tr class="highlighted"><td
+        class="td_1"><span class="domainname">lexicontest.astzweig.de</span><br/><td
+        class="td_2"><a href="/en/domain/subdomain/index/id/452641">Subdomains</a>
+        <span class="grey">|</span><a href="/en/domain/email-address/index/domain/452641">Email</a>
+        <span class="grey">|</span><a href="/domains/settings/dns.php?domain=452641">DNS</a></td><td
+        class="payeduntil">External domain</td><td class="td_5"><span class="managelink"><a
+        data-original-title="Manage" data-placement="top" data-toggle="tooltip" href="/domains/settings/view-domainstatus.php?domain=452641"><span
+        class="en-icon-edit blue"></span></a></span></td></td></tr></table></body></html>'}
+    headers:
+      cache-control: ['no-store, no-cache, must-revalidate']
+      connection: [Keep-Alive]
+      content-length: ['28409']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 23 Oct 2018 11:06:26 GMT']
+      expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      keep-alive: ['timeout=3, max=509']
+      pragma: [no-cache]
+      server: [Apache]
+      strict-transport-security: [max-age=2592000]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
