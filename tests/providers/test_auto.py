@@ -36,7 +36,7 @@ def there_is_no_network():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class OvhProviderTests(TestCase, IntegrationTests):
+class AutoProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'auto'
@@ -47,7 +47,7 @@ class OvhProviderTests(TestCase, IntegrationTests):
 
     # Override _test_options to call env_auth_options and then import auth config from env variables
     def _test_options(self):
-        cmd_options = super(OvhProviderTests, self)._test_options()
+        cmd_options = super(AutoProviderTests, self)._test_options()
         cmd_options.update({'auth_entrypoint':'ovh-eu'})
         return cmd_options
 

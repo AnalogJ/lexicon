@@ -72,7 +72,11 @@ class TransipProviderTests(TestCase, IntegrationTests):
         return options
 
     def tearDown(self):
-        os.unlink(self._fake_key)
+        try:
+            os.unlink(self._fake_key)
+        except AttributeError:
+            # Method _test_options may not have been executed, in this case self._fake_key does not exist.
+            pass
 
     def _filter_headers(self):
         return ['Cookie']
