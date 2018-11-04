@@ -1,5 +1,6 @@
 import contextlib
 
+from importlib import import_module
 from builtins import object
 from functools import wraps
 
@@ -85,6 +86,24 @@ class IntegrationTests(object):
         self.Provider = BaseProvider
         self.domain = None
         self.provider_name = None
+
+    ###########################################################################
+    # Provider module shape
+    ###########################################################################
+    def test_provider_module_shape(self):
+        module = import_module(
+            'lexicon.providers.{0}'.format(
+                self.provider_name))
+
+        assert hasattr(module, 'ProviderParser')
+        assert hasattr(module, 'Provider')
+        if self.provider_name != 'auto':
+            assert hasattr(module, 'NAMESERVER_DOMAINS')
+
+        assert callable(module.ProviderParser)
+        assert callable(module.Provider)
+        if self.provider_name != 'auto':
+            assert isinstance(module.NAMESERVER_DOMAINS, list)
 
     ###########################################################################
     # Provider.authenticate()
