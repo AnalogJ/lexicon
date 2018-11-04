@@ -1,0 +1,121 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[{"name":"","type":"NS","data":"ns.phx5.nearlyfreespeech.net.","ttl":86400,"scope":"system"},{"name":"","type":"NS","data":"ns.phx7.nearlyfreespeech.net.","ttl":86400,"scope":"system"},{"name":"docs","type":"CNAME","data":"docs.example.com","ttl":3600,"scope":"member"},{"name":"localhost","type":"A","data":"127.0.0.1","ttl":3600,"scope":"member"},{"name":"_acme-challenge.createrecordset","type":"TXT","data":"challengetoken1","ttl":3600,"scope":"member"},{"name":"_acme-challenge.createrecordset","type":"TXT","data":"challengetoken2","ttl":3600,"scope":"member"},{"name":"_acme-challenge.fqdn","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.full","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"},{"name":"_acme-challenge.test","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"}]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['858']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:23:43 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663823']
+    status: {code: 200, message: OK}
+- request:
+    body: type=TXT&name=_acme-challenge.noop&data=challengetoken
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['54']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['2']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:23:44 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663824']
+    status: {code: 200, message: OK}
+- request:
+    body: name=_acme-challenge.noop&type=TXT&data=challengetoken&ttl=3600
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['63']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/addRR
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['0']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:23:44 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663824']
+    status: {code: 200, message: OK}
+- request:
+    body: type=TXT&name=_acme-challenge.noop&data=challengetoken
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['54']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[{"name":"_acme-challenge.noop","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"}]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['98']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:23:47 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663827']
+    status: {code: 200, message: OK}
+- request:
+    body: type=TXT&name=_acme-challenge.noop
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['34']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.nearlyfreespeech.net/dns/koupia.xyz/listRRs
+  response:
+    body: {string: '[{"name":"_acme-challenge.noop","type":"TXT","data":"challengetoken","ttl":3600,"scope":"member"}]'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Length: ['98']
+      Content-Type: [application/x-nfsn-api]
+      Date: ['Tue, 16 Oct 2018 04:23:47 GMT']
+      Keep-Alive: ['timeout=1, max=100']
+      Server: [Apache]
+      Strict-Transport-Security: [max-age=31536000]
+      X-Frame-Options: [DENY]
+      X-NFSN-Timestamp: ['1539663827']
+    status: {code: 200, message: OK}
+version: 1
