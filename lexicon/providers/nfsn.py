@@ -16,6 +16,7 @@ from urllib.parse import urlencode
 
 logger = logging.getLogger(__name__)
 
+NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username", help="specify username used to authenticate")
