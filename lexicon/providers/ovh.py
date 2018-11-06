@@ -206,9 +206,15 @@ class Provider(BaseProvider):
         ]).encode('utf-8'))
 
         # Sign the request
-        prepared_request.headers['X-Ovh-Signature'] = '$1$' + signature.hexdigest()
+        headers['X-Ovh-Signature'] = '$1$' + signature.hexdigest()
 
-        result = self.session.send(prepared_request)
+        result = self.session.request(
+            method=action,
+            url=target,
+            params=query_params,
+            data=body,
+            headers=headers
+        )
         result.raise_for_status()
 
         return result.json()
