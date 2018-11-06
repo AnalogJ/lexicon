@@ -2,6 +2,7 @@ import logging
 import os
 import re
 import yaml
+import warnings
 
 LOGGER = logging.getLogger(__name__)
 
@@ -166,7 +167,8 @@ class ConfigResolver(object):
                         lexicon_config_files.append(path)
 
         for lexicon_provider_config_file in lexicon_provider_config_files:
-            self.with_provider_config_file(lexicon_provider_config_file[0], lexicon_provider_config_file[1])
+            self.with_provider_config_file(lexicon_provider_config_file[0], 
+                                           lexicon_provider_config_file[1])
 
         for lexicon_config_file in lexicon_config_files:
             self.with_config_file(lexicon_config_file)
@@ -174,7 +176,8 @@ class ConfigResolver(object):
         return self
 
     def with_legacy_dict(self, legacy_dict_object):
-        LOGGER.warning('Legacy configuration object has been used to load the ConfigResolver.')
+        warnings.warn(DeprecationWarning('Legacy configuration object has been used '
+                                         'to load the ConfigResolver.'))
         return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
 class ConfigSource(object):
@@ -217,11 +220,14 @@ class EnvironmentConfigSource(ConfigSource):
         # Second try, with the legacy naming convention for specific provider config: 
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_MY_CONFIG
         # Users get a warning about this deprecated usage.
-        environment_variable_legacy = re.sub(r'(.*)_AUTH_(.*)', r'\1_\2', environment_variable).upper()
+        environment_variable_legacy = re.sub(r'(.*)_AUTH_(.*)', r'\1_\2',
+                                             environment_variable).upper()
         value = self._parameters.get(environment_variable_legacy, None)
         if value:
-            LOGGER.warning('Warning: Use of environment variable {0} is deprecated. Try {1} instead.'
-            .format(environment_variable_legacy, environment_variable))
+            LOGGER.warning(('Warning: Use of environment variable %s is deprecated. '
+                            'Try %s instead.'),
+                           environment_variable_legacy,
+                           environment_variable)
             return value
 
         return None
