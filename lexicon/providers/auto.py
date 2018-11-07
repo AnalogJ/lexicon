@@ -45,13 +45,13 @@ def _get_ns_records_for_domain(domain):
     # Available both for Windows and Linux (if dnsutils is installed for the latter)
     try:
         output = subprocess.check_output(['nslookup', '-querytype=NS', domain],
-                                        stderr=subprocess.STDOUT)
+                                        stderr=subprocess.STDOUT, universal_newlines=True)
     except subprocess.CalledProcessError as e:
         if 'NXDOMAIN' in e.output:
             raise ValueError('Error, domain {0} could not be resolved.'.format(domain))
 
     pattern = re.compile(r'nameserver = (.*?)\.*{0}'.format(os.linesep))
-    match = pattern.findall(output.decode())
+    match = pattern.findall(output)
 
     if not match:
         raise ValueError('Error, could not find ns entries for domain {0}. '
