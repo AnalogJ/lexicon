@@ -20,24 +20,23 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get(
-            'api_endpoint', 'https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1')
+        self.api_endpoint = 'https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1'
 
     def authenticate(self):
 
         query_params = {
             "Filter": {
                 "Provider.Class": "dns",
-                "Name": self.options['domain']
+                "Name": self.domain
             }
         }
         payload = self._get('/commonserviceitem', query_params=query_params)
 
         for item in payload["CommonServiceItems"]:
-            if item["Status"]["Zone"] == self.options['domain']:
+            if item["Status"]["Zone"] == self.domain:
                 self.domain_id = item["ID"]
                 return
 
@@ -58,7 +57,7 @@ class Provider(BaseProvider):
                 "Name": name,
                 "Type": type,
                 "RData": self._bind_format_target(type, content),
-                "TTL": self.options["ttl"],
+                "TTL": self._get_lexicon_option('ttl'),
             }
         )
 
@@ -111,14 +110,14 @@ class Provider(BaseProvider):
             resource_record_sets[index]["Name"] = name
             resource_record_sets[index]["RData"] = self._bind_format_target(
                 type, content)
-            resource_record_sets[index]["TTL"] = self.options["ttl"]
+            resource_record_sets[index]["TTL"] = self._get_lexicon_option('ttl')
         else:
             resource_record_sets.append(
                 {
                     "Name": name,
                     "Type": type,
                     "RData": self._bind_format_target(type, content),
-                    "TTL": self.options["ttl"],
+                    "TTL": self._get_lexicon_option('ttl'),
                 }
             )
 
@@ -162,7 +161,7 @@ class Provider(BaseProvider):
     # Helpers
     def _full_name(self, record_name):
         if record_name == "@":
-            record_name = self.options['domain']
+            record_name = self.domain
         return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):
@@ -213,7 +212,7 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json',
         }
         default_auth = HTTPBasicAuth(
-            self.options['auth_token'], self.options['auth_secret'])
+            self._get_provider_option('auth_token'), self._get_provider_option('auth_secret'))
 
         query_string = ""
         if query_params:

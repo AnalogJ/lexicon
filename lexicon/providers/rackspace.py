@@ -31,32 +31,27 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get(
-            'api_endpoint',
-            'https://dns.api.rackspacecloud.com/v1.0'
-        )
-        self.auth_api_endpoint = self.engine_overrides.get(
-            'auth_api_endpoint',
-            'https://identity.api.rackspacecloud.com/v2.0'
-        )
+        self.api_endpoint = 'https://dns.api.rackspacecloud.com/v1.0'
+        self.auth_api_endpoint = 'https://identity.api.rackspacecloud.com/v2.0'
 
     def authenticate(self):
-        if not self.options['auth_token']:
+        self._auth_token = self._get_provider_option('auth_token')
+        if not self._auth_token:
             auth_response = self._auth_request('POST', '/tokens', {
                 'auth': {
                     'RAX-KSKEY:apiKeyCredentials': {
-                        'username': self.options['auth_username'],
-                        'apiKey': self.options['auth_api_key']
+                        'username': self._get_provider_option('auth_username'),
+                        'apiKey': self._get_provider_option('auth_api_key')
                     }
                 }
             })
-            self.options['auth_token'] = auth_response['access']['token']['id']
+            self._auth_token = auth_response['access']['token']['id']
 
         payload = self._get('/domains', {
-            'name': self.options['domain']
+            'name': self.domain
         })
 
         if not payload['domains']:
@@ -70,8 +65,8 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
         data = {'records': [{'type': type, 'name': self._full_name(name), 'data': content}]}
-        if self.options.get('ttl'):
-            data['records'][0]['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['records'][0]['ttl'] = self._get_lexicon_option('ttl')
 
         try:
             payload = self._post_and_wait('/domains/{0}/records'.format(self.domain_id), data)
@@ -122,8 +117,8 @@ class Provider(BaseProvider):
             data['name'] = self._full_name(name)
         if content:
             data['data'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
 
         if identifier is None:
             records = self.list_records(type, name)
@@ -166,11 +161,11 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        full_url = (self.api_endpoint + '/{0}' + url).format(self.options.get('auth_account'))
+        full_url = (self.api_endpoint + '/{0}' + url).format(self._get_provider_option('auth_account'))
         r = requests.request(action, full_url, params=query_params,
                              data=json.dumps(data),
                              headers={
-                                 'X-Auth-Token': self.options.get('auth_token'),
+                                 'X-Auth-Token': self._get_provider_option('auth_token'),
                                  'Content-Type': 'application/json'
                              })
         r.raise_for_status()  # if the request fails for any reason, throw an error.
@@ -180,9 +175,7 @@ class Provider(BaseProvider):
     def _request_and_wait(self, action='POST', url='/', data=None, query_params=None):
         result = self._request(action, url, data, query_params)
 
-        sleep_time = self.options.get('sleep_time')
-        if sleep_time == "":
-            sleep_time = "1"
+        sleep_time = self._get_provider_option('sleep_time') or '1'
         sleep_time = float(sleep_time)
 
         while not _async_request_completed(result):
@@ -210,7 +203,7 @@ class Provider(BaseProvider):
         r = requests.request('GET', payload['callbackUrl'], params={'showDetails': 'true'},
                              data={},
                              headers={
-                                 'X-Auth-Token': self.options.get('auth_token'),
+                                 'X-Auth-Token': self._get_provider_option('auth_token'),
                                  'Content-Type': 'application/json'
                              })
 

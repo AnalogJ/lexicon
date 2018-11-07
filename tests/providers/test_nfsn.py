@@ -31,14 +31,7 @@ parameters must be provided:
 class NFSNProviderTests(TestCase, IntegrationTests):
     Provider = Provider
     provider_name = 'nfsn'
-
-    default_domain = 'koupia.xyz'
-
-    @property
-    def domain(self):
-        _domain = os.environ.get('LEXICON_NFSN_DOMAIN')
-        return _domain or NFSNProviderTests.default_domain
+    domain = 'koupia.xyz'
 
     def _filter_headers(self):
         return ['X-NFSN-Authentication']
-        

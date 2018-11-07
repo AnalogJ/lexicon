@@ -1,6 +1,5 @@
 # Test for one implementation of the interface
 from lexicon.providers.gandi import Provider
-from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
@@ -16,10 +15,8 @@ class GandiRPCProviderTests(TestCase, IntegrationTests):
     domain = 'reachlike.ca'
     provider_variant = 'RPC'
 
-    def _test_options(self):
-        cmd_options = super(GandiRPCProviderTests, self)._test_options()
-        cmd_options['api_protocol'] = 'rpc'
-        return cmd_options
+    def _test_parameters_overrides(self):
+        return {'api_protocol': 'rpc'}
 
 class GandiRESTProviderTests(TestCase, IntegrationTests):
 
@@ -31,8 +28,5 @@ class GandiRESTProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['X-Api-Key']
 
-    def _test_options(self):
-        cmd_options = super(GandiRESTProviderTests, self)._test_options()
-        cmd_options['api_protocol'] = 'rest'
-        return cmd_options
-
+    def _test_parameters_overrides(self):
+        return {'api_protocol': 'rest'}

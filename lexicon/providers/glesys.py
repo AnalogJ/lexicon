@@ -14,16 +14,16 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.glesys.com')
+        self.api_endpoint = 'https://api.glesys.com'
 
     def authenticate(self):
         payload = self._get('/domain/list')
         domains = payload['response']['domains']
         for record in domains:
-            if record['domainname'] == self.options['domain']:
+            if record['domainname'] == self.domain:
                 # Domain records do not have any id.
                 # Since domain_id cannot be None, use domain name as id instead.
                 self.domain_id = record['domainname']
@@ -40,7 +40,7 @@ class Provider(BaseProvider):
             return True
 
         request_data = {
-            'domainname': self.options['domain'],
+            'domainname': self.domain,
             'host': self._full_name(name),
             'type': type,
             'data': content
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
         request_data = {
-            'domainname': self.options['domain']
+            'domainname': self.domain
         }
         payload = self._post('/domain/listrecords', data=request_data)
 
@@ -115,7 +115,7 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
 
-        credentials = (self.options['auth_username'], self.options['auth_token'])
+        credentials = (self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
         response = requests.request(action,
                                     self.api_endpoint + url,
                                     params=query_params,
@@ -129,8 +129,8 @@ class Provider(BaseProvider):
 
     # Adds TTL parameter if passed as argument to lexicon.
     def _addttl(self, request_data):
-        if 'ttl'in self.options:
-            request_data['ttl'] = self.options['ttl']
+        if self._get_lexicon_option('ttl'):
+            request_data['ttl'] = self._get_lexicon_option('ttl')
 
     # From Glesys record structure: [u'domainname', u'recordid', u'type', u'host', u'ttl', u'data']
     def _glesysrecord2lexiconrecord(self, glesys_record):

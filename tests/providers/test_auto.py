@@ -45,11 +45,11 @@ class AutoProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['X-Ovh-Application', 'X-Ovh-Consumer', 'X-Ovh-Signature']
 
-    # Override _test_options to call env_auth_options and then import auth config from env variables
-    def _test_options(self):
-        cmd_options = super(AutoProviderTests, self)._test_options()
-        cmd_options.update({'auth_entrypoint':'ovh-eu'})
-        return cmd_options
+    def _test_parameters_overrides(self):
+        return {'auth_entrypoint':'ovh-eu'}
+
+    def _test_fallback_fn(self):
+        return lambda x: 'placeholder_' + x if x != 'mapping_override' else None
 
     # Here we do not mock the function _get_ns_records_domains_for_domain
     # to effectively test the nslookup call and processing.\

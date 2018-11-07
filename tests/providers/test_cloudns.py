@@ -18,3 +18,4 @@ class CloudnsProviderTests(TestCase, IntegrationTests):
 
     def _filter_post_data_parameters(self):
         return ['auth-id', 'sub-auth-id', 'sub-auth-user', 'auth-password']
+

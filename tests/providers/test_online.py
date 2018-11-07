@@ -16,10 +16,8 @@ class OnlineProviderTests(TestCase, IntegrationTests):
 	def _filter_headers(self):
 		return ['Authorization', 'x-recruitment']
 
-	def _test_engine_overrides(self):
-		overrides = super(OnlineProviderTests, self)._test_engine_overrides()
-		overrides['fallbackFn'] = (lambda x: 'placeholder_' + x if x != 'priority' else '')
-		return overrides
+	def _test_fallback_fn(self):
+		return lambda x: 'placeholder_' + x if x != 'priority' else ''
 
 	@pytest.mark.skip(reason="manipulating records by id is not supported")
 	def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):

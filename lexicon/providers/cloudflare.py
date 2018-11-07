@@ -17,15 +17,15 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.cloudflare.com/client/v4')
+        self.api_endpoint = 'https://api.cloudflare.com/client/v4'
 
     def authenticate(self):
 
         payload = self._get('/zones', {
-            'name': self.options['domain'],
+            'name': self.domain,
             'status': 'active'
         })
 
@@ -40,8 +40,8 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
         data = {'type': type, 'name': self._full_name(name), 'content': content}
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
 
         payload = {'success': True}
         try:
@@ -92,8 +92,8 @@ class Provider(BaseProvider):
             data['name'] = self._full_name(name)
         if content:
             data['content'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
 
         payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
@@ -113,7 +113,7 @@ class Provider(BaseProvider):
         logger.debug('delete_records: %s', delete_record_id)
         
         for record_id in delete_record_id:
-            payload = self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
+            self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
 
         logger.debug('delete_record: %s', True)
         return True
@@ -127,8 +127,8 @@ class Provider(BaseProvider):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              headers={
-                                 'X-Auth-Email': self.options['auth_username'],
-                                 'X-Auth-Key': self.options.get('auth_token'),
+                                 'X-Auth-Email': self._get_provider_option('auth_username'),
+                                 'X-Auth-Key': self._get_provider_option('auth_token'),
                                  'Content-Type': 'application/json'
                              })
         r.raise_for_status()  # if the request fails for any reason, throw an error.

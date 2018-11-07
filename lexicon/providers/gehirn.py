@@ -45,18 +45,17 @@ FORMAT_RE = {
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
         self.version_id = None
-        self.api_endpoint = self.engine_overrides.get(
-            'api_endpoint', 'https://api.gis.gehirn.jp/dns/v1')
+        self.api_endpoint = 'https://api.gis.gehirn.jp/dns/v1'
 
     def authenticate(self):
         payload = self._get('/zones')
 
         domains = [item for item in payload if item['name']
-                   == self.options['domain']]
+                   == self.domain]
         if not domains:
             raise Exception('No domain found')
 
@@ -75,7 +74,7 @@ class Provider(BaseProvider):
                 'type': type,
                 'name': name,
                 'enable_alias': False,
-                'ttl': self.options['ttl'],
+                'ttl': self._get_lexicon_option('ttl'),
                 'records': [],
             }
         else:
@@ -142,7 +141,7 @@ class Provider(BaseProvider):
                 'type': type,
                 'name': name,
                 'enable_alias': False,
-                'ttl': self.options['ttl'],
+                'ttl': self._get_lexicon_option('ttl'),
                 'records': [self._parse_content(type, content)],
             }
 
@@ -170,7 +169,7 @@ class Provider(BaseProvider):
                     record["type"] = type
                 if name:
                     record["name"] = name
-                record["ttl"] = self.options['ttl']
+                record["ttl"] = self._get_lexicon_option('ttl')
                 if content:
                     record["records"] = [
                         self._parse_content(record["type"], content)]
@@ -307,7 +306,7 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json',
         }
         default_auth = HTTPBasicAuth(
-            self.options['auth_token'], self.options['auth_secret'])
+            self._get_provider_option('auth_token'), self._get_provider_option('auth_secret'))
 
         query_string = ""
         if query_params:

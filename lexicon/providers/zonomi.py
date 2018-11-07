@@ -42,30 +42,30 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        if not self.options.get('auth_token'):
+        if not self._get_provider_option('auth_token'):
             raise Exception('Error, application key is not defined')
 
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENTRYPOINT.get('zonomi'))
+        self.api_endpoint = APIENTRYPOINT.get('zonomi')
 
-        if self.options.get('auth_entrypoint'):
-            self.api_endpoint = self.engine_overrides.get('api_endpoint', APIENTRYPOINT.get(self.options.get('auth_entrypoint')))
+        if self._get_provider_option('auth_entrypoint'):
+            self.api_endpoint = APIENTRYPOINT.get(self._get_provider_option('auth_entrypoint'))
 
 
     def authenticate(self):
     
         payload = self._get('/dns/dyndns.jsp', {
             'action' : 'QUERY',
-            'name' : "**." + self.options['domain'],
+            'name' : "**." + self.domain,
             'type' : 'SOA'
         })
 
         if payload.find('is_ok').text != 'OK:':
             raise Exception('Error with api {0}'.format(payload.find('is_ok').text))
 
-        self.domain_id = self.options['domain']
+        self.domain_id = self.domain
 
 
     def _make_identifier(self, type, name, content):
@@ -85,18 +85,18 @@ class Provider(BaseProvider):
         request = {
                 'action': 'SET', 
                 'type': type, 
-                'name': self.options['domain'], 
+                'name': self.domain, 
                 'value': content 
         }
 
         if name is not None:
             request['name'] = self._full_name(name)
 
-        if self.options.get('ttl'):
-            request['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            request['ttl'] = self._get_lexicon_option('ttl')
 
-        if self.options.get('priority'):
-            request['prio'] = self.options.get('priority')
+        if self._get_lexicon_option('priority'):
+            request['prio'] = self._get_lexicon_option('priority')
 
         payload = self._get('/dns/dyndns.jsp', request)
 
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
 
         request = {
             'action' : 'QUERY',
-            'name': "**." + self.options['domain']
+            'name': "**." + self.domain
         }
 
         if type is not None:
@@ -142,7 +142,7 @@ class Provider(BaseProvider):
 
         request = {
             'action' : 'DELETE',
-            'name': self.options['domain'] 
+            'name': self.domain 
         }
         
         if type is not None:
@@ -177,10 +177,10 @@ class Provider(BaseProvider):
             request['name'] = self._full_name(name)
         if content is not None:
             request['value'] = content
-        if self.options.get('ttl'):
-            request['ttl'] = self.options.get('ttl')
-        if self.options.get('priority'):
-            request['prio'] = self.options.get('priority')
+        if self._get_lexicon_option('ttl'):
+            request['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            request['prio'] = self._get_lexicon_option('priority')
 
         payload = self._get('/dns/dyndns.jsp', request)
 
@@ -196,7 +196,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         else:
-            query_params['api_key'] = self.options.get('auth_token')
+            query_params['api_key'] = self._get_provider_option('auth_token')
 
         r = requests.request(action, self.api_endpoint + url, params=query_params)
         tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))

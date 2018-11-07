@@ -19,12 +19,12 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
 
-        username = self.options.get('auth_username')
-        api_key = self.options.get('auth_api_key')
+        username = self._get_provider_option('auth_username')
+        api_key = self._get_provider_option('auth_api_key')
 
         if not username or not api_key:
             raise Exception("No username and/or api key was specified")
@@ -37,7 +37,7 @@ class Provider(BaseProvider):
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
-        domain = self.options.get('domain')
+        domain = self.domain
 
         payload = self.sl_dns.resolve_ids(domain)
 
@@ -59,7 +59,7 @@ class Provider(BaseProvider):
             return True
 
         name = self._relative_name(name)
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
         payload = self.sl_dns.create_record(self.domain_id,name,type,content,ttl)
 
         logger.debug('create_record: %s', payload)
@@ -108,8 +108,8 @@ class Provider(BaseProvider):
             record['host'] = self._relative_name(name)
         if content:
             record['data'] = content
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
 
         payload = self.sl_dns.edit_record(record)
 

@@ -23,15 +23,15 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dnsmadeeasy.com/V2.0')
+        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://api.dnsmadeeasy.com/V2.0'
 
     def authenticate(self):
 
         try:
-            payload = self._get('/dns/managed/name', {'domainname': self.options['domain']})
+            payload = self._get('/dns/managed/name', {'domainname': self.domain})
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 payload = {}
@@ -50,7 +50,7 @@ class Provider(BaseProvider):
             'type': type,
             'name': self._relative_name(name),
             'value': content,
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
         payload = {}
         try:
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
         for record in payload['data']:
             processed_record = {
                 'type': record['type'],
-                'name': '{0}.{1}'.format(record['name'], self.options['domain']),
+                'name': '{0}.{1}'.format(record['name'], self.domain),
                 'ttl': record['ttl'],
                 'content': record['value'],
                 'id': record['id']
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
 
         data = {
             'id': identifier,
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
 
         if name:
@@ -143,14 +143,14 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'x-dnsme-apiKey': self.options['auth_username']
+            'x-dnsme-apiKey': self._get_provider_option('auth_username')
         }
         default_auth = None
 
         # Date string in HTTP format e.g. Sat, 12 Feb 2011 20:59:04 GMT
         request_date = formatdate(usegmt=True)
 
-        hashed = hmac.new(bytes(self.options['auth_token'], 'ascii'),
+        hashed = hmac.new(bytes(self._get_provider_option('auth_token'), 'ascii'),
                           bytes(request_date, 'ascii'), sha1)
 
         default_headers['x-dnsme-requestDate'] = request_date

@@ -17,7 +17,8 @@ import tldextract
 import sys
 
 from lexicon import providers
-from lexicon.common.options_handler import env_auth_options
+from lexicon.config import ConfigResolver, ArgsConfigSource
+from lexicon.config import legacy_config_resolver
 
 logger = logging.getLogger(__name__)
 
@@ -121,11 +122,17 @@ class Provider(object):
     the resolved provider if it respect the naming convention: --[provider]-[parameter_name] for a
     command line parameter, or LEXICON_[PROVIDER]_PARAMETER_NAME for a environment variable.
     """
-    def __init__(self, options, engine_overrides=None):
-        self.domain = options.get('domain')
+    def __init__(self, config):
+        if not isinstance(config, ConfigResolver):
+            # If config is a plain dict, we are in a legacy situation.
+            # To protect the Provider API, the legacy dict is handled in a
+            # correctly defined ConfigResolver.
+            self.config = legacy_config_resolver(config)
+        else:
+            self.config = config
+
+        self.domain = config.resolve('lexicon:domain')
         self.proxy_provider = None
-        self.options = options
-        self.engine_overrides = engine_overrides
 
     def authenticate(self):
         """
@@ -133,7 +140,8 @@ class Provider(object):
         provider, then call its authenticate() method. Almost every subsequent operation will then 
         be delegated to that provider.
         """
-        mapping_override = self.options.get('mapping_override')
+        mapping_override = self.config.resolve('lexicon:auto:mapping_override')
+        print(mapping_override)
         mapping_override_processed = {}
         if mapping_override:
             for one_mapping in mapping_override.split(','):
@@ -148,17 +156,25 @@ class Provider(object):
             (provider_name, provider_module) = _relevant_provider_for_domain(self.domain)
             logger.info('Provider discovered for domain %s: %s.', self.domain, provider_name)
 
-        new_options = env_auth_options(provider_name)
-        for key, value in self.options.items():
-            target_prefix = 'auto_{0}_'.format(provider_name)
-            if key.startswith(target_prefix):
-                new_options[re.sub('^{0}'.format(target_prefix), '', key)] = value
-            if not key.startswith('auto_'):
-                new_options[key] = value
+        new_config = ConfigResolver()
+        new_config.with_dict({'lexicon:provider_name': provider_name})
 
-        new_options['provider_name'] = provider_name
+        target_prefix = 'auto_{0}_'.format(provider_name)
+        for configSource in self.config._config_sources:
+            if not isinstance(configSource, ArgsConfigSource):
+                new_config.with_config_source(configSource)
+            else:
+                # ArgsConfigSource needs to be reprocessed to rescope the provided args to the delegate provider
+                new_dict = {}
+                for key, value in configSource._parameters.items():
+                    if key.startswith(target_prefix):
+                        new_param_name = re.sub('^{0}'.format(target_prefix), '', key)
+                        new_dict['lexicon:{0}:{1}'.format(provider_name, new_param_name)] = value
+                    elif not key.startswith('auto_'):
+                        new_dict['lexicon:{0}'.format(key)] = value
+                new_config.with_dict(new_dict)
 
-        self.proxy_provider = provider_module.Provider(new_options, self.engine_overrides)
+        self.proxy_provider = provider_module.Provider(new_config)
         self.proxy_provider.authenticate()
 
     def __getattr__(self, attr_name):

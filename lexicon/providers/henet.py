@@ -37,10 +37,9 @@ class Provider(BaseProvider):
         he.net provider
     """
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
-        self.options = options
-        self.domain = self.options['domain']
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
+        self.domain = self.domain
         self.domain_id = None
 
     def authenticate(self):
@@ -56,8 +55,8 @@ class Provider(BaseProvider):
         login_response = self.session.post(
            "https://dns.he.net",
             data={
-                "email": self.options.get('auth_username',''),
-                "pass": self.options.get('auth_password','')
+                "email": self._get_provider_option('auth_username') or '',
+                "pass": self._get_provider_option('auth_password') or ''
             }
         )
 
@@ -73,12 +72,12 @@ class Provider(BaseProvider):
         )
 
         html = BeautifulSoup(zones_response.content, "html.parser")
-        zone_img = html.find("img", {"name": self.options.get("domain",''), "alt": "delete"})
+        zone_img = html.find("img", {"name": self.domain, "alt": "delete"})
 
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
-            logger.warning("Domain {0} not found in account".format(self.options.get("domain",'')))
-            raise AssertionError("Domain {0} not found in account".format(self.options.get("domain",'')))
+            logger.warning("Domain {0} not found in account".format(self.domain))
+            raise AssertionError("Domain {0} not found in account".format(self.domain))
 
         self.domain_id = zone_img["value"]
         logger.debug("HENET domain ID: {}".format(self.domain_id))
@@ -105,13 +104,13 @@ class Provider(BaseProvider):
             "TTL": "3600",
             "hosted_dns_editrecord": "Submit"
         }
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
         if ttl:
             if ttl <= 0: 
                 data['TTL'] = "3600"
             else:
                 data['TTL'] = str(ttl)
-        prio = self.options.get('priority')
+        prio = self._get_lexicon_option('priority')
         if prio:
             if prio <= 0: 
                 data['Priority'] = "10"

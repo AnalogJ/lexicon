@@ -21,15 +21,13 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
-        self.api_endpoint = self.engine_overrides.get(
-            "api_endpoint", "https://api.exoscale.ch/dns"
-        )
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
+        self.api_endpoint = 'https://api.exoscale.ch/dns'
 
     def authenticate(self):
         """An innocent call to check that the credentials are okay."""
-        r = self._get("/v1/domains/{0}".format(self.options.get("domain")))
+        r = self._get("/v1/domains/{0}".format(self.domain))
 
         self.domain_id = r["domain"]["id"]
 
@@ -45,13 +43,13 @@ class Provider(BaseProvider):
             "name": self._relative_name(name),
             "content": content,
         }
-        if self.options.get("ttl"):
-            record["ttl"] = self.options.get("ttl", 6 * HOUR)
-        if self.options.get("prio"):
-            record["prio"] = self.options.get("prio")
+        if self._get_lexicon_option("ttl"):
+            record["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            record["prio"] = self._get_lexicon_option("priority")
 
         payload = self._post(
-            "/v1/domains/{0}/records".format(self.options.get("domain")),
+            "/v1/domains/{0}/records".format(self.domain),
             {"record": record},
         )
 
@@ -74,7 +72,7 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
             filter["name"] = name
         payload = self._get(
-            "/v1/domains/{0}/records".format(self.options.get("domain")),
+            "/v1/domains/{0}/records".format(self.domain),
             query_params=filter,
         )
 
@@ -86,9 +84,9 @@ class Provider(BaseProvider):
                 continue
 
             if record["name"] == "":
-                rname = self.options.get("domain")
+                rname = self.domain
             else:
-                rname = ".".join((record["name"], self.options.get("domain")))
+                rname = ".".join((record["name"], self.domain))
 
             processed_record = {
                 "type": record["record_type"],
@@ -120,17 +118,17 @@ class Provider(BaseProvider):
             record["name"] = self._relative_name(name)
         if content:
             record["content"] = content
-        if self.options.get("ttl"):
-            record["ttl"] = self.options.get("ttl")
-        if self.options.get("prio"):
-            record["prio"] = self.options.get("prio")
+        if self._get_lexicon_option('ttl'):
+            record["ttl"] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            record["prio"] = self._get_lexicon_option('priority')
 
         logger.debug("update_records: %s", identifiers)
 
         for record_id in identifiers:
             self._put(
                 "/v1/domains/{0}/records/{1}".format(
-                    self.options.get("domain"), identifier
+                    self.domain, identifier
                 ),
                 record,
             )
@@ -157,7 +155,7 @@ class Provider(BaseProvider):
         for record_id in identifiers:
             self._delete(
                 "/v1/domains/{0}/records/{1}".format(
-                    self.options.get("domain"), record_id
+                    self.domain, record_id
                 )
             )
             logger.debug("delete_record: %s", record_id)
@@ -174,7 +172,7 @@ class Provider(BaseProvider):
         default_headers = {"Accept": "application/json"}
 
         default_headers["X-DNS-Token"] = ":".join(
-            (self.options.get("auth_key"), self.options.get("auth_secret"))
+            (self._get_provider_option("auth_key"), self._get_provider_option("auth_secret"))
         )
 
         r = requests.request(

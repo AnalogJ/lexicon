@@ -15,19 +15,19 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.vultr.com/v1')
+        self.api_endpoint = 'https://api.vultr.com/v1'
 
     def authenticate(self):
 
         payload = self._get('/dns/list')
 
-        if not [item for item in payload if item['domain'] == self.options['domain']]:
+        if not [item for item in payload if item['domain'] == self.domain]:
             raise Exception('No domain found')
 
-        self.domain_id = self.options['domain']
+        self.domain_id = self.domain
 
 
     # Create record. If record already exists with the same content, do nothing'
@@ -42,8 +42,8 @@ class Provider(BaseProvider):
             record['data'] = "\"{0}\"".format(content)
         else:
             record['data'] = content
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
         payload = self._post('/dns/create_record', record)
 
         logger.debug('create_record: %s', True)
@@ -61,7 +61,7 @@ class Provider(BaseProvider):
             processed_record = {
                 'type': record['type'],
                 'name': "{0}.{1}".format(record['name'], self.domain_id),
-                'ttl': record.get('ttl', self.options['ttl']),
+                'ttl': record.get('ttl', self._get_lexicon_option('ttl')),
                 'content': record['data'],
                 'id': record['RECORDID']
             }
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
         data = {
             'domain': self.domain_id,
             'RECORDID': identifier,
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
         # if type:
         #     data['type'] = type
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             # 'Content-Type': 'application/json',
-            'API-Key': self.options['auth_token']
+            'API-Key': self._get_provider_option('auth_token')
         }
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,

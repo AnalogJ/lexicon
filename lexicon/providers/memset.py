@@ -16,14 +16,14 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.memset.com/v1/json')
+        self.api_endpoint = 'https://api.memset.com/v1/json'
 
     def authenticate(self):
         payload = self._get('/dns.zone_domain_info', {
-            'domain': self.options['domain']
+            'domain': self.domain
         })
         if not payload['zone_id']:
             raise Exception('No domain found')
@@ -32,8 +32,8 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
         data = {'type': type, 'record': self._relative_name(name), 'address': content}
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
         data['zone_id'] = self.domain_id
         check_exists = self.list_records(type=type, name=name, content=content)
         if not len(check_exists) > 0:
@@ -94,8 +94,8 @@ class Provider(BaseProvider):
             data['record'] = self._relative_name(name)
         if content:
             data['address'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
         data['id'] = identifier
         data['zone_id'] = self.domain_id
 
@@ -134,7 +134,7 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=(self.options['auth_token'], 'x'),
+                             auth=(self._get_provider_option('auth_token'), 'x'),
                              headers={'Content-Type': 'application/json'})
         r.raise_for_status()  # if the request fails for any reason, throw an error.
         return r.json()

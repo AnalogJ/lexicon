@@ -8,60 +8,16 @@ import logging
 import os
 import sys
 import json
-import pkgutil
 
 import pkg_resources
 
 from lexicon.client import Client
-from lexicon import providers as providers_package
+from lexicon.config import ConfigResolver
+from lexicon.parser import generate_cli_main_parser
 
 #based off https://docs.python.org/2/howto/argparse.html
 
 logger = logging.getLogger(__name__)
-
-
-def BaseProviderParser():
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument('action', help='specify the action to take', default='list', choices=['create', 'list', 'update', 'delete'])
-    parser.add_argument('domain', help='specify the domain, supports subdomains as well')
-    parser.add_argument('type', help='specify the entry type', default='TXT', choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
-
-    parser.add_argument('--name', help='specify the record name')
-    parser.add_argument('--content', help='specify the record content')
-    parser.add_argument('--ttl', type=int, help='specify the record time-to-live')
-    parser.add_argument('--priority', help='specify the record priority')
-    parser.add_argument('--identifier', help='specify the record for update or delete actions')
-    parser.add_argument('--log_level', help='specify the log level', default='ERROR', choices=['CRITICAL','ERROR','WARNING','INFO','DEBUG','NOTSET'])
-    parser.add_argument('--output', 
-                        help='specify the type of output: by default a formatted table (TABLE), a formatted table without header (TABLE-NO-HEADER), a JSON string (JSON) or no output (QUIET)',
-                        default='TABLE', choices=['TABLE', 'TABLE-NO-HEADER', 'JSON', 'QUIET'])
-    return parser
-
-def MainParser():
-    providers = []
-    for _, modname, _ in pkgutil.iter_modules(providers_package.__path__):
-        if modname != 'base':
-            providers.append(modname)
-    providers = sorted(providers)
-
-    parser = argparse.ArgumentParser(description='Create, Update, Delete, List DNS entries')
-    try:
-        version = pkg_resources.get_distribution('dns-lexicon').version
-    except pkg_resources.DistributionNotFound:
-        version = 'unknown'
-    parser.add_argument('--version', help='show the current version of lexicon', action='version', version='%(prog)s {0}'.format(version))
-    parser.add_argument('--delegated', help='specify the delegated domain')
-    subparsers = parser.add_subparsers(dest='provider_name', help='specify the DNS provider to use')
-    subparsers.required = True
-
-    for provider in providers:
-        provider_module = importlib.import_module('lexicon.providers.' + provider)
-        provider_parser = getattr(provider_module, 'ProviderParser')
-
-        subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider), parents=[BaseProviderParser()])
-        provider_parser(subparser)
-
-    return parser
 
 # Convert returned JSON into a nice table for command line usage
 def generate_table_result(logger, output=None, without_header=None):
@@ -123,15 +79,23 @@ def handle_output(results, output_type):
                 logger.debug('Output is not a JSON, and then cannot be printed with --output=JSON parameter.')
                 pass
 
-# Dynamically determine all the providers available.
+# Main function of Lexicon.
 def main():
-    parsed_args = MainParser().parse_args()
+    # Dynamically determine all the providers available and gather command line arguments.
+    parsed_args = generate_cli_main_parser().parse_args()
+
     log_level = logging.getLevelName(parsed_args.log_level)
     logging.basicConfig(stream=sys.stdout, level=log_level, format='%(message)s')
-
     logger.debug('Arguments: %s', parsed_args)
 
-    client = Client(vars(parsed_args))
+    # In the CLI context, will get configuration interactively:
+    #   * from the command line
+    #   * from the environment variables
+    #   * from lexicon configuration files in working directory
+    config = ConfigResolver()
+    config.with_args(parsed_args).with_env().with_config_dir(os.getcwd())
+
+    client = Client(config)
     
     results = client.execute()
 

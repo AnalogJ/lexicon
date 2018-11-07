@@ -17,14 +17,14 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://pointhq.com')
+        self.api_endpoint = 'https://pointhq.com'
 
     def authenticate(self):
 
-        payload = self._get('/zones/{0}'.format(self.options['domain']))
+        payload = self._get('/zones/{0}'.format(self.domain))
 
         if not payload['zone']:
             raise Exception('No domain found')
@@ -116,7 +116,7 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options['auth_token']),
+                             auth=requests.auth.HTTPBasicAuth(self._get_provider_option('auth_username'), self._get_provider_option('auth_token')),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'

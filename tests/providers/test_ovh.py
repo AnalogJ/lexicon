@@ -16,8 +16,5 @@ class OvhProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['X-Ovh-Application', 'X-Ovh-Consumer', 'X-Ovh-Signature']
 
-    # Override _test_options to call env_auth_options and then import auth config from env variables
-    def _test_options(self):
-        cmd_options = super(OvhProviderTests, self)._test_options()
-        cmd_options.update({'auth_entrypoint':'ovh-eu'})
-        return cmd_options
+    def _test_parameters_overrides(self):
+        return {'auth_entrypoint':'ovh-eu'}

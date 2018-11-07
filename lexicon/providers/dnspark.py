@@ -18,14 +18,14 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dnspark.com/v2')
+        self.api_endpoint = 'https://api.dnspark.com/v2'
 
     def authenticate(self):
 
-        payload = self._get('/dns/{0}'.format(self.options['domain']))
+        payload = self._get('/dns/{0}'.format(self.domain))
 
         if not payload['additional']['domain_id']:
             raise Exception('No domain found')
@@ -83,7 +83,7 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
         if type:
             data['rtype'] = type
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        default_auth = (self.options['auth_username'], self.options['auth_token'])
+        default_auth = (self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),

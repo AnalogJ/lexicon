@@ -17,15 +17,15 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://www.namesilo.com/api')
+        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://www.namesilo.com/api'
 
     def authenticate(self):
 
-        payload = self._get('/getDomainInfo', {'domain': self.options['domain']})
-        self.domain_id = self.options['domain']
+        payload = self._get('/getDomainInfo', {'domain': self.domain})
+        self.domain_id = self.domain
 
 
     # Create record. If record already exists with the same content, do nothing'
@@ -36,8 +36,8 @@ class Provider(BaseProvider):
             'rrtype': type,
             'rrvalue': content
         }
-        if self.options.get('ttl'):
-            record['rrttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['rrttl'] = self._get_lexicon_option('ttl')
         try:
             payload = self._get('/dnsAddRecord', record)
         except ValueError as err:
@@ -88,8 +88,8 @@ class Provider(BaseProvider):
             data['rrhost'] = self._relative_name(name)
         if content:
             data['rrvalue'] = content
-        if self.options.get('ttl'):
-            data['rrttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['rrttl'] = self._get_lexicon_option('ttl')
 
         payload = self._get('/dnsUpdateRecord', data)
 
@@ -128,7 +128,7 @@ class Provider(BaseProvider):
             query_params = {}
         query_params['version'] = 1
         query_params['type'] = 'xml'
-        query_params['key'] = self.options['auth_token']
+        query_params['key'] = self._get_provider_option('auth_token')
         r = requests.request(action, self.api_endpoint + url, params=query_params)
                              #data=json.dumps(data))
         r.raise_for_status()  # if the request fails for any reason, throw an error.

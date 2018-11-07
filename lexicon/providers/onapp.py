@@ -23,22 +23,22 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
         self.domain_id = None
 
-        if not self.options.get('auth_username'):
+        if not self._get_provider_option('auth_username'):
             raise Exception('Error, OnApp Email Address is not defined')
-        if not self.options.get('auth_token'):
+        if not self._get_provider_option('auth_token'):
             raise Exception('Error, OnApp API Key is not defined')
-        if not self.options.get('auth_server'):
+        if not self._get_provider_option('auth_server'):
             raise Exception('Error, OnApp Control Panel URL is not defined')
 
         self.session = requests.Session()
     
     def authenticate(self):
-        domain = self.options.get('domain')
+        domain = self.domain
         
         zones = self._get('/dns_zones.json')
         for zone in zones:
@@ -56,7 +56,7 @@ class Provider(BaseProvider):
             self._key_for_record_type(type): content
         }
 
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
         if ttl:
             data['ttl'] = "{0}".format(ttl)
 
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
             existing = self._guess_record(type, name)
             identifier = existing['id']
 
-        ttl = self.options.get('ttl')
+        ttl = self._get_lexicon_option('ttl')
 
         if not name or not ttl:
             if not existing:
@@ -147,13 +147,13 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        target = self.options['auth_server'] + url
+        target = self._get_provider_option('auth_server') + url
         
         body = ''
         if data is not None:
             body = json.dumps(data)
 
-        auth = HTTPBasicAuth(self.options['auth_username'], self.options['auth_token'])
+        auth = HTTPBasicAuth(self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
 
         request = requests.Request(action, target, data=body, headers=headers, params=query_params, auth=auth)
         prepared_request = self.session.prepare_request(request)

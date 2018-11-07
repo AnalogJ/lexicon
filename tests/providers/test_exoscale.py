@@ -31,15 +31,5 @@ class ExoscaleProviderTests(TestCase, IntegrationTests):
     provider_name = "exoscale"
     domain = "lexicontest.com"
 
-    def _test_engine_overrides(self):
-        overrides = super(ExoscaleProviderTests, self)._test_engine_overrides()
-        env_endpoint = os.getenv("EXOSCALE_DNS_ENDPOINT")
-        if env_endpoint:
-            overrides.update({"api_endpoint": env_endpoint})
-        overrides["fallbackFn"] = (
-            lambda x: "placeholder_" + x if x != "prio" else ""
-        )
-        return overrides
-
     def _filter_headers(self):
         return ["X-DNS-Token", "x-request-id"]

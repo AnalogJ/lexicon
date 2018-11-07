@@ -14,10 +14,8 @@ class EasyDnsProviderTests(TestCase, IntegrationTests):
     domain = 'easydnstemp.com'
 
 
-    def _test_engine_overrides(self):
-        overrides = super(EasyDnsProviderTests, self)._test_engine_overrides()
-        overrides.update({'api_endpoint': 'http://sandbox.rest.easydns.net'})
-        return overrides
+    def _test_parameters_overrides(self):
+        return {'api_endpoint': 'http://sandbox.rest.easydns.net'}
 
     def _filter_headers(self):
         return ['Authorization']

@@ -22,17 +22,17 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.auroradns.eu')
+        self.api_endpoint = 'https://api.auroradns.eu'
 
     def authenticate(self):
         zone = None
         payload = self._get('/zones')
 
         for item in payload:
-            if item['name'] == self.options['domain']:
+            if item['name'] == self.domain:
                 zone = item
 
         if not zone:
@@ -43,8 +43,8 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
         data = {'type': type, 'name': self._relative_name(name), 'content': content}
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
         payload = self._post('/zones/{0}/records'.format(self.domain_id), data)
 
         logger.debug('create_record: {0}'.format(payload))
@@ -93,8 +93,8 @@ class Provider(BaseProvider):
             data['name'] = self._relative_name(name)
         if content:
             data['content'] = content
-        if self.options.get('ttl'):
-            data['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
 
         payload = self._put('/zones/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
@@ -154,8 +154,8 @@ class Provider(BaseProvider):
             return True
 
     def _generate_auth_header(self, action, url, timestamp):
-        secret_key = self.options['auth_secret_key']
-        api_key = self.options['auth_api_key']
+        secret_key = self._get_provider_option('auth_secret_key')
+        api_key = self._get_provider_option('auth_api_key')
         sig = action + url + timestamp
 
         signature = base64.b64encode(hmac.new(

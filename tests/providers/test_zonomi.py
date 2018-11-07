@@ -11,15 +11,9 @@ class ZonomiProviderTests(TestCase, IntegrationTests):
     Provider = Provider
     provider_name = 'zonomi'
     domain = 'pcekper.com.ar'
-        
-    def _test_engine_overrides(self):
-        overrides = super(ZonomiProviderTests, self)._test_engine_overrides()
-        overrides.update({'api_endpoint': 'https://zonomi.com/app'})
-        return overrides
     
     def _filter_query_parameters(self):
         return ['api_key']
-
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.mark.skip(reason="new test, missing recording")
@@ -30,3 +24,6 @@ class ZonomiProviderTests(TestCase, IntegrationTests):
     def skip_suite(self, request):
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
+
+    def _test_parameters_overrides(self):
+        return {'auth_entrypoint': 'zonomi'}
