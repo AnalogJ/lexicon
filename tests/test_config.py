@@ -7,7 +7,7 @@ from lexicon.parser import generate_cli_main_parser
 def test_environment_resolution(monkeypatch):
     monkeypatch.setenv('LEXICON_DELEGATED','TEST1')
     monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN','TEST2')
-    monkeypatch.setenv('LEXICON_CLOUDFLARE_AUTH_USERNAME','TEST2')
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_AUTH_USERNAME','TEST3')
 
     config = ConfigResolver().with_env()
 
