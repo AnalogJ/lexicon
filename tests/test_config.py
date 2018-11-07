@@ -1,12 +1,13 @@
 import os
+import pytest
 
 from lexicon.config import ConfigResolver, ConfigSource
 from lexicon.parser import generate_cli_main_parser
 
-def test_environment_resolution():
-    os.environ['LEXICON_DELEGATED'] = 'TEST1'
-    os.environ['LEXICON_CLOUDFLARE_TOKEN'] = 'TEST2'
-    os.environ['LEXICON_CLOUDFLARE_AUTH_USERNAME'] = 'TEST3'
+def test_environment_resolution(monkeypatch):
+    monkeypatch.setenv('LEXICON_DELEGATED','TEST1')
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN','TEST2')
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_AUTH_USERNAME','TEST2')
 
     config = ConfigResolver().with_env()
 
@@ -96,11 +97,11 @@ def test_legacy_dict_config_resolution():
     assert config.resolve('lexicon:auth_token') is None
     assert config.resolve('lexicon:nonexistent') is None
 
-def test_prioritized_resolution(tmpdir):
+def test_prioritized_resolution(tmpdir, monkeypatch):
     lexicon_file = tmpdir.join('lexicon.yml')
     lexicon_file.write('cloudflare:\n  auth_token: TEST1')
 
-    os.environ['LEXICON_CLOUDFLARE_AUTH_TOKEN'] = 'TEST2'
+    monkeypatch.setenv('LEXICON_CLOUDFLARE_AUTH_TOKEN', 'TEST2')
 
     assert ConfigResolver().with_config_file(str(lexicon_file)).with_env().resolve('lexicon:cloudflare:auth_token') == 'TEST1'
     assert ConfigResolver().with_env().with_config_file(str(lexicon_file)).resolve('lexicon:cloudflare:auth_token') == 'TEST2'
