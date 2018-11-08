@@ -1,25 +1,21 @@
 #!/usr/bin/env python
+"""Module for Lexicon command-line interface"""
 from __future__ import absolute_import
 from __future__ import print_function
 
-import argparse
-import importlib
+import os
 import logging
 import sys
 import json
-
-import pkg_resources
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
 
-#based off https://docs.python.org/2/howto/argparse.html
+logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
-logger = logging.getLogger(__name__)
-
-# Convert returned JSON into a nice table for command line usage
-def generate_table_result(logger, output=None, without_header=None):
+def generate_table_result(lexicon_logger, output=None, without_header=None):
+    """Convert returned JSON into a nice table for command line usage"""
     try:
         _ = (entry for entry in output)
     except TypeError:
@@ -28,10 +24,10 @@ def generate_table_result(logger, output=None, without_header=None):
         return None
 
     array = [[
-        row.get('id', ''), 
-        row.get('type', ''), 
-        row.get('name', ''), 
-        row.get('content', ''), 
+        row.get('id', ''),
+        row.get('type', ''),
+        row.get('name', ''),
+        row.get('content', ''),
         row.get('ttl', '')] for row in output]
 
     # Insert header (insert before calculating the max width of each column
@@ -55,10 +51,10 @@ def generate_table_result(logger, output=None, without_header=None):
     # Construct table to be printed
     table = []
     for row in array:
-        rowList = []
+        row_list = []
         for idx, col in enumerate(row):
-            rowList.append(str(col).ljust(column_widths[idx]))
-        table.append(' '.join(rowList))
+            row_list.append(str(col).ljust(column_widths[idx]))
+        table.append(' '.join(row_list))
 
     # Return table
     return '\n'.join(table)
@@ -76,12 +72,13 @@ def handle_output(results, output_type):
                 json_str = json.dumps(results)
                 if json_str:
                     print(json_str)
-            except:
-                logger.debug('Output is not a JSON, and then cannot be printed with --output=JSON parameter.')
-                pass
+            except:  # pylint: disable=W0702
+                logger.debug('Output is not a JSON, and then cannot '
+                             'be printed with --output=JSON parameter.')
 
-# Main function of Lexicon.
+
 def main():
+    """Main function of Lexicon."""
     # Dynamically determine all the providers available and gather command line arguments.
     parsed_args = generate_cli_main_parser().parse_args()
 
@@ -97,7 +94,7 @@ def main():
     config.with_args(parsed_args).with_env().with_config_dir(os.getcwd())
 
     client = Client(config)
-    
+
     results = client.execute()
 
     handle_output(results, parsed_args.output)
