@@ -1,25 +1,30 @@
+"""
+Definition of the ConfigResolver to configure Lexicon, and convenient classes to build
+various configuration sources.
+"""
 import logging
 import os
 import re
-import yaml
 import warnings
+
+import yaml
 
 LOGGER = logging.getLogger(__name__)
 
 class ConfigResolver(object):
     """
     Highly customizable configuration resolver object, that gets configuration parameters
-    from various sources with a precedence order. Sources and their priority are configured 
+    from various sources with a precedence order. Sources and their priority are configured
     by calling the with* methods of this object, in the decreasing priority order.
 
-    A configuration parameter can be retrieved using the resolve() method. The configuration parameter
-    key needs to conform to a namespace, whose delimeters is ':'. Two namespaces will be used in 
-    the context of Lexicon:
+    A configuration parameter can be retrieved using the resolve() method. The configuration
+    parameter key needs to conform to a namespace, whose delimeters is ':'. Two namespaces will
+    be used in the context of Lexicon:
         * the parameters relevant for Lexicon itself: 'lexicon:global_parameter'
         * the parameters specific to a DNS provider: 'lexicon:cloudflare:cloudflare_parameter'
 
     Example:
-        # This will resolve configuration parameters from environment variables, 
+        # This will resolve configuration parameters from environment variables,
         # then from a configuration file named '/my/path/to/lexicon.yml'.
         $ from lexicon.config import Config
         $ config = Config()
@@ -43,11 +48,12 @@ class ConfigResolver(object):
 
     def resolve(self, config_key):
         """
-        Resolve the value of the given config parameter key. Key must be correctly scoped for Lexicon, and
-        optionally for the DNS provider for which the parameter is consumed. For instance:
-            * config.resolve('lexicon:delegated') will get the delegated config parameter for Lexicon
-            * config.resolve('lexicon:cloudflare:auth_token') will get 
-            the auth_token config parameter consumed by cloudflare DNS provider.
+        Resolve the value of the given config parameter key. Key must be correctly scoped for
+        Lexicon, and optionally for the DNS provider for which the parameter is consumed.
+        For instance:
+            * config.resolve('lexicon:delegated') will get the delegated parameter for Lexicon
+            * config.resolve('lexicon:cloudflare:auth_token') will get the auth_token parameter
+              consumed by cloudflare DNS provider.
 
         Value is resolved against each configured source, and value from the highest priority source
         is returned. None will be returned if the given config parameter key could not be resolved
@@ -60,8 +66,13 @@ class ConfigResolver(object):
 
         return None
 
-    def add_config_source(self, config_source, position = None):
-        self._config_sources.insert(position if position is not None else len(self._config_sources), config_source)
+    def add_config_source(self, config_source, position=None):
+        """
+        Add a config source to the current ConfigResolver instance.
+        If position is not set, this source will be inserted with the lowest priority.
+        """
+        rank = position if position is not None else len(self._config_sources)
+        self._config_sources.insert(rank, config_source)
 
     def with_config_source(self, config_source):
         """
@@ -74,7 +85,7 @@ class ConfigResolver(object):
     def with_env(self):
         """
         Configure current resolver to use available environment variables as a source.
-        Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]' 
+        Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]'
         will be taken into account.
         """
         return self.with_config_source(EnvironmentConfigSource())
@@ -87,15 +98,14 @@ class ConfigResolver(object):
 
         It is assumed that the argument parser have already checked that provided arguments are
         valid for Lexicon or the current provider. No further namespace check on parameter keys will
-        be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token present
-        in the given Namespace object will be returned.
+        be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token
+        present in the given Namespace object will be returned.
         """
         return self.with_config_source(ArgsConfigSource(argparse_namespace))
 
     def with_dict(self, dict_object):
         """
         Configure current resolver to use the given dict object, scoped to lexicon namespace.
-        
         Example of valid dict object for lexicon:
             {
                 'delegated': 'onedelegated',
@@ -128,7 +138,8 @@ class ConfigResolver(object):
 
         Typical format is:
             $ cat lexicon_cloudflare.yml
-            # Will define properties 'lexicon:cloudflare:auth_token' and 'lexicon:cloudflare:auth_username'
+            # Will define properties 'lexicon:cloudflare:auth_token'
+            # and 'lexicon:cloudflare:auth_username'
             auth_token: SECRET_TOKEN
             auth_username: USERNAME
 
@@ -167,7 +178,7 @@ class ConfigResolver(object):
                         lexicon_config_files.append(path)
 
         for lexicon_provider_config_file in lexicon_provider_config_files:
-            self.with_provider_config_file(lexicon_provider_config_file[0], 
+            self.with_provider_config_file(lexicon_provider_config_file[0],
                                            lexicon_provider_config_file[1])
 
         for lexicon_config_file in lexicon_config_files:
@@ -176,6 +187,7 @@ class ConfigResolver(object):
         return self
 
     def with_legacy_dict(self, legacy_dict_object):
+        """Configure a source that consumes the dict that where used on Lexicon 2.x"""
         warnings.warn(DeprecationWarning('Legacy configuration object has been used '
                                          'to load the ConfigResolver.'))
         return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
@@ -186,19 +198,20 @@ class ConfigSource(object):
     The relevant method to override is resolve(self, config_parameter).
     """
 
-    def resolve(self, config_parameter):
+    def resolve(self, config_key):
         """
-        Using the given config_parameter value (in the form of 'lexicon:config_key' or 
+        Using the given config_parameter value (in the form of 'lexicon:config_key' or
         'lexicon:[provider]:config_key'), try to get the associated value.
 
         None must be returned if no value could be found.
 
         Must be implemented by each ConfigSource concrete child class.
         """
-        raise NotImplementedError('The method resolve(config_parameter) '
+        raise NotImplementedError('The method resolve(config_key) '
                                   'must be implemented in the concret sub-classes.')
 
 class EnvironmentConfigSource(ConfigSource):
+    """ConfigSource that resolve configuration against existing environment variables."""
 
     def __init__(self):
         super(EnvironmentConfigSource, self).__init__()
@@ -207,17 +220,17 @@ class EnvironmentConfigSource(ConfigSource):
             if key.startswith('LEXICON_'):
                 self._parameters[key] = value
 
-    def resolve(self, config_parameter):
-        # First try, with a direct conversion of the config_parameter: 
+    def resolve(self, config_key):
+        # First try, with a direct conversion of the config_parameter:
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_AUTH_MY_CONFIG
         #   * lexicon:provider:my_other_config => LEXICON_PROVIDER_AUTH_MY_OTHER_CONFIG
         #   * lexicon:my_global_config => LEXICON_MY_GLOBAL_CONFIG
-        environment_variable = re.sub(':', '_', config_parameter).upper()
+        environment_variable = re.sub(':', '_', config_key).upper()
         value = self._parameters.get(environment_variable, None)
         if value:
             return value
 
-        # Second try, with the legacy naming convention for specific provider config: 
+        # Second try, with the legacy naming convention for specific provider config:
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_MY_CONFIG
         # Users get a warning about this deprecated usage.
         environment_variable_legacy = re.sub(r'(.*)_AUTH_(.*)', r'\1_\2',
@@ -233,6 +246,7 @@ class EnvironmentConfigSource(ConfigSource):
         return None
 
 class ArgsConfigSource(ConfigSource):
+    """ConfigSource that resolve configuration against an argparse namespace."""
 
     def __init__(self, namespace):
         super(ArgsConfigSource, self).__init__()
@@ -247,6 +261,7 @@ class ArgsConfigSource(ConfigSource):
         return self._parameters.get(splitted_config_key[-1], None)
 
 class DictConfigSource(ConfigSource):
+    """ConfigSource that resolve configuration against a dict object."""
 
     def __init__(self, dict_object):
         super(DictConfigSource, self).__init__()
@@ -263,6 +278,7 @@ class DictConfigSource(ConfigSource):
         return cursor.get(splitted_config_key[-1], None)
 
 class FileConfigSource(DictConfigSource):
+    """ConfigSource that resolve configuration against a lexicon config file."""
 
     def __init__(self, file_path):
         with open(file_path, 'r') as stream:
@@ -271,6 +287,7 @@ class FileConfigSource(DictConfigSource):
         super(FileConfigSource, self).__init__(yaml_object)
 
 class ProviderFileConfigSource(FileConfigSource):
+    """ConfigSource that resolve configuration against an provider config file."""
 
     def __init__(self, provider_name, file_path):
         super(ProviderFileConfigSource, self).__init__(file_path)
@@ -278,6 +295,7 @@ class ProviderFileConfigSource(FileConfigSource):
         self._parameters = {provider_name: self._parameters}
 
 class LegacyDictConfigSource(DictConfigSource):
+    """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
 
     def __init__(self, dict_object):
         provider_name = dict_object.get('provider_name')
@@ -287,7 +305,7 @@ class LegacyDictConfigSource(DictConfigSource):
                                  'the provider specific options.')
 
         generic_parameters = [
-            'domain', 'action', 'provider_name', 'delegated', 'identifier', 'type' , 'name',
+            'domain', 'action', 'provider_name', 'delegated', 'identifier', 'type', 'name',
             'content', 'ttl', 'priority', 'log_level', 'output']
 
         provider_options = {}
