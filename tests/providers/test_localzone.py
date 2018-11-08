@@ -37,13 +37,3 @@ class LocalzoneProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="localzone does not require authentication")
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
         return
-
-    # TODO: well, I could check to see if an FQDN was sent, and then send a
-    # derelativise flag...
-    @pytest.mark.skip(reason="this test should be smarter about relativization")
-    def test_Provider_when_calling_list_records_with_name_filter_should_return_record(self):
-        return
-
-    @pytest.mark.skip(reason="this test should be smarter about relativization")
-    def test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
-        return
