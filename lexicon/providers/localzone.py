@@ -39,6 +39,7 @@ class Provider(BaseProvider):
         content, do nothing.
         """
         result = False
+        name = self._relative_name(name)
         ttl = None
 
         # TODO: shoud assert that this is an int
@@ -52,22 +53,16 @@ class Provider(BaseProvider):
         logger.debug("create_record: %s", result)
         return result
 
-    def list_records(self, type=None, name=None, content=None, relativize=True):
+    def list_records(self, type=None, name=None, content=None):
         """
         Return a list of records matching the supplied params. If no params are
         provided, then return all zone records. If no records are found, return
         an empty list.
         """
-        # TODO: hack until integration test is fixed upstream
-        if name == "ttl.fqdn.example.com":
-            name = "ttl.fqdn"
-
+        if name:
+            name = self._relative_name(name)
         if not type:
             type = "ANY"
-
-        if relativize and name:
-            fqdn = ".%s." % self.domain
-            name = name.replace(fqdn, "")
 
         filter = {"rdtype": type, "name": name, "content": content}
 
@@ -78,7 +73,7 @@ class Provider(BaseProvider):
         for record in records:
             rdict = {
                 "type": record.rdtype,
-                "name": record.name,
+                "name": self._full_name(record.name),
                 "ttl": record.ttl,
                 "content": record.content,
                 "id": record.hashid,
