@@ -43,13 +43,13 @@ The current supported providers are:
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Easyname ([docs](https://www.easyname.com/en))
-- ExoScale
+- ExoScale ([docs](https://community.exoscale.com/documentation/dns/api/))
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
-- Gehirn
+- Gehirn ([docs](https://support.gehirn.jp/apidocs/gis/dns/index.html))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
-- Hurricane Electric DNS
+- Hurricane Electric DNS ([docs](https://dns.he.net/))
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
 - Linode v4 ([docs](https://developers.linode.com/v4))

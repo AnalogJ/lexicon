@@ -13,10 +13,11 @@ class ConohaProviderTests(TestCase, IntegrationTests):
     provider_name = 'conoha'
     domain = 'narusejun.com'
 
-    def _test_engine_overrides(self):
-        overrides = super(ConohaProviderTests, self)._test_engine_overrides()
-        overrides['fallbackFn'] = (lambda x: 'placeholder_' + x if x != 'priority' else '')
-        return overrides
+    def _test_parameters_overrides(self):
+        return {'region': 'tyo1'}
+
+    def _test_fallback_fn(self):
+        return lambda x: None if x in ('priority', 'auth_token') else 'placeholder_' + x
 
     def _filter_post_data_parameters(self):
         return ['auth']

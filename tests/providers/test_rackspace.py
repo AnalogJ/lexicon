@@ -28,19 +28,15 @@ class RackspaceProviderTests(TestCase, IntegrationTests):
     # Replace the auth_account, auth_username and auth_api_key as well as the
     # domain above with an actual domain you have added to Rackspace to
     # regenerate the fixtures
-    def _test_options(self):
-        options = super(RackspaceProviderTests, self)._test_options()
+    def _test_parameters_overrides(self):
         # Set this to 1 if you are making new recordings and set to 0 when
         # finished to make sure we don't actually sleep and waste time
         # when we are replaying. Rackspace API calls are async, so you place
         # the initial request and then make update calls to see if the action
         # is complete and has a response.
-        options.update({
+        return {
             'sleep_time': '0',
-        })
-        return options
+        }
 
-    def _test_engine_overrides(self):
-        overrides = super(RackspaceProviderTests, self)._test_engine_overrides()
-        overrides['fallbackFn'] = (lambda x: 'placeholder_' + x if x != 'auth_token' else None)
-        return overrides
+    def _test_fallback_fn(self):
+        return lambda x: 'placeholder_' + x if x != 'auth_token' else None

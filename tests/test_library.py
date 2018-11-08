@@ -18,23 +18,23 @@ In particular:
 # Fake provider to simulate the provider resolution from configuration, and to have excution traces when lexicon client is invoked
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
     def authenticate(self):
         print('Authenticate action')
 
     def create_record(self, type, name, content):
-        return {'action': 'create', 'domain': self.options.get('domain'), 'type': type, 'name': name, 'content': content}
+        return {'action': 'create', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
 
     def list_records(self, type=None, name=None, content=None):
-        return {'action': 'list', 'domain': self.options.get('domain'), 'type': type, 'name': name, 'content': content}
+        return {'action': 'list', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        return {'action': 'update', 'domain': self.options.get('domain'), 'identifier': identifier, 'type': type, 'name': name, 'content': content}
+        return {'action': 'update', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        return {'action': 'delete', 'domain': self.options.get('domain'), 'identifier': identifier, 'type': type, 'name': name, 'content': content}
+        return {'action': 'delete', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
 
 # We register at runtime our fake provider as a module to allow lexicon to resolve it correctly
 module = ModuleType('lexicon.providers.fakeprovider')

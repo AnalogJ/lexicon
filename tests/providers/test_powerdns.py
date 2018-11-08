@@ -16,10 +16,8 @@ class PowerdnsProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['X-API-Key']
 
-    def _test_options(self):
-        options = super(PowerdnsProviderTests, self)._test_options()
-        options.update({'pdns_server': 'https://dnsadmin.hhome.me', 'pdns_server_id': 'localhost'})
-        return options
+    def _test_parameters_overrides(self):
+        return {'pdns_server': 'https://dnsadmin.hhome.me', 'pdns_server_id': 'localhost'}
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.mark.skip(reason="new test, missing recording")

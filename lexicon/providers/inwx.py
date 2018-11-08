@@ -25,23 +25,18 @@ class Provider(BaseProvider):
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
-    def __init__(self, options, engine_overrides=None):
+    def __init__(self, config):
         """
-        :param dict options: command line options
-        :param engine_overrides:
+        :param config: command line options
         """
-        super(Provider, self).__init__(options)
+        super(Provider, self).__init__(config)
 
-        self._auth = {'user': self.options['auth_username'],
-                      'pass': self.options['auth_password']}
-        self._domain = self.options['domain'].lower()
+        self._auth = {'user': self._get_provider_option('auth_username'),
+                      'pass': self._get_provider_option('auth_password')}
+        self._domain = self.domain.lower()
         self.domain_id = None
 
-        endpoint = 'https://api.domrobot.com/xmlrpc/'
-
-        # allow tests to override endpoint to point to inwx ote
-        if 'endpoint' in self.options:
-            endpoint = self.options['endpoint']
+        endpoint = self._get_provider_option('endpoint') or 'https://api.domrobot.com/xmlrpc/'
 
         self._api = xmlrpclib.ServerProxy(endpoint, allow_none=True)
 
@@ -96,8 +91,8 @@ class Provider(BaseProvider):
         """
         opts = {'domain': self._domain, 'type': type.upper(),
                 'name': self._full_name(name), 'content': content}
-        if self.options.get('ttl'):
-            opts['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            opts['ttl'] = self._get_lexicon_option('ttl')
         opts.update(self._auth)
 
         response = self._api.nameserver.createRecord(opts)

@@ -40,10 +40,10 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.dns.constellix.com/v1')
+        self.api_endpoint = 'https://api.dns.constellix.com/v1'
 
     def authenticate(self):
         try:
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
                 raise e
     
         for domain in payload:
-            if domain['name'] == self.options['domain']:
+            if domain['name'] == self.domain:
                 self.domain_id = domain['id']
                 self.domain_details = domain
                 continue
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
     def create_record(self, type, name, content):
         record = {
             'name': self._relative_name(name),
-            'ttl': self.options['ttl'],
+            'ttl': self._get_lexicon_option('ttl'),
             'roundRobin':
                 [{'disableFlag': False,
                  'value': content}],
@@ -113,7 +113,7 @@ class Provider(BaseProvider):
             for rr in record['roundRobin']:
                 processed_record = {
                     'type': record['type'],
-                    'name': '{0}.{1}'.format(record['name'], self.options['domain']),
+                    'name': '{0}.{1}'.format(record['name'], self.domain),
                     'ttl': record['ttl'],
                     'content': rr['value'],
                     'id': record['id']
@@ -147,7 +147,7 @@ class Provider(BaseProvider):
 
         data = {
             'id': identifier,
-            'ttl': self.options['ttl'],
+            'ttl': self._get_lexicon_option('ttl'),
             'name': self._relative_name(name)
         }
 
@@ -222,14 +222,14 @@ class Provider(BaseProvider):
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'x-cnsdns-apiKey': self.options['auth_username'],
+            'x-cnsdns-apiKey': self._get_provider_option('auth_username'),
         }
         default_auth = None
 
         # Date string in epoch format
         request_date = str(int(time.time() * 1000))
 
-        hashed = hmac.new(self.options['auth_token'].encode('utf-8'), request_date.encode('utf-8'), digestmod=hashlib.sha1)
+        hashed = hmac.new(self._get_provider_option('auth_token').encode('utf-8'), request_date.encode('utf-8'), digestmod=hashlib.sha1)
 
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())

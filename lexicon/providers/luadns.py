@@ -17,16 +17,16 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.luadns.com/v1')
+        self.api_endpoint = 'https://api.luadns.com/v1'
 
     def authenticate(self):
 
         payload = self._get('/zones')
 
-        domain_info = next((domain for domain in payload if domain['name'] == self.options['domain']), None)
+        domain_info = next((domain for domain in payload if domain['name'] == self.domain), None)
 
         if not domain_info:
             raise Exception('No domain found')
@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         if len(existing_records) == 1:
             return True
 
-        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'type': type, 'name': self._fqdn_name(name), 'content': content, 'ttl': self.options['ttl']})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'type': type, 'name': self._fqdn_name(name), 'content': content, 'ttl': self._get_lexicon_option('ttl')})
 
         logger.debug('create_record: %s', True)
         return True
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
         if type:
             data['type'] = type
@@ -119,7 +119,7 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self.options['auth_username'], self.options['auth_token']),
+                             auth=requests.auth.HTTPBasicAuth(self._get_provider_option('auth_username'), self._get_provider_option('auth_token')),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'

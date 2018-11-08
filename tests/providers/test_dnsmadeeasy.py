@@ -13,10 +13,8 @@ class DnsmadeeasyProviderTests(TestCase, IntegrationTests):
     provider_name = 'dnsmadeeasy'
     domain = 'capsulecd.com'
 
-    def _test_engine_overrides(self):
-        overrides = super(DnsmadeeasyProviderTests, self)._test_engine_overrides()
-        overrides.update({'api_endpoint': 'http://api.sandbox.dnsmadeeasy.com/V2.0'})
-        return overrides
+    def _test_parameters_overrides(self):
+        return {'api_endpoint': 'http://api.sandbox.dnsmadeeasy.com/V2.0'}
 
     def _filter_headers(self):
         return ['x-dnsme-apiKey', 'x-dnsme-hmac', 'Authorization']

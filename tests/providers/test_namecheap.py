@@ -1,6 +1,5 @@
 # Test for one implementation of the interface
 from lexicon.providers.namecheap import Provider
-from lexicon.common.options_handler import env_auth_options
 from integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
@@ -69,12 +68,11 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
     def _filter_query_parameters(self):
         return ['ApiKey','UserName', 'ApiUser']
 
-    def _test_options(self):
-        options = super(NamecheapProviderTests, self)._test_options()
-        options.update({'auth_sandbox':True})
-        options.update({'auth_client_ip':'127.0.0.1'})
-        options.update(env_auth_options(self.provider_name))
-        return options
+    def _test_parameters_overrides(self):
+        return {
+            'auth_sandbox': True,
+            'auth_client_ip': '127.0.0.1'
+        }
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_Provider_when_calling_list_records_after_setting_ttl(self):

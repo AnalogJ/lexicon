@@ -60,18 +60,17 @@ class Provider(BaseProvider):
     `A + DDNS` on their control panel will be downgrated to `A` records.
     """
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
-        self.options = options
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.client = namecheap.Api(
-            ApiUser=options.get('auth_username',''),
-            ApiKey=options.get('auth_token',''),
-            UserName=options.get('auth_username',''),
-            ClientIP=options.get('auth_client_ip',''),
-            sandbox=options.get('auth_sandbox', False),
+            ApiUser=self._get_provider_option('auth_username') or '',
+            ApiKey=self._get_provider_option('auth_token') or '',
+            UserName=self._get_provider_option('auth_username') or '',
+            ClientIP=self._get_provider_option('auth_client_ip') or '',
+            sandbox=self._get_provider_option('auth_sandbox') or False,
             debug=False,
         )
-        self.domain = self.options['domain']
+        self.domain = self.domain
         self.domain_id = None
 
     def authenticate(self):
@@ -182,7 +181,7 @@ class Provider(BaseProvider):
             short TTL of 60 seconds, it may take 120 seconds for their DNS to
             propagate.
         """
-        return self.options.get('ttl', None)
+        return self._get_lexicon_option('ttl')
         
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):

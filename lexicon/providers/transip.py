@@ -37,13 +37,13 @@ class Provider(BaseProvider):
     def provider_options(self):
         return {'ttl': 86400}
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.provider_name = 'transip'
         self.domain_id = None
 
-        username = self.options.get('auth_username')
-        key_file = self.options.get('auth_api_key')
+        username = self._get_provider_option('auth_username')
+        key_file = self._get_provider_option('auth_api_key')
 
         if not username or not key_file:
             raise Exception("No username and/or keyfile was specified")
@@ -59,7 +59,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         ## This request will fail when the domain does not exist,
         ## allowing us to check for existence
-        domain = self.options.get('domain')
+        domain = self.domain
         try:
             self.client.get_info(domain)
         except:
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        records = self.client.get_info(self.options.get('domain')).dnsEntries
+        records = self.client.get_info(self.domain).dnsEntries
 
         if self._filter_records(records, type, name, content):
             # Nothing to do, record already exists
@@ -81,10 +81,10 @@ class Provider(BaseProvider):
             "name": self._relative_name(name),
             "record_type": type,
             "content": self._bind_format_target(type, content),
-            "expire": self.options.get('ttl')
+            "expire": self._get_lexicon_option('ttl')
         }))
 
-        self.client.set_dns_entries(self.options.get('domain'), records)
+        self.client.set_dns_entries(self.domain, records)
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
         logger.debug('create_record: %s', status)
         return status
@@ -93,7 +93,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None, show_output=True):
-        all_records = self._convert_records(self.client.get_info(self.options.get('domain')).dnsEntries)
+        all_records = self._convert_records(self.client.get_info(self.domain).dnsEntries)
         records = self._filter_records(
             records=all_records,
             type=type,
@@ -119,10 +119,10 @@ class Provider(BaseProvider):
             "name": name,
             "type": type,
             "content": self._bind_format_target(type, content),
-            "ttl": self.options.get('ttl')
+            "ttl": self._get_lexicon_option('ttl')
         })
 
-        self.client.set_dns_entries(self.options.get('domain'), self._convert_records_back(all_records))
+        self.client.set_dns_entries(self.domain, self._convert_records_back(all_records))
         status = len(self.list_records(type, name, content, show_output=False)) >= 1
         logger.debug('update_record: %s', status)
         return status
@@ -140,14 +140,14 @@ class Provider(BaseProvider):
         for record in filtered_records:
             all_records.remove(record)
 
-        self.client.set_dns_entries(self.options.get('domain'), self._convert_records_back(all_records))
+        self.client.set_dns_entries(self.domain, self._convert_records_back(all_records))
         status = len(self.list_records(type, name, content, show_output=False)) == 0
         logger.debug('delete_record: %s', status)
         return status
 
     def _full_name(self, record_name):
         if record_name == "@":
-            record_name = self.options['domain']
+            record_name = self.domain
         return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):

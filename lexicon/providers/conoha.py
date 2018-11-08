@@ -19,39 +19,39 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
 
-        self.api_endpoint = self.engine_overrides.get(
-            'api_endpoint',
-            'https://dns-service.%s.conoha.io/v1' % options.get('region', 'tyo1')
-        )
-        self.auth_api_endpoint = self.engine_overrides.get(
-            'auth_api_endpoint',
-            'https://identity.%s.conoha.io/v2.0' % options.get('region', 'tyo1')
-        )
+        self.api_endpoint = ('https://dns-service.{0}.conoha.io/v1'
+                             .format(self._get_provider_option('region') or 'tyo1'))
+        self.auth_api_endpoint = ('https://identity.{0}.conoha.io/v2.0'
+                                  .format(self._get_provider_option('region') or 'tyo1'))
+        self.auth_token = None
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
-        if not self.options['auth_token']:
-            if not (self.options['auth_username'] and self.options['auth_password']):
+        self.auth_token = self._get_provider_option('auth_token')
+        if self.auth_token:
+            if not (self._get_provider_option('auth_username') 
+                    and self._get_provider_option('auth_password')):
                 raise Exception("auth_username and auth_password or auth_token must be specified.")
-            auth_response = self._send_request('POST', '%s/tokens' % self.auth_api_endpoint, {
+            auth_response = self._send_request('POST', '{0}/tokens'
+                                                        .format(self.auth_api_endpoint), {
                 'auth': {
                     'passwordCredentials': {
-                        'username': self.options['auth_username'],
-                        'password': self.options['auth_password']
+                        'username': self._get_provider_option('auth_username'),
+                        'password': self._get_provider_option('auth_password')
                     },
-                    'tenantId': self.options['auth_tenant_id']
+                    'tenantId': self._get_provider_option('auth_tenant_id')
                 }
             })
-            self.options['auth_token'] = auth_response['access']['token']['id']
+            self.auth_token = auth_response['access']['token']['id']
 
         payload = self._get('/domains', {
-            'name': self._fqdn_name(self.options['domain'])
+            'name': self._fqdn_name(self.domain)
         })
 
         if not payload['domains']:
@@ -69,11 +69,12 @@ class Provider(BaseProvider):
             raise Exception("name must be specified.")
         if not content:
             raise Exception("content must be specified.")
-        if not self.options.get('priority') and type in ("MX", "SRV"):
+        if not self._get_lexicon_option('priority') and type in ("MX", "SRV"):
             raise Exception("priority must be specified.")
 
         try:
-            self._post('/domains/%s/records' % self.domain_id, self._record_payload(type, name, content))
+            self._post('/domains/{0}/records'.format(self.domain_id),
+                       self._record_payload(type, name, content))
         except requests.exceptions.HTTPError as err:
             # 409 Duplicate Record
             if err.response.status_code != 409:
@@ -86,7 +87,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        payload = self._get('/domains/%s/records' % self.domain_id)
+        payload = self._get('/domains/{0}/records'.format(self.domain_id))
         records = payload['records']
 
         if type:
@@ -115,7 +116,8 @@ class Provider(BaseProvider):
                 raise Exception("Cannot determine record")
             identifier = records[0]['id']
 
-        self._put('/domains/%s/records/%s' % (self.domain_id, identifier), self._record_payload(type, name, content))
+        self._put('/domains/{0}/records/{1}'
+                  .format(self.domain_id, identifier), self._record_payload(type, name, content))
 
         logger.debug('update_record: %s', True)
         return True
@@ -130,14 +132,15 @@ class Provider(BaseProvider):
             records = [record for record in records if record['id'] == identifier]
 
         for record in records:
-            self._delete('/domains/%s/records/%s' % (self.domain_id, record['id']))
+            self._delete('/domains/{0}/records/{1}'.format(self.domain_id, record['id']))
 
         logger.debug('delete_record: %s', True)
         return True
 
     #Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):
-        return self._send_request(action, "%s%s" % (self.api_endpoint, url), data, query_params)
+        return self._send_request(action, '{0}{1}'.format(self.api_endpoint, url),
+                                  data, query_params)
 
     def _send_request(self, action, url, data=None, query_params=None):
         if data is None:
@@ -145,7 +148,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         r = requests.request(action, url, data=json.dumps(data), params=query_params, headers={
-            'X-Auth-Token': self.options.get('auth_token'),
+            'X-Auth-Token': self.auth_token,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         })
@@ -157,8 +160,8 @@ class Provider(BaseProvider):
         return '%s.' % name.rstrip('.') if name else None
 
     def _record_payload(self, type, name, content):
-        priority = self.options.get('priority')
-        ttl = self.options.get('ttl')
+        priority = self._get_lexicon_option('priority')
+        ttl = self._get_lexicon_option('ttl')
         return {
             'name': self._fqdn_name(name) if name else None,
             'type': type,

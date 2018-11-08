@@ -86,6 +86,7 @@ setup(
         'tldextract',
         'future',
         'cryptography',
+        'pyyaml',
     ],
 
     # Each dependency group in extras_require should match a provider name
@@ -107,7 +108,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'lexicon=lexicon.__main__:main',
+            'lexicon=lexicon.cli:main',
         ],
     },
     test_suite='tests'

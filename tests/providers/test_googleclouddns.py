@@ -29,8 +29,5 @@ class GoogleCloudDnsTests(TestCase, IntegrationTests):
     #   - for access_token with regex replace: ya29\.c\.[\w-]+ => access_token_placeholder
 
     # Override _test_options to call env_auth_options and then import auth config from env variables
-    def _test_options(self):
-        cmd_options = super(GoogleCloudDnsTests, self)._test_options()
-
-        cmd_options.update({'auth_service_account_info': 'base64::{0}'.format(service_account_info_base64)})
-        return cmd_options
+    def _test_parameters_overrides(self):
+        return {'auth_service_account_info': 'base64::{0}'.format(service_account_info_base64)}

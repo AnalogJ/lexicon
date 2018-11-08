@@ -18,14 +18,14 @@ def ProviderParser(subparser):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://rest.easydns.net')
+        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://rest.easydns.net'
 
     def authenticate(self):
 
-        payload = self._get('/domain/{0}'.format(self.options['domain']))
+        payload = self._get('/domain/{0}'.format(self.domain))
 
         if payload['data']['exists'] == 'N':
             raise Exception('No domain found')
@@ -39,7 +39,7 @@ class Provider(BaseProvider):
             'type': type,
             'domain': self.domain_id,
             'host': self._relative_name(name),
-            'ttl': self.options['ttl'],
+            'ttl': self._get_lexicon_option('ttl'),
             'prio': 0,
             'rdata': content
         }
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
     def update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
         if type:
             data['type'] = type
@@ -127,8 +127,8 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         query_params['format'] = 'json'
-        query_params['_user'] = self.options['auth_username']
-        query_params['_key'] = self.options['auth_token']
+        query_params['_user'] = self._get_provider_option('auth_username')
+        query_params['_key'] = self._get_provider_option('auth_token')
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

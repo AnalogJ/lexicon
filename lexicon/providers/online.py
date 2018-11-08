@@ -22,13 +22,13 @@ def to_data(type, content):
 
 class Provider(BaseProvider):
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.zone_name = 'Zone Automatic Lexicon '
         self.passive_zone = None
         self.active_zone = None
-        self.domain_id = self.options['domain']
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://api.online.net/api/v1')
+        self.domain_id = self.domain
+        self.api_endpoint = 'https://api.online.net/api/v1'
 
     def authenticate(self):
         self.init_zones()
@@ -105,8 +105,8 @@ class Provider(BaseProvider):
                 'name': self._fqdn_name(name),
                 'type': type,
                 'data': to_data(type, content),
-                'priority': self.options['priority'] or '',
-                'ttl': self.options['ttl'] or ''
+                'priority': self._get_lexicon_option('priority') or '',
+                'ttl': self._get_lexicon_option('ttl') or ''
             }
 
             payload = self._post(
@@ -175,11 +175,11 @@ class Provider(BaseProvider):
             record['name'] = self._fqdn_name(name)
         if content:
             record['data'] = to_data(type, content)
-        if self.options.get('ttl'):
-            record['ttl'] = self.options.get('ttl')
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
         # it is weird that 'aux' becomes 'priority' in online's api
-        if self.options['priority']:
-            record['priority'] = self.options['priority']
+        if self._get_lexicon_option('priority'):
+            record['priority'] = self._get_lexicon_option('priority')
 
         if id is None:
             id = record['id']
@@ -236,7 +236,7 @@ class Provider(BaseProvider):
 
         headers = {
             'Accept': 'application/json',
-            'Authorization': 'Bearer {0}'.format(self.options['auth_token'])
+            'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))
         }
         if data is not None:
             if type(data) is str:
