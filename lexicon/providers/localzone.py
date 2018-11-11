@@ -47,7 +47,7 @@ class Provider(BaseProvider):
             ttl = self.ttl
 
         with localzone.manage(self.filename, self.origin, autosave=True) as z:
-            if z.add_record(name, type, content, ttl=ttl):
+            if z.add_record(name, type, content, ttl=ttl):  # pylint: disable=no-member
                 result = True
 
         logger.debug("create_record: %s", result)
@@ -67,7 +67,7 @@ class Provider(BaseProvider):
         filter = {"rdtype": type, "name": name, "content": content}
 
         with localzone.manage(self.filename, self.origin, autosave=True) as z:
-            records = z.find_record(**filter)
+            records = z.find_record(**filter)  # pylint: disable=no-member
 
         result = []
         for record in records:
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
 
         if identifier and content:
             with localzone.manage(self.filename, self.origin, autosave=True) as z:
-                if z.update_record(identifier, content):
+                if z.update_record(identifier, content):  # pylint: disable=no-member
                     result = True
 
         logger.debug("update_record: %s", result)
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
             logger.debug("delete_records: %s", ids)
             with localzone.manage(self.filename, self.origin, autosave=True) as z:
                 for hashid in ids:
-                    z.remove_record(hashid)
+                    z.remove_record(hashid)  # pylint: disable=no-member
                     logger.debug("delete_record: %s", hashid)
 
         return True
