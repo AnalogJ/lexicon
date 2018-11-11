@@ -70,6 +70,9 @@ defines the following functions, which must be overridden in your provider imple
 	See the [`cloudflare.py`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py)
 	 file, or any provider in the [`lexicon/providers/`](https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers) folder for examples
 
+It's a good idea to review the provider [specification](https://github.com/AnalogJ/lexicon/blob/master/SPECIFICATION.md) to ensure that your interface follows
+the proper conventions.
+
 
 ## Testing your provider
 

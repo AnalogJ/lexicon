@@ -101,6 +101,7 @@ setup(
         'plesk': ['xmltodict'],
         'henet': ['beautifulsoup4'],
         'easyname': ['beautifulsoup4'],
+        'localzone': ['localzone'],
     },
 
     # To provide executable scripts, use entry points in preference to the
