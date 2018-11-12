@@ -111,9 +111,9 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
 
-        payload = self.sl_dns.edit_record(record)
+        self.sl_dns.edit_record(record)
 
-        logger.debug('update_record: %s', payload)
+        logger.debug('update_record: %s', record)
         return True
 
 
@@ -127,12 +127,11 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
-            payload = self.sl_dns.delete_record(record_id)
+            self.sl_dns.delete_record(record_id)
 
         logger.debug('delete_record: %s', True)
         return True
-

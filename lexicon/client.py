@@ -1,15 +1,16 @@
+"""Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import absolute_import
 
 import importlib
-import os
+
 import tldextract
 
 from lexicon.config import ConfigResolver, DictConfigSource
 from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
 
-# From providers import Example
 class Client(object):
-    def __init__(self, config = None):
+    """This is the Lexicon client, that will execute all the logic."""
+    def __init__(self, config=None):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
             self.config = non_interactive_config_resolver()
@@ -41,7 +42,8 @@ class Client(object):
                 runtime_config['domain'] = '{0}.{1}'.format(delegated, runtime_config.get('domain'))
 
         self.action = self.config.resolve('lexicon:action')
-        self.provider_name = self.config.resolve('lexicon:provider_name') or self.config.resolve('lexicon:provider')
+        self.provider_name = (self.config.resolve('lexicon:provider_name')
+                              or self.config.resolve('lexicon:provider'))
 
         self.config.add_config_source(DictConfigSource(runtime_config), 0)
 
@@ -50,6 +52,7 @@ class Client(object):
         self.provider = provider_class(self.config)
 
     def execute(self):
+        """Execute provided configuration in class constructor to the DNS records"""
         self.provider.authenticate()
         identifier = self.config.resolve('lexicon:identifier')
         record_type = self.config.resolve('lexicon:type')
