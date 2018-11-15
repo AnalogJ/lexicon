@@ -1,0 +1,155 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/zone_auth?fqdn=test.local&view=internal
+  response:
+    body: {string: !!python/unicode "[\n    {\n        \"_ref\": \"zone_auth/ZG5zLnpvbmUkLjIzLmxvY2FsLnRlc3Q:test.local/internal\"\
+        , \n        \"fqdn\": \"test.local\", \n        \"view\": \"internal\"\n \
+        \   }\n]"}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:28 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      set-cookie: ['ibapauth="ip=164.61.224.80,client=API,group=admin-group,ctime=1542285930,timeout=3600,mtime=1542285930,su=1,auth=LOCAL,user=admin.nss,bO5QtHHSvGAZsnf9eWxhHd3dBykhBR4VSNo";
+          httponly; Path=/; secure']
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:a?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=ipv4addr,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:aaaa?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=ipv6addr,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:cname?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=canonical,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:srv?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=target,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:txt?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=text,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode "[\n    {\n        \"_ref\": \"record:txt/ZG5zLmJpbmRfdHh0JC4yMy5sb2NhbC50ZXN0LmZxZG4uX2FjbWUtY2hhbGxlbmdlLiJjaGFsbGVuZ2V0b2tlbiI:_acme-challenge.fqdn.test.local/internal\"\
+        , \n        \"text\": \"challengetoken\", \n        \"ttl\": 3600, \n    \
+        \    \"use_ttl\": true\n    }\n]"}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns1.int.metro-cc.com/wapi/v2.6.1/record:mx?name=_acme-challenge.fqdn.test.local&view=internal&_return_fields=mail_exchanger,ttl,use_ttl
+  response:
+    body: {string: !!python/unicode '[]'}
+    headers:
+      cache-control: ['no-cache, no-store']
+      connection: [Keep-Alive]
+      content-type: [application/json]
+      date: ['Thu, 15 Nov 2018 12:45:30 GMT']
+      keep-alive: [timeout=150]
+      pragma: [no-cache]
+      transfer-encoding: [chunked]
+    status: {code: 200, message: OK}
+version: 1
