@@ -52,8 +52,8 @@ Your provider file should contain 2 things:
 
 - a `ProviderParser` which is used to add provider specific commandline arguments.
 eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
- those values will be available to your provider via `self.options['auth_username']`
- or `self.options['auth_token']` respectively
+ those values will be available to your provider via `self._get_provider_option('auth_username')`
+ or `self._get_provider_option('auth_token')` respectively
 
 - a `Provider` class which inherits from [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py), which is in the `base.py` file.
 The [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py)
