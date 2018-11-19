@@ -1,12 +1,14 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import absolute_import
-
 import importlib
 
 import tldextract
-
-from lexicon.config import ConfigResolver, DictConfigSource
-from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
+from lexicon.config import (
+    ConfigResolver,
+    DictConfigSource,
+    legacy_config_resolver,
+    non_interactive_config_resolver,
+)
 
 
 class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods

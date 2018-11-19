@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
-from lexicon.config import ConfigResolver
-from lexicon.config import legacy_config_resolver
+from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
 class Provider(object):

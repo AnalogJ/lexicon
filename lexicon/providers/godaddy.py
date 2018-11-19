@@ -1,13 +1,13 @@
 from __future__ import absolute_import
-
-import logging
-import requests
-import json
 import hashlib
+import json
+import logging
 
+import requests
 from lexicon.providers.base import Provider as BaseProvider
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
 
 LOGGER = logging.getLogger(__name__)
 

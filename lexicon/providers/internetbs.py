@@ -12,14 +12,13 @@
 # transfers/trades)."
 
 from __future__ import absolute_import
-
-import json
 import hashlib
+import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

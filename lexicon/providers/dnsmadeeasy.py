@@ -1,17 +1,16 @@
 from __future__ import absolute_import
-
 import contextlib
 import hmac
 import json
 import locale
 import logging
+from builtins import bytes
 from email.utils import formatdate
 from hashlib import sha1
 
 import requests
-from builtins import bytes
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

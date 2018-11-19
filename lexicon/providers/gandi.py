@@ -26,13 +26,13 @@ the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
 from __future__ import absolute_import
-
 import json
 import logging
-import requests
-
 from builtins import object
+
+import requests
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import xmlrpclib

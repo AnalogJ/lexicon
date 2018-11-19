@@ -1,16 +1,16 @@
 from __future__ import absolute_import
-
 import logging
+from collections import OrderedDict
 
 import requests
-from collections import OrderedDict
+from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import xmltodict  # optional dependency
 except ImportError:
     pass
 
-from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

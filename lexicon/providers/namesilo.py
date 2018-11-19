@@ -1,11 +1,10 @@
 from __future__ import absolute_import
-
 import logging
 from xml.etree import ElementTree
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

@@ -1,17 +1,16 @@
 from __future__ import absolute_import
-
+import binascii
 import json
 import logging
 import time
-import requests
-import binascii
+from base64 import b64decode, urlsafe_b64encode
 
+import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
-from base64 import urlsafe_b64encode, b64decode
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

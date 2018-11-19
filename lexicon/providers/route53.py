@@ -1,10 +1,10 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
-
 import logging
 import re
 
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import boto3  # optional dep

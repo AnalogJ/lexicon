@@ -1,9 +1,8 @@
 from __future__ import absolute_import
-
 import logging
 
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     # this module uses the optional `PyNamecheap` library from PyPi

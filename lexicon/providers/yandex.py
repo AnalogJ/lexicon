@@ -1,11 +1,10 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'

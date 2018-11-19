@@ -4,7 +4,6 @@ import importlib
 import pkgutil
 
 import pkg_resources
-
 from lexicon import providers as providers_package
 
 

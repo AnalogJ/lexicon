@@ -1,18 +1,15 @@
-from __future__ import absolute_import
-from __future__ import print_function
-
+from __future__ import absolute_import, print_function
 import hashlib
 import json
 import logging
 import random
 import string
 import time
+from urllib.parse import urlencode
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-from urllib.parse import urlencode
 
 LOGGER = logging.getLogger(__name__)
 

@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 """Module for Lexicon command-line interface"""
-from __future__ import absolute_import
-from __future__ import print_function
-
-import os
-import logging
-import sys
+from __future__ import absolute_import, print_function
 import json
+import logging
+import os
+import sys
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
+
 
 logger = logging.getLogger(__name__)  # pylint: disable=C0103
 

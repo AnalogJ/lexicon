@@ -1,19 +1,21 @@
 from __future__ import absolute_import
-
-import subprocess
+import argparse
+import importlib
+import logging
 import os
 import pkgutil
-import logging
-import importlib
-import argparse
 import re
+import subprocess
 
 import six
 import tldextract
-
 from lexicon import providers
-from lexicon.config import ConfigResolver, ArgsConfigSource
-from lexicon.config import legacy_config_resolver
+from lexicon.config import (
+    ArgsConfigSource,
+    ConfigResolver,
+    legacy_config_resolver,
+)
+
 
 LOGGER = logging.getLogger(__name__)
 

@@ -15,20 +15,19 @@
 #     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 
 from __future__ import absolute_import
-
 import base64
 import contextlib
+import hashlib
 import hmac
 import json
 import locale
 import logging
 import time
-import hashlib
-
-import requests
 from builtins import bytes
 
+import requests
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

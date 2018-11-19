@@ -1,18 +1,20 @@
 from __future__ import absolute_import
-
-import re
 import logging
-from sys import stderr
+import re
 from os import environ
+from sys import stderr
 from time import sleep
+
+from lexicon.providers.base import Provider as BaseProvider
 from requests import Session
+
+
 # Due to optional requirement
 try:
     from bs4 import BeautifulSoup
 except ImportError:
     pass
 
-from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

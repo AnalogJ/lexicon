@@ -1,12 +1,11 @@
 """Provide support to Lexicon for Subreg.cz DNS changes."""
 
 from __future__ import absolute_import
-
+import collections
 import logging
 
-import collections
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import zeep  # Optional dependency

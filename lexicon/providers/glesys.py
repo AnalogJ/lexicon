@@ -1,10 +1,9 @@
 from __future__ import absolute_import
-
 import json
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 NAMESERVER_DOMAINS = ['glesys.com']
 

@@ -1,8 +1,8 @@
-from __future__ import absolute_import
-from __future__ import print_function
-
+from __future__ import absolute_import, print_function
 import logging
+
 from .base import Provider as BaseProvider
+
 
 # localzone is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.

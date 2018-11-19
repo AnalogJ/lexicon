@@ -1,9 +1,9 @@
 from __future__ import absolute_import
-
 import logging
-import requests
 
+import requests
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 

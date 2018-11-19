@@ -1,14 +1,12 @@
 from __future__ import absolute_import
-
+import base64
+import datetime
+import hashlib
+import hmac
 import json
 import logging
-import base64
-import hmac
-import hashlib
-import datetime
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
 
