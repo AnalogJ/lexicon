@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-from urllib.parse import urlencode
-from lexicon.providers.base import Provider as BaseProvider
-import requests
-import time
-import logging
-import json
-import hashlib
 from __future__ import absolute_import
 from future.standard_library import install_aliases
 install_aliases()
+
+import hashlib  # nopep8
+import json  # nopep8
+import logging  # nopep8
+import time  # nopep8
+
+import requests  # nopep8
+
+from lexicon.providers.base import Provider as BaseProvider  # nopep8
+
+from urllib.parse import urlencode  # nopep8
 
 
 logger = logging.getLogger(__name__)

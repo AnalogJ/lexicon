@@ -317,8 +317,7 @@ class LegacyDictConfigSource(DictConfigSource):
             'content', 'ttl', 'priority', 'log_level', 'output']
 
         provider_options = {}
-        refactor_dict_object = {}
-        refactor_dict_object[provider_name] = provider_options
+        refactor_dict_object = {[provider_name]: provider_options}
 
         for (key, value) in dict_object.items():
             if key not in generic_parameters:

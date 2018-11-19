@@ -76,7 +76,7 @@ def handle_output(results, output_type):
                 json_str = json.dumps(results)
                 if json_str:
                     print(json_str)
-            except:  # pylint: disable=W0702
+            except TypeError:
                 logger.debug('Output is not a JSON, and then cannot '
                              'be printed with --output=JSON parameter.')
 
