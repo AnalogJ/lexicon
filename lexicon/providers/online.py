@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['online.net']
 
@@ -119,11 +119,11 @@ class Provider(BaseProvider):
                 record
             )
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     def find_zone_records(self, zone, type=None, name=None, content=None):
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     def list_zone_records(self, zone_id):
@@ -171,7 +171,7 @@ class Provider(BaseProvider):
     def update_record(self, id, type=None, name=None, content=None):
         record = self.find_record(type, name)
         if record is None:
-            logger.debug("cannot find record to update: %s %s %s",
+            LOGGER.debug("cannot find record to update: %s %s %s",
                          id, type, name)
             return True
         if type:
@@ -199,12 +199,12 @@ class Provider(BaseProvider):
             ), record)
 
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
         # If it didn't raise from the http status code, then we're good
-        logger.debug('update_record: %s', id)
+        LOGGER.debug('update_record: %s', id)
         return True
 
     # Delete an existing record.
@@ -212,9 +212,9 @@ class Provider(BaseProvider):
     def delete_record(self, id=None, type=None, name=None, content=None):
         records = self.list_records(type, name, content)
         if len(records) == 0:
-            logger.debug("Cannot find records %s %s %s", type, name, content)
+            LOGGER.debug("Cannot find records %s %s %s", type, name, content)
             return False
-        logger.debug('delete_records: %s records found', len(records))
+        LOGGER.debug('delete_records: %s records found', len(records))
         try:
             for record in records:
                 payload = self._delete('/domain/{0}/version/{1}/zone/{2}'.format(
@@ -223,12 +223,12 @@ class Provider(BaseProvider):
                     record['id']
                 ))
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     def _patch(self, url='/', data=None, query_params=None):

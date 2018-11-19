@@ -6,7 +6,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 APIENTRYPOINT = {
     'zonomi': 'https://zonomi.com/app',
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
             raise Exception('An error occurred: {0}'.format(
                 payload.find('is_ok').text))
 
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     def list_records(self, type=None, name=None, content=None):
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
                 'ttl': rxml.attrib['ttl'].split()[0]
             }
             records.append(processed_record)
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
@@ -156,7 +156,7 @@ class Provider(BaseProvider):
             raise Exception('An error occurred: {0}'.format(
                 payload.find('is_ok').text))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     def update_record(self, identifier, type=None, name=None, content=None):
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
             raise Exception('An error occurred: {0}'.format(
                 payload.find('is_ok').text))
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     def _request(self, action='GET', url='/', data=None, query_params=None):

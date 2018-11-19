@@ -17,7 +17,7 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
 
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
 
         if self._filter_records(records, type, name, content):
             # Nothing to do, record already exists
-            logger.debug('create_record: already exists')
+            LOGGER.debug('create_record: already exists')
             return True
 
         records.append(DnsEntry(**{
@@ -91,7 +91,7 @@ class Provider(BaseProvider):
         self.client.set_dns_entries(self.domain, records)
         status = len(self.list_records(
             type, name, content, show_output=False)) >= 1
-        logger.debug('create_record: %s', status)
+        LOGGER.debug('create_record: %s', status)
         return status
 
     # List all records. Return an empty list if no records found
@@ -108,7 +108,7 @@ class Provider(BaseProvider):
         )
 
         if show_output:
-            logger.debug('list_records: %s', records)
+            LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record. Identifier must be specified.
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
             self.domain, self._convert_records_back(all_records))
         status = len(self.list_records(
             type, name, content, show_output=False)) >= 1
-        logger.debug('update_record: %s', status)
+        LOGGER.debug('update_record: %s', status)
         return status
 
     # Delete an existing record.
@@ -155,7 +155,7 @@ class Provider(BaseProvider):
             self.domain, self._convert_records_back(all_records))
         status = len(self.list_records(
             type, name, content, show_output=False)) == 0
-        logger.debug('delete_record: %s', status)
+        LOGGER.debug('delete_record: %s', status)
         return status
 
     def _full_name(self, record_name):

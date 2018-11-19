@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['cloudflare.com']
 
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
             if not already_exists:
                 raise
 
-        logger.debug('create_record: %s', payload['success'])
+        LOGGER.debug('create_record: %s', payload['success'])
         return payload['success']
 
     # List all records. Return an empty list if no records found
@@ -87,7 +87,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         payload = self._put(
             '/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: %s', payload['success'])
+        LOGGER.debug('update_record: %s', payload['success'])
         return payload['success']
 
     # Delete an existing record.
@@ -119,13 +119,13 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             self._delete(
                 '/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

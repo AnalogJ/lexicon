@@ -30,7 +30,7 @@ from builtins import bytes
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['constellix.com']
 
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
                         existing_records[0]['id'], type=type, name=name, content=new_content)
             else:
                 raise
-        logger.debug('create_record: %s', 'name' in payload)
+        LOGGER.debug('create_record: %s', 'name' in payload)
         return True
 
     # Currently returns the first value for hosts where there may be multiple
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
         records = self._filter_records(
             records, type=type, name=name, content=content, identifier=identifier)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
         payload = self._put(
             '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -201,7 +201,7 @@ class Provider(BaseProvider):
                 '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

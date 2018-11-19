@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
 
@@ -51,7 +51,7 @@ class Provider(BaseProvider):
             if z.add_record(name, type, content, ttl=ttl):  # pylint: disable=no-member
                 result = True
 
-        logger.debug("create_record: %s", result)
+        LOGGER.debug("create_record: %s", result)
         return result
 
     def list_records(self, type=None, name=None, content=None):
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
 
             result.append(rdict)
 
-        logger.debug("list_records: %s", result)
+        LOGGER.debug("list_records: %s", result)
         return result
 
     def update_record(self, identifier, type=None, name=None, content=None):
@@ -107,7 +107,7 @@ class Provider(BaseProvider):
                 if z.update_record(identifier, content):  # pylint: disable=no-member
                     result = True
 
-        logger.debug("update_record: %s", result)
+        LOGGER.debug("update_record: %s", result)
         return result
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
@@ -125,11 +125,11 @@ class Provider(BaseProvider):
                 ids = [record["id"] for record in records]
 
         if len(ids) > 0:
-            logger.debug("delete_records: %s", ids)
+            LOGGER.debug("delete_records: %s", ids)
             with localzone.manage(self.filename, self.origin, autosave=True) as z:
                 for hashid in ids:
                     z.remove_record(hashid)  # pylint: disable=no-member
-                    logger.debug("delete_record: %s", hashid)
+                    LOGGER.debug("delete_record: %s", hashid)
 
         return True
 

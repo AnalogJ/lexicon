@@ -13,7 +13,7 @@ from builtins import bytes
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dnsmadeeasy']
 
@@ -67,7 +67,7 @@ class Provider(BaseProvider):
                 raise
 
                 # http 400 is ok here, because the record probably already exists
-        logger.debug('create_record: %s', 'name' in payload)
+        LOGGER.debug('create_record: %s', 'name' in payload)
         return True
 
     # List all records. Return an empty list if no records found
@@ -99,7 +99,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -120,7 +120,7 @@ class Provider(BaseProvider):
         payload = self._put(
             '/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -133,14 +133,14 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._delete(
                 '/dns/managed/{0}/records/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

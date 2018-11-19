@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['nsone.net']
 
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
                 if e.response.status_code == 400:
                     payload = {}
 
-            logger.debug('create_record: %s', 'id' in payload)
+            LOGGER.debug('create_record: %s', 'id' in payload)
 
         return True
 
@@ -177,7 +177,7 @@ class Provider(BaseProvider):
                 }
                 records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -203,7 +203,7 @@ class Provider(BaseProvider):
                 type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
             self.delete_record(identifier)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -235,7 +235,7 @@ class Provider(BaseProvider):
         else:
             self._delete('/zones/{0}'.format(identifier))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

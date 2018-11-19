@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['digitalocean.com']
 
@@ -44,7 +44,7 @@ class Provider(BaseProvider):
 
             payload = self._post(
                 '/domains/{0}/records'.format(self.domain_id), record)
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -101,7 +101,7 @@ class Provider(BaseProvider):
         payload = self._put(
             '/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -114,14 +114,14 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._delete(
                 '/domains/{0}/records/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

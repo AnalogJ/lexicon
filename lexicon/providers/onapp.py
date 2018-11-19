@@ -8,7 +8,7 @@ from requests.auth import HTTPBasicAuth
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
 
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
 
         result = self._post(
             '/dns_zones/{0}/records.json'.format(self.domain_id), {'dns_record': data})
-        logger.debug('create_record: %s', result)
+        LOGGER.debug('create_record: %s', result)
 
         return True
 
@@ -104,7 +104,7 @@ class Provider(BaseProvider):
                     'content': recordContent
                 })
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
 
         return records
 
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
 
         result = self._put('/dns_zones/{0}/records/{1}.json'.format(
             self.domain_id, identifier), {'dns_record': request})
-        logger.debug('update_record: %s', result)
+        LOGGER.debug('update_record: %s', result)
 
         return True
 
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
             self._delete(
                 '/dns_zones/{0}/records/{1}.json'.format(self.domain_id, id))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
 
         return True
 

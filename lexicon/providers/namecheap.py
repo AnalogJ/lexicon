@@ -11,7 +11,7 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['namecheap.com']
 
@@ -198,7 +198,7 @@ class Provider(BaseProvider):
         option_ttl = self.option_ttl()
         if option_ttl:
             record['TTL'] = option_ttl
-        # logger.debug('create_record: %s', 'id' in payload)
+        # LOGGER.debug('create_record: %s', 'id' in payload)
         # return 'id' in payload
         self.client.domains_dns_addHost(self.domain, record)
         return True
@@ -225,7 +225,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.

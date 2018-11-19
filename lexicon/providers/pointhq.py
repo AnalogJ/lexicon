@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['pointhq.com']
 
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
         payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {
                              'record_type': type, 'name': self._relative_name(name), 'data': content}})
 
-        logger.debug('create_record: %s', payload['zone_record'])
+        LOGGER.debug('create_record: %s', payload['zone_record'])
         return bool(payload['zone_record'])
 
     # List all records. Return an empty list if no records found
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -94,7 +94,7 @@ class Provider(BaseProvider):
         payload = self._put(
             '/zones/{0}/records/{1}'.format(self.domain_id, identifier), {'zone_record': data})
 
-        logger.debug('update_record: %s', payload)
+        LOGGER.debug('update_record: %s', payload)
         return bool(payload['zone_record'])
 
     # Delete an existing record.
@@ -107,13 +107,13 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._delete(
                 '/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

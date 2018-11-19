@@ -5,7 +5,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['cloudns.net']
 
@@ -34,7 +34,7 @@ class Provider(BaseProvider):
         payload = self._get('/dns/get-zone-info.json',
                             {'domain-name': self.domain})
         self.domain_id = payload['name']
-        logger.debug('authenticate: %s', payload)
+        LOGGER.debug('authenticate: %s', payload)
 
     def create_record(self, type, name, content):
         # Skip execution if such a record already exists
@@ -60,7 +60,7 @@ class Provider(BaseProvider):
 
         # Add new record by calling the ClouDNS API
         payload = self._post('/dns/add-record.json', params)
-        logger.debug('create_record: %s', payload)
+        LOGGER.debug('create_record: %s', payload)
 
         # Error handling is already covered by self._request
         return True
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
                 record for record in records if record['content'] == content]
 
         # Print records as debug output and return them
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     def update_record(self, identifier, type=None, name=None, content=None):
@@ -117,7 +117,7 @@ class Provider(BaseProvider):
 
         # Update existing record by calling the ClouDNS API
         payload = self._post('/dns/mod-record.json', params)
-        logger.debug('update_record: %s', payload)
+        LOGGER.debug('update_record: %s', payload)
 
         # Error handling is already covered by self._request
         return True
@@ -131,14 +131,14 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             # Delete existing record by calling the ClouDNS API
             payload = self._post(
                 '/dns/delete-record.json', {'domain-name': self.domain_id, 'record-id': record_id})
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
 
         # Error handling is already covered by self._request
         return True
@@ -163,7 +163,7 @@ class Provider(BaseProvider):
 
     def _find_record_identifier(self, type, name, content):
         records = self.list_records(type, name, content)
-        logger.debug('records: %s', records)
+        LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']
         else:

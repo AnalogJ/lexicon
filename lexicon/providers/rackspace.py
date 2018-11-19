@@ -10,7 +10,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['rackspacecloud.com']
 
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
             raise e
 
         success = len(payload['records']) > 0
-        logger.debug('create_record: %s', success)
+        LOGGER.debug('create_record: %s', success)
         return success
 
     # List all records. Return an empty list if no records found
@@ -117,7 +117,7 @@ class Provider(BaseProvider):
             'id': record['id']
         } for record in records]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -142,7 +142,7 @@ class Provider(BaseProvider):
             '/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         # If it didn't raise from the http status code, then we're good
-        logger.debug('update_record: %s', identifier)
+        LOGGER.debug('update_record: %s', identifier)
         return True
 
     # Delete an existing record.
@@ -155,7 +155,7 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._delete_and_wait(
@@ -164,7 +164,7 @@ class Provider(BaseProvider):
 
         # If it didn't raise from the http status code, then we're good
         success = True
-        logger.debug('delete_record: %s', success)
+        LOGGER.debug('delete_record: %s', success)
         return success
 
     # Helpers

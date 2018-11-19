@@ -9,7 +9,7 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['softlayer.com']
 
@@ -51,7 +51,7 @@ class Provider(BaseProvider):
         if len(payload) > 1:
             raise Exception('Too many domains found. This should not happen')
 
-        logger.debug('domain id: %s', payload[0])
+        LOGGER.debug('domain id: %s', payload[0])
         self.domain_id = payload[0]
 
     # Create record. If record already exists with the same content, do nothing
@@ -60,7 +60,7 @@ class Provider(BaseProvider):
         records = self.list_records(type, name, content)
         if len(records) > 0:
             # Nothing to do, record already exists
-            logger.debug('create_record: already exists')
+            LOGGER.debug('create_record: already exists')
             return True
 
         name = self._relative_name(name)
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
         payload = self.sl_dns.create_record(
             self.domain_id, name, type, content, ttl)
 
-        logger.debug('create_record: %s', payload)
+        LOGGER.debug('create_record: %s', payload)
         return True
 
     # List all records. Return an empty list if no records found
@@ -94,7 +94,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record.
@@ -120,7 +120,7 @@ class Provider(BaseProvider):
 
         self.sl_dns.edit_record(record)
 
-        logger.debug('update_record: %s', record)
+        LOGGER.debug('update_record: %s', record)
         return True
 
     # Delete an existing record.
@@ -135,10 +135,10 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             self.sl_dns.delete_record(record_id)
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True

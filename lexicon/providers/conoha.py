@@ -6,7 +6,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['conoha.io']
 
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
             if err.response.status_code != 409:
                 raise err
 
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -115,7 +115,7 @@ class Provider(BaseProvider):
             'id': record['id']
         } for record in records]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record. Identifier must be specified.
@@ -129,7 +129,7 @@ class Provider(BaseProvider):
         self._put('/domains/{0}/records/{1}'
                   .format(self.domain_id, identifier), self._record_payload(type, name, content))
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -146,7 +146,7 @@ class Provider(BaseProvider):
             self._delete(
                 '/domains/{0}/records/{1}'.format(self.domain_id, record['id']))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers

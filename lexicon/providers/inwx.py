@@ -9,7 +9,7 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['inwx.com']
 

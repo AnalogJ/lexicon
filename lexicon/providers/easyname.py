@@ -6,7 +6,7 @@ import sys
 from requests import Session, Response
 from .base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['easyname.eu']
 
@@ -62,7 +62,7 @@ class Provider(BaseProvider):
 
         domain_text_element = self._get_domain_text_of_authoritative_zone()
         self.domain_id = self._get_domain_id(domain_text_element)
-        logger.debug('Easyname domain ID: {}'.format(self.domain_id))
+        LOGGER.debug('Easyname domain ID: {}'.format(self.domain_id))
 
         return True
 
@@ -83,12 +83,12 @@ class Provider(BaseProvider):
           bool: True if the record was created successfully, False otherwise.
         """
         name = self._relative_name(name) if name is not None else name
-        logger.debug('Creating record with name {}'.format(name))
+        LOGGER.debug('Creating record with name {}'.format(name))
         if self._is_duplicate_record(type, name, content):
             return True
 
         data = self._get_post_data_to_create_dns_entry(type, name, content, id)
-        logger.debug('Create DNS data: {}'.format(data))
+        LOGGER.debug('Create DNS data: {}'.format(data))
         create_response = self.session.post(
             self.URLS['dns_create_entry'].format(self.domain_id),
             data=data
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
         else:
             msg = 'Failed to add record {}'
 
-        logger.info(msg.format(name))
+        LOGGER.info(msg.format(name))
         return was_success
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
@@ -125,7 +125,7 @@ class Provider(BaseProvider):
         success_url = self.URLS['dns'].format(self.domain_id)
         record_ids = self._get_matching_dns_entry_ids(identifier, type,
                                                       name, content)
-        logger.debug('Record IDs to delete: {}'.format(record_ids))
+        LOGGER.debug('Record IDs to delete: {}'.format(record_ids))
 
         success = True
         for rec_id in record_ids:
@@ -161,7 +161,7 @@ class Provider(BaseProvider):
             records = self.list_records(id=identifier)
         else:
             records = self.list_records(name=name, type=type)
-        logger.debug('Records to update ({}): {}'.format(
+        LOGGER.debug('Records to update ({}): {}'.format(
                      len(records), records))
         assert len(records) > 0, 'No record found to update'
         success = True
@@ -228,13 +228,13 @@ class Provider(BaseProvider):
                         rec['ttl'] = int(rec['ttl'])
                 except Exception as e:
                     errmsg = 'Cannot parse DNS entry ({}).'.format(e)
-                    logger.warning(errmsg)
+                    LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
                 records.append(rec)
             self._records = records
 
         records = self._filter_records(self._records, type, name, content, id)
-        logger.debug('Final records ({}): {}'.format(len(records), records))
+        LOGGER.debug('Final records ({}): {}'.format(len(records), records))
         return records
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):
@@ -256,7 +256,7 @@ class Provider(BaseProvider):
             records = self.list_records(id=id)
             assert len(records) == 1, 'ID is not unique or does not exist'
             record = records[0]
-            logger.debug('Create post data to update record: {}'.
+            LOGGER.debug('Create post data to update record: {}'.
                          format(record))
 
         data = {
@@ -284,7 +284,7 @@ class Provider(BaseProvider):
         records = self.list_records(type, name, content)
         is_duplicate = len(records) >= 1
         if is_duplicate:
-            logger.info('Duplicate record {} {} {}, NOOP'.
+            LOGGER.info('Duplicate record {} {} {}, NOOP'.
                         format(type, name, content))
         return is_duplicate
 
@@ -332,21 +332,21 @@ class Provider(BaseProvider):
         if len(records) < 1:
             return records
         if id is not None:
-            logger.debug('Filtering {} records by id: {}'.
+            LOGGER.debug('Filtering {} records by id: {}'.
                          format(len(records), id))
             records = [record for record in records if record['id'] == id]
         if type is not None:
-            logger.debug('Filtering {} records by type: {}'.
+            LOGGER.debug('Filtering {} records by type: {}'.
                          format(len(records), type))
             records = [record for record in records if record['type'] == type]
         if name is not None:
-            logger.debug('Filtering {} records by name: {}'.
+            LOGGER.debug('Filtering {} records by name: {}'.
                          format(len(records), name))
             if name.endswith('.'):
                 name = name[:-1]
             records = [record for record in records if name == record['name']]
         if content is not None:
-            logger.debug('Filtering {} records by content: {}'.
+            LOGGER.debug('Filtering {} records by content: {}'.
                          format(len(records), content.lower()))
             records = [record for record in records if
                        record['content'].lower() == content.lower()]
@@ -406,7 +406,7 @@ class Provider(BaseProvider):
         subdomains = domain.split('.')
         while True:
             domain = '.'.join(subdomains)
-            logger.debug('Check if {} has own zone'.format(domain))
+            LOGGER.debug('Check if {} has own zone'.format(domain))
             domain_text = domain_table.find(string=domain)
             if domain_text is not None or len(subdomains) < 3:
                 break
@@ -433,7 +433,7 @@ class Provider(BaseProvider):
         except Exception as e:
             errmsg = ('Cannot get the domain id even though the domain seems '
                       'to exist ({}).'.format(e))
-            logger.warning(errmsg)
+            LOGGER.warning(errmsg)
             raise AssertionError(errmsg)
 
     def _log(self, name, element):
@@ -442,8 +442,8 @@ class Provider(BaseProvider):
         """
         from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
-            logger.debug('{} response: URL={} Code={}'.format(name,
+            LOGGER.debug('{} response: URL={} Code={}'.format(name,
                                                               element.url, element.status_code))
 
         elif isinstance(element, Tag) or isinstance(element, BeautifulSoup):
-            logger.debug('{} HTML:\n{}'.format(name, element))
+            LOGGER.debug('{} HTML:\n{}'.format(name, element))

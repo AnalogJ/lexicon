@@ -15,7 +15,7 @@ from lexicon import providers
 from lexicon.config import ConfigResolver, ArgsConfigSource
 from lexicon.config import legacy_config_resolver
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 def _get_available_providers():
@@ -26,7 +26,7 @@ def _get_available_providers():
                 available_providers[modname] = importlib.import_module(
                     'lexicon.providers.' + modname)
             except ImportError:
-                logger.warn('Warning, the provider {0} cannot be loaded due '
+                LOGGER.warn('Warning, the provider {0} cannot be loaded due '
                             'to missing optional dependencies.'
                             .format(modname))
 
@@ -89,7 +89,7 @@ def _relevant_provider_for_domain(domain):
                          'Found nameservers domains are {1}'.format(domain, nameserver_domains))
 
     if len(relevant_providers) > 1:
-        logger.warn('Warning, multiple DNS providers have been found for given domain {0}, '
+        LOGGER.warn('Warning, multiple DNS providers have been found for given domain {0}, '
                     'first one will be used: {1} '
                     'This may indicate a misconfiguration in one or more provider.'
                     .format(domain, relevant_providers))
@@ -174,12 +174,12 @@ class Provider(object):
             provider = [
                 element for element in AVAILABLE_PROVIDERS.items()
                 if element[0] == override_provider][0]
-            logger.info('Provider authoritatively mapped for domain %s: %s.',
+            LOGGER.info('Provider authoritatively mapped for domain %s: %s.',
                         self.domain, provider.__name__)
             (provider_name, provider_module) = provider
         else:
             (provider_name, provider_module) = _relevant_provider_for_domain(self.domain)
-            logger.info('Provider discovered for domain %s: %s.',
+            LOGGER.info('Provider discovered for domain %s: %s.',
                         self.domain, provider_name)
 
         new_config = ConfigResolver()

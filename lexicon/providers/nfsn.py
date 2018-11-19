@@ -14,7 +14,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 from urllib.parse import urlencode
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
 
@@ -51,7 +51,7 @@ class Provider(BaseProvider):
             return True
 
         self._do_create(type, name, content)
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -76,7 +76,7 @@ class Provider(BaseProvider):
             'id': hashlib.sha1(''.join([r['type'], r['name'], r['data']]).encode('utf-8')).hexdigest()
         } for r in records]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -99,7 +99,7 @@ class Provider(BaseProvider):
         self._do_delete(to_delete['type'],
                         to_delete['name'], to_delete['content'])
         self._do_create(type, name, content)
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record
@@ -118,7 +118,7 @@ class Provider(BaseProvider):
         for d in to_delete:
             self._do_delete(d['type'], d['name'], d['content'])
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     def _do_create(self, type, name, content):

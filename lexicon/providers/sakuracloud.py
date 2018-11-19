@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
@@ -50,7 +50,7 @@ class Provider(BaseProvider):
         index = self._find_resource_record_set(
             resource_record_sets, type=type, name=name, content=content)
         if index >= 0:
-            logger.debug('create_record: %s', False)
+            LOGGER.debug('create_record: %s', False)
             return
 
         resource_record_sets.append(
@@ -63,7 +63,7 @@ class Provider(BaseProvider):
         )
 
         payload = self._update_resource_record_sets(resource_record_sets)
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -124,9 +124,9 @@ class Provider(BaseProvider):
             )
 
         payload = self._update_resource_record_sets(resource_record_sets)
-        logger.debug('create_record')
+        LOGGER.debug('create_record')
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -150,14 +150,14 @@ class Provider(BaseProvider):
             filtered_records.append(record)
 
         if len(filtered_records) == 0:
-            logger.debug('delete_record: %s', False)
+            LOGGER.debug('delete_record: %s', False)
             return False
 
         for record in filtered_records:
             resource_record_sets.remove(record)
 
         self._update_resource_record_sets(resource_record_sets)
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers
@@ -228,6 +228,6 @@ class Provider(BaseProvider):
             # if the request fails for any reason, throw an error.
             r.raise_for_status()
         except:
-            logger.error(r.json().get("error_msg"))
+            LOGGER.error(r.json().get("error_msg"))
             raise
         return r.json()

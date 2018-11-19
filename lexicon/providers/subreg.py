@@ -13,7 +13,7 @@ try:
 except:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['subreg.cz']
 

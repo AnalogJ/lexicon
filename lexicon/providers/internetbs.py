@@ -21,7 +21,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['topdns.com']
 
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
             'searchTermFilter': self.domain
         })
 
-        logger.debug('authenticate debug: %s', payload)
+        LOGGER.debug('authenticate debug: %s', payload)
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
         if payload['status'] != 'SUCCESS':
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
         # for MX records, query['Priority'] could be set (default is 10)
 
         payload = self._post('/Domain/DnsRecord/Add', None, query)
-        logger.debug('authenticate debug: %s', payload)
+        LOGGER.debug('authenticate debug: %s', payload)
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
         if payload['status'] != 'SUCCESS':
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record.
@@ -125,9 +125,9 @@ class Provider(BaseProvider):
         else:
             query = {'Type': type, 'FullRecordName': self._full_name(
                 name), 'NewValue': content}
-        logger.debug('update_record query: %s', query)
+        LOGGER.debug('update_record query: %s', query)
         payload = self._post('/Domain/DnsRecord/Update', None, query)
-        logger.debug('update_record payload: %s', payload)
+        LOGGER.debug('update_record payload: %s', payload)
 
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
@@ -158,9 +158,9 @@ class Provider(BaseProvider):
                 if not self.list_records(type, name):
                     return True
 
-        logger.debug('delete_record query: %s', query)
+        LOGGER.debug('delete_record query: %s', query)
         payload = self._post('/Domain/DnsRecord/Remove', None, query)
-        logger.debug('delete_record payload: %s', payload)
+        LOGGER.debug('delete_record payload: %s', payload)
 
         if not payload['status']:
             raise Exception('Internal error. This should not happen')

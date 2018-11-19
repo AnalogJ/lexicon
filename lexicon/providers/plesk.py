@@ -12,7 +12,7 @@ except ImportError:
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 # Lexicon Plesk Provider
 #
@@ -93,14 +93,14 @@ class Provider(BaseProvider):
             "packet": request
         }, pretty=True)
 
-        logger.debug("Request: %s", xml)
+        LOGGER.debug("Request: %s", xml)
 
         r = requests.post(self.api_endpoint, headers=headers,
                           data=xml,  auth=(self.username, self.password))
 
         data = r.text
 
-        logger.debug("Response: %s", data)
+        LOGGER.debug("Response: %s", data)
         result = xmltodict.parse(data)
         return result["packet"]
 
@@ -121,14 +121,14 @@ class Provider(BaseProvider):
 
     def list_records(self, type=None, name=None, content=None):
         entries = self.__find_dns_entries(type, name, content)
-        logger.debug("list_records: %s" % entries)
+        LOGGER.debug("list_records: %s" % entries)
         return entries
 
     def update_record(self, identifier, type=None, name=None, content=None):
 
         if identifier is None:
             entries = self.__find_dns_entries(type, name, None)
-            logger.debug("Entries found: %s", entries)
+            LOGGER.debug("Entries found: %s", entries)
 
             if len(entries) < 1:
                 raise Exception("No entry found for updating")
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
 
         assert entry is not None
 
-        logger.debug("Updating: %s", entry)
+        LOGGER.debug("Updating: %s", entry)
 
         if type:
             entry["type"] = type
@@ -203,10 +203,10 @@ class Provider(BaseProvider):
         })["result"]["data"]
 
     def __find_dns_entries(self, type=None, host=None, value=None):
-        logger.debug("Searching for: %s, %s, %s", type, host, value)
+        LOGGER.debug("Searching for: %s, %s, %s", type, host, value)
 
         if value and type and type in ["CNAME"]:
-            logger.debug("CNAME transformation")
+            LOGGER.debug("CNAME transformation")
             value = value.rstrip('.') + "."
 
         if host:
@@ -222,20 +222,20 @@ class Provider(BaseProvider):
 
         for r in result["result"]:
 
-            logger.debug("Record: %s", r)
+            LOGGER.debug("Record: %s", r)
 
             if (type is not None) and (r["data"]["type"] != type):
-                logger.debug(
+                LOGGER.debug(
                     "\tType doesn't match - expected: '%s', found: '%s'", type, r["data"]["type"])
                 continue
 
             if (host is not None) and (r["data"]["host"] != host):
-                logger.debug(
+                LOGGER.debug(
                     "\tHost doesn't match - expected: '%s', found: '%s'", host, r["data"]["host"])
                 continue
 
             if (value is not None) and (r["data"]["value"] != value):
-                logger.debug(
+                LOGGER.debug(
                     "\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
                 continue
 

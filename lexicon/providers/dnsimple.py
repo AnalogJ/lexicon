@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dnsimple.com']
 
@@ -72,7 +72,7 @@ class Provider(BaseProvider):
         payload = self._post(
             '{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
 
-        logger.debug('create_record: %s', 'id' in payload)
+        LOGGER.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
 
     # List all records. Return an empty list if no records found
@@ -104,7 +104,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -132,9 +132,9 @@ class Provider(BaseProvider):
         for identifier in identifiers:
             payload = self._patch(
                 '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, identifier), data)
-            logger.debug('update_record: %s', identifier)
+            LOGGER.debug('update_record: %s', identifier)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -147,14 +147,14 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._delete(
                 '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, record_id))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
-        logger.debug('delete_record: True')
+        LOGGER.debug('delete_record: True')
         return True
 
     # Helpers

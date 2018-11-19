@@ -11,7 +11,7 @@ __author__ = 'Aliaksandr Kharkevich'
 __license__ = 'MIT'
 __contact__ = 'https://github.com/kharkevich'
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['yandex.com']
 
@@ -85,14 +85,14 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Just update existing record. Domain ID (domain) and Identifier (record_id) is mandatory
     def update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
-            logger.debug(
+            LOGGER.debug(
                 'Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
             return False
 
@@ -119,7 +119,7 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
             payload = self._post(
@@ -155,11 +155,11 @@ class Provider(BaseProvider):
 
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
-            logger.debug('%s: %s', title, payload['success'])
+            LOGGER.debug('%s: %s', title, payload['success'])
             return True
         elif payload['error'] == 'record_exists':
-            logger.debug('%s: %s', title, True)
+            LOGGER.debug('%s: %s', title, True)
             return True
         else:
-            logger.debug('%s: %s', title, payload['error'])
+            LOGGER.debug('%s: %s', title, payload['error'])
             return False

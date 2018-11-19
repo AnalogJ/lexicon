@@ -7,7 +7,7 @@ import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['linode.com']
 
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
                     'content': resource['target']
                 })
 
-        logger.debug('list_records: %s', processed_records)
+        LOGGER.debug('list_records: %s', processed_records)
         return processed_records
 
     # Create or update a record.
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
             resources = self.list_records(type, name, None)
             identifier = resources[0]['id'] if len(resources) > 0 else None
 
-        logger.debug('update_record: %s', identifier)
+        LOGGER.debug('update_record: %s', identifier)
 
         if name:
             name = self._relative_name(name)
@@ -121,7 +121,7 @@ class Provider(BaseProvider):
         else:
             delete_resource_id.append(identifier)
 
-        logger.debug('delete_records: %s', delete_resource_id)
+        LOGGER.debug('delete_records: %s', delete_resource_id)
 
         for resource_id in delete_resource_id:
             self._delete('domains/{0}/records/{1}'.format(

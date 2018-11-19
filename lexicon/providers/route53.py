@@ -12,7 +12,7 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
@@ -157,7 +157,7 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as e:
-            logger.debug(str(e), exc_info=True)
+            LOGGER.debug(str(e), exc_info=True)
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
@@ -190,12 +190,12 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
-            logger.debug('record: %s', record)
+            LOGGER.debug('record: %s', record)
             records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
             })
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
