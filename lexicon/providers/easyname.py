@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['easyname.eu']
 
+
 def ProviderParser(subparser):
     subparser.description = """A provider for Easyname DNS."""
     subparser.add_argument(
@@ -20,7 +21,6 @@ def ProviderParser(subparser):
         '--auth-password',
         help='Specify password used to authenticate',
     )
-
 
 
 class Provider(BaseProvider):
@@ -37,13 +37,11 @@ class Provider(BaseProvider):
         'dns_delete_entry': 'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'
     }
 
-
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.session = Session()
         self.domain_id = None
         self._records = None
-
 
     def authenticate(self):
         """
@@ -67,7 +65,6 @@ class Provider(BaseProvider):
         logger.debug('Easyname domain ID: {}'.format(self.domain_id))
 
         return True
-
 
     def create_record(self, type, name, content, id=None):
         """
@@ -109,7 +106,6 @@ class Provider(BaseProvider):
         logger.info(msg.format(name))
         return was_success
 
-
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         """
         Delete one or more DNS entries in the domain zone that match the given
@@ -140,7 +136,6 @@ class Provider(BaseProvider):
             success = success and delete_response.url == success_url
 
         return success
-
 
     def update_record(self, identifier, type=None, name=None, content=None):
         """
@@ -175,13 +170,12 @@ class Provider(BaseProvider):
             name = name if name is not None else record['name']
             type = type if type is not None else record['type']
             content = content if content is not None \
-                                        else record['content']
+                else record['content']
             success = success and self.create_record(type,
                                                      name,
                                                      content,
                                                      record['id'])
         return success
-
 
     def list_records(self, type=None, name=None, content=None, id=None):
         """
@@ -215,7 +209,8 @@ class Provider(BaseProvider):
                 try:
                     rec = {}
                     if row.has_attr('ondblclick'):
-                        rec['id'] = int(row['ondblclick'].split('id=')[1].split("'")[0])
+                        rec['id'] = int(row['ondblclick'].split(
+                            'id=')[1].split("'")[0])
                     else:
                         rec['id'] = -no
 
@@ -242,10 +237,8 @@ class Provider(BaseProvider):
         logger.debug('Final records ({}): {}'.format(len(records), records))
         return records
 
-
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         pass
-
 
     def _invalidate_records_cache(self):
         """
@@ -253,7 +246,6 @@ class Provider(BaseProvider):
         request to retrieve DNS entries.
         """
         self._records = None
-
 
     def _get_post_data_to_create_dns_entry(self, type, name, content, id=None):
         """
@@ -264,10 +256,10 @@ class Provider(BaseProvider):
             records = self.list_records(id=id)
             assert len(records) == 1, 'ID is not unique or does not exist'
             record = records[0]
-            logger.debug('Create post data to update record: {}'.\
+            logger.debug('Create post data to update record: {}'.
                          format(record))
 
-        data={
+        data = {
             'id': str(id) if is_update else '',
             'action': 'save',
             'name': name,
@@ -287,16 +279,14 @@ class Provider(BaseProvider):
 
         return data
 
-
     def _is_duplicate_record(self, type, name, content):
         """Check if DNS entry already exists."""
         records = self.list_records(type, name, content)
         is_duplicate = len(records) >= 1
         if is_duplicate:
-            logger.info('Duplicate record {} {} {}, NOOP'.\
+            logger.info('Duplicate record {} {} {}, NOOP'.
                         format(type, name, content))
         return is_duplicate
-
 
     def _get_matching_dns_entry_ids(self, identifier=None, type=None,
                                     name=None, content=None):
@@ -309,7 +299,6 @@ class Provider(BaseProvider):
             record_ids.append(identifier)
         return record_ids
 
-
     def _get_dns_entry_trs(self):
         """
         Return the TR elements holding the DNS entries.
@@ -319,7 +308,7 @@ class Provider(BaseProvider):
             self.URLS['dns'].format(self.domain_id))
         self._log('DNS list', dns_list_response)
         assert dns_list_response.status_code == 200, \
-               'Could not load DNS entries.'
+            'Could not load DNS entries.'
 
         html = BeautifulSoup(dns_list_response.content, 'html.parser')
         self._log('DNS list', html)
@@ -333,36 +322,35 @@ class Provider(BaseProvider):
 
         rows = dns_table.findAll(_is_zone_tr)
         assert rows is not None and len(rows) > 0, \
-               'Could not find any DNS entries'
+            'Could not find any DNS entries'
         return rows
-
 
     def _filter_records(self, records, type=None, name=None, content=None, id=None):
         """
         Filter dns entries based on type, name or content.
         """
-        if len(records) < 1: return records
+        if len(records) < 1:
+            return records
         if id is not None:
-            logger.debug('Filtering {} records by id: {}'.\
+            logger.debug('Filtering {} records by id: {}'.
                          format(len(records), id))
             records = [record for record in records if record['id'] == id]
         if type is not None:
-            logger.debug('Filtering {} records by type: {}'.\
+            logger.debug('Filtering {} records by type: {}'.
                          format(len(records), type))
             records = [record for record in records if record['type'] == type]
         if name is not None:
-            logger.debug('Filtering {} records by name: {}'.\
+            logger.debug('Filtering {} records by name: {}'.
                          format(len(records), name))
             if name.endswith('.'):
                 name = name[:-1]
-            records = [record for record in records if name == record['name'] ]
+            records = [record for record in records if name == record['name']]
         if content is not None:
-            logger.debug('Filtering {} records by content: {}'.\
+            logger.debug('Filtering {} records by content: {}'.
                          format(len(records), content.lower()))
             records = [record for record in records if
                        record['content'].lower() == content.lower()]
         return records
-
 
     def _get_csrf_token(self):
         """Return the CSRF Token of easyname login form."""
@@ -370,7 +358,7 @@ class Provider(BaseProvider):
         home_response = self.session.get(self.URLS['login'])
         self._log('Home', home_response)
         assert home_response.status_code == 200, \
-               'Could not load Easyname login page.'
+            'Could not load Easyname login page.'
 
         html = BeautifulSoup(home_response.content, 'html.parser')
         self._log('Home', html)
@@ -378,11 +366,10 @@ class Provider(BaseProvider):
         assert csrf_token_field is not None, 'Could not find login token.'
         return csrf_token_field['value']
 
-
     def _login(self, csrf_token):
         """Attempt to login session on easyname."""
         login_response = self.session.post(
-           self.URLS['login'],
+            self.URLS['login'],
             data={
                 'username':     self._get_provider_option('auth_username') or '',
                 'password':     self._get_provider_option('auth_password') or '',
@@ -392,10 +379,9 @@ class Provider(BaseProvider):
         )
         self._log('Login', login_response)
         assert login_response.status_code == 200, \
-               'Could not login due to a network error.'
+            'Could not login due to a network error.'
         assert login_response.url == self.URLS['overview'], \
-               'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
-
+            'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
 
     def _get_domain_text_of_authoritative_zone(self):
         """Get the authoritative name zone."""
@@ -404,7 +390,7 @@ class Provider(BaseProvider):
         zones_response = self.session.get(self.URLS['domain_list'])
         self._log('Zone', zones_response)
         assert zones_response.status_code == 200, \
-               'Could not retrieve domain list due to a network error.'
+            'Could not retrieve domain list due to a network error.'
 
         html = BeautifulSoup(zones_response.content, 'html.parser')
         self._log('Zone', html)
@@ -423,7 +409,7 @@ class Provider(BaseProvider):
             logger.debug('Check if {} has own zone'.format(domain))
             domain_text = domain_table.find(string=domain)
             if domain_text is not None or len(subdomains) < 3:
-                break;
+                break
             subdomains.pop(0)
 
         # Update domain to equal the zone's domain. This is important if we are
@@ -432,9 +418,8 @@ class Provider(BaseProvider):
         # away.
         self.domain = domain
         assert domain_text is not None, \
-               'The domain does not exist on Easyname.'
+            'The domain does not exist on Easyname.'
         return domain_text
-
 
     def _get_domain_id(self, domain_text_element):
         """Return the easyname id of the domain."""
@@ -443,14 +428,13 @@ class Provider(BaseProvider):
             tr = domain_text_element.parent.parent.parent
             td = tr.find('td', {'class': 'td_2'})
             link = td.find('a')['href']
-            domain_id = link.rsplit('/',1)[-1]
+            domain_id = link.rsplit('/', 1)[-1]
             return domain_id
         except Exception as e:
             errmsg = ('Cannot get the domain id even though the domain seems '
                       'to exist ({}).'.format(e))
             logger.warning(errmsg)
             raise AssertionError(errmsg)
-
 
     def _log(self, name, element):
         """
@@ -459,7 +443,7 @@ class Provider(BaseProvider):
         from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
             logger.debug('{} response: URL={} Code={}'.format(name,
-                         element.url, element.status_code))
+                                                              element.url, element.status_code))
 
         elif isinstance(element, Tag) or isinstance(element, BeautifulSoup):
             logger.debug('{} HTML:\n{}'.format(name, element))

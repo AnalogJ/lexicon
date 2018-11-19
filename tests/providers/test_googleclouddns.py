@@ -11,6 +11,8 @@ service_account_info_base64 = 'ew0KICAidHlwZSI6ICJzZXJ2aWNlX2FjY291bnQiLA0KICAic
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
+
+
 class GoogleCloudDnsTests(TestCase, IntegrationTests):
 
     Provider = Provider
@@ -20,11 +22,11 @@ class GoogleCloudDnsTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['Authorization']
 
-    # WARNING ! 
+    # WARNING !
     # The body parameters 'access_token' and 'assertion' must be removed from the authentication phase.
     # However the body is not JSON encoded, so _filter_headers and _filter_query_parameters methods are of no use.
     # You will need to replace manually theses parameters from the cassettes by placeholders.
-    # Typically, 
+    # Typically,
     #   - for assertion with regex replace: assertion=[\w-%]+\.[\w-%]+\.[\w-%]+ => assertion=assertion_placeholder
     #   - for access_token with regex replace: ya29\.c\.[\w-]+ => access_token_placeholder
 

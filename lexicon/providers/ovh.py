@@ -22,6 +22,7 @@ ENDPOINTS = {
 
 NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 
+
 def ProviderParser(subparser):
     subparser.description = '''
         OVH Provider requires a token with full rights on /domain/*.
@@ -29,10 +30,14 @@ def ProviderParser(subparser):
         https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*'''
     subparser.add_argument('--auth-entrypoint', help='specify the OVH entrypoint', choices=[
         'ovh-eu', 'ovh-ca', 'soyoustart-eu', 'soyoustart-ca', 'kimsufi-eu', 'kimsufi-ca'
-        ])
-    subparser.add_argument('--auth-application-key', help='specify the application key')
-    subparser.add_argument('--auth-application-secret', help='specify the application secret')
-    subparser.add_argument('--auth-consumer-key', help='specify the consumer key')
+    ])
+    subparser.add_argument('--auth-application-key',
+                           help='specify the application key')
+    subparser.add_argument('--auth-application-secret',
+                           help='specify the application secret')
+    subparser.add_argument('--auth-consumer-key',
+                           help='specify the consumer key')
+
 
 class Provider(BaseProvider):
 
@@ -51,14 +56,16 @@ class Provider(BaseProvider):
 
         # Construct DNS OVH environment
         self.domain_id = None
-        self.endpoint_api = ENDPOINTS.get(self._get_provider_option('auth_entrypoint'))
+        self.endpoint_api = ENDPOINTS.get(
+            self._get_provider_option('auth_entrypoint'))
 
     def authenticate(self):
         # All requests will be done in one HTTPS session
         self.session = requests.Session()
 
         # Calculate delta time between local and OVH to avoid requests rejection
-        server_time = self.session.get('{0}/auth/time'.format(self.endpoint_api)).json()
+        server_time = self.session.get(
+            '{0}/auth/time'.format(self.endpoint_api)).json()
         self.time_delta = server_time - int(time.time())
 
         # Get domain and status
@@ -81,7 +88,8 @@ class Provider(BaseProvider):
         records = self.list_records(type, name, content)
         for record in records:
             if record['type'] == type and self._relative_name(record['name']) == self._relative_name(name) and record['content'] == content:
-                LOGGER.debug('create_record (ignored, duplicate): %s %s %s', type, name, content)
+                LOGGER.debug(
+                    'create_record (ignored, duplicate): %s %s %s', type, name, content)
                 return True
 
         data = {
@@ -110,10 +118,12 @@ class Provider(BaseProvider):
         if name:
             params['subDomain'] = self._relative_name(name)
 
-        record_ids = self._get('/domain/zone/{0}/record'.format(domain), params)
+        record_ids = self._get(
+            '/domain/zone/{0}/record'.format(domain), params)
 
         for record_id in record_ids:
-            raw = self._get('/domain/zone/{0}/record/{1}'.format(domain, record_id))
+            raw = self._get(
+                '/domain/zone/{0}/record/{1}'.format(domain, record_id))
             records.append({
                 'type': raw['fieldType'],
                 'name': self._full_name(raw['subDomain']),
@@ -123,7 +133,8 @@ class Provider(BaseProvider):
             })
 
         if content:
-            records = [record for record in records if record['content'].lower() == content.lower()]
+            records = [
+                record for record in records if record['content'].lower() == content.lower()]
 
         LOGGER.debug('list_records: %s', records)
 
@@ -147,7 +158,8 @@ class Provider(BaseProvider):
         if content:
             data['target'] = content
 
-        self._put('/domain/zone/{0}/record/{1}'.format(domain, identifier), data)
+        self._put(
+            '/domain/zone/{0}/record/{1}'.format(domain, identifier), data)
         self._post('/domain/zone/{0}/refresh'.format(domain))
 
         LOGGER.debug('update_record: %s', identifier)
@@ -165,9 +177,10 @@ class Provider(BaseProvider):
             delete_record_id.append(identifier)
 
         LOGGER.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
-            self._delete('/domain/zone/{0}/record/{1}'.format(domain, record_id))
+            self._delete(
+                '/domain/zone/{0}/record/{1}'.format(domain, record_id))
 
         self._post('/domain/zone/{0}/refresh'.format(domain))
 
@@ -187,11 +200,14 @@ class Provider(BaseProvider):
         # Get correctly sync time
         now = str(int(time.time()) + self.time_delta)
 
-        headers['X-Ovh-Application'] = self._get_provider_option('auth_application_key')
-        headers['X-Ovh-Consumer'] = self._get_provider_option('auth_consumer_key')
+        headers['X-Ovh-Application'] = self._get_provider_option(
+            'auth_application_key')
+        headers['X-Ovh-Consumer'] = self._get_provider_option(
+            'auth_consumer_key')
         headers['X-Ovh-Timestamp'] = now
 
-        request = requests.Request(action, target, data=body, params=query_params, headers=headers)
+        request = requests.Request(
+            action, target, data=body, params=query_params, headers=headers)
         prepared_request = self.session.prepare_request(request)
 
         # Build OVH API signature for the current request

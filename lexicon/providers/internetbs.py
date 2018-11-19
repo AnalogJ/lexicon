@@ -25,9 +25,13 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['topdns.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        "--auth-key", help="specify API key for authentication")
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -57,7 +61,8 @@ class Provider(BaseProvider):
         if len(existing_records) > 0:
             return True
 
-        query = {'Type': type, 'FullRecordName': self._full_name(name), 'Value': content}
+        query = {'Type': type, 'FullRecordName': self._full_name(
+            name), 'Value': content}
         ttl = self._get_lexicon_option('ttl')
         if ttl:
             query['Ttl'] = ttl
@@ -88,7 +93,8 @@ class Provider(BaseProvider):
             record_list = [record for record in record_list
                            if self._relative_name(record['name']) == cmp_name]
         if content:
-            record_list = [record for record in record_list if record['value'] == content]
+            record_list = [
+                record for record in record_list if record['value'] == content]
 
         records = []
         for record in record_list:
@@ -111,12 +117,14 @@ class Provider(BaseProvider):
     def update_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
-            to_update = next((r for r in records if r['id'] == identifier), None)
+            to_update = next(
+                (r for r in records if r['id'] == identifier), None)
             query = {'Type': to_update['type'],
                      'FullRecordName': to_update['name'],
                      'NewValue': content}
         else:
-            query = {'Type': type, 'FullRecordName': self._full_name(name), 'NewValue': content}
+            query = {'Type': type, 'FullRecordName': self._full_name(
+                name), 'NewValue': content}
         logger.debug('update_record query: %s', query)
         payload = self._post('/Domain/DnsRecord/Update', None, query)
         logger.debug('update_record payload: %s', payload)
@@ -132,7 +140,8 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
-            to_update = next((r for r in records if r['id'] == identifier), None)
+            to_update = next(
+                (r for r in records if r['id'] == identifier), None)
             if not to_update:
                 return True
             query = {'Type': to_update['type'],
@@ -171,5 +180,6 @@ class Provider(BaseProvider):
         request = requests.request(action, self.api_endpoint + url, params=query_params,
                                    data=json.dumps(data),
                                    headers={'Content-Type': 'application/json'})
-        request.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        request.raise_for_status()
         return request.json()

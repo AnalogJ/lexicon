@@ -11,6 +11,7 @@ import yaml
 
 LOGGER = logging.getLogger(__name__)
 
+
 class ConfigResolver(object):
     """
     Highly customizable configuration resolver object, that gets configuration parameters
@@ -192,6 +193,7 @@ class ConfigResolver(object):
                                          'to load the ConfigResolver.'))
         return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
+
 class ConfigSource(object):
     """
     Base class to implement a configuration source for a ConfigResolver.
@@ -209,6 +211,7 @@ class ConfigSource(object):
         """
         raise NotImplementedError('The method resolve(config_key) '
                                   'must be implemented in the concret sub-classes.')
+
 
 class EnvironmentConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against existing environment variables."""
@@ -245,6 +248,7 @@ class EnvironmentConfigSource(ConfigSource):
 
         return None
 
+
 class ArgsConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against an argparse namespace."""
 
@@ -259,6 +263,7 @@ class ArgsConfigSource(ConfigSource):
         splitted_config_key = config_key.split(':')
 
         return self._parameters.get(splitted_config_key[-1], None)
+
 
 class DictConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against a dict object."""
@@ -277,6 +282,7 @@ class DictConfigSource(ConfigSource):
 
         return cursor.get(splitted_config_key[-1], None)
 
+
 class FileConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a lexicon config file."""
 
@@ -286,6 +292,7 @@ class FileConfigSource(DictConfigSource):
 
         super(FileConfigSource, self).__init__(yaml_object)
 
+
 class ProviderFileConfigSource(FileConfigSource):
     """ConfigSource that resolve configuration against an provider config file."""
 
@@ -293,6 +300,7 @@ class ProviderFileConfigSource(FileConfigSource):
         super(ProviderFileConfigSource, self).__init__(file_path)
         # Scope the loaded config file into provider namespace
         self._parameters = {provider_name: self._parameters}
+
 
 class LegacyDictConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
@@ -320,12 +328,14 @@ class LegacyDictConfigSource(DictConfigSource):
 
         super(LegacyDictConfigSource, self).__init__(refactor_dict_object)
 
+
 def non_interactive_config_resolver():
     """
     Create a typical config resolver in a non-interactive context (eg. lexicon used as a library).
     Configuration will be resolved againts env variables and lexicon config files in working dir.
     """
     return ConfigResolver().with_env().with_config_dir(os.getcwd())
+
 
 def legacy_config_resolver(legacy_dict):
     """

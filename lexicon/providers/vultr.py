@@ -10,8 +10,11 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['vultr.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -29,8 +32,8 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-
     # Create record. If record already exists with the same content, do nothing'
+
     def create_record(self, type, name, content):
         record = {
             'type': type,
@@ -71,9 +74,11 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records
@@ -110,7 +115,7 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
@@ -124,8 +129,8 @@ class Provider(BaseProvider):
         logger.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -141,8 +146,10 @@ class Provider(BaseProvider):
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=data,
                              headers=default_headers)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
 
         if action == 'DELETE' or action == 'PUT' or action == 'POST':
-            return r.text # vultr handles succss/failure via HTTP Codes, Only GET returns a response.
+            # vultr handles succss/failure via HTTP Codes, Only GET returns a response.
+            return r.text
         return r.json()

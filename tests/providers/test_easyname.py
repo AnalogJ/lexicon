@@ -4,6 +4,7 @@ from integration_tests import IntegrationTests
 from unittest import TestCase
 from bs4 import BeautifulSoup
 
+
 class EasynameProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider

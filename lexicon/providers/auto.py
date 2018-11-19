@@ -22,33 +22,40 @@ from lexicon.config import legacy_config_resolver
 
 logger = logging.getLogger(__name__)
 
+
 def _get_available_providers():
     available_providers = {}
     for _, modname, _ in pkgutil.iter_modules(providers.__path__):
         if modname != 'base' and modname != 'auto':
             try:
-                available_providers[modname] = importlib.import_module('lexicon.providers.' + modname)
+                available_providers[modname] = importlib.import_module(
+                    'lexicon.providers.' + modname)
             except ImportError:
                 logger.warn('Warning, the provider {0} cannot be loaded due to missing optional dependencies.'
                             .format(modname))
 
     return available_providers
 
+
 AVAILABLE_PROVIDERS = _get_available_providers()
 
+
 def _get_ns_records_domains_for_domain(domain):
-    tlds = [tldextract.extract(ns_entry) for ns_entry in _get_ns_records_for_domain(domain)]
+    tlds = [tldextract.extract(ns_entry)
+            for ns_entry in _get_ns_records_for_domain(domain)]
 
     return set(['{0}.{1}'.format(tld.domain, tld.suffix) for tld in tlds])
+
 
 def _get_ns_records_for_domain(domain):
     # Available both for Windows and Linux (if dnsutils is installed for the latter)
     try:
         output = subprocess.check_output(['nslookup', '-querytype=NS', domain],
-                                        stderr=subprocess.STDOUT, universal_newlines=True)
+                                         stderr=subprocess.STDOUT, universal_newlines=True)
     except subprocess.CalledProcessError as e:
         if 'NXDOMAIN' in e.output:
-            raise ValueError('Error, domain {0} could not be resolved.'.format(domain))
+            raise ValueError(
+                'Error, domain {0} could not be resolved.'.format(domain))
 
     pattern = re.compile(r'nameserver = (.*?)\.*{0}'.format(os.linesep))
     match = pattern.findall(output)
@@ -59,13 +66,14 @@ def _get_ns_records_for_domain(domain):
 
     return match
 
+
 def _relevant_provider_for_domain(domain):
     nameserver_domains = _get_ns_records_domains_for_domain(domain)
     relevant_providers = []
 
     for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
         ns_domains = provider_module.NAMESERVER_DOMAINS
-        
+
         # Test plain domain string comparison
         if set([ns_domain for ns_domain in ns_domains if isinstance(ns_domain, six.string_types)]) & nameserver_domains:
             relevant_providers.append((provider_name, provider_module))
@@ -88,13 +96,15 @@ def _relevant_provider_for_domain(domain):
 
     return relevant_providers[0]
 
+
 def ProviderParser(subparser):
     subparser.description = '''
         Provider 'auto' enables the Lexicon provider auto-discovery feature.
         Based on the nameservers declared for the given domain, Lexicon will try to find the DNS provider holding the DNS zone if it is supported.
         Actual DNS zone read/write operations will be delegated to the provider found: every environment variable or command line specific to this provider can be passed to Lexicon and will be processed accordingly.
         '''
-    subparser.add_argument("--mapping-override", metavar="[DOMAIN]:[PROVIDER], ...", help="comma separated list of elements in the form of [DOMAIN]:[PROVIDER] to authoritatively map a particular domain to a particular provider")
+    subparser.add_argument("--mapping-override", metavar="[DOMAIN]:[PROVIDER], ...",
+                           help="comma separated list of elements in the form of [DOMAIN]:[PROVIDER] to authoritatively map a particular domain to a particular provider")
 
     # Explore and load the arguments available for every provider into the 'auto' provider.
     for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
@@ -102,7 +112,8 @@ def ProviderParser(subparser):
         provider_module.ProviderParser(parser)
 
         for action in parser._actions:
-            action.option_strings = [re.sub(r'^--(.*)$', r'--{0}-\1'.format(provider_name), option) for option in action.option_strings]
+            action.option_strings = [re.sub(
+                r'^--(.*)$', r'--{0}-\1'.format(provider_name), option) for option in action.option_strings]
             action.dest = 'auto_{0}_{1}'.format(provider_name, action.dest)
             subparser._add_action(action)
 
@@ -111,6 +122,8 @@ def ProviderParser(subparser):
 # but __getattr__ is called only if the parameter/method cannot be found in the
 # current Provider hierarchy. If it is object, it will be the case for every relevant
 # call in the Lexicon library.
+
+
 class Provider(object):
     """
     Implementation of the provider 'auto'.
@@ -122,6 +135,7 @@ class Provider(object):
     the resolved provider if it respect the naming convention: --[provider]-[parameter_name] for a
     command line parameter, or LEXICON_[PROVIDER]_PARAMETER_NAME for a environment variable.
     """
+
     def __init__(self, config):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
@@ -146,15 +160,19 @@ class Provider(object):
         if mapping_override:
             for one_mapping in mapping_override.split(','):
                 one_mapping_processed = one_mapping.split(':')
-                mapping_override_processed[one_mapping_processed[0]] = one_mapping_processed[1]
+                mapping_override_processed[one_mapping_processed[0]
+                                           ] = one_mapping_processed[1]
 
         override_provider = mapping_override_processed.get(self.domain)
         if override_provider:
-            provider = [element for element in AVAILABLE_PROVIDERS if element.__name__ == override_provider][0]
-            logger.info('Provider authoritatively mapped for domain %s: %s.', self.domain, provider.__name__)
+            provider = [
+                element for element in AVAILABLE_PROVIDERS if element.__name__ == override_provider][0]
+            logger.info('Provider authoritatively mapped for domain %s: %s.',
+                        self.domain, provider.__name__)
         else:
             (provider_name, provider_module) = _relevant_provider_for_domain(self.domain)
-            logger.info('Provider discovered for domain %s: %s.', self.domain, provider_name)
+            logger.info('Provider discovered for domain %s: %s.',
+                        self.domain, provider_name)
 
         new_config = ConfigResolver()
         new_config.with_dict({'lexicon:provider_name': provider_name})
@@ -168,8 +186,10 @@ class Provider(object):
                 new_dict = {}
                 for key, value in configSource._parameters.items():
                     if key.startswith(target_prefix):
-                        new_param_name = re.sub('^{0}'.format(target_prefix), '', key)
-                        new_dict['lexicon:{0}:{1}'.format(provider_name, new_param_name)] = value
+                        new_param_name = re.sub(
+                            '^{0}'.format(target_prefix), '', key)
+                        new_dict['lexicon:{0}:{1}'.format(
+                            provider_name, new_param_name)] = value
                     elif not key.startswith('auto_'):
                         new_dict['lexicon:{0}'.format(key)] = value
                 new_config.with_dict(new_dict)

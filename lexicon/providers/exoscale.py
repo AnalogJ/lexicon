@@ -11,6 +11,7 @@ HOUR = 3600
 
 NAMESERVER_DOMAINS = ['exoscale.ch']
 
+
 def ProviderParser(subparser):
     subparser.add_argument(
         "--auth-key", help="specify API key for authentication"
@@ -172,7 +173,8 @@ class Provider(BaseProvider):
         default_headers = {"Accept": "application/json"}
 
         default_headers["X-DNS-Token"] = ":".join(
-            (self._get_provider_option("auth_key"), self._get_provider_option("auth_secret"))
+            (self._get_provider_option("auth_key"),
+             self._get_provider_option("auth_secret"))
         )
 
         r = requests.request(

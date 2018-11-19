@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
+from urllib.parse import urlencode
+from lexicon.providers.base import Provider as BaseProvider
+import requests
+import time
+import logging
+import json
+import hashlib
 from __future__ import absolute_import
 from future.standard_library import install_aliases
 install_aliases()
 
-import hashlib
-import json
-import logging
-import time
-
-import requests
-
-from lexicon.providers.base import Provider as BaseProvider
-
-from urllib.parse import urlencode
 
 logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['cloudxns.net']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify API-KEY for authentication")
-    subparser.add_argument("--auth-token", help="specify SECRET-KEY for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify API-KEY for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify SECRET-KEY for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -60,7 +61,8 @@ class Provider(BaseProvider):
             if not already_exists:
                 raise
 
-        logger.debug('create_record: %s', True) # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
+        # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
+        logger.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -69,7 +71,8 @@ class Provider(BaseProvider):
     def list_records(self, type=None, name=None, content=None):
         filter = {}
 
-        payload = self._get('/record/' + self.domain_id, {'host_id':0, 'offset':0, 'row_num': 2000})
+        payload = self._get('/record/' + self.domain_id,
+                            {'host_id': 0, 'offset': 0, 'row_num': 2000})
         records = []
         for record in payload['data']:
             processed_record = {
@@ -77,20 +80,23 @@ class Provider(BaseProvider):
                 'name': self._full_name(record['host']),
                 'ttl': record['ttl'],
                 'content': record['value'],
-                #this id is useless unless your doing record linking. Lets return the original record identifier.
-                'id': record['record_id'] #
+                # this id is useless unless your doing record linking. Lets return the original record identifier.
+                'id': record['record_id']
             }
             if processed_record['type'] == 'TXT':
-                processed_record['content'] = processed_record['content'].replace('"', '')
+                processed_record['content'] = processed_record['content'].replace(
+                    '"', '')
                 # CloudXNS will add quotes automaticly for TXT records, https://www.cloudxns.net/Support/detail/id/114.html
             records.append(processed_record)
 
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records
@@ -132,18 +138,20 @@ class Provider(BaseProvider):
         logger.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete('/record/' + record_id + '/' + self.domain_id)
+            payload = self._delete(
+                '/record/' + record_id + '/' + self.domain_id)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         logger.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
-        data['login_token'] = self._get_provider_option('auth_username') + ',' + self._get_provider_option('auth_token')
+        data['login_token'] = self._get_provider_option(
+            'auth_username') + ',' + self._get_provider_option('auth_token')
         data['format'] = 'json'
         if query_params:
             query_string = '?' + urlencode(query_params)
@@ -158,13 +166,14 @@ class Provider(BaseProvider):
         default_headers = {
             'API-KEY': self._get_provider_option('auth_username'),
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self._get_provider_option('auth_username'),self.api_endpoint, url, query_string, data, date, self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
-            'API-FORMAT':'json'
+            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self._get_provider_option('auth_username'), self.api_endpoint, url, query_string, data, date, self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
+            'API-FORMAT': 'json'
         }
         default_auth = None
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=data,
                              headers=default_headers,
                              auth=default_auth)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()

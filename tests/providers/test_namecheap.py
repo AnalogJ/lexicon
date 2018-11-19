@@ -51,6 +51,8 @@ The required Environment Variables for a live test are:
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
+
+
 class NamecheapProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
@@ -66,7 +68,7 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
         return env_domain or 'example-aptise.com'
 
     def _filter_query_parameters(self):
-        return ['ApiKey','UserName', 'ApiUser']
+        return ['ApiKey', 'UserName', 'ApiUser']
 
     def _test_parameters_overrides(self):
         return {
@@ -87,7 +89,7 @@ class NamecheapManagedProviderTests(NamecheapProviderTests):
 
     In orde to handle this, we run the tests on a second domain owned by another
     namecheap customer, but permissioned to this account.
-    
+
     Note we define a `provider_variant`, which will change the cassette path.
     """
     provider_variant = 'managed'

@@ -14,6 +14,7 @@ from lexicon.parser import generate_cli_main_parser
 
 logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
+
 def generate_table_result(lexicon_logger, output=None, without_header=None):
     """Convert returned JSON into a nice table for command line usage"""
     try:
@@ -46,7 +47,8 @@ def generate_table_result(lexicon_logger, output=None, without_header=None):
 
     # Add a 'nice' separator
     if not without_header:
-        array.insert(1, ['-' * column_widths[idx] for idx in range(len(column_widths))])
+        array.insert(1, ['-' * column_widths[idx]
+                         for idx in range(len(column_widths))])
 
     # Construct table to be printed
     table = []
@@ -59,11 +61,13 @@ def generate_table_result(lexicon_logger, output=None, without_header=None):
     # Return table
     return '\n'.join(table)
 
+
 def handle_output(results, output_type):
     """Print the relevant output for given output_type"""
     if not output_type == 'QUIET':
         if not output_type == 'JSON':
-            table = generate_table_result(logger, results, output_type == 'TABLE-NO-HEADER')
+            table = generate_table_result(
+                logger, results, output_type == 'TABLE-NO-HEADER')
             if table:
                 print(table)
         else:
@@ -83,7 +87,8 @@ def main():
     parsed_args = generate_cli_main_parser().parse_args()
 
     log_level = logging.getLevelName(parsed_args.log_level)
-    logging.basicConfig(stream=sys.stdout, level=log_level, format='%(message)s')
+    logging.basicConfig(stream=sys.stdout, level=log_level,
+                        format='%(message)s')
     logger.debug('Arguments: %s', parsed_args)
 
     # In the CLI context, will get configuration interactively:
@@ -98,6 +103,7 @@ def main():
     results = client.execute()
 
     handle_output(results, parsed_args.output)
+
 
 if __name__ == '__main__':
     main()

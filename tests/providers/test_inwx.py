@@ -14,4 +14,3 @@ class InwxProviderTests(TestCase, IntegrationTests):
         return {
             'endpoint': 'https://api.ote.domrobot.com/xmlrpc/'
         }
-

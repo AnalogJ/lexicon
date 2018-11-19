@@ -11,8 +11,10 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['memset.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify API key for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify API key for authentication")
 
 
 class Provider(BaseProvider):
@@ -31,7 +33,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        data = {'type': type, 'record': self._relative_name(name), 'address': content}
+        data = {'type': type, 'record': self._relative_name(
+            name), 'address': content}
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
         data['zone_id'] = self.domain_id
@@ -51,7 +54,7 @@ class Provider(BaseProvider):
     def list_records(self, type=None, name=None, content=None):
         payload = self._get('/dns.zone_info', {
             'id': self.domain_id
-            })
+        })
         records = []
         for record in payload['records']:
             processed_record = {
@@ -110,11 +113,12 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, self._relative_name(name), content)
+            records = self.list_records(
+                type, self._relative_name(name), content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
@@ -134,8 +138,9 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=(self._get_provider_option('auth_token'), 'x'),
+                             auth=(self._get_provider_option(
+                                 'auth_token'), 'x'),
                              headers={'Content-Type': 'application/json'})
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()
-

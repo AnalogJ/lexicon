@@ -7,11 +7,14 @@ import pytest
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
+
+
 class DnsPodProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
     provider_name = 'dnspod'
     domain = 'capsulecd.com'
+
     def _filter_post_data_parameters(self):
         return ['login_token']
 

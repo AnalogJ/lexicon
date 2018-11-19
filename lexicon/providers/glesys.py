@@ -8,9 +8,12 @@ from lexicon.providers.base import Provider as BaseProvider
 
 NAMESERVER_DOMAINS = ['glesys.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username (CL12345)")
+    subparser.add_argument(
+        "--auth-username", help="specify username (CL12345)")
     subparser.add_argument("--auth-token", help="specify API key")
+
 
 class Provider(BaseProvider):
 
@@ -60,14 +63,18 @@ class Provider(BaseProvider):
         payload = self._post('/domain/listrecords', data=request_data)
 
         # Convert from Glesys record structure to Lexicon structure.
-        processed_records = [self._glesysrecord2lexiconrecord(r) for r in payload['response']['records']]
+        processed_records = [self._glesysrecord2lexiconrecord(
+            r) for r in payload['response']['records']]
 
         if type:
-            processed_records = [record for record in processed_records if record['type'] == type]
+            processed_records = [
+                record for record in processed_records if record['type'] == type]
         if name:
-            processed_records = [record for record in processed_records if record['name'] == self._full_name(name)]
+            processed_records = [
+                record for record in processed_records if record['name'] == self._full_name(name)]
         if content:
-            processed_records = [record for record in processed_records if record['content'].lower() == content.lower()]
+            processed_records = [
+                record for record in processed_records if record['content'].lower() == content.lower()]
 
         return processed_records
 
@@ -115,7 +122,8 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
 
-        credentials = (self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
+        credentials = (self._get_provider_option('auth_username'),
+                       self._get_provider_option('auth_token'))
         response = requests.request(action,
                                     self.api_endpoint + url,
                                     params=query_params,

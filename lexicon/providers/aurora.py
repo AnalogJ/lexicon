@@ -16,9 +16,13 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['auroradns.eu']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-api-key", help="specify API key for authentication")
-    subparser.add_argument("--auth-secret-key", help="specify the secret key for authentication")
+    subparser.add_argument(
+        "--auth-api-key", help="specify API key for authentication")
+    subparser.add_argument("--auth-secret-key",
+                           help="specify the secret key for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -42,7 +46,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        data = {'type': type, 'name': self._relative_name(name), 'content': content}
+        data = {'type': type, 'name': self._relative_name(
+            name), 'content': content}
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
         payload = self._post('/zones/{0}/records'.format(self.domain_id), data)
@@ -59,11 +64,14 @@ class Provider(BaseProvider):
         # Apply filtering first.
         processed_records = payload
         if type:
-            processed_records = [record for record in processed_records if record['type'] == type]
+            processed_records = [
+                record for record in processed_records if record['type'] == type]
         if name:
-            processed_records = [record for record in processed_records if record['name'] == self._relative_name(name)]
+            processed_records = [
+                record for record in processed_records if record['name'] == self._relative_name(name)]
         if content:
-            processed_records = [record for record in processed_records if record['content'].lower() == content.lower()]
+            processed_records = [
+                record for record in processed_records if record['content'].lower() == content.lower()]
 
         # Format the records.
         records = []
@@ -96,7 +104,8 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
 
-        payload = self._put('/zones/{0}/records/{1}'.format(self.domain_id, identifier), data)
+        payload = self._put(
+            '/zones/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         logger.debug('update_record: %s', payload)
         return payload
@@ -111,17 +120,18 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
+
         logger.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
-            payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, record_id))
+            payload = self._delete(
+                '/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
         logger.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -130,15 +140,16 @@ class Provider(BaseProvider):
 
         t = datetime.datetime.utcnow()
         timestamp = t.strftime('%Y%m%dT%H%M%SZ')
-        authorization_header = self._generate_auth_header(action, url, timestamp)
+        authorization_header = self._generate_auth_header(
+            action, url, timestamp)
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
-            data=json.dumps(data),
-            headers={
-                'X-AuroraDNS-Date': timestamp,
-                'Authorization': authorization_header,
-                'Content-Type': 'application/json'
-            })
+                             data=json.dumps(data),
+                             headers={
+                                 'X-AuroraDNS-Date': timestamp,
+                                 'Authorization': authorization_header,
+                                 'Content-Type': 'application/json'
+                             })
 
         # If the response is a HTTP 409 statusCode, the record already exists: return true.
         if r.status_code == 409:
@@ -172,4 +183,5 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]['id']
         else:
-            raise Exception('Record identifier could not be found. Try to provide an identifier')
+            raise Exception(
+                'Record identifier could not be found. Try to provide an identifier')

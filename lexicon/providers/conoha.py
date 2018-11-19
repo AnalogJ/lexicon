@@ -10,12 +10,19 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['conoha.io']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-region", help="specify region. If empty, region `tyo1` will be used.")
-    subparser.add_argument("--auth-token", help="specify token for authentication. If empty, the username and password will be used to create a token.")
-    subparser.add_argument("--auth-username", help="specify api username for authentication. Only used if --auth-token is empty.")
-    subparser.add_argument("--auth-password", help="specify api user password for authentication. Only used if --auth-token is empty.")
-    subparser.add_argument("--auth-tenant-id", help="specify tenand id for authentication. Only used if --auth-token is empty.")
+    subparser.add_argument(
+        "--auth-region", help="specify region. If empty, region `tyo1` will be used.")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication. If empty, the username and password will be used to create a token.")
+    subparser.add_argument(
+        "--auth-username", help="specify api username for authentication. Only used if --auth-token is empty.")
+    subparser.add_argument(
+        "--auth-password", help="specify api user password for authentication. Only used if --auth-token is empty.")
+    subparser.add_argument(
+        "--auth-tenant-id", help="specify tenand id for authentication. Only used if --auth-token is empty.")
+
 
 class Provider(BaseProvider):
 
@@ -35,19 +42,20 @@ class Provider(BaseProvider):
     def authenticate(self):
         self.auth_token = self._get_provider_option('auth_token')
         if self.auth_token:
-            if not (self._get_provider_option('auth_username') 
+            if not (self._get_provider_option('auth_username')
                     and self._get_provider_option('auth_password')):
-                raise Exception("auth_username and auth_password or auth_token must be specified.")
+                raise Exception(
+                    "auth_username and auth_password or auth_token must be specified.")
             auth_response = self._send_request('POST', '{0}/tokens'
-                                                        .format(self.auth_api_endpoint), {
-                'auth': {
-                    'passwordCredentials': {
-                        'username': self._get_provider_option('auth_username'),
-                        'password': self._get_provider_option('auth_password')
-                    },
-                    'tenantId': self._get_provider_option('auth_tenant_id')
-                }
-            })
+                                               .format(self.auth_api_endpoint), {
+                                                   'auth': {
+                                                       'passwordCredentials': {
+                                                           'username': self._get_provider_option('auth_username'),
+                                                           'password': self._get_provider_option('auth_password')
+                                                       },
+                                                       'tenantId': self._get_provider_option('auth_tenant_id')
+                                                   }
+                                               })
             self.auth_token = auth_response['access']['token']['id']
 
         payload = self._get('/domains', {
@@ -93,9 +101,11 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._fqdn_name(name)]
+            records = [record for record in records if record['name']
+                       == self._fqdn_name(name)]
         if content:
-            records = [record for record in records if record['data'] == content]
+            records = [
+                record for record in records if record['data'] == content]
 
         records = [{
             'type': record['type'],
@@ -129,15 +139,17 @@ class Provider(BaseProvider):
         records = self.list_records(type, name, content)
 
         if identifier:
-            records = [record for record in records if record['id'] == identifier]
+            records = [
+                record for record in records if record['id'] == identifier]
 
         for record in records:
-            self._delete('/domains/{0}/records/{1}'.format(self.domain_id, record['id']))
+            self._delete(
+                '/domains/{0}/records/{1}'.format(self.domain_id, record['id']))
 
         logger.debug('delete_record: %s', True)
         return True
 
-    #Helpers
+    # Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         return self._send_request(action, '{0}{1}'.format(self.api_endpoint, url),
                                   data, query_params)

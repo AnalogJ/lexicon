@@ -6,7 +6,7 @@ import requests
 from collections import OrderedDict
 
 try:
-    import xmltodict # optional dependency
+    import xmltodict  # optional dependency
 except ImportError:
     pass
 
@@ -25,10 +25,15 @@ plesk_url_suffix = "/enterprise/control/agent.php"
 
 NAMESERVER_DOMAINS = []
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
-    subparser.add_argument('--plesk-server', help="specify URL to the Plesk Web UI, including the port")
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication")
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        '--plesk-server', help="specify URL to the Plesk Web UI, including the port")
+
 
 class Provider(BaseProvider):
 
@@ -55,24 +60,25 @@ class Provider(BaseProvider):
         assert self.password is not None
 
     def __simple_request(self, type, operation, req):
-        
+
         response = self.__plesk_request({
             type: {
                 operation: req
             }
         })[type][operation]
-        
+
         result = response["result"]
-        
+
         if isinstance(result, list):
             for r in result:
                 if r["status"] == "error":
-                    raise Exception("API returned at least one error: %s" % r["errtext"] )
+                    raise Exception(
+                        "API returned at least one error: %s" % r["errtext"])
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception("API returned error: %s (%s)" % ( errcode, errtext ) )
-        
+            raise Exception("API returned error: %s (%s)" % (errcode, errtext))
+
         return response
 
     def __plesk_request(self, request):
@@ -84,17 +90,18 @@ class Provider(BaseProvider):
         headers["HTTP_AUTH_PASSWD"] = self.password
 
         xml = xmltodict.unparse({
-                "packet": request
-            }, pretty=True)
+            "packet": request
+        }, pretty=True)
 
-        logger.debug ( "Request: %s", xml)
+        logger.debug("Request: %s", xml)
 
-        r = requests.post(self.api_endpoint, headers=headers, data=xml,  auth=(self.username, self.password))
+        r = requests.post(self.api_endpoint, headers=headers,
+                          data=xml,  auth=(self.username, self.password))
 
         data = r.text
 
-        logger.debug ( "Response: %s", data )
-        result = xmltodict.parse(data )
+        logger.debug("Response: %s", data)
+        result = xmltodict.parse(data)
         return result["packet"]
 
     def __find_site(self):
@@ -105,7 +112,7 @@ class Provider(BaseProvider):
 
     def authenticate(self):
         self.domain_id = self.__find_site()
-        
+
         if self.domain_id == None:
             raise Exception('Domain not found')
 
@@ -118,25 +125,25 @@ class Provider(BaseProvider):
         return entries
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        
+
         if identifier is None:
             entries = self.__find_dns_entries(type, name, None)
             logger.debug("Entries found: %s", entries)
-            
+
             if len(entries) < 1:
                 raise Exception("No entry found for updating")
-            
+
             identifier = entries[0]["id"]
             entry = self.__get_dns_entry(identifier)
-            
+
             ids = []
             for e in entries:
                 ids.append(e["id"])
-            
+
             self.__delete_dns_records_by_id(ids)
-            
+
         else:
-            
+
             entry = self.__get_dns_entry(identifier)
             self.__delete_dns_records_by_id([identifier])
 
@@ -150,41 +157,41 @@ class Provider(BaseProvider):
             entry["host"] = name
         if content:
             entry["value"] = content
-        
+
         return self.__create_entry(entry["type"], entry["host"], entry["value"], entry["opt"])
 
     def __create_entry(self, type, host, value, opt):
         entries = self.__find_dns_entries(type, self._fqdn_name(host), value)
-        
-        if entries:
-            return True # already exists
 
-        self.__simple_request('dns','add_rec',OrderedDict([
+        if entries:
+            return True  # already exists
+
+        self.__simple_request('dns', 'add_rec', OrderedDict([
             ('site-id', self.domain_id),
             ('type', type),
             ('host', self._relative_name(host)),
             ('value', value),
             ('opt', opt)
         ]))
-        
+
         return True
 
-
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        
+
         if identifier:
-            
+
             self.__delete_dns_records_by_id([identifier])
             return True
-            
+
         else:
-            
-            entries = self.__find_dns_entries ( type, self._fqdn_name(name), content )
+
+            entries = self.__find_dns_entries(
+                type, self._fqdn_name(name), content)
             ids = []
-            
+
             for entry in entries:
                 ids.append(entry["id"])
-            
+
             self.__delete_dns_records_by_id(ids)
             return len(ids) > 0
 
@@ -195,8 +202,8 @@ class Provider(BaseProvider):
             }
         })["result"]["data"]
 
-    def __find_dns_entries(self, type = None, host = None, value = None):
-        logger.debug("Searching for: %s, %s, %s", type, host, value )
+    def __find_dns_entries(self, type=None, host=None, value=None):
+        logger.debug("Searching for: %s, %s, %s", type, host, value)
 
         if value and type and type in ["CNAME"]:
             logger.debug("CNAME transformation")
@@ -206,7 +213,7 @@ class Provider(BaseProvider):
             host = self._fqdn_name(host)
 
         result = self.__simple_request('dns', 'get_rec', {
-           'filter': {
+            'filter': {
                 'site-id': self.domain_id
             }
         })
@@ -217,16 +224,19 @@ class Provider(BaseProvider):
 
             logger.debug("Record: %s", r)
 
-            if ( type is not None ) and ( r["data"]["type"] != type ):
-                logger.debug("\tType doesn't match - expected: '%s', found: '%s'", type, r["data"]["type"])
+            if (type is not None) and (r["data"]["type"] != type):
+                logger.debug(
+                    "\tType doesn't match - expected: '%s', found: '%s'", type, r["data"]["type"])
                 continue
-            
-            if ( host is not None ) and ( r["data"]["host"] != host ):
-                logger.debug("\tHost doesn't match - expected: '%s', found: '%s'", host, r["data"]["host"])
+
+            if (host is not None) and (r["data"]["host"] != host):
+                logger.debug(
+                    "\tHost doesn't match - expected: '%s', found: '%s'", host, r["data"]["host"])
                 continue
-            
-            if ( value is not None ) and ( r["data"]["value"] != value ):
-                logger.debug("\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
+
+            if (value is not None) and (r["data"]["value"] != value):
+                logger.debug(
+                    "\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
                 continue
 
             entry = {
@@ -236,7 +246,7 @@ class Provider(BaseProvider):
                 'ttl': None,
                 'options': {}
             }
-            
+
             if r["data"]["type"] in ("CNAME"):
                 entry['content'] = r["data"]["value"].rstrip('.')
             else:

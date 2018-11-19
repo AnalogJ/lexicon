@@ -8,6 +8,8 @@ import os
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
+
+
 class InternetbsProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
@@ -15,10 +17,10 @@ class InternetbsProviderTests(TestCase, IntegrationTests):
     domain = 'world-of-ysera.com'
 
     def _filter_query_parameters(self):
-        return ['ApiKey','Password']
+        return ['ApiKey', 'Password']
 
     def _test_parameters_overrides(self):
-        #workaround ENV problems during testing
+        # workaround ENV problems during testing
         env_key = os.environ.get('LEXICON_INTERNETBS_AUTH_KEY')
         env_password = os.environ.get('LEXICON_INTERNETBS_AUTH_PASSWORD')
         return {'auth_key': env_key, 'auth_password': env_password}

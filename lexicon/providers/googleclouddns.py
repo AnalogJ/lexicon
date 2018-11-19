@@ -22,16 +22,18 @@ NAMESERVER_DOMAINS = ['googledomains.com']
 # First of all, it uses a full-fledged OAuth2 authentication, involving signing a JWT and retrieve a Bearer token.
 # This hard work is done in the authenticate() process, using the strong and well known "cryptography" package.
 # Second, Google Cloud DNS API contains this really particular patterns:
-#   - all records of the same type and name are stacked together in a RecordSet representation, 
+#   - all records of the same type and name are stacked together in a RecordSet representation,
 #       which contains in the rrdatas array all current values for this type/name pair, including
 #       explictly monovalued entries like A or CNAME.
 #   - modifications can only done through a create/delete pattern: there is no way to update a record
 #   - more importantly, this approach extends to all values of a given type/name pair: it means that adding/removing
-#       a new value to a TXT entry requires to delete all values of this entry, then recreate it with all 
+#       a new value to a TXT entry requires to delete all values of this entry, then recreate it with all
 #       values desired (the old ones plus the new one for adding, the old ones minus the removed one for removing)
 # So all the hard work in this provider, appart from the authentication process, is to convert the Lexicon monovalued
-#   entries representation to/from the Google multivalued and stacked representation 
+#   entries representation to/from the Google multivalued and stacked representation
 #   through create/update/list/delete processes.
+
+
 def ProviderParser(subparser):
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
@@ -43,9 +45,10 @@ def ProviderParser(subparser):
         can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
         or the base64 encoded content of this file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)''')
 
+
 class Provider(BaseProvider):
 
-    # We need serveral parameters, which are available in the JSON file provided 
+    # We need serveral parameters, which are available in the JSON file provided
     #   by Google when associating a private key to the relevant service account.
     # So this JSON file is the natural input to configure the provider.
     # It can be provided as a path to the JSON file, or as its content encoded
@@ -60,15 +63,19 @@ class Provider(BaseProvider):
             with open(self._get_provider_option('auth_service_account_info').replace('file::', ''), 'rb') as file:
                 service_account_info_bytes = file.read()
         elif self._get_provider_option('auth_service_account_info').startswith('base64::'):
-            service_account_info_bytes = b64decode(self._get_provider_option('auth_service_account_info').replace('base64::', ''))
+            service_account_info_bytes = b64decode(self._get_provider_option(
+                'auth_service_account_info').replace('base64::', ''))
         else:
-            raise Exception('Invalid value passed to --auth-service-account-info, should be a path prefixed with \'file::\' or a base64 value prefixed by \'base64::\'.')
+            raise Exception(
+                'Invalid value passed to --auth-service-account-info, should be a path prefixed with \'file::\' or a base64 value prefixed by \'base64::\'.')
 
-        self._service_account_info = json.loads(service_account_info_bytes.decode('utf-8'))
+        self._service_account_info = json.loads(
+            service_account_info_bytes.decode('utf-8'))
 
         if not self._service_account_info['client_email'] or not self._service_account_info['private_key'] or not self._service_account_info['project_id']:
-            raise Exception('Invalid service account info (missing either client_email/private_key/project_id key).')
-    
+            raise Exception(
+                'Invalid service account info (missing either client_email/private_key/project_id key).')
+
     # We have a real authentication here, which uses the OAuth protocol:
     #   - a JWT token is forged with the Google Cloud DNS access claims, using the service account info loaded by the constructor,
     #   - this JWT token is signed by a PKCS1v15 signature using the RSA private key associated to the service account,
@@ -81,8 +88,9 @@ class Provider(BaseProvider):
             'alg': 'RS256',
             'typ': 'JWT'
         }
-        jwt_header_bytes = urlsafe_b64encode(json.dumps(jwt_header).encode('utf-8'))
-        
+        jwt_header_bytes = urlsafe_b64encode(
+            json.dumps(jwt_header).encode('utf-8'))
+
         epoch_time = int(time.time())
         jwt_claims_set = {
             'iss': self._service_account_info['client_email'],
@@ -91,7 +99,8 @@ class Provider(BaseProvider):
             'exp': epoch_time + 60 * 10,
             'iat': epoch_time
         }
-        jwt_claims_set_bytes = urlsafe_b64encode(json.dumps(jwt_claims_set).encode('utf-8'))
+        jwt_claims_set_bytes = urlsafe_b64encode(
+            json.dumps(jwt_claims_set).encode('utf-8'))
 
         private_key = serialization.load_pem_private_key(
             self._service_account_info['private_key'].encode('utf-8'),
@@ -106,7 +115,8 @@ class Provider(BaseProvider):
         )
         jwt_sign_bytes = urlsafe_b64encode(jwt_sign)
 
-        jwt_bytes = b'.'.join([jwt_header_bytes, jwt_claims_set_bytes, jwt_sign_bytes])
+        jwt_bytes = b'.'.join(
+            [jwt_header_bytes, jwt_claims_set_bytes, jwt_sign_bytes])
 
         post_data = {
             'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
@@ -116,29 +126,33 @@ class Provider(BaseProvider):
             'Content-Type': 'application/x-www-form-urlencoded'
         }
 
-        auth_request = requests.request('POST', 'https://www.googleapis.com/oauth2/v4/token', data=post_data, headers=post_header)
+        auth_request = requests.request(
+            'POST', 'https://www.googleapis.com/oauth2/v4/token', data=post_data, headers=post_header)
 
         auth_request.raise_for_status()
         post_result = auth_request.json()
 
         if not post_result['access_token']:
-            raise Exception('Error, could not grant RW access on the Google Cloud DNS API for user: {0}'.format(self._get_provider_option('auth_email')))
+            raise Exception('Error, could not grant RW access on the Google Cloud DNS API for user: {0}'.format(
+                self._get_provider_option('auth_email')))
 
         self._token = post_result['access_token']
 
         results = self._get('/managedZones')
 
-        targetedManagedZoneIds = [managedZone['id'] for managedZone in results['managedZones'] if managedZone['dnsName'] == '{0}.'.format(self.domain)]
+        targetedManagedZoneIds = [managedZone['id'] for managedZone in results['managedZones']
+                                  if managedZone['dnsName'] == '{0}.'.format(self.domain)]
 
         if not targetedManagedZoneIds:
-            raise Exception('Error, domain {0} is not registered for this project'.format(self.domain))
+            raise Exception(
+                'Error, domain {0} is not registered for this project'.format(self.domain))
 
         self.domain_id = targetedManagedZoneIds[0]
 
     # List all records for the given type/name/content.
     # It is quite straight forward to request data, the biggest operation is to convert
     #   the stacked multivalued RecordSets into Lexicon monovalued entries.
-    # Plese not that we could provide type and name to the API to make the filtering, 
+    # Plese not that we could provide type and name to the API to make the filtering,
     #   but providing the type makes the name mandatory with the Google Cloud DNS API, and
     #   name is not always available (we can ask for every TXT record for example). So to stick to
     #   the most general case, its preferable to always get all records and be free to filter
@@ -163,9 +177,11 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
         LOGGER.debug('list_records: %s', records)
 
@@ -178,16 +194,19 @@ class Provider(BaseProvider):
     #   if it exists, to replace it with the RecordSet containing the new content we want.
     def create_record(self, type, name, content):
         if not type or not name or not content:
-            raise Exception('Error, type, name and content are mandatory to create a record.')
+            raise Exception(
+                'Error, type, name and content are mandatory to create a record.')
 
-        identifier = Provider._identifier({'type': type, 'name': self._full_name(name), 'content': content})
+        identifier = Provider._identifier(
+            {'type': type, 'name': self._full_name(name), 'content': content})
 
         query_params = {
             'type': type,
             'name': self._fqdn_name(name)
         }
 
-        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id), query_params=query_params)
+        results = self._get(
+            '/managedZones/{0}/rrsets'.format(self.domain_id), query_params=query_params)
 
         rrdatas = []
         changes = {}
@@ -195,7 +214,8 @@ class Provider(BaseProvider):
             rrset = results['rrsets'][0]
             for rrdata in rrset['rrdatas']:
                 if rrdata == Provider._normalize_content(rrset['type'], content):
-                    LOGGER.debug('create_record (ignored, duplicate): %s', identifier)
+                    LOGGER.debug(
+                        'create_record (ignored, duplicate): %s', identifier)
                     return True
 
             changes['deletions'] = [{
@@ -206,7 +226,7 @@ class Provider(BaseProvider):
             }]
 
             rrdatas = rrset['rrdatas'][:]
-        
+
         rrdatas.append(Provider._normalize_content(type, content))
 
         changes['additions'] = [{
@@ -216,7 +236,8 @@ class Provider(BaseProvider):
             'rrdatas': rrdatas
         }]
 
-        self._post('/managedZones/{0}/changes'.format(self.domain_id), data=changes)
+        self._post(
+            '/managedZones/{0}/changes'.format(self.domain_id), data=changes)
 
         LOGGER.debug('create_record: %s', identifier)
 
@@ -228,23 +249,27 @@ class Provider(BaseProvider):
     # As all the hard work has been done on list_record, create_record and delete_record, we use a
     #   combination of these three methods to obtain the state we want.
     # Even if this make the operation very costly regarding the number of requests to do, it allows
-    #   the implementation to be way more readable (without that, it would take grossly the size of 
+    #   the implementation to be way more readable (without that, it would take grossly the size of
     #   the three quoted methods).
     def update_record(self, identifier, type=None, name=None, content=None):
         if not identifier and (not type or not name):
-            raise Exception('Error, identifier or type+name parameters are required.')
+            raise Exception(
+                'Error, identifier or type+name parameters are required.')
 
         if identifier:
             records = self.list_records()
-            records_to_update = [record for record in records if record['id'] == identifier]
+            records_to_update = [
+                record for record in records if record['id'] == identifier]
         else:
             records_to_update = self.list_records(type=type, name=name)
 
         if not records_to_update:
-            raise Exception('Error, could not find a record for given identifier: {0}'.format(identifier))
+            raise Exception(
+                'Error, could not find a record for given identifier: {0}'.format(identifier))
 
         if len(records_to_update) > 1:
-            LOGGER.warn('Warning, multiple records found for given parameters, only first one will be updated: %s', records_to_update)
+            LOGGER.warn(
+                'Warning, multiple records found for given parameters, only first one will be updated: %s', records_to_update)
 
         record_identifier = records_to_update[0]['id']
 
@@ -253,15 +278,17 @@ class Provider(BaseProvider):
         self.delete_record(record_identifier)
 
         new_record = {
-            'type': type if type else records_to_update[0]['type'], 
-            'name': name if name else records_to_update[0]['name'], 
+            'type': type if type else records_to_update[0]['type'],
+            'name': name if name else records_to_update[0]['name'],
             'content': content if content else records_to_update[0]['content']
         }
 
-        self.create_record(new_record['type'], new_record['name'], new_record['content'])
+        self.create_record(
+            new_record['type'], new_record['name'], new_record['content'])
         LOGGER.setLevel(original_level)
 
-        LOGGER.debug('update_record: %s => %s', record_identifier, Provider._identifier(new_record))
+        LOGGER.debug('update_record: %s => %s', record_identifier,
+                     Provider._identifier(new_record))
 
         return True
 
@@ -275,22 +302,27 @@ class Provider(BaseProvider):
     #   - mark as deletion the existing RecordSet
     #   - remove the targeted content from the RecordSet
     #   - mark as addition the update RecordSet with the subset of rrdatas if rrdatas is not empty
-    #   - do not mark as additions RecordSets whose rrdatas subset become empty: 
+    #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #       for this type/name pair, all RecordSet needs to go away.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
 
         if identifier:
-            changes = self._process_records_to_delete_by_identifier(results, identifier)
+            changes = self._process_records_to_delete_by_identifier(
+                results, identifier)
         else:
-            changes = self._process_records_to_delete_by_parameters(results, type, name, content)
+            changes = self._process_records_to_delete_by_parameters(
+                results, type, name, content)
 
         if not changes:
-            raise Exception('Could not find existing record matching the given parameters.')
+            raise Exception(
+                'Could not find existing record matching the given parameters.')
 
-        self._post('/managedZones/{0}/changes'.format(self.domain_id), data=changes)
+        self._post(
+            '/managedZones/{0}/changes'.format(self.domain_id), data=changes)
 
-        LOGGER.debug('delete_records: %s %s %s %s', identifier, type, name, content)
+        LOGGER.debug('delete_records: %s %s %s %s',
+                     identifier, type, name, content)
 
         return True
 
@@ -301,8 +333,8 @@ class Provider(BaseProvider):
         for rrset in results['rrsets']:
             for rrdata in rrset['rrdatas']:
                 record = {
-                    'type': rrset['type'], 
-                    'name': self._full_name(rrset['name']), 
+                    'type': rrset['type'],
+                    'name': self._full_name(rrset['name']),
                     'content': rrdata
                 }
 
@@ -321,14 +353,17 @@ class Provider(BaseProvider):
         rrsets_to_modify = results['rrsets']
 
         if type:
-            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if rrset['type'] == type]
+            rrsets_to_modify = [
+                rrset for rrset in rrsets_to_modify if rrset['type'] == type]
         if name:
-            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if rrset['name'] == self._fqdn_name(name)]
+            rrsets_to_modify = [
+                rrset for rrset in rrsets_to_modify if rrset['name'] == self._fqdn_name(name)]
         if content:
-            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if ('"{0}"'.format(content) if rrset['type'] == 'TXT' else content) in rrset['rrdatas']]
+            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if ('"{0}"'.format(
+                content) if rrset['type'] == 'TXT' else content) in rrset['rrdatas']]
 
         changes = {
-            'additions': [], 
+            'additions': [],
             'deletions': []
         }
 
@@ -342,7 +377,8 @@ class Provider(BaseProvider):
 
             if content:
                 new_rrdatas = rrset_to_modify['rrdatas'][:]
-                new_rrdatas.remove('"{0}"'.format(content) if rrset_to_modify['type'] == 'TXT' else content)
+                new_rrdatas.remove('"{0}"'.format(
+                    content) if rrset_to_modify['type'] == 'TXT' else content)
                 if new_rrdatas:
                     changes['additions'].append({
                         'name': rrset_to_modify['name'],
@@ -364,7 +400,7 @@ class Provider(BaseProvider):
             return '"{0}"'.format(content)
         if type == 'CNAME':
             return '{0}.'.format(content) if not content.endswith('.') else content
-        
+
         return content
 
     # Google Cloud DNS API does not provide identifier for RecordSets.
@@ -377,7 +413,8 @@ class Provider(BaseProvider):
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
         digest.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
         digest.update(('name=' + record.get('name', '') + ',').encode('utf-8'))
-        digest.update(('content=' + record.get('content', '') + ',').encode('utf-8'))
+        digest.update(
+            ('content=' + record.get('content', '') + ',').encode('utf-8'))
 
         return binascii.hexlify(digest.finalize()).decode('utf-8')[0:7]
 
@@ -386,8 +423,9 @@ class Provider(BaseProvider):
     #   the body response is also encoded as application/json for GET and POST,
     #   and the request headers must contain the access token in the 'Authorization' field.
     def _request(self, action='GET',  url='/', data=None, query_params=None):
-        request = requests.request(action, 
-                                   'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(self._service_account_info['project_id'], url), 
+        request = requests.request(action,
+                                   'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(
+                                       self._service_account_info['project_id'], url),
                                    params=None if not query_params else query_params,
                                    json=None if not data else data,
                                    headers={'Authorization': 'Bearer {0}'.format(self._token)})

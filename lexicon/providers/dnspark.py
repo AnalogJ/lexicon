@@ -11,9 +11,12 @@ logger = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dnspark.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify api key for authentication")
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify api key for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
@@ -32,8 +35,8 @@ class Provider(BaseProvider):
 
         self.domain_id = payload['additional']['domain_id']
 
-
     # Create record. If record already exists with the same content, do nothing'
+
     def create_record(self, type, name, content):
         record = {
             'rname': self._relative_name(name),
@@ -47,7 +50,7 @@ class Provider(BaseProvider):
             if e.response.status_code == 400:
                 payload = {}
             raise e
-                # http 400 is ok here, because the record probably already exists
+            # http 400 is ok here, because the record probably already exists
         logger.debug('create_record: %s', True)
         return True
 
@@ -72,9 +75,11 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
         logger.debug('list_records: %s', records)
         return records
@@ -108,7 +113,7 @@ class Provider(BaseProvider):
             delete_record_id.append(identifier)
 
         logger.debug('delete_records: %s', delete_record_id)
-        
+
         for record_id in delete_record_id:
             payload = self._delete('/dns/{0}'.format(record_id))
 
@@ -116,8 +121,8 @@ class Provider(BaseProvider):
         logger.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -127,11 +132,13 @@ class Provider(BaseProvider):
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        default_auth = (self._get_provider_option('auth_username'), self._get_provider_option('auth_token'))
+        default_auth = (self._get_provider_option('auth_username'),
+                        self._get_provider_option('auth_token'))
 
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              headers=default_headers,
                              auth=default_auth)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()

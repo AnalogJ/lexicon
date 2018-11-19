@@ -28,4 +28,3 @@ class PowerdnsProviderTests(TestCase, IntegrationTests):
     def skip_suite(self, request):
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
-

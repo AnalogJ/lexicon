@@ -8,6 +8,7 @@ import pytest
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 
+
 class GandiRPCProviderTests(TestCase, IntegrationTests):
 
     Provider = Provider
@@ -17,6 +18,7 @@ class GandiRPCProviderTests(TestCase, IntegrationTests):
 
     def _test_parameters_overrides(self):
         return {'api_protocol': 'rpc'}
+
 
 class GandiRESTProviderTests(TestCase, IntegrationTests):
 

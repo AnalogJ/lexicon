@@ -13,9 +13,12 @@ LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['godaddy.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument('--auth-key', help='specify the key to access the API')
-    subparser.add_argument('--auth-secret', help='specify the secret to access the API')
+    subparser.add_argument(
+        '--auth-key', help='specify the key to access the API')
+    subparser.add_argument(
+        '--auth-secret', help='specify the secret to access the API')
 
 # Implements the DNS GoDaddy provider.
 # Some general remarks about this provider, because it uses a weirdly designed API.
@@ -30,6 +33,8 @@ def ProviderParser(subparser):
 #   to allow an easy update or delete using the '--identifier' lexicon parameter.
 # But you need to call the 'list' command just before executing and update/delete action, because identifier value
 #   is tied to the content of the record, and will change anytime something is changed in the record.
+
+
 class Provider(BaseProvider):
 
     def __init__(self, config):
@@ -65,7 +70,8 @@ class Provider(BaseProvider):
             })
 
         if content:
-            records = [record for record in records if record['data'] == content]
+            records = [
+                record for record in records if record['data'] == content]
 
         LOGGER.debug('list_records: %s', records)
 
@@ -82,7 +88,8 @@ class Provider(BaseProvider):
         # Check if a record already matches given parameters
         for record in records:
             if record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] == content:
-                LOGGER.debug('create_record (ignored, duplicate): %s %s %s', type, name, content)
+                LOGGER.debug(
+                    'create_record (ignored, duplicate): %s %s %s', type, name, content)
                 return True
 
         # Append a new entry corresponding to given parameters.
@@ -100,13 +107,13 @@ class Provider(BaseProvider):
         return True
 
     def update_record(self, identifier, type=None, name=None, content=None):
-        # No identifier is used with GoDaddy. 
+        # No identifier is used with GoDaddy.
         # We can rely either:
         #   - only on type/name to get the relevant records, both of them are required or we will could update to much records ...,
         #   - or by the pseudo-identifier provided
-        # Furthermore for type/name approach, we cannot update all matching records, as it would lead 
+        # Furthermore for type/name approach, we cannot update all matching records, as it would lead
         #   to an error (two entries of same type + name cannot have the same content).
-        # So for type/name approach, we search first matching record for type/name on which content is different, 
+        # So for type/name approach, we search first matching record for type/name on which content is different,
         #   and we update it before synchronizing the DNS zone.
         if not identifier and not type:
             raise Exception('ERROR: type is required')
@@ -121,15 +128,15 @@ class Provider(BaseProvider):
         # Retrieve existing data in DNS zone.
         records = self._get('/domains/{0}/records'.format(domain))
 
-        # Get the record to update: 
-        #   - either explicitly by its identifier, 
+        # Get the record to update:
+        #   - either explicitly by its identifier,
         #   - or the first matching by its type+name where content does not match (first match, see first method comment for explanation).
         for record in records:
             if ((identifier and Provider._identifier(record) == identifier) or
-                (not identifier and record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content)):
+                    (not identifier and record['type'] == type and self._relative_name(record['name']) == relative_name and record['data'] != content)):
                 record['data'] = content
                 break
-        
+
         # Synchronize data with updated records into DNS zone.
         self._put('/domains/{0}/records'.format(domain), records)
 
@@ -155,7 +162,8 @@ class Provider(BaseProvider):
         # Filter out all records which matches the pattern (either identifier, or some combination of type/name/content).
         filtered_records = []
         if identifier:
-            filtered_records = [record for record in records if Provider._identifier(record) != identifier]
+            filtered_records = [
+                record for record in records if Provider._identifier(record) != identifier]
         else:
             for record in records:
                 if ((not type and not relative_name and not content) or
@@ -165,7 +173,7 @@ class Provider(BaseProvider):
                     (type and relative_name and not content and (record['type'] != type or self._relative_name(record['name']) != relative_name)) or
                     (type and not relative_name and content and (record['type'] != type or record['data'] != content)) or
                     (not type and relative_name and content and (self._relative_name(record['name']) != relative_name or record['data'] != content)) or
-                    (type and relative_name and content and (record['type'] != type or self._relative_name(record['name']) != relative_name or record['data'] != content))):
+                        (type and relative_name and content and (record['type'] != type or self._relative_name(record['name']) != relative_name or record['data'] != content))):
                     filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone.
@@ -201,23 +209,25 @@ class Provider(BaseProvider):
             total=10,
             backoff_factor=0.5,
             status_forcelist=[409],
-            method_whitelist=frozenset(['GET', 'PUT', 'POST', 'DELETE', 'PATCH'])
+            method_whitelist=frozenset(
+                ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'])
         )
 
         session = requests.Session()
         session.mount('https://', HTTPAdapter(max_retries=retries))
 
         result = session.request(action, self.api_endpoint + url,
-                                  params=query_params,
-                                  data=json.dumps(data),
-                                  headers={
-                                      'Content-Type': 'application/json',
-                                      'Accept': 'application/json',
-                                      # GoDaddy use a key/secret pair to authenticate
-                                      'Authorization': 'sso-key {0}:{1}'.format(
-                                          self._get_provider_option('auth_key'),
-                                          self._get_provider_option('auth_secret'))
-                                  })
+                                 params=query_params,
+                                 data=json.dumps(data),
+                                 headers={
+                                     'Content-Type': 'application/json',
+                                     'Accept': 'application/json',
+                                     # GoDaddy use a key/secret pair to authenticate
+                                     'Authorization': 'sso-key {0}:{1}'.format(
+                                         self._get_provider_option(
+                                             'auth_key'),
+                                         self._get_provider_option('auth_secret'))
+                                 })
 
         result.raise_for_status()
 

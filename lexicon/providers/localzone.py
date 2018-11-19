@@ -18,7 +18,8 @@ NAMESERVER_DOMAINS = []
 
 
 def ProviderParser(subparser):
-    subparser.add_argument("--filename", help="specify location of zone master file")
+    subparser.add_argument(
+        "--filename", help="specify location of zone master file")
 
 
 class Provider(BaseProvider):
