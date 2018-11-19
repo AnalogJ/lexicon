@@ -51,7 +51,7 @@ class Provider(BaseProvider):
                 self.domain_id = zone['dns_zone']['id']
                 break
 
-        if self.domain_id == None:
+        if self.domain_id is None:
             raise Exception(
                 'Could not find {0} in OnApp DNS Zones'.format(domain))
 

@@ -113,7 +113,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         self.domain_id = self.__find_site()
 
-        if self.domain_id == None:
+        if self.domain_id is None:
             raise Exception('Domain not found')
 
     def create_record(self, type, name, content):

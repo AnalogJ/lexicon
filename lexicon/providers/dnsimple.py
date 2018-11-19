@@ -112,7 +112,7 @@ class Provider(BaseProvider):
 
         data = {}
 
-        if identifier == None:
+        if identifier is None:
             records = self.list_records(type, name, content)
             identifiers = [record["id"] for record in records]
         else:
@@ -188,7 +188,7 @@ class Provider(BaseProvider):
                              auth=default_auth)
         # if the request fails for any reason, throw an error.
         r.raise_for_status()
-        if r.text and r.json()['data'] == None:
+        if r.text and r.json()['data'] is None:
             raise Exception('No data returned')
 
         return r.json()['data'] if r.text else None

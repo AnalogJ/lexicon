@@ -32,7 +32,7 @@ class Provider(BaseProvider):
                 self.domain_id = record['domainname']
                 break
 
-        if self.domain_id == None:
+        if self.domain_id is None:
             raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing.

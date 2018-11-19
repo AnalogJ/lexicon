@@ -30,7 +30,7 @@ class Provider(BaseProvider):
         for domain in payload['DATA']:
             if domain['DOMAIN'] == self.domain:
                 self.domain_id = domain['DOMAINID']
-        if self.domain_id == None:
+        if self.domain_id is None:
             raise Exception('Domain not found')
 
     def create_record(self, type, name, content):
