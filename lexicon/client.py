@@ -9,7 +9,7 @@ from lexicon.config import ConfigResolver, DictConfigSource
 from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
 
 
-class Client(object):
+class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
     """This is the Lexicon client, that will execute all the logic."""
 
     def __init__(self, config=None):
@@ -68,14 +68,16 @@ class Client(object):
         if self.action == 'create':
             return self.provider.create_record(record_type, name, content)
 
-        elif self.action == 'list':
+        if self.action == 'list':
             return self.provider.list_records(record_type, name, content)
 
-        elif self.action == 'update':
+        if self.action == 'update':
             return self.provider.update_record(identifier, record_type, name, content)
 
-        elif self.action == 'delete':
+        if self.action == 'delete':
             return self.provider.delete_record(identifier, record_type, name, content)
+
+        raise ValueError('Invalid action statement: {0}'.format(self.action))
 
     def _validate_config(self):
         if not self.config.resolve('lexicon:provider_name'):

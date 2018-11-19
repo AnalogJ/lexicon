@@ -5,7 +5,7 @@ through those services' APIs. This module implements the Lexicon interface
 against the Gandi API.
 
 Gandi introduced the LiveDNS API (http://doc.livedns.gandi.net/) in 2017.
-It is the successor of the traditional XMLRPC API, which suffered from 
+It is the successor of the traditional XMLRPC API, which suffered from
 long delays between API-based changes and their activation.
 The LiveDNS API has one significant peculiarity: DNS records with the
 same name and type are managed as one unit. Thus records cannot be
@@ -63,11 +63,11 @@ class Provider(BaseProvider):
         self.default_ttl = 3600
         self.protocol = self._get_provider_option('api_protocol') or 'rpc'
 
-        if (self.protocol != 'rpc' and self.protocol != 'rest'):
+        if self.protocol != 'rpc' and self.protocol != 'rest':
             raise ValueError(
                 "Invalid API protocol specified, should be 'rpc' or 'rest'")
 
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             self.rpc_helper = GandiRPCSubProvider(self._get_provider_option('auth_token'),
                                                   'https://rpc.gandi.net/xmlrpc/',
                                                   self.domain.lower(),
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
             self.api_endpoint = 'https://dns.api.gandi.net/api/v5'
 
     def authenticate(self):
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
             self.domain_id = self.domain.lower()
 
     def create_record(self, type, name, content):
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.create_record(type, self._relative_name(name),
                                                  content, self._get_lexicon_option('ttl') or self.default_ttl)
 
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.list_records(type, name, content)
 
         try:
@@ -163,7 +163,7 @@ class Provider(BaseProvider):
 
         'content' should be a string or a list of strings
         """
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.update_record(identifier, type, name, content)
 
         data = {}
@@ -194,7 +194,7 @@ class Provider(BaseProvider):
     # Delete existings records.
     # If records do not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.delete_record(identifier, type, name, content)
 
         if not identifier:
