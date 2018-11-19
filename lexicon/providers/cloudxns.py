@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+from future.standard_library import install_aliases
+install_aliases()
 import hashlib  # nopep8
 import json  # nopep8
 import logging  # nopep8
@@ -7,15 +9,7 @@ import time  # nopep8
 from urllib.parse import urlencode  # nopep8
 
 import requests  # nopep8
-from future.standard_library import install_aliases
 from lexicon.providers.base import Provider as BaseProvider  # nopep8
-
-
-install_aliases()
-
-
-
-
 
 
 LOGGER = logging.getLogger(__name__)
