@@ -1,15 +1,14 @@
 import contextlib
-
-from importlib import import_module
+import os
 from builtins import object
 from functools import wraps
-
-from lexicon.providers.base import Provider as BaseProvider
-from lexicon.config import ConfigSource, DictConfigSource, ConfigResolver
+from importlib import import_module
 
 import pytest
 import vcr
-import os
+from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
+from lexicon.providers.base import Provider as BaseProvider
+
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
 record_mode = 'new_episodes' if os.environ.get(

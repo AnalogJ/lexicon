@@ -1,9 +1,11 @@
 # Test for one implementation of the interface
-from lexicon.providers.internetbs import Provider
-from integration_tests import IntegrationTests
-from unittest import TestCase
-import pytest
 import os
+from unittest import TestCase
+
+import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.internetbs import Provider
+
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must

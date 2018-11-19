@@ -1,11 +1,11 @@
 from __future__ import absolute_import, print_function
-
-import sys
 import importlib
-import pytest
-
-from lexicon.providers.base import Provider as BaseProvider
+import sys
 from types import ModuleType
+
+import pytest
+from lexicon.providers.base import Provider as BaseProvider
+
 
 '''
 This unit test suite ensures that the lexicon client works correctly when used as a library.

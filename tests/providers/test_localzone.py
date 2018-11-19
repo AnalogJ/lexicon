@@ -1,8 +1,10 @@
 # Test the localzone implementation of the interface
-from lexicon.providers.localzone import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
+
 import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.localzone import Provider
+
 
 try:
     from urllib.request import urlretrieve

@@ -4,10 +4,9 @@ from unittest import TestCase
 
 import mock
 import pytest
-
-from lexicon.providers.auto import Provider
-from lexicon.providers.auto import _get_ns_records_domains_for_domain
 from integration_tests import IntegrationTests
+from lexicon.providers.auto import Provider, _get_ns_records_domains_for_domain
+
 
 # This fixture ensures to mock _get_ns_records_domains_for_domain, in order to not rely
 # on the machine on which the test is done, as this function call nslookup.

@@ -1,10 +1,11 @@
 # Test for one implementation of the interface
-from lexicon.providers.nfsn import Provider
-from integration_tests import IntegrationTests
-from unittest import TestCase
-import pytest
-
 import os
+from unittest import TestCase
+
+import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.nfsn import Provider
+
 
 """
 Some small info about running live tests.

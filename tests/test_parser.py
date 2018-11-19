@@ -1,8 +1,10 @@
 from __future__ import absolute_import
 
 import pytest
-
-from lexicon.parser import generate_base_provider_parser, generate_cli_main_parser
+from lexicon.parser import (
+    generate_base_provider_parser,
+    generate_cli_main_parser,
+)
 
 
 def test_base_provider_parser():

@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
-import sys
 import os
 import shutil
-import tempfile
 import stat
+import subprocess
+import sys
+import tempfile
 
 from pylint import lint
+
 
 REPO_DIR = os.path.dirname(os.path.dirname(__file__))
 

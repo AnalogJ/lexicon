@@ -1,10 +1,11 @@
 """"Test for rackspace implementation of the lexicon interface"""
-from unittest import TestCase
-import pytest
 import logging
+from unittest import TestCase
 
-from lexicon.providers.rackspace import Provider
+import pytest
 from integration_tests import IntegrationTests
+from lexicon.providers.rackspace import Provider
+
 
 logger = logging.getLogger(__name__)
 

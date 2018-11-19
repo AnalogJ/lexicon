@@ -1,6 +1,6 @@
 import os
-import pytest
 
+import pytest
 from lexicon.config import ConfigResolver, ConfigSource
 from lexicon.parser import generate_cli_main_parser
 

@@ -1,8 +1,9 @@
 # Test for one implementation of the interface
-from lexicon.providers.easyname import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
+
 from bs4 import BeautifulSoup
+from integration_tests import IntegrationTests
+from lexicon.providers.easyname import Provider
 
 
 class EasynameProviderTests(TestCase, IntegrationTests):

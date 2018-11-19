@@ -1,8 +1,10 @@
 # Test for one implementation of the interface
 from unittest import TestCase
-from lexicon.providers.zeit import Provider
-from integration_tests import IntegrationTests
+
 import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.zeit import Provider
+
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must

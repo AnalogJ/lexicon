@@ -1,7 +1,7 @@
-import lexicon.client
-import pytest
 import os
 
+import lexicon.client
+import pytest
 from lexicon.config import ConfigResolver
 
 

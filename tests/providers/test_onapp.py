@@ -1,6 +1,7 @@
 from unittest import TestCase
-from lexicon.providers.onapp import Provider
+
 from integration_tests import IntegrationTests
+from lexicon.providers.onapp import Provider
 
 
 class OnappProviderTests(TestCase, IntegrationTests):

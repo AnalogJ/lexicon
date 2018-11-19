@@ -1,14 +1,13 @@
 from __future__ import absolute_import
-
-import sys
 import importlib
-import logging
 import json
+import logging
+import sys
+from types import ModuleType
 
 from lexicon import cli
-
-from types import ModuleType
 from lexicon.providers.base import Provider as BaseProvider
+
 
 logger = logging.getLogger(__name__)
 data = [

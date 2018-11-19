@@ -1,7 +1,9 @@
-from lexicon.providers.constellix import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
+
 import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.constellix import Provider
+
 
 # Constellix does not currently have a sandbox and they enforce domain
 # uniqueness across the service.  You'll need your own production credentials
