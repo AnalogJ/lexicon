@@ -71,7 +71,8 @@ class Provider(BaseProvider):
                 'name': self._full_name(record['name']),
                 'ttl': record['ttl'],
                 'content': record['value'],
-                # this id is useless unless your doing record linking. Lets return the original record identifier.
+                # this id is useless unless your doing record linking.
+                # Lets return the original record identifier.
                 'id': record['id']
             }
             records.append(processed_record)

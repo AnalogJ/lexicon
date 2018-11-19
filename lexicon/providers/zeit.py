@@ -18,15 +18,18 @@ def ProviderParser(subparser):
         https://zeit.co/account/tokens'''
     subparser.add_argument('--auth-token', help='specify your API token')
 
-# Implements the DNS Zeit provider.
-# The API is quite simple: you can list all records, add one record or delete one record.
-#   - list is pretty straightforward: we get all records then filter for given parameters,
-#   - add uses directly the API to add a new record without any added complexity,
-#   - delete uses list + delete: we get the list of all records, filter on the given parameters and delete record by id,
-#   - update uses list + delete + add: we get the list of all records, find record for given identifier, then insert a new record and delete the old record.
-
 
 class Provider(BaseProvider):
+    """
+    Implements the DNS Zeit provider.
+    The API is quite simple: you can list all records, add one record or delete one record.
+        - list is pretty straightforward: we get all records then filter for given parameters,
+        - add uses directly the API to add a new record without any added complexity,
+        - delete uses list + delete: we get the list of all records,
+          filter on the given parameters and delete record by id,
+        - update uses list + delete + add: we get the list of all records,
+          find record for given identifier, then insert a new record and delete the old record.
+    """
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

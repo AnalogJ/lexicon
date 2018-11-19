@@ -1,7 +1,5 @@
 from __future__ import absolute_import
 
-from builtins import object
-
 from lexicon.config import ConfigResolver
 from lexicon.config import legacy_config_resolver
 
@@ -9,8 +7,10 @@ from lexicon.config import legacy_config_resolver
 class Provider(object):
 
     """
-    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implemented
-    Providers follow a standard ducktype. All standardized options will be provided here as defaults, but can be overwritten
+    This is the base class for all lexicon Providers.
+    It provides common functionality and ensures that all implemented
+    Providers follow a standard ducktype.
+    All standardized options will be provided here as defaults, but can be overwritten
     by environmental variables and cli arguments.
 
     Common options are:
@@ -31,7 +31,8 @@ class Provider(object):
     auth_password
     ...
 
-    :param provider_env_cli_options: is a ConfigResolver object that contains all the options for this provider, merged from CLI and Env variables.
+    :param config: is a ConfigResolver object that contains all the options
+    for this provider, merged from CLI and Env variables.
     """
 
     def __init__(self, config):
@@ -52,8 +53,10 @@ class Provider(object):
         self.domain_id = None
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
+    # Make any requests required to get the domain's id for this provider,
+    # so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def authenticate(self):
         raise NotImplementedError("Providers should implement this!")
 
@@ -120,7 +123,8 @@ class Provider(object):
 
     def _clean_TXT_record(self, record):
         if record['type'] == 'TXT':
-            # some providers have quotes around the TXT records, so we're going to remove those extra quotes
+            # Some providers have quotes around the TXT records,
+            # so we're going to remove those extra quotes
             record['content'] = record['content'][1:-1]
         return record
 
