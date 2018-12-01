@@ -1,8 +1,9 @@
 # Test for one implementation of the interface
-from lexicon.providers.memset import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
+
 import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.memset import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

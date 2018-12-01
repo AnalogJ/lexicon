@@ -5,7 +5,7 @@ through those services' APIs. This module implements the Lexicon interface
 against the Gandi API.
 
 Gandi introduced the LiveDNS API (http://doc.livedns.gandi.net/) in 2017.
-It is the successor of the traditional XMLRPC API, which suffered from 
+It is the successor of the traditional XMLRPC API, which suffered from
 long delays between API-based changes and their activation.
 The LiveDNS API has one significant peculiarity: DNS records with the
 same name and type are managed as one unit. Thus records cannot be
@@ -26,13 +26,13 @@ the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
 from __future__ import absolute_import
-
 import json
 import logging
-import requests
-
 from builtins import object
+
+import requests
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import xmlrpclib
@@ -43,10 +43,13 @@ LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['gandi.net']
 
+
 def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
     subparser.add_argument('--auth-token', help="specify Gandi API key")
-    subparser.add_argument('--api-protocol', help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+    subparser.add_argument(
+        '--api-protocol', help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+
 
 class Provider(BaseProvider):
     """Provide Gandi LiveDNS API implementation of Lexicon Provider interface.
@@ -54,17 +57,19 @@ class Provider(BaseProvider):
     Note that this implementation will delegates its call to GandiRPCSubProvider
     if RPC protocol is used.
     """
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.default_ttl = 3600
         self.protocol = self._get_provider_option('api_protocol') or 'rpc'
 
-        if (self.protocol != 'rpc' and self.protocol != 'rest'):
-            raise ValueError("Invalid API protocol specified, should be 'rpc' or 'rest'")
+        if self.protocol != 'rpc' and self.protocol != 'rest':
+            raise ValueError(
+                "Invalid API protocol specified, should be 'rpc' or 'rest'")
 
-        if (self.protocol == 'rpc'):
-            self.rpc_helper = GandiRPCSubProvider(self._get_provider_option('auth_token'), 
-                                                  'https://rpc.gandi.net/xmlrpc/', 
+        if self.protocol == 'rpc':
+            self.rpc_helper = GandiRPCSubProvider(self._get_provider_option('auth_token'),
+                                                  'https://rpc.gandi.net/xmlrpc/',
                                                   self.domain.lower(),
                                                   self._relative_name,
                                                   self._full_name)
@@ -72,7 +77,7 @@ class Provider(BaseProvider):
             self.api_endpoint = 'https://dns.api.gandi.net/api/v5'
 
     def authenticate(self):
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
@@ -80,14 +85,16 @@ class Provider(BaseProvider):
             self.domain_id = self.domain.lower()
 
     def create_record(self, type, name, content):
-        if (self.protocol == 'rpc'):
-            return self.rpc_helper.create_record(type, self._relative_name(name), 
+        if self.protocol == 'rpc':
+            return self.rpc_helper.create_record(type, self._relative_name(name),
                                                  content, self._get_lexicon_option('ttl') or self.default_ttl)
 
-        current_values = [record['content'] for record in self.list_records(type=type, name=name)]
+        current_values = [record['content']
+                          for record in self.list_records(type=type, name=name)]
         if current_values != [content]:
             # a change is necessary
-            url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id, self._relative_name(name), type)
+            url = '/domains/{0}/records/{1}/{2}'.format(
+                self.domain_id, self._relative_name(name), type)
             if current_values:
                 record = {'rrset_values': current_values + [content]}
                 self._put(url, record)
@@ -105,7 +112,7 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.list_records(type, name, content)
 
         try:
@@ -118,9 +125,11 @@ class Provider(BaseProvider):
                     query_results = self._get('/domains/{0}/records/{1}'
                                               .format(self.domain_id, self._relative_name(name)))
             else:
-                query_results = self._get('/domains/{0}/records'.format(self.domain_id))
+                query_results = self._get(
+                    '/domains/{0}/records'.format(self.domain_id))
                 if type is not None:
-                    query_results = [item for item in query_results if item['rrset_type'] == type]
+                    query_results = [
+                        item for item in query_results if item['rrset_type'] == type]
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 query_results = []
@@ -143,7 +152,8 @@ class Provider(BaseProvider):
                 records.append(record)
         # filter for content, if requested
         if content is not None:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
         LOGGER.debug('list_records: %s', records)
         return records
 
@@ -153,7 +163,7 @@ class Provider(BaseProvider):
 
         'content' should be a string or a list of strings
         """
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.update_record(identifier, type, name, content)
 
         data = {}
@@ -169,7 +179,8 @@ class Provider(BaseProvider):
         if type is None:
             # replace the records of a specific type
             url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id,
-                                                        identifier or self._relative_name(name),
+                                                        identifier or self._relative_name(
+                                                            name),
                                                         type)
             self._put(url, data)
         else:
@@ -183,7 +194,7 @@ class Provider(BaseProvider):
     # Delete existings records.
     # If records do not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        if (self.protocol == 'rpc'):
+        if self.protocol == 'rpc':
             return self.rpc_helper.delete_record(identifier, type, name, content)
 
         if not identifier:
@@ -191,7 +202,8 @@ class Provider(BaseProvider):
             # get all matching (by type and name) records - ignore 'content' for now
             records = self.list_records(type=type, name=name)
             for current_type in set(record['type'] for record in records):
-                matching_records = [record for record in records if record['type'] == current_type]
+                matching_records = [
+                    record for record in records if record['type'] == current_type]
                 # collect all non-matching values
                 if content is None:
                     remaining_values = []
@@ -215,7 +227,8 @@ class Provider(BaseProvider):
             if remove_count == 0:
                 raise Exception('Record identifier could not be found.')
         else:
-            self._delete('/domains/{0}/records/{1}'.format(self.domain_id, identifier))
+            self._delete(
+                '/domains/{0}/records/{1}'.format(self.domain_id, identifier))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -251,6 +264,7 @@ class GandiRPCSubProvider(object):
     This implementation is called through the main LiveDNS implementation
     is RPC protocol is used.
     """
+
     def __init__(self, api_key, api_endpoint, domain, relative_name_fn, full_name_fn):
         """Initialize Gandi RCPXML API provider."""
         super(GandiRPCSubProvider, self).__init__()
@@ -285,19 +299,22 @@ class GandiRPCSubProvider(object):
         # In this case, no new record will be created, but a new zone version
         # will be created and set.
         try:
-            version = self._api.domain.zone.version.new(self._api_key, self._zone_id)
+            version = self._api.domain.zone.version.new(
+                self._api_key, self._zone_id)
             self._api.domain.zone.record.add(self._api_key, self._zone_id, version,
-                                            {'type': type.upper(),
-                                             'name': name,
-                                             'value': content,
-                                             'ttl': ttl
-                                            })
-            self._api.domain.zone.version.set(self._api_key, self._zone_id, version)
+                                             {'type': type.upper(),
+                                              'name': name,
+                                              'value': content,
+                                              'ttl': ttl
+                                              })
+            self._api.domain.zone.version.set(
+                self._api_key, self._zone_id, version)
             ret = True
 
         finally:
             if not ret and version is not None:
-                self._api.domain.zone.version.delete(self._api_key, self._zone_id, version)
+                self._api.domain.zone.version.delete(
+                    self._api_key, self._zone_id, version)
 
         LOGGER.debug("create_record: %s", ret)
         return ret
@@ -313,10 +330,12 @@ class GandiRPCSubProvider(object):
         if name is not None:
             opts['name'] = self._relative_name(name)
         if content is not None:
-            opts['value'] = self._txt_encode(content) if opts.get('type', '') == 'TXT' else content
+            opts['value'] = self._txt_encode(content) if opts.get(
+                'type', '') == 'TXT' else content
 
         records = []
-        payload = self._api.domain.zone.record.list(self._api_key, self._zone_id, 0, opts)
+        payload = self._api.domain.zone.record.list(
+            self._api_key, self._zone_id, 0, opts)
         for record in payload:
             processed_record = {
                 'type': record['type'],
@@ -328,7 +347,8 @@ class GandiRPCSubProvider(object):
 
             # Gandi will add quotes to all TXT record strings
             if processed_record['type'] == 'TXT':
-                processed_record['content'] = self._txt_decode(processed_record['content'])
+                processed_record['content'] = self._txt_decode(
+                    processed_record['content'])
 
             records.append(processed_record)
 
@@ -336,8 +356,8 @@ class GandiRPCSubProvider(object):
         return records
 
     # Update a record. Identifier or type+name+content
-    def update_record(self, identifier, type=None, name=None, content=None): 
-        """Updates the specified record in a new Gandi zone."""     
+    def update_record(self, identifier, type=None, name=None, content=None):
+        """Updates the specified record in a new Gandi zone."""
         if not identifier:
             records = self.list_records(type, name)
             if len(records) == 1:
@@ -355,15 +375,18 @@ class GandiRPCSubProvider(object):
         # a new zone file. To update by identifier, we lookup the record
         # by identifier, then use the record fields to find the record in
         # the newly created zone.
-        records = self._api.domain.zone.record.list(self._api_key, self._zone_id, 0, {'id': identifier})
+        records = self._api.domain.zone.record.list(
+            self._api_key, self._zone_id, 0, {'id': identifier})
 
         if len(records) == 1:
             rec = records[0]
             del rec['id']
 
             try:
-                version = self._api.domain.zone.version.new(self._api_key, self._zone_id)
-                records = self._api.domain.zone.record.list(self._api_key, self._zone_id, version, rec)
+                version = self._api.domain.zone.version.new(
+                    self._api_key, self._zone_id)
+                records = self._api.domain.zone.record.list(
+                    self._api_key, self._zone_id, version, rec)
                 if len(records) != 1:
                     raise self.GandiInternalError("expected one record")
 
@@ -372,17 +395,21 @@ class GandiRPCSubProvider(object):
                 if name is not None:
                     rec['name'] = self._relative_name(name)
                 if content is not None:
-                    rec['value'] = self._txt_encode(content) if rec['type'] == 'TXT' else content
+                    rec['value'] = self._txt_encode(
+                        content) if rec['type'] == 'TXT' else content
 
                 records = self._api.domain.zone.record.update(self._api_key,
-                                                             self._zone_id,
-                                                             version,
-                                                             {'id': records[0]['id']},
-                                                             rec)
+                                                              self._zone_id,
+                                                              version,
+                                                              {'id': records[0]
+                                                                  ['id']},
+                                                              rec)
                 if len(records) != 1:
-                    raise self.GandiInternalError("expected one updated record")
+                    raise self.GandiInternalError(
+                        "expected one updated record")
 
-                self._api.domain.zone.version.set(self._api_key, self._zone_id, version)
+                self._api.domain.zone.version.set(
+                    self._api_key, self._zone_id, version)
                 ret = True
 
             except self.GandiInternalError:
@@ -390,7 +417,8 @@ class GandiRPCSubProvider(object):
 
             finally:
                 if not ret and version is not None:
-                    self._api.domain.zone.version.delete(self._api_key, self._zone_id, version)
+                    self._api.domain.zone.version.delete(
+                        self._api_key, self._zone_id, version)
 
         LOGGER.debug("update_record: %s", ret)
         return ret
@@ -408,30 +436,37 @@ class GandiRPCSubProvider(object):
             opts['id'] = identifier
         else:
             if not type and not name and not content:
-                raise ValueError('Error, at least one parameter from type, name or content must be set')
+                raise ValueError(
+                    'Error, at least one parameter from type, name or content must be set')
             if type:
                 opts['type'] = type.upper()
             if name:
                 opts['name'] = self._relative_name(name)
             if content:
-                opts['value'] = self._txt_encode(content) if opts['type'] == 'TXT' else content
+                opts['value'] = self._txt_encode(
+                    content) if opts['type'] == 'TXT' else content
 
-        records = self._api.domain.zone.record.list(self._api_key, self._zone_id, 0, opts)
+        records = self._api.domain.zone.record.list(
+            self._api_key, self._zone_id, 0, opts)
 
         if len(records):
             try:
-                version = self._api.domain.zone.version.new(self._api_key, self._zone_id)
+                version = self._api.domain.zone.version.new(
+                    self._api_key, self._zone_id)
                 for record in records:
                     del record['id']
-                    self._api.domain.zone.record.delete(self._api_key, self._zone_id, version, record)
-                self._api.domain.zone.version.set(self._api_key, self._zone_id, version)
+                    self._api.domain.zone.record.delete(
+                        self._api_key, self._zone_id, version, record)
+                self._api.domain.zone.version.set(
+                    self._api_key, self._zone_id, version)
                 ret = True
             finally:
                 if not ret and version is not None:
-                    self._api.domain.zone.version.delete(self._api_key, self._zone_id, version)
+                    self._api.domain.zone.version.delete(
+                        self._api_key, self._zone_id, version)
 
         LOGGER.debug("delete_record: %s", ret)
-        return ret  
+        return ret
 
     @staticmethod
     def _txt_encode(val):
@@ -444,7 +479,8 @@ class GandiRPCSubProvider(object):
         if not val:
             return None
         if len(val) > 1 and val[0:1] == '"':
-            val = val[1:-1].replace('" "', '').replace('\\"', '"').replace('\\\\', '\\')
+            val = val[1:-1].replace('" "', '').replace('\\"',
+                                                       '"').replace('\\\\', '\\')
         return val
 
     # This exception is for cleaner handling of internal errors
@@ -452,4 +488,3 @@ class GandiRPCSubProvider(object):
     class GandiInternalError(Exception):
         """Internal exception handling class for Gandi management errors"""
         pass
-

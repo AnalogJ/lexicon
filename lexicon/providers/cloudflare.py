@@ -1,19 +1,22 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['cloudflare.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify email address for authentication")
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify email address for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -36,22 +39,25 @@ class Provider(BaseProvider):
 
         self.domain_id = payload['result'][0]['id']
 
-
     # Create record. If record already exists with the same content, do nothing'
+
     def create_record(self, type, name, content):
-        data = {'type': type, 'name': self._full_name(name), 'content': content}
+        data = {'type': type, 'name': self._full_name(
+            name), 'content': content}
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
 
         payload = {'success': True}
         try:
-            payload = self._post('/zones/{0}/dns_records'.format(self.domain_id), data)
+            payload = self._post(
+                '/zones/{0}/dns_records'.format(self.domain_id), data)
         except requests.exceptions.HTTPError as err:
-            already_exists = next((True for error in err.response.json()['errors'] if error['code'] == 81057), False)
+            already_exists = next((True for error in err.response.json()[
+                                  'errors'] if error['code'] == 81057), False)
             if not already_exists:
                 raise
 
-        logger.debug('create_record: %s', payload['success'])
+        LOGGER.debug('create_record: %s', payload['success'])
         return payload['success']
 
     # List all records. Return an empty list if no records found
@@ -66,7 +72,8 @@ class Provider(BaseProvider):
         if content:
             filter['content'] = content
 
-        payload = self._get('/zones/{0}/dns_records'.format(self.domain_id), filter)
+        payload = self._get(
+            '/zones/{0}/dns_records'.format(self.domain_id), filter)
 
         records = []
         for record in payload['result']:
@@ -79,7 +86,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -95,9 +102,10 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
 
-        payload = self._put('/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
+        payload = self._put(
+            '/zones/{0}/dns_records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: %s', payload['success'])
+        LOGGER.debug('update_record: %s', payload['success'])
         return payload['success']
 
     # Delete an existing record.
@@ -109,13 +117,14 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
-        logger.debug('delete_records: %s', delete_record_id)
-        
-        for record_id in delete_record_id:
-            self._delete('/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_records: %s', delete_record_id)
+
+        for record_id in delete_record_id:
+            self._delete(
+                '/zones/{0}/dns_records/{1}'.format(self.domain_id, record_id))
+
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers
@@ -131,5 +140,6 @@ class Provider(BaseProvider):
                                  'X-Auth-Key': self._get_provider_option('auth_token'),
                                  'Content-Type': 'application/json'
                              })
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()

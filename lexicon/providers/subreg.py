@@ -1,25 +1,28 @@
 """Provide support to Lexicon for Subreg.cz DNS changes."""
 
 from __future__ import absolute_import
-
-import logging
-
 import collections
+import logging
 
 from lexicon.providers.base import Provider as BaseProvider
 
+
 try:
-    import zeep # Optional dependency
+    import zeep  # Optional dependency
 except:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['subreg.cz']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication")
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication")
+
 
 class Provider(BaseProvider):
     def __init__(self, config):
@@ -36,7 +39,8 @@ class Provider(BaseProvider):
     def authenticate(self):
         """Logs-in the user and checks the domain name"""
         if not self._get_provider_option('auth_username') or not self._get_provider_option('auth_password'):
-            raise Exception('No valid authentication data passed, expected: auth-username and auth-password')
+            raise Exception(
+                'No valid authentication data passed, expected: auth-username and auth-password')
         response = self._request_login(self._get_provider_option('auth_username'),
                                        self._get_provider_option('auth_password'))
         if 'ssid' in response:
@@ -78,7 +82,8 @@ class Provider(BaseProvider):
                 records = self._list_records(identifier=identifier)
                 if len(records) == 1 and records[0]['name'] != self._full_name(name):
                     # API does not allow us to update name directly
-                    self._update_record_with_name(records[0], type, name, content)
+                    self._update_record_with_name(
+                        records[0], type, name, content)
                 else:
                     self._update_record(identifier, type, content)
             else:
@@ -213,27 +218,32 @@ class Provider(BaseProvider):
             name_check = self._relative_name(name)
 
             # Stringize the identifier to prevent any type differences
-            identifier_check = str(identifier) if identifier is not None else None
+            identifier_check = str(
+                identifier) if identifier is not None else None
 
             filtered_records = [record for record in response['records'] if
-                        (identifier is None or str(record['id']) == identifier_check) and
-                        (type is None or record['type'] == type) and
-                        (name is None or record['name'] == name_check) and
-                        (content is None or ('content' in record and record['content'] == content_check))]
-            records = [self._create_response_record(filtered_record) for filtered_record in filtered_records]
+                                (identifier is None or str(record['id']) == identifier_check) and
+                                (type is None or record['type'] == type) and
+                                (name is None or record['name'] == name_check) and
+                                (content is None or ('content' in record and record['content'] == content_check))]
+            records = [self._create_response_record(
+                filtered_record) for filtered_record in filtered_records]
         else:
             records = []
         return records
 
     def _guess_record(self, type, name=None, content=None):
         """Tries to find existing unique record by type, name and content"""
-        records = self._list_records(identifier=None, type=type, name=name, content=content)
+        records = self._list_records(
+            identifier=None, type=type, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:
-            raise Exception('Identifier was not provided and several existing records match the request for {0}/{1}'.format(type,name))
+            raise Exception(
+                'Identifier was not provided and several existing records match the request for {0}/{1}'.format(type, name))
         else:
-            raise Exception('Identifier was not provided and no existing records match the request for {0}/{1}'.format(type,name))
+            raise Exception(
+                'Identifier was not provided and no existing records match the request for {0}/{1}'.format(type, name))
 
     def _request_login(self, login, password):
         """Sends Login request"""
@@ -266,7 +276,7 @@ class Provider(BaseProvider):
         """Sends Delete_DNS_Record request"""
         return self._request("Delete_DNS_Record",
                              domain=self.domain,
-                             record={ 'id': identifier })
+                             record={'id': identifier})
 
     def _request(self, command, **kwargs):
         """Make request parse response"""
@@ -288,6 +298,7 @@ class Provider(BaseProvider):
             else:
                 raise Exception("Invalid status found in SOAP response")
         raise Exception('Invalid response')
+
 
 class SubregError(Exception):
     def __init__(self, major, minor, message):

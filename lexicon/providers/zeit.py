@@ -1,14 +1,15 @@
 from __future__ import absolute_import
-
-import requests
 import json
 import logging
 
+import requests
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['zeit.world']
+
 
 def ProviderParser(subparser):
     subparser.description = '''
@@ -17,13 +18,18 @@ def ProviderParser(subparser):
         https://zeit.co/account/tokens'''
     subparser.add_argument('--auth-token', help='specify your API token')
 
-# Implements the DNS Zeit provider.
-# The API is quite simple: you can list all records, add one record or delete one record.
-#   - list is pretty straightforward: we get all records then filter for given parameters,
-#   - add uses directly the API to add a new record without any added complexity,
-#   - delete uses list + delete: we get the list of all records, filter on the given parameters and delete record by id,
-#   - update uses list + delete + add: we get the list of all records, find record for given identifier, then insert a new record and delete the old record.
+
 class Provider(BaseProvider):
+    """
+    Implements the DNS Zeit provider.
+    The API is quite simple: you can list all records, add one record or delete one record.
+        - list is pretty straightforward: we get all records then filter for given parameters,
+        - add uses directly the API to add a new record without any added complexity,
+        - delete uses list + delete: we get the list of all records,
+          filter on the given parameters and delete record by id,
+        - update uses list + delete + add: we get the list of all records,
+          find record for given identifier, then insert a new record and delete the old record.
+    """
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -43,12 +49,15 @@ class Provider(BaseProvider):
 
         raw_records = result['records']
         if type:
-            raw_records = [raw_record for raw_record in raw_records if raw_record['type'] == type]
+            raw_records = [
+                raw_record for raw_record in raw_records if raw_record['type'] == type]
         if name:
-            raw_records = [raw_record for raw_record in raw_records if raw_record['name'] == self._relative_name(name)]
+            raw_records = [
+                raw_record for raw_record in raw_records if raw_record['name'] == self._relative_name(name)]
         if content:
-            raw_records = [raw_record for raw_record in raw_records if raw_record['value'] == content]
-        
+            raw_records = [
+                raw_record for raw_record in raw_records if raw_record['value'] == content]
+
         records = []
         for raw_record in raw_records:
             records.append({
@@ -66,9 +75,10 @@ class Provider(BaseProvider):
         # We ignore creation if a record already exists for given type/name/content
         records = self.list_records(type, name, content)
         if records:
-            LOGGER.debug('create_record (ignored, duplicate): %s', records[0]['id'])
+            LOGGER.debug('create_record (ignored, duplicate): %s',
+                         records[0]['id'])
             return True
-        
+
         data = {
             'type': type,
             'name': self._relative_name(name),
@@ -91,15 +101,18 @@ class Provider(BaseProvider):
         records = []
         if identifier:
             records = self.list_records()
-            records = [record for record in records if record['id'] == identifier]
+            records = [
+                record for record in records if record['id'] == identifier]
         else:
             records = self.list_records(type, name)
-        
+
         if not records:
-            raise Exception('No record found for identifer: {0}'.format(identifier))
+            raise Exception(
+                'No record found for identifer: {0}'.format(identifier))
 
         if len(records) > 1:
-            LOGGER.warn('Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(records[0]['id']))
+            LOGGER.warn('Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(
+                records[0]['id']))
 
         data = {
             'type': type,
@@ -117,7 +130,8 @@ class Provider(BaseProvider):
         result = self._post('/{0}/records'.format(self.domain), data)
         self._delete('/{0}/records/{1}'.format(self.domain, records[0]['id']))
 
-        LOGGER.debug('update_record: %s => %s', records[0]['id'], result['uid'])
+        LOGGER.debug('update_record: %s => %s',
+                     records[0]['id'], result['uid'])
 
         return True
 
@@ -132,7 +146,8 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete('/{0}/records/{1}'.format(self.domain, delete_record_id))
+            self._delete(
+                '/{0}/records/{1}'.format(self.domain, delete_record_id))
 
         LOGGER.debug('delete_record: %s', True)
 
@@ -143,8 +158,8 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        
-        request = requests.request(action, self.api_endpoint + url, 
+
+        request = requests.request(action, self.api_endpoint + url,
                                    params=query_params,
                                    data=json.dumps(data),
                                    headers={'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))})

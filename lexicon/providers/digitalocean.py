@@ -1,18 +1,20 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['digitalocean.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -36,10 +38,12 @@ class Provider(BaseProvider):
 
             }
             if type == 'CNAME':
-                record['data'] = record['data'].rstrip('.') + '.' # make sure a the data is always a FQDN for CNAMe.
+                # make sure a the data is always a FQDN for CNAMe.
+                record['data'] = record['data'].rstrip('.') + '.'
 
-            payload = self._post('/domains/{0}/records'.format(self.domain_id), record)
-        logger.debug('create_record: %s', True)
+            payload = self._post(
+                '/domains/{0}/records'.format(self.domain_id), record)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -73,11 +77,13 @@ class Provider(BaseProvider):
         if type:
             records = [record for record in records if record['type'] == type]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'].lower() == content.lower()]
+            records = [
+                record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -91,9 +97,10 @@ class Provider(BaseProvider):
         if content:
             data['data'] = content
 
-        payload = self._put('/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
+        payload = self._put(
+            '/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -105,18 +112,19 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
-        logger.debug('delete_records: %s', delete_record_id)
-        
+
+        LOGGER.debug('delete_records: %s', delete_record_id)
+
         for record_id in delete_record_id:
-            payload = self._delete('/domains/{0}/records/{1}'.format(self.domain_id, record_id))
+            payload = self._delete(
+                '/domains/{0}/records/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -133,7 +141,8 @@ class Provider(BaseProvider):
         r = requests.request(action, url, params=query_params,
                              data=json.dumps(data),
                              headers=default_headers)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         if action == 'DELETE':
             return ''
         else:

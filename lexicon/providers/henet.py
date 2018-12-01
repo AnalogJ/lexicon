@@ -1,21 +1,25 @@
 from __future__ import absolute_import
-
-import re, logging
-from sys import stderr
+import logging
+import re
 from os import environ
+from sys import stderr
 from time import sleep
+
+from lexicon.providers.base import Provider as BaseProvider
 from requests import Session
+
+
 # Due to optional requirement
 try:
     from bs4 import BeautifulSoup
 except ImportError:
-   pass
+    pass
 
-from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['he.net']
+
 
 def ProviderParser(subparser):
     subparser.description = """A provider for Hurricane Electric DNS.
@@ -46,14 +50,14 @@ class Provider(BaseProvider):
         """
         """
         # Create the session GET the login page to retrieve a session cookie
-        self.session = Session()    
+        self.session = Session()
         self.session.get(
             "https://dns.he.net/"
         )
 
         # Hit the login page with authentication info to login the session
         login_response = self.session.post(
-           "https://dns.he.net",
+            "https://dns.he.net",
             data={
                 "email": self._get_provider_option('auth_username') or '',
                 "pass": self._get_provider_option('auth_password') or ''
@@ -63,7 +67,7 @@ class Provider(BaseProvider):
         # Parse in the HTML, if the div containing the error message is found, error
         html = BeautifulSoup(login_response.content, "html.parser")
         if html.find("div", {"id": "dns_err"}) is not None:
-            logger.warning("HE login failed, check HE_USER and HE_PASS")
+            LOGGER.warning("HE login failed, check HE_USER and HE_PASS")
             return False
 
         # Make an authenticated GET to the DNS management page
@@ -76,22 +80,25 @@ class Provider(BaseProvider):
 
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
-            logger.warning("Domain {0} not found in account".format(self.domain))
-            raise AssertionError("Domain {0} not found in account".format(self.domain))
+            LOGGER.warning(
+                "Domain {0} not found in account".format(self.domain))
+            raise AssertionError(
+                "Domain {0} not found in account".format(self.domain))
 
         self.domain_id = zone_img["value"]
-        logger.debug("HENET domain ID: {}".format(self.domain_id))
+        LOGGER.debug("HENET domain ID: {}".format(self.domain_id))
         return True
 
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):
-        logger.debug("Creating record for zone {0}".format(name))
+        LOGGER.debug("Creating record for zone {0}".format(name))
         # Pull a list of records and check for ours
         records = self.list_records(type=type, name=name, content=content)
         if len(records) >= 1:
-            logger.warning("Duplicate record {} {} {}, NOOP".format(type, name, content))
+            LOGGER.warning(
+                "Duplicate record {} {} {}, NOOP".format(type, name, content))
             return True
-        data={
+        data = {
             "account": "",
             "menu": "edit_zone",
             "Type": type,
@@ -106,13 +113,13 @@ class Provider(BaseProvider):
         }
         ttl = self._get_lexicon_option('ttl')
         if ttl:
-            if ttl <= 0: 
+            if ttl <= 0:
                 data['TTL'] = "3600"
             else:
                 data['TTL'] = str(ttl)
         prio = self._get_lexicon_option('priority')
         if prio:
-            if prio <= 0: 
+            if prio <= 0:
                 data['Priority'] = "10"
             else:
                 data['Priority'] = str(prio)
@@ -122,10 +129,10 @@ class Provider(BaseProvider):
         # Pull a list of records and check for ours
         records = self.list_records(name=name)
         if len(records) >= 1:
-            logger.info("Successfully added record {}".format(name))
+            LOGGER.info("Successfully added record {}".format(name))
             return True
         else:
-            logger.info("Failed to add record {}".format(name))
+            LOGGER.info("Failed to add record {}".format(name))
             return False
 
     # List all records. Return an empty list if no records found.
@@ -136,18 +143,20 @@ class Provider(BaseProvider):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
-            "https://dns.he.net/?hosted_dns_zoneid={0}&menu=edit_zone&hosted_dns_editzone".format(self.domain_id)
+            "https://dns.he.net/?hosted_dns_zoneid={0}&menu=edit_zone&hosted_dns_editzone".format(
+                self.domain_id)
         )
 
         # Parse the HTML response, and list the table rows for DNS records
         html = BeautifulSoup(edit_response.content, "html.parser")
+
         def is_dns_tr_type(klass):
             return klass and re.compile("dns_tr").search(klass)
         records = html.findAll("tr", class_=is_dns_tr_type)
 
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if records is None or len(records) == 0:
-            logger.warning("Domains not found in account")
+            LOGGER.warning("Domains not found in account")
         else:
             new_records = []
             for dns_tr in records:
@@ -175,20 +184,28 @@ class Provider(BaseProvider):
                 new_records.append(rec)
             records = new_records
             if id:
-                logger.debug("Filtering {} records by id: {}".format(len(records), id))
+                LOGGER.debug(
+                    "Filtering {} records by id: {}".format(len(records), id))
                 records = [record for record in records if record['id'] == id]
             if type:
-                logger.debug("Filtering {} records by type: {}".format(len(records), type))
-                records = [record for record in records if record['type'] == type]
+                LOGGER.debug("Filtering {} records by type: {}".format(
+                    len(records), type))
+                records = [
+                    record for record in records if record['type'] == type]
             if name:
-                logger.debug("Filtering {} records by name: {}".format(len(records), name))
+                LOGGER.debug("Filtering {} records by name: {}".format(
+                    len(records), name))
                 if name.endswith('.'):
                     name = name[:-1]
-                records = [record for record in records if name in record['name'] ]
+                records = [
+                    record for record in records if name in record['name']]
             if content:
-                logger.debug("Filtering {} records by content: {}".format(len(records), content.lower()))
-                records = [record for record in records if record['content'].lower() == content.lower()]
-            logger.debug("Final records ({}): {}".format(len(records), records))
+                LOGGER.debug("Filtering {} records by content: {}".format(
+                    len(records), content.lower()))
+                records = [
+                    record for record in records if record['content'].lower() == content.lower()]
+            LOGGER.debug("Final records ({}): {}".format(
+                len(records), records))
         return records
 
     # Create or update a record.
@@ -206,7 +223,7 @@ class Provider(BaseProvider):
             delete_record_ids = [record['id'] for record in records]
         else:
             delete_record_ids.append(identifier)
-        logger.debug("Record IDs to delete: {}".format(delete_record_ids))
+        LOGGER.debug("Record IDs to delete: {}".format(delete_record_ids))
         for rec_id in delete_record_ids:
             # POST to the DNS management UI with form values to delete the record
             delete_response = self.session.post(
@@ -224,6 +241,6 @@ class Provider(BaseProvider):
             # Parse the HTML response, if the <div> tag indicating success isn't found, error
             html = BeautifulSoup(delete_response.content, "html.parser")
             if html.find("div", {"id": "dns_status"}) is None:
-                logger.warning("Unable to delete record {}".format(rec_id))
+                LOGGER.warning("Unable to delete record {}".format(rec_id))
                 return False
         return True

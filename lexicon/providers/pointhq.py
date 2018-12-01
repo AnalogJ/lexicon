@@ -1,19 +1,22 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['pointhq.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify email address for authentication")
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify email address for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -38,9 +41,10 @@ class Provider(BaseProvider):
         if len(existing_records) == 1:
             return True
 
-        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {'record_type': type, 'name': self._relative_name(name), 'data': content}})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {
+                             'record_type': type, 'name': self._relative_name(name), 'data': content}})
 
-        logger.debug('create_record: %s', payload['zone_record'])
+        LOGGER.debug('create_record: %s', payload['zone_record'])
         return bool(payload['zone_record'])
 
     # List all records. Return an empty list if no records found
@@ -53,7 +57,8 @@ class Provider(BaseProvider):
         if name:
             filter['name'] = self._relative_name(name)
 
-        payload = self._get('/zones/{0}/records'.format(self.domain_id), filter)
+        payload = self._get(
+            '/zones/{0}/records'.format(self.domain_id), filter)
 
         records = []
         for record in payload:
@@ -68,9 +73,10 @@ class Provider(BaseProvider):
             records.append(processed_record)
 
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -84,9 +90,10 @@ class Provider(BaseProvider):
         if content:
             data['data'] = content
 
-        payload = self._put('/zones/{0}/records/{1}'.format(self.domain_id, identifier), {'zone_record': data})
+        payload = self._put(
+            '/zones/{0}/records/{1}'.format(self.domain_id, identifier), {'zone_record': data})
 
-        logger.debug('update_record: %s', payload)
+        LOGGER.debug('update_record: %s', payload)
         return bool(payload['zone_record'])
 
     # Delete an existing record.
@@ -98,17 +105,18 @@ class Provider(BaseProvider):
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
-        logger.debug('delete_records: %s', delete_record_id)
+
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete('/zones/{0}/records/{1}'.format(self.domain_id, record_id))
+            payload = self._delete(
+                '/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
+
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -116,10 +124,12 @@ class Provider(BaseProvider):
             query_params = {}
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self._get_provider_option('auth_username'), self._get_provider_option('auth_token')),
+                             auth=requests.auth.HTTPBasicAuth(self._get_provider_option(
+                                 'auth_username'), self._get_provider_option('auth_token')),
                              headers={
                                  'Content-Type': 'application/json',
                                  'Accept': 'application/json'
                              })
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()

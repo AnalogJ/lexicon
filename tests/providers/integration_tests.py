@@ -1,39 +1,42 @@
 import contextlib
-
-from importlib import import_module
+import os
 from builtins import object
 from functools import wraps
-
-from lexicon.providers.base import Provider as BaseProvider
-from lexicon.config import ConfigSource, DictConfigSource, ConfigResolver
+from importlib import import_module
 
 import pytest
 import vcr
-import os
+from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
+from lexicon.providers.base import Provider as BaseProvider
+
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
-record_mode = 'new_episodes' if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true' else 'none'
+record_mode = 'new_episodes' if os.environ.get(
+    'LEXICON_LIVE_TESTS', 'false') == 'true' else 'none'
 provider_vcr = vcr.VCR(
-        cassette_library_dir='tests/fixtures/cassettes',
-        record_mode=record_mode,
-        decode_compressed_response=True
+    cassette_library_dir='tests/fixtures/cassettes',
+    record_mode=record_mode,
+    decode_compressed_response=True
 )
 
-# Prepare custom decorator: it will start a casette in relevant folder for current provider, 
+# Prepare custom decorator: it will start a casette in relevant folder for current provider,
 #   and using the name of the test method as the cassette's name.
+
+
 def _vcr_integration_test(decorated):
     @wraps(decorated)
     def wrapper(self):
         with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{0}.yaml'.format(decorated.__name__)),
-                                        filter_headers=self._filter_headers(),
-                                        before_record_response=self._filter_response,
-                                        filter_query_parameters=self._filter_query_parameters(),
-                                        filter_post_data_parameters=self._filter_post_data_parameters()):
+                                       filter_headers=self._filter_headers(),
+                                       before_record_response=self._filter_response,
+                                       filter_query_parameters=self._filter_query_parameters(),
+                                       filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
     return wrapper
 
+
 class EngineOverrideConfigSource(ConfigSource):
-    
+
     def __init__(self, overrides):
         super(EngineOverrideConfigSource, self).__init__()
         self.overrides = overrides
@@ -43,8 +46,9 @@ class EngineOverrideConfigSource(ConfigSource):
         config_parameter = config_parameter.split(':')[-1]
         return self.overrides.get(config_parameter)
 
+
 class FallbackConfigSource(ConfigSource):
-    
+
     def __init__(self, fallback_fn):
         super(FallbackConfigSource, self).__init__()
         self.fallback_fn = fallback_fn
@@ -55,6 +59,7 @@ class FallbackConfigSource(ConfigSource):
             return self.fallback_fn(config_parameter[-1])
 
         return None
+
 
 """
 https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
@@ -80,6 +85,8 @@ Extended test suites can be skipped by adding the following snippet to the test_
             pytest.skip('Skipping extended suite')
 
 """
+
+
 class IntegrationTests(object):
 
     def __init__(self):
@@ -116,7 +123,8 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
         config = self._test_config()
-        config.add_config_source(DictConfigSource({'domain': 'thisisadomainidonotown.com'}), 0)
+        config.add_config_source(DictConfigSource(
+            {'domain': 'thisisadomainidonotown.com'}), 0)
         provider = self.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
@@ -127,27 +135,30 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_for_A_with_valid_name_and_content(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('A','localhost','127.0.0.1')
+        assert provider.create_record('A', 'localhost', '127.0.0.1')
 
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('CNAME','docs','docs.example.com')
+        assert provider.create_record('CNAME', 'docs', 'docs.example.com')
 
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_for_TXT_with_valid_name_and_content(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','_acme-challenge.test','challengetoken')
+        assert provider.create_record(
+            'TXT', '_acme-challenge.test', 'challengetoken')
 
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_for_TXT_with_full_name_and_content(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.full.{0}".format(self.domain),'challengetoken')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.full.{0}".format(self.domain), 'challengetoken')
 
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.fqdn.{0}.".format(self.domain),'challengetoken')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.fqdn.{0}.".format(self.domain), 'challengetoken')
 
     ###########################################################################
     # Provider.list_records()
@@ -160,8 +171,8 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_with_name_filter_should_return_record(self):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT','random.test','challengetoken')
-        records = provider.list_records('TXT','random.test')
+        provider.create_record('TXT', 'random.test', 'challengetoken')
+        records = provider.list_records('TXT', 'random.test')
         assert len(records) == 1
         assert records[0]['content'] == 'challengetoken'
         assert records[0]['type'] == 'TXT'
@@ -170,8 +181,10 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_with_full_name_filter_should_return_record(self):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT','random.fulltest.{0}'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT','random.fulltest.{0}'.format(self.domain))
+        provider.create_record('TXT', 'random.fulltest.{0}'.format(
+            self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'random.fulltest.{0}'.format(self.domain))
         assert len(records) == 1
         assert records[0]['content'] == 'challengetoken'
         assert records[0]['type'] == 'TXT'
@@ -180,8 +193,10 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT','random.fqdntest.{0}.'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT','random.fqdntest.{0}.'.format(self.domain))
+        provider.create_record('TXT', 'random.fqdntest.{0}.'.format(
+            self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'random.fqdntest.{0}.'.format(self.domain))
         assert len(records) == 1
         assert records[0]['content'] == 'challengetoken'
         assert records[0]['type'] == 'TXT'
@@ -190,8 +205,10 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_after_setting_ttl(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"ttl.fqdn.{0}.".format(self.domain),'ttlshouldbe3600')
-        records = provider.list_records('TXT','ttl.fqdn.{0}'.format(self.domain))
+        assert provider.create_record(
+            'TXT', "ttl.fqdn.{0}.".format(self.domain), 'ttlshouldbe3600')
+        records = provider.list_records(
+            'TXT', 'ttl.fqdn.{0}'.format(self.domain))
         assert len(records) == 1
         assert str(records[0]['ttl']) == str(3600)
 
@@ -213,29 +230,38 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_update_record_should_modify_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','orig.test','challengetoken')
-        records = provider.list_records('TXT','orig.test')
-        assert provider.update_record(records[0].get('id', None),'TXT','updated.test','challengetoken')
+        assert provider.create_record('TXT', 'orig.test', 'challengetoken')
+        records = provider.list_records('TXT', 'orig.test')
+        assert provider.update_record(records[0].get(
+            'id', None), 'TXT', 'updated.test', 'challengetoken')
 
     @_vcr_integration_test
     def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','orig.nameonly.test','challengetoken')
-        assert provider.update_record(None,'TXT','orig.nameonly.test','updated')
+        assert provider.create_record(
+            'TXT', 'orig.nameonly.test', 'challengetoken')
+        assert provider.update_record(
+            None, 'TXT', 'orig.nameonly.test', 'updated')
 
     @_vcr_integration_test
     def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','orig.testfull.{0}'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT','orig.testfull.{0}'.format(self.domain))
-        assert provider.update_record(records[0].get('id', None),'TXT','updated.testfull.{0}'.format(self.domain),'challengetoken')
+        assert provider.create_record(
+            'TXT', 'orig.testfull.{0}'.format(self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'orig.testfull.{0}'.format(self.domain))
+        assert provider.update_record(records[0].get(
+            'id', None), 'TXT', 'updated.testfull.{0}'.format(self.domain), 'challengetoken')
 
     @_vcr_integration_test
     def test_Provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','orig.testfqdn.{0}.'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT','orig.testfqdn.{0}.'.format(self.domain))
-        assert provider.update_record(records[0].get('id', None),'TXT','updated.testfqdn.{0}.'.format(self.domain),'challengetoken')
+        assert provider.create_record(
+            'TXT', 'orig.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'orig.testfqdn.{0}.'.format(self.domain))
+        assert provider.update_record(records[0].get(
+            'id', None), 'TXT', 'updated.testfqdn.{0}.'.format(self.domain), 'challengetoken')
 
     ###########################################################################
     # Provider.delete_record()
@@ -243,34 +269,42 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','delete.testid','challengetoken')
-        records = provider.list_records('TXT','delete.testid')
+        assert provider.create_record('TXT', 'delete.testid', 'challengetoken')
+        records = provider.list_records('TXT', 'delete.testid')
         assert provider.delete_record(records[0]['id'])
-        records = provider.list_records('TXT','delete.testid')
+        records = provider.list_records('TXT', 'delete.testid')
         assert len(records) == 0
 
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_by_filter_should_remove_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT','delete.testfilt','challengetoken')
-        assert provider.delete_record(None, 'TXT','delete.testfilt','challengetoken')
-        records = provider.list_records('TXT','delete.testfilt')
+        assert provider.create_record(
+            'TXT', 'delete.testfilt', 'challengetoken')
+        assert provider.delete_record(
+            None, 'TXT', 'delete.testfilt', 'challengetoken')
+        records = provider.list_records('TXT', 'delete.testfilt')
         assert len(records) == 0
 
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT', 'delete.testfull.{0}'.format(self.domain),'challengetoken')
-        assert provider.delete_record(None, 'TXT', 'delete.testfull.{0}'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT', 'delete.testfull.{0}'.format(self.domain))
+        assert provider.create_record(
+            'TXT', 'delete.testfull.{0}'.format(self.domain), 'challengetoken')
+        assert provider.delete_record(
+            None, 'TXT', 'delete.testfull.{0}'.format(self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'delete.testfull.{0}'.format(self.domain))
         assert len(records) == 0
 
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT', 'delete.testfqdn.{0}.'.format(self.domain),'challengetoken')
-        assert provider.delete_record(None, 'TXT', 'delete.testfqdn.{0}.'.format(self.domain),'challengetoken')
-        records = provider.list_records('TXT', 'delete.testfqdn.{0}.'.format(self.domain))
+        assert provider.create_record(
+            'TXT', 'delete.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+        assert provider.delete_record(
+            None, 'TXT', 'delete.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', 'delete.testfqdn.{0}.'.format(self.domain))
         assert len(records) == 0
 
     ###########################################################################
@@ -281,54 +315,71 @@ class IntegrationTests(object):
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_with_duplicate_records_should_be_noop(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
-        assert provider.create_record('TXT',"_acme-challenge.noop.{0}.".format(self.domain),'challengetoken')
-        records = provider.list_records('TXT',"_acme-challenge.noop.{0}.".format(self.domain))
+        assert provider.create_record(
+            'TXT', "_acme-challenge.noop.{0}.".format(self.domain), 'challengetoken')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.noop.{0}.".format(self.domain), 'challengetoken')
+        records = provider.list_records(
+            'TXT', "_acme-challenge.noop.{0}.".format(self.domain))
         assert len(records) == 1
 
     @pytest.mark.ext_suite_1
     @_vcr_integration_test
     def test_Provider_when_calling_create_record_multiple_times_should_create_record_set(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken1')
-        assert provider.create_record('TXT',"_acme-challenge.createrecordset.{0}.".format(self.domain),'challengetoken2')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.createrecordset.{0}.".format(self.domain), 'challengetoken1')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.createrecordset.{0}.".format(self.domain), 'challengetoken2')
 
     @pytest.mark.ext_suite_1
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
         provider = self._construct_authenticated_provider()
-        records = provider.list_records('TXT','filter.thisdoesnotexist.{0}'.format(self.domain))
+        records = provider.list_records(
+            'TXT', 'filter.thisdoesnotexist.{0}'.format(self.domain))
         assert len(records) == 0
 
     @pytest.mark.ext_suite_1
     @_vcr_integration_test
     def test_Provider_when_calling_list_records_should_handle_record_sets(self):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken1')
-        provider.create_record('TXT',"_acme-challenge.listrecordset.{0}.".format(self.domain),'challengetoken2')
-        records = provider.list_records('TXT','_acme-challenge.listrecordset.{0}.'.format(self.domain))
+        provider.create_record(
+            'TXT', "_acme-challenge.listrecordset.{0}.".format(self.domain), 'challengetoken1')
+        provider.create_record(
+            'TXT', "_acme-challenge.listrecordset.{0}.".format(self.domain), 'challengetoken2')
+        records = provider.list_records(
+            'TXT', '_acme-challenge.listrecordset.{0}.'.format(self.domain))
         assert len(records) == 2
 
     @pytest.mark.ext_suite_1
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_with_record_set_name_remove_all(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken1')
-        assert provider.create_record('TXT',"_acme-challenge.deleterecordset.{0}.".format(self.domain),'challengetoken2')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.deleterecordset.{0}.".format(self.domain), 'challengetoken1')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.deleterecordset.{0}.".format(self.domain), 'challengetoken2')
 
-        assert provider.delete_record(None, 'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
-        records = provider.list_records('TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+        assert provider.delete_record(
+            None, 'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+        records = provider.list_records(
+            'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
         assert len(records) == 0
 
     @pytest.mark.ext_suite_1
     @_vcr_integration_test
     def test_Provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken1')
-        assert provider.create_record('TXT',"_acme-challenge.deleterecordinset.{0}.".format(self.domain),'challengetoken2')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.deleterecordinset.{0}.".format(self.domain), 'challengetoken1')
+        assert provider.create_record(
+            'TXT', "_acme-challenge.deleterecordinset.{0}.".format(self.domain), 'challengetoken2')
 
-        assert provider.delete_record(None, 'TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain),'challengetoken1')
-        records = provider.list_records('TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain))
+        assert provider.delete_record(
+            None, 'TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain), 'challengetoken1')
+        records = provider.list_records(
+            'TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain))
         assert len(records) == 1
 
     # Private helpers, mimicing the auth_* options provided by the Client
@@ -361,12 +412,13 @@ class IntegrationTests(object):
         overrides = self._test_parameters_overrides()
         overrides['domain'] = self.domain
         config.with_config_source(EngineOverrideConfigSource(overrides))
-        
+
         # Then we get environment variables
         config.with_env()
-        
+
         # And finally we provide the fallback function
-        config.with_config_source(FallbackConfigSource(self._test_fallback_fn()))
+        config.with_config_source(
+            FallbackConfigSource(self._test_fallback_fn()))
 
         return config
 
@@ -374,7 +426,7 @@ class IntegrationTests(object):
         """
         This method gives an object whose keys are some provider or lexicon parameters expected during a test.
         If a parameter match on of the key during a test, the associated value will be used authoritatively.
-        
+
         Example:
         {'auth_token': 'AUTH_TOKEN'} => if the provider require to use auth_token, its value will be always AUTH_TOKEN.
 
@@ -416,10 +468,13 @@ class IntegrationTests(object):
 
     def _filter_headers(self):
         return []
+
     def _filter_query_parameters(self):
         return []
+
     def _filter_post_data_parameters(self):
         return []
+
     def _filter_response(self, response):
         """Filter any sensitive data out of the providers response. `response`
         is a Python object with the same structure as all the response sections

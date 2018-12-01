@@ -1,18 +1,20 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['nsone.net']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -32,7 +34,8 @@ class Provider(BaseProvider):
 
     def _get_record_set(self, name, type):
         try:
-            payload = self._get('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
+            payload = self._get(
+                '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 return None
@@ -61,26 +64,28 @@ class Provider(BaseProvider):
                 existing_record_set['answers'].append({
                     'answer': [content]
                 })
-                self._post('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), existing_record_set)
+                self._post(
+                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), existing_record_set)
         else:
             record = {
                 'type': type,
                 'domain': name,
                 'ttl': self._get_lexicon_option('ttl'),
                 'zone': self.domain_id,
-                'answers':[
+                'answers': [
                     {"answer": [content]}
                 ]
             }
             payload = {}
             try:
-                payload = self._put('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record)
+                payload = self._put(
+                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record)
             except requests.exceptions.HTTPError as e:
                 # http 400 is ok here, because the record probably already exists
                 if e.response.status_code == 400:
                     payload = {}
 
-            logger.debug('create_record: %s', 'id' in payload)
+            LOGGER.debug('create_record: %s', 'id' in payload)
 
         return True
 
@@ -105,10 +110,11 @@ class Provider(BaseProvider):
             # no such domain on ns1
             return None
 
-        record = self._get('/zones/{0}/{1}/{2}'.format(match['zone'], match['domain'], match['type']))
+        record = self._get(
+            '/zones/{0}/{1}/{2}'.format(match['zone'], match['domain'], match['type']))
         if record.get('message', None):
-            return None # {"message":"record not found"}
-        short_answers = [ x['answer'][0] for x in record['answers'] ]
+            return None  # {"message":"record not found"}
+        short_answers = [x['answer'][0] for x in record['answers']]
 
         # ensure a compatibility level with self.list_records
         record['short_answers'] = short_answers
@@ -165,12 +171,12 @@ class Provider(BaseProvider):
                     'name': record['domain'],
                     'ttl': record['ttl'],
                     'content': answer,
-                    #this id is useless unless your doing record linking. Lets return the original record identifier.
+                    # this id is useless unless your doing record linking. Lets return the original record identifier.
                     'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type'])
                 }
                 records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -178,7 +184,8 @@ class Provider(BaseProvider):
 
         data = {}
         payload = None
-        new_identifier = "{0}/{1}/{2}".format(self.domain_id, self._full_name(name),type)
+        new_identifier = "{0}/{1}/{2}".format(
+            self.domain_id, self._full_name(name), type)
 
         if(new_identifier == identifier or (type is None and name is None)):
             # the identifier hasnt changed, or type and name are both unspecified, only update the content.
@@ -191,10 +198,11 @@ class Provider(BaseProvider):
             # identifiers are different
             # get the old record, create a new one with updated data, delete the old record.
             old_record = self._get('/zones/{0}'.format(identifier))
-            self.create_record(type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
+            self.create_record(
+                type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
             self.delete_record(identifier)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -202,7 +210,7 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             name = self._full_name(name)
-            
+
             record_set = self._get_record_set(name, type)
             if record_set:
                 record_set_new = {
@@ -218,13 +226,15 @@ class Provider(BaseProvider):
                             record_set_new['answers'].append(answer)
 
                 if len(record_set_new['answers']) > 0:
-                    self._post('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record_set_new)
+                    self._post(
+                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record_set_new)
                 else:
-                    self._delete('/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
+                    self._delete(
+                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
         else:
             self._delete('/zones/{0}'.format(identifier))
-        
-        logger.debug('delete_record: %s', True)
+
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers
@@ -244,5 +254,6 @@ class Provider(BaseProvider):
                              data=json.dumps(data),
                              headers=default_headers,
                              auth=default_auth)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
         return r.json()
