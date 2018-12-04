@@ -39,6 +39,8 @@ def ProviderParser(subparser):
         "--auth-username", help="specify the API key username for authentication")
     subparser.add_argument(
         "--auth-token", help="specify secret key for authenticate=")
+    subparser.add_argument("--weight", help="specify the SRV record weight")
+    subparser.add_argument("--port", help="specify the SRV record port")
 
 
 class Provider(BaseProvider):
@@ -66,16 +68,37 @@ class Provider(BaseProvider):
         if not self.domain_id:
             raise Exception('No domain found')
 
+
+    def _compose_entry( self, type, content ):
+        
+        entry = {
+            'disableFlag': False,
+            'value': content
+        }
+
+        if type == 'SRV':
+            if self._get_provider_option('weight'):
+                entry['weight'] = self._get_provider_option('weight')
+            if self._get_provider_option('port'):
+                entry['port'] = self._get_provider_option('port')
+            if self._get_provider_option('priority'):
+                entry['priority'] = self._get_provider_option('priority')
+
+        return entry
+        
+
     # Create record. If record already exists with the same content, do nothing'
 
     def create_record(self, type, name, content):
+
         record = {
             'name': self._relative_name(name),
             'ttl': self._get_lexicon_option('ttl'),
-            'roundRobin':
-                [{'disableFlag': False,
-                  'value': content}],
+            'roundRobin': []
         }
+
+        record['roundRobin'].append( self._compose_entry( type, content ) )
+
         payload = {}
 
         try:
@@ -161,8 +184,7 @@ class Provider(BaseProvider):
         data['roundRobin'] = []
 
         for c in content:
-            data['roundRobin'].append({'disableFlag': False,
-                                       'value': c})
+            data['roundRobin'].append( self._compose_entry( type, c ) )
 
         payload = self._put(
             '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
