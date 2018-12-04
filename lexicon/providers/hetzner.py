@@ -167,9 +167,8 @@ class Provider(BaseProvider):
                         self._close_session()
                         return False
 
-                    else:
-                        keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass, delete_rrset.rdtype, record['ttl'], keep_rdatas)
-                        self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
+                    keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass, delete_rrset.rdtype, record['ttl'], keep_rdatas)
+                    self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
                 else:
                     self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
             # Create record
@@ -241,7 +240,6 @@ class Provider(BaseProvider):
                 return response
             except requests.exceptions.ConnectionError:
                 time.sleep(1)
-        raise requests.exceptions.ConnectionError
         return None
 
     def _build_identifier(self, type, name, content):
@@ -287,7 +285,7 @@ class Provider(BaseProvider):
         concatenate = True if self._get_provider_option('concatenate') == 'yes' else False
         name_update = name
         if identifier:
-            type, name = self._parse_identifier(identifier)
+            type, name, content = self._parse_identifier(identifier)
             name_update = name if name_update is None or name_update == name else name_update
         if action != 'list' and type and type != 'CNAME' and name and concatenate:
             if action != 'update' or name == name_update:
@@ -319,8 +317,8 @@ class Provider(BaseProvider):
             rrset = resolver.query(qname, rdtype)
             for rdata in rrset:
                 LOGGER.debug('DNS Lookup => {0} {1} {2} {3}'.format(rrset.qname.to_text(), dns.rdataclass.to_text(rrset.rdclass), dns.rdatatype.to_text(rrset.rdtype), rdata.to_text()))
-        except dns.exception.DNSException as e:
-            LOGGER.debug('DNS Lookup => {0}'.format(e))
+        except dns.exception.DNSException as error:
+            LOGGER.debug('DNS Lookup => {0}'.format(error))
         return rrset
 
     def _dns(self, zone, name):
@@ -328,7 +326,7 @@ class Provider(BaseProvider):
         nameservers = []
         rdtypes_ns = ['SOA', 'NS']
         rdtypes_ip = ['A', 'AAAA']
-        while (len(qname.labels) > 2 and len(nameservers) == 0):
+        while (len(qname.labels) > 2 and not nameservers):
             for rdtype_ns in rdtypes_ns:
                 for rdata_ns in self._dns_lookup(qname, rdtype_ns):
                     for rdtype_ip in rdtypes_ip:
@@ -337,8 +335,8 @@ class Provider(BaseProvider):
                                 nameservers.append(rdata_ip.to_text())
             qzone = qname.to_text()
             qname = qname.parent()
-        zone = qzone if len(nameservers) > 0 else zone
-        nameservers = nameservers if len(nameservers) > 0 else []
+        zone = qzone if nameservers else zone
+        nameservers = nameservers if nameservers else []
         LOGGER.debug('DNS Lookup => {0} IN NS {1}'.format(zone, ' '.join(nameservers)))
         return zone, nameservers
 
@@ -349,7 +347,7 @@ class Provider(BaseProvider):
             zone, nameservers = self._dns(zone, name)
         else:
             concat, max_concats, name = 0, 10, self._fqdn_name(name)
-            while concatenate == True:
+            while concatenate:
                 if concat >= max_concats:
                     LOGGER.error('Hetzner => Record {0} has more than {1} concatenated CNAME entries. Reduce the amount of CNAME concatenations!'.format(name, max_concats))
                     self._close_session()
@@ -357,7 +355,7 @@ class Provider(BaseProvider):
                 qname = cname if cname else name
                 zone, nameservers = self._dns(zone, qname)
                 rrset = self._dns_lookup(qname, 'CNAME')
-                if len(rrset) > 0:
+                if rrset:
                     concat += 1
                     cname = rrset[0].to_text()
                 else:
