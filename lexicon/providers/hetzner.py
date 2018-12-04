@@ -30,7 +30,7 @@ LOGGER = logging.getLogger(__name__)
 #   type, name(FQDN) and content(if possible FQDN), which when taken together are unique.
 #   Supported record identifier formats are:
 #   * hash - generated|verified by 'list' command; e.g. '30fa112'
-#   * raw  - concatenation of the record type, name(FQDN) and content(if possible FQDN) 
+#   * raw  - concatenation of the record type, name(FQDN) and content(if possible FQDN)
 #            with delimiter '/';
 #            e.g. 'TXT/example.com./challengetoken' or 'SRV/example.com./0 0 443 msx.example.com.'
 
@@ -40,14 +40,18 @@ def ProviderParser(subparser):
     subparser.add_argument('--auth-username', help='specify Hetzner Robot username')
     subparser.add_argument('--auth-password', help='specify Hetzner Robot password')
     subparser.add_argument('--concatenate',
-        help='use existent CNAME as record name for create|update|delete action: by default (yes); '
-        'Restriction: Only enabled if the record name or the raw FQDN record identifier '
-        '\'type/name/content\' is spezified, and additionally for update action the record name '
-        'remains the same',
-        default='yes'.encode('UTF-8'), choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
+                           help='use existent CNAME as record name for create|update|delete '
+                           'action: by default (yes); Restriction: Only enabled if the record '
+                           'name or the raw FQDN record identifier \'type/name/content\' is '
+                           'spezified, and additionally for update action the record name '
+                           'remains the same',
+                           default='yes'.encode('UTF-8'),
+                           choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
     subparser.add_argument('--propagated',
-        help='wait until record is propagated after succeeded create|update action: by default (yes)',
-        default='yes'.encode('UTF-8'), choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
+                           help='wait until record is propagated after succeeded create|update '
+                           'action: by default (yes)',
+                           default='yes'.encode('UTF-8'),
+                           choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
 
 class Provider(BaseProvider):
 
@@ -150,14 +154,14 @@ class Provider(BaseProvider):
 
         # Delete record
         delete_records = self.list_records(delete_type, delete_name, delete_content)
-        if len(delete_records) > 0:
+        if delete_records:
             for record in delete_records:
                 delete_rrset = self.zone['data'].get_rdataset(record['name']+'.', rdtype=record['type'])
                 keep_rdatas = []
                 for delete_rdata in delete_rrset:
                     if self._wellformed_content(record['type'], record['content']) != delete_rdata.to_text():
                         keep_rdatas.append(delete_rdata.to_text())
-                if len(keep_rdatas) > 0:
+                if keep_rdatas:
                     if delete_content is None:
                         LOGGER.error('Hetzner => Record lookup matching more than one record')
                         self._close_session()
@@ -204,14 +208,14 @@ class Provider(BaseProvider):
                 return True
 
         delete_records = self.list_records(type, name, content)
-        if len(delete_records) > 0:
+        if delete_records:
             for record in delete_records:
                 rrset = self.zone['data'].get_rdataset(record['name']+'.', rdtype=record['type'])
                 rdatas = []
                 for rdata in rrset:
                     if self._wellformed_content(record['type'], record['content']) != rdata.to_text():
                         rdatas.append(rdata.to_text())
-                if len(rdatas) > 0:
+                if rdatas:
                     rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype, record['ttl'], rdatas)
                     self.zone['data'].replace_rdataset(record['name']+'.', rdataset)
                 else:
@@ -283,14 +287,14 @@ class Provider(BaseProvider):
         concatenate = True if self._get_provider_option('concatenate') == 'yes' else False
         name_update = name
         if identifier:
-            type, name, content = self._parse_identifier(identifier)
+            type, name = self._parse_identifier(identifier)
             name_update = name if name_update is None or name_update == name else name_update
-        if action == 'list' or (action == 'update' and name != name_update) or type is None or type == 'CNAME' or name is None or not concatenate:
-            LOGGER.info('Hetzner => Disabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
-            return False, name
-
-        LOGGER.info('Hetzner => Enabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
-        return True, name
+        if action != 'list' and type and type != 'CNAME' and name and concatenate:
+            if action != 'update' or name == name_update:
+                LOGGER.info('Hetzner => Enabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
+                return True, name
+        LOGGER.info('Hetzner => Disabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
+        return False, name
 
     def _propagated(self, type, name, content):
         propagated = True if self._get_provider_option('propagated') == 'yes' else False
@@ -300,14 +304,13 @@ class Provider(BaseProvider):
                 for rdata in self._dns_lookup((self.cname if self.cname else self._fqdn_name(name)), type, self.nameservers):
                     if self._wellformed_content(type, content) == rdata.to_text():
                         return True
-
                 retry += 1
                 LOGGER.info('Hetzner => Record is not propagated, {0} retries remaining - wait 30s...'.format(max_retry - retry))
                 time.sleep(30)
         return False
 
-    def _dns_lookup(self, qname, rdtype, nameservers=[]):
-        if len(nameservers) == 0:
+    def _dns_lookup(self, qname, rdtype, nameservers=None):
+        if not nameservers:
             nameservers = ['8.8.8.8', '8.8.4.4']
         rrset = dns.rrset.from_text(qname, 0, 1, rdtype)
         try:
@@ -377,16 +380,18 @@ class Provider(BaseProvider):
     def _close_session(self):
         if self._get_provider_option('live_tests') is None:
             response = self._get('/login/logout/r/true')
-            if '{0}/logout'.format(self.auth_endpoint) not in response.url and response.status_code != 200:
-                LOGGER.error('Hetzner => Unable to safely close session')
-            else:
+            if '{0}/logout'.format(self.auth_endpoint) in response.url and response.status_code == 200:
                 LOGGER.info('Hetzner => Close session')
+            else:
+                LOGGER.error('Hetzner => Unable to safely close session')
             self.session = None
+            return True
+        return False
 
     def _extract_zone_id_from_js(self, string):
         regex = re.compile(r'\'(\d+)\'')
         match = regex.search(string)
-        if not match: 
+        if not match:
             return False
         return int(match.group(1))
 
@@ -439,6 +444,5 @@ class Provider(BaseProvider):
             if self._get_provider_option('live_tests') != 'false':
                 time.sleep(30)
             return True
-
         LOGGER.error('Hetzner => Unable to update data for zone ID {0}\n\n{1}'.format(self.domain_id, self.zone['data'].to_text(relativize=True)))
         return False
