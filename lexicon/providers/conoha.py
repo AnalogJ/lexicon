@@ -41,7 +41,7 @@ class Provider(BaseProvider):
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
         self.auth_token = self._get_provider_option('auth_token')
-        if self.auth_token:
+        if not self.auth_token:
             if not (self._get_provider_option('auth_username')
                     and self._get_provider_option('auth_password')):
                 raise Exception(
