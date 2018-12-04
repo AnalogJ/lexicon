@@ -21,7 +21,7 @@ class ConohaProviderTests(TestCase, IntegrationTests):
         return {'region': 'tyo1'}
 
     def _test_fallback_fn(self):
-        return lambda x: None if x in ('priority', 'auth_token') else 'placeholder_' + x
+        return lambda x: None if x in ('priority') else 'placeholder_' + x
 
     def _filter_post_data_parameters(self):
         return ['auth']
