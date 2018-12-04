@@ -53,11 +53,11 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             payload = self._get('/domains/')
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+        except requests.exceptions.HTTPError as err:
+            if err.response.status_code == 404:
                 payload = {}
             else:
-                raise e
+                raise err
 
         for domain in payload:
             if domain['name'] == self.domain:
@@ -69,14 +69,14 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
 
-    def _compose_entry( self, type, content ):
-        
+    def _compose_entry(self, type, content):
         entry = {
             'disableFlag': False,
             'value': content
         }
 
         if type == 'SRV':
+            # TODO: This will overwrite the current weight/port/priority for the SRV records
             if self._get_provider_option('weight'):
                 entry['weight'] = self._get_provider_option('weight')
             if self._get_provider_option('port'):
@@ -85,7 +85,6 @@ class Provider(BaseProvider):
                 entry['priority'] = self._get_provider_option('priority')
 
         return entry
-        
 
     # Create record. If record already exists with the same content, do nothing'
 
@@ -97,16 +96,16 @@ class Provider(BaseProvider):
             'roundRobin': []
         }
 
-        record['roundRobin'].append( self._compose_entry( type, content ) )
+        record['roundRobin'].append(self._compose_entry(type, content))
 
         payload = {}
 
         try:
             payload = self._post(
                 '/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.HTTPError as err:
             # If there is already a record with that name, we need to do an update.
-            if e.response.status_code == 400:
+            if err.response.status_code == 400:
                 existing_records = self.list_records(type=type, name=name)
                 new_content = [r['content'] for r in existing_records]
 
@@ -139,12 +138,12 @@ class Provider(BaseProvider):
         records = []
 
         for record in payload:
-            for rr in record['roundRobin']:
+            for entry in record['roundRobin']:
                 processed_record = {
                     'type': record['type'],
                     'name': '{0}.{1}'.format(record['name'], self.domain),
                     'ttl': record['ttl'],
-                    'content': rr['value'],
+                    'content': entry['value'],
                     'id': record['id']
                 }
 
@@ -184,7 +183,7 @@ class Provider(BaseProvider):
         data['roundRobin'] = []
 
         for c in content:
-            data['roundRobin'].append( self._compose_entry( type, c ) )
+            data['roundRobin'].append(self._compose_entry(type, c))
 
         payload = self._put(
             '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
@@ -247,7 +246,7 @@ class Provider(BaseProvider):
                 _records.append(record)
         return _records
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
@@ -268,15 +267,15 @@ class Provider(BaseProvider):
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
+        req = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=json.dumps(data),
                              headers=default_headers,
                              auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        req.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
         if action == 'DELETE' or action == 'PUT':
-            return r.text
+            return req.text
 
-        return r.json()
+        return req.json()
