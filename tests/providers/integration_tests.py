@@ -360,6 +360,7 @@ class IntegrationTests(object):
         # First we load the overrides
         overrides = self._test_parameters_overrides()
         overrides['domain'] = self.domain
+        overrides['provider_name'] = self.provider_name
         config.with_config_source(EngineOverrideConfigSource(overrides))
         
         # Then we get environment variables
