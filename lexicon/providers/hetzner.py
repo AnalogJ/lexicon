@@ -96,10 +96,8 @@ class Provider(BaseProvider):
 
         ttl = (rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl')
                else self._get_lexicon_option('ttl'))
-        rdataset = dns.rdataset.from_text(rrset.rdclass,
-                                          rrset.rdtype,
-                                          ttl,
-                                          self._wellformed_content(type, content))
+        rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
+                                          ttl, self._wellformed_content(type, content))
         rrset.update(rdataset)
         synced_change = self._post_zone()
         if synced_change:
@@ -117,7 +115,8 @@ class Provider(BaseProvider):
             rtype = dns.rdatatype.to_text(rdataset.rdtype)
             rname = rname.to_text()
             if ((not type or type == rtype)
-                and (not name or (self.cname if self.cname else self._fqdn_name(name)) == rname)):
+                    and (not name or (self.cname if self.cname
+                                      else self._fqdn_name(name)) == rname)):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._wellformed_content(rtype, content) == rdata):
@@ -127,7 +126,7 @@ class Provider(BaseProvider):
                             'name': self._full_name(rname),
                             'ttl': int(rdataset.ttl),
                             'content': raw_rdata,
-                            'id': self._build_identifier(rtype, rname, raw_rdata)
+                            'id': Provider._build_identifier(rtype, rname, raw_rdata)
                         }
                         records.append(data)
         if self._get_lexicon_option('action') == 'list':
@@ -178,8 +177,7 @@ class Provider(BaseProvider):
 
                     keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass,
                                                                 delete_rrset.rdtype,
-                                                                record['ttl'],
-                                                                keep_rdatas)
+                                                                record['ttl'], keep_rdatas)
                     self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
                 else:
                     self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
@@ -262,8 +260,9 @@ class Provider(BaseProvider):
                     raise requests.exceptions.ConnectionError
                 time.sleep(1)
         return response
-
-    def _build_identifier(self, type, name, content):
+    
+    @staticmethod
+    def _build_identifier(type, name, content):
         sha256 = hashlib.sha256()
         sha256.update((type + '/').encode('UTF-8'))
         sha256.update((name + '/').encode('UTF-8'))
@@ -400,7 +399,7 @@ class Provider(BaseProvider):
         response = session.request('POST', '{}/login_check'.format(self.auth_endpoint),
                                    data={'_username': username, '_password': password})
         if ('{}/account/masterdata'.format(self.auth_endpoint) == response.url
-            and response.status_code == 200):
+                and response.status_code == 200):
             response = session.request('GET', '{}/'.format(self.api_endpoint))
         if self.api_endpoint not in response.url or response.status_code != 200:
             LOGGER.error('Hetzner => Unable to open session to account %s', username)
@@ -412,7 +411,7 @@ class Provider(BaseProvider):
         if self._get_provider_option('live_tests') is None:
             response = self._get('/login/logout/r/true')
             if ('{}/logout'.format(self.auth_endpoint) in response.url
-                and response.status_code == 200):
+                    and response.status_code == 200):
                 LOGGER.info('Hetzner => Close session')
             else:
                 LOGGER.error('Hetzner => Unable to safely close session')
@@ -420,7 +419,8 @@ class Provider(BaseProvider):
             return True
         return False
 
-    def _extract_zone_id_from_js(self, string):
+    @staticmethod
+    def _extract_zone_id_from_js(string):
         regex = re.compile(r'\'(\d+)\'')
         match = regex.search(string)
         if not match:
@@ -437,7 +437,7 @@ class Provider(BaseProvider):
                      .findAll('table', attrs={'class': 'box_title'}))
             for box in boxes:
                 expand_box = dict(box.attrs)['onclick']
-                zone_id = self._extract_zone_id_from_js(expand_box)
+                zone_id = Provider._extract_zone_id_from_js(expand_box)
                 zone_name = (box.find('td', attrs={'class': 'title'})
                              .renderContents().decode('UTF-8'))
                 zones[zone_name] = zone_id
