@@ -482,10 +482,12 @@ class Provider(BaseProvider):
         # (delivering the update form as an 'error message')
         if post_response[language] in response.text:
             LOGGER.info('Hetzner => Update data for zone ID %d - wait 30s...\n\n%s',
-                        self.zone['id'], self.zone['data'].to_text(relativize=True))
+                        self.zone['id'],
+                        self.zone['data'].to_text(relativize=True).decode('UTF-8'))
             if self._get_provider_option('live_tests') != 'false':
                 time.sleep(30)
             return True
         LOGGER.error('Hetzner => Unable to update data for zone ID %d\n\n%s',
-                     self.zone['id'], self.zone['data'].to_text(relativize=True))
+                     self.zone['id'],
+                     self.zone['data'].to_text(relativize=True).decode('UTF-8'))
         return False
