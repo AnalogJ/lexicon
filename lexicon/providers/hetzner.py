@@ -260,54 +260,54 @@ class Provider(BaseProvider):
                     raise requests.exceptions.ConnectionError
                 time.sleep(1)
         return response
-    
+
     @staticmethod
-    def _build_identifier(type, name, content):
+    def _build_identifier(rdtype, name, content):
         sha256 = hashlib.sha256()
-        sha256.update((type + '/').encode('UTF-8'))
+        sha256.update((rdtype + '/').encode('UTF-8'))
         sha256.update((name + '/').encode('UTF-8'))
         sha256.update(content.encode('UTF-8'))
         return sha256.hexdigest()[0:7]
 
     def _parse_identifier(self, identifier):
-        type, name, content = None, None, None
+        rdtype, name, content = None, None, None
         if len(identifier) > 7:
             parts = identifier.split('/')
-            type, name, content = parts[0], parts[1], '/'.join(parts[2:])
+            rdtype, name, content = parts[0], parts[1], '/'.join(parts[2:])
         else:
             records = self.list_records()
             for record in records:
                 if record['id'] == identifier:
-                    type, name, content = record['type'], record['name']+'.', record['content']
-        return type, name, content
+                    rdtype, name, content = record['type'], record['name']+'.', record['content']
+        return rdtype, name, content
 
-    def _wellformed_content(self, type, content):
-        if type in ('TXT', 'LOC'):
+    def _wellformed_content(self, rdtype, content):
+        if rdtype in ('TXT', 'LOC'):
             if content[0] != '"':
                 content = '"' + content
             if content[-1] != '"':
                 content += '"'
-        if type in ('CNAME', 'MX', 'NS', 'SRV'):
+        if rdtype in ('CNAME', 'MX', 'NS', 'SRV'):
             if content[-1] != '.':
                 content = self._fqdn_name(content)
         return content
 
-    def _raw_content(self, type, content):
-        if type in ('TXT', 'LOC'):
+    def _raw_content(self, rdtype, content):
+        if rdtype in ('TXT', 'LOC'):
             content = content.strip('"')
         return content
 
     def _concatenate(self):
         action = self._get_lexicon_option('action')
         identifier = self._get_lexicon_option('identifier')
-        type = self._get_lexicon_option('type')
+        rdtype = self._get_lexicon_option('type')
         name = self._get_lexicon_option('name')
         concatenate = True if self._get_provider_option('concatenate') == 'yes' else False
         name_update = name
         if identifier:
-            type, name, content = self._parse_identifier(identifier)
+            rdtype, name, _ = self._parse_identifier(identifier)
             name_update = name if name_update is None or name_update == name else name_update
-        if action != 'list' and type and type != 'CNAME' and name and concatenate:
+        if action != 'list' and rdtype and rdtype != 'CNAME' and name and concatenate:
             if action != 'update' or name == name_update:
                 LOGGER.info('Hetzner => Enabled CNAME lookup, '
                             'see --concatenate option with \'lexicon hetzner --help\'')
@@ -316,15 +316,15 @@ class Provider(BaseProvider):
                     'see --concatenate option with \'lexicon hetzner --help\'')
         return False, name
 
-    def _propagated(self, type, name, content):
+    def _propagated(self, rdtype, name, content):
         propagated = True if self._get_provider_option('propagated') == 'yes' else False
         if propagated:
             retry, max_retry = 0, 30
             while retry < max_retry:
                 for rdata in self._dns_lookup((self.cname if self.cname
                                                else self._fqdn_name(name)),
-                                              type, self.nameservers):
-                    if self._wellformed_content(type, content) == rdata.to_text():
+                                              rdtype, self.nameservers):
+                    if self._wellformed_content(rdtype, content) == rdata.to_text():
                         return True
                 retry += 1
                 LOGGER.info('Hetzner => Record is not propagated, %d retries remaining - '
