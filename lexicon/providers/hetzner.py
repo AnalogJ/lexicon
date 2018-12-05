@@ -45,13 +45,13 @@ def ProviderParser(subparser):
                            'name or the raw FQDN record identifier \'type/name/content\' is '
                            'spezified, and additionally for update action the record name '
                            'remains the same',
-                           default='yes'.encode('UTF-8'),
-                           choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
+                           default=str('yes'),
+                           choices=['yes', 'no'])
     subparser.add_argument('--propagated',
                            help='wait until record is propagated after succeeded create|update '
                            'action: by default (yes)',
-                           default='yes'.encode('UTF-8'),
-                           choices=['yes'.encode('UTF-8'), 'no'.encode('UTF-8')])
+                           default=str('yes'),
+                           choices=['yes', 'no'])
 
 class Provider(BaseProvider):
 
@@ -72,11 +72,11 @@ class Provider(BaseProvider):
 
     # Authenticate against provider.
     def authenticate(self):
-        concatenate, name = self._concatenate()
-        zone, self.nameservers, self.cname = self._dns_cname(concatenate, self.domain, name)
+        name, concatenate = self._concatenate()
+        self.domain, self.nameservers, self.cname = self._dns_cname(self.domain, name, concatenate)
         self.session = self._open_session(self.username, self.password)
-        self.domain_id = self._get_zone_id(zone)
-        self.zone = self._get_zone(zone, self.domain_id)
+        self.domain_id = self._get_zone_id(self.domain)
+        self.zone = self._get_zone(self.domain, self.domain_id)
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, type, name, content):
@@ -306,20 +306,20 @@ class Provider(BaseProvider):
         name_update = name
         if identifier:
             rdtype, name, _ = self._parse_identifier(identifier)
-            name_update = name if name_update is None or name_update == name else name_update
+            name_update = self._fqdn_name(name_update) if name_update else name
         if action != 'list' and rdtype and rdtype != 'CNAME' and name and concatenate:
             if action != 'update' or name == name_update:
                 LOGGER.info('Hetzner => Enabled CNAME lookup, '
                             'see --concatenate option with \'lexicon hetzner --help\'')
-                return True, name
+                return name, True
         LOGGER.info('Hetzner => Disabled CNAME lookup, '
                     'see --concatenate option with \'lexicon hetzner --help\'')
-        return False, name
+        return name, False
 
     def _propagated(self, rdtype, name, content):
         propagated = True if self._get_provider_option('propagated') == 'yes' else False
         if propagated:
-            retry, max_retry = 0, 30
+            retry, max_retry = 0, 20
             while retry < max_retry:
                 for rdata in self._dns_lookup((self.cname if self.cname
                                                else self._fqdn_name(name)),
@@ -361,14 +361,13 @@ class Provider(BaseProvider):
                                                          rdtype_ip):
                             if rdata_ip.to_text() not in nameservers:
                                 nameservers.append(rdata_ip.to_text())
-            qzone = qname.to_text()
+            qzone = qname.to_text(True)
             qname = qname.parent()
         zone = qzone if nameservers else zone
-        nameservers = nameservers if nameservers else []
-        LOGGER.debug('DNS Lookup => %s IN NS %s', zone, ' '.join(nameservers))
+        LOGGER.debug('DNS Lookup => %s IN NS %s', zone+'.', ' '.join(nameservers))
         return zone, nameservers
 
-    def _dns_cname(self, concatenate, zone, name=None):
+    def _dns_cname(self, zone, name=None, concatenate=False):
         cname = None
         if not concatenate:
             name = self._fqdn_name(name) if name else zone+'.'
@@ -427,8 +426,8 @@ class Provider(BaseProvider):
             return False
         return int(match.group(1))
 
-    def _get_zone_id(self, zone):
-        qzone_name = dns.name.from_text(zone).to_unicode(True)
+    def _get_zone_id(self, zone_name):
+        qzone_name = dns.name.from_text(zone_name).to_unicode(True)
         qzone_id, zones, last_count, page = None, {}, -1, 1
         while (last_count != len(zones) and qzone_id is None):
             last_count = len(zones)
@@ -458,8 +457,8 @@ class Provider(BaseProvider):
         csrf_token = soup.find('input', attrs={'id': 'csrf_token'})['value']
         zone_file = (soup.find('textarea', attrs={'id': 'zonefile'})
                      .renderContents().decode('UTF-8'))
-        zone = {'data': dns.zone.from_text(zone_file, origin=zone_name, relativize=False),
-                'token': csrf_token}
+        zone = {'id': zone_id, 'name': zone_name, 'token': csrf_token,
+                'data': dns.zone.from_text(zone_file, origin=zone_name, relativize=False)}
         LOGGER.info('Hetzner => Get data for zone ID %d', zone_id)
         return zone
 
@@ -475,7 +474,7 @@ class Provider(BaseProvider):
     def _post_zone(self):
         language = self._get_language()
         post_response = {'de_DE': 'Vielen Dank', 'en_GB': 'Thank you for'}
-        response = self._post('/dns/update', data={'id': self.domain_id,
+        response = self._post('/dns/update', data={'id': self.zone['id'],
                                                    'zonefile': (self.zone['data']
                                                                 .to_text(relativize=True)),
                                                    '_csrf_token': self.zone['token']})
@@ -483,10 +482,10 @@ class Provider(BaseProvider):
         # (delivering the update form as an 'error message')
         if post_response[language] in response.text:
             LOGGER.info('Hetzner => Update data for zone ID %d - wait 30s...\n\n%s',
-                        self.domain_id, self.zone['data'].to_text(relativize=True))
+                        self.zone['id'], self.zone['data'].to_text(relativize=True))
             if self._get_provider_option('live_tests') != 'false':
                 time.sleep(30)
             return True
         LOGGER.error('Hetzner => Unable to update data for zone ID %d\n\n%s',
-                     self.domain_id, self.zone['data'].to_text(relativize=True))
+                     self.zone['id'], self.zone['data'].to_text(relativize=True))
         return False
