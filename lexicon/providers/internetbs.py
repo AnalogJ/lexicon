@@ -12,22 +12,25 @@
 # transfers/trades)."
 
 from __future__ import absolute_import
-
-import json
 import hashlib
+import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['topdns.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        "--auth-key", help="specify API key for authentication")
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication")
+
 
 class Provider(BaseProvider):
 
@@ -41,7 +44,7 @@ class Provider(BaseProvider):
             'searchTermFilter': self.domain
         })
 
-        logger.debug('authenticate debug: %s', payload)
+        LOGGER.debug('authenticate debug: %s', payload)
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
         if payload['status'] != 'SUCCESS':
@@ -57,7 +60,8 @@ class Provider(BaseProvider):
         if len(existing_records) > 0:
             return True
 
-        query = {'Type': type, 'FullRecordName': self._full_name(name), 'Value': content}
+        query = {'Type': type, 'FullRecordName': self._full_name(
+            name), 'Value': content}
         ttl = self._get_lexicon_option('ttl')
         if ttl:
             query['Ttl'] = ttl
@@ -65,7 +69,7 @@ class Provider(BaseProvider):
         # for MX records, query['Priority'] could be set (default is 10)
 
         payload = self._post('/Domain/DnsRecord/Add', None, query)
-        logger.debug('authenticate debug: %s', payload)
+        LOGGER.debug('authenticate debug: %s', payload)
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
         if payload['status'] != 'SUCCESS':
@@ -88,7 +92,8 @@ class Provider(BaseProvider):
             record_list = [record for record in record_list
                            if self._relative_name(record['name']) == cmp_name]
         if content:
-            record_list = [record for record in record_list if record['value'] == content]
+            record_list = [
+                record for record in record_list if record['value'] == content]
 
         records = []
         for record in record_list:
@@ -104,22 +109,24 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record.
     def update_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
-            to_update = next((r for r in records if r['id'] == identifier), None)
+            to_update = next(
+                (r for r in records if r['id'] == identifier), None)
             query = {'Type': to_update['type'],
                      'FullRecordName': to_update['name'],
                      'NewValue': content}
         else:
-            query = {'Type': type, 'FullRecordName': self._full_name(name), 'NewValue': content}
-        logger.debug('update_record query: %s', query)
+            query = {'Type': type, 'FullRecordName': self._full_name(
+                name), 'NewValue': content}
+        LOGGER.debug('update_record query: %s', query)
         payload = self._post('/Domain/DnsRecord/Update', None, query)
-        logger.debug('update_record payload: %s', payload)
+        LOGGER.debug('update_record payload: %s', payload)
 
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
@@ -132,7 +139,8 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
-            to_update = next((r for r in records if r['id'] == identifier), None)
+            to_update = next(
+                (r for r in records if r['id'] == identifier), None)
             if not to_update:
                 return True
             query = {'Type': to_update['type'],
@@ -149,9 +157,9 @@ class Provider(BaseProvider):
                 if not self.list_records(type, name):
                     return True
 
-        logger.debug('delete_record query: %s', query)
+        LOGGER.debug('delete_record query: %s', query)
         payload = self._post('/Domain/DnsRecord/Remove', None, query)
-        logger.debug('delete_record payload: %s', payload)
+        LOGGER.debug('delete_record payload: %s', payload)
 
         if not payload['status']:
             raise Exception('Internal error. This should not happen')
@@ -171,5 +179,6 @@ class Provider(BaseProvider):
         request = requests.request(action, self.api_endpoint + url, params=query_params,
                                    data=json.dumps(data),
                                    headers={'Content-Type': 'application/json'})
-        request.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        request.raise_for_status()
         return request.json()

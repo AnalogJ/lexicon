@@ -1,16 +1,15 @@
 from __future__ import absolute_import
 
-from builtins import object
-
-from lexicon.config import ConfigResolver
-from lexicon.config import legacy_config_resolver
+from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
 class Provider(object):
 
     """
-    This is the base class for all lexicon Providers. It provides common functionality and ensures that all implemented
-    Providers follow a standard ducktype. All standardized options will be provided here as defaults, but can be overwritten
+    This is the base class for all lexicon Providers.
+    It provides common functionality and ensures that all implemented
+    Providers follow a standard ducktype.
+    All standardized options will be provided here as defaults, but can be overwritten
     by environmental variables and cli arguments.
 
     Common options are:
@@ -31,8 +30,10 @@ class Provider(object):
     auth_password
     ...
 
-    :param provider_env_cli_options: is a ConfigResolver object that contains all the options for this provider, merged from CLI and Env variables.
+    :param config: is a ConfigResolver object that contains all the options
+    for this provider, merged from CLI and Env variables.
     """
+
     def __init__(self, config):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
@@ -45,13 +46,16 @@ class Provider(object):
         # Default ttl
         self.config.with_dict({'ttl': 3600})
 
-        self.provider_name = self.config.resolve('lexicon:provider_name') or self.config.resolve('lexicon:provider')
+        self.provider_name = self.config.resolve(
+            'lexicon:provider_name') or self.config.resolve('lexicon:provider')
         self.domain = self.config.resolve('lexicon:domain')
         self.domain_id = None
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
+    # Make any requests required to get the domain's id for this provider,
+    # so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def authenticate(self):
         raise NotImplementedError("Providers should implement this!")
 
@@ -75,7 +79,7 @@ class Provider(object):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
 
-    #Helpers
+    # Helpers
     def _request(self, action='GET',  url='/', data=None, query_params=None):
         raise NotImplementedError("Providers should implement this!")
 
@@ -92,22 +96,25 @@ class Provider(object):
         return self._request('DELETE', url, query_params=query_params)
 
     def _fqdn_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip('.')
+        # check if the record_name is fully specified
         if not record_name.endswith(self.domain):
             record_name = "{0}.{1}".format(record_name, self.domain)
-        return "{0}.".format(record_name) #return the fqdn name
+        return "{0}.".format(record_name)  # return the fqdn name
 
     def _full_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip('.')
+        # check if the record_name is fully specified
         if not record_name.endswith(self.domain):
             record_name = "{0}.{1}".format(record_name, self.domain)
         return record_name
 
     def _relative_name(self, record_name):
-        record_name = record_name.rstrip('.') # strip trailing period from fqdn if present
-        #check if the record_name is fully specified
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip('.')
+        # check if the record_name is fully specified
         if record_name.endswith(self.domain):
             record_name = record_name[:-len(self.domain)]
             record_name = record_name.rstrip('.')
@@ -115,7 +122,8 @@ class Provider(object):
 
     def _clean_TXT_record(self, record):
         if record['type'] == 'TXT':
-            # some providers have quotes around the TXT records, so we're going to remove those extra quotes
+            # Some providers have quotes around the TXT records,
+            # so we're going to remove those extra quotes
             record['content'] = record['content'][1:-1]
         return record
 

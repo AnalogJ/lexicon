@@ -1,17 +1,18 @@
 from __future__ import absolute_import
-
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
+
 
 try:
     import xmlrpclib
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['inwx.com']
+
 
 def ProviderParser(subparser):
     subparser.add_argument("--auth-username",
@@ -25,6 +26,7 @@ class Provider(BaseProvider):
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
+
     def __init__(self, config):
         """
         :param config: command line options
@@ -36,7 +38,8 @@ class Provider(BaseProvider):
         self._domain = self.domain.lower()
         self.domain_id = None
 
-        endpoint = self._get_provider_option('endpoint') or 'https://api.domrobot.com/xmlrpc/'
+        endpoint = self._get_provider_option(
+            'endpoint') or 'https://api.domrobot.com/xmlrpc/'
 
         self._api = xmlrpclib.ServerProxy(endpoint, allow_none=True)
 

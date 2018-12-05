@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from lexicon.providers.inwx import Provider
 from integration_tests import IntegrationTests
+from lexicon.providers.inwx import Provider
 
 
 class InwxProviderTests(TestCase, IntegrationTests):
@@ -14,4 +14,3 @@ class InwxProviderTests(TestCase, IntegrationTests):
         return {
             'endpoint': 'https://api.ote.domrobot.com/xmlrpc/'
         }
-

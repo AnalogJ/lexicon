@@ -1,8 +1,9 @@
 # Test for one implementation of the interface
-from lexicon.providers.cloudns import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
+
 import pytest
+from integration_tests import IntegrationTests
+from lexicon.providers.cloudns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -18,4 +19,3 @@ class CloudnsProviderTests(TestCase, IntegrationTests):
 
     def _filter_post_data_parameters(self):
         return ['auth-id', 'sub-auth-id', 'sub-auth-user', 'auth-password']
-

@@ -1,16 +1,19 @@
 """"Test for rackspace implementation of the lexicon interface"""
-from unittest import TestCase
-import pytest
 import logging
+from unittest import TestCase
 
-from lexicon.providers.rackspace import Provider
+import pytest
 from integration_tests import IntegrationTests
+from lexicon.providers.rackspace import Provider
+
 
 logger = logging.getLogger(__name__)
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
+
+
 class RackspaceProviderTests(TestCase, IntegrationTests):
     """Tests the rackspace provider"""
 

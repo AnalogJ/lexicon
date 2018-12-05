@@ -1,15 +1,19 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import absolute_import
-
 import importlib
 
 import tldextract
+from lexicon.config import (
+    ConfigResolver,
+    DictConfigSource,
+    legacy_config_resolver,
+    non_interactive_config_resolver,
+)
 
-from lexicon.config import ConfigResolver, DictConfigSource
-from lexicon.config import non_interactive_config_resolver, legacy_config_resolver
 
-class Client(object):
+class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
     """This is the Lexicon client, that will execute all the logic."""
+
     def __init__(self, config=None):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
@@ -27,8 +31,10 @@ class Client(object):
         runtime_config = {}
 
         # Process domain, strip subdomain
-        domain_parts = tldextract.extract(self.config.resolve('lexicon:domain'))
-        runtime_config['domain'] = '{0}.{1}'.format(domain_parts.domain, domain_parts.suffix)
+        domain_parts = tldextract.extract(
+            self.config.resolve('lexicon:domain'))
+        runtime_config['domain'] = '{0}.{1}'.format(
+            domain_parts.domain, domain_parts.suffix)
 
         if self.config.resolve('lexicon:delegated'):
             # handle delegated domain
@@ -39,7 +45,8 @@ class Client(object):
                     delegated = delegated[:-len(runtime_config.get('domain'))]
                     delegated = delegated.rstrip('.')
                 # update domain
-                runtime_config['domain'] = '{0}.{1}'.format(delegated, runtime_config.get('domain'))
+                runtime_config['domain'] = '{0}.{1}'.format(
+                    delegated, runtime_config.get('domain'))
 
         self.action = self.config.resolve('lexicon:action')
         self.provider_name = (self.config.resolve('lexicon:provider_name')
@@ -47,7 +54,8 @@ class Client(object):
 
         self.config.add_config_source(DictConfigSource(runtime_config), 0)
 
-        provider_module = importlib.import_module('lexicon.providers.' + self.provider_name)
+        provider_module = importlib.import_module(
+            'lexicon.providers.' + self.provider_name)
         provider_class = getattr(provider_module, 'Provider')
         self.provider = provider_class(self.config)
 
@@ -62,14 +70,16 @@ class Client(object):
         if self.action == 'create':
             return self.provider.create_record(record_type, name, content)
 
-        elif self.action == 'list':
+        if self.action == 'list':
             return self.provider.list_records(record_type, name, content)
 
-        elif self.action == 'update':
+        if self.action == 'update':
             return self.provider.update_record(identifier, record_type, name, content)
 
-        elif self.action == 'delete':
+        if self.action == 'delete':
             return self.provider.delete_record(identifier, record_type, name, content)
+
+        raise ValueError('Invalid action statement: {0}'.format(self.action))
 
     def _validate_config(self):
         if not self.config.resolve('lexicon:provider_name'):

@@ -1,24 +1,26 @@
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['online.net']
 
+
 def ProviderParser(subparser):
     subparser.add_argument("--auth-token", help="specify private api token")
+
 
 def to_data(type, content):
     if type == "TXT":
         return '"{0}"'.format(content)
     else:
         return content
+
 
 class Provider(BaseProvider):
 
@@ -57,7 +59,6 @@ class Provider(BaseProvider):
         self.passive_zone = passive_row['uuid_ref']
         self.update_passive_zone()
 
-
     def update_passive_zone(self):
         self._put(
             '/domain/{0}/version/{1}/zone_from_bind'.format(
@@ -69,7 +70,7 @@ class Provider(BaseProvider):
 
     def get_bind_zone(self):
         records = self.list_zone_records(self.active_zone)
-         # then convert records to bind format
+        # then convert records to bind format
         bindStr = ''
         for record in records:
             bindStr = bindStr + '{0} {1} IN {2} {3}{4}\n'.format(
@@ -93,8 +94,8 @@ class Provider(BaseProvider):
         self.active_zone = zone
         self.update_passive_zone()
 
-
     # Create record. If record already exists with the same content, do nothing'
+
     def create_record(self, type, name, content):
         try:
             record = self.find_record(type, name, content)
@@ -117,11 +118,11 @@ class Provider(BaseProvider):
                 record
             )
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     def find_zone_records(self, zone, type=None, name=None, content=None):
@@ -141,11 +142,13 @@ class Provider(BaseProvider):
             records = [record for record in records if record['type'] == type]
         if name:
             fullName = self._full_name(name)
-            records = [record for record in records if record['name'] == fullName]
+            records = [
+                record for record in records if record['name'] == fullName]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     def list_zone_records(self, zone_id):
@@ -162,12 +165,13 @@ class Provider(BaseProvider):
         else:
             return records[0]
 
-
     # Create or update a record.
+
     def update_record(self, id, type=None, name=None, content=None):
         record = self.find_record(type, name)
         if record is None:
-            logger.debug("cannot find record to update: %s %s %s", id, type, name)
+            LOGGER.debug("cannot find record to update: %s %s %s",
+                         id, type, name)
             return True
         if type:
             record['type'] = type
@@ -194,12 +198,12 @@ class Provider(BaseProvider):
             ), record)
 
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
         # If it didn't raise from the http status code, then we're good
-        logger.debug('update_record: %s', id)
+        LOGGER.debug('update_record: %s', id)
         return True
 
     # Delete an existing record.
@@ -207,9 +211,9 @@ class Provider(BaseProvider):
     def delete_record(self, id=None, type=None, name=None, content=None):
         records = self.list_records(type, name, content)
         if len(records) == 0:
-            logger.debug("Cannot find records %s %s %s", type, name, content)
+            LOGGER.debug("Cannot find records %s %s %s", type, name, content)
             return False
-        logger.debug('delete_records: %s records found', len(records))
+        LOGGER.debug('delete_records: %s records found', len(records))
         try:
             for record in records:
                 payload = self._delete('/domain/{0}/version/{1}/zone/{2}'.format(
@@ -218,12 +222,12 @@ class Provider(BaseProvider):
                     record['id']
                 ))
         except Exception as e:
-            logger.debug(e)
+            LOGGER.debug(e)
             return False
 
         self.enable_zone()
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     def _patch(self, url='/', data=None, query_params=None):
@@ -240,9 +244,9 @@ class Provider(BaseProvider):
         }
         if data is not None:
             if type(data) is str:
-                headers['Content-Type'] = 'text/plain';
+                headers['Content-Type'] = 'text/plain'
             else:
-                headers['Content-Type'] = 'application/json';
+                headers['Content-Type'] = 'application/json'
                 data = json.dumps(data)
 
         r = requests.request(
@@ -252,6 +256,7 @@ class Provider(BaseProvider):
             data=data,
             headers=headers
         )
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
 
         return r.text and r.json() or ''

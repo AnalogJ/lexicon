@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
-import sys
 import os
 import shutil
 import tempfile
 import contextlib
 import stat
+import sys
+import subprocess
 from io import StringIO
 
 from pylint import lint
@@ -63,34 +63,36 @@ def quality_gate(stats, upstream_master_note):
     Trigger various performance metrics on code quality.
     Raise if these metrics do not match expectations.
     """
-    quality_errors = []
+    quality_errors = False
 
     sys.stdout.write('=====================\n')
     sys.stdout.write('Quality gate results:\n')
     sys.stdout.write('=====================\n')
 
     if stats['fatal']:
-        quality_errors.append('Quality gate failure: {0} "fatal" issues have been found.\n'
-                              .format(stats['fatal']))
+        sys.stderr.write('1) Failure: {0} "fatal" issues have been found.\n'
+                         .format(stats['fatal']))
+        quality_errors = True
+    else:
+        sys.stdout.write('1) OK: No "fatal" issues have been found.\n')
 
     if stats['error']:
-        quality_errors.append('Quality gate failure: {0} "error" issues have been found.\n'
-                              .format(stats['error']))
+        sys.stderr.write('2) Failure: {0} "error" issues have been found.\n'
+                         .format(stats['error']))
+        quality_errors = True
+    else:
+        sys.stdout.write('2) OK. No "error" issues have been found.\n')
 
     if stats['global_note'] < upstream_master_note:
-        quality_errors.append('Quality gate failure: pylint global note is '
-                              'decreasing compared to master: {0} => {1}\n'
-                              .format(upstream_master_note, stats['global_note']))
+        sys.stderr.write('3) Failure: pylint global note is '
+                         'decreasing compared to master: {0} => {1}\n'
+                         .format(upstream_master_note, stats['global_note']))
+        quality_errors = True
     else:
-        sys.stdout.write('Info: pylint global is increasing or stable compared to master: '
+        sys.stdout.write('3) OK: pylint global is increasing or stable compared to master: '
                          '{0} => {1}\n'.format(upstream_master_note, stats['global_note']))
 
-    if quality_errors:
-        for quality_error in quality_errors:
-            sys.stderr.write(quality_error)
-        return 1
-
-    return 0
+    return 0 if not quality_errors else 1
 
 
 def main():

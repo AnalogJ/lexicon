@@ -1,13 +1,13 @@
 from __future__ import absolute_import
-
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
 
+
 try:
     from transip.service.objects import DnsEntry
 except ImportError:
-    try: 
+    try:
         from transip.service.dns import DnsEntry
     except ImportError:
         pass
@@ -17,13 +17,16 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-api-key", help="specify API private key for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication")
+    subparser.add_argument(
+        "--auth-api-key", help="specify API private key for authentication")
 
 
 class Provider(BaseProvider):
@@ -34,6 +37,7 @@ class Provider(BaseProvider):
     order is:
 
     """
+
     def provider_options(self):
         return {'ttl': 86400}
 
@@ -57,15 +61,15 @@ class Provider(BaseProvider):
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
-        ## This request will fail when the domain does not exist,
-        ## allowing us to check for existence
+        # This request will fail when the domain does not exist,
+        # allowing us to check for existence
         domain = self.domain
         try:
             self.client.get_info(domain)
         except:
             raise
             raise Exception("Could not retrieve information about {0}, "
-                                "is this domain yours?".format(domain))
+                            "is this domain yours?".format(domain))
         self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
@@ -74,7 +78,7 @@ class Provider(BaseProvider):
 
         if self._filter_records(records, type, name, content):
             # Nothing to do, record already exists
-            logger.debug('create_record: already exists')
+            LOGGER.debug('create_record: already exists')
             return True
 
         records.append(DnsEntry(**{
@@ -85,15 +89,17 @@ class Provider(BaseProvider):
         }))
 
         self.client.set_dns_entries(self.domain, records)
-        status = len(self.list_records(type, name, content, show_output=False)) >= 1
-        logger.debug('create_record: %s', status)
+        status = len(self.list_records(
+            type, name, content, show_output=False)) >= 1
+        LOGGER.debug('create_record: %s', status)
         return status
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None, show_output=True):
-        all_records = self._convert_records(self.client.get_info(self.domain).dnsEntries)
+        all_records = self._convert_records(
+            self.client.get_info(self.domain).dnsEntries)
         records = self._filter_records(
             records=all_records,
             type=type,
@@ -102,13 +108,14 @@ class Provider(BaseProvider):
         )
 
         if show_output:
-            logger.debug('list_records: %s', records)
+            LOGGER.debug('list_records: %s', records)
         return records
 
     # Update a record. Identifier must be specified.
     def update_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
-            raise Exception("At least one of type, name or content must be specified.")
+            raise Exception(
+                "At least one of type, name or content must be specified.")
 
         all_records = self.list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name)
@@ -122,9 +129,11 @@ class Provider(BaseProvider):
             "ttl": self._get_lexicon_option('ttl')
         })
 
-        self.client.set_dns_entries(self.domain, self._convert_records_back(all_records))
-        status = len(self.list_records(type, name, content, show_output=False)) >= 1
-        logger.debug('update_record: %s', status)
+        self.client.set_dns_entries(
+            self.domain, self._convert_records_back(all_records))
+        status = len(self.list_records(
+            type, name, content, show_output=False)) >= 1
+        LOGGER.debug('update_record: %s', status)
         return status
 
     # Delete an existing record.
@@ -132,17 +141,21 @@ class Provider(BaseProvider):
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
-            raise Exception("At least one of type, name or content must be specified.")
+            raise Exception(
+                "At least one of type, name or content must be specified.")
 
         all_records = self.list_records(show_output=False)
-        filtered_records = self._filter_records(all_records, type, name, content)
+        filtered_records = self._filter_records(
+            all_records, type, name, content)
 
         for record in filtered_records:
             all_records.remove(record)
 
-        self.client.set_dns_entries(self.domain, self._convert_records_back(all_records))
-        status = len(self.list_records(type, name, content, show_output=False)) == 0
-        logger.debug('delete_record: %s', status)
+        self.client.set_dns_entries(
+            self.domain, self._convert_records_back(all_records))
+        status = len(self.list_records(
+            type, name, content, show_output=False)) == 0
+        LOGGER.debug('delete_record: %s', status)
         return status
 
     def _full_name(self, record_name):

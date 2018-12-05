@@ -1,11 +1,11 @@
 from __future__ import absolute_import, print_function
-
-import sys
 import importlib
-import pytest
-
-from lexicon.providers.base import Provider as BaseProvider
+import sys
 from types import ModuleType
+
+import pytest
+from lexicon.providers.base import Provider as BaseProvider
+
 
 '''
 This unit test suite ensures that the lexicon client works correctly when used as a library.
@@ -16,6 +16,8 @@ In particular:
 '''
 
 # Fake provider to simulate the provider resolution from configuration, and to have excution traces when lexicon client is invoked
+
+
 class Provider(BaseProvider):
 
     def __init__(self, config):
@@ -36,35 +38,48 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         return {'action': 'delete', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
 
+
 # We register at runtime our fake provider as a module to allow lexicon to resolve it correctly
 module = ModuleType('lexicon.providers.fakeprovider')
 module.Provider = Provider
 sys.modules['lexicon.providers.fakeprovider'] = module
 
+
 @pytest.fixture
 def lexicon_client():
     return importlib.import_module('lexicon.client')
 
+
 def test_unknown_provider_raises_error(lexicon_client):
     with pytest.raises(ImportError):
-        lexicon_client.Client({'action': 'list', 'provider_name': 'unknownprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
+        lexicon_client.Client({'action': 'list', 'provider_name': 'unknownprovider',
+                               'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
+
 
 def test_missing_required_client_config_parameter_raises_error(lexicon_client):
     with pytest.raises(AttributeError):
-        lexicon_client.Client({'no-action': 'list', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
+        lexicon_client.Client({'no-action': 'list', 'provider_name': 'fakeprovider',
+                               'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
     with pytest.raises(AttributeError):
-        lexicon_client.Client({'action': 'list', 'no-provider_name': 'fakeprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
+        lexicon_client.Client({'action': 'list', 'no-provider_name': 'fakeprovider',
+                               'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
     with pytest.raises(AttributeError):
-        lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider', 'no-domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
+        lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider',
+                               'no-domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake'})
     with pytest.raises(AttributeError):
-        lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'no-type': 'TXT', 'name': 'fake', 'content': 'fake'})
+        lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider',
+                               'domain': 'example.com', 'no-type': 'TXT', 'name': 'fake', 'content': 'fake'})
+
 
 def test_missing_optional_client_config_parameter_does_not_raise_error(lexicon_client):
-    lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'type': 'TXT', 'no-name': 'fake', 'no-content': 'fake'})
+    lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider',
+                           'domain': 'example.com', 'type': 'TXT', 'no-name': 'fake', 'no-content': 'fake'})
+
 
 def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     lexicon_client = importlib.import_module('lexicon.client')
-    client = lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
+    client = lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider',
+                                    'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
     results = client.execute()
 
     out, _ = capsys.readouterr()
@@ -76,9 +91,11 @@ def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     assert results['name'] == 'fake'
     assert results['content'] == 'fake-content'
 
+
 def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     lexicon_client = importlib.import_module('lexicon.client')
-    client = lexicon_client.Client({'action': 'create', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
+    client = lexicon_client.Client({'action': 'create', 'provider_name': 'fakeprovider',
+                                    'domain': 'example.com', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
     results = client.execute()
 
     out, _ = capsys.readouterr()
@@ -90,9 +107,11 @@ def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     assert results['name'] == 'fake'
     assert results['content'] == 'fake-content'
 
+
 def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     lexicon_client = importlib.import_module('lexicon.client')
-    client = lexicon_client.Client({'action': 'update', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'identifier': 'fake-id', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
+    client = lexicon_client.Client({'action': 'update', 'provider_name': 'fakeprovider', 'domain': 'example.com',
+                                    'identifier': 'fake-id', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
     results = client.execute()
 
     out, _ = capsys.readouterr()
@@ -105,9 +124,11 @@ def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     assert results['name'] == 'fake'
     assert results['content'] == 'fake-content'
 
+
 def test_delete_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     lexicon_client = importlib.import_module('lexicon.client')
-    client = lexicon_client.Client({'action': 'delete', 'provider_name': 'fakeprovider', 'domain': 'example.com', 'identifier': 'fake-id', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
+    client = lexicon_client.Client({'action': 'delete', 'provider_name': 'fakeprovider', 'domain': 'example.com',
+                                    'identifier': 'fake-id', 'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
     results = client.execute()
 
     out, _ = capsys.readouterr()
@@ -119,4 +140,3 @@ def test_delete_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     assert results['type'] == 'TXT'
     assert results['name'] == 'fake'
     assert results['content'] == 'fake-content'
-
