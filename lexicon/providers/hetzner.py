@@ -85,15 +85,21 @@ class Provider(BaseProvider):
             self._close_session()
             return False
 
-        rrset = self.zone['data'].get_rdataset((self.cname if self.cname else self._fqdn_name(name)), rdtype=type, create=True)
+        rrset = self.zone['data'].get_rdataset((self.cname if self.cname
+                                                else self._fqdn_name(name)),
+                                               rdtype=type, create=True)
         for rdata in rrset:
             if self._wellformed_content(type, content) == rdata.to_text():
-                LOGGER.info('Hetzner => Record with content \'{0}\' already exists'.format(content))
+                LOGGER.info('Hetzner => Record with content \'%s\' already exists', content)
                 self._close_session()
                 return True
 
-        ttl = rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl') else self._get_lexicon_option('ttl')
-        rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl, self._wellformed_content(type, content))
+        ttl = (rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl')
+               else self._get_lexicon_option('ttl'))
+        rdataset = dns.rdataset.from_text(rrset.rdclass,
+                                          rrset.rdtype,
+                                          ttl,
+                                          self._wellformed_content(type, content))
         rrset.update(rdataset)
         synced_change = self._post_zone()
         if synced_change:
@@ -110,7 +116,8 @@ class Provider(BaseProvider):
         for rname, rdataset in rrsets:
             rtype = dns.rdatatype.to_text(rdataset.rdtype)
             rname = rname.to_text()
-            if (not type or type == rtype) and (not name or (self.cname if self.cname else self._fqdn_name(name)) == rname):
+            if ((not type or type == rtype)
+                and (not name or (self.cname if self.cname else self._fqdn_name(name)) == rname)):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._wellformed_content(rtype, content) == rdata):
@@ -141,7 +148,7 @@ class Provider(BaseProvider):
                 name = name if name else delete_name
                 content = content if content else delete_content
             else:
-                LOGGER.error('Hetzner => Record with identifier \'{0}\' does not exist'.format(identifier))
+                LOGGER.error('Hetzner => Record with identifier \'%s\' does not exist', identifier)
                 self._close_session()
                 return False
 
@@ -156,10 +163,12 @@ class Provider(BaseProvider):
         delete_records = self.list_records(delete_type, delete_name, delete_content)
         if delete_records:
             for record in delete_records:
-                delete_rrset = self.zone['data'].get_rdataset(record['name']+'.', rdtype=record['type'])
+                delete_rrset = self.zone['data'].get_rdataset(record['name']+'.',
+                                                              rdtype=record['type'])
                 keep_rdatas = []
                 for delete_rdata in delete_rrset:
-                    if self._wellformed_content(record['type'], record['content']) != delete_rdata.to_text():
+                    if self._wellformed_content(record['type'],
+                                                record['content']) != delete_rdata.to_text():
                         keep_rdatas.append(delete_rdata.to_text())
                 if keep_rdatas:
                     if delete_content is None:
@@ -167,21 +176,28 @@ class Provider(BaseProvider):
                         self._close_session()
                         return False
 
-                    keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass, delete_rrset.rdtype, record['ttl'], keep_rdatas)
+                    keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass,
+                                                                delete_rrset.rdtype,
+                                                                record['ttl'],
+                                                                keep_rdatas)
                     self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
                 else:
                     self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
             # Create record
-            rrset = self.zone['data'].get_rdataset((self.cname if self.cname else self._fqdn_name(name)), rdtype=type, create=True)
+            rrset = self.zone['data'].get_rdataset((self.cname if self.cname
+                                                    else self._fqdn_name(name)),
+                                                   rdtype=type, create=True)
             synced_create_change = False
             for rdata in rrset:
                 if self._wellformed_content(type, content) == rdata.to_text():
-                    LOGGER.info('Hetzner => Record with content \'{0}\' already exists'.format(content))
+                    LOGGER.info('Hetzner => Record with content \'%s\' already exists', content)
                     synced_create_change = True
                     break
             if not synced_create_change:
-                ttl = rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl') else self._get_lexicon_option('ttl')
-                renew_rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl, self._wellformed_content(type, content))
+                ttl = (rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl')
+                       else self._get_lexicon_option('ttl'))
+                renew_rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl,
+                                                        self._wellformed_content(type, content))
                 rrset.update(renew_rdataset)
             synced_change = self._post_zone()
             if synced_change:
@@ -202,7 +218,7 @@ class Provider(BaseProvider):
         if identifier:
             type, name, content = self._parse_identifier(identifier)
             if type is None or name is None or content is None:
-                LOGGER.info('Hetzner => Record with identifier \'{0}\' does not exist'.format(identifier))
+                LOGGER.info('Hetzner => Record with identifier \'%s\' does not exist', identifier)
                 self._close_session()
                 return True
 
@@ -212,10 +228,12 @@ class Provider(BaseProvider):
                 rrset = self.zone['data'].get_rdataset(record['name']+'.', rdtype=record['type'])
                 rdatas = []
                 for rdata in rrset:
-                    if self._wellformed_content(record['type'], record['content']) != rdata.to_text():
+                    if self._wellformed_content(record['type'],
+                                                record['content']) != rdata.to_text():
                         rdatas.append(rdata.to_text())
                 if rdatas:
-                    rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype, record['ttl'], rdatas)
+                    rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
+                                                           record['ttl'], rdatas)
                     self.zone['data'].replace_rdataset(record['name']+'.', rdataset)
                 else:
                     self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
@@ -235,12 +253,15 @@ class Provider(BaseProvider):
             query_params = {}
         for retry in range(10):
             try:
-                response = self.session.request(action, self.api_endpoint + url, params=query_params, data=data)
+                response = self.session.request(action, self.api_endpoint + url,
+                                                params=query_params, data=data)
                 response.raise_for_status()
-                return response
+                break
             except requests.exceptions.ConnectionError:
+                if retry == 9:
+                    raise requests.exceptions.ConnectionError
                 time.sleep(1)
-        return None
+        return response
 
     def _build_identifier(self, type, name, content):
         sha256 = hashlib.sha256()
@@ -289,9 +310,11 @@ class Provider(BaseProvider):
             name_update = name if name_update is None or name_update == name else name_update
         if action != 'list' and type and type != 'CNAME' and name and concatenate:
             if action != 'update' or name == name_update:
-                LOGGER.info('Hetzner => Enabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
+                LOGGER.info('Hetzner => Enabled CNAME lookup, '
+                            'see --concatenate option with \'lexicon hetzner --help\'')
                 return True, name
-        LOGGER.info('Hetzner => Disabled CNAME lookup, see --concatenate option with \'lexicon hetzner --help\'')
+        LOGGER.info('Hetzner => Disabled CNAME lookup, '
+                    'see --concatenate option with \'lexicon hetzner --help\'')
         return False, name
 
     def _propagated(self, type, name, content):
@@ -299,11 +322,14 @@ class Provider(BaseProvider):
         if propagated:
             retry, max_retry = 0, 30
             while retry < max_retry:
-                for rdata in self._dns_lookup((self.cname if self.cname else self._fqdn_name(name)), type, self.nameservers):
+                for rdata in self._dns_lookup((self.cname if self.cname
+                                               else self._fqdn_name(name)),
+                                              type, self.nameservers):
                     if self._wellformed_content(type, content) == rdata.to_text():
                         return True
                 retry += 1
-                LOGGER.info('Hetzner => Record is not propagated, {0} retries remaining - wait 30s...'.format(max_retry - retry))
+                LOGGER.info('Hetzner => Record is not propagated, %d retries remaining - '
+                            'wait 30s...', (max_retry - retry))
                 time.sleep(30)
         return False
 
@@ -316,9 +342,11 @@ class Provider(BaseProvider):
             resolver.nameservers = nameservers
             rrset = resolver.query(qname, rdtype)
             for rdata in rrset:
-                LOGGER.debug('DNS Lookup => {0} {1} {2} {3}'.format(rrset.qname.to_text(), dns.rdataclass.to_text(rrset.rdclass), dns.rdatatype.to_text(rrset.rdtype), rdata.to_text()))
+                LOGGER.debug('DNS Lookup => %s %s %s %s',
+                             rrset.qname.to_text(), dns.rdataclass.to_text(rrset.rdclass),
+                             dns.rdatatype.to_text(rrset.rdtype), rdata.to_text())
         except dns.exception.DNSException as error:
-            LOGGER.debug('DNS Lookup => {0}'.format(error))
+            LOGGER.debug('DNS Lookup => %s', error)
         return rrset
 
     def _dns(self, zone, name):
@@ -330,14 +358,15 @@ class Provider(BaseProvider):
             for rdtype_ns in rdtypes_ns:
                 for rdata_ns in self._dns_lookup(qname, rdtype_ns):
                     for rdtype_ip in rdtypes_ip:
-                        for rdata_ip in self._dns_lookup(rdata_ns.to_text().split(' ')[0], rdtype_ip):
+                        for rdata_ip in self._dns_lookup(rdata_ns.to_text().split(' ')[0],
+                                                         rdtype_ip):
                             if rdata_ip.to_text() not in nameservers:
                                 nameservers.append(rdata_ip.to_text())
             qzone = qname.to_text()
             qname = qname.parent()
         zone = qzone if nameservers else zone
         nameservers = nameservers if nameservers else []
-        LOGGER.debug('DNS Lookup => {0} IN NS {1}'.format(zone, ' '.join(nameservers)))
+        LOGGER.debug('DNS Lookup => %s IN NS %s', zone, ' '.join(nameservers))
         return zone, nameservers
 
     def _dns_cname(self, concatenate, zone, name=None):
@@ -349,7 +378,9 @@ class Provider(BaseProvider):
             concat, max_concats, name = 0, 10, self._fqdn_name(name)
             while concatenate:
                 if concat >= max_concats:
-                    LOGGER.error('Hetzner => Record {0} has more than {1} concatenated CNAME entries. Reduce the amount of CNAME concatenations!'.format(name, max_concats))
+                    LOGGER.error('Hetzner => Record %s has more than %d concatenated CNAME '
+                                 'entries. Reduce the amount of CNAME concatenations!',
+                                 name, max_concats)
                     self._close_session()
                     raise AssertionError
                 qname = cname if cname else name
@@ -360,25 +391,28 @@ class Provider(BaseProvider):
                     cname = rrset[0].to_text()
                 else:
                     concatenate = False
-        LOGGER.info('Hetzner => Record {0} has CNAME {1}'.format(name, cname))
+        LOGGER.info('Hetzner => Record %s has CNAME %s', name, cname)
         return zone, nameservers, cname
 
     def _open_session(self, username, password):
         session = requests.session()
-        session.request('GET', '{0}/login'.format(self.auth_endpoint))
-        response = session.request('POST', '{0}/login_check'.format(self.auth_endpoint), data={'_username': username, '_password': password})
-        if '{0}/account/masterdata'.format(self.auth_endpoint) == response.url and response.status_code == 200:
-            response = session.request('GET', '{0}/'.format(self.api_endpoint))
+        session.request('GET', '{}/login'.format(self.auth_endpoint))
+        response = session.request('POST', '{}/login_check'.format(self.auth_endpoint),
+                                   data={'_username': username, '_password': password})
+        if ('{}/account/masterdata'.format(self.auth_endpoint) == response.url
+            and response.status_code == 200):
+            response = session.request('GET', '{}/'.format(self.api_endpoint))
         if self.api_endpoint not in response.url or response.status_code != 200:
-            LOGGER.error('Hetzner => Unable to open session to account {0}'.format(username))
+            LOGGER.error('Hetzner => Unable to open session to account %s', username)
             raise AssertionError
-        LOGGER.info('Hetzner => Open session to account {0}'.format(username))
+        LOGGER.info('Hetzner => Open session to account %s', username)
         return session
 
     def _close_session(self):
         if self._get_provider_option('live_tests') is None:
             response = self._get('/login/logout/r/true')
-            if '{0}/logout'.format(self.auth_endpoint) in response.url and response.status_code == 200:
+            if ('{}/logout'.format(self.auth_endpoint) in response.url
+                and response.status_code == 200):
                 LOGGER.info('Hetzner => Close session')
             else:
                 LOGGER.error('Hetzner => Unable to safely close session')
@@ -398,49 +432,61 @@ class Provider(BaseProvider):
         qzone_id, zones, last_count, page = None, {}, -1, 1
         while (last_count != len(zones) and qzone_id is None):
             last_count = len(zones)
-            response = self._get('/dns/index/page/{0}'.format(page))
-            boxes = BeautifulSoup(response.text, 'html.parser').findAll('table', attrs={'class': 'box_title'})
+            response = self._get('/dns/index/page/{}'.format(page))
+            boxes = (BeautifulSoup(response.text, 'html.parser')
+                     .findAll('table', attrs={'class': 'box_title'}))
             for box in boxes:
                 expand_box = dict(box.attrs)['onclick']
                 zone_id = self._extract_zone_id_from_js(expand_box)
-                zone_name = box.find('td', attrs={'class': 'title'}).renderContents().decode('UTF-8')
+                zone_name = (box.find('td', attrs={'class': 'title'})
+                             .renderContents().decode('UTF-8'))
                 zones[zone_name] = zone_id
                 if zone_name == qzone_name:
                     qzone_id = zone_id
                     break
             page += 1
         if qzone_id is None:
-            LOGGER.error('Hetzner => ID for zone {0} does not exists'.format(zone))
+            LOGGER.error('Hetzner => ID for zone %s does not exists', qzone_name)
             self._close_session()
             raise AssertionError
-        LOGGER.info('Hetzner => Get ID {1} for zone {0}'.format(zone, qzone_id))
+        LOGGER.info('Hetzner => Get ID %d for zone %s', qzone_id, qzone_name)
         return qzone_id
 
     def _get_zone(self, zone_name, zone_id):
-        response = self._get('/dns/update/id/{0}'.format(zone_id))
+        response = self._get('/dns/update/id/{}'.format(zone_id))
         soup = BeautifulSoup(response.text, 'html.parser')
         csrf_token = soup.find('input', attrs={'id': 'csrf_token'})['value']
-        zone_file = soup.find('textarea', attrs={'id': 'zonefile'}).renderContents().decode('UTF-8')
-        zone = {'data': dns.zone.from_text(zone_file, origin=zone_name, relativize=False), 'token': csrf_token}
-        LOGGER.info('Hetzner => Get data for zone ID {0}'.format(zone_id))
+        zone_file = (soup.find('textarea', attrs={'id': 'zonefile'})
+                     .renderContents().decode('UTF-8'))
+        zone = {'data': dns.zone.from_text(zone_file, origin=zone_name, relativize=False),
+                'token': csrf_token}
+        LOGGER.info('Hetzner => Get data for zone ID %d', zone_id)
         return zone
 
     def _get_language(self):
         response = self._get('/preferences/culture')
         soup = BeautifulSoup(response.text, 'html.parser')
-        language = (soup.find('select', attrs={'id': 'culture'})).find('option', attrs={'selected': 'selected'})['value']
-        LOGGER.info('Hetzner => Get GUI language {0} for account {1}'.format(language, self.username))
+        language = ((soup.find('select', attrs={'id': 'culture'}))
+                    .find('option', attrs={'selected': 'selected'})['value'])
+        LOGGER.info('Hetzner => Get GUI language %s for account %s',
+                    language, self.username)
         return language
 
     def _post_zone(self):
         language = self._get_language()
         post_response = {'de_DE': 'Vielen Dank', 'en_GB': 'Thank you for'}
-        response = self._post('/dns/update', data={'id': self.domain_id, 'zonefile': self.zone['data'].to_text(relativize=True), '_csrf_token': self.zone['token']})
-        # ugly: the Hetzner Robot status code is always 200 (delivering the update form as an 'error message')
+        response = self._post('/dns/update', data={'id': self.domain_id,
+                                                   'zonefile': (self.zone['data']
+                                                                .to_text(relativize=True)),
+                                                   '_csrf_token': self.zone['token']})
+        # Hetzner Robot status code is always 200
+        # (delivering the update form as an 'error message')
         if post_response[language] in response.text:
-            LOGGER.info('Hetzner => Update data for zone ID {0} - wait 30s...\n\n{1}'.format(self.domain_id, self.zone['data'].to_text(relativize=True)))
+            LOGGER.info('Hetzner => Update data for zone ID %d - wait 30s...\n\n%s',
+                        self.domain_id, self.zone['data'].to_text(relativize=True))
             if self._get_provider_option('live_tests') != 'false':
                 time.sleep(30)
             return True
-        LOGGER.error('Hetzner => Unable to update data for zone ID {0}\n\n{1}'.format(self.domain_id, self.zone['data'].to_text(relativize=True)))
+        LOGGER.error('Hetzner => Unable to update data for zone ID %d\n\n%s',
+                     self.domain_id, self.zone['data'].to_text(relativize=True))
         return False

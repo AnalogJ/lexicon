@@ -23,7 +23,7 @@ class HetznerProviderTests(TestCase, IntegrationTests):
         return ['Cookie']
 
     def _filter_response(self, response):
-        for cookie in ['set-cookie','Set-Cookie']:
+        for cookie in ['set-cookie', 'Set-Cookie']:
             if cookie in response['headers']:
                 del response['headers'][cookie]
         if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
@@ -37,11 +37,9 @@ class HetznerProviderTests(TestCase, IntegrationTests):
         env_username = os.environ.get('LEXICON_HETZNER_AUTH_USERNAME')
         env_password = os.environ.get('LEXICON_HETZNER_AUTH_PASSWORD')
         env_live_tests = os.environ.get('LEXICON_LIVE_TESTS', 'false')
-        options = {
-            'auth_username': env_username,
-            'auth_password': env_password,
-            'concatenate': 'no',
-            'propagated': 'no',
-            'live_tests': env_live_tests
-        }
+        options = {'auth_username': env_username,
+                   'auth_password': env_password,
+                   'concatenate': 'no',
+                   'propagated': 'no',
+                   'live_tests': env_live_tests}
         return options
