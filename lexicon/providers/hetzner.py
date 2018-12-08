@@ -132,7 +132,7 @@ class Provider(BaseProvider):
                 }
             }
         }
-        
+
         self.account = ('robot' if self._get_provider_option('auth_account') != 'konsoleh'
                         else 'konsoleh')
         self.username = self._get_provider_option('auth_username')
@@ -148,7 +148,8 @@ class Provider(BaseProvider):
     # Authenticate against provider.
     def authenticate(self):
         name, concatenate = self._concatenate()
-        self.domain, self.nameservers, self.cname = self._get_dns_cname(self.domain, name, concatenate)
+        self.domain, self.nameservers, self.cname = self._get_dns_cname(self.domain, name,
+                                                                        concatenate)
         self.session = self._auth_session(self.username, self.password)
         self.domain_id = self._get_domain_id(self.domain)
         self.zone = self._get_zone(self.domain, self.domain_id)
@@ -358,7 +359,7 @@ class Provider(BaseProvider):
         return rdtype, name, content
 
     def _wellformed_content(self, rdtype, content):
-        if rdtype in ('TXT'):
+        if rdtype == 'TXT':
             if content[0] != '"':
                 content = '"' + content
             if content[-1] != '"':
@@ -369,7 +370,7 @@ class Provider(BaseProvider):
         return content
 
     def _raw_content(self, rdtype, content):
-        if rdtype in ('TXT'):
+        if rdtype == 'TXT':
             content = content.strip('"')
         return content
 
@@ -492,22 +493,22 @@ class Provider(BaseProvider):
     def _filter_dom(dom, filters, last_find_all=False):
         if isinstance(dom, six.string_types):
             dom = BeautifulSoup(dom, 'html.parser')
-        for idx, filter in enumerate(filters, start=1):
+        for idx, find in enumerate(filters, start=1):
             if not dom:
                 break
-            name = filter.get('name', None)
-            attrs = filter.get('attrs',{})
+            name = find.get('name', None)
+            attrs = find.get('attrs', {})
             if len(filters) == idx and last_find_all:
                 dom = dom.find_all(name, attrs=attrs) if name else dom.find_all(attrs=attrs)
             else:
                 dom = dom.find(name, attrs=attrs) if name else dom.find(attrs=attrs)
         return dom
-    
+
     def _auth_session(self, username, password):
         api = self.api[self.account]['auth']
         endpoint = api.get('endpoint', self.api[self.account]['endpoint'])
         session = requests.session()
-        response = session.request('GET', endpoint + api['GET'].get('url','/'))
+        response = session.request('GET', endpoint + api['GET'].get('url', '/'))
         dom = Provider._filter_dom(response.text, api['filter'])
         data = Provider._extract_hidden_data(dom)
         data[api['user']], data[api['pass']] = username, password
