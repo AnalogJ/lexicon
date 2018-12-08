@@ -1,0 +1,939 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/
+  response:
+    body: {string: "<form action=\"login.php\" enctype=\"application/x-www-form-urlencoded\"\
+        \ id=\"loginform\" method=\"POST\" name=\"konsolehlogin\">\n<input name=\"\
+        _csrf_name\" type=\"hidden\" value=\"csrf_220988785\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"00a3ca7e4e6689b731b12c3b6c7548c527e2e83d2253d8531a7580da214d5e352f802723a19d2dd066b9a55f84b89a1d646be64025b514982ee27e36cd4a1278\"\
+        />\n<img alt=\"konsoleH\" id=\"logo\" src=\"/templates/ui-default/de/images/konsoleh_login.gif\"\
+        />\n<div style=\"text-align:right;\"><a href=\"?UI_LANG=de\"><img alt=\"de\"\
+        \ height=\"10\" src=\"/templates/ui-default/de/images/flag_de.gif\" style=\"\
+        border:1px solid #0B3661;\" width=\"20\"/></a>\_<a href=\"?UI_LANG=en\"><img\
+        \ alt=\"en\" height=\"10\" src=\"/templates/ui-default/de/images/flag_en.gif\"\
+        \ style=\"border:1px solid #0B3661;\" width=\"20\"/></a></div> <noscript><p\
+        \ class=\"error\"><strong>Achtung:</strong> Javascript und Cookies m\xFCssen\
+        \ aktiviert sein.</p></noscript>\n<br/>\n<table border=\"0\" cellpadding=\"\
+        3\" cellspacing=\"0\" width=\"100%\">\n<tr>\n<td></td>\n<th colspan=\"3\"\
+        \ style=\"font-size:1.3em;font-weight: bold;\">Welchen Zugang m\xF6chten Sie\
+        \ nutzen?</th>\n<td></td>\n</tr>\n<tr>\n<td>\_</td>\n</tr>\n<tr>\n<td width=\"\
+        14%\"></td>\n<th style=\"padding-right: 1.2em;\" width=\"23%\"><a class=\"\
+        loginchooser active\" id=\"loginchooser_client\"><span>\uE824</span><br/>konsoleH<br/>Kundenaccount</a></th>\n\
+        <th style=\"padding-right: 1.2em;\" width=\"23%\"><a class=\"loginchooser\"\
+        \ id=\"loginchooser_domain\"><span>\uE825</span><br/>konsoleH<br/>Domainzugang</a></th>\n\
+        <th width=\"23%\"><a class=\"loginchooser\" id=\"loginchooser_mail\"><span>\uE826\
+        </span><br/>Webmail-<br/>zugang</a></th>\n<td width=\"18%\"></td>\n</tr>\n\
+        <tr>\n<td>\_</td>\n</tr>\n<tr>\n<th align=\"right\">Login</th>\n<td colspan=\"\
+        3\"><input class=\"textbox_input\" id=\"login_user_inputbox\" name=\"login_user_inputbox\"\
+        \ placeholder=\"Kundennummer (z.B. C123456789)\" tabindex=\"1\" type=\"text\"\
+        \ value=\"\"/></td>\n<td></td>\n</tr>\n<tr>\n<th align=\"right\">Passwort</th>\n\
+        <td colspan=\"3\"><input class=\"textbox_input\" id=\"login_pass_inputbox\"\
+        \ name=\"login_pass_inputbox\" placeholder=\"Kundenpasswort\" tabindex=\"\
+        2\" type=\"password\" value=\"\"/></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n\
+        <th colspan=\"3\"><input class=\"big_button\" style=\"width: 100%;\" tabindex=\"\
+        3\" title=\"Klicken Sie hier, um sich anzumelden.\" type=\"submit\" value=\"\
+        Anmelden\"/></th>\n<td></td>\n</tr>\n<tr>\n<td>\_</td>\n</tr>\n<tr>\n<td>\_\
+        </td>\n</tr>\n<tr>\n<td></td>\n<th colspan=\"3\"><a href=\"forgot_password.php\"\
+        \ tabindex=\"6\">Passwort vergessen?</a></th>\n<td></td>\n</tr>\n</table>\n\
+        </form>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: ['Upgrade, Keep-Alive']
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:18 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=100']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Upgrade: [h2]
+      Vary: [Accept-Encoding]
+      content-length: ['6791']
+    status: {code: 200, message: OK}
+- request:
+    body: ''
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['240']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.20.1]
+    method: POST
+    uri: https://konsoleh.your-server.de/login.php
+  response:
+    body: {string: None}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Length: ['0']
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:18 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=99']
+      Location: ['https://konsoleh.your-server.de/']
+      Pragma: [no-cache]
+      Server: [Apache]
+    status: {code: 302, message: Moved Temporarily}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\"><a href=\"?domain_number=D1279684218\" name=\"bettilaila.com\"\
+        \ onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\"></script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:18 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=98']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['6147']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/?page=1
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\"><a href=\"?domain_number=D1279684218\" name=\"bettilaila.com\"\
+        \ onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\"></script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:18 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=97']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['6147']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/?domain_number=D1279684218
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\" id=\"active\"><a href=\"?domain_number=D1279684218\" name=\"\
+        bettilaila.com\" onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\">    $('#sidemenu_progress').hide();\n\
+        \    $('#noresultset').show();</script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:19 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=96']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['9688']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/dns.php?dnsaction2=editintextarea
+  response:
+    body: {string: "<div id=\"content\"><div class=\"warning\">Bitte beachten Sie,\
+        \ dass es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n  \
+        \                             Sie wirksam werden.<br/><br/>\n<strong>Ebenso\
+        \ sollten Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n   \
+        \                            DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw.\
+        \ Ihrer E-Mail-Konten negativ\n                               beeintr\xE4\
+        chtigen k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n\
+        \                               keine Haftung.</strong><br/><br/>\n      \
+        \                         Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_721427397\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"ba8146b4750c7eefb50b09f85a2bfaa826fc309b8f0f92dbfed15c6cf9324ed5ca665cbdc9c07d1c69f3a27e0cd125c919218ea865b079feeb3a7368a0ad8c2c\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_548956046\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"d465946194e8712ff9417ea4df2bece2ad0c27c4d4df9c538f34c84199dd3e1883f94d53e736a3dbbde9d9a29dde353ae74b834a9ac86912e9a67465a2b3b386\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"28\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">$TTL 7200\n@   IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ (\n    2018120978   ; serial\n    86400        ; refresh\n    10800    \
+        \    ; retry\n    3600000      ; expire\n    86400 )      ; minimum\n \n@\
+        \                        IN NS      ns3.second-ns.de.\n@                 \
+        \       IN NS      ns.second-ns.com.\n@                        IN NS     \
+        \ ns1.your-server.de.\n \nlocalhost                IN A       127.0.0.1\n\
+        loopback                 IN CNAME   localhost\ndocs                3600 IN\
+        \ CNAME   docs.example.com\n_acme-challenge.createrecordset  3600 IN TXT \
+        \    \"challengetoken2\"\n_acme-challenge.createrecordset  3600 IN TXT   \
+        \  \"challengetoken1\"\n_acme-challenge.deleterecordinset  3600 IN TXT   \
+        \  \"challengetoken2\"\n_acme-challenge.fqdn  3600 IN TXT     \"challengetoken\"\
+        \n_acme-challenge.full  3600 IN TXT     \"challengetoken\"\n_acme-challenge.noop\
+        \  3600 IN TXT     \"challengetoken\"\n_acme-challenge.test  3600 IN TXT \
+        \    \"challengetoken\"\n</textarea>\n<input name=\"domain_to_use\" type=\"\
+        hidden\" value=\"bettilaila.com\"/>\n<input name=\"dnsaction2\" type=\"hidden\"\
+        \ value=\"zonereplace\"/>\n</div>\n<p>\n<input name=\"update\" type=\"submit\"\
+        \ value=\"Zonefile speichern\"/>\n</p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:19 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=95']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10885']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/?domain_number=D1279684218
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\" id=\"active\"><a href=\"?domain_number=D1279684218\" name=\"\
+        bettilaila.com\" onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\">    $('#sidemenu_progress').hide();\n\
+        \    $('#noresultset').show();</script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:20 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=94']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['9688']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/dns.php?dnsaction2=editintextarea
+  response:
+    body: {string: "<div id=\"content\"><div class=\"warning\">Bitte beachten Sie,\
+        \ dass es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n  \
+        \                             Sie wirksam werden.<br/><br/>\n<strong>Ebenso\
+        \ sollten Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n   \
+        \                            DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw.\
+        \ Ihrer E-Mail-Konten negativ\n                               beeintr\xE4\
+        chtigen k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n\
+        \                               keine Haftung.</strong><br/><br/>\n      \
+        \                         Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_1018840507\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"6224170f8af90d9044334830e454207d5cade548133c7eb35a81905cf6accdafa433728f1640715d5d740856d6dd73ab0dc0e13aa28ff81f793a3a8206ee5071\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_944173104\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"27abe1f6b7c5a93ca4ff21533c367c89b686c29f352e63b6742b247e0be3f8bd98f3faedbde41c4040d267e558ad3a56a7097d4fb7d99ea2854723294542393d\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"28\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">$TTL 7200\n@   IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ (\n    2018120978   ; serial\n    86400        ; refresh\n    10800    \
+        \    ; retry\n    3600000      ; expire\n    86400 )      ; minimum\n \n@\
+        \                        IN NS      ns3.second-ns.de.\n@                 \
+        \       IN NS      ns.second-ns.com.\n@                        IN NS     \
+        \ ns1.your-server.de.\n \nlocalhost                IN A       127.0.0.1\n\
+        loopback                 IN CNAME   localhost\ndocs                3600 IN\
+        \ CNAME   docs.example.com\n_acme-challenge.createrecordset  3600 IN TXT \
+        \    \"challengetoken2\"\n_acme-challenge.createrecordset  3600 IN TXT   \
+        \  \"challengetoken1\"\n_acme-challenge.deleterecordinset  3600 IN TXT   \
+        \  \"challengetoken2\"\n_acme-challenge.fqdn  3600 IN TXT     \"challengetoken\"\
+        \n_acme-challenge.full  3600 IN TXT     \"challengetoken\"\n_acme-challenge.noop\
+        \  3600 IN TXT     \"challengetoken\"\n_acme-challenge.test  3600 IN TXT \
+        \    \"challengetoken\"\n</textarea>\n<input name=\"domain_to_use\" type=\"\
+        hidden\" value=\"bettilaila.com\"/>\n<input name=\"dnsaction2\" type=\"hidden\"\
+        \ value=\"zonereplace\"/>\n</div>\n<p>\n<input name=\"update\" type=\"submit\"\
+        \ value=\"Zonefile speichern\"/>\n</p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:20 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=93']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10886']
+    status: {code: 200, message: OK}
+- request:
+    body: dnsaction2=zonereplace&domain_to_use=bettilaila.com&zone_file1=%40+7200+IN+SOA+ns1.your-server.de.+postmaster.your-server.de.+2018120978+86400+10800+3600000+86400%0A%40+7200+IN+NS+ns3.second-ns.de.%0A%40+7200+IN+NS+ns.second-ns.com.%0A%40+7200+IN+NS+ns1.your-server.de.%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken2%22%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken1%22%0A_acme-challenge.deleterecordinset+3600+IN+TXT+%22challengetoken2%22%0A_acme-challenge.deleterecordset+3600+IN+TXT+%22challengetoken1%22%0Adocs+3600+IN+CNAME+docs.example.com%0A_acme-challenge.fqdn+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.full+3600+IN+TXT+%22challengetoken%22%0Alocalhost+7200+IN+A+127.0.0.1%0Aloopback+7200+IN+CNAME+localhost%0A_acme-challenge.noop+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.test+3600+IN+TXT+%22challengetoken%22%0A
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1042']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.20.1]
+    method: POST
+    uri: https://konsoleh.your-server.de/dns.php
+  response:
+    body: {string: "<div id=\"content\"> <div class=\"ok\">Das DNS-Zonefile wurde\
+        \ erfolgreich ersetzt</div><div class=\"warning\">Bitte beachten Sie, dass\
+        \ es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n       \
+        \                        Sie wirksam werden.<br/><br/>\n<strong>Ebenso sollten\
+        \ Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n           \
+        \                    DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw. Ihrer\
+        \ E-Mail-Konten negativ\n                               beeintr\xE4chtigen\
+        \ k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n     \
+        \                          keine Haftung.</strong><br/><br/>\n           \
+        \                    Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_293768274\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"3cad8aa7af279ffcd08fb5c8612611e5f3e75be65572a9a897bf5f7d7938d7ff9a2544b439bc1dc446d867fa800aee441e33c82d03ee4fb3eec09b77c1fb31f0\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_1799543420\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"d5c7a69774d480df4e0c2003fab361383e00624ff4220768a1714086222c6b9653438c13230b8d4299ad783df834cb48636d825fbdae63413089d64843ab5b9f\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"21\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">@ 7200 IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ 2018120978 86400 10800 3600000 86400\n@ 7200 IN NS ns3.second-ns.de.\n@\
+        \ 7200 IN NS ns.second-ns.com.\n@ 7200 IN NS ns1.your-server.de.\n_acme-challenge.createrecordset\
+        \ 3600 IN TXT \"challengetoken2\"\n_acme-challenge.createrecordset 3600 IN\
+        \ TXT \"challengetoken1\"\n_acme-challenge.deleterecordinset 3600 IN TXT \"\
+        challengetoken2\"\n_acme-challenge.deleterecordset 3600 IN TXT \"challengetoken1\"\
+        \ndocs 3600 IN CNAME docs.example.com\n_acme-challenge.fqdn 3600 IN TXT \"\
+        challengetoken\"\n_acme-challenge.full 3600 IN TXT \"challengetoken\"\nlocalhost\
+        \ 7200 IN A 127.0.0.1\nloopback 7200 IN CNAME localhost\n_acme-challenge.noop\
+        \ 3600 IN TXT \"challengetoken\"\n_acme-challenge.test 3600 IN TXT \"challengetoken\"\
+        \n</textarea>\n<input name=\"domain_to_use\" type=\"hidden\" value=\"bettilaila.com\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"zonereplace\"/>\n</div>\n\
+        <p>\n<input name=\"update\" type=\"submit\" value=\"Zonefile speichern\"/>\n\
+        </p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:21 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=92']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10769']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/?domain_number=D1279684218
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\" id=\"active\"><a href=\"?domain_number=D1279684218\" name=\"\
+        bettilaila.com\" onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\">    $('#sidemenu_progress').hide();\n\
+        \    $('#noresultset').show();</script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:21 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=91']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['9688']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/dns.php?dnsaction2=editintextarea
+  response:
+    body: {string: "<div id=\"content\"><div class=\"warning\">Bitte beachten Sie,\
+        \ dass es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n  \
+        \                             Sie wirksam werden.<br/><br/>\n<strong>Ebenso\
+        \ sollten Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n   \
+        \                            DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw.\
+        \ Ihrer E-Mail-Konten negativ\n                               beeintr\xE4\
+        chtigen k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n\
+        \                               keine Haftung.</strong><br/><br/>\n      \
+        \                         Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_958806131\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"c2eb7e173739df6854486a47c852073116779b394a8e7cc23f413b9ad21bce2bb309bda6116e8879b0d0c5338318e4ade47f837901fced66d22bcf4ff5d3e921\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_1634516205\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"257fb1b8dfa7f449624864c36d149e64023a5cdc2634049338e6789576bfc3896c6009c3631df6b7a32a5ec4c6348896c0b49bcad60c5588e4991fc657f015be\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"29\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">$TTL 7200\n@   IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ (\n    2018120979   ; serial\n    86400        ; refresh\n    10800    \
+        \    ; retry\n    3600000      ; expire\n    86400 )      ; minimum\n \n@\
+        \                        IN NS      ns3.second-ns.de.\n@                 \
+        \       IN NS      ns.second-ns.com.\n@                        IN NS     \
+        \ ns1.your-server.de.\n \nlocalhost                IN A       127.0.0.1\n\
+        loopback                 IN CNAME   localhost\ndocs                3600 IN\
+        \ CNAME   docs.example.com\n_acme-challenge.createrecordset  3600 IN TXT \
+        \    \"challengetoken2\"\n_acme-challenge.createrecordset  3600 IN TXT   \
+        \  \"challengetoken1\"\n_acme-challenge.deleterecordinset  3600 IN TXT   \
+        \  \"challengetoken2\"\n_acme-challenge.deleterecordset  3600 IN TXT     \"\
+        challengetoken1\"\n_acme-challenge.fqdn  3600 IN TXT     \"challengetoken\"\
+        \n_acme-challenge.full  3600 IN TXT     \"challengetoken\"\n_acme-challenge.noop\
+        \  3600 IN TXT     \"challengetoken\"\n_acme-challenge.test  3600 IN TXT \
+        \    \"challengetoken\"\n</textarea>\n<input name=\"domain_to_use\" type=\"\
+        hidden\" value=\"bettilaila.com\"/>\n<input name=\"dnsaction2\" type=\"hidden\"\
+        \ value=\"zonereplace\"/>\n</div>\n<p>\n<input name=\"update\" type=\"submit\"\
+        \ value=\"Zonefile speichern\"/>\n</p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:22 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=90']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10963']
+    status: {code: 200, message: OK}
+- request:
+    body: dnsaction2=zonereplace&domain_to_use=bettilaila.com&zone_file1=%40+7200+IN+SOA+ns1.your-server.de.+postmaster.your-server.de.+2018120978+86400+10800+3600000+86400%0A%40+7200+IN+NS+ns3.second-ns.de.%0A%40+7200+IN+NS+ns.second-ns.com.%0A%40+7200+IN+NS+ns1.your-server.de.%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken2%22%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken1%22%0A_acme-challenge.deleterecordinset+3600+IN+TXT+%22challengetoken2%22%0A_acme-challenge.deleterecordset+3600+IN+TXT+%22challengetoken1%22%0A_acme-challenge.deleterecordset+3600+IN+TXT+%22challengetoken2%22%0Adocs+3600+IN+CNAME+docs.example.com%0A_acme-challenge.fqdn+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.full+3600+IN+TXT+%22challengetoken%22%0Alocalhost+7200+IN+A+127.0.0.1%0Aloopback+7200+IN+CNAME+localhost%0A_acme-challenge.noop+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.test+3600+IN+TXT+%22challengetoken%22%0A
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1111']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.20.1]
+    method: POST
+    uri: https://konsoleh.your-server.de/dns.php
+  response:
+    body: {string: "<div id=\"content\"> <div class=\"ok\">Das DNS-Zonefile wurde\
+        \ erfolgreich ersetzt</div><div class=\"warning\">Bitte beachten Sie, dass\
+        \ es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n       \
+        \                        Sie wirksam werden.<br/><br/>\n<strong>Ebenso sollten\
+        \ Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n           \
+        \                    DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw. Ihrer\
+        \ E-Mail-Konten negativ\n                               beeintr\xE4chtigen\
+        \ k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n     \
+        \                          keine Haftung.</strong><br/><br/>\n           \
+        \                    Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_1674780497\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"98e95c35e2057a5bc0c25cbe29f1becea277b0fff2ef231cc1f0f2396ca89c151278e557a80d304678740c42bc7f3b64eca47bb22dc73cffc279b70a6d1426f1\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_1732436168\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"02c97d56f92fc1214b07583b3e2e6954e3476dbb2146aef727a52dc16c25d245b591bab7dfe2510cff49ccadac6ef475cce837c009ce46ca4d9383881ee30782\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"22\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">@ 7200 IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ 2018120978 86400 10800 3600000 86400\n@ 7200 IN NS ns3.second-ns.de.\n@\
+        \ 7200 IN NS ns.second-ns.com.\n@ 7200 IN NS ns1.your-server.de.\n_acme-challenge.createrecordset\
+        \ 3600 IN TXT \"challengetoken2\"\n_acme-challenge.createrecordset 3600 IN\
+        \ TXT \"challengetoken1\"\n_acme-challenge.deleterecordinset 3600 IN TXT \"\
+        challengetoken2\"\n_acme-challenge.deleterecordset 3600 IN TXT \"challengetoken1\"\
+        \n_acme-challenge.deleterecordset 3600 IN TXT \"challengetoken2\"\ndocs 3600\
+        \ IN CNAME docs.example.com\n_acme-challenge.fqdn 3600 IN TXT \"challengetoken\"\
+        \n_acme-challenge.full 3600 IN TXT \"challengetoken\"\nlocalhost 7200 IN A\
+        \ 127.0.0.1\nloopback 7200 IN CNAME localhost\n_acme-challenge.noop 3600 IN\
+        \ TXT \"challengetoken\"\n_acme-challenge.test 3600 IN TXT \"challengetoken\"\
+        \n</textarea>\n<input name=\"domain_to_use\" type=\"hidden\" value=\"bettilaila.com\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"zonereplace\"/>\n</div>\n\
+        <p>\n<input name=\"update\" type=\"submit\" value=\"Zonefile speichern\"/>\n\
+        </p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:23 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=89']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10842']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/?domain_number=D1279684218
+  response:
+    body: {string: "<div id=\"content\"><script src=\"/templates/ui-default/de/javascripts/domainlist.js\"\
+        \ type=\"text/javascript\"></script>\n<div id=\"domainlistsearch\">\n<label\
+        \ for=\"search\">Domain suchen:</label>\n<input id=\"search\" name=\"search_domainlist\"\
+        \ type=\"text\" value=\"\"/>\n<label for=\"filter\">Filter:</label>\n<select\
+        \ id=\"filter\">\n<option value=\"0\">Aktive</option>\n<option value=\"1\"\
+        >Fertiggestellt</option>\n<option value=\"2\">In Bearbeitung</option>\n<option\
+        \ value=\"3\">In K\xFCndigung</option>\n<option value=\"4\">Gesperrt</option>\n\
+        <option value=\"5\">Gek\xFCndigt</option>\n</select>\n<input id=\"toggle\"\
+        \ type=\"checkbox\"/>\_<label for=\"toggle\">Ausklappen</label>\n</div>\n\
+        <form action=\"\" enctype=\"multipart/form-data\" method=\"post\" name=\"\
+        domain_listing\" onsubmit=\"return false;\">\n<input name=\"type\" type=\"\
+        hidden\" value=\"\"/>\n<div>\n<p class=\"info\" id=\"noresultset\" style=\"\
+        display: none\">Herzlich Willkommen bei der Hetzner Online GmbH. F\xFCr neue\
+        \ Bestellungen klicken Sie bitte auf <strong><a href=\"/order.php\">Neue Bestellung</a></strong></p>\
+        \ <div id=\"domainlist\"><h2 class=\"neutral\"><a href=\"#\">Domains <small>(1)</small></a></h2><div><dl><dt\
+        \ class=\"ready\" id=\"active\"><a href=\"?domain_number=D1279684218\" name=\"\
+        bettilaila.com\" onclick=\"$('#sidemenu').hide();$('#sidemenu_progress').show();$('#menu').load('menu.php?domain_number=D1279684218');window.scrollTo(0,\
+        \ 0);return false;\"><strong>bettilaila.com</strong></a></dt><dd><strong>Domainregistrierung</strong></dd>\n\
+        </dl></div> <script type=\"text/javascript\">\n        $('#toggle').prop('checked',\
+        \ true);\n        $('#toggle').change();\n      </script>\n</div> <p>\n<strong>Status:</strong>\n\
+        <span style=\"border:1px solid #ccc;background:#d8fed8 url('/templates/ui-default/de/images/domain_ready.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Fertiggestellt\">\_\uE800\_</span>\_\
+        Fertiggestellt\_|\n    \_<span style=\"border:1px solid #ccc;background:#f8eeb0\
+        \ url('/templates/ui-default/de/images/domain_processing.png') repeat-y;font-family:iconified;\"\
+        \ title=\"In Bearbeitung\">\_\uE802\_</span>\_In Bearbeitung\_|\n    \_<span\
+        \ style=\"border:1px solid #ccc;background:#f8cba5 url('/templates/ui-default/de/images/domain_termination-period.png')\
+        \ repeat-y;font-family:iconified;\" title=\"In K\xFCndigung\">\_\uE803\_</span>\_\
+        In K\xFCndigung\_|\n    \_<span style=\"border:1px solid #ccc;background:#fe9baa\
+        \ url('/templates/ui-default/de/images/domain_host-locked.png') repeat-y;font-family:iconified;\"\
+        \ title=\"Gesperrt\">\_\uE801\_</span>\_Gesperrt|\n    \_<span style=\"border:1px\
+        \ solid #ccc;background:#fe9baa url('/templates/ui-default/de/images/domain_deleted.png')\
+        \ repeat-y;font-family:iconified;\" title=\"Gek\xFCndigt\">\_\uE804\_</span>\_\
+        Gek\xFCndigt  </p> </div>\n<script type=\"text/javascript\">    $('#sidemenu_progress').hide();\n\
+        \    $('#noresultset').show();</script></form></div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:23 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=88']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['9688']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.20.1]
+    method: GET
+    uri: https://konsoleh.your-server.de/dns.php?dnsaction2=editintextarea
+  response:
+    body: {string: "<div id=\"content\"><div class=\"warning\">Bitte beachten Sie,\
+        \ dass es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n  \
+        \                             Sie wirksam werden.<br/><br/>\n<strong>Ebenso\
+        \ sollten Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n   \
+        \                            DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw.\
+        \ Ihrer E-Mail-Konten negativ\n                               beeintr\xE4\
+        chtigen k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n\
+        \                               keine Haftung.</strong><br/><br/>\n      \
+        \                         Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_115551687\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"b88ec33b5bbc7220d4dc0a3d40dfd153c082076f3e5336155b7b7ccf8a01b264257f3d50113561730cf4437cb04a114e0a776006d15e2e7a17f51ed1f656d676\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_428486111\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"e96d1c1c5315cf42716f88313a2b443eb80abc0564fde51a48b2649bae757523a2b47f4ee039276c3157ddf5b4ccfad15e0491d1d135d59b893cac4ed81f4d10\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"30\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">$TTL 7200\n@   IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ (\n    2018120980   ; serial\n    86400        ; refresh\n    10800    \
+        \    ; retry\n    3600000      ; expire\n    86400 )      ; minimum\n \n@\
+        \                        IN NS      ns3.second-ns.de.\n@                 \
+        \       IN NS      ns.second-ns.com.\n@                        IN NS     \
+        \ ns1.your-server.de.\n \nlocalhost                IN A       127.0.0.1\n\
+        loopback                 IN CNAME   localhost\ndocs                3600 IN\
+        \ CNAME   docs.example.com\n_acme-challenge.createrecordset  3600 IN TXT \
+        \    \"challengetoken2\"\n_acme-challenge.createrecordset  3600 IN TXT   \
+        \  \"challengetoken1\"\n_acme-challenge.deleterecordinset  3600 IN TXT   \
+        \  \"challengetoken2\"\n_acme-challenge.deleterecordset  3600 IN TXT     \"\
+        challengetoken2\"\n_acme-challenge.deleterecordset  3600 IN TXT     \"challengetoken1\"\
+        \n_acme-challenge.fqdn  3600 IN TXT     \"challengetoken\"\n_acme-challenge.full\
+        \  3600 IN TXT     \"challengetoken\"\n_acme-challenge.noop  3600 IN TXT \
+        \    \"challengetoken\"\n_acme-challenge.test  3600 IN TXT     \"challengetoken\"\
+        \n</textarea>\n<input name=\"domain_to_use\" type=\"hidden\" value=\"bettilaila.com\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"zonereplace\"/>\n</div>\n\
+        <p>\n<input name=\"update\" type=\"submit\" value=\"Zonefile speichern\"/>\n\
+        </p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:24 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=87']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['11039']
+    status: {code: 200, message: OK}
+- request:
+    body: dnsaction2=zonereplace&domain_to_use=bettilaila.com&zone_file1=%40+7200+IN+SOA+ns1.your-server.de.+postmaster.your-server.de.+2018120978+86400+10800+3600000+86400%0A%40+7200+IN+NS+ns3.second-ns.de.%0A%40+7200+IN+NS+ns.second-ns.com.%0A%40+7200+IN+NS+ns1.your-server.de.%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken2%22%0A_acme-challenge.createrecordset+3600+IN+TXT+%22challengetoken1%22%0A_acme-challenge.deleterecordinset+3600+IN+TXT+%22challengetoken2%22%0Adocs+3600+IN+CNAME+docs.example.com%0A_acme-challenge.fqdn+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.full+3600+IN+TXT+%22challengetoken%22%0Alocalhost+7200+IN+A+127.0.0.1%0Aloopback+7200+IN+CNAME+localhost%0A_acme-challenge.noop+3600+IN+TXT+%22challengetoken%22%0A_acme-challenge.test+3600+IN+TXT+%22challengetoken%22%0A
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['974']
+      Content-Type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.20.1]
+    method: POST
+    uri: https://konsoleh.your-server.de/dns.php
+  response:
+    body: {string: "<div id=\"content\"> <div class=\"ok\">Das DNS-Zonefile wurde\
+        \ erfolgreich ersetzt</div><div class=\"warning\">Bitte beachten Sie, dass\
+        \ es bis zu 24 Stunden dauern kann, bis die \xC4nderungen f\xFCr\n       \
+        \                        Sie wirksam werden.<br/><br/>\n<strong>Ebenso sollten\
+        \ Sie in Betracht ziehen, dass fehlerhafte \xC4nderungen der\n           \
+        \                    DNS-Eintr\xE4ge den Betrieb Ihrer Webseite bzw. Ihrer\
+        \ E-Mail-Konten negativ\n                               beeintr\xE4chtigen\
+        \ k\xF6nnen. Wir \xFCbernehmen f\xFCr evtl. entstandene Sch\xE4den\n     \
+        \                          keine Haftung.</strong><br/><br/>\n           \
+        \                    Falls Sie f\xFCr die Domain andere DNS-Server verwenden\
+        \ m\xF6chten, ist es zwingend\n                               notwendig ein\
+        \ Update der Domain beim Registrar durchzuf\xFChren.\n                   \
+        \            <strong>Die \xC4nderung der DNS-Servernamen hier im Zonefile\
+        \ reicht\n                               daf\xFCr <u>nicht</u> aus!</strong></div><h2>DNS:\
+        \ bettilaila.com</h2>\n<div class=\"contentpart\">\n<div class=\"contentmenu\"\
+        >\n<form action=\"?\" method=\"post\" name=\"dns\">\n<input name=\"_csrf_name\"\
+        \ type=\"hidden\" value=\"csrf_1372594372\"/>\n<input name=\"_csrf_token\"\
+        \ type=\"hidden\" value=\"2ec20d59dc54fcc640de3ff49bbf017a492886d9fbb2cbf466621e3db30caf8003949f8cf0b8fa7a3baf7389fe5d969d7603c6f716c6e1f0c9dbd7194007e5c0\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"\"/> <a href=\"?dnsaction2=edit&amp;domain_to_use=\"\
+        >Normale Ansicht</a>\n<span class=\"selected\">Erweiterte Ansicht</span>\n\
+        <a href=\"?dnsaction2=addrecord\">Record hinzuf\xFCgen</a>\n      \_\_|\_\_\
+        \n      <input onclick=\"this.form.dnsaction2.value='resetzone';return confirm('Sind\
+        \ Sie sicher, dass Sie den DNS-Eintrag der Domain zur\xFCcksetzen m\xF6chten?\
+        \ Alle vorhandenen Eintr\xE4ge gehen dadurch verloren und werden durch Standardwerte\
+        \ ersetzt.')\" type=\"submit\" value=\"Zone zur\xFCcksetzen\"/>\n<input onclick=\"\
+        this.form.dnsaction2.value='disablezone';return confirm('Sind Sie sicher,\
+        \ dass Sie den DNS-Eintrag der Domain deaktivieren m\xF6chten? Dies k\xF6\
+        nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar ist!')\" type=\"\
+        submit\" value=\"Zone deaktivieren\"/>\n<input onclick=\"this.form.dnsaction2.value='deletezone';return\
+        \ confirm('Sind Sie sicher, dass Sie den DNS-Eintrag der Domain l\xF6schen\
+        \ m\xF6chten? Dies k\xF6nnte dazu f\xFChren, dass die Domain nicht mehr erreichbar\
+        \ ist!')\" type=\"submit\" value=\"Zone l\xF6schen\"/>\n</form>\n</div>\n\
+        <form action=\"?\" method=\"POST\">\n<input name=\"_csrf_name\" type=\"hidden\"\
+        \ value=\"csrf_189115798\"/>\n<input name=\"_csrf_token\" type=\"hidden\"\
+        \ value=\"3b5df254ae55157fba6e38ce0c1c8cd0c6b2c6bf93b75f6f20cdd16126b0f5572f28624b9e77479999bd2619e93e0191658c992af5f9e39c0de72ca19c171499\"\
+        />\n<div>\n<textarea name=\"zone_file1\" rows=\"20\" style=\"width:100%;font-family:\
+        \ monospace;\" wrap=\"off\">@ 7200 IN SOA ns1.your-server.de. postmaster.your-server.de.\
+        \ 2018120978 86400 10800 3600000 86400\n@ 7200 IN NS ns3.second-ns.de.\n@\
+        \ 7200 IN NS ns.second-ns.com.\n@ 7200 IN NS ns1.your-server.de.\n_acme-challenge.createrecordset\
+        \ 3600 IN TXT \"challengetoken2\"\n_acme-challenge.createrecordset 3600 IN\
+        \ TXT \"challengetoken1\"\n_acme-challenge.deleterecordinset 3600 IN TXT \"\
+        challengetoken2\"\ndocs 3600 IN CNAME docs.example.com\n_acme-challenge.fqdn\
+        \ 3600 IN TXT \"challengetoken\"\n_acme-challenge.full 3600 IN TXT \"challengetoken\"\
+        \nlocalhost 7200 IN A 127.0.0.1\nloopback 7200 IN CNAME localhost\n_acme-challenge.noop\
+        \ 3600 IN TXT \"challengetoken\"\n_acme-challenge.test 3600 IN TXT \"challengetoken\"\
+        \n</textarea>\n<input name=\"domain_to_use\" type=\"hidden\" value=\"bettilaila.com\"\
+        />\n<input name=\"dnsaction2\" type=\"hidden\" value=\"zonereplace\"/>\n</div>\n\
+        <p>\n<input name=\"update\" type=\"submit\" value=\"Zonefile speichern\"/>\n\
+        </p>\n</form>\n</div>\n</div>"}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
+      Connection: [Keep-Alive]
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Sat, 08 Dec 2018 15:20:24 GMT']
+      Expires: ['Thu, 19 Nov 1981 08:52:00 GMT']
+      Keep-Alive: ['timeout=15, max=86']
+      Pragma: [no-cache]
+      Server: [Apache]
+      Vary: [Accept-Encoding]
+      content-length: ['10697']
+    status: {code: 200, message: OK}
+version: 1
