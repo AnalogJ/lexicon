@@ -1,12 +1,14 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from contextlib import contextmanager
 import hashlib
 import logging
 import re
 import time
 import requests
 import six
+from urllib3.util.retry import Retry
 
 # Due to optional requirement
 try:
@@ -47,7 +49,7 @@ def ProviderParser(subparser):
                            help='use existent CNAME as record name for create|update|delete '
                            'action: by default (yes); Restriction: Only enabled if the record '
                            'name or the raw FQDN record identifier \'type/name/content\' is '
-                           'spezified, and additionally for update action the record name '
+                           'specified, and additionally for update action the record name '
                            'remains the same',
                            default=str('yes'),
                            choices=['yes', 'no'])
@@ -133,8 +135,14 @@ class Provider(BaseProvider):
             }
         }
 
-        self.account = ('robot' if self._get_provider_option('auth_account') != 'konsoleh'
-                        else 'konsoleh')
+        self.account = self._get_provider_option('auth_account') 
+        if self.account in (None, 'robot', 'konsoleh'):
+            self.account = self.account if self.account else 'robot'
+        else:
+            LOGGER.error('Hetzner => Argument for --auth-account is invalid: \'%s\' '
+                         '(choose from \'robot\' or \'konsoleh\')',
+                         self._get_provider_option('auth_account'))
+            raise AssertionError
         self.username = self._get_provider_option('auth_username')
         assert self.username is not None
         self.password = self._get_provider_option('auth_password')
@@ -151,52 +159,169 @@ class Provider(BaseProvider):
         self.domain, self.nameservers, self.cname = self._get_dns_cname(self.domain, name,
                                                                         concatenate)
         self.session = self._auth_session(self.username, self.password)
-        self.domain_id = self._get_domain_id(self.domain)
-        self.zone = self._get_zone(self.domain, self.domain_id)
+        with self._exit_session(False):
+            self.domain_id = self._get_domain_id(self.domain)
+            self.zone = self._get_zone(self.domain, self.domain_id)
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, type, name, content):
-        if type is None or name is None or content is None:
-            LOGGER.error('Hetzner => Record has no type|name|content spezified')
-            self._exit_session()
-            return False
+        with self._exit_session():
+            if type is None or name is None or content is None:
+                LOGGER.error('Hetzner => Record has no type|name|content specified')
+                return False
 
-        rrset = self.zone['data'].get_rdataset((self.cname if self.cname
-                                                else self._fqdn_name(name)),
-                                               rdtype=type, create=True)
-        for rdata in rrset:
-            if self._wellformed_content(type, content) == rdata.to_text():
-                LOGGER.info('Hetzner => Record with content \'%s\' already exists', content)
-                self._exit_session()
-                return True
+            rrset = self.zone['data'].get_rdataset((self.cname if self.cname
+                                                    else self._fqdn_name(name)),
+                                                rdtype=type, create=True)
+            for rdata in rrset:
+                if self._wellformed_content(type, content) == rdata.to_text():
+                    LOGGER.info('Hetzner => Record with content \'%s\' already exists',
+                                content)
+                    return True
 
-        ttl = (rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl')
-               else self._get_lexicon_option('ttl'))
-        rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
-                                          ttl, self._wellformed_content(type, content))
-        rrset.update(rdataset)
-        synced_change = self._post_zone()
-        if synced_change:
-            self._propagated(type, name, content)
-        self._exit_session()
-        return synced_change
+            ttl = (rrset.ttl if rrset.ttl > 0
+                   and rrset.ttl < self._get_lexicon_option('ttl')
+                   else self._get_lexicon_option('ttl'))
+            rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
+                                            ttl, self._wellformed_content(type, content))
+            rrset.update(rdataset)
+            synced_change = self._post_zone()
+            if synced_change:
+                self._propagated(type, name, content)
+            return synced_change
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
+        with self._exit_session():
+            return self._list_records(type, name, content)
+
+    # Update a record.
+    # If record does not exist or lookup matching more than one record, do nothing.
+    # If an identifier is specified, use it, otherwise do a lookup using type and name.
+    # Support existent CNAME as record name if:
+    # * record type & record name or raw FQDN record identifier 'type/name/content' are specified
+    # * record name remains the same
+    def update_record(self, identifier=None, type=None, name=None, content=None):
+        with self._exit_session():
+            if identifier:
+                delete_type, delete_name, delete_content = self._parse_identifier(identifier)
+                if delete_type and delete_name and delete_content:
+                    type = type if type else delete_type
+                    name = name if name else delete_name
+                    content = content if content else delete_content
+                else:
+                    LOGGER.error('Hetzner => Record with identifier \'%s\' does not exist',
+                                 identifier)
+                    return False
+
+            elif type and name and content:
+                delete_type, delete_name, delete_content = type, name, None
+            else:
+                LOGGER.error('Hetzner => Record has no type|name|content specified')
+                return False
+
+            # Delete record
+            delete_records = self._list_records(delete_type, delete_name, delete_content)
+            if delete_records:
+                for record in delete_records:
+                    delete_rrset = self.zone['data'].get_rdataset(record['name']+'.',
+                                                                rdtype=record['type'])
+                    keep_rdatas = []
+                    for delete_rdata in delete_rrset:
+                        if self._wellformed_content(record['type'],
+                                                    record['content']) != delete_rdata.to_text():
+                            keep_rdatas.append(delete_rdata.to_text())
+                    if keep_rdatas:
+                        if delete_content is None:
+                            LOGGER.error('Hetzner => Record lookup matching more than one record')
+                            return False
+
+                        keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass,
+                                                                    delete_rrset.rdtype,
+                                                                    record['ttl'], keep_rdatas)
+                        self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
+                    else:
+                        self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
+                # Create record
+                rrset = self.zone['data'].get_rdataset((self.cname if self.cname
+                                                        else self._fqdn_name(name)),
+                                                    rdtype=type, create=True)
+                synced_create_change = False
+                for rdata in rrset:
+                    if self._wellformed_content(type, content) == rdata.to_text():
+                        LOGGER.info('Hetzner => Record with content \'%s\' already exists',
+                                    content)
+                        synced_create_change = True
+                        break
+                if not synced_create_change:
+                    ttl = (rrset.ttl if rrset.ttl > 0
+                           and rrset.ttl < self._get_lexicon_option('ttl')
+                           else self._get_lexicon_option('ttl'))
+                    renew_rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl,
+                                                            self._wellformed_content(type, content))
+                    rrset.update(renew_rdataset)
+                synced_change = self._post_zone()
+                if synced_change:
+                    self._propagated(type, name, content)
+                return synced_change
+
+            LOGGER.error('Hetzner => Record lookup has no matches')
+            return False
+
+    # Delete an existing record.
+    # If record does not exist, do nothing.
+    # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
+    # Support existent CNAME as record name if:
+    # * record type & record name or raw FQDN record identifier 'type/name/content' are specified
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        with self._exit_session():
+            if identifier:
+                type, name, content = self._parse_identifier(identifier)
+                if type is None or name is None or content is None:
+                    LOGGER.info('Hetzner => Record with identifier \'%s\' does not exist',
+                                identifier)
+                    return True
+
+            delete_records = self._list_records(type, name, content)
+            if delete_records:
+                for record in delete_records:
+                    rrset = self.zone['data'].get_rdataset(record['name']+'.',
+                                                           rdtype=record['type'])
+                    rdatas = []
+                    for rdata in rrset:
+                        if self._wellformed_content(record['type'],
+                                                    record['content']) != rdata.to_text():
+                            rdatas.append(rdata.to_text())
+                    if rdatas:
+                        rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
+                                                            record['ttl'], rdatas)
+                        self.zone['data'].replace_rdataset(record['name']+'.', rdataset)
+                    else:
+                        self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
+                synced_change = self._post_zone()
+                return synced_change
+
+            LOGGER.info('Hetzner => Record lookup has no matches')
+            return True
+
+    # Lexicon Helpers
+    ###########################################################################
+    def _list_records(self, rdtype=None, name=None, content=None):
         records = []
         rrsets = self.zone['data'].iterate_rdatasets() if self.zone else []
         for rname, rdataset in rrsets:
             rtype = dns.rdatatype.to_text(rdataset.rdtype)
             rname = rname.to_text()
-            if ((not type or type == rtype)
+            if ((not rdtype or rdtype == rtype)
                     and (not name or (self.cname if self.cname
-                                      else self._fqdn_name(name)) == rname)):
+                                    else self._fqdn_name(name)) == rname)):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._wellformed_content(rtype, content) == rdata):
-                        raw_rdata = self._raw_content(rtype, rdata)
+                        raw_rdata = self._clean_TXT_record({'type': rtype,
+                                                            'content': rdata})['content']
                         data = {
                             'type': rtype,
                             'name': self._full_name(rname),
@@ -205,137 +330,16 @@ class Provider(BaseProvider):
                             'id': Provider._build_identifier(rtype, rname, raw_rdata)
                         }
                         records.append(data)
-        if self._get_lexicon_option('action') == 'list':
-            self._exit_session()
         return records
 
-    # Update a record.
-    # If record does not exist or lookup matching more than one record, do nothing.
-    # If an identifier is specified, use it, otherwise do a lookup using type and name.
-    # Support existent CNAME as record name if:
-    # * record type & record name or raw FQDN record identifier 'type/name/content' are spezified
-    # * record name remains the same
-    def update_record(self, identifier=None, type=None, name=None, content=None):
-        if identifier:
-            delete_type, delete_name, delete_content = self._parse_identifier(identifier)
-            if delete_type and delete_name and delete_content:
-                type = type if type else delete_type
-                name = name if name else delete_name
-                content = content if content else delete_content
-            else:
-                LOGGER.error('Hetzner => Record with identifier \'%s\' does not exist', identifier)
-                self._exit_session()
-                return False
-
-        elif type and name and content:
-            delete_type, delete_name, delete_content = type, name, None
-        else:
-            LOGGER.error('Hetzner => Record has no type|name|content spezified')
-            self._exit_session()
-            return False
-
-        # Delete record
-        delete_records = self.list_records(delete_type, delete_name, delete_content)
-        if delete_records:
-            for record in delete_records:
-                delete_rrset = self.zone['data'].get_rdataset(record['name']+'.',
-                                                              rdtype=record['type'])
-                keep_rdatas = []
-                for delete_rdata in delete_rrset:
-                    if self._wellformed_content(record['type'],
-                                                record['content']) != delete_rdata.to_text():
-                        keep_rdatas.append(delete_rdata.to_text())
-                if keep_rdatas:
-                    if delete_content is None:
-                        LOGGER.error('Hetzner => Record lookup matching more than one record')
-                        self._exit_session()
-                        return False
-
-                    keep_rdataset = dns.rdataset.from_text_list(delete_rrset.rdclass,
-                                                                delete_rrset.rdtype,
-                                                                record['ttl'], keep_rdatas)
-                    self.zone['data'].replace_rdataset(record['name']+'.', keep_rdataset)
-                else:
-                    self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
-            # Create record
-            rrset = self.zone['data'].get_rdataset((self.cname if self.cname
-                                                    else self._fqdn_name(name)),
-                                                   rdtype=type, create=True)
-            synced_create_change = False
-            for rdata in rrset:
-                if self._wellformed_content(type, content) == rdata.to_text():
-                    LOGGER.info('Hetzner => Record with content \'%s\' already exists', content)
-                    synced_create_change = True
-                    break
-            if not synced_create_change:
-                ttl = (rrset.ttl if rrset.ttl > 0 and rrset.ttl < self._get_lexicon_option('ttl')
-                       else self._get_lexicon_option('ttl'))
-                renew_rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl,
-                                                        self._wellformed_content(type, content))
-                rrset.update(renew_rdataset)
-            synced_change = self._post_zone()
-            if synced_change:
-                self._propagated(type, name, content)
-            self._exit_session()
-            return synced_change
-
-        LOGGER.error('Hetzner => Record lookup has no matches')
-        self._exit_session()
-        return False
-
-    # Delete an existing record.
-    # If record does not exist, do nothing.
-    # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    # Support existent CNAME as record name if:
-    # * record type & record name or raw FQDN record identifier 'type/name/content' are spezified
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
-        if identifier:
-            type, name, content = self._parse_identifier(identifier)
-            if type is None or name is None or content is None:
-                LOGGER.info('Hetzner => Record with identifier \'%s\' does not exist', identifier)
-                self._exit_session()
-                return True
-
-        delete_records = self.list_records(type, name, content)
-        if delete_records:
-            for record in delete_records:
-                rrset = self.zone['data'].get_rdataset(record['name']+'.', rdtype=record['type'])
-                rdatas = []
-                for rdata in rrset:
-                    if self._wellformed_content(record['type'],
-                                                record['content']) != rdata.to_text():
-                        rdatas.append(rdata.to_text())
-                if rdatas:
-                    rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
-                                                           record['ttl'], rdatas)
-                    self.zone['data'].replace_rdataset(record['name']+'.', rdataset)
-                else:
-                    self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
-            synced_change = self._post_zone()
-            self._exit_session()
-            return synced_change
-
-        LOGGER.info('Hetzner => Record lookup has no matches')
-        self._exit_session()
-        return True
-
-    # Lexicon Helpers
-    ###########################################################################
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
-        for retry in range(10):
-            try:
-                response = self.session.request(action, self.api[self.account]['endpoint'] + url,
-                                                params=query_params, data=data)
-                response.raise_for_status()
-                break
-            except requests.exceptions.ConnectionError:
-                if retry == 9:
-                    raise requests.exceptions.ConnectionError
-                time.sleep(1)
+        response = self.session.request(action, self.api[self.account]['endpoint'] + url,
+                                        params=query_params, data=data)
+        response.raise_for_status()
         return response
 
     @staticmethod
@@ -352,7 +356,7 @@ class Provider(BaseProvider):
             parts = identifier.split('/')
             rdtype, name, content = parts[0], parts[1], '/'.join(parts[2:])
         else:
-            records = self.list_records()
+            records = self._list_records()
             for record in records:
                 if record['id'] == identifier:
                     rdtype, name, content = record['type'], record['name']+'.', record['content']
@@ -367,11 +371,6 @@ class Provider(BaseProvider):
         if rdtype in ('CNAME', 'MX', 'NS', 'SRV'):
             if content[-1] != '.':
                 content = self._fqdn_name(content)
-        return content
-
-    def _raw_content(self, rdtype, content):
-        if rdtype == 'TXT':
-            content = content.strip('"')
         return content
 
     def _concatenate(self):
@@ -458,7 +457,6 @@ class Provider(BaseProvider):
                     LOGGER.error('Hetzner => Record %s has more than %d concatenated CNAME '
                                  'entries. Reduce the amount of CNAME concatenations!',
                                  name, max_concats)
-                    self._exit_session()
                     raise AssertionError
                 qname = cname if cname else name
                 domain, nameservers = self._get_dns(domain, qname)
@@ -468,7 +466,7 @@ class Provider(BaseProvider):
                     cname = rrset[0].to_text()
                 else:
                     concatenate = False
-        LOGGER.info('Hetzner => Record %s has CNAME %s', name, cname)
+            LOGGER.info('Hetzner => Record %s has CNAME %s', name, cname)
         return domain, nameservers, cname
 
     # Hetzner Helpers
@@ -496,8 +494,7 @@ class Provider(BaseProvider):
         for idx, find in enumerate(filters, start=1):
             if not dom:
                 break
-            name = find.get('name', None)
-            attrs = find.get('attrs', {})
+            name , attrs = find.get('name', None), find.get('attrs', {})
             if len(filters) == idx and last_find_all:
                 dom = dom.find_all(name, attrs=attrs) if name else dom.find_all(attrs=attrs)
             else:
@@ -507,7 +504,10 @@ class Provider(BaseProvider):
     def _auth_session(self, username, password):
         api = self.api[self.account]['auth']
         endpoint = api.get('endpoint', self.api[self.account]['endpoint'])
-        session = requests.session()
+        session = requests.Session()
+        session_retries = Retry(total=10, backoff_factor=0.5)
+        session_adapter = requests.adapters.HTTPAdapter(max_retries=session_retries)
+        session.mount('https://', session_adapter)
         response = session.request('GET', endpoint + api['GET'].get('url', '/'))
         dom = Provider._filter_dom(response.text, api['filter'])
         data = Provider._extract_hidden_data(dom)
@@ -522,17 +522,22 @@ class Provider(BaseProvider):
                     self.account, username)
         return session
 
-    def _exit_session(self):
-        if self._get_provider_option('live_tests') is None:
-            api = self.api[self.account]
-            response = self._get(api['exit']['GET']['url'])
-            if not Provider._filter_dom(response.text, api['filter']):
-                LOGGER.info('Hetzner => Exit session')
-            else:
-                LOGGER.error('Hetzner => Unable to savely exit session')
-            self.session = None
-            return True
-        return False
+    @contextmanager
+    def _exit_session(self, always=True):
+        try:
+            yield
+        except Exception as exc:
+            always = True
+            raise exc
+        finally:
+            if always and self._get_provider_option('live_tests') is None:
+                api = self.api[self.account]
+                response = self._get(api['exit']['GET']['url'])
+                if not Provider._filter_dom(response.text, api['filter']):
+                    LOGGER.info('Hetzner => Exit session')
+                else:
+                    LOGGER.error('Hetzner => Unable to savely exit session')
+                self.session = None
 
     def _get_domain_id(self, domain):
         api = self.api[self.account]['domain_id']
@@ -559,7 +564,6 @@ class Provider(BaseProvider):
             page += 1
         if qdomain_id is None:
             LOGGER.error('Hetzner => ID for domain %s does not exists', qdomain)
-            self._exit_session()
             raise AssertionError
         LOGGER.info('Hetzner => Get ID %s for domain %s', qdomain_id, qdomain)
         return qdomain_id

@@ -31,15 +31,12 @@ class HetznerRobotProviderTests(TestCase, IntegrationTests):
             filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='center_col')
             if not filter_body:
                 filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='login-form')
-            response['body']['string'] = str(filter_body)
+            response['body']['string'] = str(filter_body).encode('UTF-8')
         return response
 
     def _test_parameters_overrides(self):
-        env_username = os.environ.get('LEXICON_HETZNER_AUTH_USERNAME')
-        env_password = os.environ.get('LEXICON_HETZNER_AUTH_PASSWORD')
         env_live_tests = os.environ.get('LEXICON_LIVE_TESTS', 'false')
-        options = {'auth_username': env_username,
-                   'auth_password': env_password,
+        options = {'auth_account': 'robot',
                    'concatenate': 'no',
                    'propagated': 'no',
                    'live_tests': env_live_tests}
@@ -66,7 +63,7 @@ class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
             filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='content')
             if not filter_body:
                 filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='loginform')
-            response['body']['string'] = str(filter_body)
+            response['body']['string'] = str(filter_body).encode('UTF-8')
         return response
 
     def _test_parameters_overrides(self):
