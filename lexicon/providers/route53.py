@@ -1,31 +1,37 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
-
 import logging
 import re
 
 from lexicon.providers.base import Provider as BaseProvider
 
+
 try:
-    import boto3 #optional dep
-    import botocore #optional dep
+    import boto3  # optional dep
+    import botocore  # optional dep
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
+
 def ProviderParser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
-    subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY for authentication")
-    subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET for authentication")
-    subparser.add_argument("--private-zone", help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
+    subparser.add_argument("--auth-access-key",
+                           help="specify ACCESS_KEY for authentication")
+    subparser.add_argument("--auth-access-secret",
+                           help="specify ACCESS_SECRET for authentication")
+    subparser.add_argument(
+        "--private-zone", help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
 
-    #TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
+    # TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
-    subparser.add_argument("--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
-    subparser.add_argument("--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
+    subparser.add_argument(
+        "--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
+    subparser.add_argument(
+        "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
 
 
 class RecordSetPaginator(object):
@@ -88,8 +94,10 @@ class Provider(BaseProvider):
         # instantiate the client
         self.r53_client = boto3.client(
             'route53',
-            aws_access_key_id=self._get_provider_option('auth_access_key') or self._get_provider_option('auth_username'),
-            aws_secret_access_key=self._get_provider_option('auth_access_secret') or self._get_provider_option('auth_token')
+            aws_access_key_id=self._get_provider_option(
+                'auth_access_key') or self._get_provider_option('auth_username'),
+            aws_secret_access_key=self._get_provider_option(
+                'auth_access_secret') or self._get_provider_option('auth_token')
         )
 
     def filter_zone(self, hz):
@@ -149,7 +157,7 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as e:
-            logger.debug(str(e), exc_info=True)
+            LOGGER.debug(str(e), exc_info=True)
 
     def create_record(self, type, name, content):
         """Create a record in the hosted zone."""
@@ -182,12 +190,12 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
-            logger.debug('record: %s', record)
+            LOGGER.debug('record: %s', record)
             records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
             })
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records

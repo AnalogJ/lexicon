@@ -3,9 +3,9 @@ import os
 from unittest import TestCase
 
 import pytest
+from integration_tests import IntegrationTests
 from lexicon.providers.exoscale import Provider
 
-from integration_tests import IntegrationTests
 
 """
 To set enable live testing against the Exoscale API.

@@ -1,26 +1,26 @@
 from __future__ import absolute_import
-
 import logging
-
 
 from lexicon.providers.base import Provider as BaseProvider
 
+
 try:
     # this module uses the optional `PyNamecheap` library from PyPi
-    import namecheap # optional dep
+    import namecheap  # optional dep
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['namecheap.com']
+
 
 def ProviderParser(subparser):
     subparser.add_argument(
         '--auth-token',
         help='specify api token for authentication'
     )
-    
+
     # earlier versions of the API expected the email address here
     # now they appear to want the username.
     subparser.add_argument(
@@ -124,7 +124,8 @@ class Provider(BaseProvider):
             # we should print the error, so people know how to correct it.
             raise Exception('Authentication failed: `%s`' % str(err))
 
-        xpath = './/{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult' % {'ns': namecheap.NAMESPACE}
+        xpath = './/{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult' % {
+            'ns': namecheap.NAMESPACE}
         domain_info = xml.find(xpath)
 
         def _check_hosts_permission():
@@ -137,7 +138,8 @@ class Provider(BaseProvider):
                 return True
 
             # look for rights
-            xpath_alt = './/{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult/{%(ns)s}Modificationrights' % {'ns': namecheap.NAMESPACE}
+            xpath_alt = './/{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult/{%(ns)s}Modificationrights' % {
+                'ns': namecheap.NAMESPACE}
             rights_info = xml.find(xpath_alt)
             if rights_info is None:
                 return False
@@ -182,7 +184,7 @@ class Provider(BaseProvider):
             propagate.
         """
         return self._get_lexicon_option('ttl')
-        
+
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, type, name, content):
         record = {
@@ -195,7 +197,7 @@ class Provider(BaseProvider):
         option_ttl = self.option_ttl()
         if option_ttl:
             record['TTL'] = option_ttl
-        # logger.debug('create_record: %s', 'id' in payload)
+        # LOGGER.debug('create_record: %s', 'id' in payload)
         # return 'id' in payload
         self.client.domains_dns_addHost(self.domain, record)
         return True
@@ -217,11 +219,12 @@ class Provider(BaseProvider):
         if name:
             if name.endswith('.'):
                 name = name[:-1]
-            records = [record for record in records if name in record['name'] ]
+            records = [record for record in records if name in record['name']]
         if content:
-            records = [record for record in records if record['content'].lower() == content.lower()]
+            records = [
+                record for record in records if record['content'].lower() == content.lower()]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -233,9 +236,11 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        records = self.list_records(type=type, name=name, content=content, id=identifier)
+        records = self.list_records(
+            type=type, name=name, content=content, id=identifier)
         for record in records:
-            self.client.domains_dns_delHost(self.domain, self._convert_to_namecheap(record))
+            self.client.domains_dns_delHost(
+                self.domain, self._convert_to_namecheap(record))
         return True
 
     def _convert_to_namecheap(self, record):
@@ -263,7 +268,7 @@ class Provider(BaseProvider):
 
         name = record['Name']
         if self.domain not in name:
-            name = "{}.{}".format(name,self.domain)
+            name = "{}.{}".format(name, self.domain)
 
         processed_record = {
             'type': record['Type'],

@@ -1,10 +1,12 @@
 # Test for one implementation of the interface
-from lexicon.providers.transip import Provider
-from integration_tests import IntegrationTests, provider_vcr
-from unittest import TestCase
-import pytest
-from tempfile import mkstemp
 import os
+from tempfile import mkstemp
+from unittest import TestCase
+
+import pytest
+from integration_tests import IntegrationTests, provider_vcr
+from lexicon.providers.transip import Provider
+
 
 FAKE_KEY = b"""
 -----BEGIN RSA PRIVATE KEY-----

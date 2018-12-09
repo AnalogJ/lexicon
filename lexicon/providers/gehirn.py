@@ -1,19 +1,19 @@
 from __future__ import absolute_import
-
+import base64
+import copy
 import json
 import logging
 import re
-import base64
-import copy
 
 import requests
+from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
 
-from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['gehirn.jp']
+
 
 def ProviderParser(subparser):
     subparser.add_argument(
@@ -81,12 +81,12 @@ class Provider(BaseProvider):
             record = records[0]
 
         if r in record["records"]:
-            logger.debug('create_record: %s', True)
+            LOGGER.debug('create_record: %s', True)
             return True
 
         record["records"].append(r)
         self._update_record(record)
-        logger.debug('create_record: %s', True)
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -114,7 +114,7 @@ class Provider(BaseProvider):
             records = [
                 record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
 
             if not records:
                 self.create_record(type=type, name=name, content=content)
-                logger.debug('update_record: %s', True)
+                LOGGER.debug('update_record: %s', True)
                 return True
 
             record = {
@@ -161,7 +161,7 @@ class Provider(BaseProvider):
                     name=name or record["name"],
                     content=content
                 )
-                logger.debug('update_record: %s', True)
+                LOGGER.debug('update_record: %s', True)
                 return True
             else:
                 # update entire record
@@ -175,7 +175,7 @@ class Provider(BaseProvider):
                         self._parse_content(record["type"], content)]
 
         self._update_record(record)
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -188,7 +188,7 @@ class Provider(BaseProvider):
                     self.domain_id, self.version_id, identifier,
                 )
                 self._delete(path)
-                logger.debug('delete_record: %s', True)
+                LOGGER.debug('delete_record: %s', True)
                 return True
 
             record_identifier = identifier.split(".")[1]
@@ -214,7 +214,7 @@ class Provider(BaseProvider):
                 else:
                     self._update_record(record)
 
-                logger.debug('delete_record: %s', True)
+                LOGGER.debug('delete_record: %s', True)
                 return True
             else:
                 raise Exception('Record identifier could not be found.')
@@ -240,7 +240,7 @@ class Provider(BaseProvider):
             )
             self._delete(path)
 
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers
@@ -320,6 +320,6 @@ class Provider(BaseProvider):
             # if the request fails for any reason, throw an error.
             r.raise_for_status()
         except:
-            logger.error(r.text)
+            LOGGER.error(r.text)
             raise
         return r.json()

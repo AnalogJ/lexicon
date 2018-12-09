@@ -4,7 +4,7 @@
 #  1) SOA records are not first-class record types in the Constellix API, so are not supported.
 #  2) We expect all records to use the "Standard" record type, so failover, pools or round robin with
 #     failover are not supported.
-#  3) Because Constellix represents record sets as a single record with multiple values attached, not as 
+#  3) Because Constellix represents record sets as a single record with multiple values attached, not as
 #     a set of separate records, create and delete operations end up becoming read/update operations when
 #     working with record sets.
 #
@@ -15,28 +15,31 @@
 #     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 
 from __future__ import absolute_import
-
 import base64
 import contextlib
+import hashlib
 import hmac
 import json
 import locale
 import logging
 import time
-import hashlib
-
-import requests
 from builtins import bytes
 
+import requests
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['constellix.com']
 
+
 def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify the API key username for authentication")
-    subparser.add_argument("--auth-token", help="specify secret key for authenticate=")
+    subparser.add_argument(
+        "--auth-username", help="specify the API key username for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify secret key for authenticate=")
+
 
 class Provider(BaseProvider):
 
@@ -53,7 +56,7 @@ class Provider(BaseProvider):
                 payload = {}
             else:
                 raise e
-    
+
         for domain in payload:
             if domain['name'] == self.domain:
                 self.domain_id = domain['id']
@@ -63,20 +66,21 @@ class Provider(BaseProvider):
         if not self.domain_id:
             raise Exception('No domain found')
 
-
     # Create record. If record already exists with the same content, do nothing'
+
     def create_record(self, type, name, content):
         record = {
             'name': self._relative_name(name),
             'ttl': self._get_lexicon_option('ttl'),
             'roundRobin':
                 [{'disableFlag': False,
-                 'value': content}],
+                  'value': content}],
         }
         payload = {}
 
         try:
-            payload = self._post('/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
+            payload = self._post(
+                '/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
         except requests.exceptions.HTTPError as e:
             # If there is already a record with that name, we need to do an update.
             if e.response.status_code == 400:
@@ -87,15 +91,16 @@ class Provider(BaseProvider):
                 # Constellix will throw an error.
                 if content not in new_content:
                     new_content.append(content)
-                    self.update_record(existing_records[0]['id'], type=type, name=name, content=new_content)
+                    self.update_record(
+                        existing_records[0]['id'], type=type, name=name, content=new_content)
             else:
                 raise
-        logger.debug('create_record: %s', 'name' in payload)
+        LOGGER.debug('create_record: %s', 'name' in payload)
         return True
-
 
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
+
     def list_records(self, type=None, name=None, content=None, identifier=None):
         self._check_type(type)
 
@@ -105,7 +110,8 @@ class Provider(BaseProvider):
         if not type or type == 'LOC':
             payload = self._get('/domains/{0}/records/'.format(self.domain_id))
         else:
-            payload = self._get('/domains/{0}/records/{1}/'.format(self.domain_id, type))
+            payload = self._get(
+                '/domains/{0}/records/{1}/'.format(self.domain_id, type))
 
         records = []
 
@@ -117,14 +123,15 @@ class Provider(BaseProvider):
                     'ttl': record['ttl'],
                     'content': rr['value'],
                     'id': record['id']
-                    }
+                }
 
                 processed_record = self._clean_TXT_record(processed_record)
                 records.append(processed_record)
 
-        records = self._filter_records(records, type=type, name=name, content=content, identifier=identifier)
+        records = self._filter_records(
+            records, type=type, name=name, content=content, identifier=identifier)
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
@@ -157,9 +164,10 @@ class Provider(BaseProvider):
             data['roundRobin'].append({'disableFlag': False,
                                        'value': c})
 
-        payload = self._put('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
+        payload = self._put(
+            '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
@@ -167,7 +175,8 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         self._check_type(type)
 
-        records = self.list_records(identifier=identifier, type=type, name=name)
+        records = self.list_records(
+            identifier=identifier, type=type, name=name)
 
         # If we are filtering delete records by content and we are going to have
         # at least one record left over after deleting, then this becomes an
@@ -176,7 +185,8 @@ class Provider(BaseProvider):
             current_content = set(r['content'] for r in records)
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
-                self.update_record(records[0]['id'], type=type, name=name, content=list(current_content))
+                self.update_record(
+                    records[0]['id'], type=type, name=name, content=list(current_content))
                 return True
 
         delete_record_id = set(record['id'] for record in records)
@@ -184,12 +194,13 @@ class Provider(BaseProvider):
         # We need a type to do a delete, so pull one from the first record if it's not supplied.
         if not type:
             type = records[0]['type']
-        
+
         for record_id in delete_record_id:
-            payload = self._delete('/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, record_id))
+            payload = self._delete(
+                '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
     # Helpers
@@ -199,10 +210,10 @@ class Provider(BaseProvider):
         # improvement
 
         if type == 'SOA':
-            raise Exception('{0} record type is not supported in the Constellix Provider'.format(type))
+            raise Exception(
+                '{0} record type is not supported in the Constellix Provider'.format(type))
 
         return True
-
 
     def _filter_records(self, records, type=None, name=None, content=None, identifier=None):
         _records = []
@@ -229,7 +240,8 @@ class Provider(BaseProvider):
         # Date string in epoch format
         request_date = str(int(time.time() * 1000))
 
-        hashed = hmac.new(self._get_provider_option('auth_token').encode('utf-8'), request_date.encode('utf-8'), digestmod=hashlib.sha1)
+        hashed = hmac.new(self._get_provider_option('auth_token').encode(
+            'utf-8'), request_date.encode('utf-8'), digestmod=hashlib.sha1)
 
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())
@@ -238,7 +250,8 @@ class Provider(BaseProvider):
                              data=json.dumps(data),
                              headers=default_headers,
                              auth=default_auth)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
+        # if the request fails for any reason, throw an error.
+        r.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
         if action == 'DELETE' or action == 'PUT':
