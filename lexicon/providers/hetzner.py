@@ -411,12 +411,11 @@ class Provider(BaseProvider):
     # DNS Helpers
     ###########################################################################
     def _dns_lookup(self, qname, rdtype, nameservers=None):
-        if not nameservers:
-            nameservers = ['8.8.8.8', '8.8.4.4']
         rrset = dns.rrset.from_text(qname, 0, 1, rdtype)
         try:
             resolver = dns.resolver.Resolver()
-            resolver.nameservers = nameservers
+            if nameservers:
+                resolver.nameservers = nameservers
             rrset = resolver.query(qname, rdtype)
             for rdata in rrset:
                 LOGGER.debug('DNS Lookup => %s %s %s %s',
@@ -431,7 +430,7 @@ class Provider(BaseProvider):
         nameservers = []
         rdtypes_ns = ['SOA', 'NS']
         rdtypes_ip = ['A', 'AAAA']
-        while (len(qname.labels) > 2 and not nameservers):
+        while (len(qname.labels) > 2 and not nameservers): # pylint: disable=E1101
             for rdtype_ns in rdtypes_ns:
                 for rdata_ns in self._dns_lookup(qname, rdtype_ns):
                     for rdtype_ip in rdtypes_ip:
