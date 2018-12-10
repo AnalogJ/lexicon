@@ -35,11 +35,9 @@ class HetznerRobotProviderTests(TestCase, IntegrationTests):
         return response
 
     def _test_parameters_overrides(self):
-        env_live_tests = os.environ.get('LEXICON_LIVE_TESTS', 'false')
         options = {'auth_account': 'robot',
                    'concatenate': 'no',
-                   'propagated': 'no',
-                   'live_tests': env_live_tests}
+                   'propagated': 'no'}
         return options
 
 class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
@@ -69,11 +67,9 @@ class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
     def _test_parameters_overrides(self):
         env_username = os.environ.get('LEXICON_HETZNER_KONSOLEH_USERNAME')
         env_password = os.environ.get('LEXICON_HETZNER_KONSOLEH_PASSWORD')
-        env_live_tests = os.environ.get('LEXICON_LIVE_TESTS', 'false')
         options = {'auth_account': 'konsoleh',
                    'auth_username': env_username,
                    'auth_password': env_password,
                    'concatenate': 'no',
-                   'propagated': 'no',
-                   'live_tests': env_live_tests}
+                   'propagated': 'no'}
         return options

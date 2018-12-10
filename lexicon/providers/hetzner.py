@@ -135,44 +135,35 @@ class Provider(BaseProvider):
             }
         }
 
-        self.account = self._get_provider_option('auth_account') 
+        self.account = self._get_provider_option('auth_account')
         if self.account in (None, 'robot', 'konsoleh'):
             self.account = self.account if self.account else 'robot'
         else:
             LOGGER.error('Hetzner => Argument for --auth-account is invalid: \'%s\' '
-                         '(choose from \'robot\' or \'konsoleh\')',
-                         self._get_provider_option('auth_account'))
+                         '(choose from \'robot\' or \'konsoleh\')', self.account)
             raise AssertionError
         self.username = self._get_provider_option('auth_username')
         assert self.username is not None
         self.password = self._get_provider_option('auth_password')
         assert self.password is not None
 
-        self.nameservers = None
-        self.cname = None
-        self.session = None
-        self.zone = None
+        self.session, self.nameservers, self.cname, self.zone = None, None, None, None
 
     # Authenticate against provider.
     def authenticate(self):
-        name, concatenate = self._concatenate()
-        self.domain, self.nameservers, self.cname = self._get_dns_cname(self.domain, name,
-                                                                        concatenate)
-        self.session = self._auth_session(self.username, self.password)
-        with self._exit_session(False):
-            self.domain_id = self._get_domain_id(self.domain)
-            self.zone = self._get_zone(self.domain, self.domain_id)
+        with self._session():
+            return True
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, type, name, content):
-        with self._exit_session():
+        with self._session(self.domain):
             if type is None or name is None or content is None:
                 LOGGER.error('Hetzner => Record has no type|name|content specified')
                 return False
 
             rrset = self.zone['data'].get_rdataset((self.cname if self.cname
                                                     else self._fqdn_name(name)),
-                                                rdtype=type, create=True)
+                                                   rdtype=type, create=True)
             for rdata in rrset:
                 if self._wellformed_content(type, content) == rdata.to_text():
                     LOGGER.info('Hetzner => Record with content \'%s\' already exists',
@@ -183,7 +174,7 @@ class Provider(BaseProvider):
                    and rrset.ttl < self._get_lexicon_option('ttl')
                    else self._get_lexicon_option('ttl'))
             rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
-                                            ttl, self._wellformed_content(type, content))
+                                              ttl, self._wellformed_content(type, content))
             rrset.update(rdataset)
             synced_change = self._post_zone()
             if synced_change:
@@ -194,7 +185,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        with self._exit_session():
+        with self._session(self.domain):
             return self._list_records(type, name, content)
 
     # Update a record.
@@ -204,7 +195,7 @@ class Provider(BaseProvider):
     # * record type & record name or raw FQDN record identifier 'type/name/content' are specified
     # * record name remains the same
     def update_record(self, identifier=None, type=None, name=None, content=None):
-        with self._exit_session():
+        with self._session(self.domain):
             if identifier:
                 delete_type, delete_name, delete_content = self._parse_identifier(identifier)
                 if delete_type and delete_name and delete_content:
@@ -227,7 +218,7 @@ class Provider(BaseProvider):
             if delete_records:
                 for record in delete_records:
                     delete_rrset = self.zone['data'].get_rdataset(record['name']+'.',
-                                                                rdtype=record['type'])
+                                                                  rdtype=record['type'])
                     keep_rdatas = []
                     for delete_rdata in delete_rrset:
                         if self._wellformed_content(record['type'],
@@ -247,7 +238,7 @@ class Provider(BaseProvider):
                 # Create record
                 rrset = self.zone['data'].get_rdataset((self.cname if self.cname
                                                         else self._fqdn_name(name)),
-                                                    rdtype=type, create=True)
+                                                       rdtype=type, create=True)
                 synced_create_change = False
                 for rdata in rrset:
                     if self._wellformed_content(type, content) == rdata.to_text():
@@ -276,7 +267,7 @@ class Provider(BaseProvider):
     # Support existent CNAME as record name if:
     # * record type & record name or raw FQDN record identifier 'type/name/content' are specified
     def delete_record(self, identifier=None, type=None, name=None, content=None):
-        with self._exit_session():
+        with self._session(self.domain):
             if identifier:
                 type, name, content = self._parse_identifier(identifier)
                 if type is None or name is None or content is None:
@@ -296,7 +287,7 @@ class Provider(BaseProvider):
                             rdatas.append(rdata.to_text())
                     if rdatas:
                         rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
-                                                            record['ttl'], rdatas)
+                                                               record['ttl'], rdatas)
                         self.zone['data'].replace_rdataset(record['name']+'.', rdataset)
                     else:
                         self.zone['data'].delete_rdataset(record['name']+'.', record['type'])
@@ -316,7 +307,7 @@ class Provider(BaseProvider):
             rname = rname.to_text()
             if ((not rdtype or rdtype == rtype)
                     and (not name or (self.cname if self.cname
-                                    else self._fqdn_name(name)) == rname)):
+                                      else self._fqdn_name(name)) == rname)):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._wellformed_content(rtype, content) == rdata):
@@ -385,11 +376,11 @@ class Provider(BaseProvider):
             name_update = self._fqdn_name(name_update) if name_update else name
         if action != 'list' and rdtype and rdtype != 'CNAME' and name and concatenate:
             if action != 'update' or name == name_update:
-                LOGGER.info('Hetzner => Enabled CNAME lookup, '
-                            'see --concatenate option with \'lexicon hetzner --help\'')
+                LOGGER.info('Hetzner => Enable CNAME lookup, '
+                            'see --concatenate option')
                 return name, True
-        LOGGER.info('Hetzner => Disabled CNAME lookup, '
-                    'see --concatenate option with \'lexicon hetzner --help\'')
+        LOGGER.info('Hetzner => Disable CNAME lookup, '
+                    'see --concatenate option')
         return name, False
 
     def _propagated(self, rdtype, name, content):
@@ -403,8 +394,8 @@ class Provider(BaseProvider):
                     if self._wellformed_content(rdtype, content) == rdata.to_text():
                         return True
                 retry += 1
-                LOGGER.info('Hetzner => Record is not propagated, %d retries remaining - '
-                            'wait 30s...', (max_retry - retry))
+                LOGGER.info('Hetzner => Record is not propagated, retry (%d remaining) '
+                            'after 30s...', (max_retry - retry))
                 time.sleep(30)
         return False
 
@@ -430,7 +421,7 @@ class Provider(BaseProvider):
         nameservers = []
         rdtypes_ns = ['SOA', 'NS']
         rdtypes_ip = ['A', 'AAAA']
-        while (len(qname.labels) > 2 and not nameservers): # pylint: disable=E1101
+        while (len(qname.labels) > 2 and not nameservers): # pylint: disable=no-member
             for rdtype_ns in rdtypes_ns:
                 for rdata_ns in self._dns_lookup(qname, rdtype_ns):
                     for rdtype_ip in rdtypes_ip:
@@ -493,7 +484,7 @@ class Provider(BaseProvider):
         for idx, find in enumerate(filters, start=1):
             if not dom:
                 break
-            name , attrs = find.get('name', None), find.get('attrs', {})
+            name, attrs = find.get('name', None), find.get('attrs', {})
             if len(filters) == idx and last_find_all:
                 dom = dom.find_all(name, attrs=attrs) if name else dom.find_all(attrs=attrs)
             else:
@@ -521,22 +512,33 @@ class Provider(BaseProvider):
                     self.account, username)
         return session
 
+    def _exit_session(self):
+        api = self.api[self.account]
+        response = self._get(api['exit']['GET']['url'])
+        if not Provider._filter_dom(response.text, api['filter']):
+            LOGGER.info('Hetzner => Exit session')
+        else:
+            LOGGER.error('Hetzner => Unable to savely exit session')
+        return None
+
     @contextmanager
-    def _exit_session(self, always=True):
+    def _session(self, domain=None):
+        name, concatenate = self._concatenate()
+        self.domain, self.nameservers, self.cname = self._get_dns_cname(self.domain, name,
+                                                                        concatenate)
+        self.session = self._auth_session(self.username, self.password)
         try:
-            yield
+            if self.domain != domain:
+                self.domain_id = self._get_domain_id(self.domain)
+            if domain:
+                self.zone = self._get_zone(self.domain, self.domain_id)
         except Exception as exc:
-            always = True
+            self.session = self._exit_session()
+            self.nameservers, self.cname, self.zone = None, None, None
             raise exc
-        finally:
-            if always and self._get_provider_option('live_tests') is None:
-                api = self.api[self.account]
-                response = self._get(api['exit']['GET']['url'])
-                if not Provider._filter_dom(response.text, api['filter']):
-                    LOGGER.info('Hetzner => Exit session')
-                else:
-                    LOGGER.error('Hetzner => Unable to savely exit session')
-                self.session = None
+        yield
+        self.session = self._exit_session()
+        self.nameservers, self.cname, self.zone = None, None, None
 
     def _get_domain_id(self, domain):
         api = self.api[self.account]['domain_id']
@@ -587,21 +589,19 @@ class Provider(BaseProvider):
 
     def _post_zone(self):
         api = self.api[self.account]['zone']
-        zone = self._get_zone(self.domain, self.domain_id)
-        data = zone['hidden']
+        data = self.zone['hidden']
         data[api['file']] = self.zone['data'].to_text(relativize=True)
         response = self._post(api['POST']['url'], data=data)
         if Provider._filter_dom(response.text, api['filter']):
             LOGGER.error('Hetzner => Unable to update data for domain ID %s: Syntax error\n\n%s',
                          self.domain_id,
                          self.zone['data'].to_text(relativize=True).decode('UTF-8'))
-            self.zone = zone
             return False
 
         LOGGER.info('Hetzner => Update data for domain ID %s\n\n%s',
                     self.domain_id,
                     self.zone['data'].to_text(relativize=True).decode('UTF-8'))
-        if self._get_provider_option('live_tests') != 'false' and self.account == 'robot':
-            LOGGER.info('Hetzner => Wait 30s...')
+        if self.account == 'robot':
+            LOGGER.info('Hetzner => Wait 30s until Hetzner Robot has took over data...')
             time.sleep(30)
         return True
