@@ -519,7 +519,7 @@ class Provider(BaseProvider):
             LOGGER.info('Hetzner => Exit session')
         else:
             LOGGER.error('Hetzner => Unable to savely exit session')
-        return None
+        return True
 
     @contextmanager
     def _session(self, domain=None):
@@ -533,12 +533,12 @@ class Provider(BaseProvider):
             if domain:
                 self.zone = self._get_zone(self.domain, self.domain_id)
         except Exception as exc:
-            self.session = self._exit_session()
-            self.nameservers, self.cname, self.zone = None, None, None
+            self._exit_session()
+            self.session, self.nameservers, self.cname, self.zone = None, None, None, None
             raise exc
         yield
-        self.session = self._exit_session()
-        self.nameservers, self.cname, self.zone = None, None, None
+        self._exit_session()
+        self.session, self.nameservers, self.cname, self.zone = None, None, None, None
 
     def _get_domain_id(self, domain):
         api = self.api[self.account]['domain_id']
