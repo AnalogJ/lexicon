@@ -54,10 +54,15 @@ def ProviderParser(subparser):
                            default=str('yes'),
                            choices=['yes', 'no'])
     subparser.add_argument('--propagated',
-                           help='wait until record is propagated after succeeded create|update '
-                           'action: by default (yes)',
+                           help='wait until record is publicly propagated after succeeded '
+                           'create|update action: by default (yes)',
                            default=str('yes'),
                            choices=['yes', 'no'])
+    subparser.add_argument('--latency',
+                           help='specify latency, used after record updates of Hetzner Robot '
+                           'and during checks for publicly propagation: by default 30s (30)',
+                           default=int(30),
+                           type=int)
 
 class Provider(BaseProvider):
 
@@ -384,6 +389,7 @@ class Provider(BaseProvider):
         return name, False
 
     def _propagated(self, rdtype, name, content):
+        latency = self._get_provider_option('latency')
         propagated = True if self._get_provider_option('propagated') == 'yes' else False
         if propagated:
             retry, max_retry = 0, 20
@@ -395,8 +401,8 @@ class Provider(BaseProvider):
                         return True
                 retry += 1
                 LOGGER.info('Hetzner => Record is not propagated, retry (%d remaining) '
-                            'after 30s...', (max_retry - retry))
-                time.sleep(30)
+                            'after %ds...', (max_retry - retry), latency)
+                time.sleep(latency)
         return False
 
     # DNS Helpers
@@ -602,6 +608,8 @@ class Provider(BaseProvider):
                     self.domain_id,
                     self.zone['data'].to_text(relativize=True).decode('UTF-8'))
         if self.account == 'robot':
-            LOGGER.info('Hetzner => Wait 30s until Hetzner Robot has took over data...')
-            time.sleep(30)
+            latency = self._get_provider_option('latency')
+            LOGGER.info('Hetzner => Wait %ds until Hetzner Robot has took over data...',
+                        latency)
+            time.sleep(latency)
         return True

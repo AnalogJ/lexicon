@@ -37,7 +37,8 @@ class HetznerRobotProviderTests(TestCase, IntegrationTests):
     def _test_parameters_overrides(self):
         options = {'auth_account': 'robot',
                    'concatenate': 'no',
-                   'propagated': 'no'}
+                   'propagated': 'no',
+                   'latency': 1}
         return options
 
 class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
@@ -71,5 +72,6 @@ class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
                    'auth_username': env_username,
                    'auth_password': env_password,
                    'concatenate': 'no',
-                   'propagated': 'no'}
+                   'propagated': 'no',
+                   'latency': 1}
         return options
