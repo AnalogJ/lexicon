@@ -27,7 +27,7 @@ NAMESERVER_DOMAINS = []
 def ProviderParser(subparser):
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
-                           '(robot) or Hetzner KonsoleH (konsoleh)')
+                           '(robot) or Hetzner konsoleH (konsoleh)')
     subparser.add_argument('--auth-username', help='specify username of Hetzner account')
     subparser.add_argument('--auth-password', help='specify password of Hetzner account')
     subparser.add_argument('--linked',
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
     """
     Implements the Hetzner DNS Provider.
     There are two variants to manage DNS records on Hetzner: Hetzner Robot or
-    Hetzner KonsoleH. Both do not provide a common API, therefore this provider
+    Hetzner konsoleH. Both do not provide a common API, therefore this provider
     implements missing read and write methods in a generic way. For editing DNS
     records on Hetzner, this provider manipulates and replaces the whole DNS zone.
     Furthermore, there is no unique identifier to each record in the way that Lexicon
@@ -525,8 +525,9 @@ class Provider(BaseProvider):
                         LOGGER.info('Hetzner => Record %s has %s %s', name, rdtype, content)
                         return True
                 retry += 1
-                LOGGER.info('Hetzner => Record is not propagated, retry (-%d) in %ds...',
-                            (max_retry - retry), latency)
+                retry_log = (', retry ({}/{}) in {}s...'.format((retry + 1), max_retry, latency)
+                             if retry < max_retry else '')
+                LOGGER.info('Hetzner => Record is not propagated%s', retry_log)
                 time.sleep(latency)
         return False
 
