@@ -468,7 +468,7 @@ class Provider(BaseProvider):
             if links >= max_links:
                 LOGGER.error('Hetzner => Record %s has more than %d linked CNAME '
                              'records. Reduce the amount of CNAME links!',
-                              name, max_links)
+                             name, max_links)
                 raise AssertionError
             qname = cname if cname else name
             rrset = Provider._dns_lookup(qname, 'CNAME', nameservers)
