@@ -100,6 +100,7 @@ setup(
         'transip': ['transip>=0.3.0'],
         'plesk': ['xmltodict'],
         'henet': ['beautifulsoup4'],
+        'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
         'easyname': ['beautifulsoup4'],
         'localzone': ['localzone'],
     },
