@@ -13,7 +13,6 @@ from urllib3.util.retry import Retry
 # Due to optional requirement
 try:
     from bs4 import BeautifulSoup
-    import dns.exception
     import dns.resolver
     import dns.zone
 except ImportError:
@@ -501,9 +500,8 @@ class Provider(BaseProvider):
         qname = name
         if identifier:
             rdtype, name, _ = self._parse_identifier(identifier)
-            qname = qname if qname else name
         if action != 'list' and rdtype in ('A', 'AAAA', 'TXT') and name and link:
-            if action != 'update' or name == qname:
+            if action != 'update' or name == qname or not qname:
                 LOGGER.info('Hetzner => Enable CNAME lookup '
                             '(see --linked parameter)')
                 return qname, True
@@ -524,10 +522,11 @@ class Provider(BaseProvider):
             while retry < max_retry:
                 for rdata in Provider._dns_lookup(name, rdtype, nameservers):
                     if content == rdata.to_text():
+                        LOGGER.info('Hetzner => Record %s has %s %s', name, rdtype, content)
                         return True
                 retry += 1
-                LOGGER.info('Hetzner => Record is not propagated, retry (%d remaining) '
-                            'after %ds...', (max_retry - retry), latency)
+                LOGGER.info('Hetzner => Record is not propagated, retry (-%d) in %ds...',
+                            (max_retry - retry), latency)
                 time.sleep(latency)
         return False
 
@@ -706,9 +705,8 @@ class Provider(BaseProvider):
                          zone['data'].to_text(relativize=True).decode('UTF-8'))
             return False
 
-        LOGGER.info('Hetzner => Update zone for domain %s\n\n%s',
-                    zone['data'].origin.to_unicode(True),
-                    zone['data'].to_text(relativize=True).decode('UTF-8'))
+        LOGGER.info('Hetzner => Update zone for domain %s',
+                    zone['data'].origin.to_unicode(True))
         if self.account == 'robot':
             latency = self._get_provider_option('latency')
             LOGGER.info('Hetzner => Wait %ds until Hetzner Robot has taken over zone...',
