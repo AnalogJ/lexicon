@@ -147,7 +147,7 @@ class Provider(BaseProvider):
                 }
             }
         }
-        self.session= None
+        self.session = None
 
         self.account = self._get_provider_option('auth_account')
         if self.account in (None, 'robot', 'konsoleh'):
@@ -228,7 +228,7 @@ class Provider(BaseProvider):
                     content = content if content else dcontent
                 else:
                     LOGGER.warning('Hetzner => Record with identifier \'%s\' does not exist',
-                                 identifier)
+                                   identifier)
                     return False
 
             elif type and name and content:
@@ -296,7 +296,7 @@ class Provider(BaseProvider):
                     LOGGER.info('Hetzner => Record with identifier \'%s\' does not exist',
                                 identifier)
                     return True
- 
+
             name = ddata['cname'] if ddata['cname'] else (self._fqdn_name(name) if name else None)
             records = self._list_records(ddata['zone']['data'], type, name, content)
             if records:
@@ -372,7 +372,7 @@ class Provider(BaseProvider):
     def _list_records(self, zone, rdtype=None, name=None, content=None):
         """
         Iterates over all records of the zone and returns a list of records filtered
-        by record type, name and content. The list is empty if no records found. 
+        by record type, name and content. The list is empty if no records found.
         """
         records = []
         rrsets = zone.iterate_rdatasets() if zone else []
@@ -458,7 +458,7 @@ class Provider(BaseProvider):
         """
         Looks for associated domain zone, nameservers and linked record name until no
         more linked record name was found for the given fully qualified record name or
-        the CNAME lookup was disabled, and then returns the parameters as a tuple. 
+        the CNAME lookup was disabled, and then returns the parameters as a tuple.
         """
         domain = dns.resolver.zone_for_name(name).to_text(True)
         nameservers = Provider._get_nameservers(domain)
@@ -467,8 +467,8 @@ class Provider(BaseProvider):
         while link:
             if links >= max_links:
                 LOGGER.error('Hetzner => Record %s has more than %d linked CNAME '
-                                'records. Reduce the amount of CNAME links!',
-                                name, max_links)
+                             'records. Reduce the amount of CNAME links!',
+                              name, max_links)
                 raise AssertionError
             qname = cname if cname else name
             rrset = Provider._dns_lookup(qname, 'CNAME', nameservers)
@@ -637,9 +637,9 @@ class Provider(BaseProvider):
             LOGGER.info('Hetzner => Exit session')
         else:
             LOGGER.warning('Hetzner => Unable to exit session')
-        self.session= None
+        self.session = None
         return True
- 
+
     def _get_domain_id(self, domain):
         """
         Pulls all domains managed by authenticated Hetzner account, extracts their IDs
