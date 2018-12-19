@@ -8,6 +8,7 @@ import re
 import time
 import requests
 from six import string_types
+import tldextract
 from urllib3.util.retry import Retry
 
 # Due to optional requirement
@@ -423,6 +424,7 @@ class Provider(BaseProvider):
             resolver = dns.resolver.Resolver()
             if nameservers:
                 resolver.nameservers = nameservers
+            resolver.lifetime = 1
             rrset = resolver.query(name, rdtype)
             for rdata in rrset:
                 LOGGER.debug('DNS Lookup => %s %s %s %s',
@@ -459,7 +461,12 @@ class Provider(BaseProvider):
         more linked record name was found for the given fully qualified record name or
         the CNAME lookup was disabled, and then returns the parameters as a tuple.
         """
-        domain = dns.resolver.zone_for_name(name).to_text(True)
+        resolver = dns.resolver.Resolver()
+        resolver.lifetime = 1
+        try:
+            domain = dns.resolver.zone_for_name(name, resolver=resolver).to_text(True)
+        except dns.exception.DNSException:
+            domain = tldextract.extract(name).registered_domain
         nameservers = Provider._get_nameservers(domain)
         cname = None
         links, max_links = 0, 5
@@ -474,9 +481,12 @@ class Provider(BaseProvider):
             if rrset:
                 links += 1
                 cname = rrset[0].to_text()
-                qdomain = dns.resolver.zone_for_name(cname)
-                if domain != qdomain.to_text(True):
-                    domain = qdomain.to_text(True)
+                try:
+                    qdomain = dns.resolver.zone_for_name(cname, resolver=resolver).to_text(True)
+                except dns.exception.DNSException:
+                    qdomain = tldextract.extract(cname).registered_domain
+                if domain != qdomain:
+                    domain = qdomain
                     nameservers = Provider._get_nameservers(qdomain)
             else:
                 link = False
