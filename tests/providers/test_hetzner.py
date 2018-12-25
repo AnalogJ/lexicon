@@ -1,12 +1,12 @@
-from lexicon.providers.hetzner import Provider
-from integration_tests import IntegrationTests
 from unittest import TestCase
-import pytest
-
 from bs4 import BeautifulSoup
 import mock
 import os
 import socket
+import pytest
+
+from lexicon.providers.hetzner import Provider
+from integration_tests import IntegrationTests
 
 def no_network():
     try:
@@ -24,7 +24,7 @@ class HetznerIntegrationTests(IntegrationTests):
         _domain_mock = self.domain
         if request.node.name == 'test_Provider_authenticate_with_unmanaged_domain_should_fail':
             _domain_mock = 'thisisadomainidonotown.com'
-        if (_ignore_mock):
+        if _ignore_mock:
             yield
         else:
             with mock.patch('lexicon.providers.hetzner.Provider._get_dns_cname',
@@ -35,7 +35,7 @@ class HetznerIntegrationTests(IntegrationTests):
     @pytest.mark.ignore_get_dns_cname_mock('yes')
     def test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
-        _domain, _, _ = self.Provider._get_dns_cname('_acme-challenge.fqdn.{}.'.format(self.domain),
+        _domain, _, _ = Provider._get_dns_cname('_acme-challenge.fqdn.{}.'.format(self.domain),
                                                      False)
         assert _domain == self.domain
 
@@ -47,7 +47,7 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
     domain = 'rimek.info'
 
     def _filter_post_data_parameters(self):
-        return ['_username','_password', '_csrf_token']
+        return ['_username', '_password', '_csrf_token']
 
     def _filter_headers(self):
         return ['Cookie']
@@ -57,9 +57,11 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
             if cookie in response['headers']:
                 del response['headers'][cookie]
         if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-            filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='center_col')
+            filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
+                           .find(id='center_col'))
             if not filter_body:
-                filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='login-form')
+                filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
+                               .find(id='login-form'))
             response['body']['string'] = str(filter_body).encode('UTF-8')
         return response
 
@@ -78,7 +80,7 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
     domain = 'bettilaila.com'
 
     def _filter_post_data_parameters(self):
-        return ['login_user_inputbox','login_pass_inputbox', '_csrf_name', '_csrf_token']
+        return ['login_user_inputbox', 'login_pass_inputbox', '_csrf_name', '_csrf_token']
 
     def _filter_headers(self):
         return ['Cookie']
@@ -88,9 +90,11 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
             if cookie in response['headers']:
                 del response['headers'][cookie]
         if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-            filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='content')
+            filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
+                           .find(id='content'))
             if not filter_body:
-                filter_body = BeautifulSoup(response['body']['string'], 'html.parser').find(id='loginform')
+                filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
+                               .find(id='loginform'))
             response['body']['string'] = str(filter_body).encode('UTF-8')
         return response
 
