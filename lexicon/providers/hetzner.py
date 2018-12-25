@@ -8,7 +8,6 @@ import re
 import time
 import requests
 from six import string_types
-import tldextract
 from urllib3.util.retry import Retry
 
 # Due to optional requirement
