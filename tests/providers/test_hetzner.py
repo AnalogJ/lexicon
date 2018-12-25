@@ -1,16 +1,45 @@
-# Test for one implementation of the interface
 from lexicon.providers.hetzner import Provider
 from integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
 
-import os
 from bs4 import BeautifulSoup
+import mock
+import os
+import socket
 
-# Hook into testing framework by inheriting unittest.TestCase and reuse
-# the tests which *each and every* implementation of the interface must
-# pass, by inheritance from integration_tests.IntegrationTests
-class HetznerRobotProviderTests(TestCase, IntegrationTests):
+def no_network():
+    try:
+        socket.create_connection(("www.google.com", 80))
+        return False
+    except OSError:
+        pass
+    return True
+
+class HetznerIntegrationTests(IntegrationTests):
+
+    @pytest.fixture(autouse=True)
+    def get_dns_cname_mock(self, request):
+        _ignore_mock = request.node.get_marker('ignore_get_dns_cname_mock')
+        _domain_mock = self.domain
+        if request.node.name == 'test_Provider_authenticate_with_unmanaged_domain_should_fail':
+            _domain_mock = 'thisisadomainidonotown.com'
+        if (_ignore_mock):
+            yield
+        else:
+            with mock.patch('lexicon.providers.hetzner.Provider._get_dns_cname',
+                            return_value=(_domain_mock, [], None)) as fixture:
+                yield fixture
+
+    @pytest.mark.skipif(no_network(), reason='No network, no dns.resolver call possible.')
+    @pytest.mark.ignore_get_dns_cname_mock('yes')
+    def test_get_dns_cname(self):
+        """Ensure that zone for name can be resolved through dns.resolver call."""
+        _domain, _, _ = self.Provider._get_dns_cname('_acme-challenge.fqdn.{}.'.format(self.domain),
+                                                     False)
+        assert _domain == self.domain
+
+class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
 
     Provider = Provider
     provider_name = 'hetzner'
@@ -41,7 +70,7 @@ class HetznerRobotProviderTests(TestCase, IntegrationTests):
                    'latency': 1}
         return options
 
-class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
+class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
 
     Provider = Provider
     provider_name = 'hetzner'
@@ -66,8 +95,8 @@ class HetznerKonsoleHProviderTests(TestCase, IntegrationTests):
         return response
 
     def _test_parameters_overrides(self):
-        env_username = os.environ.get('LEXICON_HETZNER_KONSOLEH_USERNAME')
-        env_password = os.environ.get('LEXICON_HETZNER_KONSOLEH_PASSWORD')
+        env_username = os.environ.get('LEXICON_HETZNER_KONSOLEH_USERNAME', 'placeholder_username')
+        env_password = os.environ.get('LEXICON_HETZNER_KONSOLEH_PASSWORD', 'placeholder_password')
         options = {'auth_account': 'konsoleh',
                    'auth_username': env_username,
                    'auth_password': env_password,

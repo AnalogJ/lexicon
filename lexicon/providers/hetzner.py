@@ -422,9 +422,9 @@ class Provider(BaseProvider):
         rrset = dns.rrset.from_text(name, 0, 1, rdtype)
         try:
             resolver = dns.resolver.Resolver()
+            resolver.lifetime = 1
             if nameservers:
                 resolver.nameservers = nameservers
-            resolver.lifetime = 1
             rrset = resolver.query(name, rdtype)
             for rdata in rrset:
                 LOGGER.debug('DNS Lookup => %s %s %s %s',
@@ -463,10 +463,7 @@ class Provider(BaseProvider):
         """
         resolver = dns.resolver.Resolver()
         resolver.lifetime = 1
-        try:
-            domain = dns.resolver.zone_for_name(name, resolver=resolver).to_text(True)
-        except dns.exception.DNSException:
-            domain = tldextract.extract(name).registered_domain
+        domain = dns.resolver.zone_for_name(name, resolver=resolver).to_text(True)
         nameservers = Provider._get_nameservers(domain)
         cname = None
         links, max_links = 0, 5
@@ -481,10 +478,7 @@ class Provider(BaseProvider):
             if rrset:
                 links += 1
                 cname = rrset[0].to_text()
-                try:
-                    qdomain = dns.resolver.zone_for_name(cname, resolver=resolver).to_text(True)
-                except dns.exception.DNSException:
-                    qdomain = tldextract.extract(cname).registered_domain
+                qdomain = dns.resolver.zone_for_name(cname, resolver=resolver).to_text(True)
                 if domain != qdomain:
                     domain = qdomain
                     nameservers = Provider._get_nameservers(qdomain)
