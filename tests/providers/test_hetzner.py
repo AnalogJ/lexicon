@@ -1,10 +1,9 @@
 from unittest import TestCase
-from bs4 import BeautifulSoup
 import mock
 import os
 import socket
 import pytest
-
+from bs4 import BeautifulSoup
 from lexicon.providers.hetzner import Provider
 from integration_tests import IntegrationTests
 
@@ -36,7 +35,7 @@ class HetznerIntegrationTests(IntegrationTests):
     def test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
         _domain, _, _ = Provider._get_dns_cname('_acme-challenge.fqdn.{}.'.format(self.domain),
-                                                     False)
+                                                False)
         assert _domain == self.domain
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
