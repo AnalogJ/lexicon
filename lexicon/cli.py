@@ -14,12 +14,12 @@ from lexicon.parser import generate_cli_main_parser
 logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
 
-def generate_table_result(lexicon_logger, output=None, without_header=None):
-    """Convert returned JSON into a nice table for command line usage"""
+def generate_list_table_result(lexicon_logger, output=None, without_header=None):
+    """Convert returned data from list actions into a nice table for command line usage"""
     try:
-        _ = (entry for entry in output)
+        isinstance(output, dict)
     except TypeError:
-        lexicon_logger.debug('Command output is not iterable, and then cannot '
+        lexicon_logger.debug('Command output is not a dict, and then cannot '
                              'be printed with --quiet parameter not enabled.')
         return None
 
@@ -58,26 +58,43 @@ def generate_table_result(lexicon_logger, output=None, without_header=None):
         table.append(' '.join(row_list))
 
     # Return table
-    return '\n'.join(table)
+    return os.linesep.join(table)
 
 
-def handle_output(results, output_type):
+def generate_table_results(output=None, without_header=None):
+    """Convert returned data from non-list actions into a nice table for command line usage"""
+    array = []
+    str_output = str(output)
+
+    if not without_header:
+        array.append('RESULT')
+        array.append('-' * max(6, len(str_output)))
+
+    array.append(str_output)
+    return os.linesep.join(array)
+
+
+def handle_output(results, output_type, action):
     """Print the relevant output for given output_type"""
-    if not output_type == 'QUIET':
-        if not output_type == 'JSON':
-            table = generate_table_result(
+    if output_type == 'QUIET':
+        return
+
+    if not output_type == 'JSON':
+        if action == 'list':
+            table = generate_list_table_result(
                 logger, results, output_type == 'TABLE-NO-HEADER')
-            if table:
-                print(table)
         else:
-            try:
-                _ = (entry for entry in results)
-                json_str = json.dumps(results)
-                if json_str:
-                    print(json_str)
-            except TypeError:
-                logger.debug('Output is not a JSON, and then cannot '
-                             'be printed with --output=JSON parameter.')
+            table = generate_table_results(results, output_type == 'TABLE-NO-HEADER')
+        if table:
+            print(table)
+    else:
+        try:
+            json_str = json.dumps(results)
+            if json_str:
+                print(json_str)
+        except TypeError:
+            logger.debug('Output is not JSON serializable, and then cannot '
+                         'be printed with --output=JSON parameter.')
 
 
 def main():
@@ -101,7 +118,7 @@ def main():
 
     results = client.execute()
 
-    handle_output(results, parsed_args.output)
+    handle_output(results, parsed_args.output, config.resolve('lexicon:action'))
 
 
 if __name__ == '__main__':
