@@ -1,25 +1,29 @@
 from unittest import TestCase
-import mock
 import os
-import socket
+import mock
 import pytest
 from bs4 import BeautifulSoup
+import dns.resolver
 from lexicon.providers.hetzner import Provider
 from integration_tests import IntegrationTests
 
-def no_network():
-    try:
-        socket.create_connection(("www.google.com", 80))
-        return False
-    except OSError:
-        pass
-    return True
-
 class HetznerIntegrationTests(IntegrationTests):
 
+    def _no_dns_lookup():
+        _domains = ['rimek.info', 'bettilaila.com']
+        _resolver = dns.resolver.Resolver()
+        _resolver.lifetime = 1
+        try:
+            for _domain in _domains:
+                _ = dns.resolver.zone_for_name(_domain, resolver=_resolver)
+            return False
+        except dns.exception.DNSException:
+            pass
+        return True
+
     @pytest.fixture(autouse=True)
-    def get_dns_cname_mock(self, request):
-        _ignore_mock = request.node.get_marker('ignore_get_dns_cname_mock')
+    def dns_cname_mock(self, request):
+        _ignore_mock = request.node.get_marker('ignore_dns_cname_mock')
         _domain_mock = self.domain
         if request.node.name == 'test_Provider_authenticate_with_unmanaged_domain_should_fail':
             _domain_mock = 'thisisadomainidonotown.com'
@@ -30,13 +34,14 @@ class HetznerIntegrationTests(IntegrationTests):
                             return_value=(_domain_mock, [], None)) as fixture:
                 yield fixture
 
-    @pytest.mark.skipif(no_network(), reason='No network, no dns.resolver call possible.')
-    @pytest.mark.ignore_get_dns_cname_mock('yes')
+    @pytest.mark.skipif(_no_dns_lookup(), reason='No DNS resolution possible.')
+    @pytest.mark.ignore_dns_cname_mock
     def test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
-        _domain, _, _ = Provider._get_dns_cname('_acme-challenge.fqdn.{}.'.format(self.domain),
-                                                False)
+        _domain, _nameservers, _ = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'
+                                                            .format(self.domain)), True)
         assert _domain == self.domain
+        assert _nameservers
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
 

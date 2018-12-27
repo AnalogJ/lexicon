@@ -507,10 +507,10 @@ class Provider(BaseProvider):
             if action != 'update' or name == qname or not qname:
                 LOGGER.info('Hetzner => Enable CNAME lookup '
                             '(see --linked parameter)')
-                return qname, True
+                return name, True
         LOGGER.info('Hetzner => Disable CNAME lookup '
                     '(see --linked parameter)')
-        return qname, False
+        return name, False
 
     def _propagated_record(self, rdtype, name, content, nameservers=None):
         """
