@@ -16,10 +16,8 @@ logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
 def generate_list_table_result(lexicon_logger, output=None, without_header=None):
     """Convert returned data from list actions into a nice table for command line usage"""
-    try:
-        isinstance(output, dict)
-    except TypeError:
-        lexicon_logger.debug('Command output is not a dict, and then cannot '
+    if not isinstance(output, list):
+        lexicon_logger.debug('Command output is not a list, and then cannot '
                              'be printed with --quiet parameter not enabled.')
         return None
 
