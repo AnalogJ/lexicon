@@ -33,13 +33,13 @@ BUILD_FORMATS = {
 }
 
 FORMAT_RE = {
-    "A": re.compile("(?P<address>.+)"),
-    "AAAA": re.compile("(?P<address>.+)"),
-    "CNAME": re.compile("(?P<cname>.+)"),
-    "TXT": re.compile("(?P<data>.+)"),
-    "NS": re.compile("(?P<nsdname>.+)"),
-    "MX": re.compile("(?P<prio>\d+)\s+(?P<exchange>.+)"),
-    "SRV": re.compile("(?P<prio>\d+)\s+(?P<weight>\d+)\s+(?P<port>\d+)\s+(?P<target>.+)"),
+    "A": re.compile(r"(?P<address>.+)"),
+    "AAAA": re.compile(r"(?P<address>.+)"),
+    "CNAME": re.compile(r"(?P<cname>.+)"),
+    "TXT": re.compile(r"(?P<data>.+)"),
+    "NS": re.compile(r"(?P<nsdname>.+)"),
+    "MX": re.compile(r"(?P<prio>\d+)\s+(?P<exchange>.+)"),
+    "SRV": re.compile(r"(?P<prio>\d+)\s+(?P<weight>\d+)\s+(?P<port>\d+)\s+(?P<target>.+)"),
 }
 
 
