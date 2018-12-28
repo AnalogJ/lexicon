@@ -7,19 +7,19 @@ import dns.resolver
 from lexicon.providers.hetzner import Provider
 from integration_tests import IntegrationTests
 
-class HetznerIntegrationTests(IntegrationTests):
+def _no_dns_lookup():
+    _domains = ['rimek.info', 'bettilaila.com']
+    _resolver = dns.resolver.Resolver()
+    _resolver.lifetime = 1
+    try:
+        for _domain in _domains:
+            _ = dns.resolver.zone_for_name(_domain, resolver=_resolver)
+        return False
+    except dns.exception.DNSException:
+        pass
+    return True
 
-    def _no_dns_lookup():
-        _domains = ['rimek.info', 'bettilaila.com']
-        _resolver = dns.resolver.Resolver()
-        _resolver.lifetime = 1
-        try:
-            for _domain in _domains:
-                _ = dns.resolver.zone_for_name(_domain, resolver=_resolver)
-            return False
-        except dns.exception.DNSException:
-            pass
-        return True
+class HetznerIntegrationTests(IntegrationTests):
 
     @pytest.fixture(autouse=True)
     def dns_cname_mock(self, request):
