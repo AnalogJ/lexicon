@@ -38,10 +38,11 @@ class HetznerIntegrationTests(IntegrationTests):
     @pytest.mark.ignore_dns_cname_mock
     def test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
-        _domain, _nameservers, _ = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'
-                                                            .format(self.domain)), True)
+        _domain, _nameservers, _cname = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'
+                                                                 .format(self.domain)), False)
         assert _domain == self.domain
         assert _nameservers
+        assert not _cname
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
 
