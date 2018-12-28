@@ -1,12 +1,9 @@
+""" Ensure that stdout corresponds to the given reference output """
 from __future__ import absolute_import
-import importlib
 import json
 import logging
-import sys
-from types import ModuleType
 
 from lexicon import cli
-from lexicon.providers.base import Provider as BaseProvider
 
 
 logger = logging.getLogger(__name__)
@@ -16,8 +13,6 @@ data = [
     {'id': 'fake2-id', 'type': 'TXT', 'name': 'fake2.example.com',
         'content': 'fake2', 'ttl': 3600}
 ]
-
-# Ensure that stdout corresponds to the given reference output
 
 
 def assert_correct_output(capsys, expected_output_lines):
