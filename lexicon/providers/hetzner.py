@@ -421,6 +421,7 @@ class Provider(BaseProvider):
         rrset = dns.rrset.from_text(name, 0, 1, rdtype)
         try:
             resolver = dns.resolver.Resolver()
+            resolver.lifetime = 1
             if nameservers:
                 resolver.nameservers = nameservers
             rrset = resolver.query(name, rdtype)
@@ -459,7 +460,9 @@ class Provider(BaseProvider):
         more linked record name was found for the given fully qualified record name or
         the CNAME lookup was disabled, and then returns the parameters as a tuple.
         """
-        domain = dns.resolver.zone_for_name(name).to_text(True)
+        resolver = dns.resolver.Resolver()
+        resolver.lifetime = 1
+        domain = dns.resolver.zone_for_name(name, resolver=resolver).to_text(True)
         nameservers = Provider._get_nameservers(domain)
         cname = None
         links, max_links = 0, 5
@@ -474,9 +477,9 @@ class Provider(BaseProvider):
             if rrset:
                 links += 1
                 cname = rrset[0].to_text()
-                qdomain = dns.resolver.zone_for_name(cname)
-                if domain != qdomain.to_text(True):
-                    domain = qdomain.to_text(True)
+                qdomain = dns.resolver.zone_for_name(cname, resolver=resolver).to_text(True)
+                if domain != qdomain:
+                    domain = qdomain
                     nameservers = Provider._get_nameservers(qdomain)
             else:
                 link = False
@@ -504,10 +507,10 @@ class Provider(BaseProvider):
             if action != 'update' or name == qname or not qname:
                 LOGGER.info('Hetzner => Enable CNAME lookup '
                             '(see --linked parameter)')
-                return qname, True
+                return name, True
         LOGGER.info('Hetzner => Disable CNAME lookup '
                     '(see --linked parameter)')
-        return qname, False
+        return name, False
 
     def _propagated_record(self, rdtype, name, content, nameservers=None):
         """
