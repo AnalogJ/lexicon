@@ -1,4 +1,3 @@
-import contextlib
 import os
 from builtins import object
 from functools import wraps
@@ -10,17 +9,20 @@ from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 from lexicon.providers.base import Provider as BaseProvider
 
 
-# Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
-record_mode = 'new_episodes' if os.environ.get(
-    'LEXICON_LIVE_TESTS', 'false') == 'true' else 'none'
+# Configure VCR. Parameter record_mode depends
+# on the LEXICON_LIVE_TESTS environment variable value.
+record_mode = 'none'
+if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
+    record_mode = 'new_episodes'
 provider_vcr = vcr.VCR(
-    cassette_library_dir='tests/fixtures/cassettes',
+    cassette_library_dir=os.environ.get('LEXICON_VCRPY_CASSETTES_PATH',
+                                        'tests/fixtures/cassettes'),
     record_mode=record_mode,
     decode_compressed_response=True
 )
 
 # Prepare custom decorator: it will start a casette in relevant folder for current provider,
-#   and using the name of the test method as the cassette's name.
+# and using the name of the test method as the cassette's name.
 
 
 def _vcr_integration_test(decorated):
