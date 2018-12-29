@@ -7,7 +7,7 @@ from pylint import lint
 
 
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GLOBAL_NOTE_THRESHOLD = 8.12
+GLOBAL_NOTE_THRESHOLD = 8.16
 
 
 def quality_gate(stats):
@@ -49,14 +49,8 @@ def quality_gate(stats):
 def main():
     """Main process"""
     # Script is located two levels deep in the repository root (./tests/pylint_quality_gate.py)
-    repo_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
     sys.stdout.write('===> Executing pylint ... <===\n')
-    results = lint.Run([
-        os.path.join(repo_dir, 'lexicon'),
-        os.path.join(repo_dir, 'tests'),
-        os.path.join(repo_dir, 'tests', 'providers'), '--persistent=n'],
-        do_exit=False)
+    results = lint.Run(['lexicon', '--persistent=n'], None, False)
 
     stats = results.linter.stats
     sys.exit(quality_gate(stats))
