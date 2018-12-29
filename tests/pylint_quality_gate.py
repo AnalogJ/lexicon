@@ -56,7 +56,7 @@ def main():
         os.path.join(repo_dir, 'lexicon'),
         os.path.join(repo_dir, 'tests'),
         os.path.join(repo_dir, 'tests', 'providers'), '--persistent=n'],
-        do_exit=False)
+        exit=False)
 
     stats = results.linter.stats
     sys.exit(quality_gate(stats))

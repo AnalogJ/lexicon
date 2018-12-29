@@ -54,7 +54,7 @@ extras_require['dev'] = [
     'python-coveralls==2.9.1',
     'vcrpy==1.13.0',
     'mock==2.0.0',
-    'pylint==2.1.1',
+    'pylint<2.0.0',  # Can pass to 2.x branch when support for Python 2.x in Lexicon is dropped
 ]
 
 setup(
