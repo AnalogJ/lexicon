@@ -23,19 +23,19 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
 
-    def authenticate(self):
+    def _authenticate(self):
         print('Authenticate action')
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         return {'action': 'create', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         return {'action': 'list', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         return {'action': 'update', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         return {'action': 'delete', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
 
 

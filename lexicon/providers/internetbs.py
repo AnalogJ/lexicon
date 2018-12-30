@@ -39,7 +39,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.internet.bs'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/Domain/List', {
             'searchTermFilter': self.domain
         })
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         # Skip execution if such a record already exists
         existing_records = self.list_records(type, name, content)
         if len(existing_records) > 0:
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         query = {'Domain': self.domain}
         if type:
             query['FilterType'] = type
@@ -113,7 +113,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record.
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
             to_update = next(
@@ -136,7 +136,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
             records = self.list_records()
             to_update = next(

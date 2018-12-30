@@ -59,7 +59,7 @@ class Provider(BaseProvider):
         self.endpoint_api = ENDPOINTS.get(
             self._get_provider_option('auth_entrypoint'))
 
-    def authenticate(self):
+    def _authenticate(self):
         # All requests will be done in one HTTPS session
         self.session = requests.Session()
 
@@ -81,7 +81,7 @@ class Provider(BaseProvider):
 
         self.domain_id = domain
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         domain = self.domain
         ttl = self._get_lexicon_option('ttl')
 
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         domain = self.domain
         records = []
 
@@ -142,7 +142,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         domain = self.domain
 
         if not identifier:
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         domain = self.domain
 
         delete_record_id = []

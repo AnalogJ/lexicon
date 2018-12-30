@@ -73,7 +73,7 @@ class Provider(BaseProvider):
         self.domain = self.domain
         self.domain_id = None
 
-    def authenticate(self):
+    def _authenticate(self):
         """
         The Namecheap API is a little difficult to work with.
         Originally this method called PyNamecheap's `domains_getList`, which is
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
         return self._get_lexicon_option('ttl')
 
     # Create record. If record already exists with the same content, do nothing
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         record = {
             # required
             'Type': type,
@@ -206,7 +206,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, type=None, name=None, content=None, id=None):
         records = []
         raw_records = self.client.domains_dns_getHosts(self.domain)
         for record in raw_records:
@@ -228,14 +228,14 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # Delete record if it exists
         self.delete_record(identifier, type, name, content)
         return self.create_record(type, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         records = self.list_records(
             type=type, name=name, content=content, id=identifier)
         for record in records:

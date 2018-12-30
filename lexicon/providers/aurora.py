@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.auroradns.eu'
 
-    def authenticate(self):
+    def _authenticate(self):
         zone = None
         payload = self._get('/zones')
 
@@ -43,7 +43,7 @@ class Provider(BaseProvider):
         self.domain_id = zone['id']
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         data = {'type': type, 'name': self._relative_name(
             name), 'content': content}
         if self._get_lexicon_option('ttl'):
@@ -56,7 +56,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         payload = self._get('/zones/{0}/records'.format(self.domain_id))
 
         # Apply filtering first.
@@ -87,7 +87,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
             identifier = self._find_record_identifier(type, name, None)
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:

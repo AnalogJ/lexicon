@@ -39,7 +39,7 @@ class Provider(BaseProvider):
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
-    def authenticate(self):
+    def _authenticate(self):
         self.auth_token = self._get_provider_option('auth_token')
         if not self.auth_token:
             if not (self._get_provider_option('auth_username')
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
         self.domain_id = payload['domains'][0]['id']
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         if not type:
             raise Exception("type must be specified.")
         if not name:
@@ -94,7 +94,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         payload = self._get('/domains/{0}/records'.format(self.domain_id))
         records = payload['records']
 
@@ -119,7 +119,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name)
             if len(records) != 1:
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         records = self.list_records(type, name, content)
 
         if identifier:

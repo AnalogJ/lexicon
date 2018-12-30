@@ -46,7 +46,7 @@ class Provider(BaseProvider):
         self.domain = self.domain
         self.domain_id = None
 
-    def authenticate(self):
+    def _authenticate(self):
         """
         """
         # Create the session GET the login page to retrieve a session cookie
@@ -90,7 +90,7 @@ class Provider(BaseProvider):
         return True
 
     # Create record. If record already exists with the same content, do nothing
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         LOGGER.debug("Creating record for zone {0}".format(name))
         # Pull a list of records and check for ours
         records = self.list_records(type=type, name=name, content=content)
@@ -139,7 +139,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, type=None, name=None, content=None, id=None):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
@@ -209,14 +209,14 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # Delete record if it exists
         self.delete_record(identifier, type, name, content)
         return self.create_record(type, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
             records = self.list_records(type, name, content)

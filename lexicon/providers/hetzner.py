@@ -160,7 +160,7 @@ class Provider(BaseProvider):
         self.password = self._get_provider_option('auth_password')
         assert self.password is not None
 
-    def authenticate(self):
+    def _authenticate(self):
         """
         Connects to Hetzner account and returns, if authentification was
         successful and the domain or CNAME target is managed by this account.
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
         with self._session(self.domain, get_zone=False):
             return True
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         """
         Connects to Hetzner account, adds a new record to the zone and returns a
         boolean, if creation was successful or not. Needed record type, name and
@@ -202,7 +202,7 @@ class Provider(BaseProvider):
                                         ddata['nameservers'])
             return synced_change
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """
         Connects to Hetzner account and returns a list of records filtered by record
         type, name and content. The list is empty if no records found.
@@ -211,7 +211,7 @@ class Provider(BaseProvider):
             name = self._fqdn_name(name) if name else None
             return self._list_records(ddata['zone']['data'], type, name, content)
 
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
         """
         Connects to Hetzner account, changes an existing record and returns a boolean,
         if update was successful or not. Needed identifier or type & name to lookup
@@ -281,7 +281,7 @@ class Provider(BaseProvider):
             LOGGER.warning('Hetzner => Record lookup has not only one match')
             return False
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         """
         Connects to Hetzner account, removes an existing record from the zone and returns a
         boolean, if deletion was successful or not. Uses identifier or type, name & content to

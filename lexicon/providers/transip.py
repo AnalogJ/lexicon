@@ -60,7 +60,7 @@ class Provider(BaseProvider):
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
-    def authenticate(self):
+    def _authenticate(self):
         # This request will fail when the domain does not exist,
         # allowing us to check for existence
         domain = self.domain
@@ -73,7 +73,7 @@ class Provider(BaseProvider):
         self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         records = self.client.get_info(self.domain).dnsEntries
 
         if self._filter_records(records, type, name, content):
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None, show_output=True):
+    def _list_records(self, type=None, name=None, content=None, show_output=True):
         all_records = self._convert_records(
             self.client.get_info(self.domain).dnsEntries)
         records = self._filter_records(
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
             raise Exception(
                 "At least one of type, name or content must be specified.")
@@ -139,7 +139,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if not (type or name or content):
             raise Exception(
                 "At least one of type, name or content must be specified.")

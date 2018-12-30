@@ -23,7 +23,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.nsone.net/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/zones/{0}'.format(self.domain))
 
@@ -50,7 +50,7 @@ class Provider(BaseProvider):
         }
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         name = self._full_name(name)
         existing_record_set = self._get_record_set(name, type)
         if existing_record_set:
@@ -123,7 +123,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
 
         def _resolve_link(record, recurse=0):
             # https://ns1.com/articles/cname-alias-and-linked-records
@@ -180,7 +180,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
 
         data = {}
         payload = None
@@ -207,7 +207,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             name = self._full_name(name)
 

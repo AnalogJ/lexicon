@@ -23,7 +23,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.linode.com/v4/'
 
-    def authenticate(self):
+    def _authenticate(self):
         self.domain_id = None
         payload = self._get('domains', query_params={
             'filter': {
@@ -35,7 +35,7 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise Exception('Domain not found')
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         if len(self.list_records(type, name, content)) == 0:
             if name:
                 name = self._relative_name(name)
@@ -52,7 +52,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         resources_url = "domains/{0}/records".format(self.domain_id)
 
         if name:
@@ -91,7 +91,7 @@ class Provider(BaseProvider):
         return processed_records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         if not identifier:
             resources = self.list_records(type, name, None)
             identifier = resources[0]['id'] if len(resources) > 0 else None
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_resource_id = []
         if not identifier:
             resources = self.list_records(type, name, content)

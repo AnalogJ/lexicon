@@ -61,7 +61,7 @@ class Provider(BaseProvider):
                 message, response['msg'], response['code']))
 
     # Make any request to validate credentials
-    def authenticate(self):
+    def _authenticate(self):
         """
         run any request against the API just to make sure the credentials
         are valid
@@ -81,7 +81,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         """
         create a record
         does nothing if the record already exists
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """
         list all records
 
@@ -142,7 +142,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         """
         update a record
 
@@ -177,7 +177,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None,
+    def _delete_record(self, identifier=None, type=None, name=None,
                       content=None):
         """
         delete a record

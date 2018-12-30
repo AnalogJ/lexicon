@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://www.cloudxns.net/api2'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/domain')
         for record in payload['data']:
@@ -43,7 +43,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
 
         record = {
             'domain_id': self.domain_id,
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         filter = {}
 
         payload = self._get('/record/' + self.domain_id,
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
             records = self.list_records(name=name)
@@ -128,7 +128,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)

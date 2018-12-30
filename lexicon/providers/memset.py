@@ -22,7 +22,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.memset.com/v1/json'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/dns.zone_domain_info', {
             'domain': self.domain
         })
@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         self.domain_id = payload['zone_id']
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         data = {'type': type, 'record': self._relative_name(
             name), 'address': content}
         if self._get_lexicon_option('ttl'):
@@ -50,7 +50,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         payload = self._get('/dns.zone_info', {
             'id': self.domain_id
         })
@@ -82,7 +82,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         data = {}
         if not identifier:
             records = self.list_records(type, self._relative_name(name))
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
             records = self.list_records(

@@ -110,21 +110,21 @@ class Provider(BaseProvider):
             ('dataset', {})
         ]))["result"]["id"]
 
-    def authenticate(self):
+    def _authenticate(self):
         self.domain_id = self.__find_site()
 
         if self.domain_id is None:
             raise Exception('Domain not found')
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         return self.__create_entry(type, name, content, None)
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         entries = self.__find_dns_entries(type, name, content)
         LOGGER.debug("list_records: %s" % entries)
         return entries
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
 
         if identifier is None:
             entries = self.__find_dns_entries(type, name, None)
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
 
         if identifier:
 

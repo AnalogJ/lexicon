@@ -41,7 +41,7 @@ class Provider(BaseProvider):
 
         self.session = requests.Session()
 
-    def authenticate(self):
+    def _authenticate(self):
         domain = self.domain
 
         zones = self._get('/dns_zones.json')
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
             raise Exception(
                 'Could not find {0} in OnApp DNS Zones'.format(domain))
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         data = {
             'name': self._relative_name(name),
             'type': type,
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         records = []
 
         response = self._get(
@@ -107,7 +107,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         if not identifier:
             existing = self._guess_record(type, name)
             identifier = existing['id']
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         deletion_ids = []
 
         if not identifier:

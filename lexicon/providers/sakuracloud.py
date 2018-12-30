@@ -26,7 +26,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         query_params = {
             "Filter": {
@@ -44,7 +44,7 @@ class Provider(BaseProvider):
         raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         records = []
 
         for record in self._get_resource_record_sets():
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
 
         if not (type and name and content):
             raise Exception("type ,name and content must be specified.")
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         resource_record_sets = self._get_resource_record_sets()
 
         if name is not None:

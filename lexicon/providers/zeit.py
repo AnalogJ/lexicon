@@ -36,7 +36,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.zeit.co/v2/domains'
 
-    def authenticate(self):
+    def _authenticate(self):
         result = self._get('/{0}'.format(self.domain))
 
         if not result['uid']:
@@ -44,7 +44,7 @@ class Provider(BaseProvider):
 
         self.domain_id = result['uid']
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         result = self._get('/{0}/records'.format(self.domain))
 
         raw_records = result['records']
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         # We ignore creation if a record already exists for given type/name/content
         records = self.list_records(type, name, content)
         if records:
@@ -94,7 +94,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # Zeit do not allow to update a record, only add or remove.
         # So we get the corresponding record, dump or update its content and insert it as a new record.
         # Then we remove the old record.
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
             records = self.list_records(type, name, content)

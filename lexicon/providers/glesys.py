@@ -21,7 +21,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.glesys.com'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/domain/list')
         domains = payload['response']['domains']
         for record in domains:
@@ -35,7 +35,7 @@ class Provider(BaseProvider):
             raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing.
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         existing = self.list_records(type, name, content)
         if len(existing) > 0:
             # Already exists, do nothing.
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         request_data = {
             'domainname': self.domain
         }
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
         return processed_records
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         request_data = {'recordid': identifier}
         if name:
             request_data['host'] = name
@@ -94,7 +94,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)

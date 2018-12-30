@@ -4,7 +4,6 @@ from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
 class Provider(object):
-
     """
     This is the base class for all lexicon Providers.
     It provides common functionality and ensures that all implemented
@@ -51,32 +50,59 @@ class Provider(object):
         self.domain = self.config.resolve('lexicon:domain')
         self.domain_id = None
 
-    # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider,
-    # so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason,
-    # of if the domain does not exist.
+    # Provider API
     def authenticate(self):
-        raise NotImplementedError("Providers should implement this!")
+        """
+        Authenticate against provider,
+        Make any requests required to get the domain's id for this provider,
+        so it can be used in subsequent calls.
+        Should throw an error if authentication fails for any reason,
+        of if the domain does not exist.
+        """
+        return self._authenticate()
 
-    # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        raise NotImplementedError("Providers should implement this!")
+        """
+        Create record. If record already exists with the same content, do nothing.
+        """
+        return self._create_record(type, name, content)
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        """
+        List all records. Return an empty list if no records found
+        type, name and content are used to filter records.
+        If possible filter during the query, otherwise filter after response is received.
+        """
+        return self._list_records(type, name, content)
 
-    # Update a record. Identifier must be specified.
     def update_record(self, identifier, type=None, name=None, content=None):
+        """
+        Update a record. Identifier must be specified.
+        """
+        return self._update_record(identifier, type, name, content)
+
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        """
+        Delete an existing record.
+        If record does not exist, do nothing.
+        If an identifier is specified, use it, otherwise do a lookup using type, name and content.
+        """
+        return self._delete_record(identifier, type, name, content)
+
+    # Internal abstract implementations
+    def _authenticate(self):
         raise NotImplementedError("Providers should implement this!")
 
-    # Delete an existing record.
-    # If record does not exist, do nothing.
-    # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _create_record(self, type, name, content):
+        raise NotImplementedError("Providers should implement this!")
+
+    def _list_records(self, type=None, name=None, content=None):
+        raise NotImplementedError("Providers should implement this!")
+
+    def _update_record(self, identifier, type=None, name=None, content=None):
+        raise NotImplementedError("Providers should implement this!")
+
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         raise NotImplementedError("Providers should implement this!")
 
     # Helpers

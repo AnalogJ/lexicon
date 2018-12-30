@@ -27,13 +27,13 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://pddimp.yandex.ru/api2/admin/dns'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/list?domain={0}'.format(self.domain))
         if payload['success'] != "ok":
             raise Exception('No domain found')
         self.domain_id = self.domain
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         if (type == 'CNAME') or (type == 'MX') or (type == 'NS'):
             # make sure a the data is always a FQDN for CNAMe.
             content = content.rstrip('.') + '.'
@@ -50,7 +50,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         url = '/list?domain={0}'.format(self.domain_id)
         records = []
         payload = {}
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
         return records
 
     # Just update existing record. Domain ID (domain) and Identifier (record_id) is mandatory
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
             LOGGER.debug(
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist (I'll hope), do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)

@@ -70,7 +70,7 @@ class Provider(BaseProvider):
             self._zone_data = self._get('/zones/' + self.domain).json()
         return self._zone_data
 
-    def authenticate(self):
+    def _authenticate(self):
         self.zone_data()
         self.domain_id = self.domain
 
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
         content = "=".join(parts[1:])
         return type, name, content
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         records = []
         for rrset in self.zone_data()['rrsets']:
             if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(name)) and (type is None or rrset['type'] == type):
@@ -118,7 +118,7 @@ class Provider(BaseProvider):
             content = self._full_name(content)
         return content
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         content = self._clean_content(type, content)
         for rrset in self.zone_data()['rrsets']:
             if rrset['name'] == name and rrset['type'] == type:
@@ -154,7 +154,7 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier is not None:
             type, name, content = self._parse_identifier(identifier)
 
@@ -187,7 +187,7 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         self.delete_record(identifier)
         return self.create_record(type, name, content)
 

@@ -30,13 +30,13 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.cloudns.net'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/dns/get-zone-info.json',
                             {'domain-name': self.domain})
         self.domain_id = payload['name']
         LOGGER.debug('authenticate: %s', payload)
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         # Skip execution if such a record already exists
         existing_records = self.list_records(type, name, content)
         if len(existing_records) > 0:
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         # Build parameters to make use of the built-in API filtering
         params = {'domain-name': self.domain_id}
         if type:
@@ -95,7 +95,7 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
             identifier = self._find_record_identifier(type, name, None)
@@ -122,7 +122,7 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:

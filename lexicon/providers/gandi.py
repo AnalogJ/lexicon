@@ -76,7 +76,7 @@ class Provider(BaseProvider):
         else:
             self.api_endpoint = 'https://dns.api.gandi.net/api/v5'
 
-    def authenticate(self):
+    def _authenticate(self):
         if self.protocol == 'rpc':
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
             self._get('/domains/{0}'.format(self.domain))
             self.domain_id = self.domain.lower()
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         if self.protocol == 'rpc':
             return self.rpc_helper.create_record(type, self._relative_name(name),
                                                  content, self._get_lexicon_option('ttl') or self.default_ttl)
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
         if self.protocol == 'rpc':
             return self.rpc_helper.list_records(type, name, content)
@@ -158,7 +158,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         """Updates the specified record in a new Gandi zone
 
         'content' should be a string or a list of strings
@@ -193,7 +193,7 @@ class Provider(BaseProvider):
 
     # Delete existings records.
     # If records do not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if self.protocol == 'rpc':
             return self.rpc_helper.delete_record(identifier, type, name, content)
 

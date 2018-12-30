@@ -48,7 +48,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.dns.constellix.com/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
         try:
             payload = self._get('/domains/')
         except requests.exceptions.HTTPError as e:
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         record = {
             'name': self._relative_name(name),
             'ttl': self._get_lexicon_option('ttl'),
@@ -101,7 +101,7 @@ class Provider(BaseProvider):
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
 
-    def list_records(self, type=None, name=None, content=None, identifier=None):
+    def _list_records(self, type=None, name=None, content=None, identifier=None):
         self._check_type(type)
 
         # Oddly, Constellix supports API-level filtering for everything except LOC
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         self._check_type(type)
 
         if content and not isinstance(content, (list)):
@@ -172,7 +172,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         self._check_type(type)
 
         records = self.list_records(

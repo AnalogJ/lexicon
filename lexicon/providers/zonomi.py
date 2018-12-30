@@ -55,7 +55,7 @@ class Provider(BaseProvider):
             self.api_endpoint = APIENTRYPOINT.get(
                 self._get_provider_option('auth_entrypoint'))
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/dns/dyndns.jsp', {
             'action': 'QUERY',
@@ -80,7 +80,7 @@ class Provider(BaseProvider):
         content = "=".join(parts[1:])
         return type, name, content
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         request = {
             'action': 'SET',
             'type': type,
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         LOGGER.debug('create_record: %s', True)
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         records = []
 
         request = {
@@ -134,7 +134,7 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier is not None:
             type, name, content = self._parse_identifier(identifier)
 
@@ -159,7 +159,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_record: %s', True)
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         self.delete_record(identifier)
         ttype, tname, tcontent = self._parse_identifier(identifier)
         request = {

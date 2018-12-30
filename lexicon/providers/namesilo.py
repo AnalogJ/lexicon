@@ -24,14 +24,14 @@ class Provider(BaseProvider):
         self.api_endpoint = self._get_provider_option(
             'api_endpoint') or 'https://www.namesilo.com/api'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/getDomainInfo', {'domain': self.domain})
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         record = {
             'domain': self.domain_id,
             'rrhost': self._relative_name(name),
@@ -52,7 +52,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         query = {'domain': self.domain_id}
 
         payload = self._get('/dnsListRecords', query)
@@ -80,7 +80,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
 
         data = {
             'domain': self.domain_id,
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         data = {
             'domain': self.domain_id
         }

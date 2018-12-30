@@ -51,13 +51,13 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.godaddy.com/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
         domain = self.domain
 
         result = self._get('/domains/{0}'.format(domain))
         self.domain_id = result['domainId']
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         domain = self.domain
 
         url = '/domains/{0}/records'.format(domain)
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         domain = self.domain
         relative_name = self._relative_name(name)
         ttl = self._get_lexicon_option('ttl')
@@ -116,7 +116,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         # No identifier is used with GoDaddy.
         # We can rely either:
         #   - only on type/name to get the relevant records, both of them are required
@@ -158,7 +158,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         # For the LOL. GoDaddy does not accept an empty array
         # when updating a particular set of records.
         # It means that you cannot request to remove all records

@@ -32,7 +32,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
         self.api_endpoint = 'https://api.online.net/api/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
         self.init_zones()
 
     def list_zones(self):
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         try:
             record = self.find_record(type, name, content)
             if record is not None:
@@ -154,7 +154,7 @@ class Provider(BaseProvider):
     def list_zone_records(self, zone_id):
         return self._get('/domain/{0}/version/{1}/zone'.format(self.domain_id, zone_id))
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         return self.find_zone_records(self.passive_zone, type, name, content)
 
     def find_record(self, type=None, name=None, content=None):
@@ -167,7 +167,7 @@ class Provider(BaseProvider):
 
     # Create or update a record.
 
-    def update_record(self, id, type=None, name=None, content=None):
+    def _update_record(self, id, type=None, name=None, content=None):
         record = self.find_record(type, name)
         if record is None:
             LOGGER.debug("cannot find record to update: %s %s %s",
@@ -208,7 +208,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, id=None, type=None, name=None, content=None):
+    def _delete_record(self, id=None, type=None, name=None, content=None):
         records = self.list_records(type, name, content)
         if len(records) == 0:
             LOGGER.debug("Cannot find records %s %s %s", type, name, content)

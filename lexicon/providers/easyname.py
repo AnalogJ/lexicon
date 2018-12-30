@@ -44,7 +44,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self._records = None
 
-    def authenticate(self):
+    def _authenticate(self):
         """
         Authenticates against Easyname website and try to find out the domain
         id.
@@ -67,7 +67,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def create_record(self, type, name, content, id=None):
+    def _create_record(self, type, name, content, id=None):
         """
         Create a new DNS entry in the domain zone if it does not already exist.
 
@@ -107,7 +107,7 @@ class Provider(BaseProvider):
         LOGGER.info(msg.format(name))
         return was_success
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         """
         Delete one or more DNS entries in the domain zone that match the given
         criteria.
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
 
         return success
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         """
         Update a DNS entry identified by identifier or name in the domain zone.
         Any non given argument will leave the current value of the DNS entry.
@@ -178,7 +178,7 @@ class Provider(BaseProvider):
                                                      record['id'])
         return success
 
-    def list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, type=None, name=None, content=None, id=None):
         """
         Filter and list DNS entries of domain zone on Easyname.
         Easyname shows each entry in a HTML table row and each attribute on a

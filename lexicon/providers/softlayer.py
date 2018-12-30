@@ -41,7 +41,7 @@ class Provider(BaseProvider):
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
 
-    def authenticate(self):
+    def _authenticate(self):
         domain = self.domain
 
         payload = self.sl_dns.resolve_ids(domain)
@@ -56,7 +56,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         records = self.list_records(type, name, content)
         if len(records) > 0:
             # Nothing to do, record already exists
@@ -75,7 +75,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         ttl = None
         if name:
             name = self._relative_name(name)
@@ -100,7 +100,7 @@ class Provider(BaseProvider):
     # Update a record.
     # If an identifier is specified, use it, otherwise do a lookup using type and name.
 
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
             records = self.list_records(type, name)
             if len(records) == 1:
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
             records = self.list_records(type, name, content)

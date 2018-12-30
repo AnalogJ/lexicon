@@ -34,12 +34,12 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.nearlyfreespeech.net'
         self.shortname = None
 
-    def authenticate(self):
+    def _authenticate(self):
         self._post('/dns/{0}/listRRs'.format(self.domain))
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         existing_record = self.list_records(type, name, content)
         if len(existing_record) > 0:
             # Do nothing if the record already exists.
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         params = {}
         if type is not None:
             params['type'] = type
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
 
     # Create or update a record.
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         if identifier is not None:
             records = self.list_records()
             to_delete = next(
@@ -101,7 +101,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         matching_records = self.list_records(type, name, content)
         if identifier is not None:
             to_delete = next(

@@ -26,13 +26,13 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
         self.api_endpoint = 'https://api.exoscale.ch/dns'
 
-    def authenticate(self):
+    def _authenticate(self):
         """An innocent call to check that the credentials are okay."""
         r = self._get("/v1/domains/{0}".format(self.domain))
 
         self.domain_id = r["domain"]["id"]
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         """Create record if doesnt already exist with same content"""
         # check if record already exists
         existing_records = self.list_records(type, name, content)
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", status)
         return status
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """List all records.
 
         record_type, name and content are used to filter the records.
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         """Create or update a record."""
         record = {}
 
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", True)
         return True
 
-    def delete_record(
+    def _delete_record(
         self, identifier=None, type=None, name=None, content=None
     ):
         """Delete an existing record.

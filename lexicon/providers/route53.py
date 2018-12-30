@@ -114,7 +114,7 @@ class Provider(BaseProvider):
     def str2bool(input_string):
         return input_string.lower() in ('true', 'yes')
 
-    def authenticate(self):
+    def _authenticate(self):
         """Determine the hosted zone id for the domain."""
         try:
             hosted_zones = self.r53_client.list_hosted_zones_by_name()[
@@ -159,22 +159,22 @@ class Provider(BaseProvider):
         except botocore.exceptions.ClientError as e:
             LOGGER.debug(str(e), exc_info=True)
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         """Create a record in the hosted zone."""
         return self._change_record_sets('CREATE', type, name, content)
 
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, type=None, name=None, content=None):
         """Update a record from the hosted zone."""
         return self._change_record_sets('UPSERT', type, name, content)
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         """Delete a record from the hosted zone."""
         return self._change_record_sets('DELETE', type, name, content)
 
     def _format_content(self, type, content):
         return content[1:-1] if type in ['TXT', 'SPF'] else content
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """List all records for the hosted zone."""
         records = []
         paginator = RecordSetPaginator(self.r53_client, self.domain_id)

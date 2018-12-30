@@ -30,11 +30,11 @@ class Provider(BaseProvider):
         self.origin = self.domain + "."
         self.filename = self._get_provider_option("filename")
 
-    def authenticate(self):
+    def _authenticate(self):
         """Authentication is not required for localzone."""
         pass
 
-    def create_record(self, type, name, content):
+    def _create_record(self, type, name, content):
         """
         Create a resource record. If a record already exists with the same
         content, do nothing.
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", result)
         return result
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, type=None, name=None, content=None):
         """
         Return a list of records matching the supplied params. If no params are
         provided, then return all zone records. If no records are found, return
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", result)
         return result
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, type=None, name=None, content=None):
         """
         Update a record. Returns `False` if no matching record is found.
         """
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", result)
         return result
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         """
         Delete record(s) matching the provided params. If there is no match, do
         nothing.
