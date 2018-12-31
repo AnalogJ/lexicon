@@ -264,11 +264,11 @@ class Provider(BaseProvider):
                 'Error, identifier or type+name parameters are required.')
 
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             records_to_update = [
                 record for record in records if record['id'] == identifier]
         else:
-            records_to_update = self.list_records(type=type, name=name)
+            records_to_update = self._list_records(type=type, name=name)
 
         if not records_to_update:
             raise Exception(
@@ -283,7 +283,7 @@ class Provider(BaseProvider):
 
         original_level = LOGGER.getEffectiveLevel()
         LOGGER.setLevel(logging.WARNING)
-        self.delete_record(record_identifier)
+        self._delete_record(record_identifier)
 
         new_record = {
             'type': type if type else records_to_update[0]['type'],
@@ -291,7 +291,7 @@ class Provider(BaseProvider):
             'content': content if content else records_to_update[0]['content']
         }
 
-        self.create_record(
+        self._create_record(
             new_record['type'], new_record['name'], new_record['content'])
         LOGGER.setLevel(original_level)
 

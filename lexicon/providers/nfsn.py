@@ -40,7 +40,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, type, name, content):
-        existing_record = self.list_records(type, name, content)
+        existing_record = self._list_records(type, name, content)
         if len(existing_record) > 0:
             # Do nothing if the record already exists.
             # The creation call can fail for a variety of reasons, so
@@ -80,14 +80,14 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier, type=None, name=None, content=None):
         if identifier is not None:
-            records = self.list_records()
+            records = self._list_records()
             to_delete = next(
                 (r for r in records if r['id'] == identifier), None)
             if to_delete is None:
                 raise ValueError('No record with that identifier.')
         else:
             # Check name and type
-            matching_records = self.list_records(type=type, name=name)
+            matching_records = self._list_records(type=type, name=name)
             if len(matching_records) > 1:
                 raise ValueError(
                     'More than one record exists with that type and name. Try specifying an identifier.')
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
     # Delete an existing record
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        matching_records = self.list_records(type, name, content)
+        matching_records = self._list_records(type, name, content)
         if identifier is not None:
             to_delete = next(
                 (r for r in matching_records if r['id'] == identifier), None)

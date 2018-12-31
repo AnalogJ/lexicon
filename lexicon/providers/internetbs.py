@@ -56,7 +56,7 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, type, name, content):
         # Skip execution if such a record already exists
-        existing_records = self.list_records(type, name, content)
+        existing_records = self._list_records(type, name, content)
         if len(existing_records) > 0:
             return True
 
@@ -115,7 +115,7 @@ class Provider(BaseProvider):
     # Update a record.
     def _update_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             to_update = next(
                 (r for r in records if r['id'] == identifier), None)
             query = {'Type': to_update['type'],
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             to_update = next(
                 (r for r in records if r['id'] == identifier), None)
             if not to_update:
@@ -151,10 +151,10 @@ class Provider(BaseProvider):
                      'FullRecordName': self._full_name(name)}
             if content:
                 query['Value'] = content
-                if not self.list_records(type, name, content):
+                if not self._list_records(type, name, content):
                     return True
             else:
-                if not self.list_records(type, name):
+                if not self._list_records(type, name):
                     return True
 
         LOGGER.debug('delete_record query: %s', query)

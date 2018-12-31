@@ -81,7 +81,7 @@ class Provider(BaseProvider):
                 '/domains/{0}/records'.format(self.domain_id), data)
         except Exception as e:
             if str(e).startswith('Record is a duplicate of another record'):
-                return self.update_record(None, type, name, content)
+                return self._update_record(None, type, name, content)
             raise e
 
         success = len(payload['records']) > 0
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
             data['ttl'] = self._get_lexicon_option('ttl')
 
         if identifier is None:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             if len(records) < 1:
                 raise Exception('Unable to find record to modify: ' + name)
             identifier = records[0]['id']
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

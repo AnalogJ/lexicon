@@ -56,7 +56,7 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, type, name, content):
         """Creates a new unique record"""
-        found = self.list_records(type, name, content)
+        found = self._list_records(type, name, content)
         if len(found) > 0:
             return True
 
@@ -66,13 +66,6 @@ class Provider(BaseProvider):
 
         self._request_add_dns_record(record)
         return True
-
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
-        """Lists all records by the type, name and content"""
-        return self._list_records(identifier=None, type=type, name=name, content=content)
 
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, type=None, name=None, content=None):
@@ -85,15 +78,15 @@ class Provider(BaseProvider):
                     self._update_record_with_name(
                         records[0], type, name, content)
                 else:
-                    self._update_record(identifier, type, content)
+                    self._update_record_with_id(identifier, type, content)
             else:
-                self._update_record(identifier, type, content)
+                self._update_record_with_id(identifier, type, content)
         else:
             guessed_record = self._guess_record(type, name)
-            self._update_record(guessed_record['id'], type, content)
+            self._update_record_with_id(guessed_record['id'], type, content)
         return True
 
-    def _update_record(self, identifier, type, content):
+    def _update_record_with_id(self, identifier, type, content):
         """Updates existing record with no sub-domain name changes"""
         record = self._create_request_record(identifier, type, None, content,
                                              self._get_lexicon_option('ttl'),
@@ -139,7 +132,7 @@ class Provider(BaseProvider):
         if identifier:
             to_delete_ids.append(identifier)
         else:
-            for record in self.list_records(type, name, content):
+            for record in self._list_records(type, name, content):
                 to_delete_ids.append(record["id"])
 
         for to_delete_id in to_delete_ids:

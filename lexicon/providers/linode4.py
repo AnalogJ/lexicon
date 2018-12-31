@@ -36,7 +36,7 @@ class Provider(BaseProvider):
             raise Exception('Domain not found')
 
     def _create_record(self, type, name, content):
-        if len(self.list_records(type, name, content)) == 0:
+        if len(self._list_records(type, name, content)) == 0:
             if name:
                 name = self._relative_name(name)
 
@@ -93,7 +93,7 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, type=None, name=None, content=None):
         if not identifier:
-            resources = self.list_records(type, name, None)
+            resources = self._list_records(type, name, None)
             identifier = resources[0]['id'] if len(resources) > 0 else None
 
         LOGGER.debug('update_record: %s', identifier)
@@ -115,7 +115,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_resource_id = []
         if not identifier:
-            resources = self.list_records(type, name, content)
+            resources = self._list_records(type, name, content)
             delete_resource_id = [resource['id'] for resource in resources]
         else:
             delete_resource_id.append(identifier)

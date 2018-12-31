@@ -139,7 +139,7 @@ class Provider(BaseProvider):
         deletion_ids = []
 
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             deletion_ids = [record['id'] for record in records]
         else:
             deletion_ids.append(identifier)
@@ -190,7 +190,7 @@ class Provider(BaseProvider):
                 '{0} record type is not supported in the OnApp Provider'.format(record_type))
 
     def _guess_record(self, type, name=None, content=None):
-        records = self.list_records(type=type, name=name, content=content)
+        records = self._list_records(type=type, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:

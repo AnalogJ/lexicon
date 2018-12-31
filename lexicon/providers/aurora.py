@@ -114,7 +114,7 @@ class Provider(BaseProvider):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
         return 'AuroraDNSv1 %s' % (auth_b64.decode('utf-8'))
 
     def _find_record_identifier(self, type, name, content):
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']

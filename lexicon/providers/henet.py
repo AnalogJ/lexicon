@@ -93,7 +93,7 @@ class Provider(BaseProvider):
     def _create_record(self, type, name, content):
         LOGGER.debug("Creating record for zone {0}".format(name))
         # Pull a list of records and check for ours
-        records = self.list_records(type=type, name=name, content=content)
+        records = self._list_records(type=type, name=name, content=content)
         if len(records) >= 1:
             LOGGER.warning(
                 "Duplicate record {} {} {}, NOOP".format(type, name, content))
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
             "https://dns.he.net/index.cgi", data=data
         )
         # Pull a list of records and check for ours
-        records = self.list_records(name=name)
+        records = self._list_records(name=name)
         if len(records) >= 1:
             LOGGER.info("Successfully added record {}".format(name))
             return True
@@ -211,15 +211,15 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, type=None, name=None, content=None):
         # Delete record if it exists
-        self.delete_record(identifier, type, name, content)
-        return self.create_record(type, name, content)
+        self._delete_record(identifier, type, name, content)
+        return self._create_record(type, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_ids = [record['id'] for record in records]
         else:
             delete_record_ids.append(identifier)

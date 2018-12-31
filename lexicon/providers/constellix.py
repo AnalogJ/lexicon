@@ -84,14 +84,14 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as e:
             # If there is already a record with that name, we need to do an update.
             if e.response.status_code == 400:
-                existing_records = self.list_records(type=type, name=name)
+                existing_records = self._list_records(type=type, name=name)
                 new_content = [r['content'] for r in existing_records]
 
                 # Only do the update if we are creating a record that doesn't already exist, otherwise
                 # Constellix will throw an error.
                 if content not in new_content:
                     new_content.append(content)
-                    self.update_record(
+                    self._update_record(
                         existing_records[0]['id'], type=type, name=name, content=new_content)
             else:
                 raise
@@ -142,11 +142,11 @@ class Provider(BaseProvider):
             content = [content]
 
         if identifier and (not type or not name):
-            record = self.list_records(identifier=identifier)
+            record = self._list_records(identifier=identifier)
             type = record[0]['type']
             name = record[0]['name']
         elif not identifier:
-            record = self.list_records(type, name)
+            record = self._list_records(type, name)
             identifier = record[0]['id']
 
         if not identifier:
@@ -175,7 +175,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         self._check_type(type)
 
-        records = self.list_records(
+        records = self._list_records(
             identifier=identifier, type=type, name=name)
 
         # If we are filtering delete records by content and we are going to have
@@ -185,7 +185,7 @@ class Provider(BaseProvider):
             current_content = set(r['content'] for r in records)
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
-                self.update_record(
+                self._update_record(
                     records[0]['id'], type=type, name=name, content=list(current_content))
                 return True
 

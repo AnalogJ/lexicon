@@ -90,7 +90,7 @@ class Provider(BaseProvider):
                                                  content, self._get_lexicon_option('ttl') or self.default_ttl)
 
         current_values = [record['content']
-                          for record in self.list_records(type=type, name=name)]
+                          for record in self._list_records(type=type, name=name)]
         if current_values != [content]:
             # a change is necessary
             url = '/domains/{0}/records/{1}/{2}'.format(
@@ -200,7 +200,7 @@ class Provider(BaseProvider):
         if not identifier:
             remove_count = 0
             # get all matching (by type and name) records - ignore 'content' for now
-            records = self.list_records(type=type, name=name)
+            records = self._list_records(type=type, name=name)
             for current_type in set(record['type'] for record in records):
                 matching_records = [
                     record for record in records if record['type'] == current_type]

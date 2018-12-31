@@ -160,7 +160,7 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, type=None, name=None, content=None):
-        self.delete_record(identifier)
+        self._delete_record(identifier)
         ttype, tname, tcontent = self._parse_identifier(identifier)
         request = {
             'action': 'SET',

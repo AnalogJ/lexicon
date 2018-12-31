@@ -159,7 +159,7 @@ class Provider(BaseProvider):
 
     def find_record(self, type=None, name=None, content=None):
         record = None
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         if len(records) < 1:
             return None
         else:
@@ -209,7 +209,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, id=None, type=None, name=None, content=None):
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         if len(records) == 0:
             LOGGER.debug("Cannot find records %s %s %s", type, name, content)
             return False

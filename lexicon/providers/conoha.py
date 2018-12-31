@@ -121,7 +121,7 @@ class Provider(BaseProvider):
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, type=None, name=None, content=None):
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             if len(records) != 1:
                 raise Exception("Cannot determine record")
             identifier = records[0]['id']
@@ -136,7 +136,7 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
 
         if identifier:
             records = [

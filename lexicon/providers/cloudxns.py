@@ -106,7 +106,7 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, type=None, name=None, content=None):
 
         if not identifier:
-            records = self.list_records(name=name)
+            records = self._list_records(name=name)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

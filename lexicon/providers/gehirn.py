@@ -132,7 +132,7 @@ class Provider(BaseProvider):
             records = self._get_records(type=type, name=name)
 
             if not records:
-                self.create_record(type=type, name=name, content=content)
+                self._create_record(type=type, name=name, content=content)
                 LOGGER.debug('update_record: %s', True)
                 return True
 
@@ -155,8 +155,8 @@ class Provider(BaseProvider):
 
             if "." in identifier:
                 # modify single record
-                self.delete_record(identifier=identifier)
-                self.create_record(
+                self._delete_record(identifier=identifier)
+                self._create_record(
                     type=type or record["type"],
                     name=name or record["name"],
                     content=content

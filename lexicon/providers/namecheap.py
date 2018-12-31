@@ -230,13 +230,13 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, type=None, name=None, content=None):
         # Delete record if it exists
-        self.delete_record(identifier, type, name, content)
-        return self.create_record(type, name, content)
+        self._delete_record(identifier, type, name, content)
+        return self._create_record(type, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        records = self.list_records(
+        records = self._list_records(
             type=type, name=name, content=content, id=identifier)
         for record in records:
             self.client.domains_dns_delHost(

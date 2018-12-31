@@ -73,7 +73,7 @@ class Provider(BaseProvider):
 
     def _create_record(self, type, name, content):
         # We ignore creation if a record already exists for given type/name/content
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         if records:
             LOGGER.debug('create_record (ignored, duplicate): %s',
                          records[0]['id'])
@@ -100,11 +100,11 @@ class Provider(BaseProvider):
         # Then we remove the old record.
         records = []
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             records = [
                 record for record in records if record['id'] == identifier]
         else:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
 
         if not records:
             raise Exception(
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_ids = [record['id'] for record in records]
         else:
             delete_record_ids.append(identifier)

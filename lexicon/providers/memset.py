@@ -37,7 +37,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
         data['zone_id'] = self.domain_id
-        check_exists = self.list_records(type=type, name=name, content=content)
+        check_exists = self._list_records(type=type, name=name, content=content)
         if not len(check_exists) > 0:
             payload = self._get('/dns.zone_record_create', data)
             if payload['id']:
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, type=None, name=None, content=None):
         data = {}
         if not identifier:
-            records = self.list_records(type, self._relative_name(name))
+            records = self._list_records(type, self._relative_name(name))
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(
+            records = self._list_records(
                 type, self._relative_name(name), content)
             delete_record_id = [record['id'] for record in records]
         else:

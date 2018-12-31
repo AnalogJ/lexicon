@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         # ID, and therefore `identifier` is here optional. If we don't receive
         # an ID, look it up.
         if not identifier and type and name:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             if len(records) == 1:
                 identifier = records[0]["id"]
 
@@ -120,7 +120,7 @@ class Provider(BaseProvider):
         if identifier:
             ids.append(identifier)
         elif not identifier and type and name:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             if len(records) > 0:
                 ids = [record["id"] for record in records]
 

@@ -89,7 +89,7 @@ class Provider(BaseProvider):
         }))
 
         self.client.set_dns_entries(self.domain, records)
-        status = len(self.list_records(
+        status = len(self._list_records(
             type, name, content, show_output=False)) >= 1
         LOGGER.debug('create_record: %s', status)
         return status
@@ -117,7 +117,7 @@ class Provider(BaseProvider):
             raise Exception(
                 "At least one of type, name or content must be specified.")
 
-        all_records = self.list_records(show_output=False)
+        all_records = self._list_records(show_output=False)
         filtered_records = self._filter_records(all_records, type, name)
 
         for record in filtered_records:
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
 
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
-        status = len(self.list_records(
+        status = len(self._list_records(
             type, name, content, show_output=False)) >= 1
         LOGGER.debug('update_record: %s', status)
         return status
@@ -144,7 +144,7 @@ class Provider(BaseProvider):
             raise Exception(
                 "At least one of type, name or content must be specified.")
 
-        all_records = self.list_records(show_output=False)
+        all_records = self._list_records(show_output=False)
         filtered_records = self._filter_records(
             all_records, type, name, content)
 
@@ -153,7 +153,7 @@ class Provider(BaseProvider):
 
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
-        status = len(self.list_records(
+        status = len(self._list_records(
             type, name, content, show_output=False)) == 0
         LOGGER.debug('delete_record: %s', status)
         return status

@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         self._log('Create DNS entry', create_response)
 
         # Pull a list of records and check for ours
-        was_success = len(self.list_records(type, name, content)) > 0
+        was_success = len(self._list_records(type, name, content)) > 0
         if was_success:
             msg = 'Successfully added record {}'
         else:
@@ -159,9 +159,9 @@ class Provider(BaseProvider):
         """
         if identifier is not None:
             identifier = int(identifier)
-            records = self.list_records(id=identifier)
+            records = self._list_records(id=identifier)
         else:
-            records = self.list_records(name=name, type=type)
+            records = self._list_records(name=name, type=type)
         LOGGER.debug('Records to update ({}): {}'.format(
                      len(records), records))
         assert len(records) > 0, 'No record found to update'
@@ -172,7 +172,7 @@ class Provider(BaseProvider):
             type = type if type is not None else record['type']
             content = content if content is not None \
                 else record['content']
-            success = success and self.create_record(type,
+            success = success and self._create_record(type,
                                                      name,
                                                      content,
                                                      record['id'])
@@ -254,7 +254,7 @@ class Provider(BaseProvider):
         """
         is_update = id is not None
         if is_update:
-            records = self.list_records(id=id)
+            records = self._list_records(id=id)
             assert len(records) == 1, 'ID is not unique or does not exist'
             record = records[0]
             LOGGER.debug('Create post data to update record: {}'.
@@ -282,7 +282,7 @@ class Provider(BaseProvider):
 
     def _is_duplicate_record(self, type, name, content):
         """Check if DNS entry already exists."""
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         is_duplicate = len(records) >= 1
         if is_duplicate:
             LOGGER.info('Duplicate record {} {} {}, NOOP'.
@@ -294,7 +294,7 @@ class Provider(BaseProvider):
         """Return a list of DNS entries that match the given criteria."""
         record_ids = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             record_ids = [record['id'] for record in records]
         else:
             record_ids.append(identifier)

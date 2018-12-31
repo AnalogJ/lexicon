@@ -155,7 +155,7 @@ class Provider(BaseProvider):
         """
         record_ids = []
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             record_ids = [record['id'] for record in records]
         else:
             record_ids.append(identifier)
@@ -192,7 +192,7 @@ class Provider(BaseProvider):
         """
         record_ids = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             record_ids = [record['id'] for record in records]
         else:
             record_ids.append(identifier)

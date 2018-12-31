@@ -38,7 +38,7 @@ class Provider(BaseProvider):
 
     def _create_record(self, type, name, content):
         # Skip execution if such a record already exists
-        existing_records = self.list_records(type, name, content)
+        existing_records = self._list_records(type, name, content)
         if len(existing_records) > 0:
             return True
 
@@ -126,7 +126,7 @@ class Provider(BaseProvider):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -162,7 +162,7 @@ class Provider(BaseProvider):
                 'No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser')
 
     def _find_record_identifier(self, type, name, content):
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']

@@ -188,8 +188,8 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, type=None, name=None, content=None):
-        self.delete_record(identifier)
-        return self.create_record(type, name, content)
+        self._delete_record(identifier)
+        return self._create_record(type, name, content)
 
     def _patch(self, url='/', data=None, query_params=None):
         return self._request('PATCH', url, data=data, query_params=query_params)

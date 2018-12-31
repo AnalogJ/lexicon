@@ -85,7 +85,7 @@ class Provider(BaseProvider):
         domain = self.domain
         ttl = self._get_lexicon_option('ttl')
 
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         for record in records:
             if (record['type'] == type
                     and self._relative_name(record['name']) == self._relative_name(name)
@@ -146,7 +146,7 @@ class Provider(BaseProvider):
         domain = self.domain
 
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             if len(records) == 1:
                 identifier = records[0]['id']
             elif len(records) > 1:
@@ -173,7 +173,7 @@ class Provider(BaseProvider):
 
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

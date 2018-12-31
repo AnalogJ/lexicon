@@ -57,7 +57,7 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing
 
     def _create_record(self, type, name, content):
-        records = self.list_records(type, name, content)
+        records = self._list_records(type, name, content)
         if len(records) > 0:
             # Nothing to do, record already exists
             LOGGER.debug('create_record: already exists')
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier=None, type=None, name=None, content=None):
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(type, name)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
@@ -130,7 +130,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

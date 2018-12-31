@@ -35,7 +35,7 @@ class Provider(BaseProvider):
     def _create_record(self, type, name, content):
         """Create record if doesnt already exist with same content"""
         # check if record already exists
-        existing_records = self.list_records(type, name, content)
+        existing_records = self._list_records(type, name, content)
         if len(existing_records) >= 1:
             return True
 
@@ -110,7 +110,7 @@ class Provider(BaseProvider):
         record = {}
 
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             identifiers = [r["id"] for r in records]
         else:
             identifiers = [identifier]
@@ -146,7 +146,7 @@ class Provider(BaseProvider):
         If the record doesn't exist, does nothing.
         """
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(type, name, content)
             identifiers = [record["id"] for record in records]
         else:
             identifiers = [identifier]

@@ -116,7 +116,7 @@ class Provider(BaseProvider):
             return None  # {"message":"record not found"}
         short_answers = [x['answer'][0] for x in record['answers']]
 
-        # ensure a compatibility level with self.list_records
+        # ensure a compatibility level with self._list_records
         record['short_answers'] = short_answers
         return record
 
@@ -198,9 +198,9 @@ class Provider(BaseProvider):
             # identifiers are different
             # get the old record, create a new one with updated data, delete the old record.
             old_record = self._get('/zones/{0}'.format(identifier))
-            self.create_record(
+            self._create_record(
                 type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
-            self.delete_record(identifier)
+            self._delete_record(identifier)
 
         LOGGER.debug('update_record: %s', True)
         return True
