@@ -54,8 +54,9 @@ def _get_ns_records_for_domain(domain):
         if 'NXDOMAIN' in e.output:
             raise ValueError(
                 'Error, domain {0} could not be resolved.'.format(domain))
+        output = e.output
 
-    pattern = re.compile(r'nameserver = (.*?)\.*{0}'.format(os.linesep))
+    pattern = re.compile(r'nameserver = (.*?)\.*\n')
     match = pattern.findall(output)
 
     if not match:
