@@ -208,7 +208,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, id=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, type=None, name=None, content=None):
         records = self._list_records(type, name, content)
         if len(records) == 0:
             LOGGER.debug("Cannot find records %s %s %s", type, name, content)

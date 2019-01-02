@@ -73,13 +73,13 @@ class Provider(object):
         type, name and content are used to filter records.
         If possible filter during the query, otherwise filter after response is received.
         """
-        return self._list_records(type, name, content)
+        return self._list_records(type=type, name=name, content=content)
 
     def update_record(self, identifier, type=None, name=None, content=None):
         """
         Update a record. Identifier must be specified.
         """
-        return self._update_record(identifier, type, name, content)
+        return self._update_record(identifier, type=type, name=name, content=content)
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         """
@@ -87,7 +87,7 @@ class Provider(object):
         If record does not exist, do nothing.
         If an identifier is specified, use it, otherwise do a lookup using type, name and content.
         """
-        return self._delete_record(identifier, type, name, content)
+        return self._delete_record(identifier=identifier, type=type, name=name, content=content)
 
     # Internal abstract implementations
     def _authenticate(self):
