@@ -56,7 +56,7 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, type, name, content):
         """Creates a new unique record"""
-        found = self._list_records(type, name, content)
+        found = self._list_records(type=type, name=name, content=content)
         if len(found) > 0:
             return True
 
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
         if identifier:
             to_delete_ids.append(identifier)
         else:
-            for record in self._list_records(type, name, content):
+            for record in self._list_records(type=type, name=name, content=content):
                 to_delete_ids.append(record["id"])
 
         for to_delete_id in to_delete_ids:
