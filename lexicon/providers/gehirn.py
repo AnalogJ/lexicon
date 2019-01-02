@@ -67,7 +67,6 @@ class Provider(BaseProvider):
         name = self._full_name(name)
         r = self._parse_content(type, content)
 
-        record = None
         records = self._get_records(type=type, name=name)
         if len(records) == 0:
             record = {
@@ -85,7 +84,7 @@ class Provider(BaseProvider):
             return True
 
         record["records"].append(r)
-        self._update_record(record)
+        self._update_internal_record(record)
         LOGGER.debug('create_record: %s', True)
         return True
 
@@ -123,7 +122,6 @@ class Provider(BaseProvider):
         if name:
             name = self._full_name(name)
 
-        record = None
         if not identifier:
             if not (type and name and content):
                 raise Exception("type, name and content must be specified.")
@@ -174,7 +172,7 @@ class Provider(BaseProvider):
                     record["records"] = [
                         self._parse_content(record["type"], content)]
 
-        self._update_record(record)
+        self._update_internal_record(record)
         LOGGER.debug('update_record: %s', True)
         return True
 
@@ -212,7 +210,7 @@ class Provider(BaseProvider):
                     )
                     self._delete(path)
                 else:
-                    self._update_record(record)
+                    self._update_internal_record(record)
 
                 LOGGER.debug('delete_record: %s', True)
                 return True
@@ -232,7 +230,7 @@ class Provider(BaseProvider):
             if r and r in record["records"]:
                 record["records"].remove(r)
                 if len(record["records"]):
-                    self._update_record(record)
+                    self._update_internal_record(record)
                     continue
 
             path = '/zones/{}/versions/{}/records/{}'.format(
@@ -276,7 +274,7 @@ class Provider(BaseProvider):
             self.domain_id, self.version_id)
         return self._filter_records(self._get(path), identifier=identifier, type=type, name=name)
 
-    def _update_record(self, record):
+    def _update_internal_record(self, record):
         if record.get("id"):
             # PUT
             path = '/zones/{}/versions/{}/records/{}'.format(

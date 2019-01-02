@@ -209,7 +209,7 @@ class Provider(BaseProvider):
         """
         with self._session(self.domain, self.domain_id) as ddata:
             name = self._fqdn_name(name) if name else None
-            return self._list_records(ddata['zone']['data'], type, name, content)
+            return self._list_records_in_zone(ddata['zone']['data'], type, name, content)
 
     def _update_record(self, identifier=None, type=None, name=None, content=None):
         """
@@ -237,7 +237,7 @@ class Provider(BaseProvider):
                 return False
 
             dname = ddata['cname'] if ddata['cname'] else self._fqdn_name(dname)
-            records = self._list_records(ddata['zone']['data'], dtype, dname, dcontent)
+            records = self._list_records_in_zone(ddata['zone']['data'], dtype, dname, dcontent)
             if len(records) == 1:
                 # Remove record from zone
                 rrset = ddata['zone']['data'].get_rdataset(records[0]['name']+'.',
@@ -297,7 +297,7 @@ class Provider(BaseProvider):
                     return True
 
             name = ddata['cname'] if ddata['cname'] else (self._fqdn_name(name) if name else None)
-            records = self._list_records(ddata['zone']['data'], type, name, content)
+            records = self._list_records_in_zone(ddata['zone']['data'], type, name, content)
             if records:
                 # Remove records from zone
                 for record in records:
@@ -347,7 +347,7 @@ class Provider(BaseProvider):
             parts = identifier.split('/')
             rdtype, name, content = parts[0], parts[1], '/'.join(parts[2:])
         else:
-            records = self._list_records(zone)
+            records = self._list_records_in_zone(zone)
             for record in records:
                 if record['id'] == identifier:
                     rdtype, name, content = record['type'], record['name']+'.', record['content']
@@ -368,7 +368,7 @@ class Provider(BaseProvider):
                 content = self._fqdn_name(content)
         return content
 
-    def _list_records(self, zone, rdtype=None, name=None, content=None):
+    def _list_records_in_zone(self, zone, rdtype=None, name=None, content=None):
         """
         Iterates over all records of the zone and returns a list of records filtered
         by record type, name and content. The list is empty if no records found.
