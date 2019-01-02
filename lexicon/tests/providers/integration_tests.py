@@ -13,7 +13,7 @@ from lexicon.providers.base import Provider as BaseProvider
 # on the LEXICON_LIVE_TESTS environment variable value.
 record_mode = 'none'
 if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-    record_mode = 'new_episodes'
+    record_mode = 'once'
 provider_vcr = vcr.VCR(
     cassette_library_dir=os.environ.get('LEXICON_VCRPY_CASSETTES_PATH',
                                         'tests/fixtures/cassettes'),
