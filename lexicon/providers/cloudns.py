@@ -36,16 +36,16 @@ class Provider(BaseProvider):
         self.domain_id = payload['name']
         LOGGER.debug('authenticate: %s', payload)
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
-        existing_records = self._list_records(type, name, content)
+        existing_records = self._list_records(rtype, name, content)
         if len(existing_records) > 0:
             return True
 
         # Build parameters for adding a new record
         params = {
             'domain-name': self.domain_id,
-            'record-type': type,
+            'record-rtype': rtype,
             'host': self._relative_name(name),
             'record': content
         }
@@ -65,11 +65,11 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         # Build parameters to make use of the built-in API filtering
         params = {'domain-name': self.domain_id}
-        if type:
-            params['type'] = type
+        if rtype:
+            params['type'] = rtype
         if name:
             params['host'] = self._relative_name(name)
 
@@ -95,10 +95,10 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
-            identifier = self._find_record_identifier(type, name, None)
+            identifier = self._find_record_identifier(rtype, name, None)
 
         # Build parameters for updating an existing record
         params = {'domain-name': self.domain_id, 'record-id': identifier}
@@ -122,11 +122,11 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self._list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

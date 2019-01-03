@@ -50,9 +50,9 @@ class Provider(BaseProvider):
         }
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         name = self._full_name(name)
-        existing_record_set = self._get_record_set(name, type)
+        existing_record_set = self._get_record_set(name, rtype)
         if existing_record_set:
             def _record_set_has_answer(record_set, content):
                 for answer in record_set['answers']:
@@ -65,10 +65,10 @@ class Provider(BaseProvider):
                     'answer': [content]
                 })
                 self._post(
-                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), existing_record_set)
+                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype), existing_record_set)
         else:
             record = {
-                'type': type,
+                'type': rtype,
                 'domain': name,
                 'ttl': self._get_lexicon_option('ttl'),
                 'zone': self.domain_id,
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
             payload = {}
             try:
                 payload = self._put(
-                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record)
+                    '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype), record)
             except requests.exceptions.HTTPError as e:
                 # http 400 is ok here, because the record probably already exists
                 if e.response.status_code == 400:
@@ -123,12 +123,12 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
 
         def _resolve_link(record, recurse=0):
             # https://ns1.com/articles/cname-alias-and-linked-records
             # - recursion is allowed
-            # - link source and link target are always of the same type
+            # - link source and link target are always of the same rtype
             # - target can be anywhere on ns1, not necessarily self.domain_id.
             if record.get('link', None) is None:
                 # not a linked record
@@ -147,7 +147,7 @@ class Provider(BaseProvider):
         records = []
         for record in payload['records']:
 
-            if type and record['type'] != type:
+            if rtype and record['type'] != rtype:
                 continue
 
             if name and record['domain'] != self._full_name(name):
@@ -180,15 +180,15 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         data = {}
         payload = None
         new_identifier = "{0}/{1}/{2}".format(
-            self.domain_id, self._full_name(name), type)
+            self.domain_id, self._full_name(name), rtype)
 
-        if(new_identifier == identifier or (type is None and name is None)):
-            # the identifier hasnt changed, or type and name are both unspecified, only update the content.
+        if(new_identifier == identifier or (rtype is None and name is None)):
+            # the identifier hasnt changed, or rtype and name are both unspecified, only update the content.
             data['answers'] = [
                 {"answer": [content]}
             ]
@@ -199,7 +199,7 @@ class Provider(BaseProvider):
             # get the old record, create a new one with updated data, delete the old record.
             old_record = self._get('/zones/{0}'.format(identifier))
             self._create_record(
-                type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
+                rtype or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
             self._delete_record(identifier)
 
         LOGGER.debug('update_record: %s', True)
@@ -207,11 +207,11 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
             name = self._full_name(name)
 
-            record_set = self._get_record_set(name, type)
+            record_set = self._get_record_set(name, rtype)
             if record_set:
                 record_set_new = {
                     'type': record_set['type'],
@@ -227,10 +227,10 @@ class Provider(BaseProvider):
 
                 if len(record_set_new['answers']) > 0:
                     self._post(
-                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type), record_set_new)
+                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype), record_set_new)
                 else:
                     self._delete(
-                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
+                        '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype))
         else:
             self._delete('/zones/{0}'.format(identifier))
 

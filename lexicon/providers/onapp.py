@@ -54,11 +54,11 @@ class Provider(BaseProvider):
             raise Exception(
                 'Could not find {0} in OnApp DNS Zones'.format(domain))
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         data = {
             'name': self._relative_name(name),
-            'type': type,
-            self._key_for_record_type(type): content
+            'type': rtype,
+            self._key_for_record_type(rtype): content
         }
 
         ttl = self._get_lexicon_option('ttl')
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
         response = self._get(
@@ -82,7 +82,7 @@ class Provider(BaseProvider):
             if recordType not in ('A', 'AAAA', 'CNAME', 'TXT'):
                 continue
 
-            if type and recordType != type:
+            if rtype and recordType != rtype:
                 continue
 
             for record in response['dns_zone']['records'][recordType]:
@@ -107,9 +107,9 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
-            existing = self._guess_record(type, name)
+            existing = self._guess_record(rtype, name)
             identifier = existing['id']
 
         ttl = self._get_lexicon_option('ttl')
@@ -126,7 +126,7 @@ class Provider(BaseProvider):
         request = {
             'name': self._relative_name(name),
             'ttl': '{0}'.format(ttl),
-            self._key_for_record_type(type): content
+            self._key_for_record_type(rtype): content
         }
 
         result = self._put('/dns_zones/{0}/records/{1}.json'.format(
@@ -135,11 +135,11 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         deletion_ids = []
 
         if not identifier:
-            records = self._list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             deletion_ids = [record['id'] for record in records]
         else:
             deletion_ids.append(identifier)
@@ -190,7 +190,7 @@ class Provider(BaseProvider):
                 '{0} record type is not supported in the OnApp Provider'.format(record_type))
 
     def _guess_record(self, type, name=None, content=None):
-        records = self._list_records(type=type, name=name, content=content)
+        records = self._list_records(rtype=type, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:

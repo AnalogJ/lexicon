@@ -73,36 +73,36 @@ class Provider(BaseProvider):
         self.domain_id = domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         records = self.client.get_info(self.domain).dnsEntries
 
-        if self._filter_records(records, type, name, content):
+        if self._filter_records(records, rtype, name, content):
             # Nothing to do, record already exists
             LOGGER.debug('create_record: already exists')
             return True
 
         records.append(DnsEntry(**{
             "name": self._relative_name(name),
-            "record_type": type,
-            "content": self._bind_format_target(type, content),
+            "record_type": rtype,
+            "content": self._bind_format_target(rtype, content),
             "expire": self._get_lexicon_option('ttl')
         }))
 
         self.client.set_dns_entries(self.domain, records)
         status = len(self._list_records(
-            type, name, content, show_output=False)) >= 1
+            rtype, name, content, show_output=False)) >= 1
         LOGGER.debug('create_record: %s', status)
         return status
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None, show_output=True):
+    def _list_records(self, rtype=None, name=None, content=None, show_output=True):
         all_records = self._convert_records(
             self.client.get_info(self.domain).dnsEntries)
         records = self._filter_records(
             records=all_records,
-            type=type,
+            type=rtype,
             name=name,
             content=content
         )
@@ -112,41 +112,41 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier=None, type=None, name=None, content=None):
-        if not (type or name or content):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+        if not (rtype or name or content):
             raise Exception(
-                "At least one of type, name or content must be specified.")
+                "At least one of rtype, name or content must be specified.")
 
         all_records = self._list_records(show_output=False)
-        filtered_records = self._filter_records(all_records, type, name)
+        filtered_records = self._filter_records(all_records, rtype, name)
 
         for record in filtered_records:
             all_records.remove(record)
         all_records.append({
             "name": name,
-            "type": type,
-            "content": self._bind_format_target(type, content),
+            "type": rtype,
+            "content": self._bind_format_target(rtype, content),
             "ttl": self._get_lexicon_option('ttl')
         })
 
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
         status = len(self._list_records(
-            type, name, content, show_output=False)) >= 1
+            rtype, name, content, show_output=False)) >= 1
         LOGGER.debug('update_record: %s', status)
         return status
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        if not (type or name or content):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        if not (rtype or name or content):
             raise Exception(
-                "At least one of type, name or content must be specified.")
+                "At least one of rtype, name or content must be specified.")
 
         all_records = self._list_records(show_output=False)
         filtered_records = self._filter_records(
-            all_records, type, name, content)
+            all_records, rtype, name, content)
 
         for record in filtered_records:
             all_records.remove(record)
@@ -154,7 +154,7 @@ class Provider(BaseProvider):
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
         status = len(self._list_records(
-            type, name, content, show_output=False)) == 0
+            rtype, name, content, show_output=False)) == 0
         LOGGER.debug('delete_record: %s', status)
         return status
 

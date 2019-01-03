@@ -44,11 +44,11 @@ class Provider(BaseProvider):
         raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=type, name=name, content=content)
+            resource_record_sets, type=rtype, name=name, content=content)
         if index >= 0:
             LOGGER.debug('create_record: %s', False)
             return
@@ -56,8 +56,8 @@ class Provider(BaseProvider):
         resource_record_sets.append(
             {
                 "Name": name,
-                "Type": type,
-                "RData": self._bind_format_target(type, content),
+                "Type": rtype,
+                "RData": self._bind_format_target(rtype, content),
                 "TTL": self._get_lexicon_option('ttl'),
             }
         )
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
         for record in self._get_resource_record_sets():
@@ -82,8 +82,8 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
             records = [
                 record for record in records if record['name'] == self._full_name(name)
@@ -96,29 +96,29 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
 
-        if not (type and name and content):
-            raise Exception("type ,name and content must be specified.")
+        if not (rtype and name and content):
+            raise Exception("rtype ,name and content must be specified.")
 
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=type, name=name)
+            resource_record_sets, type=rtype, name=name)
 
         if index >= 0:
-            resource_record_sets[index]["Type"] = type
+            resource_record_sets[index]["Type"] = rtype
             resource_record_sets[index]["Name"] = name
             resource_record_sets[index]["RData"] = self._bind_format_target(
-                type, content)
+                rtype, content)
             resource_record_sets[index]["TTL"] = self._get_lexicon_option(
                 'ttl')
         else:
             resource_record_sets.append(
                 {
                     "Name": name,
-                    "Type": type,
-                    "RData": self._bind_format_target(type, content),
+                    "Type": rtype,
+                    "RData": self._bind_format_target(rtype, content),
                     "TTL": self._get_lexicon_option('ttl'),
                 }
             )
@@ -131,17 +131,17 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         resource_record_sets = self._get_resource_record_sets()
 
         if name is not None:
             name = self._relative_name(name)
         if content is not None:
-            content = self._bind_format_target(type, content)
+            content = self._bind_format_target(rtype, content)
 
         filtered_records = []
         for record in resource_record_sets:
-            if type and record['Type'] != type:
+            if rtype and record['Type'] != rtype:
                 continue
             if name and record['Name'] != name:
                 continue

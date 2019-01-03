@@ -90,18 +90,18 @@ class Provider(BaseProvider):
         return True
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         LOGGER.debug("Creating record for zone {0}".format(name))
         # Pull a list of records and check for ours
-        records = self._list_records(type=type, name=name, content=content)
+        records = self._list_records(rtype=rtype, name=name, content=content)
         if len(records) >= 1:
             LOGGER.warning(
-                "Duplicate record {} {} {}, NOOP".format(type, name, content))
+                "Duplicate record {} {} {}, NOOP".format(rtype, name, content))
             return True
         data = {
             "account": "",
             "menu": "edit_zone",
-            "Type": type,
+            "Type": rtype,
             "hosted_dns_zoneid": self.domain_id,
             "hosted_dns_recordid": "",
             "hosted_dns_editzone": "1",
@@ -139,7 +139,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def _list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, rtype=None, name=None, content=None, id=None):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
@@ -187,11 +187,11 @@ class Provider(BaseProvider):
                 LOGGER.debug(
                     "Filtering {} records by id: {}".format(len(records), id))
                 records = [record for record in records if record['id'] == id]
-            if type:
-                LOGGER.debug("Filtering {} records by type: {}".format(
-                    len(records), type))
+            if rtype:
+                LOGGER.debug("Filtering {} records by rtype: {}".format(
+                    len(records), rtype))
                 records = [
-                    record for record in records if record['type'] == type]
+                    record for record in records if record['type'] == rtype]
             if name:
                 LOGGER.debug("Filtering {} records by name: {}".format(
                     len(records), name))
@@ -209,17 +209,17 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Delete record if it exists
-        self._delete_record(identifier, type, name, content)
-        return self._create_record(type, name, content)
+        self._delete_record(identifier, rtype, name, content)
+        return self._create_record(rtype, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self._list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_ids = [record['id'] for record in records]
         else:
             delete_record_ids.append(identifier)

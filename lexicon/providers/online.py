@@ -96,16 +96,16 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         try:
-            record = self.find_record(type, name, content)
+            record = self.find_record(rtype, name, content)
             if record is not None:
                 return True
 
             record = {
                 'name': self._fqdn_name(name),
-                'type': type,
-                'data': to_data(type, content),
+                'type': rtype,
+                'data': to_data(rtype, content),
                 'priority': self._get_lexicon_option('priority') or '',
                 'ttl': self._get_lexicon_option('ttl') or ''
             }
@@ -154,8 +154,8 @@ class Provider(BaseProvider):
     def list_zone_records(self, zone_id):
         return self._get('/domain/{0}/version/{1}/zone'.format(self.domain_id, zone_id))
 
-    def _list_records(self, type=None, name=None, content=None):
-        return self.find_zone_records(self.passive_zone, type, name, content)
+    def _list_records(self, rtype=None, name=None, content=None):
+        return self.find_zone_records(self.passive_zone, rtype, name, content)
 
     def find_record(self, type=None, name=None, content=None):
         record = None
@@ -167,18 +167,18 @@ class Provider(BaseProvider):
 
     # Create or update a record.
 
-    def _update_record(self, id, type=None, name=None, content=None):
-        record = self.find_record(type, name)
+    def _update_record(self, id, rtype=None, name=None, content=None):
+        record = self.find_record(rtype, name)
         if record is None:
             LOGGER.debug("cannot find record to update: %s %s %s",
-                         id, type, name)
+                         id, rtype, name)
             return True
-        if type:
-            record['type'] = type
+        if rtype:
+            record['type'] = rtype
         if name:
             record['name'] = self._fqdn_name(name)
         if content:
-            record['data'] = to_data(type, content)
+            record['data'] = to_data(rtype, content)
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
         # it is weird that 'aux' becomes 'priority' in online's api
@@ -208,10 +208,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        records = self._list_records(type, name, content)
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        records = self._list_records(rtype, name, content)
         if len(records) == 0:
-            LOGGER.debug("Cannot find records %s %s %s", type, name, content)
+            LOGGER.debug("Cannot find records %s %s %s", rtype, name, content)
             return False
         LOGGER.debug('delete_records: %s records found', len(records))
         try:

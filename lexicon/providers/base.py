@@ -83,7 +83,7 @@ class Provider(object):
             warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
             rtype = kwargs.get('type')
 
-        return self._list_records(type=rtype, name=name, content=content)
+        return self._list_records(rtype=rtype, name=name, content=content)
 
     def update_record(self, identifier, rtype=None, name=None, content=None, **kwargs):
         """
@@ -93,7 +93,7 @@ class Provider(object):
             warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
             rtype = kwargs.get('type')
 
-        return self._update_record(identifier, type=rtype, name=name, content=content)
+        return self._update_record(identifier, rtype=rtype, name=name, content=content)
 
     def delete_record(self, identifier=None, rtype=None, name=None, content=None, **kwargs):
         """
@@ -105,22 +105,22 @@ class Provider(object):
             warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
             rtype = kwargs.get('type')
 
-        return self._delete_record(identifier=identifier, type=rtype, name=name, content=content)
+        return self._delete_record(identifier=identifier, rtype=rtype, name=name, content=content)
 
     # Internal abstract implementations
     def _authenticate(self):
         raise NotImplementedError("Providers must implement this!")
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         raise NotImplementedError("Providers must implement this!")
 
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         raise NotImplementedError("Providers must implement this!")
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         raise NotImplementedError("Providers must implement this!")
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         raise NotImplementedError("Providers must implement this!")
 
     def _request(self, action='GET',  url='/', data=None, query_params=None):

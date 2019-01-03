@@ -43,8 +43,8 @@ class Provider(BaseProvider):
         self.domain_id = zone['id']
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, type, name, content):
-        data = {'type': type, 'name': self._relative_name(
+    def _create_record(self, rtype, name, content):
+        data = {'type': rtype, 'name': self._relative_name(
             name), 'content': content}
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
@@ -56,14 +56,14 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         payload = self._get('/zones/{0}/records'.format(self.domain_id))
 
         # Apply filtering first.
         processed_records = payload
-        if type:
+        if rtype:
             processed_records = [
-                record for record in processed_records if record['type'] == type]
+                record for record in processed_records if record['type'] == rtype]
         if name:
             processed_records = [
                 record for record in processed_records if record['name'] == self._relative_name(name)]
@@ -87,14 +87,14 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
-            identifier = self._find_record_identifier(type, name, None)
+            identifier = self._find_record_identifier(rtype, name, None)
 
         data = {}
-        if type:
-            data['type'] = type
+        if rtype:
+            data['type'] = rtype
         if name:
             data['name'] = self._relative_name(name)
         if content:
@@ -110,11 +110,11 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self._list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

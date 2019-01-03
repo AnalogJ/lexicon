@@ -68,7 +68,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         record = {
             'name': self._relative_name(name),
             'ttl': self._get_lexicon_option('ttl'),
@@ -80,11 +80,11 @@ class Provider(BaseProvider):
 
         try:
             payload = self._post(
-                '/domains/{0}/records/{1}/'.format(self.domain_id, type), record)
+                '/domains/{0}/records/{1}/'.format(self.domain_id, rtype), record)
         except requests.exceptions.HTTPError as e:
             # If there is already a record with that name, we need to do an update.
             if e.response.status_code == 400:
-                existing_records = self._list_records(type=type, name=name)
+                existing_records = self._list_records(rtype=rtype, name=name)
                 new_content = [r['content'] for r in existing_records]
 
                 # Only do the update if we are creating a record that doesn't already exist, otherwise
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
                 if content not in new_content:
                     new_content.append(content)
                     self._update_record(
-                        existing_records[0]['id'], type=type, name=name, content=new_content)
+                        existing_records[0]['id'], rtype=rtype, name=name, content=new_content)
             else:
                 raise
         LOGGER.debug('create_record: %s', 'name' in payload)
@@ -101,17 +101,17 @@ class Provider(BaseProvider):
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
 
-    def _list_records(self, type=None, name=None, content=None, identifier=None):
-        self._check_type(type)
+    def _list_records(self, rtype=None, name=None, content=None, identifier=None):
+        self._check_type(rtype)
 
         # Oddly, Constellix supports API-level filtering for everything except LOC
-        # records, so we need to retrieve all records for LOC and filter based on type
+        # records, so we need to retrieve all records for LOC and filter based on rtype
         # on our end.
-        if not type or type == 'LOC':
+        if not rtype or rtype == 'LOC':
             payload = self._get('/domains/{0}/records/'.format(self.domain_id))
         else:
             payload = self._get(
-                '/domains/{0}/records/{1}/'.format(self.domain_id, type))
+                '/domains/{0}/records/{1}/'.format(self.domain_id, rtype))
 
         records = []
 
@@ -129,24 +129,24 @@ class Provider(BaseProvider):
                 records.append(processed_record)
 
         records = self._filter_records(
-            records, type=type, name=name, content=content, identifier=identifier)
+            records, type=rtype, name=name, content=content, identifier=identifier)
 
         LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, type=None, name=None, content=None):
-        self._check_type(type)
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        self._check_type(rtype)
 
         if content and not isinstance(content, (list)):
             content = [content]
 
-        if identifier and (not type or not name):
+        if identifier and (not rtype or not name):
             record = self._list_records(identifier=identifier)
-            type = record[0]['type']
+            rtype = record[0]['type']
             name = record[0]['name']
         elif not identifier:
-            record = self._list_records(type, name)
+            record = self._list_records(rtype, name)
             identifier = record[0]['id']
 
         if not identifier:
@@ -165,18 +165,18 @@ class Provider(BaseProvider):
                                        'value': c})
 
         payload = self._put(
-            '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, identifier), data)
+            '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, rtype, identifier), data)
 
         LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        self._check_type(type)
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        self._check_type(rtype)
 
         records = self._list_records(
-            identifier=identifier, type=type, name=name)
+            identifier=identifier, rtype=rtype, name=name)
 
         # If we are filtering delete records by content and we are going to have
         # at least one record left over after deleting, then this becomes an
@@ -186,18 +186,18 @@ class Provider(BaseProvider):
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
                 self._update_record(
-                    records[0]['id'], type=type, name=name, content=list(current_content))
+                    records[0]['id'], rtype=rtype, name=name, content=list(current_content))
                 return True
 
         delete_record_id = set(record['id'] for record in records)
 
-        # We need a type to do a delete, so pull one from the first record if it's not supplied.
-        if not type:
-            type = records[0]['type']
+        # We need a rtype to do a delete, so pull one from the first record if it's not supplied.
+        if not rtype:
+            rtype = records[0]['type']
 
         for record_id in delete_record_id:
             payload = self._delete(
-                '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, type, record_id))
+                '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, rtype, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)

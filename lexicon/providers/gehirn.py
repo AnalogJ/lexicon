@@ -63,14 +63,14 @@ class Provider(BaseProvider):
         self.version_id = domains[0]["current_version_id"]
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         name = self._full_name(name)
-        r = self._parse_content(type, content)
+        r = self._parse_content(rtype, content)
 
-        records = self._get_records(type=type, name=name)
+        records = self._get_records(type=rtype, name=name)
         if len(records) == 0:
             record = {
-                'type': type,
+                'type': rtype,
                 'name': name,
                 'enable_alias': False,
                 'ttl': self._get_lexicon_option('ttl'),
@@ -91,11 +91,11 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
         if name:
             name = self._full_name(name)
-        for record in self._get_records(type=type, name=name):
+        for record in self._get_records(type=rtype, name=name):
             for i, r in enumerate(record["records"]):
                 c = self._build_content(record['type'], r)
                 processed_record = {
@@ -117,30 +117,30 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
 
         if name:
             name = self._full_name(name)
 
         if not identifier:
-            if not (type and name and content):
-                raise Exception("type, name and content must be specified.")
-                r = self._parse_content(type, content)
+            if not (rtype and name and content):
+                raise Exception("rtype, name and content must be specified.")
+                r = self._parse_content(rtype, content)
 
-            records = self._get_records(type=type, name=name)
+            records = self._get_records(type=rtype, name=name)
 
             if not records:
-                self._create_record(type=type, name=name, content=content)
+                self._create_record(rtype=rtype, name=name, content=content)
                 LOGGER.debug('update_record: %s', True)
                 return True
 
             record = {
                 'id': records[0]["id"],
-                'type': type,
+                'type': rtype,
                 'name': name,
                 'enable_alias': False,
                 'ttl': self._get_lexicon_option('ttl'),
-                'records': [self._parse_content(type, content)],
+                'records': [self._parse_content(rtype, content)],
             }
 
         else:
@@ -155,7 +155,7 @@ class Provider(BaseProvider):
                 # modify single record
                 self._delete_record(identifier=identifier)
                 self._create_record(
-                    type=type or record["type"],
+                    rtype=rtype or record["type"],
                     name=name or record["name"],
                     content=content
                 )
@@ -163,8 +163,8 @@ class Provider(BaseProvider):
                 return True
             else:
                 # update entire record
-                if type:
-                    record["type"] = type
+                if rtype:
+                    record["type"] = rtype
                 if name:
                     record["name"] = name
                 record["ttl"] = self._get_lexicon_option('ttl')
@@ -178,7 +178,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             if "." not in identifier:
                 # delete entire record
@@ -221,10 +221,10 @@ class Provider(BaseProvider):
         if name is not None:
             name = self._full_name(name)
         if content is not None:
-            content = self._bind_format_target(type, content)
-            r = self._parse_content(type, content)
+            content = self._bind_format_target(rtype, content)
+            r = self._parse_content(rtype, content)
 
-        records = self._get_records(type=type, name=name)
+        records = self._get_records(type=rtype, name=name)
 
         for record in records:
             if r and r in record["records"]:

@@ -67,12 +67,12 @@ class Provider(BaseProvider):
 
         return True
 
-    def _create_record(self, type, name, content, id=None):
+    def _create_record(self, rtype, name, content, id=None):
         """
         Create a new DNS entry in the domain zone if it does not already exist.
 
         Args:
-          type (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
+          rtype (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
           name (str): The name of the new DNS entry, e.g the domain for which a
                       MX entry shall be valid.
           content (str): The content of the new DNS entry, e.g. the mail server
@@ -85,10 +85,10 @@ class Provider(BaseProvider):
         """
         name = self._relative_name(name) if name is not None else name
         LOGGER.debug('Creating record with name {}'.format(name))
-        if self._is_duplicate_record(type, name, content):
+        if self._is_duplicate_record(rtype, name, content):
             return True
 
-        data = self._get_post_data_to_create_dns_entry(type, name, content, id)
+        data = self._get_post_data_to_create_dns_entry(rtype, name, content, id)
         LOGGER.debug('Create DNS data: {}'.format(data))
         create_response = self.session.post(
             self.URLS['dns_create_entry'].format(self.domain_id),
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         self._log('Create DNS entry', create_response)
 
         # Pull a list of records and check for ours
-        was_success = len(self._list_records(type, name, content)) > 0
+        was_success = len(self._list_records(rtype, name, content)) > 0
         if was_success:
             msg = 'Successfully added record {}'
         else:
@@ -107,14 +107,14 @@ class Provider(BaseProvider):
         LOGGER.info(msg.format(name))
         return was_success
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Delete one or more DNS entries in the domain zone that match the given
         criteria.
 
         Args:
           [identifier] (str): An ID to match against DNS entry easyname IDs.
-          [type] (str): A DNS type (e.g. A, TXT, MX, etc) to match against DNS
+          [rtype] (str): A DNS rtype (e.g. A, TXT, MX, etc) to match against DNS
                       entry types.
           [name] (str): A name to match against DNS entry names.
           [content] (str): A content to match against a DNS entry contents.
@@ -124,7 +124,7 @@ class Provider(BaseProvider):
                 otherwise.
         """
         success_url = self.URLS['dns'].format(self.domain_id)
-        record_ids = self._get_matching_dns_entry_ids(identifier, type,
+        record_ids = self._get_matching_dns_entry_ids(identifier, rtype,
                                                       name, content)
         LOGGER.debug('Record IDs to delete: {}'.format(record_ids))
 
@@ -138,14 +138,14 @@ class Provider(BaseProvider):
 
         return success
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         """
         Update a DNS entry identified by identifier or name in the domain zone.
         Any non given argument will leave the current value of the DNS entry.
 
         Args:
           identifier (str): The easyname id of the DNS entry to update.
-          [type] (str): The DNS type (e.g. A, TXT, MX, etc) of the new entry.
+          [rtype] (str): The DNS rtype (e.g. A, TXT, MX, etc) of the new entry.
           [name] (str): The name of the new DNS entry, e.g the domain for which
                         a MX entry shall be valid.
           [content] (str): The content of the new DNS entry, e.g. the mail
@@ -161,7 +161,7 @@ class Provider(BaseProvider):
             identifier = int(identifier)
             records = self._list_records(id=identifier)
         else:
-            records = self._list_records(name=name, type=type)
+            records = self._list_records(name=name, rtype=rtype)
         LOGGER.debug('Records to update ({}): {}'.format(
                      len(records), records))
         assert len(records) > 0, 'No record found to update'
@@ -169,23 +169,23 @@ class Provider(BaseProvider):
 
         for record in records:
             name = name if name is not None else record['name']
-            type = type if type is not None else record['type']
+            rtype = rtype if rtype is not None else record['type']
             content = content if content is not None \
                 else record['content']
-            success = success and self._create_record(type,
-                                                     name,
-                                                     content,
-                                                     record['id'])
+            success = success and self._create_record(rtype,
+                                                      name,
+                                                      content,
+                                                      record['id'])
         return success
 
-    def _list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, rtype=None, name=None, content=None, id=None):
         """
         Filter and list DNS entries of domain zone on Easyname.
         Easyname shows each entry in a HTML table row and each attribute on a
         table column.
 
         Args:
-          [type] (str): Filter by DNS type (e.g. A, TXT, MX, etc)
+          [rtype] (str): Filter by DNS rtype (e.g. A, TXT, MX, etc)
           [name] (str): Filter by the name of the DNS entry, e.g the domain for
                       which a MX entry shall be valid.
           [content] (str): Filter by the content of the DNS entry, e.g. the
@@ -234,7 +234,7 @@ class Provider(BaseProvider):
                 records.append(rec)
             self._records = records
 
-        records = self._filter_records(self._records, type, name, content, id)
+        records = self._filter_records(self._records, rtype, name, content, id)
         LOGGER.debug('Final records ({}): {}'.format(len(records), records))
         return records
 

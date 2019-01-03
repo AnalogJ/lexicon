@@ -186,10 +186,10 @@ class Provider(BaseProvider):
         return self._get_lexicon_option('ttl')
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         record = {
             # required
-            'Type': type,
+            'Type': rtype,
             'Name': self._relative_name(name),
             'Address': content,
         }
@@ -206,7 +206,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def _list_records(self, type=None, name=None, content=None, id=None):
+    def _list_records(self, rtype=None, name=None, content=None, id=None):
         records = []
         raw_records = self.client.domains_dns_getHosts(self.domain)
         for record in raw_records:
@@ -214,8 +214,8 @@ class Provider(BaseProvider):
 
         if id:
             records = [record for record in records if record['id'] == id]
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
             if name.endswith('.'):
                 name = name[:-1]
@@ -228,16 +228,16 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Delete record if it exists
-        self._delete_record(identifier, type, name, content)
-        return self._create_record(type, name, content)
+        self._delete_record(identifier, rtype, name, content)
+        return self._create_record(rtype, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         records = self._list_records(
-            type=type, name=name, content=content, id=identifier)
+            rtype=rtype, name=name, content=content, id=identifier)
         for record in records:
             self.client.domains_dns_delHost(
                 self.domain, self._convert_to_namecheap(record))

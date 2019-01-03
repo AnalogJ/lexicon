@@ -116,18 +116,18 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise Exception('Domain not found')
 
-    def _create_record(self, type, name, content):
-        return self.__create_entry(type, name, content, None)
+    def _create_record(self, rtype, name, content):
+        return self.__create_entry(rtype, name, content, None)
 
-    def _list_records(self, type=None, name=None, content=None):
-        entries = self.__find_dns_entries(type, name, content)
+    def _list_records(self, rtype=None, name=None, content=None):
+        entries = self.__find_dns_entries(rtype, name, content)
         LOGGER.debug("list_records: %s" % entries)
         return entries
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         if identifier is None:
-            entries = self.__find_dns_entries(type, name, None)
+            entries = self.__find_dns_entries(rtype, name, None)
             LOGGER.debug("Entries found: %s", entries)
 
             if len(entries) < 1:
@@ -151,8 +151,8 @@ class Provider(BaseProvider):
 
         LOGGER.debug("Updating: %s", entry)
 
-        if type:
-            entry["type"] = type
+        if rtype:
+            entry["type"] = rtype
         if name:
             entry["host"] = name
         if content:
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
 
         if identifier:
 
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
         else:
 
             entries = self.__find_dns_entries(
-                type, self._fqdn_name(name), content)
+                rtype, self._fqdn_name(name), content)
             ids = []
 
             for entry in entries:

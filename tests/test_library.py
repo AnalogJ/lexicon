@@ -26,17 +26,17 @@ class Provider(BaseProvider):
     def _authenticate(self):
         print('Authenticate action')
 
-    def _create_record(self, type, name, content):
-        return {'action': 'create', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
+    def _create_record(self, rtype, name, content):
+        return {'action': 'create', 'domain': self.domain, 'type': rtype, 'name': name, 'content': content}
 
-    def _list_records(self, type=None, name=None, content=None):
-        return {'action': 'list', 'domain': self.domain, 'type': type, 'name': name, 'content': content}
+    def _list_records(self, rtype=None, name=None, content=None):
+        return {'action': 'list', 'domain': self.domain, 'type': rtype, 'name': name, 'content': content}
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
-        return {'action': 'update', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        return {'action': 'update', 'domain': self.domain, 'identifier': identifier, 'type': rtype, 'name': name, 'content': content}
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        return {'action': 'delete', 'domain': self.domain, 'identifier': identifier, 'type': type, 'name': name, 'content': content}
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        return {'action': 'delete', 'domain': self.domain, 'identifier': identifier, 'type': rtype, 'name': name, 'content': content}
 
 
 # We register at runtime our fake provider as a module to allow lexicon to resolve it correctly

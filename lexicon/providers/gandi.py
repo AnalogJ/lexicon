@@ -84,17 +84,17 @@ class Provider(BaseProvider):
             self._get('/domains/{0}'.format(self.domain))
             self.domain_id = self.domain.lower()
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         if self.protocol == 'rpc':
-            return self.rpc_helper.create_record(type, self._relative_name(name),
+            return self.rpc_helper.create_record(rtype, self._relative_name(name),
                                                  content, self._get_lexicon_option('ttl') or self.default_ttl)
 
         current_values = [record['content']
-                          for record in self._list_records(type=type, name=name)]
+                          for record in self._list_records(rtype=rtype, name=name)]
         if current_values != [content]:
             # a change is necessary
             url = '/domains/{0}/records/{1}/{2}'.format(
-                self.domain_id, self._relative_name(name), type)
+                self.domain_id, self._relative_name(name), rtype)
             if current_values:
                 record = {'rrset_values': current_values + [content]}
                 self._put(url, record)
@@ -110,26 +110,26 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
         if self.protocol == 'rpc':
-            return self.rpc_helper.list_records(type, name, content)
+            return self.rpc_helper.list_records(rtype, name, content)
 
         try:
             if name is not None:
-                if type is not None:
+                if rtype is not None:
                     query_results = [self._get(
                         '/domains/{0}/records/{1}/{2}'
-                        .format(self.domain_id, self._relative_name(name), type))]
+                        .format(self.domain_id, self._relative_name(name), rtype))]
                 else:
                     query_results = self._get('/domains/{0}/records/{1}'
                                               .format(self.domain_id, self._relative_name(name)))
             else:
                 query_results = self._get(
                     '/domains/{0}/records'.format(self.domain_id))
-                if type is not None:
+                if rtype is not None:
                     query_results = [
-                        item for item in query_results if item['rrset_type'] == type]
+                        item for item in query_results if item['rrset_type'] == rtype]
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 query_results = []
@@ -158,17 +158,17 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates the specified record in a new Gandi zone
 
         'content' should be a string or a list of strings
         """
         if self.protocol == 'rpc':
-            return self.rpc_helper.update_record(identifier, type, name, content)
+            return self.rpc_helper.update_record(identifier, rtype, name, content)
 
         data = {}
-        if type:
-            data['rrset_type'] = type
+        if rtype:
+            data['rrset_type'] = rtype
         if name:
             data['rrset_name'] = self._relative_name(name)
         if content:
@@ -176,12 +176,12 @@ class Provider(BaseProvider):
                 data['rrset_values'] = list(content)
             else:
                 data['rrset_values'] = [content]
-        if type is None:
-            # replace the records of a specific type
+        if rtype is None:
+            # replace the records of a specific rtype
             url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id,
                                                         identifier or self._relative_name(
                                                             name),
-                                                        type)
+                                                        rtype)
             self._put(url, data)
         else:
             # replace all records with a matching name
@@ -193,14 +193,14 @@ class Provider(BaseProvider):
 
     # Delete existings records.
     # If records do not exist, do nothing.
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if self.protocol == 'rpc':
-            return self.rpc_helper.delete_record(identifier, type, name, content)
+            return self.rpc_helper.delete_record(identifier, rtype, name, content)
 
         if not identifier:
             remove_count = 0
-            # get all matching (by type and name) records - ignore 'content' for now
-            records = self._list_records(type=type, name=name)
+            # get all matching (by rtype and name) records - ignore 'content' for now
+            records = self._list_records(rtype=rtype, name=name)
             for current_type in set(record['type'] for record in records):
                 matching_records = [
                     record for record in records if record['type'] == current_type]
@@ -213,7 +213,7 @@ class Provider(BaseProvider):
                 url = '/domains/{0}/records/{1}/{2}'.format(
                     self.domain_id, self._relative_name(name), current_type)
                 if len(matching_records) == len(remaining_values):
-                    # no matching item should be removed for this type
+                    # no matching item should be removed for this rtype
                     pass
                 elif remaining_values:
                     # reduce the list of values

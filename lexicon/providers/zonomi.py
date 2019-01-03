@@ -80,10 +80,10 @@ class Provider(BaseProvider):
         content = "=".join(parts[1:])
         return type, name, content
 
-    def _create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         request = {
             'action': 'SET',
-            'type': type,
+            'type': rtype,
             'name': self.domain,
             'value': content
         }
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         LOGGER.debug('create_record: %s', True)
         return True
 
-    def _list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
         request = {
@@ -114,8 +114,8 @@ class Provider(BaseProvider):
             'name': "**." + self.domain
         }
 
-        if type is not None:
-            request['type'] = type
+        if rtype is not None:
+            request['type'] = rtype
         if name is not None:
             request['name'] = self._full_name(name)
         if content is not None:
@@ -134,17 +134,17 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def _delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is not None:
-            type, name, content = self._parse_identifier(identifier)
+            rtype, name, content = self._parse_identifier(identifier)
 
         request = {
             'action': 'DELETE',
             'name': self.domain
         }
 
-        if type is not None:
-            request['type'] = type
+        if rtype is not None:
+            request['type'] = rtype
         if name is not None:
             request['name'] = self._full_name(name)
         if content is not None:
@@ -159,7 +159,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_record: %s', True)
         return True
 
-    def _update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         self._delete_record(identifier)
         ttype, tname, tcontent = self._parse_identifier(identifier)
         request = {
@@ -169,8 +169,8 @@ class Provider(BaseProvider):
             'value': tcontent
         }
 
-        if type is not None:
-            request['type'] = type
+        if rtype is not None:
+            request['type'] = rtype
         if name is not None:
             request['name'] = self._full_name(name)
         if content is not None:
