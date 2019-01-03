@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import warnings
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
@@ -61,54 +62,71 @@ class Provider(object):
         """
         return self._authenticate()
 
-    def create_record(self, type, name, content):
+    def create_record(self, rtype, name, content, **kwargs):
         """
         Create record. If record already exists with the same content, do nothing.
         """
-        return self._create_record(type, name, content)
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            rtype = kwargs.get('type')
 
-    def list_records(self, type=None, name=None, content=None):
+        return self._create_record(rtype, name, content)
+
+    def list_records(self, rtype=None, name=None, content=None, **kwargs):
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
         If possible filter during the query, otherwise filter after response is received.
         """
-        return self._list_records(type=type, name=name, content=content)
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            rtype = kwargs.get('type')
+
+        return self._list_records(type=rtype, name=name, content=content)
+
+    def update_record(self, identifier, rtype=None, name=None, content=None, **kwargs):
         """
         Update a record. Identifier must be specified.
         """
-        return self._update_record(identifier, type=type, name=name, content=content)
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            rtype = kwargs.get('type')
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+        return self._update_record(identifier, type=rtype, name=name, content=content)
+
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None, **kwargs):
         """
         Delete an existing record.
         If record does not exist, do nothing.
         If an identifier is specified, use it, otherwise do a lookup using type, name and content.
         """
-        return self._delete_record(identifier=identifier, type=type, name=name, content=content)
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            rtype = kwargs.get('type')
+
+        return self._delete_record(identifier=identifier, type=rtype, name=name, content=content)
 
     # Internal abstract implementations
     def _authenticate(self):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
 
     def _create_record(self, type, name, content):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
 
     def _list_records(self, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
 
     def _update_record(self, identifier, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
 
     def _delete_record(self, identifier=None, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
+
+    def _request(self, action='GET',  url='/', data=None, query_params=None):
+        raise NotImplementedError("Providers must implement this!")
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
-        raise NotImplementedError("Providers should implement this!")
-
     def _get(self, url='/', query_params=None):
         return self._request('GET', url, query_params=query_params)
 
