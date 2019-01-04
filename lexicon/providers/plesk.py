@@ -236,7 +236,9 @@ class Provider(BaseProvider):
 
             if (value is not None) and (r["data"]["value"] != value):
                 LOGGER.debug(
-                    "\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
+                    "\tValue doesn't match - expected: '%s', found: '%s'",
+                    value,
+                    r["data"]["value"])
                 continue
 
             entry = {

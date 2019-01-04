@@ -45,7 +45,7 @@ class Provider(BaseProvider):
         active_row = None
         passive_row = None
         for row in self.list_zones():
-            if row['active'] == True:
+            if row['active']:
                 active_row = row
             elif row['name'] == zone_name_a or row['name'] == zone_name_b:
                 passive_row = row

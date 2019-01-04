@@ -41,8 +41,10 @@ class Provider(BaseProvider):
         if len(existing_records) == 1:
             return True
 
-        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'zone_record': {
-                             'record_type': type, 'name': self._relative_name(name), 'data': content}})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id),
+                             {'zone_record': {'record_type': type,
+                                              'name': self._relative_name(name),
+                                              'data': content}})
 
         LOGGER.debug('create_record: %s', payload['zone_record'])
         return bool(payload['zone_record'])

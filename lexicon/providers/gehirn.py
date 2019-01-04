@@ -104,7 +104,10 @@ class Provider(BaseProvider):
                     'name': record['name'].rstrip("."),
                     'ttl': record['ttl'],
                     'content': c,
-                    'id': "{}.{}".format(record["id"], base64.b64encode(c.encode("utf-8")).decode("ascii")),
+                    'id': "{}.{}".format(
+                        record["id"],
+                        base64.b64encode(
+                            c.encode("utf-8")).decode("ascii")),
                 }
                 self._parse_content(
                     record['type'], processed_record["content"])

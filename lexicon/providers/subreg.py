@@ -222,11 +222,14 @@ class Provider(BaseProvider):
             identifier_check = str(
                 identifier) if identifier is not None else None
 
-            filtered_records = [record for record in response['records'] if
-                                (identifier is None or str(record['id']) == identifier_check) and
-                                (type is None or record['type'] == type) and
-                                (name is None or record['name'] == name_check) and
-                                (content is None or ('content' in record and record['content'] == content_check))]
+            filtered_records = [
+                record for record in response['records'] if (
+                    identifier is None or str(
+                        record['id']) == identifier_check) and (
+                    type is None or record['type'] == type) and (
+                    name is None or record['name'] == name_check) and (
+                        content is None or (
+                            'content' in record and record['content'] == content_check))]
             records = [self._create_response_record(
                 filtered_record) for filtered_record in filtered_records]
         else:

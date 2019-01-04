@@ -152,8 +152,13 @@ class Provider(BaseProvider):
 
         timestamp = str(int(time.time()))
         salt = ''.join(random.choice(SALT_SHAKER) for _ in range(16))
-        hash_items = [self._get_provider_option(
-            'auth_username'), timestamp, salt, self._get_provider_option('auth_token'), url, hashed_body]
+        hash_items = [
+            self._get_provider_option('auth_username'),
+            timestamp,
+            salt,
+            self._get_provider_option('auth_token'),
+            url,
+            hashed_body]
         auth_hash = hashlib.sha1(
             ';'.join(hash_items).encode('utf-8')).hexdigest()
         auth_value = ';'.join([self._get_provider_option(

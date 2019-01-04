@@ -201,7 +201,9 @@ class Provider(BaseProvider):
             # get the old record, create a new one with updated data, delete the old record.
             old_record = self._get('/zones/{0}'.format(identifier))
             self.create_record(
-                type or old_record['type'], name or old_record['domain'], content or old_record['answers'][0]['answer'][0])
+                type or old_record['type'],
+                name or old_record['domain'],
+                content or old_record['answers'][0]['answer'][0])
             self.delete_record(identifier)
 
         LOGGER.debug('update_record: %s', True)

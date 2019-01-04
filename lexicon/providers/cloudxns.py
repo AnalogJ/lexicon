@@ -170,9 +170,16 @@ class Provider(BaseProvider):
         default_headers = {
             'API-KEY': self._get_provider_option('auth_username'),
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self._get_provider_option('auth_username'), self.api_endpoint, url, query_string, data, date, self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
-            'API-FORMAT': 'json'
-        }
+            'API-HMAC': hashlib.md5(
+                "{0}{1}{2}{3}{4}{5}{6}".format(
+                    self._get_provider_option('auth_username'),
+                    self.api_endpoint,
+                    url,
+                    query_string,
+                    data,
+                    date,
+                    self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
+            'API-FORMAT': 'json'}
         default_auth = None
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=data,

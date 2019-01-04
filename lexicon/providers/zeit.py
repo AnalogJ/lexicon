@@ -111,8 +111,9 @@ class Provider(BaseProvider):
                 'No record found for identifer: {0}'.format(identifier))
 
         if len(records) > 1:
-            LOGGER.warn('Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(
-                records[0]['id']))
+            LOGGER.warn(
+                'Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(
+                    records[0]['id']))
 
         data = {
             'type': type,
@@ -159,10 +160,14 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        request = requests.request(action, self.api_endpoint + url,
-                                   params=query_params,
-                                   data=json.dumps(data),
-                                   headers={'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))})
+        request = requests.request(
+            action,
+            self.api_endpoint + url,
+            params=query_params,
+            data=json.dumps(data),
+            headers={
+                'Authorization': 'Bearer {0}'.format(
+                    self._get_provider_option('auth_token'))})
 
         request.raise_for_status()
         return request.json()

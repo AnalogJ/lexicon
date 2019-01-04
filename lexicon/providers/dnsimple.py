@@ -19,7 +19,8 @@ def ProviderParser(subparser):
     subparser.add_argument(
         "--auth-password", help="specify password for authentication")
     subparser.add_argument(
-        "--auth-2fa", help="specify two-factor auth token (OTP) to use with email/password authentication")
+        "--auth-2fa",
+        help="specify two-factor auth token (OTP) to use with email/password authentication")
 
 
 class Provider(BaseProvider):
@@ -90,11 +91,13 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 'type': record['type'],
-                'name': '{}'.format(self.domain) if record['name'] == "" else '{0}.{1}'.format(record['name'], self.domain),
+                'name': '{}'.format(
+                    self.domain) if record['name'] == "" else '{0}.{1}'.format(
+                    record['name'],
+                    self.domain),
                 'ttl': record['ttl'],
                 'content': record['content'],
-                'id': record['id']
-            }
+                'id': record['id']}
             if record['priority']:
                 processed_record['priority'] = record['priority']
             records.append(processed_record)

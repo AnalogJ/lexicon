@@ -17,7 +17,8 @@ NAMESERVER_DOMAINS = ['yandex.com']
 
 def ProviderParser(subparser):
     subparser.add_argument(
-        "--auth-token", help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
+        "--auth-token",
+        help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
 
 
 class Provider(BaseProvider):

@@ -15,13 +15,17 @@ def ProviderParser(subparser):
     subparser.add_argument(
         "--auth-region", help="specify region. If empty, region `tyo1` will be used.")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication. If empty, the username and password will be used to create a token.")
+        "--auth-token",
+        help="specify token for authentication. If empty, the username and password will be used to create a token.")
     subparser.add_argument(
-        "--auth-username", help="specify api username for authentication. Only used if --auth-token is empty.")
+        "--auth-username",
+        help="specify api username for authentication. Only used if --auth-token is empty.")
     subparser.add_argument(
-        "--auth-password", help="specify api user password for authentication. Only used if --auth-token is empty.")
+        "--auth-password",
+        help="specify api user password for authentication. Only used if --auth-token is empty.")
     subparser.add_argument(
-        "--auth-tenant-id", help="specify tenand id for authentication. Only used if --auth-token is empty.")
+        "--auth-tenant-id",
+        help="specify tenand id for authentication. Only used if --auth-token is empty.")
 
 
 class Provider(BaseProvider):

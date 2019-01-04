@@ -35,8 +35,7 @@ class Provider(BaseProvider):
         'overview': 'https://my.easyname.com/hosting/view-user.php',
         'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
         'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
-        'dns_delete_entry': 'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'
-    }
+        'dns_delete_entry': 'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'}
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
