@@ -9,7 +9,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import zeep  # Optional dependency
-except:
+except BaseException:
     pass
 
 LOGGER = logging.getLogger(__name__)
@@ -38,7 +38,8 @@ class Provider(BaseProvider):
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
     def authenticate(self):
         """Logs-in the user and checks the domain name"""
-        if not self._get_provider_option('auth_username') or not self._get_provider_option('auth_password'):
+        if not self._get_provider_option(
+                'auth_username') or not self._get_provider_option('auth_password'):
             raise Exception(
                 'No valid authentication data passed, expected: auth-username and auth-password')
         response = self._request_login(self._get_provider_option('auth_username'),
@@ -221,11 +222,14 @@ class Provider(BaseProvider):
             identifier_check = str(
                 identifier) if identifier is not None else None
 
-            filtered_records = [record for record in response['records'] if
-                                (identifier is None or str(record['id']) == identifier_check) and
-                                (type is None or record['type'] == type) and
-                                (name is None or record['name'] == name_check) and
-                                (content is None or ('content' in record and record['content'] == content_check))]
+            filtered_records = [
+                record for record in response['records'] if (
+                    identifier is None or str(
+                        record['id']) == identifier_check) and (
+                    type is None or record['type'] == type) and (
+                    name is None or record['name'] == name_check) and (
+                        content is None or (
+                            'content' in record and record['content'] == content_check))]
             records = [self._create_response_record(
                 filtered_record) for filtered_record in filtered_records]
         else:

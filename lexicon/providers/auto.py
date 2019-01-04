@@ -106,7 +106,7 @@ def ProviderParser(subparser):
         Based on the nameservers declared for the given domain,
         Lexicon will try to find the DNS provider holding the DNS zone if it is supported.
         Actual DNS zone read/write operations will be delegated to the provider found:
-        every environment variable or command line specific to this provider 
+        every environment variable or command line specific to this provider
         can be passed to Lexicon and will be processed accordingly.
         '''
     subparser.add_argument("--mapping-override", metavar="[DOMAIN]:[PROVIDER], ...",
@@ -160,7 +160,7 @@ class Provider(object):
     def authenticate(self):
         """
         Launch the authentication process: for 'auto' provider, it means first to find the relevant
-        provider, then call its authenticate() method. Almost every subsequent operation will then 
+        provider, then call its authenticate() method. Almost every subsequent operation will then
         be delegated to that provider.
         """
         mapping_override = self.config.resolve('lexicon:auto:mapping_override')

@@ -80,7 +80,7 @@ class Provider(object):
         raise NotImplementedError("Providers should implement this!")
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         raise NotImplementedError("Providers should implement this!")
 
     def _get(self, url='/', query_params=None):

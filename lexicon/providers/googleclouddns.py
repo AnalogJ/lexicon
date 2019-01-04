@@ -42,10 +42,10 @@ def ProviderParser(subparser):
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
         This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
-        You can create a new service account, associate a private key, and download its info through this url: 
+        You can create a new service account, associate a private key, and download its info through this url:
         https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2'''
     subparser.add_argument('--auth-service-account-info', help='''
-        specify the service account info in the Google JSON format: 
+        specify the service account info in the Google JSON format:
         can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
         or the base64 encoded content of this file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)''')
 
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
 
         if self._get_provider_option('auth_service_account_info').startswith('file::'):
             with open(self._get_provider_option('auth_service_account_info')
-                              .replace('file::', ''), 'rb') as file:
+                      .replace('file::', ''), 'rb') as file:
                 service_account_info_bytes = file.read()
         elif self._get_provider_option('auth_service_account_info').startswith('base64::'):
             service_account_info_bytes = b64decode(self._get_provider_option(
@@ -140,7 +140,7 @@ class Provider(BaseProvider):
         if not post_result['access_token']:
             raise Exception('Error, could not grant RW access on the '
                             'Google Cloud DNS API for user: {0}'.format(
-                self._get_provider_option('auth_email')))
+                                self._get_provider_option('auth_email')))
 
         self._token = post_result['access_token']
 
