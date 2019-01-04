@@ -45,8 +45,11 @@ class Provider(BaseProvider):
         if len(existing_records) == 1:
             return True
 
-        payload = self._post('/zones/{0}/records'.format(self.domain_id), {'type': rtype,
-                                                                           'name': self._fqdn_name(name), 'content': content, 'ttl': self._get_lexicon_option('ttl')})
+        payload = self._post('/zones/{0}/records'.format(self.domain_id),
+                             {'type': rtype,
+                              'name': self._fqdn_name(name),
+                              'content': content,
+                              'ttl': self._get_lexicon_option('ttl')})
 
         LOGGER.debug('create_record: %s', True)
         return True
@@ -120,7 +123,7 @@ class Provider(BaseProvider):
 
     # Helpers
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:

@@ -14,7 +14,7 @@ NAMESERVER_DOMAINS = []
 
 def ProviderParser(subparser):
     subparser.description = '''
-        The OnApp provider requires your OnApp account\'s email address and 
+        The OnApp provider requires your OnApp account\'s email address and
         API token, which can be found on your /profile page on the Control Panel interface.
         The server is your dashboard URL, in the format of e.g. https://dashboard.youronapphost.org'''
     subparser.add_argument(
@@ -78,7 +78,8 @@ class Provider(BaseProvider):
             '/dns_zones/{0}/records.json'.format(self.domain_id))
         for recordType in response['dns_zone']['records']:
 
-            # For now we do not support other RR types so we ignore them, also see _key_for_record_type
+            # For now we do not support other RR types so we ignore them, also see
+            # _key_for_record_type
             if recordType not in ('A', 'AAAA', 'CNAME', 'TXT'):
                 continue
 

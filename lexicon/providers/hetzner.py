@@ -24,6 +24,7 @@ LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
 
+
 def ProviderParser(subparser):
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
@@ -49,6 +50,7 @@ def ProviderParser(subparser):
                            '30s (30)',
                            default=int(30),
                            type=int)
+
 
 class Provider(BaseProvider):
     """
@@ -240,7 +242,7 @@ class Provider(BaseProvider):
             records = self._list_records_in_zone(ddata['zone']['data'], dtype, dname, dcontent)
             if len(records) == 1:
                 # Remove record from zone
-                rrset = ddata['zone']['data'].get_rdataset(records[0]['name']+'.',
+                rrset = ddata['zone']['data'].get_rdataset(records[0]['name'] + '.',
                                                            rdtype=records[0]['type'])
                 rdatas = []
                 for rdata in rrset:
@@ -250,9 +252,9 @@ class Provider(BaseProvider):
                 if rdatas:
                     rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
                                                            records[0]['ttl'], rdatas)
-                    ddata['zone']['data'].replace_rdataset(records[0]['name']+'.', rdataset)
+                    ddata['zone']['data'].replace_rdataset(records[0]['name'] + '.', rdataset)
                 else:
-                    ddata['zone']['data'].delete_rdataset(records[0]['name']+'.',
+                    ddata['zone']['data'].delete_rdataset(records[0]['name'] + '.',
                                                           records[0]['type'])
                 # Add record to zone
                 name = ddata['cname'] if ddata['cname'] else self._fqdn_name(name)
@@ -301,7 +303,7 @@ class Provider(BaseProvider):
             if records:
                 # Remove records from zone
                 for record in records:
-                    rrset = ddata['zone']['data'].get_rdataset(record['name']+'.',
+                    rrset = ddata['zone']['data'].get_rdataset(record['name'] + '.',
                                                                rdtype=record['type'])
                     rdatas = []
                     for rdata in rrset:
@@ -311,9 +313,9 @@ class Provider(BaseProvider):
                     if rdatas:
                         rdataset = dns.rdataset.from_text_list(rrset.rdclass, rrset.rdtype,
                                                                record['ttl'], rdatas)
-                        ddata['zone']['data'].replace_rdataset(record['name']+'.', rdataset)
+                        ddata['zone']['data'].replace_rdataset(record['name'] + '.', rdataset)
                     else:
-                        ddata['zone']['data'].delete_rdataset(record['name']+'.', record['type'])
+                        ddata['zone']['data'].delete_rdataset(record['name'] + '.', record['type'])
                 # Post zone to Hetzner
                 synced_change = self._post_zone(ddata['zone'])
                 return synced_change
@@ -350,7 +352,7 @@ class Provider(BaseProvider):
             records = self._list_records_in_zone(zone)
             for record in records:
                 if record['id'] == identifier:
-                    rdtype, name, content = record['type'], record['name']+'.', record['content']
+                    rdtype, name, content = record['type'], record['name'] + '.', record['content']
         return rdtype, name, content
 
     def _convert_content(self, rdtype, content):
@@ -589,7 +591,8 @@ class Provider(BaseProvider):
         if provider fails during session.
         """
         name, link = self._link_record()
-        qdomain, nameservers, cname = Provider._get_dns_cname((name if name else domain+'.'), link)
+        qdomain, nameservers, cname = Provider._get_dns_cname(
+            (name if name else domain + '.'), link)
         qdomain_id, zone = domain_id, None
         self.session = self._auth_session(self.username, self.password)
         try:

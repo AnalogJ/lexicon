@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         domain = self.domain
         try:
             self.client.get_info(domain)
-        except:
+        except BaseException:
             raise
             raise Exception("Could not retrieve information about {0}, "
                             "is this domain yours?".format(domain))
@@ -188,7 +188,8 @@ class Provider(BaseProvider):
         return _records
 
     def _to_dns_entry(self, _entry):
-        return DnsEntry(self._relative_name(_entry['name']), _entry['ttl'], _entry['type'], _entry['content'])
+        return DnsEntry(self._relative_name(_entry['name']),
+                        _entry['ttl'], _entry['type'], _entry['content'])
 
     def _convert_records_back(self, _records):
         return [self._to_dns_entry(record) for record in _records]

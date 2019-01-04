@@ -35,7 +35,7 @@ class Provider(BaseProvider):
 
         payload = self._get('/domain')
         for record in payload['data']:
-            if record['domain'] == self.domain+'.':
+            if record['domain'] == self.domain + '.':
                 self.domain_id = record['id']
                 break
 
@@ -62,7 +62,8 @@ class Provider(BaseProvider):
             if not already_exists:
                 raise
 
-        # CloudXNS will return bad HTTP Status when error, will throw at r.raise_for_status() in _request()
+        # CloudXNS will return bad HTTP Status when error, will throw at
+        # r.raise_for_status() in _request()
         LOGGER.debug('create_record: %s', True)
         return True
 
@@ -81,13 +82,15 @@ class Provider(BaseProvider):
                 'name': self._full_name(record['host']),
                 'ttl': record['ttl'],
                 'content': record['value'],
-                # this id is useless unless your doing record linking. Lets return the original record identifier.
+                # this id is useless unless your doing record linking. Lets return the
+                # original record identifier.
                 'id': record['record_id']
             }
             if processed_record['type'] == 'TXT':
                 processed_record['content'] = processed_record['content'].replace(
                     '"', '')
-                # CloudXNS will add quotes automaticly for TXT records, https://www.cloudxns.net/Support/detail/id/114.html
+                # CloudXNS will add quotes automaticly for TXT records,
+                # https://www.cloudxns.net/Support/detail/id/114.html
             records.append(processed_record)
 
         if rtype:
@@ -148,7 +151,7 @@ class Provider(BaseProvider):
 
     # Helpers
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         data['login_token'] = self._get_provider_option(
@@ -167,9 +170,16 @@ class Provider(BaseProvider):
         default_headers = {
             'API-KEY': self._get_provider_option('auth_username'),
             'API-REQUEST-DATE': date,
-            'API-HMAC': hashlib.md5("{0}{1}{2}{3}{4}{5}{6}".format(self._get_provider_option('auth_username'), self.api_endpoint, url, query_string, data, date, self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
-            'API-FORMAT': 'json'
-        }
+            'API-HMAC': hashlib.md5(
+                "{0}{1}{2}{3}{4}{5}{6}".format(
+                    self._get_provider_option('auth_username'),
+                    self.api_endpoint,
+                    url,
+                    query_string,
+                    data,
+                    date,
+                    self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
+            'API-FORMAT': 'json'}
         default_auth = None
         r = requests.request(action, self.api_endpoint + url, params=query_params,
                              data=data,

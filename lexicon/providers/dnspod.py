@@ -136,7 +136,7 @@ class Provider(BaseProvider):
 
     # Helpers
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         data['login_token'] = self._get_provider_option(

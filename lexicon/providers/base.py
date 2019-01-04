@@ -67,7 +67,8 @@ class Provider(object):
         Create record. If record already exists with the same content, do nothing.
         """
         if not rtype and kwargs.get('type'):
-            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
             rtype = kwargs.get('type')
 
         return self._create_record(rtype, name, content)
@@ -80,7 +81,8 @@ class Provider(object):
         """
 
         if not rtype and kwargs.get('type'):
-            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
             rtype = kwargs.get('type')
 
         return self._list_records(rtype=rtype, name=name, content=content)
@@ -90,7 +92,8 @@ class Provider(object):
         Update a record. Identifier must be specified.
         """
         if not rtype and kwargs.get('type'):
-            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
             rtype = kwargs.get('type')
 
         return self._update_record(identifier, rtype=rtype, name=name, content=content)
@@ -102,7 +105,8 @@ class Provider(object):
         If an identifier is specified, use it, otherwise do a lookup using type, name and content.
         """
         if not rtype and kwargs.get('type'):
-            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.', DeprecationWarning)
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
             rtype = kwargs.get('type')
 
         return self._delete_record(identifier=identifier, rtype=rtype, name=name, content=content)
@@ -123,7 +127,8 @@ class Provider(object):
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         raise NotImplementedError("Providers must implement this!")
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    # Helpers
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         raise NotImplementedError("Providers must implement this!")
 
     # Helpers

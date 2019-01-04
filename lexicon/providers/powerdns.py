@@ -88,7 +88,8 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         records = []
         for rrset in self.zone_data()['rrsets']:
-            if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(name)) and (rtype is None or rrset['type'] == rtype):
+            if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(
+                    name)) and (rtype is None or rrset['type'] == rtype):
                 for record in rrset['records']:
                     if content is None or record['content'] == self._clean_content(rtype, content):
                         records.append({
@@ -174,7 +175,8 @@ class Provider(BaseProvider):
 
         new_records = []
         for record in update_data['records']:
-            if content is None or self._unclean_content(rtype, record['content']) != self._unclean_content(rtype, content):
+            if content is None or self._unclean_content(
+                    rtype, record['content']) != self._unclean_content(rtype, content):
                 new_records.append(record)
 
         update_data['name'] = self._fqdn_name(update_data['name'])

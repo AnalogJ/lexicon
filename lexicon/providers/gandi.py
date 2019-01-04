@@ -48,7 +48,8 @@ def ProviderParser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
     subparser.add_argument('--auth-token', help="specify Gandi API key")
     subparser.add_argument(
-        '--api-protocol', help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+        '--api-protocol',
+        help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
 
 
 class Provider(BaseProvider):
@@ -86,8 +87,8 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         if self.protocol == 'rpc':
-            return self.rpc_helper.create_record(rtype, self._relative_name(name),
-                                                 content, self._get_lexicon_option('ttl') or self.default_ttl)
+            return self.rpc_helper.create_record(rtype, self._relative_name(
+                name), content, self._get_lexicon_option('ttl') or self.default_ttl)
 
         current_values = [record['content']
                           for record in self._list_records(rtype=rtype, name=name)]
@@ -235,7 +236,7 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:

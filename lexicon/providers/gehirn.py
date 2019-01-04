@@ -103,7 +103,10 @@ class Provider(BaseProvider):
                     'name': record['name'].rstrip("."),
                     'ttl': record['ttl'],
                     'content': c,
-                    'id': "{}.{}".format(record["id"], base64.b64encode(c.encode("utf-8")).decode("ascii")),
+                    'id': "{}.{}".format(
+                        record["id"],
+                        base64.b64encode(
+                            c.encode("utf-8")).decode("ascii")),
                 }
                 self._parse_content(
                     record['type'], processed_record["content"])
@@ -294,7 +297,7 @@ class Provider(BaseProvider):
     def _parse_content(self, type, content):
         return FORMAT_RE[type].match(content).groupdict()
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
@@ -317,7 +320,7 @@ class Provider(BaseProvider):
         try:
             # if the request fails for any reason, throw an error.
             r.raise_for_status()
-        except:
+        except BaseException:
             LOGGER.error(r.text)
             raise
         return r.json()

@@ -1,12 +1,9 @@
+""" Ensure that stdout corresponds to the given reference output """
 from __future__ import absolute_import
-import importlib
 import json
 import logging
-import sys
-from types import ModuleType
 
 from lexicon import cli
-from lexicon.providers.base import Provider as BaseProvider
 
 
 logger = logging.getLogger(__name__)
@@ -16,8 +13,6 @@ data = [
     {'id': 'fake2-id', 'type': 'TXT', 'name': 'fake2.example.com',
         'content': 'fake2', 'ttl': 3600}
 ]
-
-# Ensure that stdout corresponds to the given reference output
 
 
 def assert_correct_output(capsys, expected_output_lines):
@@ -33,7 +28,7 @@ def test_output_function_outputs_json_as_table(capsys):
         'fake2-id TXT  fake2.example.com fake2   3600',
     ]
 
-    cli.handle_output(data, 'TABLE')
+    cli.handle_output(data, 'TABLE', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 
@@ -43,12 +38,12 @@ def test_output_function_outputs_json_as_table_with_no_header(capsys):
         'fake2-id TXT fake2.example.com fake2 3600',
     ]
 
-    cli.handle_output(data, 'TABLE-NO-HEADER')
+    cli.handle_output(data, 'TABLE-NO-HEADER', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 
 def test_output_function_outputs_json_as_json_string(capsys):
-    cli.handle_output(data, 'JSON')
+    cli.handle_output(data, 'JSON', 'list')
 
     out, _ = capsys.readouterr()
     json_data = json.loads(out)
@@ -59,18 +54,18 @@ def test_output_function_outputs_json_as_json_string(capsys):
 def test_output_function_output_nothing_when_quiet(capsys):
     expected_output_lines = []
 
-    cli.handle_output(data, 'QUIET')
+    cli.handle_output(data, 'QUIET', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 
-def test_output_function_outputs_nothing_with_not_a_json_data(capsys):
+def test_output_function_outputs_nothing_with_not_a_json_serializable(capsys):
     expected_output_lines = []
 
-    cli.handle_output(True, 'TABLE')
+    cli.handle_output(object(), 'TABLE', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
-    cli.handle_output(True, 'TABLE-NO-HEADER')
+    cli.handle_output(object(), 'TABLE-NO-HEADER', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
-    cli.handle_output(True, 'JSON')
+    cli.handle_output(object(), 'JSON', 'list')
     assert_correct_output(capsys, expected_output_lines)

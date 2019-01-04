@@ -159,7 +159,7 @@ class Provider(BaseProvider):
         # Try to parse the json, if it not exists, return true.
         try:
             return r.json()
-        except:
+        except BaseException:
             return True
 
     def _generate_auth_header(self, action, url, timestamp):

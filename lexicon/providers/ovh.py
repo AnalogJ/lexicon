@@ -26,7 +26,7 @@ NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 def ProviderParser(subparser):
     subparser.description = '''
         OVH Provider requires a token with full rights on /domain/*.
-        It can be generated for your OVH account on the following URL: 
+        It can be generated for your OVH account on the following URL:
         https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*'''
     subparser.add_argument('--auth-entrypoint', help='specify the OVH entrypoint', choices=[
         'ovh-eu', 'ovh-ca', 'soyoustart-eu', 'soyoustart-ca', 'kimsufi-eu', 'kimsufi-ca'

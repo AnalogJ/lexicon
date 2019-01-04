@@ -251,7 +251,7 @@ class Provider(BaseProvider):
         if name.endswith('.'):
             name = name[:-1]
 
-        short_name = name[:name.find(self.domain)-1]
+        short_name = name[:name.find(self.domain) - 1]
         processed_record = {
             'Type': record['type'],
             'Name': short_name,
