@@ -141,7 +141,7 @@ class Provider(BaseProvider):
             if not match:
                 return None
 
-            return _resolve_link(match, recurse=recurse-1)
+            return _resolve_link(match, recurse=recurse - 1)
 
         payload = self._get('/zones/{0}'.format(self.domain_id))
         records = []
@@ -171,7 +171,8 @@ class Provider(BaseProvider):
                     'name': record['domain'],
                     'ttl': record['ttl'],
                     'content': answer,
-                    # this id is useless unless your doing record linking. Lets return the original record identifier.
+                    # this id is useless unless your doing record linking. Lets return the
+                    # original record identifier.
                     'id': '{0}/{1}/{2}'.format(self.domain_id, record['domain'], record['type'])
                 }
                 records.append(processed_record)
@@ -188,7 +189,8 @@ class Provider(BaseProvider):
             self.domain_id, self._full_name(name), type)
 
         if(new_identifier == identifier or (type is None and name is None)):
-            # the identifier hasnt changed, or type and name are both unspecified, only update the content.
+            # the identifier hasnt changed, or type and name are both unspecified,
+            # only update the content.
             data['answers'] = [
                 {"answer": [content]}
             ]
@@ -238,7 +240,7 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:

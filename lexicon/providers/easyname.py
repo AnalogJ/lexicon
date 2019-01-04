@@ -238,7 +238,7 @@ class Provider(BaseProvider):
         LOGGER.debug('Final records ({}): {}'.format(len(records), records))
         return records
 
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         pass
 
     def _invalidate_records_cache(self):
@@ -372,10 +372,10 @@ class Provider(BaseProvider):
         login_response = self.session.post(
             self.URLS['login'],
             data={
-                'username':     self._get_provider_option('auth_username') or '',
-                'password':     self._get_provider_option('auth_password') or '',
-                'submit':       '',
-                'loginxtoken':  csrf_token,
+                'username': self._get_provider_option('auth_username') or '',
+                'password': self._get_provider_option('auth_password') or '',
+                'submit': '',
+                'loginxtoken': csrf_token,
             }
         )
         self._log('Login', login_response)

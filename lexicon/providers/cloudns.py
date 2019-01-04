@@ -149,11 +149,14 @@ class Provider(BaseProvider):
                 'No valid authentication data passed, expected: auth-password')
 
         if self._get_provider_option('auth_id'):
-            return {'auth-id': self._get_provider_option('auth_id'), 'auth-password': self._get_provider_option('auth_password')}
+            return {'auth-id': self._get_provider_option('auth_id'),
+                    'auth-password': self._get_provider_option('auth_password')}
         elif self._get_provider_option('auth_subid'):
-            return {'sub-auth-id': self._get_provider_option('auth_subid'), 'auth-password': self._get_provider_option('auth_password')}
+            return {'sub-auth-id': self._get_provider_option(
+                'auth_subid'), 'auth-password': self._get_provider_option('auth_password')}
         elif self._get_provider_option('auth_subuser'):
-            return {'sub-auth-user': self._get_provider_option('auth_subuser'), 'auth-password': self._get_provider_option('auth_password')}
+            return {'sub-auth-user': self._get_provider_option(
+                'auth_subuser'), 'auth-password': self._get_provider_option('auth_password')}
         elif self._get_provider_option('auth_id') or self._get_provider_option('auth_subid') or self._get_provider_option('auth_subuser'):
             # All the options were passed with a fallback value, return an empty dictionary.
             return {}

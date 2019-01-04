@@ -150,7 +150,7 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         return self._send_request(action, '{0}{1}'.format(self.api_endpoint, url),
                                   data, query_params)
 

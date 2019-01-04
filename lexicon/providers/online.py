@@ -234,7 +234,7 @@ class Provider(BaseProvider):
         return self._request('PATCH', url, data=data, query_params=query_params)
 
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if query_params is None:
             query_params = {}
 
@@ -243,7 +243,7 @@ class Provider(BaseProvider):
             'Authorization': 'Bearer {0}'.format(self._get_provider_option('auth_token'))
         }
         if data is not None:
-            if type(data) is str:
+            if isinstance(data, str):
                 headers['Content-Type'] = 'text/plain'
             else:
                 headers['Content-Type'] = 'application/json'

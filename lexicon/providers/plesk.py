@@ -96,7 +96,7 @@ class Provider(BaseProvider):
         LOGGER.debug("Request: %s", xml)
 
         r = requests.post(self.api_endpoint, headers=headers,
-                          data=xml,  auth=(self.username, self.password))
+                          data=xml, auth=(self.username, self.password))
 
         data = r.text
 
