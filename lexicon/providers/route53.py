@@ -24,7 +24,8 @@ def ProviderParser(subparser):
     subparser.add_argument("--auth-access-secret",
                            help="specify ACCESS_SECRET for authentication")
     subparser.add_argument(
-        "--private-zone", help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
+        "--private-zone",
+        help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
 
     # TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.

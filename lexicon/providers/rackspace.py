@@ -27,11 +27,14 @@ def ProviderParser(subparser):
     subparser.add_argument(
         "--auth-account", help="specify account number for authentication")
     subparser.add_argument(
-        "--auth-username", help="specify username for authentication. Only used if --auth-token is empty.")
+        "--auth-username",
+        help="specify username for authentication. Only used if --auth-token is empty.")
     subparser.add_argument(
-        "--auth-api-key", help="specify api key for authentication. Only used if --auth-token is empty.")
+        "--auth-api-key",
+        help="specify api key for authentication. Only used if --auth-token is empty.")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication. If empty, the username and api key will be used to create a token.")
+        "--auth-token",
+        help="specify token for authentication. If empty, the username and api key will be used to create a token.")
     subparser.add_argument("--sleep-time", type=float, default=1,
                            help="number of seconds to wait between update requests.")
 

@@ -96,7 +96,7 @@ class Provider(BaseProvider):
         LOGGER.debug("Request: %s", xml)
 
         r = requests.post(self.api_endpoint, headers=headers,
-                          data=xml,  auth=(self.username, self.password))
+                          data=xml, auth=(self.username, self.password))
 
         data = r.text
 
@@ -236,7 +236,9 @@ class Provider(BaseProvider):
 
             if (value is not None) and (r["data"]["value"] != value):
                 LOGGER.debug(
-                    "\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
+                    "\tValue doesn't match - expected: '%s', found: '%s'",
+                    value,
+                    r["data"]["value"])
                 continue
 
             entry = {

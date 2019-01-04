@@ -127,9 +127,11 @@ class Provider(BaseProvider):
                 'type': rxml.attrib['type'],
                 'name': rxml.attrib['name'],
                 'content': rxml.attrib['content'],
-                'id': self._make_identifier(rxml.attrib['type'], rxml.attrib['name'], rxml.attrib['content']),
-                'ttl': rxml.attrib['ttl'].split()[0]
-            }
+                'id': self._make_identifier(
+                    rxml.attrib['type'],
+                    rxml.attrib['name'],
+                    rxml.attrib['content']),
+                'ttl': rxml.attrib['ttl'].split()[0]}
             records.append(processed_record)
         LOGGER.debug('list_records: %s', records)
         return records
