@@ -1,3 +1,4 @@
+"""Module provider for Cloudflare"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['cloudflare.com']
 
 
 def ProviderParser(subparser):
+    """Return the parser for this provider"""
     subparser.add_argument(
         "--auth-username", help="specify email address for authentication")
     subparser.add_argument(
@@ -19,7 +21,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Cloudflare"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -53,7 +55,7 @@ class Provider(BaseProvider):
                 '/zones/{0}/dns_records'.format(self.domain_id), data)
         except requests.exceptions.HTTPError as err:
             already_exists = next((True for error in err.response.json()[
-                                  'errors'] if error['code'] == 81057), False)
+                'errors'] if error['code'] == 81057), False)
             if not already_exists:
                 raise
 
@@ -64,16 +66,16 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {'per_page': 100}
+        filter_obj = {'per_page': 100}
         if rtype:
-            filter['type'] = rtype
+            filter_obj['type'] = rtype
         if name:
-            filter['name'] = self._full_name(name)
+            filter_obj['name'] = self._full_name(name)
         if content:
-            filter['content'] = content
+            filter_obj['content'] = content
 
         payload = self._get(
-            '/zones/{0}/dns_records'.format(self.domain_id), filter)
+            '/zones/{0}/dns_records'.format(self.domain_id), filter_obj)
 
         records = []
         for record in payload['result']:
@@ -133,13 +135,13 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers={
-                                 'X-Auth-Email': self._get_provider_option('auth_username'),
-                                 'X-Auth-Key': self._get_provider_option('auth_token'),
-                                 'Content-Type': 'application/json'
-                             })
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers={
+                                        'X-Auth-Email': self._get_provider_option('auth_username'),
+                                        'X-Auth-Key': self._get_provider_option('auth_token'),
+                                        'Content-Type': 'application/json'
+                                    })
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

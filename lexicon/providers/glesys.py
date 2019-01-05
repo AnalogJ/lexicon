@@ -1,3 +1,4 @@
+"""Module provider for Glesys"""
 from __future__ import absolute_import
 import json
 
@@ -9,13 +10,14 @@ NAMESERVER_DOMAINS = ['glesys.com']
 
 
 def ProviderParser(subparser):
+    """Generate a subparser for Glesys"""
     subparser.add_argument(
         "--auth-username", help="specify username (CL12345)")
     subparser.add_argument("--auth-token", help="specify API key")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Glesys"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -36,8 +38,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):
-        existing = self._list_records(rtype, name, content)
-        if len(existing) > 0:
+        existing = self.list_records(rtype, name, content)
+        if existing:
             # Already exists, do nothing.
             return True
 
@@ -73,7 +75,8 @@ class Provider(BaseProvider):
                 record for record in processed_records if record['name'] == self._full_name(name)]
         if content:
             processed_records = [
-                record for record in processed_records if record['content'].lower() == content.lower()]
+                record for record in processed_records
+                if record['content'].lower() == content.lower()]
 
         return processed_records
 

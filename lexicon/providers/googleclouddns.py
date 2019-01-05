@@ -39,6 +39,7 @@ NAMESERVER_DOMAINS = ['googledomains.com']
 
 
 def ProviderParser(subparser):
+    """Generate a subparser for Google Cloud DNS"""
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
         This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
@@ -47,17 +48,21 @@ def ProviderParser(subparser):
     subparser.add_argument('--auth-service-account-info', help='''
         specify the service account info in the Google JSON format:
         can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
-        or the base64 encoded content of this file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)''')
+        or the base64 encoded content of this file prefixed by 'base64::'
+        (eg. base64::eyJhbGciOyJ...)''')
 
 
 class Provider(BaseProvider):
+    """
+    Provider class for Google Cloud DNS
 
-    # We need serveral parameters, which are available in the JSON file provided
-    #   by Google when associating a private key to the relevant service account.
-    # So this JSON file is the natural input to configure the provider.
-    # It can be provided as a path to the JSON file, or as its content encoded
-    #   in base64, which is a suitable portable way in particular for Docker containers.
-    # In both cases the content is loaded as bytes, on loaded in a private instance variable.
+    We need serveral parameters, which are available in the JSON file provided
+    by Google when associating a private key to the relevant service account.
+    So this JSON file is the natural input to configure the provider.
+    It can be provided as a path to the JSON file, or as its content encoded
+    in base64, which is a suitable portable way in particular for Docker containers.
+    In both cases the content is loaded as bytes, on loaded in a private instance variable.
+    """
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

@@ -1,15 +1,17 @@
-# -*- coding: utf-8 -*-
+"""Module provider for CloudXNS"""
 from __future__ import absolute_import
-from future.standard_library import install_aliases
-install_aliases()
-import hashlib  # nopep8
-import json  # nopep8
-import logging  # nopep8
-import time  # nopep8
-from urllib.parse import urlencode  # nopep8
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+import hashlib
+import json
+import logging
+import time
 
-import requests  # nopep8
-from lexicon.providers.base import Provider as BaseProvider  # nopep8
+import requests
+
+from lexicon.providers.base import Provider as BaseProvider
 
 
 LOGGER = logging.getLogger(__name__)
@@ -18,6 +20,7 @@ NAMESERVER_DOMAINS = ['cloudxns.net']
 
 
 def ProviderParser(subparser):
+    """Generate subparser for CloudXNS"""
     subparser.add_argument(
         "--auth-username", help="specify API-KEY for authentication")
     subparser.add_argument(
@@ -25,7 +28,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for CloudXNS"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -56,7 +59,7 @@ class Provider(BaseProvider):
             record['ttl'] = self._get_lexicon_option('ttl')
 
         try:
-            payload = self._post('/record', record)
+            self._post('/record', record)
         except requests.exceptions.HTTPError as err:
             already_exists = (err.response.json()['code'] == 34)
             if not already_exists:

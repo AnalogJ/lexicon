@@ -1,3 +1,4 @@
+"""Module provider for auto"""
 from __future__ import absolute_import
 import argparse
 import importlib
@@ -28,9 +29,8 @@ def _get_available_providers():
                 available_providers[modname] = importlib.import_module(
                     'lexicon.providers.' + modname)
             except ImportError:
-                LOGGER.warn('Warning, the provider {0} cannot be loaded due '
-                            'to missing optional dependencies.'
-                            .format(modname))
+                LOGGER.warning('Warning, the provider %s cannot be loaded due '
+                               'to missing optional dependencies.', modname)
 
     return available_providers
 
@@ -50,11 +50,11 @@ def _get_ns_records_for_domain(domain):
     try:
         output = subprocess.check_output(['nslookup', '-querytype=NS', domain],
                                          stderr=subprocess.STDOUT, universal_newlines=True)
-    except subprocess.CalledProcessError as e:
-        if 'NXDOMAIN' in e.output:
+    except subprocess.CalledProcessError as error:
+        if 'NXDOMAIN' in error.output:
             raise ValueError(
                 'Error, domain {0} could not be resolved.'.format(domain))
-        output = e.output
+        output = error.output
 
     pattern = re.compile(r'nameserver = (.*?)\.*\n')
     match = pattern.findall(output)
@@ -92,10 +92,10 @@ def _relevant_provider_for_domain(domain):
                          'Found nameservers domains are {1}'.format(domain, nameserver_domains))
 
     if len(relevant_providers) > 1:
-        LOGGER.warn('Warning, multiple DNS providers have been found for given domain {0}, '
-                    'first one will be used: {1} '
-                    'This may indicate a misconfiguration in one or more provider.'
-                    .format(domain, relevant_providers))
+        LOGGER.warning('Warning, multiple DNS providers have been found for given domain %s, '
+                       'first one will be used: %s\n'
+                       'This may indicate a misconfiguration in one or more provider.',
+                       domain, relevant_providers)
 
     return relevant_providers[0]
 
@@ -144,7 +144,6 @@ class Provider(object):
     the resolved provider if it respect the naming convention: --[provider]-[parameter_name] for a
     command line parameter, or LEXICON_[PROVIDER]_PARAMETER_NAME for a environment variable.
     """
-
     def __init__(self, config):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
@@ -189,14 +188,14 @@ class Provider(object):
         new_config.with_dict({'lexicon:provider_name': provider_name})
 
         target_prefix = 'auto_{0}_'.format(provider_name)
-        for configSource in self.config._config_sources:
-            if not isinstance(configSource, ArgsConfigSource):
-                new_config.with_config_source(configSource)
+        for config_source in self.config._config_sources:
+            if not isinstance(config_source, ArgsConfigSource):
+                new_config.with_config_source(config_source)
             else:
                 # ArgsConfigSource needs to be reprocessed to rescope the provided
                 # args to the delegate provider
                 new_dict = {}
-                for key, value in configSource._parameters.items():
+                for key, value in config_source._parameters.items():  # pylint: disable=protected-access
                     if key.startswith(target_prefix):
                         new_param_name = re.sub(
                             '^{0}'.format(target_prefix), '', key)

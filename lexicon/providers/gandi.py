@@ -131,8 +131,8 @@ class Provider(BaseProvider):
                 if rtype is not None:
                     query_results = [
                         item for item in query_results if item['rrset_type'] == rtype]
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 404:
                 query_results = []
             else:
                 raise
@@ -249,15 +249,14 @@ class Provider(BaseProvider):
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
 
-        r = requests.request(action, url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            return r.json()
+        return response.json()
 
 
 class GandiRPCSubProvider(object):
@@ -276,6 +275,7 @@ class GandiRPCSubProvider(object):
         self._relative_name = relative_name_fn
         self._full_name = full_name_fn
         self._api = xmlrpclib.ServerProxy(self._api_endpoint, allow_none=True)
+        self._zone_id = None
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider,
@@ -399,15 +399,11 @@ class GandiRPCSubProvider(object):
                     rec['value'] = self._txt_encode(
                         content) if rec['type'] == 'TXT' else content
 
-                records = self._api.domain.zone.record.update(self._api_key,
-                                                              self._zone_id,
-                                                              version,
-                                                              {'id': records[0]
-                                                                  ['id']},
-                                                              rec)
+                records = self._api.domain.zone.record.update(
+                    self._api_key, self._zone_id, version, {'id': records[0]['id']}, rec)
                 if len(records) != 1:
                     raise self.GandiInternalError(
-                        "expected one updated record")
+                        "Expected one updated record")
 
                 self._api.domain.zone.version.set(
                     self._api_key, self._zone_id, version)
@@ -450,7 +446,7 @@ class GandiRPCSubProvider(object):
         records = self._api.domain.zone.record.list(
             self._api_key, self._zone_id, 0, opts)
 
-        if len(records):
+        if records:
             try:
                 version = self._api.domain.zone.version.new(
                     self._api_key, self._zone_id)
@@ -488,4 +484,3 @@ class GandiRPCSubProvider(object):
     # within the Gandi provider codebase
     class GandiInternalError(Exception):
         """Internal exception handling class for Gandi management errors"""
-        pass
