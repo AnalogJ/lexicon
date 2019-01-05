@@ -1,11 +1,14 @@
+"""Module provider for nfsn"""
 from __future__ import absolute_import, print_function
 import hashlib
-import json
 import logging
 import random
 import string
 import time
-from urllib.parse import urlencode
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 
 import requests
 from lexicon.providers.base import Provider as BaseProvider
@@ -17,6 +20,7 @@ NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
 
 
 def ProviderParser(subparser):
+    """Generate subparser for nfsn"""
     subparser.add_argument(
         "--auth-username", help="specify username used to authenticate")
     subparser.add_argument(
@@ -27,7 +31,7 @@ SALT_SHAKER = string.ascii_letters + string.digits
 
 
 class Provider(BaseProvider):
-
+    """Provider class for nfsn"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -40,8 +44,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, type, name, content):
-        existing_record = self.list_records(type, name, content)
-        if len(existing_record) > 0:
+        existing_records = self.list_records(type, name, content)
+        if existing_records:
             # Do nothing if the record already exists.
             # The creation call can fail for a variety of reasons, so
             # the safest thing to do is check if the record already exists
@@ -70,7 +74,8 @@ class Provider(BaseProvider):
             'name': self._full_name(r['name']),
             'ttl': r['ttl'],
             'content': r['data'],
-            'id': hashlib.sha1(''.join([r['type'], r['name'], r['data']]).encode('utf-8')).hexdigest()
+            'id': hashlib.sha1(''.join(
+                [r['type'], r['name'], r['data']]).encode('utf-8')).hexdigest()
         } for r in records]
 
         LOGGER.debug('list_records: %s', records)
@@ -90,7 +95,8 @@ class Provider(BaseProvider):
             matching_records = self.list_records(type=type, name=name)
             if len(matching_records) > 1:
                 raise ValueError(
-                    'More than one record exists with that type and name. Try specifying an identifier.')
+                    'More than one record exists with that type and name. '
+                    'Try specifying an identifier.')
             to_delete = matching_records[0]
 
         self._do_delete(to_delete['type'],

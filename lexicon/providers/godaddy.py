@@ -1,12 +1,14 @@
+"""Module provider for Godaddy"""
 from __future__ import absolute_import
 import hashlib
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
+from lexicon.providers.base import Provider as BaseProvider
 
 
 LOGGER = logging.getLogger(__name__)
@@ -15,6 +17,7 @@ NAMESERVER_DOMAINS = ['godaddy.com']
 
 
 def ProviderParser(subparser):
+    """Generate a subparser for Godaddy"""
     subparser.add_argument(
         '--auth-key', help='specify the key to access the API')
     subparser.add_argument(
@@ -45,7 +48,6 @@ class Provider(BaseProvider):
     because identifier value is tied to the content of the record, and will change anytime
     something is changed in the record.
     """
-
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
