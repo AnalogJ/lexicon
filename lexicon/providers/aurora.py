@@ -1,3 +1,4 @@
+"""Module provider for Aurora"""
 from __future__ import absolute_import
 import base64
 import datetime
@@ -23,7 +24,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider for Aurora"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -66,10 +67,12 @@ class Provider(BaseProvider):
                 record for record in processed_records if record['type'] == type]
         if name:
             processed_records = [
-                record for record in processed_records if record['name'] == self._relative_name(name)]
+                record for record in processed_records
+                if record['name'] == self._relative_name(name)]
         if content:
             processed_records = [
-                record for record in processed_records if record['content'].lower() == content.lower()]
+                record for record in processed_records
+                if record['content'].lower() == content.lower()]
 
         # Format the records.
         records = []
@@ -122,7 +125,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
         LOGGER.debug('delete_record: %s', True)
@@ -136,29 +139,29 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        t = datetime.datetime.utcnow()
-        timestamp = t.strftime('%Y%m%dT%H%M%SZ')
+        time = datetime.datetime.utcnow()
+        timestamp = time.strftime('%Y%m%dT%H%M%SZ')
         authorization_header = self._generate_auth_header(
             action, url, timestamp)
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers={
-                                 'X-AuroraDNS-Date': timestamp,
-                                 'Authorization': authorization_header,
-                                 'Content-Type': 'application/json'
-                             })
+        request = requests.request(action, self.api_endpoint + url, params=query_params,
+                                   data=json.dumps(data),
+                                   headers={
+                                       'X-AuroraDNS-Date': timestamp,
+                                       'Authorization': authorization_header,
+                                       'Content-Type': 'application/json'
+                                   })
 
         # If the response is a HTTP 409 statusCode, the record already exists: return true.
-        if r.status_code == 409:
+        if request.status_code == 409:
             return True
 
         # If the request fails for any other reason, throw an error.
-        r.raise_for_status()
+        request.raise_for_status()
 
         # Try to parse the json, if it not exists, return true.
         try:
-            return r.json()
+            return request.json()
         except BaseException:
             return True
 
@@ -180,6 +183,4 @@ class Provider(BaseProvider):
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']
-        else:
-            raise Exception(
-                'Record identifier could not be found. Try to provide an identifier')
+        raise Exception('Record identifier could not be found. Try to provide an identifier')

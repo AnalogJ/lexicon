@@ -1,3 +1,4 @@
+"""Module provider for exoscale"""
 from __future__ import absolute_import
 import logging
 
@@ -13,6 +14,7 @@ NAMESERVER_DOMAINS = ['exoscale.ch']
 
 
 def ProviderParser(subparser):
+    """Generate subparser for exoscale"""
     subparser.add_argument(
         "--auth-key", help="specify API key for authentication"
     )
@@ -22,15 +24,16 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
+    """Provider class for exoscale"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.api_endpoint = 'https://api.exoscale.ch/dns'
 
     def authenticate(self):
         """An innocent call to check that the credentials are okay."""
-        r = self._get("/v1/domains/{0}".format(self.domain))
+        response = self._get("/v1/domains/{0}".format(self.domain))
 
-        self.domain_id = r["domain"]["id"]
+        self.domain_id = response["domain"]["id"]
 
     def create_record(self, type, name, content):
         """Create record if doesnt already exist with same content"""
@@ -78,8 +81,8 @@ class Provider(BaseProvider):
         )
 
         records = []
-        for r in payload:
-            record = r["record"]
+        for data in payload:
+            record = data["record"]
 
             if content and record["content"] != content:
                 continue
@@ -138,9 +141,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", True)
         return True
 
-    def delete_record(
-        self, identifier=None, type=None, name=None, content=None
-    ):
+    def delete_record(self, identifier=None, type=None, name=None, content=None):
         """Delete an existing record.
 
         If the record doesn't exist, does nothing.
@@ -177,7 +178,7 @@ class Provider(BaseProvider):
              self._get_provider_option("auth_secret"))
         )
 
-        r = requests.request(
+        response = requests.request(
             action,
             self.api_endpoint + url,
             params=query_params,
@@ -185,8 +186,8 @@ class Provider(BaseProvider):
             headers=default_headers,
         )
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        if r.text and r.json() is None:
+        response.raise_for_status()
+        if response.text and response.json() is None:
             raise Exception("No data returned")
 
-        return r.json() if r.text else None
+        return response.json() if response.text else None
