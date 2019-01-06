@@ -33,7 +33,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
             self._zone_data = self._get('/zones/' + self.domain).json()
         return self._zone_data
 
-    def authenticate(self):
+    def _authenticate(self):
         self.zone_data()
         self.domain_id = self.domain
 
@@ -85,13 +85,13 @@ class Provider(BaseProvider):
         content = "=".join(parts[1:])
         return type, name, content
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
         for rrset in self.zone_data()['rrsets']:
             if (name is None or self._fqdn_name(rrset['name']) == self._fqdn_name(
-                    name)) and (type is None or rrset['type'] == type):
+                    name)) and (rtype is None or rrset['type'] == rtype):
                 for record in rrset['records']:
-                    if content is None or record['content'] == self._clean_content(type, content):
+                    if content is None or record['content'] == self._clean_content(rtype, content):
                         records.append({
                             'type': rrset['type'],
                             'name': self._full_name(rrset['name']),
@@ -119,10 +119,10 @@ class Provider(BaseProvider):
             content = self._full_name(content)
         return content
 
-    def create_record(self, type, name, content):
-        content = self._clean_content(type, content)
+    def _create_record(self, rtype, name, content):
+        content = self._clean_content(rtype, content)
         for rrset in self.zone_data()['rrsets']:
-            if rrset['name'] == name and rrset['type'] == type:
+            if rrset['name'] == name and rrset['type'] == rtype:
                 update_data = rrset
                 if 'comments' in update_data:
                     del update_data['comments']
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
         else:
             update_data = {
                 'name': name,
-                'type': type,
+                'type': rtype,
                 'records': [],
                 'ttl': self._get_lexicon_option('ttl') or 600,
                 'changetype': 'REPLACE'
@@ -155,16 +155,16 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is not None:
-            type, name, content = self._parse_identifier(identifier)
+            rtype, name, content = self._parse_identifier(identifier)
 
-        LOGGER.debug("delete %s %s %s", type, name, content)
-        if type is None or name is None:
-            raise Exception("Must specify at least both type and name")
+        LOGGER.debug("delete %s %s %s", rtype, name, content)
+        if rtype is None or name is None:
+            raise Exception("Must specify at least both rtype and name")
 
         for rrset in self.zone_data()['rrsets']:
-            if rrset['type'] == type and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
+            if rrset['type'] == rtype and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
                 update_data = rrset
                 if 'comments' in update_data:
                     del update_data['comments']
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
         new_records = []
         for record in update_data['records']:
             if content is None or self._unclean_content(
-                    type, record['content']) != self._unclean_content(type, content):
+                    rtype, record['content']) != self._unclean_content(rtype, content):
                 new_records.append(record)
 
         update_data['name'] = self._fqdn_name(update_data['name'])
@@ -189,9 +189,9 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
-        self.delete_record(identifier)
-        return self.create_record(type, name, content)
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        self._delete_record(identifier)
+        return self._create_record(rtype, name, content)
 
     def _patch(self, url='/', data=None, query_params=None):
         return self._request('PATCH', url, data=data, query_params=query_params)

@@ -1,3 +1,4 @@
+"""Module provider for Zeit"""
 from __future__ import absolute_import
 import json
 import logging
@@ -11,7 +12,8 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['zeit.world']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
+    """Generate provider parser for Zeit"""
     subparser.description = '''
         Zeit Provider requires a token to access its API.
         You can generate one for your account on the following URL:
@@ -36,7 +38,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.zeit.co/v2/domains'
 
-    def authenticate(self):
+    def _authenticate(self):
         result = self._get('/{0}'.format(self.domain))
 
         if not result['uid']:
@@ -44,19 +46,22 @@ class Provider(BaseProvider):
 
         self.domain_id = result['uid']
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         result = self._get('/{0}/records'.format(self.domain))
 
         raw_records = result['records']
-        if type:
+        if rtype:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['type'] == type]
+                raw_record for raw_record in raw_records
+                if raw_record['type'] == rtype]
         if name:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['name'] == self._relative_name(name)]
+                raw_record for raw_record in raw_records
+                if raw_record['name'] == self._relative_name(name)]
         if content:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['value'] == content]
+                raw_record for raw_record in raw_records
+                if raw_record['value'] == content]
 
         records = []
         for raw_record in raw_records:
@@ -71,16 +76,16 @@ class Provider(BaseProvider):
 
         return records
 
-    def create_record(self, type, name, content):
-        # We ignore creation if a record already exists for given type/name/content
-        records = self.list_records(type, name, content)
+    def _create_record(self, rtype, name, content):
+        # We ignore creation if a record already exists for given rtype/name/content
+        records = self._list_records(rtype, name, content)
         if records:
             LOGGER.debug('create_record (ignored, duplicate): %s',
                          records[0]['id'])
             return True
 
         data = {
-            'type': type,
+            'type': rtype,
             'name': self._relative_name(name),
             'value': content
         }
@@ -94,34 +99,35 @@ class Provider(BaseProvider):
 
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Zeit do not allow to update a record, only add or remove.
-        # So we get the corresponding record, dump or update its content and insert it as a new record.
+        # So we get the corresponding record, dump or update
+        # its content and insert it as a new record.
         # Then we remove the old record.
         records = []
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             records = [
                 record for record in records if record['id'] == identifier]
         else:
-            records = self.list_records(type, name)
+            records = self._list_records(rtype, name)
 
         if not records:
             raise Exception(
                 'No record found for identifer: {0}'.format(identifier))
 
         if len(records) > 1:
-            LOGGER.warn(
-                'Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(
-                    records[0]['id']))
+            LOGGER.warning(
+                'Multiple records have been found for given parameters. '
+                'Only first one will be updated (id: %s)', records[0]['id'])
 
         data = {
-            'type': type,
+            'type': rtype,
             'name': self._relative_name(name),
             'value': content
         }
 
-        if not type:
+        if not rtype:
             data['type'] = records[0]['type']
         if not name:
             data['name'] = self._relative_name(records[0]['name'])
@@ -136,10 +142,10 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_ids = [record['id'] for record in records]
         else:
             delete_record_ids.append(identifier)

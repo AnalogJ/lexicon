@@ -23,7 +23,7 @@ ENDPOINTS = {
 NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.description = '''
         OVH Provider requires a token with full rights on /domain/*.
         It can be generated for your OVH account on the following URL:
@@ -59,7 +59,7 @@ class Provider(BaseProvider):
         self.endpoint_api = ENDPOINTS.get(
             self._get_provider_option('auth_entrypoint'))
 
-    def authenticate(self):
+    def _authenticate(self):
         # All requests will be done in one HTTPS session
         self.session = requests.Session()
 
@@ -81,21 +81,21 @@ class Provider(BaseProvider):
 
         self.domain_id = domain
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         domain = self.domain
         ttl = self._get_lexicon_option('ttl')
 
-        records = self.list_records(type, name, content)
+        records = self._list_records(rtype, name, content)
         for record in records:
-            if (record['type'] == type
+            if (record['type'] == rtype
                     and self._relative_name(record['name']) == self._relative_name(name)
                     and record['content'] == content):
                 LOGGER.debug(
-                    'create_record (ignored, duplicate): %s %s %s', type, name, content)
+                    'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
                 return True
 
         data = {
-            'fieldType': type,
+            'fieldType': rtype,
             'subDomain': self._relative_name(name),
             'target': content
         }
@@ -110,13 +110,13 @@ class Provider(BaseProvider):
 
         return True
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
         records = []
 
         params = {}
-        if type:
-            params['fieldType'] = type
+        if rtype:
+            params['fieldType'] = rtype
         if name:
             params['subDomain'] = self._relative_name(name)
 
@@ -142,11 +142,11 @@ class Provider(BaseProvider):
 
         return records
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         domain = self.domain
 
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]['id']
             elif len(records) > 1:
@@ -168,12 +168,12 @@ class Provider(BaseProvider):
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         domain = self.domain
 
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
