@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['rage4.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-username", help="specify email address for authentication")
     subparser.add_argument(

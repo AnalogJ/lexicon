@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['dnspark.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-username", help="specify api key for authentication")
     subparser.add_argument(

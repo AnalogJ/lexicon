@@ -26,7 +26,7 @@ plesk_url_suffix = "/enterprise/control/agent.php"
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(

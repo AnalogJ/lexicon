@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token", help="specify access token for authentication")
     subparser.add_argument(

@@ -9,7 +9,7 @@ from lexicon.providers.base import Provider as BaseProvider
 NAMESERVER_DOMAINS = ['glesys.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate a subparser for Glesys"""
     subparser.add_argument(
         "--auth-username", help="specify username (CL12345)")

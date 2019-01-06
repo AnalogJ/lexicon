@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['conoha.io']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-region", help="specify region. If empty, region `tyo1` will be used.")
     subparser.add_argument(

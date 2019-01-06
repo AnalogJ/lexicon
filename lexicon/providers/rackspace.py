@@ -23,7 +23,7 @@ def _async_request_completed(payload):
     return False
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-account", help="specify account number for authentication")
     subparser.add_argument(

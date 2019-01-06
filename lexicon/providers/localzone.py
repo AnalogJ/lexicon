@@ -17,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--filename", help="specify location of zone master file")
 

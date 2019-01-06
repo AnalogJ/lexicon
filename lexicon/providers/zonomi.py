@@ -34,7 +34,7 @@ NAMESERVER_DOMAINS = ['zonomi.com']
 #   type and content.
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
     subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[

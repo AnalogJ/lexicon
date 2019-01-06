@@ -17,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
     subparser.add_argument("--auth-access-key",
                            help="specify ACCESS_KEY for authentication")

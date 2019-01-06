@@ -44,7 +44,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['gandi.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Specify arguments for Gandi Lexicon Provider."""
     subparser.add_argument('--auth-token', help="specify Gandi API key")
     subparser.add_argument(

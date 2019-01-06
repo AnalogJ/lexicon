@@ -50,7 +50,7 @@ and without spaces or special characters (eg. `cloudflare`)
 
 Your provider file should contain 2 things:
 
-- a `ProviderParser` which is used to add provider specific commandline arguments.
+- a `provider_parser` which is used to add provider specific commandline arguments.
 eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
  those values will be available to your provider via `self._get_provider_option('auth_username')`
  or `self._get_provider_option('auth_token')` respectively

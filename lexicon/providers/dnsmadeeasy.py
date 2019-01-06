@@ -17,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['dnsmadeeasy']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(

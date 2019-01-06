@@ -25,7 +25,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
                            '(robot) or Hetzner konsoleH (konsoleh)')

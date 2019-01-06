@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['auroradns.eu']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-api-key", help="specify API key for authentication")
     subparser.add_argument("--auth-secret-key",

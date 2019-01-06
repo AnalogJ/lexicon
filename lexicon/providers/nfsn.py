@@ -19,7 +19,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate subparser for nfsn"""
     subparser.add_argument(
         "--auth-username", help="specify username used to authenticate")

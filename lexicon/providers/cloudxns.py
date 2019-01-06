@@ -19,7 +19,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['cloudxns.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate subparser for CloudXNS"""
     subparser.add_argument(
         "--auth-username", help="specify API-KEY for authentication")

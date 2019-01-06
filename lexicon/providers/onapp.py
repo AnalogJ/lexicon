@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.description = '''
         The OnApp provider requires your OnApp account\'s email address and
         API token, which can be found on your /profile page on the Control Panel interface.

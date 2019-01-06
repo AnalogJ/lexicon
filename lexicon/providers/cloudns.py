@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['cloudns.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     identity_group = subparser.add_mutually_exclusive_group()
     identity_group.add_argument(
         "--auth-id", help="specify user id for authentication")
