@@ -95,7 +95,7 @@ class Provider(BaseProvider):
             'record_id': identifier,
             'sub_domain': self._relative_name(name),
             'record_type': rtype,
-            'record_line': '默认',
+            'record_line': u'\u9ED8\u8BA4',
             'value': content
         }
         if self._get_lexicon_option('ttl'):
