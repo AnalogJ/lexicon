@@ -36,7 +36,7 @@ class Provider(BaseProvider):
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
-    def authenticate(self):
+    def _authenticate(self):
         """Logs-in the user and checks the domain name"""
         if not self._get_provider_option(
                 'auth_username') or not self._get_provider_option('auth_password'):
@@ -55,28 +55,21 @@ class Provider(BaseProvider):
             raise Exception("No SSID provided by server")
 
     # Create record. If record already exists with the same content, do nothing.
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         """Creates a new unique record"""
-        found = self.list_records(type, name, content)
+        found = self._list_records(rtype=rtype, name=name, content=content)
         if len(found) > 0:
             return True
 
-        record = self._create_request_record(None, type, name, content,
+        record = self._create_request_record(None, rtype, name, content,
                                              self._get_lexicon_option('ttl'),
                                              self._get_lexicon_option('priority'))
 
         self._request_add_dns_record(record)
         return True
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
-        """Lists all records by the type, name and content"""
-        return self._list_records(identifier=None, type=type, name=name, content=content)
-
     # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates a record. Name changes are allowed, but the record identifier will change"""
         if identifier is not None:
             if name is not None:
@@ -84,17 +77,17 @@ class Provider(BaseProvider):
                 if len(records) == 1 and records[0]['name'] != self._full_name(name):
                     # API does not allow us to update name directly
                     self._update_record_with_name(
-                        records[0], type, name, content)
+                        records[0], rtype, name, content)
                 else:
-                    self._update_record(identifier, type, content)
+                    self._update_record_with_id(identifier, rtype, content)
             else:
-                self._update_record(identifier, type, content)
+                self._update_record_with_id(identifier, rtype, content)
         else:
-            guessed_record = self._guess_record(type, name)
-            self._update_record(guessed_record['id'], type, content)
+            guessed_record = self._guess_record(rtype, name)
+            self._update_record_with_id(guessed_record['id'], rtype, content)
         return True
 
-    def _update_record(self, identifier, type, content):
+    def _update_record_with_id(self, identifier, type, content):
         """Updates existing record with no sub-domain name changes"""
         record = self._create_request_record(identifier, type, None, content,
                                              self._get_lexicon_option('ttl'),
@@ -134,13 +127,13 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Deletes an existing record"""
         to_delete_ids = list()
         if identifier:
             to_delete_ids.append(identifier)
         else:
-            for record in self.list_records(type, name, content):
+            for record in self._list_records(rtype=rtype, name=name, content=content):
                 to_delete_ids.append(record["id"])
 
         for to_delete_id in to_delete_ids:
@@ -210,7 +203,7 @@ class Provider(BaseProvider):
 
     # List all records. Return an empty list if no records found
     # identifier, type, name and content are used to filter records.
-    def _list_records(self, identifier=None, type=None, name=None, content=None):
+    def _list_records(self, identifier=None, rtype=None, name=None, content=None):
         """Lists all records by the specified criteria"""
         response = self._request_get_dns_zone()
         if 'records' in response:
@@ -218,7 +211,7 @@ class Provider(BaseProvider):
             content_check = content if content != "" else None
             name_check = self._relative_name(name)
 
-            # Stringize the identifier to prevent any type differences
+            # Stringize the identifier to prevent any rtype differences
             identifier_check = str(
                 identifier) if identifier is not None else None
 
@@ -226,10 +219,11 @@ class Provider(BaseProvider):
                 record for record in response['records'] if (
                     identifier is None or str(
                         record['id']) == identifier_check) and (
-                    type is None or record['type'] == type) and (
-                    name is None or record['name'] == name_check) and (
-                        content is None or (
-                            'content' in record and record['content'] == content_check))]
+                            rtype is None or record['type'] == rtype) and (
+                                name is None or record['name'] == name_check) and (
+                                    content is None or (
+                                        'content' in record
+                                        and record['content'] == content_check))]
             records = [self._create_response_record(
                 filtered_record) for filtered_record in filtered_records]
         else:
@@ -239,7 +233,7 @@ class Provider(BaseProvider):
     def _guess_record(self, type, name=None, content=None):
         """Tries to find existing unique record by type, name and content"""
         records = self._list_records(
-            identifier=None, type=type, name=name, content=content)
+            identifier=None, rtype=type, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:

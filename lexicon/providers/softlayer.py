@@ -41,7 +41,7 @@ class Provider(BaseProvider):
     # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason, of if the domain does not exist.
 
-    def authenticate(self):
+    def _authenticate(self):
         domain = self.domain
 
         payload = self.sl_dns.resolve_ids(domain)
@@ -56,8 +56,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
 
-    def create_record(self, type, name, content):
-        records = self.list_records(type, name, content)
+    def _create_record(self, rtype, name, content):
+        records = self._list_records(rtype, name, content)
         if len(records) > 0:
             # Nothing to do, record already exists
             LOGGER.debug('create_record: already exists')
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         ttl = self._get_lexicon_option('ttl')
         payload = self.sl_dns.create_record(
-            self.domain_id, name, type, content, ttl)
+            self.domain_id, name, rtype, content, ttl)
 
         LOGGER.debug('create_record: %s', payload)
         return True
@@ -75,13 +75,13 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         ttl = None
         if name:
             name = self._relative_name(name)
 
         payload = self.sl_dns.get_records(
-            self.domain_id, ttl, content, name, type)
+            self.domain_id, ttl, content, name, rtype)
 
         records = []
         for record in payload:
@@ -100,17 +100,17 @@ class Provider(BaseProvider):
     # Update a record.
     # If an identifier is specified, use it, otherwise do a lookup using type and name.
 
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
-            records = self.list_records(type, name)
+            records = self._list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]['id']
             else:
                 raise Exception('Record identifier could not be found.')
 
         record = {'id': identifier}
-        if type:
-            record['type'] = type
+        if rtype:
+            record['type'] = rtype
         if name:
             record['host'] = self._relative_name(name)
         if content:
@@ -127,10 +127,10 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
