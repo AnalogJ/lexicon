@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['dnsapi.cn']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-username", help="specify api id for authentication")
     subparser.add_argument(

@@ -13,7 +13,7 @@ HOUR = 3600
 NAMESERVER_DOMAINS = ['exoscale.ch']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate subparser for exoscale"""
     subparser.add_argument(
         "--auth-key", help="specify API key for authentication"

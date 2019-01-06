@@ -23,7 +23,7 @@ ENDPOINTS = {
 NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.description = '''
         OVH Provider requires a token with full rights on /domain/*.
         It can be generated for your OVH account on the following URL:

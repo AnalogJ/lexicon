@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['softlayer.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate a provider parser for Softlayer"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")

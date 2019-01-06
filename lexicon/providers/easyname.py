@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['easyname.eu']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.description = """A provider for Easyname DNS."""
     subparser.add_argument(
         '--auth-username',

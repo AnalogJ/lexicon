@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['online.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument("--auth-token", help="specify private api token")
 
 

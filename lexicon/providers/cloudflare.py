@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['cloudflare.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.add_argument(
         "--auth-username", help="specify email address for authentication")

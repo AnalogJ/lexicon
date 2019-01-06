@@ -33,7 +33,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")

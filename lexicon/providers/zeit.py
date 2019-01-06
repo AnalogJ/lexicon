@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['zeit.world']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate provider parser for Zeit"""
     subparser.description = '''
         Zeit Provider requires a token to access its API.

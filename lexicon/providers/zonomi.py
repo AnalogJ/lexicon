@@ -35,7 +35,7 @@ APIENTRYPOINT = {
 NAMESERVER_DOMAINS = ['zonomi.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate provider parser for Zonomi"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")

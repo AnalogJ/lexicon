@@ -54,7 +54,7 @@ Your provider file should contain 3 things:
 (eg. Google Cloud DNS uses nameservers that have the FQDN pattern `ns-cloud-cX-googledomains.com`,
 so `NAMESERVER_DOMAINS` will be `['googledomains.com']`).
 
-- a `ProviderParser` which is used to add provider specific commandline arguments.
+- a `provider_parser` which is used to add provider specific commandline arguments.
 eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
  those values will be available to your provider via `self._get_provider_option('auth_username')`
  or `self._get_provider_option('auth_token')` respectively

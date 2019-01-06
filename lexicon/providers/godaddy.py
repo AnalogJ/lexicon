@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['godaddy.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate a subparser for Godaddy"""
     subparser.add_argument(
         '--auth-key', help='specify the key to access the API')

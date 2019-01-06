@@ -21,7 +21,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['he.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     subparser.description = """A provider for Hurricane Electric DNS.
         NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
               YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.

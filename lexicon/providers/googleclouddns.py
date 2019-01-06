@@ -38,7 +38,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['googledomains.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate a subparser for Google Cloud DNS"""
     subparser.description = '''
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.

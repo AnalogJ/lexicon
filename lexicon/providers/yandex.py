@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['yandex.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate parser provider for Yandex"""
     subparser.add_argument(
         "--auth-token",
