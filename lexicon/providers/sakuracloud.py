@@ -1,11 +1,12 @@
+"""Module provider for Sakura Cloud"""
 from __future__ import absolute_import
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -13,6 +14,7 @@ NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
 
 def ProviderParser(subparser):
+    """Generate a provider parser for Sakura Cloud"""
     subparser.add_argument(
         "--auth-token", help="specify access token for authentication")
     subparser.add_argument(
@@ -20,7 +22,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Sakura Cloud"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -48,7 +50,7 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=rtype, name=name, content=content)
+            resource_record_sets, rtype=rtype, name=name, content=content)
         if index >= 0:
             LOGGER.debug('create_record: %s', False)
             return
@@ -62,7 +64,7 @@ class Provider(BaseProvider):
             }
         )
 
-        payload = self._update_resource_record_sets(resource_record_sets)
+        self._update_resource_record_sets(resource_record_sets)
         LOGGER.debug('create_record: %s', True)
         return True
 
@@ -104,7 +106,7 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=rtype, name=name)
+            resource_record_sets, rtype=rtype, name=name)
 
         if index >= 0:
             resource_record_sets[index]["Type"] = rtype
@@ -123,7 +125,7 @@ class Provider(BaseProvider):
                 }
             )
 
-        payload = self._update_resource_record_sets(resource_record_sets)
+        self._update_resource_record_sets(resource_record_sets)
         LOGGER.debug('create_record')
 
         LOGGER.debug('update_record: %s', True)
@@ -149,7 +151,7 @@ class Provider(BaseProvider):
                 continue
             filtered_records.append(record)
 
-        if len(filtered_records) == 0:
+        if not filtered_records:
             LOGGER.debug('delete_record: %s', False)
             return False
 
@@ -172,14 +174,14 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, type, target):
-        if type == "CNAME" and not target.endswith("."):
+    def _bind_format_target(self, rtype, target):
+        if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _find_resource_record_set(self, records, type=None, name=None, content=None):
+    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
         for index, record in enumerate(records):
-            if type and record['Type'] != type:
+            if rtype and record['Type'] != rtype:
                 continue
             if name and record['Name'] != name:
                 continue
@@ -220,14 +222,14 @@ class Provider(BaseProvider):
         if query_params:
             query_string = json.dumps(query_params)
 
-        r = requests.request(action, self.api_endpoint + url, params=query_string,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_string,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         try:
             # if the request fails for any reason, throw an error.
-            r.raise_for_status()
+            response.raise_for_status()
         except BaseException:
-            LOGGER.error(r.json().get("error_msg"))
+            LOGGER.error(response.json().get("error_msg"))
             raise
-        return r.json()
+        return response.json()

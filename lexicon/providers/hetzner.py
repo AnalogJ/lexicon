@@ -1,3 +1,4 @@
+"""Module provider for Hetzner"""
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
@@ -26,6 +27,7 @@ NAMESERVER_DOMAINS = []
 
 
 def ProviderParser(subparser):
+    """Generate a provider parser for Hetzner"""
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
                            '(robot) or Hetzner konsoleH (konsoleh)')

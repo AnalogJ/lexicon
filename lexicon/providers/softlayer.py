@@ -1,3 +1,4 @@
+"""Module provider for Softlayer"""
 from __future__ import absolute_import
 import logging
 
@@ -15,6 +16,7 @@ NAMESERVER_DOMAINS = ['softlayer.com']
 
 
 def ProviderParser(subparser):
+    """Generate a provider parser for Softlayer"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
@@ -22,7 +24,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Softlayer"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -38,15 +40,16 @@ class Provider(BaseProvider):
         self.sl_dns = SoftLayer.managers.dns.DNSManager(sl_client)
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
-
+    # Make any requests required to get the domain's id for this provider,
+    # so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def _authenticate(self):
         domain = self.domain
 
         payload = self.sl_dns.resolve_ids(domain)
 
-        if len(payload) < 1:
+        if not payload:
             raise Exception('No domain found')
         if len(payload) > 1:
             raise Exception('Too many domains found. This should not happen')
@@ -58,7 +61,7 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         records = self._list_records(rtype, name, content)
-        if len(records) > 0:
+        if records:
             # Nothing to do, record already exists
             LOGGER.debug('create_record: already exists')
             return True
@@ -142,3 +145,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug('delete_record: %s', True)
         return True
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used in Softlayer
+        pass
