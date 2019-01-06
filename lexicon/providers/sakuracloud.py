@@ -1,18 +1,20 @@
+"""Module provider for Sakura Cloud"""
 from __future__ import absolute_import
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['sakura.ne.jp']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
+    """Generate a provider parser for Sakura Cloud"""
     subparser.add_argument(
         "--auth-token", help="specify access token for authentication")
     subparser.add_argument(
@@ -20,13 +22,13 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Sakura Cloud"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         query_params = {
             "Filter": {
@@ -44,11 +46,11 @@ class Provider(BaseProvider):
         raise Exception('No domain found')
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=type, name=name, content=content)
+            resource_record_sets, rtype=rtype, name=name, content=content)
         if index >= 0:
             LOGGER.debug('create_record: %s', False)
             return
@@ -56,20 +58,20 @@ class Provider(BaseProvider):
         resource_record_sets.append(
             {
                 "Name": name,
-                "Type": type,
-                "RData": self._bind_format_target(type, content),
+                "Type": rtype,
+                "RData": self._bind_format_target(rtype, content),
                 "TTL": self._get_lexicon_option('ttl'),
             }
         )
 
-        payload = self._update_resource_record_sets(resource_record_sets)
+        self._update_resource_record_sets(resource_record_sets)
         LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
         for record in self._get_resource_record_sets():
@@ -82,8 +84,8 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
             records = [
                 record for record in records if record['name'] == self._full_name(name)
@@ -96,34 +98,34 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
 
-        if not (type and name and content):
-            raise Exception("type ,name and content must be specified.")
+        if not (rtype and name and content):
+            raise Exception("rtype ,name and content must be specified.")
 
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, type=type, name=name)
+            resource_record_sets, rtype=rtype, name=name)
 
         if index >= 0:
-            resource_record_sets[index]["Type"] = type
+            resource_record_sets[index]["Type"] = rtype
             resource_record_sets[index]["Name"] = name
             resource_record_sets[index]["RData"] = self._bind_format_target(
-                type, content)
+                rtype, content)
             resource_record_sets[index]["TTL"] = self._get_lexicon_option(
                 'ttl')
         else:
             resource_record_sets.append(
                 {
                     "Name": name,
-                    "Type": type,
-                    "RData": self._bind_format_target(type, content),
+                    "Type": rtype,
+                    "RData": self._bind_format_target(rtype, content),
                     "TTL": self._get_lexicon_option('ttl'),
                 }
             )
 
-        payload = self._update_resource_record_sets(resource_record_sets)
+        self._update_resource_record_sets(resource_record_sets)
         LOGGER.debug('create_record')
 
         LOGGER.debug('update_record: %s', True)
@@ -131,17 +133,17 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         resource_record_sets = self._get_resource_record_sets()
 
         if name is not None:
             name = self._relative_name(name)
         if content is not None:
-            content = self._bind_format_target(type, content)
+            content = self._bind_format_target(rtype, content)
 
         filtered_records = []
         for record in resource_record_sets:
-            if type and record['Type'] != type:
+            if rtype and record['Type'] != rtype:
                 continue
             if name and record['Name'] != name:
                 continue
@@ -149,7 +151,7 @@ class Provider(BaseProvider):
                 continue
             filtered_records.append(record)
 
-        if len(filtered_records) == 0:
+        if not filtered_records:
             LOGGER.debug('delete_record: %s', False)
             return False
 
@@ -172,14 +174,14 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, type, target):
-        if type == "CNAME" and not target.endswith("."):
+    def _bind_format_target(self, rtype, target):
+        if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _find_resource_record_set(self, records, type=None, name=None, content=None):
+    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
         for index, record in enumerate(records):
-            if type and record['Type'] != type:
+            if rtype and record['Type'] != rtype:
                 continue
             if name and record['Name'] != name:
                 continue
@@ -220,14 +222,14 @@ class Provider(BaseProvider):
         if query_params:
             query_string = json.dumps(query_params)
 
-        r = requests.request(action, self.api_endpoint + url, params=query_string,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_string,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         try:
             # if the request fails for any reason, throw an error.
-            r.raise_for_status()
+            response.raise_for_status()
         except BaseException:
-            LOGGER.error(r.json().get("error_msg"))
+            LOGGER.error(response.json().get("error_msg"))
             raise
-        return r.json()
+        return response.json()

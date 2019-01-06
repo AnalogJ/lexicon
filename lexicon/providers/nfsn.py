@@ -19,7 +19,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
     """Generate subparser for nfsn"""
     subparser.add_argument(
         "--auth-username", help="specify username used to authenticate")
@@ -38,30 +38,30 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.nearlyfreespeech.net'
         self.shortname = None
 
-    def authenticate(self):
+    def _authenticate(self):
         self._post('/dns/{0}/listRRs'.format(self.domain))
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
-        existing_records = self.list_records(type, name, content)
+    def _create_record(self, rtype, name, content):
+        existing_records = self.list_records(rtype, name, content)
         if existing_records:
             # Do nothing if the record already exists.
             # The creation call can fail for a variety of reasons, so
             # the safest thing to do is check if the record already exists
             return True
 
-        self._do_create(type, name, content)
+        self._do_create(rtype, name, content)
         LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         params = {}
-        if type is not None:
-            params['type'] = type
+        if rtype is not None:
+            params['type'] = rtype
         if name is not None:
             params['name'] = self._relative_name(name)
         if content is not None:
@@ -83,16 +83,16 @@ class Provider(BaseProvider):
 
     # Create or update a record.
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is not None:
-            records = self.list_records()
+            records = self._list_records()
             to_delete = next(
                 (r for r in records if r['id'] == identifier), None)
             if to_delete is None:
                 raise ValueError('No record with that identifier.')
         else:
-            # Check name and type
-            matching_records = self.list_records(type=type, name=name)
+            # Check name and rtype
+            matching_records = self._list_records(rtype=rtype, name=name)
             if len(matching_records) > 1:
                 raise ValueError(
                     'More than one record exists with that type and name. '
@@ -101,14 +101,14 @@ class Provider(BaseProvider):
 
         self._do_delete(to_delete['type'],
                         to_delete['name'], to_delete['content'])
-        self._do_create(type, name, content)
+        self._do_create(rtype, name, content)
         LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
-        matching_records = self.list_records(type, name, content)
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        matching_records = self._list_records(rtype, name, content)
         if identifier is not None:
             to_delete = next(
                 (r for r in matching_records if r['id'] == identifier), None)
@@ -124,10 +124,10 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_record: %s', True)
         return True
 
-    def _do_create(self, type, name, content):
+    def _do_create(self, rtype, name, content):
         record = {
             'name': self._relative_name(name),
-            'type': type,
+            'type': rtype,
             'data': content
         }
 
@@ -138,11 +138,11 @@ class Provider(BaseProvider):
         self._post('/dns/{0}/addRR'.format(self.domain_id), record)
         return True
 
-    def _do_delete(self, type=None, name=None, content=None):
+    def _do_delete(self, rtype=None, name=None, content=None):
         url = '/dns/{0}/removeRR'.format(self.domain_id)
         record = {
             'name': self._relative_name(name),
-            'type': type,
+            'type': rtype,
             'data': content
         }
         self._post(url, record)

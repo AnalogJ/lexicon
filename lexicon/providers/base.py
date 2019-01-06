@@ -1,10 +1,11 @@
+"""Base provider module for all Lexicon providers"""
 from __future__ import absolute_import
+import warnings
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
 class Provider(object):
-
     """
     This is the base class for all lexicon Providers.
     It provides common functionality and ensures that all implemented
@@ -51,38 +52,87 @@ class Provider(object):
         self.domain = self.config.resolve('lexicon:domain')
         self.domain_id = None
 
-    # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider,
-    # so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason,
-    # of if the domain does not exist.
+    # Provider API
     def authenticate(self):
-        raise NotImplementedError("Providers should implement this!")
+        """
+        Authenticate against provider,
+        Make any requests required to get the domain's id for this provider,
+        so it can be used in subsequent calls.
+        Should throw an error if authentication fails for any reason,
+        of if the domain does not exist.
+        """
+        return self._authenticate()
 
-    # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
-        raise NotImplementedError("Providers should implement this!")
+    def create_record(self, rtype, name, content, **kwargs):
+        """
+        Create record. If record already exists with the same content, do nothing.
+        """
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
+            rtype = kwargs.get('type')
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        return self._create_record(rtype, name, content)
 
-    # Update a record. Identifier must be specified.
-    def update_record(self, identifier, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+    def list_records(self, rtype=None, name=None, content=None, **kwargs):
+        """
+        List all records. Return an empty list if no records found
+        type, name and content are used to filter records.
+        If possible filter during the query, otherwise filter after response is received.
+        """
 
-    # Delete an existing record.
-    # If record does not exist, do nothing.
-    # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
-        raise NotImplementedError("Providers should implement this!")
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
+            rtype = kwargs.get('type')
+
+        return self._list_records(rtype=rtype, name=name, content=content)
+
+    def update_record(self, identifier, rtype=None, name=None, content=None, **kwargs):
+        """
+        Update a record. Identifier must be specified.
+        """
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
+            rtype = kwargs.get('type')
+
+        return self._update_record(identifier, rtype=rtype, name=name, content=content)
+
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None, **kwargs):
+        """
+        Delete an existing record.
+        If record does not exist, do nothing.
+        If an identifier is specified, use it, otherwise do a lookup using type, name and content.
+        """
+        if not rtype and kwargs.get('type'):
+            warnings.warn('Parameter "type" is deprecated, use "rtype" instead.',
+                          DeprecationWarning)
+            rtype = kwargs.get('type')
+
+        return self._delete_record(identifier=identifier, rtype=rtype, name=name, content=content)
+
+    # Internal abstract implementations
+    def _authenticate(self):
+        raise NotImplementedError("Providers must implement this!")
+
+    def _create_record(self, rtype, name, content):
+        raise NotImplementedError("Providers must implement this!")
+
+    def _list_records(self, rtype=None, name=None, content=None):
+        raise NotImplementedError("Providers must implement this!")
+
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        raise NotImplementedError("Providers must implement this!")
+
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        raise NotImplementedError("Providers must implement this!")
 
     # Helpers
     def _request(self, action='GET', url='/', data=None, query_params=None):
-        raise NotImplementedError("Providers should implement this!")
+        raise NotImplementedError("Providers must implement this!")
 
+    # Helpers
     def _get(self, url='/', query_params=None):
         return self._request('GET', url, query_params=query_params)
 
@@ -120,7 +170,7 @@ class Provider(object):
             record_name = record_name.rstrip('.')
         return record_name
 
-    def _clean_TXT_record(self, record):
+    def _clean_txt_record(self, record):
         if record['type'] == 'TXT':
             # Some providers have quotes around the TXT records,
             # so we're going to remove those extra quotes

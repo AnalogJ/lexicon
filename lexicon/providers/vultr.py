@@ -1,3 +1,4 @@
+"""Module provider for Vultr"""
 from __future__ import absolute_import
 import logging
 
@@ -10,20 +11,20 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['vultr.com']
 
 
-def ProviderParser(subparser):
+def provider_parser(subparser):
+    """Generate provider parser for Vultr"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Vultr"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://api.vultr.com/v1'
 
-    def authenticate(self):
-
+    def _authenticate(self):
         payload = self._get('/dns/list')
 
         if not [item for item in payload if item['domain'] == self.domain]:
@@ -33,20 +34,20 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         record = {
-            'type': type,
+            'type': rtype,
             'domain': self.domain_id,
             'name': self._relative_name(name),
             'priority': 0
         }
-        if type == 'TXT':
+        if rtype == 'TXT':
             record['data'] = "\"{0}\"".format(content)
         else:
             record['data'] = content
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
-        payload = self._post('/dns/create_record', record)
+        self._post('/dns/create_record', record)
 
         LOGGER.debug('create_record: %s', True)
         return True
@@ -54,9 +55,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
-        filter = {}
-
+    def _list_records(self, rtype=None, name=None, content=None):
         payload = self._get('/dns/records', {'domain': self.domain_id})
         records = []
         for record in payload:
@@ -67,11 +66,11 @@ class Provider(BaseProvider):
                 'content': record['data'],
                 'id': record['RECORDID']
             }
-            processed_record = self._clean_TXT_record(processed_record)
+            processed_record = self._clean_txt_record(processed_record)
             records.append(processed_record)
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
             records = [record for record in records if record['name']
                        == self._full_name(name)]
@@ -83,34 +82,34 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         data = {
             'domain': self.domain_id,
             'RECORDID': identifier,
             'ttl': self._get_lexicon_option('ttl')
         }
-        # if type:
-        #     data['type'] = type
+        # if rtype:
+        #     data['type'] = rtype
         if name:
             data['name'] = self._relative_name(name)
         if content:
-            if type == 'TXT':
+            if rtype == 'TXT':
                 data['data'] = "\"{0}\"".format(content)
             else:
                 data['data'] = content
 
-        payload = self._post('/dns/update_record', data)
+        self._post('/dns/update_record', data)
 
         LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -122,7 +121,7 @@ class Provider(BaseProvider):
                 'domain': self.domain_id,
                 'RECORDID': record_id
             }
-            payload = self._post('/dns/delete_record', data)
+            self._post('/dns/delete_record', data)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -142,13 +141,13 @@ class Provider(BaseProvider):
             'API-Key': self._get_provider_option('auth_token')
         }
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=data,
-                             headers=default_headers)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=data,
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
 
         if action == 'DELETE' or action == 'PUT' or action == 'POST':
             # vultr handles succss/failure via HTTP Codes, Only GET returns a response.
-            return r.text
-        return r.json()
+            return response.text
+        return response.json()

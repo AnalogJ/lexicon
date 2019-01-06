@@ -104,12 +104,12 @@ class IntegrationTests(object):
             'lexicon.providers.{0}'.format(
                 self.provider_name))
 
-        assert hasattr(module, 'ProviderParser')
+        assert hasattr(module, 'provider_parser')
         assert hasattr(module, 'Provider')
         if self.provider_name != 'auto':
             assert hasattr(module, 'NAMESERVER_DOMAINS')
 
-        assert callable(module.ProviderParser)
+        assert callable(module.provider_parser)
         assert callable(module.Provider)
         if self.provider_name != 'auto':
             assert isinstance(module.NAMESERVER_DOMAINS, list)
