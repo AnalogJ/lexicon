@@ -12,7 +12,7 @@ NAMESERVER_DOMAINS = ['cloudns.net']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for CloudNS"""
+    """Configure provider parser for CloudNS"""
     identity_group = subparser.add_mutually_exclusive_group()
     identity_group.add_argument(
         "--auth-id", help="specify user id for authentication")

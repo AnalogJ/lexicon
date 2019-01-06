@@ -17,7 +17,7 @@ NAMESERVER_DOMAINS = ['auroradns.eu']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Aurora"""
+    """Configure provider parser for Aurora"""
     subparser.add_argument(
         "--auth-api-key", help="specify API key for authentication")
     subparser.add_argument("--auth-secret-key",

@@ -1,10 +1,10 @@
+"""Module provider for Easyname DNS"""
 from __future__ import absolute_import, print_function
 import logging
-import sys
 
 from requests import Response, Session
 
-from .base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider
 
 
 LOGGER = logging.getLogger(__name__)
@@ -13,6 +13,7 @@ NAMESERVER_DOMAINS = ['easyname.eu']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Easyname DNS"""
     subparser.description = """A provider for Easyname DNS."""
     subparser.add_argument(
         '--auth-username',
@@ -35,7 +36,9 @@ class Provider(BaseProvider):
         'overview': 'https://my.easyname.com/hosting/view-user.php',
         'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
         'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
-        'dns_delete_entry': 'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'}
+        'dns_delete_entry':
+            'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'
+    }
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -62,11 +65,14 @@ class Provider(BaseProvider):
 
         domain_text_element = self._get_domain_text_of_authoritative_zone()
         self.domain_id = self._get_domain_id(domain_text_element)
-        LOGGER.debug('Easyname domain ID: {}'.format(self.domain_id))
+        LOGGER.debug('Easyname domain ID: %s', self.domain_id)
 
         return True
 
-    def _create_record(self, rtype, name, content, id=None):
+    def _create_record(self, rtype, name, content):
+        return self._create_record_internal(rtype=rtype, name=name, content=content)
+
+    def _create_record_internal(self, rtype, name, content, identifier=None):
         """
         Create a new DNS entry in the domain zone if it does not already exist.
 
@@ -76,19 +82,19 @@ class Provider(BaseProvider):
                       MX entry shall be valid.
           content (str): The content of the new DNS entry, e.g. the mail server
                          hostname for a MX entry.
-          [id] (str): The easyname id of a DNS entry. Use to overwrite an
+          [identifier] (str): The easyname id of a DNS entry. Use to overwrite an
                     existing entry.
 
         Returns:
           bool: True if the record was created successfully, False otherwise.
         """
         name = self._relative_name(name) if name is not None else name
-        LOGGER.debug('Creating record with name {}'.format(name))
+        LOGGER.debug('Creating record with name %s', name)
         if self._is_duplicate_record(rtype, name, content):
             return True
 
-        data = self._get_post_data_to_create_dns_entry(rtype, name, content, id)
-        LOGGER.debug('Create DNS data: {}'.format(data))
+        data = self._get_post_data_to_create_dns_entry(rtype, name, content, identifier)
+        LOGGER.debug('Create DNS data: %s', data)
         create_response = self.session.post(
             self.URLS['dns_create_entry'].format(self.domain_id),
             data=data
@@ -99,11 +105,11 @@ class Provider(BaseProvider):
         # Pull a list of records and check for ours
         was_success = len(self._list_records(rtype, name, content)) > 0
         if was_success:
-            msg = 'Successfully added record {}'
+            msg = 'Successfully added record %s'
         else:
-            msg = 'Failed to add record {}'
+            msg = 'Failed to add record %s'
 
-        LOGGER.info(msg.format(name))
+        LOGGER.info(msg, name)
         return was_success
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -125,7 +131,7 @@ class Provider(BaseProvider):
         success_url = self.URLS['dns'].format(self.domain_id)
         record_ids = self._get_matching_dns_entry_ids(identifier, rtype,
                                                       name, content)
-        LOGGER.debug('Record IDs to delete: {}'.format(record_ids))
+        LOGGER.debug('Record IDs to delete: %s', record_ids)
 
         success = True
         for rec_id in record_ids:
@@ -158,12 +164,11 @@ class Provider(BaseProvider):
         """
         if identifier is not None:
             identifier = int(identifier)
-            records = self._list_records(id=identifier)
+            records = self._list_records_internal(identifier=identifier)
         else:
-            records = self._list_records(name=name, rtype=rtype)
-        LOGGER.debug('Records to update ({}): {}'.format(
-                     len(records), records))
-        assert len(records) > 0, 'No record found to update'
+            records = self._list_records_internal(name=name, rtype=rtype)
+        LOGGER.debug('Records to update (%d): %s', len(records), records)
+        assert records, 'No record found to update'
         success = True
 
         for record in records:
@@ -171,13 +176,14 @@ class Provider(BaseProvider):
             rtype = rtype if rtype is not None else record['type']
             content = content if content is not None \
                 else record['content']
-            success = success and self._create_record(rtype,
-                                                      name,
-                                                      content,
-                                                      record['id'])
+            success = success and self._create_record_internal(
+                rtype, name, content, record['id'])
         return success
 
-    def _list_records(self, rtype=None, name=None, content=None, id=None):
+    def _list_records(self, rtype=None, name=None, content=None):
+        return self._list_records_internal(rtype=rtype, name=name, content=content)
+
+    def _list_records_internal(self, rtype=None, name=None, content=None, identifier=None):
         """
         Filter and list DNS entries of domain zone on Easyname.
         Easyname shows each entry in a HTML table row and each attribute on a
@@ -189,7 +195,7 @@ class Provider(BaseProvider):
                       which a MX entry shall be valid.
           [content] (str): Filter by the content of the DNS entry, e.g. the
                            mail server hostname for a MX entry.
-          [id] (str): Filter by the easyname id of the DNS entry.
+          [identifier] (str): Filter by the easyname id of the DNS entry.
 
         Returns:
           list: A list of DNS entries. A DNS entry is an object with DNS
@@ -204,7 +210,7 @@ class Provider(BaseProvider):
             records = []
             rows = self._get_dns_entry_trs()
 
-            for no, row in enumerate(rows):
+            for index, row in enumerate(rows):
                 self._log('DNS list entry', row)
                 try:
                     rec = {}
@@ -212,7 +218,7 @@ class Provider(BaseProvider):
                         rec['id'] = int(row['ondblclick'].split(
                             'id=')[1].split("'")[0])
                     else:
-                        rec['id'] = -no
+                        rec['id'] = -index
 
                     columns = row.find_all('td')
                     rec['name'] = (columns[0].string or '').strip()
@@ -221,20 +227,20 @@ class Provider(BaseProvider):
                     rec['priority'] = (columns[3].string or '').strip()
                     rec['ttl'] = (columns[4].string or '').strip()
 
-                    if len(rec['priority']) > 0:
+                    if rec['priority']:
                         rec['priority'] = int(rec['priority'])
 
-                    if len(rec['ttl']) > 0:
+                    if rec['ttl']:
                         rec['ttl'] = int(rec['ttl'])
-                except Exception as e:
-                    errmsg = 'Cannot parse DNS entry ({}).'.format(e)
+                except Exception as error:
+                    errmsg = 'Cannot parse DNS entry ({}).'.format(error)
                     LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
                 records.append(rec)
             self._records = records
 
-        records = self._filter_records(self._records, rtype, name, content, id)
-        LOGGER.debug('Final records ({}): {}'.format(len(records), records))
+        records = self._filter_records(self._records, rtype, name, content, identifier)
+        LOGGER.debug('Final records (%d): %s', len(records), records)
         return records
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
@@ -247,23 +253,22 @@ class Provider(BaseProvider):
         """
         self._records = None
 
-    def _get_post_data_to_create_dns_entry(self, type, name, content, id=None):
+    def _get_post_data_to_create_dns_entry(self, rtype, name, content, identifier=None):
         """
         Build and return the post date that is needed to create a DNS entry.
         """
-        is_update = id is not None
+        is_update = identifier is not None
         if is_update:
-            records = self._list_records(id=id)
+            records = self._list_records_internal(identifier=identifier)
             assert len(records) == 1, 'ID is not unique or does not exist'
             record = records[0]
-            LOGGER.debug('Create post data to update record: {}'.
-                         format(record))
+            LOGGER.debug('Create post data to update record: %s', record)
 
         data = {
-            'id': str(id) if is_update else '',
+            'id': str(identifier) if is_update else '',
             'action': 'save',
             'name': name,
-            'type': type,
+            'type': rtype,
             'content': content,
             'prio': str(record['priority']) if is_update else '10',
             'ttl': str(record['ttl']) if is_update else '360',
@@ -279,21 +284,20 @@ class Provider(BaseProvider):
 
         return data
 
-    def _is_duplicate_record(self, type, name, content):
+    def _is_duplicate_record(self, rtype, name, content):
         """Check if DNS entry already exists."""
-        records = self._list_records(type, name, content)
+        records = self._list_records(rtype, name, content)
         is_duplicate = len(records) >= 1
         if is_duplicate:
-            LOGGER.info('Duplicate record {} {} {}, NOOP'.
-                        format(type, name, content))
+            LOGGER.info('Duplicate record %s %s %s, NOOP', rtype, name, content)
         return is_duplicate
 
-    def _get_matching_dns_entry_ids(self, identifier=None, type=None,
+    def _get_matching_dns_entry_ids(self, identifier=None, rtype=None,
                                     name=None, content=None):
         """Return a list of DNS entries that match the given criteria."""
         record_ids = []
         if not identifier:
-            records = self._list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             record_ids = [record['id'] for record in records]
         else:
             record_ids.append(identifier)
@@ -321,33 +325,28 @@ class Provider(BaseProvider):
             return elm.name.lower() == 'tr' and (has_class or has_ondblclick)
 
         rows = dns_table.findAll(_is_zone_tr)
-        assert rows is not None and len(rows) > 0, \
-            'Could not find any DNS entries'
+        assert rows is not None and rows, 'Could not find any DNS entries'
         return rows
 
-    def _filter_records(self, records, type=None, name=None, content=None, id=None):
+    def _filter_records(self, records, rtype=None, name=None, content=None, identifier=None):
         """
         Filter dns entries based on type, name or content.
         """
-        if len(records) < 1:
-            return records
-        if id is not None:
-            LOGGER.debug('Filtering {} records by id: {}'.
-                         format(len(records), id))
-            records = [record for record in records if record['id'] == id]
-        if type is not None:
-            LOGGER.debug('Filtering {} records by type: {}'.
-                         format(len(records), type))
-            records = [record for record in records if record['type'] == type]
+        if not records:
+            return []
+        if identifier is not None:
+            LOGGER.debug('Filtering %d records by id: %s', len(records), identifier)
+            records = [record for record in records if record['id'] == identifier]
+        if rtype is not None:
+            LOGGER.debug('Filtering %d records by type: %s', len(records), rtype)
+            records = [record for record in records if record['type'] == rtype]
         if name is not None:
-            LOGGER.debug('Filtering {} records by name: {}'.
-                         format(len(records), name))
+            LOGGER.debug('Filtering %d records by name: %s', len(records), name)
             if name.endswith('.'):
                 name = name[:-1]
             records = [record for record in records if name == record['name']]
         if content is not None:
-            LOGGER.debug('Filtering {} records by content: {}'.
-                         format(len(records), content.lower()))
+            LOGGER.debug('Filtering %d records by content: %s', len(records), content.lower())
             records = [record for record in records if
                        record['content'].lower() == content.lower()]
         return records
@@ -406,7 +405,7 @@ class Provider(BaseProvider):
         subdomains = domain.split('.')
         while True:
             domain = '.'.join(subdomains)
-            LOGGER.debug('Check if {} has own zone'.format(domain))
+            LOGGER.debug('Check if %s has own zone', domain)
             domain_text = domain_table.find(string=domain)
             if domain_text is not None or len(subdomains) < 3:
                 break
@@ -425,14 +424,14 @@ class Provider(BaseProvider):
         """Return the easyname id of the domain."""
         try:
             # Hierarchy: TR > TD > SPAN > Domain Text
-            tr = domain_text_element.parent.parent.parent
-            td = tr.find('td', {'class': 'td_2'})
-            link = td.find('a')['href']
+            tr_anchor = domain_text_element.parent.parent.parent
+            td_anchor = tr_anchor.find('td', {'class': 'td_2'})
+            link = td_anchor.find('a')['href']
             domain_id = link.rsplit('/', 1)[-1]
             return domain_id
-        except Exception as e:
+        except Exception as error:
             errmsg = ('Cannot get the domain id even though the domain seems '
-                      'to exist ({}).'.format(e))
+                      'to exist (%s).', error)
             LOGGER.warning(errmsg)
             raise AssertionError(errmsg)
 
@@ -442,8 +441,7 @@ class Provider(BaseProvider):
         """
         from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
-            LOGGER.debug('{} response: URL={} Code={}'.format(name,
-                                                              element.url, element.status_code))
+            LOGGER.debug('%s response: URL=%s Code=%s', name, element.url, element.status_code)
 
         elif isinstance(element, Tag) or isinstance(element, BeautifulSoup):
-            LOGGER.debug('{} HTML:\n{}'.format(name, element))
+            LOGGER.debug('%s HTML:\n%s', name, element)

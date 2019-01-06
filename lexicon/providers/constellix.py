@@ -33,7 +33,7 @@ NAMESERVER_DOMAINS = ['constellix.com']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Constellix"""
+    """Configure provider parser for Constellix"""
     subparser.add_argument(
         "--auth-username", help="specify the API key username for authentication")
     subparser.add_argument(
@@ -256,7 +256,7 @@ class Provider(BaseProvider):
         response.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
-        if action == 'DELETE' or action == 'PUT':
+        if action in ['DELETE' or action == 'PUT']:
             return response.text
 
         return response.json()

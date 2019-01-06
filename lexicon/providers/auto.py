@@ -100,7 +100,7 @@ def _relevant_provider_for_domain(domain):
 
 
 def provider_parser(subparser):
-    """Generate provider parser for auto provider"""
+    """Configure provider parser for auto provider"""
     subparser.description = '''
         Provider 'auto' enables the Lexicon provider auto-discovery.
         Based on the nameservers declared for the given domain,

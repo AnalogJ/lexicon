@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Module provider for DNSPod"""
 from __future__ import absolute_import
 
 import logging
@@ -13,6 +13,7 @@ NAMESERVER_DOMAINS = ['dnsapi.cn']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for DNSPod"""
     subparser.add_argument(
         "--auth-username", help="specify api id for authentication")
     subparser.add_argument(
@@ -20,7 +21,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for DNSPod"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -36,13 +37,12 @@ class Provider(BaseProvider):
         self.domain_id = payload['domain']['id']
 
     # Create record. If record already exists with the same content, do nothing'
-
     def _create_record(self, rtype, name, content):
         record = {
             'domain_id': self.domain_id,
             'sub_domain': self._relative_name(name),
             'record_type': rtype,
-            'record_line': '默认',
+            'record_line': u'\u9ED8\u8BA4',
             'value': content
         }
         if self._get_lexicon_option('ttl'):
@@ -60,8 +60,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
-
         payload = self._post('/Record.List', {'domain': self.domain})
         LOGGER.debug('payload: %s', payload)
         records = []
@@ -124,7 +122,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._post(
+            self._post(
                 '/Record.Remove', {'domain_id': self.domain_id, 'record_id': record_id})
 
             # if payload['status']['code'] != '1':
@@ -146,10 +144,10 @@ class Provider(BaseProvider):
             query_params = {}
         default_headers = {}
         default_auth = None
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=data,
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=data,
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

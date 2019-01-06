@@ -24,7 +24,7 @@ NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Transip"""
+    """Configure provider parser for Transip"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(

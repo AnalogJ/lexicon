@@ -13,7 +13,7 @@ NAMESERVER_DOMAINS = ['digitalocean.com']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Digital Ocean"""
+    """Configure provider parser for Digital Ocean"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 
@@ -146,5 +146,4 @@ class Provider(BaseProvider):
         response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            return response.json()
+        return response.json()

@@ -13,7 +13,7 @@ NAMESERVER_DOMAINS = ['conoha.io']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Conoha"""
+    """Configure provider parser for Conoha"""
     subparser.add_argument(
         "--auth-region", help="specify region. If empty, region `tyo1` will be used.")
     subparser.add_argument(

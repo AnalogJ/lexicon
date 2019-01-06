@@ -13,7 +13,7 @@ NAMESERVER_DOMAINS = ['dnsimple.com']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for DNS Simple"""
+    """Configure provider parser for DNS Simple"""
     subparser.add_argument(
         "--auth-token", help="specify api token for authentication")
     subparser.add_argument(
