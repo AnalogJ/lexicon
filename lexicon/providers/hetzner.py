@@ -162,7 +162,7 @@ class Provider(BaseProvider):
         self.password = self._get_provider_option('auth_password')
         assert self.password is not None
 
-    def authenticate(self):
+    def _authenticate(self):
         """
         Connects to Hetzner account and returns, if authentification was
         successful and the domain or CNAME target is managed by this account.
@@ -170,23 +170,23 @@ class Provider(BaseProvider):
         with self._session(self.domain, get_zone=False):
             return True
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         """
         Connects to Hetzner account, adds a new record to the zone and returns a
-        boolean, if creation was successful or not. Needed record type, name and
+        boolean, if creation was successful or not. Needed record rtype, name and
         content for record to create.
         """
         with self._session(self.domain, self.domain_id) as ddata:
             # Validate method parameters
-            if not type or not name or not content:
-                LOGGER.warning('Hetzner => Record has no type|name|content specified')
+            if not rtype or not name or not content:
+                LOGGER.warning('Hetzner => Record has no rtype|name|content specified')
                 return False
 
             # Add record to zone
             name = ddata['cname'] if ddata['cname'] else self._fqdn_name(name)
-            rrset = ddata['zone']['data'].get_rdataset(name, rdtype=type, create=True)
+            rrset = ddata['zone']['data'].get_rdataset(name, rdtype=rtype, create=True)
             for rdata in rrset:
-                if self._convert_content(type, content) == rdata.to_text():
+                if self._convert_content(rtype, content) == rdata.to_text():
                     LOGGER.info('Hetzner => Record with content \'%s\' already exists',
                                 content)
                     return True
@@ -195,28 +195,28 @@ class Provider(BaseProvider):
                    and rrset.ttl < self._get_lexicon_option('ttl')
                    else self._get_lexicon_option('ttl'))
             rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
-                                              ttl, self._convert_content(type, content))
+                                              ttl, self._convert_content(rtype, content))
             rrset.update(rdataset)
             # Post zone to Hetzner
             synced_change = self._post_zone(ddata['zone'])
             if synced_change:
-                self._propagated_record(type, name, self._convert_content(type, content),
+                self._propagated_record(rtype, name, self._convert_content(rtype, content),
                                         ddata['nameservers'])
             return synced_change
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         """
         Connects to Hetzner account and returns a list of records filtered by record
-        type, name and content. The list is empty if no records found.
+        rtype, name and content. The list is empty if no records found.
         """
         with self._session(self.domain, self.domain_id) as ddata:
             name = self._fqdn_name(name) if name else None
-            return self._list_records(ddata['zone']['data'], type, name, content)
+            return self._list_records_in_zone(ddata['zone']['data'], rtype, name, content)
 
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Connects to Hetzner account, changes an existing record and returns a boolean,
-        if update was successful or not. Needed identifier or type & name to lookup
+        if update was successful or not. Needed identifier or rtype & name to lookup
         over all records of the zone for exactly one record to update.
         """
         with self._session(self.domain, self.domain_id) as ddata:
@@ -224,7 +224,7 @@ class Provider(BaseProvider):
             if identifier:
                 dtype, dname, dcontent = self._parse_identifier(identifier, ddata['zone']['data'])
                 if dtype and dname and dcontent:
-                    type = type if type else dtype
+                    rtype = rtype if rtype else dtype
                     name = name if name else dname
                     content = content if content else dcontent
                 else:
@@ -232,14 +232,14 @@ class Provider(BaseProvider):
                                    identifier)
                     return False
 
-            elif type and name and content:
-                dtype, dname, dcontent = type, name, None
+            elif rtype and name and content:
+                dtype, dname, dcontent = rtype, name, None
             else:
-                LOGGER.warning('Hetzner => Record has no type|name|content specified')
+                LOGGER.warning('Hetzner => Record has no rtype|name|content specified')
                 return False
 
             dname = ddata['cname'] if ddata['cname'] else self._fqdn_name(dname)
-            records = self._list_records(ddata['zone']['data'], dtype, dname, dcontent)
+            records = self._list_records_in_zone(ddata['zone']['data'], dtype, dname, dcontent)
             if len(records) == 1:
                 # Remove record from zone
                 rrset = ddata['zone']['data'].get_rdataset(records[0]['name'] + '.',
@@ -258,10 +258,10 @@ class Provider(BaseProvider):
                                                           records[0]['type'])
                 # Add record to zone
                 name = ddata['cname'] if ddata['cname'] else self._fqdn_name(name)
-                rrset = ddata['zone']['data'].get_rdataset(name, rdtype=type, create=True)
+                rrset = ddata['zone']['data'].get_rdataset(name, rdtype=rtype, create=True)
                 synced_change = False
                 for rdata in rrset:
-                    if self._convert_content(type, content) == rdata.to_text():
+                    if self._convert_content(rtype, content) == rdata.to_text():
                         LOGGER.info('Hetzner => Record with content \'%s\' already exists',
                                     content)
                         synced_change = True
@@ -271,35 +271,35 @@ class Provider(BaseProvider):
                            and rrset.ttl < self._get_lexicon_option('ttl')
                            else self._get_lexicon_option('ttl'))
                     rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl,
-                                                      self._convert_content(type, content))
+                                                      self._convert_content(rtype, content))
                     rrset.update(rdataset)
                 # Post zone to Hetzner
                 synced_change = self._post_zone(ddata['zone'])
                 if synced_change:
-                    self._propagated_record(type, name, self._convert_content(type, content),
+                    self._propagated_record(rtype, name, self._convert_content(rtype, content),
                                             ddata['nameservers'])
                 return synced_change
 
             LOGGER.warning('Hetzner => Record lookup has not only one match')
             return False
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Connects to Hetzner account, removes an existing record from the zone and returns a
-        boolean, if deletion was successful or not. Uses identifier or type, name & content to
+        boolean, if deletion was successful or not. Uses identifier or rtype, name & content to
         lookup over all records of the zone for one or more records to delete.
         """
         with self._session(self.domain, self.domain_id) as ddata:
             # Validate method parameters
             if identifier:
-                type, name, content = self._parse_identifier(identifier, ddata['zone']['data'])
-                if type is None or name is None or content is None:
+                rtype, name, content = self._parse_identifier(identifier, ddata['zone']['data'])
+                if rtype is None or name is None or content is None:
                     LOGGER.info('Hetzner => Record with identifier \'%s\' does not exist',
                                 identifier)
                     return True
 
             name = ddata['cname'] if ddata['cname'] else (self._fqdn_name(name) if name else None)
-            records = self._list_records(ddata['zone']['data'], type, name, content)
+            records = self._list_records_in_zone(ddata['zone']['data'], rtype, name, content)
             if records:
                 # Remove records from zone
                 for record in records:
@@ -349,7 +349,7 @@ class Provider(BaseProvider):
             parts = identifier.split('/')
             rdtype, name, content = parts[0], parts[1], '/'.join(parts[2:])
         else:
-            records = self._list_records(zone)
+            records = self._list_records_in_zone(zone)
             for record in records:
                 if record['id'] == identifier:
                     rdtype, name, content = record['type'], record['name'] + '.', record['content']
@@ -370,7 +370,7 @@ class Provider(BaseProvider):
                 content = self._fqdn_name(content)
         return content
 
-    def _list_records(self, zone, rdtype=None, name=None, content=None):
+    def _list_records_in_zone(self, zone, rdtype=None, name=None, content=None):
         """
         Iterates over all records of the zone and returns a list of records filtered
         by record type, name and content. The list is empty if no records found.

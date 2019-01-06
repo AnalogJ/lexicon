@@ -53,7 +53,7 @@ class Provider(BaseProvider):
         self.version_id = None
         self.api_endpoint = 'https://api.gis.gehirn.jp/dns/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
         payload = self._get('/zones')
 
         domains = [item for item in payload if item['name']
@@ -65,15 +65,15 @@ class Provider(BaseProvider):
         self.version_id = domains[0]["current_version_id"]
 
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         name = self._full_name(name)
-        a_record = self._parse_content(type, content)
+        a_record = self._parse_content(rtype, content)
 
         record = None
-        records = self._get_records(type=type, name=name)
+        records = self._get_records(rtype=rtype, name=name)
         if not records:
             record = {
-                'type': type,
+                'type': rtype,
                 'name': name,
                 'enable_alias': False,
                 'ttl': self._get_lexicon_option('ttl'),
@@ -87,18 +87,18 @@ class Provider(BaseProvider):
             return True
 
         record["records"].append(a_record)
-        self._update_record(record)
+        self._update_internal_record(record)
         LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         records = []
         if name:
             name = self._full_name(name)
-        for record in self._get_records(type=type, name=name):
+        for record in self._get_records(rtype=rtype, name=name):
             for a_record in record["records"]:
                 content = self._build_content(record['type'], a_record)
                 processed_record = {
@@ -123,30 +123,29 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier=None, type=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
 
         if name:
             name = self._full_name(name)
 
-        record = None
         if not identifier:
-            if not (type and name and content):
+            if not (rtype and name and content):
                 raise Exception("type, name and content must be specified.")
 
-            records = self._get_records(type=type, name=name)
+            records = self._get_records(rtype=rtype, name=name)
 
             if not records:
-                self.create_record(type=type, name=name, content=content)
+                self._create_record(rtype=rtype, name=name, content=content)
                 LOGGER.debug('update_record: %s', True)
                 return True
 
             record = {
                 'id': records[0]["id"],
-                'type': type,
+                'type': rtype,
                 'name': name,
                 'enable_alias': False,
                 'ttl': self._get_lexicon_option('ttl'),
-                'records': [self._parse_content(type, content)],
+                'records': [self._parse_content(rtype, content)],
             }
 
         else:
@@ -159,9 +158,9 @@ class Provider(BaseProvider):
 
             if "." in identifier:
                 # modify single record
-                self.delete_record(identifier=identifier)
-                self.create_record(
-                    type=type or record["type"],
+                self._delete_record(identifier=identifier)
+                self._create_record(
+                    rtype=rtype or record["type"],
                     name=name or record["name"],
                     content=content
                 )
@@ -169,8 +168,8 @@ class Provider(BaseProvider):
                 return True
             else:
                 # update entire record
-                if type:
-                    record["type"] = type
+                if rtype:
+                    record["type"] = rtype
                 if name:
                     record["name"] = name
                 record["ttl"] = self._get_lexicon_option('ttl')
@@ -178,13 +177,13 @@ class Provider(BaseProvider):
                     record["records"] = [
                         self._parse_content(record["type"], content)]
 
-        self._update_record(record)
+        self._update_internal_record(record)
         LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             if "." not in identifier:
                 # delete entire record
@@ -216,7 +215,7 @@ class Provider(BaseProvider):
                     )
                     self._delete(path)
                 else:
-                    self._update_record(record)
+                    self._update_internal_record(record)
 
                 LOGGER.debug('delete_record: %s', True)
                 return True
@@ -227,16 +226,16 @@ class Provider(BaseProvider):
         if name is not None:
             name = self._full_name(name)
         if content is not None:
-            content = self._bind_format_target(type, content)
-            record = self._parse_content(type, content)
+            content = self._bind_format_target(rtype, content)
+            record = self._parse_content(rtype, content)
 
-        records = self._get_records(type=type, name=name)
+        records = self._get_records(rtype=rtype, name=name)
 
         for a_record in records:
             if record and record in a_record["records"]:
                 a_record["records"].remove(record)
                 if a_record["records"]:
-                    self._update_record(a_record)
+                    self._update_internal_record(a_record)
                     continue
 
             path = '/zones/{}/versions/{}/records/{}'.format(
@@ -254,19 +253,19 @@ class Provider(BaseProvider):
             record_name += "."
         return record_name
 
-    def _bind_format_target(self, type, target):
-        if type == "CNAME" and not target.endswith("."):
+    def _bind_format_target(self, rtype, target):
+        if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _filter_records(self, records, identifier=None, type=None, name=None):
+    def _filter_records(self, records, identifier=None, rtype=None, name=None):
         filtered_records = []
 
         if identifier:
             identifier = identifier.split(".")[0]
 
         for record in records:
-            if type and record['type'] != type:
+            if rtype and record['type'] != rtype:
                 continue
             if name and record['name'] != name:
                 continue
@@ -275,12 +274,12 @@ class Provider(BaseProvider):
             filtered_records.append(record)
         return filtered_records
 
-    def _get_records(self, identifier=None, type=None, name=None):
+    def _get_records(self, identifier=None, rtype=None, name=None):
         path = '/zones/{}/versions/{}/records'.format(
             self.domain_id, self.version_id)
-        return self._filter_records(self._get(path), identifier=identifier, type=type, name=name)
+        return self._filter_records(self._get(path), identifier=identifier, rtype=rtype, name=name)
 
-    def _update_record(self, record):
+    def _update_internal_record(self, record):
         if record.get("id"):
             # PUT
             path = '/zones/{}/versions/{}/records/{}'.format(
@@ -294,11 +293,11 @@ class Provider(BaseProvider):
         )
         return self._post(path, record)
 
-    def _build_content(self, type, record):
-        return BUILD_FORMATS[type].format(**record)
+    def _build_content(self, rtype, record):
+        return BUILD_FORMATS[rtype].format(**record)
 
-    def _parse_content(self, type, content):
-        return FORMAT_RE[type].match(content).groupdict()
+    def _parse_content(self, rtype, content):
+        return FORMAT_RE[rtype].match(content).groupdict()
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:

@@ -27,7 +27,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.cloudflare.com/client/v4'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/zones', {
             'name': self.domain,
@@ -43,8 +43,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
-        data = {'type': type, 'name': self._full_name(
+    def _create_record(self, rtype, name, content):
+        data = {'type': rtype, 'name': self._full_name(
             name), 'content': content}
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
@@ -65,10 +65,10 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         filter_obj = {'per_page': 100}
-        if type:
-            filter_obj['type'] = type
+        if rtype:
+            filter_obj['type'] = rtype
         if name:
             filter_obj['name'] = self._full_name(name)
         if content:
@@ -92,11 +92,11 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         data = {}
-        if type:
-            data['type'] = type
+        if rtype:
+            data['type'] = rtype
         if name:
             data['name'] = self._full_name(name)
         if content:
@@ -112,10 +112,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

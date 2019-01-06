@@ -53,18 +53,18 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.godaddy.com/v1'
 
-    def authenticate(self):
+    def _authenticate(self):
         domain = self.domain
 
         result = self._get('/domains/{0}'.format(domain))
         self.domain_id = result['domainId']
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
 
         url = '/domains/{0}/records'.format(domain)
-        if type:
-            url += '/{0}'.format(type)
+        if rtype:
+            url += '/{0}'.format(rtype)
         if name:
             url += '/{0}'.format(self._relative_name(name))
 
@@ -88,7 +88,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         domain = self.domain
         relative_name = self._relative_name(name)
         ttl = self._get_lexicon_option('ttl')
@@ -98,14 +98,14 @@ class Provider(BaseProvider):
 
         # Check if a record already matches given parameters
         for record in records:
-            if (record['type'] == type and self._relative_name(record['name']) == relative_name
+            if (record['type'] == rtype and self._relative_name(record['name']) == relative_name
                     and record['data'] == content):
                 LOGGER.debug(
-                    'create_record (ignored, duplicate): %s %s %s', type, name, content)
+                    'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
                 return True
 
         # Append a new entry corresponding to given parameters.
-        data = {'type': type, 'name': relative_name, 'data': content}
+        data = {'type': rtype, 'name': relative_name, 'data': content}
         if ttl:
             data['ttl'] = ttl
 
@@ -114,22 +114,22 @@ class Provider(BaseProvider):
         # Synchronize data with inserted record into DNS zone.
         self._put('/domains/{0}/records'.format(domain), records)
 
-        LOGGER.debug('create_record: %s %s %s', type, name, content)
+        LOGGER.debug('create_record: %s %s %s', rtype, name, content)
 
         return True
 
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         # No identifier is used with GoDaddy.
         # We can rely either:
-        #   - only on type/name to get the relevant records, both of them are required
+        #   - only on rtype/name to get the relevant records, both of them are required
         #     or we will could update to much records ...,
         #   - or by the pseudo-identifier provided
-        # Furthermore for type/name approach, we cannot update all matching records, as it
-        # would lead o an error (two entries of same type + name cannot have the same content).
-        # So for type/name approach, we search first matching record for type/name on which content
+        # Furthermore for rtype/name approach, we cannot update all matching records, as it
+        # would lead o an error (two entries of same rtype + name cannot have the same content).
+        # So for rtype/name approach, we search first matching record for rtype/name on which content
         # is different, and we update it before synchronizing the DNS zone.
-        if not identifier and not type:
-            raise Exception('ERROR: type is required')
+        if not identifier and not rtype:
+            raise Exception('ERROR: rtype is required')
         if not identifier and not name:
             raise Exception('ERROR: name is required')
 
@@ -143,11 +143,11 @@ class Provider(BaseProvider):
 
         # Get the record to update:
         #   - either explicitly by its identifier,
-        #   - or the first matching by its type+name where content does not match
+        #   - or the first matching by its rtype+name where content does not match
         #     (first match, see first method comment for explanation).
         for record in records:
             if ((identifier and Provider._identifier(record) == identifier) or
-                    (not identifier and record['type'] == type
+                    (not identifier and record['type'] == rtype
                      and self._relative_name(record['name']) == relative_name
                      and record['data'] != content)):
                 record['data'] = content
@@ -156,15 +156,15 @@ class Provider(BaseProvider):
         # Synchronize data with updated records into DNS zone.
         self._put('/domains/{0}/records'.format(domain), records)
 
-        LOGGER.debug('update_record: %s %s %s', type, name, content)
+        LOGGER.debug('update_record: %s %s %s', rtype, name, content)
 
         return True
 
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # For the LOL. GoDaddy does not accept an empty array
         # when updating a particular set of records.
         # It means that you cannot request to remove all records
-        # matching a particular type and/or name.
+        # matching a particular rtype and/or name.
         # Instead, we get ALL records in the DNS zone, update the set,
         # and replace EVERYTHING in the DNS zone.
         # You will always have at minimal NS/SRV entries in the array,
@@ -179,29 +179,29 @@ class Provider(BaseProvider):
             relative_name = self._relative_name(name)
 
         # Filter out all records which matches the pattern (either identifier
-        # or some combination of type/name/content).
+        # or some combination of rtype/name/content).
         filtered_records = []
         if identifier:
             filtered_records = [
                 record for record in records if Provider._identifier(record) != identifier]
         else:
             for record in records:
-                if ((not type and not relative_name and not content)
-                        or (type and not relative_name and not content and record['type'] != type)
-                        or (not type and relative_name and not content
+                if ((not rtype and not relative_name and not content)
+                        or (rtype and not relative_name and not content and record['type'] != rtype)
+                        or (not rtype and relative_name and not content
                             and self._relative_name(record['name']) != relative_name)
-                        or (not type and not relative_name and content
+                        or (not rtype and not relative_name and content
                             and record['data'] != content)
-                        or (type and relative_name and not content
-                            and (record['type'] != type
+                        or (rtype and relative_name and not content
+                            and (record['type'] != rtype
                                  or self._relative_name(record['name']) != relative_name))
-                        or (type and not relative_name and content
-                            and (record['type'] != type or record['data'] != content))
-                        or (not type and relative_name and content
+                        or (rtype and not relative_name and content
+                            and (record['type'] != rtype or record['data'] != content))
+                        or (not rtype and relative_name and content
                             and (self._relative_name(record['name']) != relative_name
                                  or record['data'] != content))
-                        or (type and relative_name and content
-                            and (record['type'] != type
+                        or (rtype and relative_name and content
+                            and (record['type'] != rtype
                                  or self._relative_name(record['name']) != relative_name
                                  or record['data'] != content))):
                     filtered_records.append(record)
@@ -209,7 +209,7 @@ class Provider(BaseProvider):
         # Synchronize data with expurged entries into DNS zone.
         self._put('/domains/{0}/records'.format(domain), filtered_records)
 
-        LOGGER.debug('delete_records: %s %s %s', type, name, content)
+        LOGGER.debug('delete_records: %s %s %s', rtype, name, content)
 
         return True
 

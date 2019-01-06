@@ -47,7 +47,7 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://dns.api.rackspacecloud.com/v1.0'
         self.auth_api_endpoint = 'https://identity.api.rackspacecloud.com/v2.0'
 
-    def authenticate(self):
+    def _authenticate(self):
         self._auth_token = self._get_provider_option('auth_token')
         if not self._auth_token:
             auth_response = self._auth_request('POST', '/tokens', {
@@ -73,9 +73,9 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         data = {'records': [
-            {'type': type, 'name': self._full_name(name), 'data': content}]}
+            {'type': rtype, 'name': self._full_name(name), 'data': content}]}
         if self._get_lexicon_option('ttl'):
             data['records'][0]['ttl'] = self._get_lexicon_option('ttl')
 
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
                 '/domains/{0}/records'.format(self.domain_id), data)
         except Exception as e:
             if str(e).startswith('Record is a duplicate of another record'):
-                return self.update_record(None, type, name, content)
+                return self._update_record(None, rtype, name, content)
             raise e
 
         success = len(payload['records']) > 0
@@ -94,10 +94,10 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         params = {'per_page': 100}
-        if type:
-            params['type'] = type
+        if rtype:
+            params['type'] = rtype
         if name:
             params['name'] = self._full_name(name)
         # Sending the data filter to the Rackspace DNS API results in a 503 error
@@ -123,10 +123,10 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         data = {}
-        if type:
-            data['type'] = type
+        if rtype:
+            data['type'] = rtype
         if name:
             data['name'] = self._full_name(name)
         if content:
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
             data['ttl'] = self._get_lexicon_option('ttl')
 
         if identifier is None:
-            records = self.list_records(type, name)
+            records = self._list_records(rtype, name)
             if len(records) < 1:
                 raise Exception('Unable to find record to modify: ' + name)
             identifier = records[0]['id']
@@ -149,10 +149,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

@@ -23,7 +23,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.linode.com/api/'
 
-    def authenticate(self):
+    def _authenticate(self):
         self.domain_id = None
         payload = self._get('domain.list')
         for domain in payload['DATA']:
@@ -32,12 +32,12 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise Exception('Domain not found')
 
-    def create_record(self, type, name, content):
-        if len(self.list_records(type, name, content)) == 0:
+    def _create_record(self, rtype, name, content):
+        if len(self._list_records(rtype, name, content)) == 0:
             self._get('domain.resource.create', query_params={
                 'DomainID': self.domain_id,
                 'Name': self._relative_name(name),
-                'Type': type,
+                'Type': rtype,
                 'Target': content,
                 'TTL_sec': 0
             })
@@ -47,13 +47,13 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         payload = self._get('domain.resource.list', query_params={
                             'DomainID': self.domain_id})
         resource_list = payload['DATA']
-        if type:
+        if rtype:
             resource_list = [
-                resource for resource in resource_list if resource['TYPE'] == type]
+                resource for resource in resource_list if resource['TYPE'] == rtype]
         if name:
             cmp_name = self._relative_name(name.lower())
             resource_list = [
@@ -75,9 +75,9 @@ class Provider(BaseProvider):
         return processed_records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
-            resources = self.list_records(type, name, None)
+            resources = self._list_records(rtype, name, None)
             identifier = resources[0]['id'] if len(resources) > 0 else None
 
         LOGGER.debug('update_record: %s', identifier)
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
             'DomainID': self.domain_id,
             'ResourceID': identifier,
             'Name': self._relative_name(name).lower() if name else None,
-            'Type': type if type else None,
+            'Type': rtype if rtype else None,
             'Target': content if content else None
         })
 
@@ -94,10 +94,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_resource_id = []
         if not identifier:
-            resources = self.list_records(type, name, content)
+            resources = self._list_records(rtype, name, content)
             delete_resource_id = [resource['id'] for resource in resources]
         else:
             delete_resource_id.append(identifier)

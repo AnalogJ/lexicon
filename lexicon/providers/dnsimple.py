@@ -32,7 +32,7 @@ class Provider(BaseProvider):
         self.api_endpoint = self._get_provider_option(
             'api_endpoint') or 'https://api.dnsimple.com/v2'
 
-    def authenticate(self):
+    def _authenticate(self):
 
         payload = self._get('/accounts')
 
@@ -51,14 +51,14 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
 
-    def create_record(self, type, name, content):
+    def _create_record(self, rtype, name, content):
         # check if record already exists
-        existing_records = self.list_records(type, name, content)
+        existing_records = self._list_records(rtype, name, content)
         if len(existing_records) == 1:
             return True
 
         record = {
-            'type': type,
+            'type': rtype,
             'name': self._relative_name(name),
             'content': content
         }
@@ -78,10 +78,10 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         filter = {}
-        if type:
-            filter['type'] = type
+        if rtype:
+            filter['type'] = rtype
         if name:
             filter['name'] = self._relative_name(name)
         payload = self._get(
@@ -110,12 +110,12 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         data = {}
 
         if identifier is None:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             identifiers = [record["id"] for record in records]
         else:
             identifiers = [identifier]
@@ -141,10 +141,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)

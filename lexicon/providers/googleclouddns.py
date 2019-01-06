@@ -100,7 +100,7 @@ class Provider(BaseProvider):
     #     the managed zone id, which will also be used on future requests.
     # This access token has a default lifetime of 10 minutes,
     # but is used only for the current Lexicon operation, so it should be sufficient.
-    def authenticate(self):
+    def _authenticate(self):
         jwt_header_bytes = urlsafe_b64encode(json.dumps({
             'alg': 'RS256',
             'typ': 'JWT'
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
     # name is not always available (we can ask for every TXT record for example). So to stick to
     # the most general case, its preferable to always get all records and be free to filter
     # the way we want afterwards.
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
 
         records = []
@@ -185,8 +185,8 @@ class Provider(BaseProvider):
                 record['id'] = Provider._identifier(record)
                 records.append(record)
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
             records = [record for record in records if record['name']
                        == self._full_name(name)]
@@ -203,16 +203,16 @@ class Provider(BaseProvider):
     # Indeed we need to know if there is already a RecordSet for the type/name pair, and update
     # or create accordingly the RecordSet. Furthermore, we need first to delete the old RecordSet
     # if it exists, to replace it with the RecordSet containing the new content we want.
-    def create_record(self, type, name, content):
-        if not type or not name or not content:
+    def _create_record(self, rtype, name, content):
+        if not rtype or not name or not content:
             raise Exception(
-                'Error, type, name and content are mandatory to create a record.')
+                'Error, rtype, name and content are mandatory to create a record.')
 
         identifier = Provider._identifier(
-            {'type': type, 'name': self._full_name(name), 'content': content})
+            {'type': rtype, 'name': self._full_name(name), 'content': content})
 
         query_params = {
-            'type': type,
+            'type': rtype,
             'name': self._fqdn_name(name)
         }
 
@@ -238,11 +238,11 @@ class Provider(BaseProvider):
 
             rrdatas = rrset['rrdatas'][:]
 
-        rrdatas.append(Provider._normalize_content(type, content))
+        rrdatas.append(Provider._normalize_content(rtype, content))
 
         changes['additions'] = [{
             'name': self._fqdn_name(name),
-            'type': type,
+            'type': rtype,
             'ttl': self._get_lexicon_option('ttl'),
             'rrdatas': rrdatas
         }]
@@ -263,17 +263,17 @@ class Provider(BaseProvider):
     # Even if this make the operation very costly regarding the number of requests to do, it allows
     # the implementation to be way more readable (without that, it would take grossly the size of
     # he three quoted methods).
-    def update_record(self, identifier, type=None, name=None, content=None):
-        if not identifier and (not type or not name):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if not identifier and (not rtype or not name):
             raise Exception(
-                'Error, identifier or type+name parameters are required.')
+                'Error, identifier or rtype+name parameters are required.')
 
         if identifier:
-            records = self.list_records()
+            records = self._list_records()
             records_to_update = [
                 record for record in records if record['id'] == identifier]
         else:
-            records_to_update = self.list_records(type=type, name=name)
+            records_to_update = self._list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception(
@@ -288,15 +288,15 @@ class Provider(BaseProvider):
 
         original_level = LOGGER.getEffectiveLevel()
         LOGGER.setLevel(logging.WARNING)
-        self.delete_record(record_identifier)
+        self._delete_record(record_identifier)
 
         new_record = {
-            'type': type if type else records_to_update[0]['type'],
+            'type': rtype if rtype else records_to_update[0]['type'],
             'name': name if name else records_to_update[0]['name'],
             'content': content if content else records_to_update[0]['content']
         }
 
-        self.create_record(
+        self._create_record(
             new_record['type'], new_record['name'], new_record['content'])
         LOGGER.setLevel(original_level)
 
@@ -319,7 +319,7 @@ class Provider(BaseProvider):
     #   - mark as addition the update RecordSet with the subset of rrdatas if rrdatas is not empty
     #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #     for this type/name pair, all RecordSet needs to go away.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
 
         if identifier:
@@ -327,7 +327,7 @@ class Provider(BaseProvider):
                 results, identifier)
         else:
             changes = self._process_records_to_delete_by_parameters(
-                results, type, name, content)
+                results, rtype, name, content)
 
         if not changes:
             raise Exception(
@@ -337,7 +337,7 @@ class Provider(BaseProvider):
             '/managedZones/{0}/changes'.format(self.domain_id), data=changes)
 
         LOGGER.debug('delete_records: %s %s %s %s',
-                     identifier, type, name, content)
+                     identifier, rtype, name, content)
 
         return True
 

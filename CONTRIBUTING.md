@@ -48,7 +48,11 @@ thing you'll really need to do is is create the following file.
 Where `foo` should be replaced with the name of the DNS service in lowercase
 and without spaces or special characters (eg. `cloudflare`)
 
-Your provider file should contain 2 things:
+Your provider file should contain 3 things:
+
+- a `NAMESERVER_DOMAINS` which contains the domain(s) used by the DNS provider nameservers FQDNs
+(eg. Google Cloud DNS uses nameservers that have the FQDN pattern `ns-cloud-cX-googledomains.com`,
+so `NAMESERVER_DOMAINS` will be `['googledomains.com']`).
 
 - a `ProviderParser` which is used to add provider specific commandline arguments.
 eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
@@ -59,11 +63,11 @@ eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
 The [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py)
 defines the following functions, which must be overridden in your provider implementation:
 
-    - `authenticate`
-    - `create_record`
-    - `list_records`
-    - `update_record`
-    - `delete_record`
+    - `_authenticate`
+    - `_create_record`
+    - `_list_records`
+    - `_update_record`
+    - `_delete_record`
     - `_request`
 
 	It also provides a few helper functions which you can use to simplify your implemenation.
