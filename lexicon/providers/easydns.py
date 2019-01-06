@@ -52,9 +52,14 @@ class Provider(BaseProvider):
             self._put(
                 '/zones/records/add/{0}/{1}'.format(self.domain_id, rtype), record)
         except requests.exceptions.HTTPError as error:
+            # FIXME: adferrand 06/01/2019: Broken provider needs fixes.
+            # In fact, this except block will silently hide every HTTP error, as an except
+            # block without raise statement will implicitly hide the exception.
+            # In reality, tests of Easy DNS are failing...
+            # So this provider needs to be corrected.
+            if error.response.status_code == 400:
+                pass
             # http 400 is ok here, because the record probably already exists
-            if error.response.status_code != 400:
-                raise
         LOGGER.debug('create_record: %s', True)
         return True
 
