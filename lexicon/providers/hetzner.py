@@ -1,3 +1,4 @@
+"""Module provider for Hetzner"""
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
@@ -26,6 +27,7 @@ NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
+    """Generate a provider parser for Hetzner"""
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
                            '(robot) or Hetzner konsoleH (konsoleh)')
@@ -384,7 +386,7 @@ class Provider(BaseProvider):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._convert_content(rtype, content) == rdata):
-                        raw_rdata = self._clean_TXT_record({'type': rtype,
+                        raw_rdata = self._clean_txt_record({'type': rtype,
                                                             'content': rdata})['content']
                         data = {
                             'type': rtype,

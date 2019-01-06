@@ -180,7 +180,7 @@ class Provider(BaseProvider):
                     rec['is_dynamic'] = True
                 else:
                     rec['is_dynamic'] = False
-                rec = self._clean_TXT_record(rec)
+                rec = self._clean_txt_record(rec)
                 new_records.append(rec)
             records = new_records
             if id:

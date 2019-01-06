@@ -1,3 +1,4 @@
+"""Module provider for Vultr"""
 from __future__ import absolute_import
 import logging
 
@@ -11,19 +12,19 @@ NAMESERVER_DOMAINS = ['vultr.com']
 
 
 def provider_parser(subparser):
+    """Generate provider parser for Vultr"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Vultr"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://api.vultr.com/v1'
 
     def _authenticate(self):
-
         payload = self._get('/dns/list')
 
         if not [item for item in payload if item['domain'] == self.domain]:
@@ -46,7 +47,7 @@ class Provider(BaseProvider):
             record['data'] = content
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
-        payload = self._post('/dns/create_record', record)
+        self._post('/dns/create_record', record)
 
         LOGGER.debug('create_record: %s', True)
         return True
@@ -55,8 +56,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
-
         payload = self._get('/dns/records', {'domain': self.domain_id})
         records = []
         for record in payload:
@@ -67,7 +66,7 @@ class Provider(BaseProvider):
                 'content': record['data'],
                 'id': record['RECORDID']
             }
-            processed_record = self._clean_TXT_record(processed_record)
+            processed_record = self._clean_txt_record(processed_record)
             records.append(processed_record)
 
         if rtype:
@@ -100,7 +99,7 @@ class Provider(BaseProvider):
             else:
                 data['data'] = content
 
-        payload = self._post('/dns/update_record', data)
+        self._post('/dns/update_record', data)
 
         LOGGER.debug('update_record: %s', True)
         return True
@@ -122,7 +121,7 @@ class Provider(BaseProvider):
                 'domain': self.domain_id,
                 'RECORDID': record_id
             }
-            payload = self._post('/dns/delete_record', data)
+            self._post('/dns/delete_record', data)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -142,13 +141,13 @@ class Provider(BaseProvider):
             'API-Key': self._get_provider_option('auth_token')
         }
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=data,
-                             headers=default_headers)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=data,
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
 
         if action == 'DELETE' or action == 'PUT' or action == 'POST':
             # vultr handles succss/failure via HTTP Codes, Only GET returns a response.
-            return r.text
-        return r.json()
+            return response.text
+        return response.json()

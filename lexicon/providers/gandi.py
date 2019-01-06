@@ -149,7 +149,7 @@ class Provider(BaseProvider):
                     'id': query_result['rrset_name'],
                 }
                 # cleanup potential quoting if suitable
-                self._clean_TXT_record(record)
+                self._clean_txt_record(record)
                 records.append(record)
         # filter for content, if requested
         if content is not None:

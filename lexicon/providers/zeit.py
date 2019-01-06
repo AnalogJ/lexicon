@@ -1,3 +1,4 @@
+"""Module provider for Zeit"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['zeit.world']
 
 
 def provider_parser(subparser):
+    """Generate provider parser for Zeit"""
     subparser.description = '''
         Zeit Provider requires a token to access its API.
         You can generate one for your account on the following URL:
@@ -50,13 +52,16 @@ class Provider(BaseProvider):
         raw_records = result['records']
         if rtype:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['type'] == rtype]
+                raw_record for raw_record in raw_records
+                if raw_record['type'] == rtype]
         if name:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['name'] == self._relative_name(name)]
+                raw_record for raw_record in raw_records
+                if raw_record['name'] == self._relative_name(name)]
         if content:
             raw_records = [
-                raw_record for raw_record in raw_records if raw_record['value'] == content]
+                raw_record for raw_record in raw_records
+                if raw_record['value'] == content]
 
         records = []
         for raw_record in raw_records:
@@ -96,7 +101,8 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         # Zeit do not allow to update a record, only add or remove.
-        # So we get the corresponding record, dump or update its content and insert it as a new record.
+        # So we get the corresponding record, dump or update
+        # its content and insert it as a new record.
         # Then we remove the old record.
         records = []
         if identifier:
@@ -111,9 +117,9 @@ class Provider(BaseProvider):
                 'No record found for identifer: {0}'.format(identifier))
 
         if len(records) > 1:
-            LOGGER.warn(
-                'Multiple records have been found for given parameters. Only first one will be updated (id: {0})'.format(
-                    records[0]['id']))
+            LOGGER.warning(
+                'Multiple records have been found for given parameters. '
+                'Only first one will be updated (id: %s)', records[0]['id'])
 
         data = {
             'type': rtype,

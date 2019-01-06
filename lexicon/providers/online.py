@@ -136,7 +136,7 @@ class Provider(BaseProvider):
                 'content': record['data'],
                 'priority': record['aux'] if 'aux' in record else ''
             }
-            records.append(self._clean_TXT_record(processed_record))
+            records.append(self._clean_txt_record(processed_record))
 
         if type:
             records = [record for record in records if record['type'] == type]

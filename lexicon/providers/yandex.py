@@ -1,3 +1,4 @@
+"""Module provider for Yandex"""
 from __future__ import absolute_import
 import json
 import logging
@@ -16,13 +17,14 @@ NAMESERVER_DOMAINS = ['yandex.com']
 
 
 def provider_parser(subparser):
+    """Generate parser provider for Yandex"""
     subparser.add_argument(
         "--auth-token",
         help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Yandex"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -56,15 +58,15 @@ class Provider(BaseProvider):
         records = []
         payload = {}
 
-        next = url
-        while next is not None:
-            payload = self._get(next)
+        next_url = url
+        while next_url is not None:
+            payload = self._get(next_url)
             if 'links' in payload \
                     and 'pages' in payload['links'] \
                     and 'next' in payload['links']['pages']:
-                next = payload['links']['pages']['next']
+                next_url = payload['links']['pages']['next']
             else:
-                next = None
+                next_url = None
 
             for record in payload['records']:
                 processed_record = {
@@ -93,7 +95,8 @@ class Provider(BaseProvider):
 
         if not identifier:
             LOGGER.debug(
-                'Domain ID (domain) and Identifier (record_id) is mandatory parameters for this case')
+                'Domain ID (domain) and Identifier (record_id) '
+                'is mandatory parameters for this case')
             return False
 
         data = ''
@@ -122,7 +125,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._post(
+            self._post(
                 '/del', {}, 'domain={0}&record_id={1}'.format(self.domain_id, record_id))
 
         # return self._check_exitcode(payload, 'delete_record')
@@ -143,15 +146,15 @@ class Provider(BaseProvider):
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
 
-        r = requests.request(action, url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
         if action == 'DELETE':
             return ''
         else:
-            return r.json()
+            return response.json()
 
     def _check_exitcode(self, payload, title):
         if payload['success'] == 'ok':
