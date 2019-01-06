@@ -170,7 +170,7 @@ class Provider(object):
             record_name = record_name.rstrip('.')
         return record_name
 
-    def _clean_TXT_record(self, record):
+    def _clean_txt_record(self, record):
         if record['type'] == 'TXT':
             # Some providers have quotes around the TXT records,
             # so we're going to remove those extra quotes

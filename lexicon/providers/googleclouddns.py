@@ -181,7 +181,7 @@ class Provider(BaseProvider):
                     'ttl': rrset['ttl'],
                     'content': rrdata
                 }
-                self._clean_TXT_record(record)
+                self._clean_txt_record(record)
                 record['id'] = Provider._identifier(record)
                 records.append(record)
 
@@ -353,7 +353,7 @@ class Provider(BaseProvider):
                     'content': rrdata
                 }
 
-                self._clean_TXT_record(record)
+                self._clean_txt_record(record)
                 record_identifier = Provider._identifier(record)
 
                 if identifier == record_identifier:

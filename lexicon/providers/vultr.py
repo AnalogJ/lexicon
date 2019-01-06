@@ -66,7 +66,7 @@ class Provider(BaseProvider):
                 'content': record['data'],
                 'id': record['RECORDID']
             }
-            processed_record = self._clean_TXT_record(processed_record)
+            processed_record = self._clean_txt_record(processed_record)
             records.append(processed_record)
 
         if rtype:

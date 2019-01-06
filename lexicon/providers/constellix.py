@@ -125,7 +125,7 @@ class Provider(BaseProvider):
                     'id': record['id']
                 }
 
-                processed_record = self._clean_TXT_record(processed_record)
+                processed_record = self._clean_txt_record(processed_record)
                 records.append(processed_record)
 
         records = self._filter_records(

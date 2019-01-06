@@ -384,7 +384,7 @@ class Provider(BaseProvider):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._convert_content(rtype, content) == rdata):
-                        raw_rdata = self._clean_TXT_record({'type': rtype,
+                        raw_rdata = self._clean_txt_record({'type': rtype,
                                                             'content': rdata})['content']
                         data = {
                             'type': rtype,
