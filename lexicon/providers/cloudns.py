@@ -1,3 +1,4 @@
+"""Provider module for CloudNS"""
 from __future__ import absolute_import
 import logging
 
@@ -11,6 +12,7 @@ NAMESERVER_DOMAINS = ['cloudns.net']
 
 
 def provider_parser(subparser):
+    """Generate provider parser for CloudNS"""
     identity_group = subparser.add_mutually_exclusive_group()
     identity_group.add_argument(
         "--auth-id", help="specify user id for authentication")
@@ -25,6 +27,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
+    """Provider class for CloudNS"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -39,7 +42,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
         existing_records = self._list_records(rtype, name, content)
-        if len(existing_records) > 0:
+        if existing_records:
             return True
 
         # Build parameters for adding a new record
@@ -135,7 +138,7 @@ class Provider(BaseProvider):
 
         for record_id in delete_record_id:
             # Delete existing record by calling the ClouDNS API
-            payload = self._post(
+            self._post(
                 '/dns/delete-record.json', {'domain-name': self.domain_id, 'record-id': record_id})
 
         LOGGER.debug('delete_record: %s', True)
@@ -157,15 +160,16 @@ class Provider(BaseProvider):
         elif self._get_provider_option('auth_subuser'):
             return {'sub-auth-user': self._get_provider_option(
                 'auth_subuser'), 'auth-password': self._get_provider_option('auth_password')}
-        elif self._get_provider_option('auth_id') or self._get_provider_option('auth_subid') or self._get_provider_option('auth_subuser'):
+        elif (self._get_provider_option('auth_id') or self._get_provider_option('auth_subid')
+              or self._get_provider_option('auth_subuser')):
             # All the options were passed with a fallback value, return an empty dictionary.
             return {}
         else:
             raise Exception(
                 'No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser')
 
-    def _find_record_identifier(self, type, name, content):
-        records = self._list_records(type, name, content)
+    def _find_record_identifier(self, rtype, name, content):
+        records = self._list_records(rtype, name, content)
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']
@@ -184,13 +188,14 @@ class Provider(BaseProvider):
             data.update(self._build_authentication_data())
 
         # Fire request against ClouDNS API and parse result as JSON
-        r = requests.request(action, self.api_endpoint +
-                             url, params=query_params, data=data)
-        r.raise_for_status()
-        payload = r.json()
+        response = requests.request(action, self.api_endpoint +
+                                    url, params=query_params, data=data)
+        response.raise_for_status()
+        payload = response.json()
 
         # Check ClouDNS specific status code and description
-        if 'status' in payload and 'statusDescription' in payload and payload['status'] != 'Success':
+        if ('status' in payload and 'statusDescription' in payload
+                and payload['status'] != 'Success'):
             raise Exception('ClouDNS API request has failed: ' +
                             payload['statusDescription'])
 

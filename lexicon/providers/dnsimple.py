@@ -1,3 +1,4 @@
+"""Module provider for DNS Simple"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['dnsimple.com']
 
 
 def provider_parser(subparser):
+    """Generate provider parser for DNS Simple"""
     subparser.add_argument(
         "--auth-token", help="specify api token for authentication")
     subparser.add_argument(
@@ -24,7 +26,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for DNS Simple"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -42,7 +44,7 @@ class Provider(BaseProvider):
         for account in payload:
             dompayload = self._get(
                 '/{0}/domains'.format(account['id']), query_params={'name_like': self.domain})
-            if len(dompayload) > 0 and dompayload[0]['id']:
+            if dompayload and dompayload[0]['id']:
                 self.account_id = account['id']
                 self.domain_id = dompayload[0]['id']
 
@@ -79,13 +81,14 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
+        filter_query = {}
         if rtype:
-            filter['type'] = rtype
+            filter_query['type'] = rtype
         if name:
-            filter['name'] = self._relative_name(name)
+            filter_query['name'] = self._relative_name(name)
         payload = self._get(
-            '/{0}/zones/{1}/records'.format(self.account_id, self.domain), query_params=filter)
+            '/{0}/zones/{1}/records'.format(self.account_id, self.domain),
+            query_params=filter_query)
 
         records = []
         for record in payload:
@@ -93,8 +96,8 @@ class Provider(BaseProvider):
                 'type': record['type'],
                 'name': '{}'.format(
                     self.domain) if record['name'] == "" else '{0}.{1}'.format(
-                    record['name'],
-                    self.domain),
+                        record['name'],
+                        self.domain),
                 'ttl': record['ttl'],
                 'content': record['content'],
                 'id': record['id']}
@@ -132,7 +135,7 @@ class Provider(BaseProvider):
             data['regions'] = self._get_provider_option('regions')
 
         for identifier in identifiers:
-            payload = self._patch(
+            self._patch(
                 '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, identifier), data)
             LOGGER.debug('update_record: %s', identifier)
 
@@ -152,7 +155,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, record_id))
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
@@ -175,7 +178,8 @@ class Provider(BaseProvider):
         if self._get_provider_option('auth_token'):
             default_headers['Authorization'] = "Bearer {0}".format(
                 self._get_provider_option('auth_token'))
-        elif self._get_provider_option('auth_username') and self._get_provider_option('auth_password'):
+        elif (self._get_provider_option('auth_username')
+              and self._get_provider_option('auth_password')):
             default_auth = (self._get_provider_option(
                 'auth_username'), self._get_provider_option('auth_password'))
             if self._get_provider_option('auth_2fa'):
@@ -184,16 +188,16 @@ class Provider(BaseProvider):
         else:
             raise Exception('No valid authentication mechanism found')
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        if r.text and r.json()['data'] is None:
+        response.raise_for_status()
+        if response.text and response.json()['data'] is None:
             raise Exception('No data returned')
 
-        return r.json()['data'] if r.text else None
+        return response.json()['data'] if response.text else None
 
     def _patch(self, url='/', data=None, query_params=None):
         return self._request('PATCH', url, data=data, query_params=query_params)

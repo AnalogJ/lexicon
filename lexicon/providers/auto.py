@@ -3,7 +3,6 @@ from __future__ import absolute_import
 import argparse
 import importlib
 import logging
-import os
 import pkgutil
 import re
 import subprocess
@@ -101,6 +100,7 @@ def _relevant_provider_for_domain(domain):
 
 
 def provider_parser(subparser):
+    """Generate provider parser for auto provider"""
     subparser.description = '''
         Provider 'auto' enables the Lexicon provider auto-discovery.
         Based on the nameservers declared for the given domain,
@@ -119,10 +119,10 @@ def provider_parser(subparser):
         parser = argparse.ArgumentParser(add_help=False)
         provider_module.provider_parser(parser)
 
-        for action in parser._actions:
+        for action in parser._actions:  # pylint: disable=protected-access
             action.option_strings = [re.sub(
                 r'^--(.*)$', r'--{0}-\1'.format(provider_name), option)
-                for option in action.option_strings]
+                                     for option in action.option_strings]
             action.dest = 'auto_{0}_{1}'.format(provider_name, action.dest)
             subparser._add_action(action)  # pylint: disable=protected-access
 
@@ -188,7 +188,7 @@ class Provider(object):
         new_config.with_dict({'lexicon:provider_name': provider_name})
 
         target_prefix = 'auto_{0}_'.format(provider_name)
-        for config_source in self.config._config_sources:
+        for config_source in self.config._config_sources:  # pylint: disable=protected-access
             if not isinstance(config_source, ArgsConfigSource):
                 new_config.with_config_source(config_source)
             else:
