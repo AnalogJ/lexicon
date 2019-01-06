@@ -1,9 +1,10 @@
+"""Module provider for Transip"""
 from __future__ import absolute_import
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
 
-
+# Support various versions of Transip Python API
 try:
     from transip.service.objects import DnsEntry
 except ImportError:
@@ -23,6 +24,7 @@ NAMESERVER_DOMAINS = []
 
 
 def ProviderParser(subparser):
+    """Generate provider parser for Transip"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
@@ -30,15 +32,16 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
     """
+    Provider class for Transip
+
     provider_options can be overwritten by a Provider to setup custom defaults.
     They will be overwritten by any options set via the CLI or Env.
     order is:
 
     """
-
     def provider_options(self):
+        """Generate provider options specific for this Transip"""
         return {'ttl': 86400}
 
     def __init__(self, config):
@@ -58,8 +61,10 @@ class Provider(BaseProvider):
         )
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
+    # Make any requests required to get the domain's id for this provider,
+    # so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def _authenticate(self):
         # This request will fail when the domain does not exist,
         # allowing us to check for existence
@@ -67,7 +72,6 @@ class Provider(BaseProvider):
         try:
             self.client.get_info(domain)
         except BaseException:
-            raise
             raise Exception("Could not retrieve information about {0}, "
                             "is this domain yours?".format(domain))
         self.domain_id = domain
@@ -89,7 +93,7 @@ class Provider(BaseProvider):
         }))
 
         self.client.set_dns_entries(self.domain, records)
-        status = len(self._list_records(
+        status = len(self._list_records_internal(
             rtype, name, content, show_output=False)) >= 1
         LOGGER.debug('create_record: %s', status)
         return status
@@ -97,12 +101,15 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None, show_output=True):
+    def _list_records(self, rtype=None, name=None, content=None):
+        return self._list_records_internal(rtype=rtype, name=name, content=content)
+
+    def _list_records_internal(self, rtype=None, name=None, content=None, show_output=True):
         all_records = self._convert_records(
             self.client.get_info(self.domain).dnsEntries)
         records = self._filter_records(
             records=all_records,
-            type=rtype,
+            rtype=rtype,
             name=name,
             content=content
         )
@@ -117,7 +124,7 @@ class Provider(BaseProvider):
             raise Exception(
                 "At least one of rtype, name or content must be specified.")
 
-        all_records = self._list_records(show_output=False)
+        all_records = self._list_records_internal(show_output=False)
         filtered_records = self._filter_records(all_records, rtype, name)
 
         for record in filtered_records:
@@ -131,7 +138,7 @@ class Provider(BaseProvider):
 
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
-        status = len(self._list_records(
+        status = len(self._list_records_internal(
             rtype, name, content, show_output=False)) >= 1
         LOGGER.debug('update_record: %s', status)
         return status
@@ -144,7 +151,7 @@ class Provider(BaseProvider):
             raise Exception(
                 "At least one of rtype, name or content must be specified.")
 
-        all_records = self._list_records(show_output=False)
+        all_records = self._list_records_internal(show_output=False)
         filtered_records = self._filter_records(
             all_records, rtype, name, content)
 
@@ -153,7 +160,7 @@ class Provider(BaseProvider):
 
         self.client.set_dns_entries(
             self.domain, self._convert_records_back(all_records))
-        status = len(self._list_records(
+        status = len(self._list_records_internal(
             rtype, name, content, show_output=False)) == 0
         LOGGER.debug('delete_record: %s', status)
         return status
@@ -169,8 +176,8 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, type, target):
-        if type == "CNAME" and not target.endswith("."):
+    def _bind_format_target(self, rtype, target):
+        if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
@@ -195,11 +202,15 @@ class Provider(BaseProvider):
         return [self._to_dns_entry(record) for record in _records]
 
     # Filter a list of records based on criteria
-    def _filter_records(self, records, type=None, name=None, content=None):
+    def _filter_records(self, records, rtype=None, name=None, content=None):
         _records = []
         for record in records:
-            if (not type or record['type'] == type) and \
+            if (not rtype or record['type'] == rtype) and \
                (not name or self._full_name(record['name']) == self._full_name(name)) and \
                (not content or record['content'] == content):
                 _records.append(record)
         return _records
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used in Transip.
+        pass

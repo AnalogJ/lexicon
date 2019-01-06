@@ -1,3 +1,22 @@
+"""
+Lexicon Zonomi and Rimuhosting Provider
+
+Author: Juan Rossi, 2017
+
+Zonomi API Docs: https://zonomi.com/app/dns/dyndns.jsp
+Rimuhosting API Docs: https://rimuhosting.com/dns/dyndns.jsp
+
+Implementation notes:
+* Lots of tricks taken from the PowerDNS API
+* The Zonomi API does not assign a unique identifier to each record in the way
+  that Lexicon expects. We work around this by creating an ID based on the record
+  name, type and content, which when taken together are always unique
+* The  API has no notion of 'create a single record' or 'delete a single
+  record'. All operations are either 'replace the RRSet with this new set of records'
+  or 'delete all records for this name and type. Similarly, there is no notion of
+  'change the content of this record', because records are identified by their name,
+  type and content.
+"""
 from __future__ import absolute_import
 import logging
 from xml.etree import ElementTree
@@ -15,26 +34,9 @@ APIENTRYPOINT = {
 
 NAMESERVER_DOMAINS = ['zonomi.com']
 
-# Lexicon Zonomi and Rimuhosting Provider
-#
-# Author: Juan Rossi, 2017
-#
-# Zonomi API Docs: https://zonomi.com/app/dns/dyndns.jsp
-# Rimuhosting API Docs: https://rimuhosting.com/dns/dyndns.jsp
-#
-# Implementation notes:
-# * Lots of tricks taken from the PowerDNS API
-# * The Zonomi API does not assign a unique identifier to each record in the way
-#   that Lexicon expects. We work around this by creating an ID based on the record
-#   name, type and content, which when taken together are always unique
-# * The  API has no notion of 'create a single record' or 'delete a single
-#   record'. All operations are either 'replace the RRSet with this new set of records'
-#   or 'delete all records for this name and type. Similarly, there is no notion of
-#   'change the content of this record', because records are identified by their name,
-#   type and content.
-
 
 def ProviderParser(subparser):
+    """Generate provider parser for Zonomi"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
     subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[
@@ -42,7 +44,7 @@ def ProviderParser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Zonomi"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -69,16 +71,16 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-    def _make_identifier(self, type, name, content):
-        return "{}/{}={}".format(type, self._full_name(name), content)
+    def _make_identifier(self, rtype, name, content):
+        return "{}/{}={}".format(rtype, self._full_name(name), content)
 
     def _parse_identifier(self, identifier):
         parts = identifier.split('/')
-        type = parts[0]
+        rtype = parts[0]
         parts = parts[1].split('=')
         name = parts[0]
         content = "=".join(parts[1:])
-        return type, name, content
+        return rtype, name, content
 
     def _create_record(self, rtype, name, content):
         request = {
@@ -199,12 +201,12 @@ class Provider(BaseProvider):
         else:
             query_params['api_key'] = self._get_provider_option('auth_token')
 
-        r = requests.request(action, self.api_endpoint +
-                             url, params=query_params)
-        tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
+        response = requests.request(
+            action, self.api_endpoint + url, params=query_params)
+        tree = ElementTree.ElementTree(ElementTree.fromstring(response.content))
         root = tree.getroot()
         if root.tag == 'error':
             raise Exception('An error occurred: {0}'.format(root.text))
         else:
-            r.raise_for_status()
+            response.raise_for_status()
         return root
