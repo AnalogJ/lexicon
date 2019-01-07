@@ -120,10 +120,11 @@ class Provider(BaseProvider):
 
         LOGGER.debug('delete_records: %s', delete_record_id)
 
+        record_id = None
         for record_id in delete_record_id:
-            payload = self._get('/dns.zone_record_delete', {'id': record_id})
+            self._get('/dns.zone_record_delete', {'id': record_id})
 
-        if len(record_id) > 0:
+        if record_id:
             self._get('/dns.reload')
 
         LOGGER.debug('delete_record: %s', True)

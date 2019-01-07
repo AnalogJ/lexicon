@@ -1,8 +1,8 @@
+"""Module provider for Namecheap"""
 from __future__ import absolute_import
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
-
 
 try:
     # this module uses the optional `PyNamecheap` library from PyPi
@@ -16,6 +16,7 @@ NAMESERVER_DOMAINS = ['namecheap.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Namecheap"""
     subparser.add_argument(
         '--auth-token',
         help='specify api token for authentication'
@@ -116,7 +117,7 @@ class Provider(BaseProvider):
         extra_payload = {'DomainName': self.domain, }
 
         try:
-            xml = self.client._call('namecheap.domains.getInfo', extra_payload)
+            xml = self.client._call('namecheap.domains.getInfo', extra_payload)  # pylint: disable=protected-access
         except namecheap.ApiError as err:
             # this will happen if there is an API connection error
             # OR if the user is not permissioned to manage this domain
@@ -279,3 +280,7 @@ class Provider(BaseProvider):
         }
 
         return processed_record
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used by Namecheap provider
+        pass
