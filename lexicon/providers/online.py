@@ -191,7 +191,7 @@ class Provider(BaseProvider):
             self._patch('/domain/{0}/version/{1}/zone/{2}'.format(
                 self.domain_id,
                 self.passive_zone,
-                id
+                identifier
             ), record)
 
         except BaseException as error:
@@ -200,7 +200,7 @@ class Provider(BaseProvider):
 
         self._enable_zone()
         # If it didn't raise from the http status code, then we're good
-        LOGGER.debug('update_record: %s', id)
+        LOGGER.debug('update_record: %s', identifier)
         return True
 
     # Delete an existing record.
