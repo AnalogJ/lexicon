@@ -74,8 +74,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
-
         payload = self._get('/record/' + self.domain_id,
                             {'host_id': 0, 'offset': 0, 'row_num': 2000})
         records = []
@@ -127,7 +125,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
 
-        payload = self._put('/record/' + identifier, data)
+        self._put('/record/' + identifier, data)
 
         LOGGER.debug('update_record: %s', True)
         return True
@@ -145,8 +143,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
-                '/record/' + record_id + '/' + self.domain_id)
+            self._delete('/record/' + record_id + '/' + self.domain_id)
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -184,10 +181,8 @@ class Provider(BaseProvider):
                     self._get_provider_option('auth_token')).encode('utf-8')).hexdigest(),
             'API-FORMAT': 'json'}
         default_auth = None
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=data,
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=data, headers=default_headers, auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

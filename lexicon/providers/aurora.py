@@ -17,6 +17,7 @@ NAMESERVER_DOMAINS = ['auroradns.eu']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Aurora"""
     subparser.add_argument(
         "--auth-api-key", help="specify API key for authentication")
     subparser.add_argument("--auth-secret-key",
@@ -51,7 +52,7 @@ class Provider(BaseProvider):
             data['ttl'] = self._get_lexicon_option('ttl')
         payload = self._post('/zones/{0}/records'.format(self.domain_id), data)
 
-        LOGGER.debug('create_record: {0}'.format(payload))
+        LOGGER.debug('create_record: %s', payload)
         return payload
 
     # List all records. Return an empty list if no records found
@@ -178,8 +179,8 @@ class Provider(BaseProvider):
         auth_b64 = base64.b64encode(auth.encode('utf-8'))
         return 'AuroraDNSv1 %s' % (auth_b64.decode('utf-8'))
 
-    def _find_record_identifier(self, type, name, content):
-        records = self._list_records(type, name, content)
+    def _find_record_identifier(self, rtype, name, content):
+        records = self._list_records(rtype, name, content)
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']

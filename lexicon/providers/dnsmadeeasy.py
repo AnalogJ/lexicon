@@ -1,8 +1,7 @@
+"""Module provider for DNSMadeEasy"""
 from __future__ import absolute_import
-import contextlib
 import hmac
 import json
-import locale
 import logging
 from builtins import bytes
 from email.utils import formatdate
@@ -18,6 +17,7 @@ NAMESERVER_DOMAINS = ['dnsmadeeasy']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for DNSMadeEasy"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
@@ -25,7 +25,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for DNSMadeEasy"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -37,11 +37,11 @@ class Provider(BaseProvider):
         try:
             payload = self._get('/dns/managed/name',
                                 {'domainname': self.domain})
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 404:
                 payload = {}
             else:
-                raise e
+                raise
 
         if not payload or not payload['id']:
             raise Exception('No domain found')
@@ -61,8 +61,8 @@ class Provider(BaseProvider):
         try:
             payload = self._post(
                 '/dns/managed/{0}/records/'.format(self.domain_id), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code != 400:
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code != 400:
                 raise
 
                 # http 400 is ok here, because the record probably already exists
@@ -73,13 +73,13 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
+        filter_query = {}
         if rtype:
-            filter['type'] = rtype
+            filter_query['type'] = rtype
         if name:
-            filter['recordName'] = self._relative_name(name)
+            filter_query['recordName'] = self._relative_name(name)
         payload = self._get(
-            '/dns/managed/{0}/records'.format(self.domain_id), filter)
+            '/dns/managed/{0}/records'.format(self.domain_id), filter_query)
 
         records = []
         for record in payload['data']:
@@ -116,7 +116,7 @@ class Provider(BaseProvider):
         if rtype:
             data['type'] = rtype
 
-        payload = self._put(
+        self._put(
             '/dns/managed/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         LOGGER.debug('update_record: %s', True)
@@ -135,7 +135,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/dns/managed/{0}/records/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
@@ -165,14 +165,14 @@ class Provider(BaseProvider):
         default_headers['x-dnsme-requestDate'] = request_date
         default_headers['x-dnsme-hmac'] = hashed.hexdigest()
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
-        if action == 'DELETE' or action == 'PUT':
-            return r.text
-        return r.json()
+        if action in ['DELETE', 'PUT']:
+            return response.text
+        return response.json()

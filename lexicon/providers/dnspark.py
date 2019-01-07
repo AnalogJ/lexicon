@@ -1,3 +1,4 @@
+"""Module provider for DNSPark"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['dnspark.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for DNSPark"""
     subparser.add_argument(
         "--auth-username", help="specify api key for authentication")
     subparser.add_argument(
@@ -19,7 +21,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for DNSPark"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -42,13 +44,11 @@ class Provider(BaseProvider):
             'rtype': rtype,
             'rdata': content
         }
-        payload = {}
         try:
-            payload = self._post('/dns/{0}'.format(self.domain_id), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
-            raise e
+            self._post('/dns/{0}'.format(self.domain_id), record)
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code != 400:
+                raise
             # http 400 is ok here, because the record probably already exists
         LOGGER.debug('create_record: %s', True)
         return True
@@ -57,8 +57,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
-
         payload = self._get('/dns/{0}'.format(self.domain_id))
         records = []
         for record in payload['records']:
@@ -85,7 +83,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {
             'ttl': self._get_lexicon_option('ttl')
         }
@@ -96,7 +93,7 @@ class Provider(BaseProvider):
         if content:
             data['rdata'] = content
 
-        payload = self._put('/dns/{0}'.format(identifier), data)
+        self._put('/dns/{0}'.format(identifier), data)
 
         LOGGER.debug('update_record: %s', True)
         return True
@@ -114,7 +111,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete('/dns/{0}'.format(record_id))
+            self._delete('/dns/{0}'.format(record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -134,10 +131,10 @@ class Provider(BaseProvider):
         default_auth = (self._get_provider_option('auth_username'),
                         self._get_provider_option('auth_token'))
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

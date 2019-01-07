@@ -12,7 +12,7 @@ NAMESERVER_DOMAINS = ['vultr.com']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Vultr"""
+    """Configure provider parser for Vultr"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 

@@ -1,29 +1,27 @@
-# The Constellix API has some limitations.  We try to paper over them here, but here's what you need to be
-# aware of:
-#
-#  1) SOA records are not first-class record types in the Constellix API, so are not supported.
-#  2) We expect all records to use the "Standard" record type, so failover, pools or round robin with
-#     failover are not supported.
-#  3) Because Constellix represents record sets as a single record with multiple values attached, not as
-#     a set of separate records, create and delete operations end up becoming read/update operations when
-#     working with record sets.
-#
-#     Since these aren't atomic operations, it creates a small window where you could have data loss
-#     if multiple processes were trying to work with the same record set.
-#
-#     This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
-#     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
+"""
+The Constellix API has some limitations.  We try to paper over them here,
+but here's what you need to be aware of:
 
+ 1) SOA records are not first-class record types in the Constellix API, so are not supported.
+ 2) We expect all records to use the "Standard" record type, so failover, pools or round robin with
+    failover are not supported.
+ 3) Because Constellix represents record sets as a single record with multiple values attached,
+    not as a set of separate records, create and delete operations end up becoming read/update
+    operations when working with record sets.
+
+    Since these aren't atomic operations, it creates a small window where you could have data loss
+    if multiple processes were trying to work with the same record set.
+
+    This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
+    out to the Constellix folks to see if they have plans to clean up the API to resolve this.
+"""
 from __future__ import absolute_import
 import base64
-import contextlib
 import hashlib
 import hmac
 import json
-import locale
 import logging
 import time
-from builtins import bytes
 
 import requests
 from lexicon.providers.base import Provider as BaseProvider
@@ -35,6 +33,7 @@ NAMESERVER_DOMAINS = ['constellix.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Constellix"""
     subparser.add_argument(
         "--auth-username", help="specify the API key username for authentication")
     subparser.add_argument(
@@ -42,20 +41,21 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider clss for Constellix"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
+        self.domain_details = None
         self.api_endpoint = 'https://api.dns.constellix.com/v1'
 
     def _authenticate(self):
         try:
             payload = self._get('/domains/')
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 404:
                 payload = {}
             else:
-                raise e
+                raise error
 
         for domain in payload:
             if domain['name'] == self.domain:
@@ -81,14 +81,14 @@ class Provider(BaseProvider):
         try:
             payload = self._post(
                 '/domains/{0}/records/{1}/'.format(self.domain_id, rtype), record)
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.HTTPError as error:
             # If there is already a record with that name, we need to do an update.
-            if e.response.status_code == 400:
+            if error.response.status_code == 400:
                 existing_records = self._list_records(rtype=rtype, name=name)
                 new_content = [r['content'] for r in existing_records]
 
-                # Only do the update if we are creating a record that doesn't already exist, otherwise
-                # Constellix will throw an error.
+                # Only do the update if we are creating a record that doesn't already exist,
+                # otherwise Constellix will throw an error.
                 if content not in new_content:
                     new_content.append(content)
                     self._update_record(
@@ -100,8 +100,10 @@ class Provider(BaseProvider):
 
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
+    def _list_records(self, rtype=None, name=None, content=None):
+        return self._list_records_internal(rtype=rtype, name=name, content=content)
 
-    def _list_records(self, rtype=None, name=None, content=None, identifier=None):
+    def _list_records_internal(self, rtype=None, name=None, content=None, identifier=None):
         self._check_type(rtype)
 
         # Oddly, Constellix supports API-level filtering for everything except LOC
@@ -116,12 +118,12 @@ class Provider(BaseProvider):
         records = []
 
         for record in payload:
-            for rr in record['roundRobin']:
+            for a_record in record['roundRobin']:
                 processed_record = {
                     'type': record['type'],
                     'name': '{0}.{1}'.format(record['name'], self.domain),
                     'ttl': record['ttl'],
-                    'content': rr['value'],
+                    'content': a_record['value'],
                     'id': record['id']
                 }
 
@@ -129,7 +131,7 @@ class Provider(BaseProvider):
                 records.append(processed_record)
 
         records = self._filter_records(
-            records, type=rtype, name=name, content=content, identifier=identifier)
+            records, rtype=rtype, name=name, content=content, identifier=identifier)
 
         LOGGER.debug('list_records: %s', records)
         return records
@@ -142,7 +144,7 @@ class Provider(BaseProvider):
             content = [content]
 
         if identifier and (not rtype or not name):
-            record = self._list_records(identifier=identifier)
+            record = self._list_records_internal(identifier=identifier)
             rtype = record[0]['type']
             name = record[0]['name']
         elif not identifier:
@@ -160,11 +162,11 @@ class Provider(BaseProvider):
 
         data['roundRobin'] = []
 
-        for c in content:
+        for a_content in content:
             data['roundRobin'].append({'disableFlag': False,
-                                       'value': c})
+                                       'value': a_content})
 
-        payload = self._put(
+        self._put(
             '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, rtype, identifier), data)
 
         LOGGER.debug('update_record: %s', True)
@@ -175,7 +177,7 @@ class Provider(BaseProvider):
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         self._check_type(rtype)
 
-        records = self._list_records(
+        records = self._list_records_internal(
             identifier=identifier, rtype=rtype, name=name)
 
         # If we are filtering delete records by content and we are going to have
@@ -196,7 +198,7 @@ class Provider(BaseProvider):
             rtype = records[0]['type']
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/domains/{0}/records/{1}/{2}/'.format(self.domain_id, rtype, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
@@ -204,22 +206,22 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
-    def _check_type(self, type=None):
+    def _check_type(self, rtype=None):
         # Constellix doesn't treat SOA as a separate record type, so we bail on SOA modificiations.
         # It looks like it would be possible to fake SOA CRUD, so an area for possible future
         # improvement
 
-        if type == 'SOA':
+        if rtype == 'SOA':
             raise Exception(
-                '{0} record type is not supported in the Constellix Provider'.format(type))
+                '{0} record type is not supported in the Constellix Provider'.format(rtype))
 
         return True
 
-    def _filter_records(self, records, type=None, name=None, content=None, identifier=None):
+    def _filter_records(self, records, rtype=None, name=None, content=None, identifier=None):
         _records = []
         for record in records:
             if (not identifier or record['id'] == identifier) and \
-               (not type or record['type'] == type) and \
+               (not rtype or record['type'] == rtype) and \
                (not name or record['name'] == self._full_name(name)) and \
                (not content or record['content'] == content):
                 _records.append(record)
@@ -246,15 +248,15 @@ class Provider(BaseProvider):
         default_headers['x-cnsdns-requestDate'] = request_date
         default_headers['x-cnsdns-hmac'] = base64.b64encode(hashed.digest())
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
-        if action == 'DELETE' or action == 'PUT':
-            return r.text
+        if action in ['DELETE' or action == 'PUT']:
+            return response.text
 
-        return r.json()
+        return response.json()

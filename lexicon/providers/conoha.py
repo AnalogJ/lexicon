@@ -1,3 +1,4 @@
+"""Module provider for Conoha"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,11 +13,13 @@ NAMESERVER_DOMAINS = ['conoha.io']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Conoha"""
     subparser.add_argument(
         "--auth-region", help="specify region. If empty, region `tyo1` will be used.")
     subparser.add_argument(
         "--auth-token",
-        help="specify token for authentication. If empty, the username and password will be used to create a token.")
+        help=("specify token for authentication. If empty, the username "
+              "and password will be used to create a token."))
     subparser.add_argument(
         "--auth-username",
         help="specify api username for authentication. Only used if --auth-token is empty.")
@@ -29,7 +32,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Conoha"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -41,8 +44,10 @@ class Provider(BaseProvider):
         self.auth_token = None
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
+    # Make any requests required to get the domain's id for this provider,
+    # so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def _authenticate(self):
         self.auth_token = self._get_provider_option('auth_token')
         if not self.auth_token:
@@ -50,16 +55,17 @@ class Provider(BaseProvider):
                     and self._get_provider_option('auth_password')):
                 raise Exception(
                     "auth_username and auth_password or auth_token must be specified.")
-            auth_response = self._send_request('POST', '{0}/tokens'
-                                               .format(self.auth_api_endpoint), {
-                                                   'auth': {
-                                                       'passwordCredentials': {
-                                                           'username': self._get_provider_option('auth_username'),
-                                                           'password': self._get_provider_option('auth_password')
-                                                       },
-                                                       'tenantId': self._get_provider_option('auth_tenant_id')
-                                                   }
-                                               })
+            auth_response = self._send_request(
+                'POST', '{0}/tokens'
+                .format(self.auth_api_endpoint), {
+                    'auth': {
+                        'passwordCredentials': {
+                            'username': self._get_provider_option('auth_username'),
+                            'password': self._get_provider_option('auth_password')
+                        },
+                        'tenantId': self._get_provider_option('auth_tenant_id')
+                    }
+                })
             self.auth_token = auth_response['access']['token']['id']
 
         payload = self._get('/domains', {
@@ -163,25 +169,30 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        r = requests.request(action, url, data=json.dumps(data), params=query_params, headers={
-            'X-Auth-Token': self.auth_token,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        })
+        response = requests.request(
+            action, url, data=json.dumps(data), params=query_params, headers={
+                'X-Auth-Token': self.auth_token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            })
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json() if r.headers['content-type'].startswith('application/json') else r.text
+        response.raise_for_status()
+        if response.headers['content-type'].startswith('application/json'):
+            return response.json()
+        else:
+            return response.text
 
     def _record_name(self, name):
         return '%s.' % name.rstrip('.') if name else None
 
-    def _record_payload(self, type, name, content):
+    def _record_payload(self, rtype, name, content):
         priority = self._get_lexicon_option('priority')
         ttl = self._get_lexicon_option('ttl')
         return {
             'name': self._fqdn_name(name) if name else None,
-            'type': type,
-            'data': self._record_name(content) if type in ("CNAME", "MX", "NS", "SRV") else content,
+            'type': rtype,
+            'data': self._record_name(content) if rtype in (
+                "CNAME", "MX", "NS", "SRV") else content,
             'priority': int(priority) if priority else None,
             'ttl': int(ttl) if ttl else None
         }
