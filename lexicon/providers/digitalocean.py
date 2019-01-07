@@ -1,3 +1,4 @@
+"""Module provider for Digital Ocean"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,25 +13,25 @@ NAMESERVER_DOMAINS = ['digitalocean.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Digital Ocean"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Digital Ocean"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://api.digitalocean.com/v2'
 
     def _authenticate(self):
-
-        payload = self._get('/domains/{0}'.format(self.domain))
+        self._get('/domains/{0}'.format(self.domain))
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):
         # check if record already exists
-        if len(self._list_records(rtype, name, content)) == 0:
+        if not self._list_records(rtype, name, content):
             record = {
                 'type': rtype,
                 'name': self._relative_name(name),
@@ -41,7 +42,7 @@ class Provider(BaseProvider):
                 # make sure a the data is always a FQDN for CNAMe.
                 record['data'] = record['data'].rstrip('.') + '.'
 
-            payload = self._post(
+            self._post(
                 '/domains/{0}/records'.format(self.domain_id), record)
         LOGGER.debug('create_record: %s', True)
         return True
@@ -54,15 +55,15 @@ class Provider(BaseProvider):
         records = []
         payload = {}
 
-        next = url
-        while next is not None:
-            payload = self._get(next)
+        next_url = url
+        while next_url is not None:
+            payload = self._get(next_url)
             if 'links' in payload \
                     and 'pages' in payload['links'] \
                     and 'next' in payload['links']['pages']:
-                next = payload['links']['pages']['next']
+                next_url = payload['links']['pages']['next']
             else:
-                next = None
+                next_url = None
 
             for record in payload['domain_records']:
                 processed_record = {
@@ -97,7 +98,7 @@ class Provider(BaseProvider):
         if content:
             data['data'] = content
 
-        payload = self._put(
+        self._put(
             '/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)
 
         LOGGER.debug('update_record: %s', True)
@@ -116,7 +117,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/domains/{0}/records/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
@@ -138,12 +139,11 @@ class Provider(BaseProvider):
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
 
-        r = requests.request(action, url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            return r.json()
+        return response.json()

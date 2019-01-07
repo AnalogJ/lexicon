@@ -13,7 +13,7 @@ NAMESERVER_DOMAINS = ['zeit.world']
 
 
 def provider_parser(subparser):
-    """Generate provider parser for Zeit"""
+    """Configure provider parser for Zeit"""
     subparser.description = '''
         Zeit Provider requires a token to access its API.
         You can generate one for your account on the following URL:

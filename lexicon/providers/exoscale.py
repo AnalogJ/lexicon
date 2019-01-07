@@ -69,15 +69,15 @@ class Provider(BaseProvider):
         An empty list is returned if no records are found.
         """
 
-        filter = {}
+        filter_query = {}
         if rtype:
-            filter["record_type"] = rtype
+            filter_query["record_type"] = rtype
         if name:
             name = self._relative_name(name)
-            filter["name"] = name
+            filter_query["name"] = name
         payload = self._get(
             "/v1/domains/{0}/records".format(self.domain),
-            query_params=filter,
+            query_params=filter_query,
         )
 
         records = []

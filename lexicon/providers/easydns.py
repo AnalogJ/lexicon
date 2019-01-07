@@ -1,3 +1,4 @@
+"""Module provider for EasyDNS"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['easydns.net']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for EasyDNS"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
@@ -19,7 +21,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for EasyDNS"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -46,15 +48,18 @@ class Provider(BaseProvider):
             'prio': 0,
             'rdata': content
         }
-        payload = {}
         try:
-            payload = self._put(
+            self._put(
                 '/zones/records/add/{0}/{1}'.format(self.domain_id, rtype), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
-
-                # http 400 is ok here, because the record probably already exists
+        except requests.exceptions.HTTPError as error:
+            # FIXME: adferrand 06/01/2019: Broken provider needs fixes.
+            # In fact, this except block will silently hide every HTTP error, as an except
+            # block without raise statement will implicitly hide the exception.
+            # In reality, tests of Easy DNS are failing...
+            # So this provider needs to be corrected.
+            if error.response.status_code == 400:
+                pass
+            # http 400 is ok here, because the record probably already exists
         LOGGER.debug('create_record: %s', True)
         return True
 
@@ -62,8 +67,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
-
         payload = self._get('/zones/records/all/{0}'.format(self.domain_id))
         records = []
         for record in payload['data']:
@@ -101,7 +104,7 @@ class Provider(BaseProvider):
         if content:
             data['rdata'] = content
 
-        payload = self._post('/zones/records/{0}'.format(identifier), data)
+        self._post('/zones/records/{0}'.format(identifier), data)
 
         LOGGER.debug('update_record: %s', True)
         return True
@@ -119,7 +122,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/zones/records/{0}/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
@@ -141,9 +144,9 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()
