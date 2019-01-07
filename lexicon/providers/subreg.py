@@ -1,5 +1,4 @@
 """Provide support to Lexicon for Subreg.cz DNS changes."""
-
 from __future__ import absolute_import
 import collections
 import logging
@@ -18,6 +17,7 @@ NAMESERVER_DOMAINS = ['subreg.cz']
 
 
 def provider_parser(subparser):
+    """Configure provider parser"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
@@ -25,6 +25,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
+    """Provider class for Subreg"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -34,8 +35,10 @@ class Provider(BaseProvider):
         self.api = client.service
 
     # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider, so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason, of if the domain does not exist.
+    # Make any requests required to get the domain's id for
+    # this provider, so it can be used in subsequent calls.
+    # Should throw an error if authentication fails for any reason,
+    # of if the domain does not exist.
     def _authenticate(self):
         """Logs-in the user and checks the domain name"""
         if not self._get_provider_option(
@@ -58,7 +61,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         """Creates a new unique record"""
         found = self._list_records(rtype=rtype, name=name, content=content)
-        if len(found) > 0:
+        if found:
             return True
 
         record = self._create_request_record(None, rtype, name, content,
@@ -73,7 +76,7 @@ class Provider(BaseProvider):
         """Updates a record. Name changes are allowed, but the record identifier will change"""
         if identifier is not None:
             if name is not None:
-                records = self._list_records(identifier=identifier)
+                records = self._list_records_internal(identifier=identifier)
                 if len(records) == 1 and records[0]['name'] != self._full_name(name):
                     # API does not allow us to update name directly
                     self._update_record_with_name(
@@ -87,17 +90,17 @@ class Provider(BaseProvider):
             self._update_record_with_id(guessed_record['id'], rtype, content)
         return True
 
-    def _update_record_with_id(self, identifier, type, content):
+    def _update_record_with_id(self, identifier, rtype, content):
         """Updates existing record with no sub-domain name changes"""
-        record = self._create_request_record(identifier, type, None, content,
+        record = self._create_request_record(identifier, rtype, None, content,
                                              self._get_lexicon_option('ttl'),
                                              self._get_lexicon_option('priority'))
 
         self._request_modify_dns_record(record)
 
-    def _update_record_with_name(self, old_record, type, new_name, content):
+    def _update_record_with_name(self, old_record, rtype, new_name, content):
         """Updates existing record and changes it's sub-domain name"""
-        new_type = type if type else old_record['type']
+        new_type = rtype if rtype else old_record['type']
 
         new_ttl = self._get_lexicon_option('ttl')
         if new_ttl is None and 'ttl' in old_record:
@@ -140,12 +143,12 @@ class Provider(BaseProvider):
             self._request_delete_dns_record_by_id(to_delete_id)
         return True
 
-    # Get list of registered domains
     def domains_list(self):
+        """Get list of registered domains"""
         response = self._request_domains_list()
         return response['domains'] if 'domains' in response else list()
 
-    def _create_request_record(self, identifier, type, name, content, ttl, priority):
+    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):
         """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
 
@@ -155,7 +158,7 @@ class Provider(BaseProvider):
         if identifier is not None:
             record['id'] = identifier
 
-        record['type'] = type
+        record['type'] = rtype
 
         # Just for creation - not for update
         if name is not None:
@@ -184,26 +187,28 @@ class Provider(BaseProvider):
             record['priority'] = response['prio']
         return record
 
-    def _full_name(self, name):
+    def _full_name(self, record_name):
         """Returns full domain name of a sub-domain name"""
         # Handle None and empty strings
-        if not name:
+        if not record_name:
             return self.domain
         else:
-            return super(Provider, self)._full_name(name)
+            return super(Provider, self)._full_name(record_name)
 
-    def _relative_name(self, name):
+    def _relative_name(self, record_name):
         """Returns sub-domain of a domain name"""
         # Handle None and empty strings as None
-        if not name:
+        if not record_name:
             return None
-        else:
-            subdomain = super(Provider, self)._relative_name(name)
-            return subdomain if subdomain else None
+        subdomain = super(Provider, self)._relative_name(record_name)
+        return subdomain if subdomain else None
 
     # List all records. Return an empty list if no records found
     # identifier, type, name and content are used to filter records.
-    def _list_records(self, identifier=None, rtype=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
+        return self._list_records_internal(rtype=rtype, name=name, content=content)
+
+    def _list_records_internal(self, identifier=None, rtype=None, name=None, content=None):
         """Lists all records by the specified criteria"""
         response = self._request_get_dns_zone()
         if 'records' in response:
@@ -230,60 +235,61 @@ class Provider(BaseProvider):
             records = []
         return records
 
-    def _guess_record(self, type, name=None, content=None):
+    def _guess_record(self, rtype, name=None, content=None):
         """Tries to find existing unique record by type, name and content"""
-        records = self._list_records(
-            identifier=None, rtype=type, name=name, content=content)
+        records = self._list_records_internal(
+            identifier=None, rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:
             raise Exception(
-                'Identifier was not provided and several existing records match the request for {0}/{1}'.format(type, name))
+                'Identifier was not provided and several existing '
+                'records match the request for {0}/{1}'.format(rtype, name))
         else:
             raise Exception(
-                'Identifier was not provided and no existing records match the request for {0}/{1}'.format(type, name))
+                'Identifier was not provided and no existing records match '
+                'the request for {0}/{1}'.format(rtype, name))
 
     def _request_login(self, login, password):
         """Sends Login request"""
-        return self._request("Login",
-                             login=login,
-                             password=password)
+        return self._request_internal("Login",
+                                      login=login,
+                                      password=password)
 
     def _request_domains_list(self):
         """Sends Domains_List request"""
-        return self._request("Domains_List")
+        return self._request_internal("Domains_List")
 
     def _request_get_dns_zone(self):
         """Sends Get_DNS_Zone request"""
-        return self._request("Get_DNS_Zone",
-                             domain=self.domain)
+        return self._request_internal("Get_DNS_Zone",
+                                      domain=self.domain)
 
     def _request_add_dns_record(self, record):
         """Sends Add_DNS_Record request"""
-        return self._request("Add_DNS_Record",
-                             domain=self.domain,
-                             record=record)
+        return self._request_internal("Add_DNS_Record",
+                                      domain=self.domain,
+                                      record=record)
 
     def _request_modify_dns_record(self, record):
         """Sends Modify_DNS_Record request"""
-        return self._request("Modify_DNS_Record",
-                             domain=self.domain,
-                             record=record)
+        return self._request_internal("Modify_DNS_Record",
+                                      domain=self.domain,
+                                      record=record)
 
     def _request_delete_dns_record_by_id(self, identifier):
         """Sends Delete_DNS_Record request"""
-        return self._request("Delete_DNS_Record",
-                             domain=self.domain,
-                             record={'id': identifier})
+        return self._request_internal("Delete_DNS_Record",
+                                      domain=self.domain,
+                                      record={'id': identifier})
 
-    def _request(self, command, **kwargs):
+    def _request_internal(self, command, **kwargs):
         """Make request parse response"""
         args = dict(kwargs)
         if self.ssid:
             args['ssid'] = self.ssid
         method = getattr(self.api, command)
         response = method(**args)
-        self.response = response
         if response and 'status' in response:
             if response['status'] == 'error':
                 raise SubregError(
@@ -297,12 +303,18 @@ class Provider(BaseProvider):
                 raise Exception("Invalid status found in SOAP response")
         raise Exception('Invalid response')
 
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Default helper _request is not used in Subreg provider
+        pass
+
 
 class SubregError(Exception):
+    """Specific error for Subreg provider"""
     def __init__(self, major, minor, message):
         self.major = int(major)
         self.minor = int(minor)
         self.message = message
+        super(SubregError, self).__init__()
 
     def __str__(self):
         return 'Major: {} Minor: {} Message: {}'.format(self.major, self.minor, self.message)

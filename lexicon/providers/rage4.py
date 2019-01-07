@@ -1,3 +1,4 @@
+"""Module provider for rage4"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['rage4.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for rage4"""
     subparser.add_argument(
         "--auth-username", help="specify email address for authentication")
     subparser.add_argument(
@@ -19,7 +21,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for rage4"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -53,11 +55,11 @@ class Provider(BaseProvider):
         payload = {}
         try:
             payload = self._post('/createrecord/', {}, record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
+        except requests.exceptions.HTTPError as error:
+            # http 400 is ok here, because the record probably already exists
+            if error.response.status_code != 400:
+                raise
 
-                # http 400 is ok here, because the record probably already exists
         LOGGER.debug('create_record: %s', payload['status'])
         return payload['status']
 
@@ -65,12 +67,12 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {
+        filter_query = {
             'id': self.domain_id
         }
         if name:
-            filter['name'] = self._full_name(name)
-        payload = self._get('/getrecords/', filter)
+            filter_query['name'] = self._full_name(name)
+        payload = self._get('/getrecords/', filter_query)
 
         records = []
         for record in payload:
@@ -126,7 +128,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._post('/deleterecord/', {'id': record_id})
+            self._post('/deleterecord/', {'id': record_id})
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
@@ -147,10 +149,10 @@ class Provider(BaseProvider):
         default_auth = requests.auth.HTTPBasicAuth(self._get_provider_option(
             'auth_username'), self._get_provider_option('auth_token'))
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

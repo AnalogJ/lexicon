@@ -1,3 +1,4 @@
+"""Module provider for PointHQ"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,6 +13,7 @@ NAMESERVER_DOMAINS = ['pointhq.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for PointHQ"""
     subparser.add_argument(
         "--auth-username", help="specify email address for authentication")
     subparser.add_argument(
@@ -19,7 +21,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for PointHQ"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -53,14 +55,14 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter = {}
+        filter_query = {}
         if rtype:
-            filter['record_type'] = rtype
+            filter_query['record_type'] = rtype
         if name:
-            filter['name'] = self._relative_name(name)
+            filter_query['name'] = self._relative_name(name)
 
         payload = self._get(
-            '/zones/{0}/records'.format(self.domain_id), filter)
+            '/zones/{0}/records'.format(self.domain_id), filter_query)
 
         records = []
         for record in payload:
@@ -111,7 +113,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete(
+            self._delete(
                 '/zones/{0}/records/{1}'.format(self.domain_id, record_id))
 
         LOGGER.debug('delete_record: %s', True)
@@ -124,14 +126,14 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             auth=requests.auth.HTTPBasicAuth(self._get_provider_option(
-                                 'auth_username'), self._get_provider_option('auth_token')),
-                             headers={
-                                 'Content-Type': 'application/json',
-                                 'Accept': 'application/json'
-                             })
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    auth=requests.auth.HTTPBasicAuth(self._get_provider_option(
+                                        'auth_username'), self._get_provider_option('auth_token')),
+                                    headers={
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    })
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

@@ -25,9 +25,11 @@ def provider_parser(subparser):
                            help="specify ACCESS_SECRET for authentication")
     subparser.add_argument(
         "--private-zone",
-        help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
+        help=("indicates what kind of hosted zone to use. If true, use "
+              "only private zones. If false, use only public zones"))
 
-    # TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
+    # TODO: these are only required for testing, we should figure out
+    # a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
     subparser.add_argument(
         "--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
@@ -101,18 +103,20 @@ class Provider(BaseProvider):
                 'auth_access_secret') or self._get_provider_option('auth_token')
         )
 
-    def filter_zone(self, hz):
+    def filter_zone(self, data):
+        """Check if a zone is private"""
         if self.private_zone is not None:
-            if hz['Config']['PrivateZone'] != self.str2bool(self.private_zone):
+            if data['Config']['PrivateZone'] != self.str2bool(self.private_zone):
                 return False
 
-        if hz['Name'] != '{0}.'.format(self.domain):
+        if data['Name'] != '{0}.'.format(self.domain):
             return False
 
         return True
 
     @staticmethod
     def str2bool(input_string):
+        """Convert a string to boolean"""
         return input_string.lower() in ('true', 'yes')
 
     def _authenticate(self):
@@ -129,9 +133,9 @@ class Provider(BaseProvider):
         except StopIteration:
             raise Exception('No domain found')
 
-    def _change_record_sets(self, action, type, name, content):
+    def _change_record_sets(self, action, rtype, name, content):
         ttl = self._get_lexicon_option('ttl')
-        value = '"{0}"'.format(content) if type in ['TXT', 'SPF'] else content
+        value = '"{0}"'.format(content) if rtype in ['TXT', 'SPF'] else content
         try:
             self.r53_client.change_resource_record_sets(
                 HostedZoneId=self.domain_id,
@@ -144,7 +148,7 @@ class Provider(BaseProvider):
                             'Action': action,
                             'ResourceRecordSet': {
                                 'Name': self._fqdn_name(name),
-                                'Type': type,
+                                'Type': rtype,
                                 'TTL': ttl if ttl is not None else 300,
                                 'ResourceRecords': [
                                     {
@@ -157,8 +161,8 @@ class Provider(BaseProvider):
                 }
             )
             return True
-        except botocore.exceptions.ClientError as e:
-            LOGGER.debug(str(e), exc_info=True)
+        except botocore.exceptions.ClientError as error:
+            LOGGER.debug(str(error), exc_info=True)
 
     def _create_record(self, rtype, name, content):
         """Create a record in the hosted zone."""
@@ -172,8 +176,8 @@ class Provider(BaseProvider):
         """Delete a record from the hosted zone."""
         return self._change_record_sets('DELETE', rtype, name, content)
 
-    def _format_content(self, type, content):
-        return content[1:-1] if type in ['TXT', 'SPF'] else content
+    def _format_content(self, rtype, content):
+        return content[1:-1] if rtype in ['TXT', 'SPF'] else content
 
     def _list_records(self, rtype=None, name=None, content=None):
         """List all records for the hosted zone."""
@@ -200,3 +204,7 @@ class Provider(BaseProvider):
             })
         LOGGER.debug('list_records: %s', records)
         return records
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used in Route53 provider
+        pass
