@@ -37,7 +37,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):
-        if (rtype == 'CNAME') or (rtype == 'MX') or (rtype == 'NS'):
+        if rtype in ('CNAME', 'MX', 'NS'):
             # make sure a the data is always a FQDN for CNAMe.
             content = content.rstrip('.') + '.'
 
@@ -153,16 +153,14 @@ class Provider(BaseProvider):
         response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            return response.json()
+        return response.json()
 
-    def _check_exitcode(self, payload, title):
+    def _check_exitcode(self, payload, title):  # pylint: disable=no-self-use
         if payload['success'] == 'ok':
             LOGGER.debug('%s: %s', title, payload['success'])
             return True
-        elif payload['error'] == 'record_exists':
+        if payload['error'] == 'record_exists':
             LOGGER.debug('%s: %s', title, True)
             return True
-        else:
-            LOGGER.debug('%s: %s', title, payload['error'])
-            return False
+        LOGGER.debug('%s: %s', title, payload['error'])
+        return False

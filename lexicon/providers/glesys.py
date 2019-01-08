@@ -143,7 +143,7 @@ class Provider(BaseProvider):
             request_data['ttl'] = self._get_lexicon_option('ttl')
 
     # From Glesys record structure: [u'domainname', u'recordid', u'type', u'host', u'ttl', u'data']
-    def _glesysrecord2lexiconrecord(self, glesys_record):
+    def _glesysrecord2lexiconrecord(self, glesys_record):  # pylint: disable=no-self-use
         return {
             'id': glesys_record['recordid'],
             'type': glesys_record['type'],

@@ -179,10 +179,9 @@ class Provider(BaseProvider):
         response.raise_for_status()
         if response.headers['content-type'].startswith('application/json'):
             return response.json()
-        else:
-            return response.text
+        return response.text
 
-    def _record_name(self, name):
+    def _record_name(self, name):  # pylint: disable=no-self-use
         return '%s.' % name.rstrip('.') if name else None
 
     def _record_payload(self, rtype, name, content):

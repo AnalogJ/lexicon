@@ -154,27 +154,25 @@ class Provider(BaseProvider):
         if self._get_provider_option('auth_id'):
             return {'auth-id': self._get_provider_option('auth_id'),
                     'auth-password': self._get_provider_option('auth_password')}
-        elif self._get_provider_option('auth_subid'):
+        if self._get_provider_option('auth_subid'):
             return {'sub-auth-id': self._get_provider_option(
                 'auth_subid'), 'auth-password': self._get_provider_option('auth_password')}
-        elif self._get_provider_option('auth_subuser'):
+        if self._get_provider_option('auth_subuser'):
             return {'sub-auth-user': self._get_provider_option(
                 'auth_subuser'), 'auth-password': self._get_provider_option('auth_password')}
-        elif (self._get_provider_option('auth_id') or self._get_provider_option('auth_subid')
-              or self._get_provider_option('auth_subuser')):
+        if (self._get_provider_option('auth_id') or self._get_provider_option('auth_subid')
+                or self._get_provider_option('auth_subuser')):
             # All the options were passed with a fallback value, return an empty dictionary.
             return {}
-        else:
-            raise Exception(
-                'No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser')
+        raise Exception(
+            'No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser')
 
     def _find_record_identifier(self, rtype, name, content):
         records = self._list_records(rtype, name, content)
         LOGGER.debug('records: %s', records)
         if len(records) == 1:
             return records[0]['id']
-        else:
-            raise Exception('Record identifier could not be found.')
+        raise Exception('Record identifier could not be found.')
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         # Set default values for missing arguments

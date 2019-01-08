@@ -178,23 +178,18 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
         if identifier:
-
             self.__delete_dns_records_by_id([identifier])
             return True
+        entries = self.__find_dns_entries(
+            rtype, self._fqdn_name(name), content)
+        ids = []
 
-        else:
+        for entry in entries:
+            ids.append(entry["id"])
 
-            entries = self.__find_dns_entries(
-                rtype, self._fqdn_name(name), content)
-            ids = []
-
-            for entry in entries:
-                ids.append(entry["id"])
-
-            self.__delete_dns_records_by_id(ids)
-            return bool(ids)
+        self.__delete_dns_records_by_id(ids)
+        return bool(ids)
 
     def __get_dns_entry(self, identifier):
         return self.__simple_request('dns', 'get_rec', {

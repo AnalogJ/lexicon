@@ -66,7 +66,7 @@ class Provider(BaseProvider):
                 'content': record['data'],
                 'id': record['RECORDID']
             }
-            processed_record = self._clean_txt_record(processed_record)
+            processed_record = self._clean_TXT_record(processed_record)
             records.append(processed_record)
 
         if rtype:
@@ -147,7 +147,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
 
-        if action == 'DELETE' or action == 'PUT' or action == 'POST':
+        if action in ('DELETE', 'PUT', 'POST'):
             # vultr handles succss/failure via HTTP Codes, Only GET returns a response.
             return response.text
         return response.json()

@@ -152,11 +152,8 @@ class Provider(BaseProvider):
 
             for right in rights_info.getchildren():
                 if right.attrib['Type'].lower() == 'hosts':
-                    if right.text.lower() == 'ok':
-                        return True
-                    else:
-                        # we're only looking at hosts, so we can exit now
-                        return False
+                    # we're only looking at hosts, so we can exit now
+                    return right.text.lower() == 'ok'
 
             return None
 

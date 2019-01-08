@@ -44,7 +44,7 @@ class Provider(BaseProvider):
 
         self._api = xmlrpclib.ServerProxy(endpoint, allow_none=True)
 
-    def _validate_response(self, response, message, exclude_code=None):
+    def _validate_response(self, response, message, exclude_code=None):  # pylint: disable=no-self-use
         """
         validate an api server response
 
@@ -161,8 +161,8 @@ class Provider(BaseProvider):
         else:
             record_ids.append(identifier)
 
-        for identifier in record_ids:
-            opts = {'id': identifier}
+        for an_identifier in record_ids:
+            opts = {'id': an_identifier}
             if rtype is not None:
                 opts['type'] = rtype.upper()
             if name is not None:

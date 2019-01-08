@@ -23,7 +23,7 @@ LOGGER = logging.getLogger(__name__)
 def _get_available_providers():
     available_providers = {}
     for _, modname, _ in pkgutil.iter_modules(providers.__path__):
-        if modname != 'base' and modname != 'auto':
+        if modname not in ('base', 'auto'):
             try:
                 available_providers[modname] = importlib.import_module(
                     'lexicon.providers.' + modname)
@@ -41,7 +41,7 @@ def _get_ns_records_domains_for_domain(domain):
     tlds = [tldextract.extract(ns_entry)
             for ns_entry in _get_ns_records_for_domain(domain)]
 
-    return set(['{0}.{1}'.format(tld.domain, tld.suffix) for tld in tlds])
+    return {'{0}.{1}'.format(tld.domain, tld.suffix) for tld in tlds}
 
 
 def _get_ns_records_for_domain(domain):
@@ -73,8 +73,8 @@ def _relevant_provider_for_domain(domain):
         ns_domains = provider_module.NAMESERVER_DOMAINS
 
         # Test plain domain string comparison
-        if set([ns_domain for ns_domain in ns_domains
-                if isinstance(ns_domain, six.string_types)]) & nameserver_domains:
+        if {ns_domain for ns_domain in ns_domains
+                if isinstance(ns_domain, six.string_types)} & nameserver_domains:
             relevant_providers.append((provider_name, provider_module))
             continue
 
@@ -131,9 +131,7 @@ def provider_parser(subparser):
 # but __getattr__ is called only if the parameter/method cannot be found in the
 # current Provider hierarchy. If it is object, it will be the case for every relevant
 # call in the Lexicon library.
-
-
-class Provider(object):
+class Provider(object):  # pylint: disable=useless-object-inheritance
     """
     Implementation of the provider 'auto'.
     For the given domain, it will resolve the actual Provider class to use by inspecting the
@@ -156,14 +154,13 @@ class Provider(object):
         self.domain = config.resolve('lexicon:domain')
         self.proxy_provider = None
 
-    def authenticate(self):
+    def authenticate(self):  # pylint: disable=too-many-locals
         """
         Launch the authentication process: for 'auto' provider, it means first to find the relevant
         provider, then call its authenticate() method. Almost every subsequent operation will then
         be delegated to that provider.
         """
         mapping_override = self.config.resolve('lexicon:auto:mapping_override')
-        print(mapping_override)
         mapping_override_processed = {}
         if mapping_override:
             for one_mapping in mapping_override.split(','):

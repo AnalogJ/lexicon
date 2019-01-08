@@ -148,7 +148,7 @@ class Provider(BaseProvider):
         response = self._request_domains_list()
         return response['domains'] if 'domains' in response else list()
 
-    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):
+    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):  # pylint: disable=too-many-arguments
         """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
 
@@ -241,14 +241,13 @@ class Provider(BaseProvider):
             identifier=None, rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
-        elif len(records) > 1:
+        if len(records) > 1:
             raise Exception(
                 'Identifier was not provided and several existing '
                 'records match the request for {0}/{1}'.format(rtype, name))
-        else:
-            raise Exception(
-                'Identifier was not provided and no existing records match '
-                'the request for {0}/{1}'.format(rtype, name))
+        raise Exception(
+            'Identifier was not provided and no existing records match '
+            'the request for {0}/{1}'.format(rtype, name))
 
     def _request_login(self, login, password):
         """Sends Login request"""

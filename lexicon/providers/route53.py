@@ -37,7 +37,7 @@ def provider_parser(subparser):
         "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
 
 
-class RecordSetPaginator(object):
+class RecordSetPaginator(object):  # pylint: disable=useless-project-inheritance
     """Paginate through complete list of record sets."""
 
     def __init__(self, r53_client, hosted_zone_id, max_items=None):
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
         """Delete a record from the hosted zone."""
         return self._change_record_sets('DELETE', rtype, name, content)
 
-    def _format_content(self, rtype, content):
+    def _format_content(self, rtype, content):  # pylint: disable=no-self-use
         return content[1:-1] if rtype in ['TXT', 'SPF'] else content
 
     def _list_records(self, rtype=None, name=None, content=None):
