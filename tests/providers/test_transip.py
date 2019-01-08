@@ -84,9 +84,9 @@ class TransipProviderTests(TestCase, IntegrationTests):
         return ['Cookie']
 
     @pytest.mark.skip(reason="manipulating records by id is not supported")
-    def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         return
 
     @pytest.mark.skip(reason="adding docs.example.com as a CNAME target will result in a RFC 1035 error")
-    def test_Provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
+    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
         return

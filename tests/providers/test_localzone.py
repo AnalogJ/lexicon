@@ -35,9 +35,9 @@ class LocalzoneProviderTests(TestCase, IntegrationTests):
         return lambda _: None
 
     @pytest.mark.skip(reason="localzone does not require authentication")
-    def test_Provider_authenticate(self):
+    def test_provider_authenticate(self):
         return
 
     @pytest.mark.skip(reason="localzone does not require authentication")
-    def test_Provider_authenticate_with_unmanaged_domain_should_fail(self):
+    def test_provider_authenticate_with_unmanaged_domain_should_fail(self):
         return
