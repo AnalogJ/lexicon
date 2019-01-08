@@ -63,7 +63,7 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
         """
         return self._authenticate()
 
-    def create_record(self, rtype, name, content, **kwargs):
+    def create_record(self, rtype=None, name=None, content=None, **kwargs):
         """
         Create record. If record already exists with the same content, do nothing.
         """
