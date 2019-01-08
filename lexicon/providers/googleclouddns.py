@@ -367,12 +367,12 @@ class Provider(BaseProvider):
     # rrdatas after its subset are not marked in additions to be completely removed
     # from the DNS zone.
     def _process_records_to_delete_by_parameters(
-            self, results, type=None, name=None, content=None):
+            self, results, rtype=None, name=None, content=None):
         rrsets_to_modify = results['rrsets']
 
-        if type:
+        if rtype:
             rrsets_to_modify = [
-                rrset for rrset in rrsets_to_modify if rrset['type'] == type]
+                rrset for rrset in rrsets_to_modify if rrset['type'] == rtype]
         if name:
             rrsets_to_modify = [
                 rrset for rrset in rrsets_to_modify if rrset['name'] == self._fqdn_name(name)]
@@ -413,10 +413,10 @@ class Provider(BaseProvider):
     # With Google Cloud DNS API, content of CNAME entries must be FQDN (with a trailing dot),
     #   and content of TXT entries must be quoted. This static method ensures that.
     @staticmethod
-    def _normalize_content(type, content):
-        if type == 'TXT':
+    def _normalize_content(rtype, content):
+        if rtype == 'TXT':
             return '"{0}"'.format(content)
-        if type == 'CNAME':
+        if rtype == 'CNAME':
             return '{0}.'.format(content) if not content.endswith('.') else content
 
         return content

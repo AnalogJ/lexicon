@@ -1,3 +1,4 @@
+"""Module provider for a localzone"""
 from __future__ import absolute_import, print_function
 import logging
 
@@ -18,11 +19,13 @@ NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
+    """Configure provider parserfor a localzone"""
     subparser.add_argument(
         "--filename", help="specify location of zone master file")
 
 
 class Provider(BaseProvider):
+    """Provider class for a localzone"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.ttl = self._get_lexicon_option("ttl")
@@ -31,7 +34,7 @@ class Provider(BaseProvider):
         self.filename = self._get_provider_option("filename")
 
     def _authenticate(self):
-        """Authentication is not required for localzone."""
+        # Authentication is not required for localzone.
         pass
 
     def _create_record(self, rtype, name, content):
@@ -47,8 +50,8 @@ class Provider(BaseProvider):
         if self.ttl:
             ttl = self.ttl
 
-        with localzone.manage(self.filename, self.origin, autosave=True) as z:
-            if z.add_record(name, rtype, content, ttl=ttl):  # pylint: disable=no-member
+        with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+            if zone.add_record(name, rtype, content, ttl=ttl):  # pylint: disable=no-member
                 result = True
 
         LOGGER.debug("create_record: %s", result)
@@ -65,10 +68,10 @@ class Provider(BaseProvider):
         if not rtype:
             rtype = "ANY"
 
-        filter = {"rdtype": rtype, "name": name, "content": content}
+        filter_query = {"rdtype": rtype, "name": name, "content": content}
 
-        with localzone.manage(self.filename, self.origin, autosave=True) as z:
-            records = z.find_record(**filter)  # pylint: disable=no-member
+        with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+            records = zone.find_record(**filter_query)  # pylint: disable=no-member
 
         result = []
         for record in records:
@@ -103,8 +106,8 @@ class Provider(BaseProvider):
                 identifier = records[0]["id"]
 
         if identifier and content:
-            with localzone.manage(self.filename, self.origin, autosave=True) as z:
-                if z.update_record(identifier, content):  # pylint: disable=no-member
+            with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+                if zone.update_record(identifier, content):  # pylint: disable=no-member
                     result = True
 
         LOGGER.debug("update_record: %s", result)
@@ -121,20 +124,18 @@ class Provider(BaseProvider):
             ids.append(identifier)
         elif not identifier and rtype and name:
             records = self._list_records(rtype, name, content)
-            if len(records) > 0:
+            if records:
                 ids = [record["id"] for record in records]
 
-        if len(ids) > 0:
+        if ids:
             LOGGER.debug("delete_records: %s", ids)
-            with localzone.manage(self.filename, self.origin, autosave=True) as z:
+            with localzone.manage(self.filename, self.origin, autosave=True) as zone:
                 for hashid in ids:
-                    z.remove_record(hashid)  # pylint: disable=no-member
+                    zone.remove_record(hashid)  # pylint: disable=no-member
                     LOGGER.debug("delete_record: %s", hashid)
 
         return True
 
-    def _request(self, **kwargs):
-        """
-        Not required.
-        """
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Not required
         pass

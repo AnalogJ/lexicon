@@ -291,7 +291,7 @@ class GandiRPCSubProvider(object):
             raise Exception("Failed to authenticate: '{0}'".format(err))
 
     # Create record. If record already exists with the same content, do nothing.
-    def create_record(self, type, name, content, ttl):
+    def create_record(self, rtype, name, content, ttl):
         """Creates a record for the domain in a new Gandi zone."""
         version = None
         ret = False
@@ -303,7 +303,7 @@ class GandiRPCSubProvider(object):
             version = self._api.domain.zone.version.new(
                 self._api_key, self._zone_id)
             self._api.domain.zone.record.add(self._api_key, self._zone_id, version,
-                                             {'type': type.upper(),
+                                             {'type': rtype.upper(),
                                               'name': name,
                                               'value': content,
                                               'ttl': ttl
@@ -323,10 +323,10 @@ class GandiRPCSubProvider(object):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
         opts = {}
-        if type is not None:
+        if rtype is not None:
             opts['type'] = type.upper()
         if name is not None:
             opts['name'] = self._relative_name(name)
@@ -357,10 +357,10 @@ class GandiRPCSubProvider(object):
         return records
 
     # Update a record. Identifier or type+name+content
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates the specified record in a new Gandi zone."""
         if not identifier:
-            records = self.list_records(type, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]['id']
             elif len(records) > 1:
@@ -391,8 +391,8 @@ class GandiRPCSubProvider(object):
                 if len(records) != 1:
                     raise self.GandiInternalError("expected one record")
 
-                if type is not None:
-                    rec['type'] = type.upper()
+                if rtype is not None:
+                    rec['type'] = rtype.upper()
                 if name is not None:
                     rec['name'] = self._relative_name(name)
                 if content is not None:
@@ -423,7 +423,7 @@ class GandiRPCSubProvider(object):
     # Delete existing records.
     # If records do not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Removes the specified records in a new Gandi zone."""
         version = None
         ret = False
@@ -432,11 +432,11 @@ class GandiRPCSubProvider(object):
         if identifier is not None:
             opts['id'] = identifier
         else:
-            if not type and not name and not content:
+            if not rtype and not name and not content:
                 raise ValueError(
                     'Error, at least one parameter from type, name or content must be set')
-            if type:
-                opts['type'] = type.upper()
+            if rtype:
+                opts['type'] = rtype.upper()
             if name:
                 opts['name'] = self._relative_name(name)
             if content:

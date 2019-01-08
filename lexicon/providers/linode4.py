@@ -1,3 +1,4 @@
+"""Module provider for Linode V4"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,12 +13,13 @@ NAMESERVER_DOMAINS = ['linode.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Linode V4"""
     subparser.add_argument(
         "--auth-token", help="specify api key for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Linode V4"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -30,13 +32,13 @@ class Provider(BaseProvider):
                 'domain': self.domain
             }
         })
-        if len(payload['data']) > 0:
+        if payload['data']:
             self.domain_id = payload['data'][0]['id']
         if self.domain_id is None:
             raise Exception('Domain not found')
 
     def _create_record(self, rtype, name, content):
-        if len(self._list_records(rtype, name, content)) == 0:
+        if not self._list_records(rtype, name, content):
             if name:
                 name = self._relative_name(name)
 
@@ -94,7 +96,7 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
             resources = self._list_records(rtype, name, None)
-            identifier = resources[0]['id'] if len(resources) > 0 else None
+            identifier = resources[0]['id'] if resources else None
 
         LOGGER.debug('update_record: %s', identifier)
 
@@ -149,13 +151,12 @@ class Provider(BaseProvider):
 
         request_url = "{0}{1}".format(self.api_endpoint, url)
 
-        r = requests.request(action, request_url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, request_url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            result = r.json()
-            return result
+        result = response.json()
+        return result

@@ -27,7 +27,7 @@ NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
-    """Generate a provider parser for Hetzner"""
+    """Configure a provider parser for Hetzner"""
     subparser.add_argument('--auth-account',
                            help='specify type of Hetzner account: by default Hetzner Robot '
                            '(robot) or Hetzner konsoleH (konsoleh)')
