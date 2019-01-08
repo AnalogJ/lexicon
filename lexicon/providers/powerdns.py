@@ -1,3 +1,25 @@
+"""
+Lexicon PowerDNS Provider
+
+Author: Will Hughes, 2017
+
+API Docs: https://doc.powerdns.com/md/httpapi/api_spec/
+
+Implementation notes:
+* The PowerDNS API does not assign a unique identifier to each record in the way
+that Lexicon expects. We work around this by creating an ID based on the record
+name, type and content, which when taken together are always unique
+* The PowerDNS API has no notion of 'create a single record' or 'delete a single
+record'. All operations are either 'replace the RRSet with this new set of records'
+or 'delete all records for this name and type. Similarly, there is no notion of
+'change the content of this record', because records are identified by their name,
+type and content.
+* The API is very picky about the format of values used when creating records:
+** CNAMEs must be fully qualified
+** TXT, LOC records must be quoted
+This is why the _clean_content and _unclean_content methods exist, to convert
+back and forth between the format PowerDNS expects, and the format Lexicon uses
+"""
 from __future__ import absolute_import
 import json
 import logging
@@ -8,32 +30,11 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-
-# Lexicon PowerDNS Provider
-#
-# Author: Will Hughes, 2017
-#
-# API Docs: https://doc.powerdns.com/md/httpapi/api_spec/
-#
-# Implementation notes:
-# * The PowerDNS API does not assign a unique identifier to each record in the way
-#   that Lexicon expects. We work around this by creating an ID based on the record
-#   name, type and content, which when taken together are always unique
-# * The PowerDNS API has no notion of 'create a single record' or 'delete a single
-#   record'. All operations are either 'replace the RRSet with this new set of records'
-#   or 'delete all records for this name and type. Similarly, there is no notion of
-#   'change the content of this record', because records are identified by their name,
-#   type and content.
-# * The API is very picky about the format of values used when creating records:
-# ** CNAMEs must be fully qualified
-# ** TXT, LOC records must be quoted
-#   This is why the _clean_content and _unclean_content methods exist, to convert
-#   back and forth between the format PowerDNS expects, and the format Lexicon uses
-
 NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
+    """Configure provider parser for powerdns"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
@@ -42,7 +43,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for PowerDNS"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
 
@@ -66,6 +67,7 @@ class Provider(BaseProvider):
         self._zone_data = None
 
     def zone_data(self):
+        """Get zone data"""
         if self._zone_data is None:
             self._zone_data = self._get('/zones/' + self.domain).json()
         return self._zone_data
@@ -74,16 +76,16 @@ class Provider(BaseProvider):
         self.zone_data()
         self.domain_id = self.domain
 
-    def _make_identifier(self, type, name, content):
-        return "{}/{}={}".format(type, name, content)
+    def _make_identifier(self, rtype, name, content):
+        return "{}/{}={}".format(rtype, name, content)
 
     def _parse_identifier(self, identifier):
         parts = identifier.split('/')
-        type = parts[0]
+        rtype = parts[0]
         parts = parts[1].split('=')
         name = parts[0]
         content = "=".join(parts[1:])
-        return type, name, content
+        return rtype, name, content
 
     def _list_records(self, rtype=None, name=None, content=None):
         records = []
@@ -97,25 +99,26 @@ class Provider(BaseProvider):
                             'name': self._full_name(rrset['name']),
                             'ttl': rrset['ttl'],
                             'content': self._unclean_content(rrset['type'], record['content']),
-                            'id': self._make_identifier(rrset['type'], rrset['name'], record['content'])
+                            'id': self._make_identifier(rrset['type'],
+                                                        rrset['name'], record['content'])
                         })
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def _clean_content(self, type, content):
-        if type in ("TXT", "LOC"):
+    def _clean_content(self, rtype, content):
+        if rtype in ("TXT", "LOC"):
             if content[0] != '"':
                 content = '"' + content
             if content[-1] != '"':
                 content += '"'
-        elif type == "CNAME":
+        elif rtype == "CNAME":
             content = self._fqdn_name(content)
         return content
 
-    def _unclean_content(self, type, content):
-        if type in ("TXT", "LOC"):
+    def _unclean_content(self, rtype, content):
+        if rtype in ("TXT", "LOC"):
             content = content.strip('"')
-        elif type == "CNAME":
+        elif rtype == "CNAME":
             content = self._full_name(content)
         return content
 
@@ -201,12 +204,12 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers={
-                                 'X-API-Key': self.api_key,
-                                 'Content-Type': 'application/json'
-                             })
-        LOGGER.debug('response: %s', r.text)
-        r.raise_for_status()
-        return r
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers={
+                                        'X-API-Key': self.api_key,
+                                        'Content-Type': 'application/json'
+                                    })
+        LOGGER.debug('response: %s', response.text)
+        response.raise_for_status()
+        return response

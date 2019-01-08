@@ -126,8 +126,8 @@ class Provider(BaseProvider):
         #   - or by the pseudo-identifier provided
         # Furthermore for rtype/name approach, we cannot update all matching records, as it
         # would lead o an error (two entries of same rtype + name cannot have the same content).
-        # So for rtype/name approach, we search first matching record for rtype/name on which content
-        # is different, and we update it before synchronizing the DNS zone.
+        # So for rtype/name approach, we search first matching record for rtype/name on which
+        # content is different, and we update it before synchronizing the DNS zone.
         if not identifier and not rtype:
             raise Exception('ERROR: rtype is required')
         if not identifier and not name:

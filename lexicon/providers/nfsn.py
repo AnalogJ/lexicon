@@ -118,8 +118,8 @@ class Provider(BaseProvider):
         else:
             to_delete = matching_records
 
-        for d in to_delete:
-            self._do_delete(d['type'], d['name'], d['content'])
+        for record in to_delete:
+            self._do_delete(record['type'], record['name'], record['content'])
 
         LOGGER.debug('delete_record: %s', True)
         return True
@@ -173,11 +173,10 @@ class Provider(BaseProvider):
             'X-NFSN-Authentication': auth_value
         }
 
-        r = requests.request(action, ''.join([self.api_endpoint, url]),
-                             data=data,
-                             headers=auth_header)
-        r.raise_for_status()
-        if r.content:
-            return r.json()
-        else:
-            return {}
+        response = requests.request(action, ''.join([self.api_endpoint, url]),
+                                    data=data,
+                                    headers=auth_header)
+        response.raise_for_status()
+        if response.content:
+            return response.json()
+        return {}

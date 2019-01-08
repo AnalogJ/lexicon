@@ -1,3 +1,5 @@
+"""Base class for provider integration tests"""
+import contextlib
 import os
 from builtins import object
 from functools import wraps
@@ -9,15 +11,14 @@ from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 from lexicon.providers.base import Provider as BaseProvider
 
 
-# Configure VCR. Parameter record_mode depends
-# on the LEXICON_LIVE_TESTS environment variable value.
-record_mode = 'none'
+# Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
+RECORD_MODE = 'none'
 if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-    record_mode = 'once'
-provider_vcr = vcr.VCR(
+    RECORD_MODE = 'once'
+PROVIDER_VCR = vcr.VCR(
     cassette_library_dir=os.environ.get('LEXICON_VCRPY_CASSETTES_PATH',
                                         'tests/fixtures/cassettes'),
-    record_mode=record_mode,
+    record_mode=RECORD_MODE,
     decode_compressed_response=True
 )
 
@@ -28,71 +29,75 @@ provider_vcr = vcr.VCR(
 def _vcr_integration_test(decorated):
     @wraps(decorated)
     def wrapper(self):
-        with provider_vcr.use_cassette(self._cassette_path('IntegrationTests/{0}.yaml'.format(decorated.__name__)),
-                                       filter_headers=self._filter_headers(),
-                                       before_record_response=self._filter_response,
-                                       filter_query_parameters=self._filter_query_parameters(),
-                                       filter_post_data_parameters=self._filter_post_data_parameters()):
+        # pylint: disable=protected-access
+        with PROVIDER_VCR.use_cassette(
+                self._cassette_path('IntegrationTests/{0}.yaml'
+                                    .format(decorated.__name__)),
+                filter_headers=self._filter_headers(),
+                before_record_response=self._filter_response,
+                filter_query_parameters=self._filter_query_parameters(),
+                filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
+        # pylint: enable=protected-access
     return wrapper
 
 
 class EngineOverrideConfigSource(ConfigSource):
+    """Config source to override some provider parameters during tests"""
 
     def __init__(self, overrides):
         super(EngineOverrideConfigSource, self).__init__()
         self.overrides = overrides
 
-    def resolve(self, config_parameter):
+    def resolve(self, config_key):
         # We extract the key from existing namespace.
-        config_parameter = config_parameter.split(':')[-1]
-        return self.overrides.get(config_parameter)
+        config_key = config_key.split(':')[-1]
+        return self.overrides.get(config_key)
 
 
 class FallbackConfigSource(ConfigSource):
+    """Config source to provider fallback to provider parameters during tests"""
 
     def __init__(self, fallback_fn):
         super(FallbackConfigSource, self).__init__()
         self.fallback_fn = fallback_fn
 
-    def resolve(self, config_parameter):
-        config_parameter = config_parameter.split(':')
-        if not config_parameter[-2] == 'lexicon':
-            return self.fallback_fn(config_parameter[-1])
+    def resolve(self, config_key):
+        config_key = config_key.split(':')
+        if not config_key[-2] == 'lexicon':
+            return self.fallback_fn(config_key[-1])
 
         return None
 
 
-"""
-https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
-Single, reusable definition of tests for the interface. Authors of
-new implementations of the interface merely have to provide the test
-data, as class attributes of a class which inherits
-unittest.TestCase AND this class.
-
-Required test data:
-self.Provider must be set
-self.provider_name must be set
-self.domain must be set
-self._filter_headers can be defined to provide a list of sensitive http headers
-self._filter_query_parameters can be defined to provide a list of sensitive query parameters
-self._filter_post_data_parameters can be defined to provide a list of sensitive post data parameters
-self.provider_variant can be defined as a prefix for saving cassettes when a provider uses multiple variants
-
-Extended test suites can be skipped by adding the following snippet to the test_{PROVIDER_NAME}.py file
-
-    @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')
-
-"""
-
-
 class IntegrationTests(object):
+    """
+    https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
+    Single, reusable definition of tests for the interface. Authors of
+    new implementations of the interface merely have to provide the test
+    data, as class attributes of a class which inherits
+    unittest.TestCase AND this class.
+
+    Required test data:
+    self.Provider must be set
+    self.provider_name must be set
+    self.domain must be set
+    self._filter_headers can be defined to provide a list of sensitive http headers
+    self._filter_query_parameters can be defined to provide a list of sensitive query parameters
+    self._filter_post_data_parameters can be defined to provide a list of sensitive post data parameters
+    self.provider_variant can be defined as a prefix for saving cassettes when a provider uses multiple variants
+
+    Extended test suites can be skipped by adding the following snippet to the test_{PROVIDER_NAME}.py file
+
+        @pytest.fixture(autouse=True)
+        def skip_suite(self, request):
+            if request.node.get_marker('ext_suite_1'):
+                pytest.skip('Skipping extended suite')
+
+    """
 
     def __init__(self):
-        self.Provider = BaseProvider
+        self.Provider = BaseProvider  # pylint: disable=invalid-name
         self.domain = None
         self.provider_name = None
 
