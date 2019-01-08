@@ -52,8 +52,6 @@ def provider_parser(subparser):
     subparser.add_argument('--ib-view', default='default',
                            help='specify DNS View to manage at the Infoblox')
     subparser.add_argument('--ib-host', help='specify Infoblox Host exposing the WAPI')
-    subparser.add_argument('--srv-port', default=0, help='specify SRV port')
-    subparser.add_argument('--srv-weight', default=100, help='specify SRV weight')
 
 class Provider(BaseProvider):
     """Provider class for Infoblox"""
