@@ -327,7 +327,7 @@ class GandiRPCSubProvider(object):
         """List all record for the domain in the active Gandi zone."""
         opts = {}
         if rtype is not None:
-            opts['type'] = type.upper()
+            opts['type'] = rtype.upper()
         if name is not None:
             opts['name'] = self._relative_name(name)
         if content is not None:
