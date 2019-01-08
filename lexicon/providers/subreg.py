@@ -148,7 +148,7 @@ class Provider(BaseProvider):
         response = self._request_domains_list()
         return response['domains'] if 'domains' in response else list()
 
-    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):
+    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):  # pylint: disable=too-many-arguments
         """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
 
@@ -192,8 +192,7 @@ class Provider(BaseProvider):
         # Handle None and empty strings
         if not record_name:
             return self.domain
-        else:
-            return super(Provider, self)._full_name(record_name)
+        return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):
         """Returns sub-domain of a domain name"""
@@ -241,14 +240,13 @@ class Provider(BaseProvider):
             identifier=None, rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
-        elif len(records) > 1:
+        if len(records) > 1:
             raise Exception(
                 'Identifier was not provided and several existing '
                 'records match the request for {0}/{1}'.format(rtype, name))
-        else:
-            raise Exception(
-                'Identifier was not provided and no existing records match '
-                'the request for {0}/{1}'.format(rtype, name))
+        raise Exception(
+            'Identifier was not provided and no existing records match '
+            'the request for {0}/{1}'.format(rtype, name))
 
     def _request_login(self, login, password):
         """Sends Login request"""
@@ -299,8 +297,7 @@ class Provider(BaseProvider):
                 )
             if response['status'] == 'ok':
                 return response['data'] if 'data' in response else dict()
-            else:
-                raise Exception("Invalid status found in SOAP response")
+            raise Exception("Invalid status found in SOAP response")
         raise Exception('Invalid response')
 
     def _request(self, action='GET', url='/', data=None, query_params=None):

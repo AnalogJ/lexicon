@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for CloudNS"""
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
@@ -9,6 +9,7 @@ from lexicon.providers.cloudns import Provider
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class CloudnsProviderTests(TestCase, IntegrationTests):
+    """TestCase for CloudNS"""
     Provider = Provider
     provider_name = 'cloudns'
     domain = 'api-example.com'

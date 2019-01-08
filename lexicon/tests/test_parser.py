@@ -1,3 +1,5 @@
+"""Unit tests for the Lexicon CLI parser"""
+# pylint: disable=missing-docstring
 from __future__ import absolute_import
 
 import pytest
@@ -13,7 +15,7 @@ def test_base_provider_parser():
     assert parsed.action == 'list'
     assert parsed.domain == 'capsulecd.com'
     assert parsed.type == 'TXT'
-    assert parsed.ttl == None
+    assert parsed.ttl is None
     assert parsed.output == 'TABLE'
 
 

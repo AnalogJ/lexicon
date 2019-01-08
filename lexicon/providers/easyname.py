@@ -328,7 +328,7 @@ class Provider(BaseProvider):
         assert rows is not None and rows, 'Could not find any DNS entries'
         return rows
 
-    def _filter_records(self, records, rtype=None, name=None, content=None, identifier=None):
+    def _filter_records(self, records, rtype=None, name=None, content=None, identifier=None):  # pylint: disable=too-many-arguments,no-self-use
         """
         Filter dns entries based on type, name or content.
         """
@@ -420,7 +420,7 @@ class Provider(BaseProvider):
             'The domain does not exist on Easyname.'
         return domain_text
 
-    def _get_domain_id(self, domain_text_element):
+    def _get_domain_id(self, domain_text_element):  # pylint: disable=no-self-use
         """Return the easyname id of the domain."""
         try:
             # Hierarchy: TR > TD > SPAN > Domain Text
@@ -435,13 +435,12 @@ class Provider(BaseProvider):
             LOGGER.warning(errmsg)
             raise AssertionError(errmsg)
 
-    def _log(self, name, element):
+    def _log(self, name, element):  # pylint: disable=no-self-use
         """
         Log Response and Tag elements. Do nothing if elements is none of them.
         """
         from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
             LOGGER.debug('%s response: URL=%s Code=%s', name, element.url, element.status_code)
-
-        elif isinstance(element, Tag) or isinstance(element, BeautifulSoup):
+        elif isinstance(element, (BeautifulSoup, Tag)):
             LOGGER.debug('%s HTML:\n%s', name, element)

@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for CloudXNS"""
 from unittest import TestCase
 
 import pytest
@@ -12,7 +12,7 @@ from lexicon.providers.cloudxns import Provider
 
 
 class CloudXNSProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for CloudXNS"""
     Provider = Provider
     provider_name = 'cloudxns'
     domain = 'capsulecd.com'
@@ -22,7 +22,7 @@ class CloudXNSProviderTests(TestCase, IntegrationTests):
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.mark.skip(reason="new test, missing recording")
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
         return
 
     def _test_parameters_overrides(self):

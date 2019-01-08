@@ -179,29 +179,30 @@ class Provider(BaseProvider):
 
         if result.text:
             return result.json()
-        else:
-            return None
+        return None
 
-    def _key_for_record_type(self, record_type):
+    def _key_for_record_type(self, record_type):  # pylint: disable=no-self-use
         if record_type in ('A', 'AAAA'):
             return 'ip'
-        elif record_type == 'CNAME':
+        if record_type == 'CNAME':
             return 'hostname'
-        elif record_type == 'TXT':
+        if record_type == 'TXT':
             return 'txt'
-        elif record_type in ('MX', 'NS', 'SOA', 'SRV', 'LOC'):
+        if record_type in ('MX', 'NS', 'SOA', 'SRV', 'LOC'):
             raise Exception(
                 '{0} record type is not supported in the OnApp Provider'.format(record_type))
+        raise Exception(
+            '{0} record type is unknown'.format(record_type))
 
     def _guess_record(self, rtype, name=None, content=None):
         records = self._list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
-        elif len(records) > 1:
+        if len(records) > 1:
             raise Exception(
                 'Identifier was not provided and several existing records '
                 'match the request for {0}/{1}'.format(rtype, name))
-        elif not records:
+        else:
             raise Exception(
                 'Identifier was not provided and no existing records '
                 'match the request for {0}/{1}'.format(rtype, name))

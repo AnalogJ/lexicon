@@ -79,7 +79,7 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
         }
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
-    def test_Provider_when_calling_list_records_after_setting_ttl(self):
+    def test_provider_when_calling_list_records_after_setting_ttl(self):
         return
 
 

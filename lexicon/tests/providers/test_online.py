@@ -24,5 +24,5 @@ class OnlineProviderTests(TestCase, IntegrationTests):
         return lambda x: 'placeholder_' + x if x != 'priority' else ''
 
     @pytest.mark.skip(reason="manipulating records by id is not supported")
-    def test_Provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         return

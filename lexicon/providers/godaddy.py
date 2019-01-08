@@ -146,7 +146,7 @@ class Provider(BaseProvider):
         #   - or the first matching by its rtype+name where content does not match
         #     (first match, see first method comment for explanation).
         for record in records:
-            if ((identifier and Provider._identifier(record) == identifier) or
+            if ((identifier and Provider._identifier(record) == identifier) or  # pylint: disable=too-many-boolean-expressions
                     (not identifier and record['type'] == rtype
                      and self._relative_name(record['name']) == relative_name
                      and record['data'] != content)):
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
                 record for record in records if Provider._identifier(record) != identifier]
         else:
             for record in records:
-                if ((not rtype and not relative_name and not content)
+                if ((not rtype and not relative_name and not content)  # pylint: disable=too-many-boolean-expressions
                         or (rtype and not relative_name and not content and record['type'] != rtype)
                         or (not rtype and relative_name and not content
                             and self._relative_name(record['name']) != relative_name)

@@ -40,10 +40,6 @@ class Provider(BaseProvider):
     order is:
 
     """
-    def provider_options(self):
-        """Generate provider options specific for this Transip"""
-        return {'ttl': 86400}
-
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.provider_name = 'transip'
@@ -176,7 +172,7 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, rtype, target):
+    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
@@ -205,9 +201,9 @@ class Provider(BaseProvider):
     def _filter_records(self, records, rtype=None, name=None, content=None):
         _records = []
         for record in records:
-            if (not rtype or record['type'] == rtype) and \
-               (not name or self._full_name(record['name']) == self._full_name(name)) and \
-               (not content or record['content'] == content):
+            if ((not rtype or record['type'] == rtype) and  # pylint: disable=too-many-boolean-expressions
+                    (not name or self._full_name(record['name']) == self._full_name(name)) and
+                    (not content or record['content'] == content)):
                 _records.append(record)
         return _records
 

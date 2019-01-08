@@ -1,11 +1,13 @@
+# pylint: disable=missing-docstring
 import os
 
-import lexicon.client
 import pytest
+
+import lexicon.client
 from lexicon.config import ConfigResolver
 
 
-def test_Client_basic_init():
+def test_client_basic_init():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -20,7 +22,7 @@ def test_Client_basic_init():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_legacy_init():
+def test_client_legacy_init():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -35,7 +37,7 @@ def test_Client_legacy_init():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_init_when_domain_includes_subdomain_should_strip():
+def test_client_init_when_domain_includes_subdomain_should_strip():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -50,7 +52,7 @@ def test_Client_init_when_domain_includes_subdomain_should_strip():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_init_with_delegated_domain_name():
+def test_client_init_with_delegated_domain_name():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -66,7 +68,7 @@ def test_Client_init_with_delegated_domain_name():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_init_with_delegated_domain_fqdn():
+def test_client_init_with_delegated_domain_fqdn():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -82,7 +84,7 @@ def test_Client_init_with_delegated_domain_fqdn():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_init_with_same_delegated_domain_fqdn():
+def test_client_init_with_same_delegated_domain_fqdn():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -98,7 +100,7 @@ def test_Client_init_with_same_delegated_domain_fqdn():
     assert client.config.resolve('lexicon:type') == options['type']
 
 
-def test_Client_init_when_missing_provider_should_fail():
+def test_client_init_when_missing_provider_should_fail():
     options = {
         'action': 'list',
         'domain': 'example.com',
@@ -108,7 +110,7 @@ def test_Client_init_when_missing_provider_should_fail():
         lexicon.client.Client(options)
 
 
-def test_Client_init_when_missing_action_should_fail():
+def test_client_init_when_missing_action_should_fail():
     options = {
         'provider_name': 'base',
         'domain': 'example.com',
@@ -118,7 +120,7 @@ def test_Client_init_when_missing_action_should_fail():
         lexicon.client.Client(options)
 
 
-def test_Client_init_when_missing_domain_should_fail():
+def test_client_init_when_missing_domain_should_fail():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -128,7 +130,7 @@ def test_Client_init_when_missing_domain_should_fail():
         lexicon.client.Client(options)
 
 
-def test_Client_init_when_missing_type_should_fail():
+def test_client_init_when_missing_type_should_fail():
     options = {
         'provider_name': 'base',
         'action': 'list',
@@ -138,7 +140,7 @@ def test_Client_init_when_missing_type_should_fail():
         lexicon.client.Client(options)
 
 
-def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
+def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
     if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
         monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
     if os.environ.get('LEXICON_CLOUDFLARE_USERNAME'):
@@ -155,11 +157,11 @@ def test_Client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
     assert client.action == options['action']
     assert client.config.resolve('lexicon:domain') == 'example.com'
     assert client.config.resolve('lexicon:type') == options['type']
-    assert client.config.resolve('lexicon:cloudflare:auth_token') == None
-    assert client.config.resolve('lexicon:cloudflare:auth_username') == None
+    assert client.config.resolve('lexicon:cloudflare:auth_token') is None
+    assert client.config.resolve('lexicon:cloudflare:auth_username') is None
 
 
-def test_Client_parse_env_with_auth_keys(monkeypatch):
+def test_client_parse_env_with_auth_keys(monkeypatch):
     monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN', 'test-token')
     monkeypatch.setenv('LEXICON_CLOUDFLARE_USERNAME',
                        'test-username@example.com')

@@ -53,7 +53,7 @@ class Provider(BaseProvider):
             resource_record_sets, rtype=rtype, name=name, content=content)
         if index >= 0:
             LOGGER.debug('create_record: %s', False)
-            return
+            return False
 
         resource_record_sets.append(
             {
@@ -174,12 +174,12 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, rtype, target):
+    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
+    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):  # pylint: disable=no-self-use
         for index, record in enumerate(records):
             if rtype and record['Type'] != rtype:
                 continue

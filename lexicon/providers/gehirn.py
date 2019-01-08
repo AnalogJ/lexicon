@@ -166,16 +166,15 @@ class Provider(BaseProvider):
                 )
                 LOGGER.debug('update_record: %s', True)
                 return True
-            else:
-                # update entire record
-                if rtype:
-                    record["type"] = rtype
-                if name:
-                    record["name"] = name
-                record["ttl"] = self._get_lexicon_option('ttl')
-                if content:
-                    record["records"] = [
-                        self._parse_content(record["type"], content)]
+            # update entire record
+            if rtype:
+                record["type"] = rtype
+            if name:
+                record["name"] = name
+            record["ttl"] = self._get_lexicon_option('ttl')
+            if content:
+                record["records"] = [
+                    self._parse_content(record["type"], content)]
 
         self._update_internal_record(record)
         LOGGER.debug('update_record: %s', True)
@@ -253,12 +252,12 @@ class Provider(BaseProvider):
             record_name += "."
         return record_name
 
-    def _bind_format_target(self, rtype, target):
+    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _filter_records(self, records, identifier=None, rtype=None, name=None):
+    def _filter_records(self, records, identifier=None, rtype=None, name=None):  # pylint: disable=no-self-use
         filtered_records = []
 
         if identifier:
@@ -293,10 +292,10 @@ class Provider(BaseProvider):
         )
         return self._post(path, record)
 
-    def _build_content(self, rtype, record):
+    def _build_content(self, rtype, record):  # pylint: disable=no-self-use
         return BUILD_FORMATS[rtype].format(**record)
 
-    def _parse_content(self, rtype, content):
+    def _parse_content(self, rtype, content):  # pylint: disable=no-self-use
         return FORMAT_RE[rtype].match(content).groupdict()
 
     def _request(self, action='GET', url='/', data=None, query_params=None):

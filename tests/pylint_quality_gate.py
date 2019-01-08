@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""This scripts execute check Lexicon quality against a quality gate"""
 import os
 import sys
 
