@@ -1,12 +1,3 @@
-# Test for one implementation of the interface
-import os
-from unittest import TestCase
-
-import pytest
-from integration_tests import IntegrationTests
-from lexicon.providers.exoscale import Provider
-
-
 """
 To set enable live testing against the Exoscale API.
 
@@ -20,13 +11,17 @@ Set the following environment variables.
     export LEXICON_EXOSCALE_SECRET=xxx
 
 """
+from unittest import TestCase
+
+from integration_tests import IntegrationTests
+from lexicon.providers.exoscale import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class ExoscaleProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Exoscale"""
     Provider = Provider
     provider_name = "exoscale"
     domain = "lexicontest.com"

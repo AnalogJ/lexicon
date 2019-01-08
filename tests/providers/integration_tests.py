@@ -84,7 +84,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
     Extended test suites can be skipped by adding the following snippet to the test_{PROVIDER_NAME}.py file
 
         @pytest.fixture(autouse=True)
-        def skip_suite(self, request):
+        def _skip_suite(self, request):  # pylint: disable=no-self-use
             if request.node.get_marker('ext_suite_1'):
                 pytest.skip('Skipping extended suite')
 
@@ -426,7 +426,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
 
         return config
 
-    def _test_parameters_overrides(self):
+    def _test_parameters_overrides(self):  # pylint: disable=no-self-use
         """
         This method gives an object whose keys are some provider
         or lexicon parameters expected during a test.
@@ -441,7 +441,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
         """
         return {}
 
-    def _test_fallback_fn(self):
+    def _test_fallback_fn(self):  # pylint: disable=no-self-use
         """
         This method gives a fallback lambda for any provider parameter that have not been resolved.
         By default it will return 'placeholder_[parameter_name]' for a particular parameter
@@ -459,8 +459,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
         """
         if self.provider_variant:
             return "{0}/{1}-{2}".format(self.provider_name, self.provider_variant, fixture_subpath)
-        else:
-            return "{0}/{1}".format(self.provider_name, fixture_subpath)
+        return "{0}/{1}".format(self.provider_name, fixture_subpath)
 
     def _construct_authenticated_provider(self):
         """
@@ -473,16 +472,16 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
     # Optional. Used to identify the test variant, if any.
     provider_variant = None
 
-    def _filter_headers(self):
+    def _filter_headers(self):  # pylint: disable=no-self-use
         return []
 
-    def _filter_query_parameters(self):
+    def _filter_query_parameters(self):  # pylint: disable=no-self-use
         return []
 
-    def _filter_post_data_parameters(self):
+    def _filter_post_data_parameters(self):  # pylint: disable=no-self-use
         return []
 
-    def _filter_response(self, response):
+    def _filter_response(self, response):  # pylint: disable=no-self-use
         """Filter any sensitive data out of the providers response. `response`
         is a Python object with the same structure as all the response sections
         in the YAML recordings at tests/fixtures/cassets/[provider]. For the

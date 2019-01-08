@@ -29,6 +29,6 @@ class SoftLayerProviderTests(TestCase, IntegrationTests):
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
+    def _skip_suite(self, request):  # pylint: disable=no-self-use
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
