@@ -119,9 +119,8 @@ class Provider(BaseProvider):
         if len(records) >= 1:
             LOGGER.info("Successfully added record %s", name)
             return True
-        else:
-            LOGGER.info("Failed to add record %s", name)
-            return False
+        LOGGER.info("Failed to add record %s", name)
+        return False
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
@@ -167,7 +166,7 @@ class Provider(BaseProvider):
                 rec['priority'] = tds[5]
             rec['content'] = tds[6].string
             rec['is_dynamic'] = tds[7].string == '1'
-            rec = self._clean_txt_record(rec)
+            rec = self._clean_TXT_record(rec)
             new_records.append(rec)
         records = new_records
         if identifier:

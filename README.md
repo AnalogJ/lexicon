@@ -51,6 +51,7 @@ The current supported providers are:
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
 - Hurricane Electric DNS ([docs](https://dns.he.net/))
 - Hetzner ([docs](https://wiki.hetzner.de/index.php/DNS_Zonendatei/en))
+- Infoblox ([docs](https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal))
 - Internet.bs ([docs](https://internetbs.net/ResellerRegistrarDomainNameAPI))
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))

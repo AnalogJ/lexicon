@@ -76,7 +76,6 @@ class Provider(BaseProvider):
     linked CNAME is only enabled if the record type & record name or the raw identifier are
     specified, and additionally for the update action the record name remains the same.
     """
-
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.api = {
@@ -215,7 +214,7 @@ class Provider(BaseProvider):
             name = self._fqdn_name(name) if name else None
             return self._list_records_in_zone(ddata['zone']['data'], rtype, name, content)
 
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):  # pylint: disable=too-many-locals,too-many-branches
         """
         Connects to Hetzner account, changes an existing record and returns a boolean,
         if update was successful or not. Needed identifier or rtype & name to lookup
@@ -386,7 +385,7 @@ class Provider(BaseProvider):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
                     if (not content or self._convert_content(rtype, content) == rdata):
-                        raw_rdata = self._clean_txt_record({'type': rtype,
+                        raw_rdata = self._clean_TXT_record({'type': rtype,
                                                             'content': rdata})['content']
                         data = {
                             'type': rtype,

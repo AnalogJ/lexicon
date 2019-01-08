@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for auto"""
 import socket
 from unittest import TestCase
 
@@ -11,13 +11,11 @@ from lexicon.providers.auto import Provider, _get_ns_records_domains_for_domain
 # This fixture ensures to mock _get_ns_records_domains_for_domain, in order to not rely
 # on the machine on which the test is done, as this function call nslookup.
 # Then it will prevent errors where there is no network or tested domain do not exists anymore.
-
-
 @pytest.fixture(autouse=True)
-def nslookup_mock(request):
+def _nslookup_mock(request):
     _ignore_nslookup_mock = request.node.get_marker('ignore_nslookup_mock')
 
-    if (_ignore_nslookup_mock):
+    if _ignore_nslookup_mock:
         # Do not mock if the test says so.
         yield
     else:
@@ -26,9 +24,7 @@ def nslookup_mock(request):
             yield fixture
 
 # Guys, are we online ?
-
-
-def there_is_no_network():
+def _there_is_no_network():
     try:
         socket.create_connection(("www.google.com", 80))
         return False
@@ -39,10 +35,8 @@ def there_is_no_network():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-
-
 class AutoProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for auto"""
     Provider = Provider
     provider_name = 'auto'
     domain = 'pacalis.net'
@@ -58,8 +52,8 @@ class AutoProviderTests(TestCase, IntegrationTests):
 
     # Here we do not mock the function _get_ns_records_domains_for_domain
     # to effectively test the nslookup call and processing.\
-    @pytest.mark.skipif(there_is_no_network(), reason='No network, no nslookup call possible.')
+    @pytest.mark.skipif(_there_is_no_network(), reason='No network, no nslookup call possible.')
     @pytest.mark.ignore_nslookup_mock('yes')
-    def test_nslookup_resolution(self):
+    def test_nslookup_resolution(self):  #  pylint: disable=no-self-use
         """Ensure that nameservers can be resolved through os nslookup call."""
         assert _get_ns_records_domains_for_domain('google.com')

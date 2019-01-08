@@ -134,10 +134,10 @@ class Provider(BaseProvider):
         if self._get_provider_option('regions'):
             data['regions'] = self._get_provider_option('regions')
 
-        for identifier in identifiers:
-            self._patch(
-                '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, identifier), data)
-            LOGGER.debug('update_record: %s', identifier)
+        for one_identifier in identifiers:
+            self._patch('/{0}/zones/{1}/records/{2}'
+                        .format(self.account_id, self.domain, one_identifier), data)
+            LOGGER.debug('update_record: %s', one_identifier)
 
         LOGGER.debug('update_record: %s', True)
         return True

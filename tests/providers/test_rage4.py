@@ -21,14 +21,14 @@ class Rage4ProviderTests(TestCase, IntegrationTests):
         return ['Authorization']
 
     @pytest.mark.skip(reason="update requires type to be specified for this provider")
-    def test_Provider_when_calling_update_record_with_full_name_should_modify_record(self):
+    def test_provider_when_calling_update_record_with_full_name_should_modify_record(self):
         return
 
     @pytest.mark.skip(reason="update requires type to be specified for this provider")
-    def test_Provider_when_calling_update_record_should_modify_record(self):
+    def test_provider_when_calling_update_record_should_modify_record(self):
         return
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.mark.skip(reason="new test, missing recording")
-    def test_Provider_when_calling_update_record_should_modify_record_name_specified(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
         return

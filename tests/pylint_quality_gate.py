@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""This scripts execute check Lexicon quality against a quality gate"""
 import os
 import sys
 
@@ -55,8 +56,7 @@ def main():
     results = lint.Run([
         os.path.join(repo_dir, 'lexicon'),
         os.path.join(repo_dir, 'tests'),
-        os.path.join(repo_dir, 'tests', 'providers'), '--persistent=n'],
-        None, False)
+        os.path.join(repo_dir, 'tests', 'providers'), '--persistent=n'], None, False)
 
     stats = results.linter.stats
     sys.exit(quality_gate(stats))
