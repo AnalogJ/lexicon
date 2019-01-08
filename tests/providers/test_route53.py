@@ -16,18 +16,32 @@
 #         return ['Authorization']
 #
 #     def test_provider_authenticate_private_zone_only(self):
-#         with provider_vcr.use_cassette(super(Route53ProviderTests, self)._cassette_path('IntegrationTests/test_provider_authenticate.yaml'), filter_headers=super(Route53ProviderTests, self)._filter_headers(), filter_query_parameters=super(Route53ProviderTests, self)._filter_query_parameters(), filter_post_data_parameters=super(Route53ProviderTests, self)._filter_post_data_parameters()):
+#         with provider_vcr.use_cassette(super(Route53ProviderTests, self)
+#               ._cassette_path('IntegrationTests/test_provider_authenticate.yaml'),
+#                   filter_headers=super(Route53ProviderTests, self)._filter_headers(),
+#                   filter_query_parameters=super(Route53ProviderTests, self).
+#                       ._filter_query_parameters(),
+#                   filter_post_data_parameters=super(Route53ProviderTests, self)
+#                       ._filter_post_data_parameters()):
 #             options = super(Route53ProviderTests, self)._test_options()
 #             options['private_zone'] = 'true'
-#             provider = self.Provider(options, super(Route53ProviderTests, self)._test_engine_overrides())
+#             provider = self.Provider(options, super(Route53ProviderTests, self)
+#                           ._test_engine_overrides())
 #             with pytest.raises(Exception):
 #                 provider.authenticate()
 #
 #     def test_provider_authenticate_private_zone_false(self):
-#         with provider_vcr.use_cassette(super(Route53ProviderTests, self)._cassette_path('IntegrationTests/test_provider_authenticate.yaml'), filter_headers=super(Route53ProviderTests, self)._filter_headers(), filter_query_parameters=super(Route53ProviderTests, self)._filter_query_parameters(), filter_post_data_parameters=super(Route53ProviderTests, self)._filter_post_data_parameters()):
+#         with provider_vcr.use_cassette(super(Route53ProviderTests, self)
+#           ._cassette_path('IntegrationTests/test_provider_authenticate.yaml'),
+#               filter_headers=super(Route53ProviderTests, self)._filter_headers(),
+#               filter_query_parameters=super(Route53ProviderTests, self)
+#                   ._filter_query_parameters(),
+#               filter_post_data_parameters=super(Route53ProviderTests, self)
+#                   ._filter_post_data_parameters()):
 #             options = super(Route53ProviderTests, self)._test_options()
 #             options['private_zone'] = 'false'
-#             provider = self.Provider(options, super(Route53ProviderTests, self)._test_engine_overrides())
+#             provider = self.Provider(options, super(Route53ProviderTests, self)
+#                               ._test_engine_overrides())
 #             provider.authenticate()
 #             assert provider.domain_id is not None
 #

@@ -29,7 +29,7 @@ class GoogleCloudDnsTests(TestCase, IntegrationTests):
     # and _filter_query_parameters methods are of no use.
     # You will need to replace manually theses parameters from the cassettes by placeholders.
     # Typically,
-    #   - for assertion with regex replace: assertion=[\w-%]+\.[\w-%]+\.[\w-%]+ 
+    #   - for assertion with regex replace: assertion=[\w-%]+\.[\w-%]+\.[\w-%]+
     #                                                   => assertion=assertion_placeholder
     #   - for access_token with regex replace: ya29\.c\.[\w-]+
     #                                                   => access_token_placeholder

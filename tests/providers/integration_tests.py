@@ -64,7 +64,7 @@ class FallbackConfigSource(ConfigSource):  # pylint: disable=too-few-public-meth
         return None
 
 
-class IntegrationTests(object):  # pylint: disable=useless-object-inheritance
+class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,too-many-public-methods
     """
     https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface  # pylint: disable=line-too-long
     Single, reusable definition of tests for the interface. Authors of

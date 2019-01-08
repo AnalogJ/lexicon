@@ -1,7 +1,6 @@
 """Integration tests for EasyName"""
 from unittest import TestCase
 
-from bs4 import BeautifulSoup
 from integration_tests import IntegrationTests
 from lexicon.providers.easyname import Provider
 
