@@ -1,3 +1,4 @@
+"""Module provider for Online.net"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,18 +13,18 @@ NAMESERVER_DOMAINS = ['online.net']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Online.net"""
     subparser.add_argument("--auth-token", help="specify private api token")
 
 
-def to_data(type, content):
-    if type == "TXT":
+def _to_data(rtype, content):
+    if rtype == "TXT":
         return '"{0}"'.format(content)
-    else:
-        return content
+    return content
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Online.net"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.zone_name = 'Zone Automatic Lexicon '
@@ -33,18 +34,18 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.online.net/api/v1'
 
     def _authenticate(self):
-        self.init_zones()
+        self._init_zones()
 
-    def list_zones(self):
+    def _list_zones(self):
         return self._get('/domain/{0}/version'.format(self.domain_id))
 
-    def init_zones(self):
+    def _init_zones(self):
         # sets current zone version
         zone_name_a = self.zone_name + 'A'
         zone_name_b = self.zone_name + 'B'
         active_row = None
         passive_row = None
-        for row in self.list_zones():
+        for row in self._list_zones():
             if row['active']:
                 active_row = row
             elif row['name'] == zone_name_a or row['name'] == zone_name_b:
@@ -57,77 +58,76 @@ class Provider(BaseProvider):
 
         self.active_zone = active_row['uuid_ref']
         self.passive_zone = passive_row['uuid_ref']
-        self.update_passive_zone()
+        self._update_passive_zone()
 
-    def update_passive_zone(self):
+    def _update_passive_zone(self):
         self._put(
             '/domain/{0}/version/{1}/zone_from_bind'.format(
                 self.domain_id,
                 self.passive_zone
             ),
-            self.get_bind_zone()
+            self._get_bind_zone()
         )
 
-    def get_bind_zone(self):
-        records = self.list_zone_records(self.active_zone)
+    def _get_bind_zone(self):
+        records = self._list_zone_records(self.active_zone)
         # then convert records to bind format
-        bindStr = ''
+        bind_str = ''
         for record in records:
-            bindStr = bindStr + '{0} {1} IN {2} {3}{4}\n'.format(
+            bind_str = bind_str + '{0} {1} IN {2} {3}{4}\n'.format(
                 record['name'] or '@',
                 record['ttl'],
                 record['type'],
                 '{0} '.format(record['aux']) if 'aux' in record else '',
                 record['data'] or ''
             )
-        return bindStr
+        return bind_str
 
-    def enable_zone(self):
+    def _enable_zone(self):
         zone = self.passive_zone
         if zone is None:
             raise Exception("Could not enable uninitialized passive_zone")
-        payload = self._patch('/domain/{0}/version/{1}/enable'.format(
+        self._patch('/domain/{0}/version/{1}/enable'.format(
             self.domain_id,
             zone
         ))
         self.passive_zone = self.active_zone
         self.active_zone = zone
-        self.update_passive_zone()
+        self._update_passive_zone()
 
     # Create record. If record already exists with the same content, do nothing'
-
     def _create_record(self, rtype, name, content):
         try:
-            record = self.find_record(rtype, name, content)
+            record = self._find_record(rtype, name, content)
             if record is not None:
                 return True
 
             record = {
                 'name': self._fqdn_name(name),
                 'type': rtype,
-                'data': to_data(rtype, content),
+                'data': _to_data(rtype, content),
                 'priority': self._get_lexicon_option('priority') or '',
                 'ttl': self._get_lexicon_option('ttl') or ''
             }
 
-            payload = self._post(
+            self._post(
                 '/domain/{0}/version/{1}/zone'.format(
                     self.domain_id,
                     self.passive_zone
                 ),
                 record
             )
-        except Exception as e:
-            LOGGER.debug(e)
+        except BaseException as error:
+            LOGGER.debug(error)
             return False
 
-        self.enable_zone()
+        self._enable_zone()
         LOGGER.debug('create_record: %s', True)
         return True
 
-    def find_zone_records(self, zone, type=None, name=None, content=None):
+    def _find_zone_records(self, zone, rtype=None, name=None, content=None):
         records = []
-        for record in self.list_zone_records(zone):
+        for record in self._list_zone_records(zone):
             processed_record = {
                 'id': record['id'],
                 'type': record['type'],
@@ -138,12 +138,12 @@ class Provider(BaseProvider):
             }
             records.append(self._clean_txt_record(processed_record))
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
-            fullName = self._full_name(name)
+            full_name = self._full_name(name)
             records = [
-                record for record in records if record['name'] == fullName]
+                record for record in records if record['name'] == full_name]
         if content:
             records = [
                 record for record in records if record['content'] == content]
@@ -151,81 +151,78 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    def list_zone_records(self, zone_id):
+    def _list_zone_records(self, zone_id):
         return self._get('/domain/{0}/version/{1}/zone'.format(self.domain_id, zone_id))
 
     def _list_records(self, rtype=None, name=None, content=None):
-        return self.find_zone_records(self.passive_zone, rtype, name, content)
+        return self._find_zone_records(self.passive_zone, rtype, name, content)
 
-    def find_record(self, type=None, name=None, content=None):
-        record = None
-        records = self._list_records(type, name, content)
-        if len(records) < 1:
+    def _find_record(self, rtype=None, name=None, content=None):
+        records = self._list_records(rtype, name, content)
+        if not records:
             return None
-        else:
-            return records[0]
+        return records[0]
 
     # Create or update a record.
-
-    def _update_record(self, id, rtype=None, name=None, content=None):
-        record = self.find_record(rtype, name)
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        record = self._find_record(rtype, name)
         if record is None:
             LOGGER.debug("cannot find record to update: %s %s %s",
-                         id, rtype, name)
+                         identifier, rtype, name)
             return True
         if rtype:
             record['type'] = rtype
         if name:
             record['name'] = self._fqdn_name(name)
         if content:
-            record['data'] = to_data(rtype, content)
+            record['data'] = _to_data(rtype, content)
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
         # it is weird that 'aux' becomes 'priority' in online's api
         if self._get_lexicon_option('priority'):
             record['priority'] = self._get_lexicon_option('priority')
 
-        if id is None:
-            id = record['id']
+        if identifier is None:
+            identifier = record['id']
 
         record.pop('id')
 
         try:
-            payload = self._patch('/domain/{0}/version/{1}/zone/{2}'.format(
+            self._patch('/domain/{0}/version/{1}/zone/{2}'.format(
                 self.domain_id,
                 self.passive_zone,
-                id
+                identifier
             ), record)
 
-        except Exception as e:
-            LOGGER.debug(e)
+        except BaseException as error:
+            LOGGER.debug(error)
             return False
 
-        self.enable_zone()
+        self._enable_zone()
         # If it didn't raise from the http status code, then we're good
-        LOGGER.debug('update_record: %s', id)
+        LOGGER.debug('update_record: %s', identifier)
         return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         records = self._list_records(rtype, name, content)
-        if len(records) == 0:
+        if not records:
             LOGGER.debug("Cannot find records %s %s %s", rtype, name, content)
             return False
         LOGGER.debug('delete_records: %s records found', len(records))
         try:
             for record in records:
-                payload = self._delete('/domain/{0}/version/{1}/zone/{2}'.format(
+                self._delete('/domain/{0}/version/{1}/zone/{2}'.format(
                     self.domain_id,
                     self.passive_zone,
                     record['id']
                 ))
-        except Exception as e:
-            LOGGER.debug(e)
+        except BaseException as error:
+            LOGGER.debug(error)
             return False
 
-        self.enable_zone()
+        self._enable_zone()
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug('delete_record: %s', True)
         return True
@@ -249,7 +246,7 @@ class Provider(BaseProvider):
                 headers['Content-Type'] = 'application/json'
                 data = json.dumps(data)
 
-        r = requests.request(
+        response = requests.request(
             action,
             self.api_endpoint + url,
             params=query_params,
@@ -257,6 +254,6 @@ class Provider(BaseProvider):
             headers=headers
         )
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
 
-        return r.text and r.json() or ''
+        return response.json() if response.text else ''

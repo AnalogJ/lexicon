@@ -1,16 +1,17 @@
-# The internetbs api has an undocumented rate-limit ; here is what the support could tell me about
-# it: "Please note that our API is intended mainly for domain name registrations and that's why we
-# offer it for free and your registration volume has to stay in phase with the requests you perform.
-# If you keep a reasonable ratio between check and successful registrations, you should never hit
-# the limits. Here are the limits:
-# - per minute = 60+N
-# - per hour = 500+N
-# - per day = 1000+2*N
-# - per week = 2000+2.5*N
-# - per month = 3000+3*N
-# Where N is the number of registered domains in your account (so excluding pending
-# transfers/trades)."
-
+"""
+The internetbs api has an undocumented rate-limit ; here is what the support could tell me about
+it: "Please note that our API is intended mainly for domain name registrations and that's why we
+offer it for free and your registration volume has to stay in phase with the requests you perform.
+If you keep a reasonable ratio between check and successful registrations, you should never hit
+the limits. Here are the limits:
+- per minute = 60+N
+- per hour = 500+N
+- per day = 1000+2*N
+- per week = 2000+2.5*N
+- per month = 3000+3*N
+Where N is the number of registered domains in your account (so excluding pending
+transfers/trades)."
+"""
 from __future__ import absolute_import
 import hashlib
 import json
@@ -26,6 +27,7 @@ NAMESERVER_DOMAINS = ['topdns.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for internetbs"""
     subparser.add_argument(
         "--auth-key", help="specify API key for authentication")
     subparser.add_argument(
@@ -33,7 +35,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for internetbs"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -57,7 +59,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
         existing_records = self._list_records(rtype, name, content)
-        if len(existing_records) > 0:
+        if existing_records:
             return True
 
         query = {'Type': rtype, 'FullRecordName': self._full_name(

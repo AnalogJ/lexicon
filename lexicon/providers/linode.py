@@ -1,3 +1,4 @@
+"""Module provider for Linode"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,12 +13,13 @@ NAMESERVER_DOMAINS = ['linode.com']
 
 
 def provider_parser(subparser):
+    """Module provider for Linode"""
     subparser.add_argument(
         "--auth-token", help="specify api key for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Linode"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -33,7 +35,7 @@ class Provider(BaseProvider):
             raise Exception('Domain not found')
 
     def _create_record(self, rtype, name, content):
-        if len(self._list_records(rtype, name, content)) == 0:
+        if not self._list_records(rtype, name, content):
             self._get('domain.resource.create', query_params={
                 'DomainID': self.domain_id,
                 'Name': self._relative_name(name),
@@ -48,8 +50,8 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get('domain.resource.list', query_params={
-                            'DomainID': self.domain_id})
+        payload = self._get('domain.resource.list',
+                            query_params={'DomainID': self.domain_id})
         resource_list = payload['DATA']
         if rtype:
             resource_list = [
@@ -78,7 +80,7 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
             resources = self._list_records(rtype, name, None)
-            identifier = resources[0]['id'] if len(resources) > 0 else None
+            identifier = resources[0]['id'] if resources else None
 
         LOGGER.debug('update_record: %s', identifier)
 
@@ -127,16 +129,14 @@ class Provider(BaseProvider):
         query_params['resultFormat'] = 'JSON'
         query_params['api_action'] = url
 
-        r = requests.request(action, self.api_endpoint, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
+        response = requests.request(action, self.api_endpoint, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
+        response.raise_for_status()
         if action == 'DELETE':
             return ''
-        else:
-            result = r.json()
-            if len(result['ERRORARRAY']) > 0:
-                raise Exception(
-                    'Linode api error: {0}'.format(result['ERRORARRAY']))
-            return result
+        result = response.json()
+        if result['ERRORARRAY']:
+            raise Exception('Linode api error: {0}'.format(result['ERRORARRAY']))
+        return result

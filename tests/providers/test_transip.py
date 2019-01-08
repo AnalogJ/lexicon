@@ -4,7 +4,7 @@ from tempfile import mkstemp
 from unittest import TestCase
 
 import pytest
-from integration_tests import IntegrationTests, provider_vcr
+from integration_tests import IntegrationTests
 from lexicon.providers.transip import Provider
 
 

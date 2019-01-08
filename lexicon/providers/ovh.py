@@ -1,3 +1,4 @@
+"""Module provider for OVH"""
 from __future__ import absolute_import
 import hashlib
 import json
@@ -24,6 +25,7 @@ NAMESERVER_DOMAINS = ['ovh.net', 'anycast.me']
 
 
 def provider_parser(subparser):
+    """Generate provider parser for OVH"""
     subparser.description = '''
         OVH Provider requires a token with full rights on /domain/*.
         It can be generated for your OVH account on the following URL:
@@ -40,7 +42,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for OVH"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
 
@@ -58,6 +60,8 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.endpoint_api = ENDPOINTS.get(
             self._get_provider_option('auth_entrypoint'))
+        self.session = None
+        self.time_delta = None
 
     def _authenticate(self):
         # All requests will be done in one HTTPS session

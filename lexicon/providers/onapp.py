@@ -1,10 +1,12 @@
+"""Module provider for OnApp"""
 from __future__ import absolute_import
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
+
+from lexicon.providers.base import Provider as BaseProvider
 
 
 LOGGER = logging.getLogger(__name__)
@@ -13,10 +15,11 @@ NAMESERVER_DOMAINS = []
 
 
 def provider_parser(subparser):
+    """Configure provider parser for OnApp"""
     subparser.description = '''
         The OnApp provider requires your OnApp account\'s email address and
         API token, which can be found on your /profile page on the Control Panel interface.
-        The server is your dashboard URL, in the format of e.g. https://dashboard.youronapphost.org'''
+        The server is your dashboard URL, with format like https://dashboard.youronapphost.org'''
     subparser.add_argument(
         '--auth-username', help='specify email address of the OnApp account')
     subparser.add_argument(
@@ -26,7 +29,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-
+    """Provider class for OnApp"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
 
@@ -76,24 +79,24 @@ class Provider(BaseProvider):
 
         response = self._get(
             '/dns_zones/{0}/records.json'.format(self.domain_id))
-        for recordType in response['dns_zone']['records']:
+        for record_type in response['dns_zone']['records']:
 
             # For now we do not support other RR types so we ignore them, also see
             # _key_for_record_type
-            if recordType not in ('A', 'AAAA', 'CNAME', 'TXT'):
+            if record_type not in ('A', 'AAAA', 'CNAME', 'TXT'):
                 continue
 
-            if rtype and recordType != rtype:
+            if rtype and record_type != rtype:
                 continue
 
-            for record in response['dns_zone']['records'][recordType]:
+            for record in response['dns_zone']['records'][record_type]:
                 record = record['dns_record']
 
                 if name and record['name'] != self._relative_name(name):
                     continue
 
-                recordContent = record[self._key_for_record_type(recordType)]
-                if content and recordContent != content:
+                record_content = record[self._key_for_record_type(record_type)]
+                if content and record_content != content:
                     continue
 
                 records.append({
@@ -101,7 +104,7 @@ class Provider(BaseProvider):
                     'name': self._full_name(record['name']),
                     'type': record['type'],
                     'ttl': record['ttl'],
-                    'content': recordContent
+                    'content': record_content
                 })
 
         LOGGER.debug('list_records: %s', records)
@@ -145,9 +148,9 @@ class Provider(BaseProvider):
         else:
             deletion_ids.append(identifier)
 
-        for id in deletion_ids:
+        for one_id in deletion_ids:
             self._delete(
-                '/dns_zones/{0}/records/{1}.json'.format(self.domain_id, id))
+                '/dns_zones/{0}/records/{1}.json'.format(self.domain_id, one_id))
 
         LOGGER.debug('delete_record: %s', True)
 
@@ -190,13 +193,15 @@ class Provider(BaseProvider):
             raise Exception(
                 '{0} record type is not supported in the OnApp Provider'.format(record_type))
 
-    def _guess_record(self, type, name=None, content=None):
-        records = self._list_records(rtype=type, name=name, content=content)
+    def _guess_record(self, rtype, name=None, content=None):
+        records = self._list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
         elif len(records) > 1:
             raise Exception(
-                'Identifier was not provided and several existing records match the request for {0}/{1}'.format(type, name))
-        elif len(records) == 0:
+                'Identifier was not provided and several existing records '
+                'match the request for {0}/{1}'.format(rtype, name))
+        elif not records:
             raise Exception(
-                'Identifier was not provided and no existing records match the request for {0}/{1}'.format(type, name))
+                'Identifier was not provided and no existing records '
+                'match the request for {0}/{1}'.format(rtype, name))

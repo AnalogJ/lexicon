@@ -1,3 +1,4 @@
+"""Module provider for INWX"""
 from __future__ import absolute_import
 import logging
 
@@ -15,6 +16,7 @@ NAMESERVER_DOMAINS = ['inwx.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for INWX"""
     subparser.add_argument("--auth-username",
                            help="specify username for authentication")
     subparser.add_argument("--auth-password",
@@ -26,7 +28,6 @@ class Provider(BaseProvider):
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
-
     def __init__(self, config):
         """
         :param config: command line options
@@ -205,3 +206,7 @@ class Provider(BaseProvider):
                 response=response, message='Failed to update record')
 
         return True
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used for INWX provider.
+        pass

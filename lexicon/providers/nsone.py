@@ -1,3 +1,4 @@
+"""Module provider for NSOne"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,12 +13,13 @@ NAMESERVER_DOMAINS = ['nsone.net']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for NSOne"""
     subparser.add_argument(
         "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for NSOne"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -32,15 +34,14 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-    def _get_record_set(self, name, type):
+    def _get_record_set(self, name, rtype):
         try:
             payload = self._get(
-                '/zones/{0}/{1}/{2}'.format(self.domain_id, name, type))
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+                '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype))
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 404:
                 return None
-            else:
-                raise e
+            raise
 
         return {
             'type': payload['type'],
@@ -80,10 +81,10 @@ class Provider(BaseProvider):
             try:
                 payload = self._put(
                     '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype), record)
-            except requests.exceptions.HTTPError as e:
+            except requests.exceptions.HTTPError as error:
                 # http 400 is ok here, because the record probably already exists
-                if e.response.status_code == 400:
-                    payload = {}
+                if error.response.status_code != 400:
+                    raise
 
             LOGGER.debug('create_record: %s', 'id' in payload)
 
@@ -182,9 +183,7 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {}
-        payload = None
         new_identifier = "{0}/{1}/{2}".format(
             self.domain_id, self._full_name(name), rtype)
 
@@ -229,7 +228,7 @@ class Provider(BaseProvider):
                         if content not in answer['answer']:
                             record_set_new['answers'].append(answer)
 
-                if len(record_set_new['answers']) > 0:
+                if record_set_new['answers']:
                     self._post(
                         '/zones/{0}/{1}/{2}'.format(self.domain_id, name, rtype), record_set_new)
                 else:
@@ -254,10 +253,10 @@ class Provider(BaseProvider):
         }
         default_auth = None
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers,
-                             auth=default_auth)
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers,
+                                    auth=default_auth)
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()

@@ -1,3 +1,4 @@
+"""Module provider for Namesilo"""
 from __future__ import absolute_import
 import logging
 from xml.etree import ElementTree
@@ -12,12 +13,13 @@ NAMESERVER_DOMAINS = ['namesilo.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for Namesilo"""
     subparser.add_argument(
         "--auth-token", help="specify key for authentication")
 
 
 class Provider(BaseProvider):
-
+    """Provider class for Namesilo"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -25,8 +27,7 @@ class Provider(BaseProvider):
             'api_endpoint') or 'https://www.namesilo.com/api'
 
     def _authenticate(self):
-
-        payload = self._get('/getDomainInfo', {'domain': self.domain})
+        self._get('/getDomainInfo', {'domain': self.domain})
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
@@ -41,10 +42,10 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             record['rrttl'] = self._get_lexicon_option('ttl')
         try:
-            payload = self._get('/dnsAddRecord', record)
+            self._get('/dnsAddRecord', record)
         except ValueError as err:
             # noop if attempting to create record that already exists.
-            LOGGER.debug('Ignoring error: {0}'.format(err))
+            LOGGER.debug('Ignoring error: %s', err)
 
         LOGGER.debug('create_record: %s', True)
         return True
@@ -95,7 +96,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             data['rrttl'] = self._get_lexicon_option('ttl')
 
-        payload = self._get('/dnsUpdateRecord', data)
+        self._get('/dnsUpdateRecord', data)
 
         LOGGER.debug('update_record: %s', True)
         return True
@@ -118,7 +119,7 @@ class Provider(BaseProvider):
 
         for record_id in delete_record_id:
             data['rrid'] = record_id
-            payload = self._get('/dnsDeleteRecord', data)
+            self._get('/dnsDeleteRecord', data)
 
         LOGGER.debug('delete_record: %s', True)
         return True
@@ -133,13 +134,12 @@ class Provider(BaseProvider):
         query_params['version'] = 1
         query_params['type'] = 'xml'
         query_params['key'] = self._get_provider_option('auth_token')
-        r = requests.request(action, self.api_endpoint +
-                             url, params=query_params)
+        response = requests.request(action, self.api_endpoint +
+                                    url, params=query_params)
         # data=json.dumps(data))
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        # TODO: check if the response is an error using
-        tree = ElementTree.ElementTree(ElementTree.fromstring(r.content))
+        response.raise_for_status()
+        tree = ElementTree.ElementTree(ElementTree.fromstring(response.content))
         root = tree.getroot()
         if root.find('reply').find('code').text == '280':
             raise ValueError('An error occurred: {0}, {1}'.format(

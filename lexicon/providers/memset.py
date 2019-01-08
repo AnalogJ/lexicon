@@ -1,3 +1,4 @@
+"""Module provider for memset"""
 from __future__ import absolute_import
 import json
 import logging
@@ -12,11 +13,13 @@ NAMESERVER_DOMAINS = ['memset.com']
 
 
 def provider_parser(subparser):
+    """Configure provider parser for memset"""
     subparser.add_argument(
         "--auth-token", help="specify API key for authentication")
 
 
 class Provider(BaseProvider):
+    """Provider class for memset"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -38,7 +41,7 @@ class Provider(BaseProvider):
             data['ttl'] = self._get_lexicon_option('ttl')
         data['zone_id'] = self.domain_id
         check_exists = self._list_records(rtype=rtype, name=name, content=content)
-        if not len(check_exists) > 0:
+        if not check_exists:
             payload = self._get('/dns.zone_record_create', data)
             if payload['id']:
                 self._get('/dns.reload')
@@ -65,7 +68,7 @@ class Provider(BaseProvider):
             }
             if name:
                 name = self._full_name(name)
-            if (processed_record['type'] == rtype):
+            if processed_record['type'] == rtype:
                 if (name is not None and content is not None):
                     if processed_record['name'] == name and processed_record['content'] == content:
                         records.append(processed_record)
@@ -120,10 +123,11 @@ class Provider(BaseProvider):
 
         LOGGER.debug('delete_records: %s', delete_record_id)
 
+        record_id = None
         for record_id in delete_record_id:
-            payload = self._get('/dns.zone_record_delete', {'id': record_id})
+            self._get('/dns.zone_record_delete', {'id': record_id})
 
-        if len(record_id) > 0:
+        if record_id:
             self._get('/dns.reload')
 
         LOGGER.debug('delete_record: %s', True)
@@ -135,11 +139,11 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             auth=(self._get_provider_option(
-                                 'auth_token'), 'x'),
-                             headers={'Content-Type': 'application/json'})
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    auth=(self._get_provider_option(
+                                        'auth_token'), 'x'),
+                                    headers={'Content-Type': 'application/json'})
         # if the request fails for any reason, throw an error.
-        r.raise_for_status()
-        return r.json()
+        response.raise_for_status()
+        return response.json()
