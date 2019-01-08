@@ -1,18 +1,16 @@
 """ Ensure that stdout corresponds to the given reference output """
+# pylint: disable=missing-docstring
 from __future__ import absolute_import
 import json
-import logging
 
 from lexicon import cli
 
 
-logger = logging.getLogger(__name__)
-data = [
+DATA = [
     {'id': 'fake-id', 'type': 'TXT', 'name': 'fake.example.com',
-        'content': 'fake', 'ttl': 3600},
+     'content': 'fake', 'ttl': 3600},
     {'id': 'fake2-id', 'type': 'TXT', 'name': 'fake2.example.com',
-        'content': 'fake2', 'ttl': 3600}
-]
+     'content': 'fake2', 'ttl': 3600}]
 
 
 def assert_correct_output(capsys, expected_output_lines):
@@ -28,7 +26,7 @@ def test_output_function_outputs_json_as_table(capsys):
         'fake2-id TXT  fake2.example.com fake2   3600',
     ]
 
-    cli.handle_output(data, 'TABLE', 'list')
+    cli.handle_output(DATA, 'TABLE', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 
@@ -38,23 +36,23 @@ def test_output_function_outputs_json_as_table_with_no_header(capsys):
         'fake2-id TXT fake2.example.com fake2 3600',
     ]
 
-    cli.handle_output(data, 'TABLE-NO-HEADER', 'list')
+    cli.handle_output(DATA, 'TABLE-NO-HEADER', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 
 def test_output_function_outputs_json_as_json_string(capsys):
-    cli.handle_output(data, 'JSON', 'list')
+    cli.handle_output(DATA, 'JSON', 'list')
 
     out, _ = capsys.readouterr()
     json_data = json.loads(out)
 
-    assert json_data == data
+    assert json_data == DATA
 
 
 def test_output_function_output_nothing_when_quiet(capsys):
     expected_output_lines = []
 
-    cli.handle_output(data, 'QUIET', 'list')
+    cli.handle_output(DATA, 'QUIET', 'list')
     assert_correct_output(capsys, expected_output_lines)
 
 

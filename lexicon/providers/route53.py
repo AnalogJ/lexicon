@@ -37,7 +37,7 @@ def provider_parser(subparser):
         "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
 
 
-class RecordSetPaginator(object):  # pylint: disable=useless-project-inheritance
+class RecordSetPaginator(object):  # pylint: disable=useless-object-inheritance
     """Paginate through complete list of record sets."""
 
     def __init__(self, r53_client, hosted_zone_id, max_items=None):

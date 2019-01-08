@@ -1,6 +1,5 @@
-import os
-
-import pytest
+"""Unit tests for the Lexicon config mechanism"""
+# pylint: disable=redefined-outer-name,missing-docstring
 from lexicon.config import ConfigResolver, ConfigSource
 from lexicon.parser import generate_cli_main_parser
 
@@ -82,8 +81,7 @@ def test_provider_config_dir_resolution(tmpdir):
 
 
 def test_generic_config_feeder_resolution():
-    class GenericConfigSource(ConfigSource):
-
+    class GenericConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         def resolve(self, config_key):
             return 'TEST1'
 

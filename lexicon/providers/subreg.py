@@ -192,8 +192,7 @@ class Provider(BaseProvider):
         # Handle None and empty strings
         if not record_name:
             return self.domain
-        else:
-            return super(Provider, self)._full_name(record_name)
+        return super(Provider, self)._full_name(record_name)
 
     def _relative_name(self, record_name):
         """Returns sub-domain of a domain name"""
@@ -298,8 +297,7 @@ class Provider(BaseProvider):
                 )
             if response['status'] == 'ok':
                 return response['data'] if 'data' in response else dict()
-            else:
-                raise Exception("Invalid status found in SOAP response")
+            raise Exception("Invalid status found in SOAP response")
         raise Exception('Invalid response')
 
     def _request(self, action='GET', url='/', data=None, query_params=None):

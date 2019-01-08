@@ -179,8 +179,7 @@ class Provider(BaseProvider):
 
         if result.text:
             return result.json()
-        else:
-            return None
+        return None
 
     def _key_for_record_type(self, record_type):  # pylint: disable=no-self-use
         if record_type in ('A', 'AAAA'):
