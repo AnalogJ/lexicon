@@ -34,12 +34,17 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
     :param config: is a ConfigResolver object that contains all the options
     for this provider, merged from CLI and Env variables.
     """
-
     def __init__(self, config):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
             # correctly defined ConfigResolver.
+            # Also, there may be some situation where `provider` key is not set in the config.
+            # It should not happen when Lexicon is called from Client, as it will set itself
+            # this key. However there were no automated logic if the Provider is used directly.
+            # So we provide this logic here.
+            if not config.get('provider_name') and not config.get('provider'):
+                config['provider'] = __name__  # Obviously we use the module name itself.
             self.config = legacy_config_resolver(config)
         else:
             self.config = config
