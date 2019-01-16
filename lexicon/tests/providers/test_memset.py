@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for Memset"""
 from unittest import TestCase
 
 import pytest
@@ -10,7 +10,7 @@ from lexicon.providers.memset import Provider
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class MemsetProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Memset"""
     Provider = Provider
     provider_name = 'memset'
     domain = 'testzone.com'

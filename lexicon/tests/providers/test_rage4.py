@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for Rage4"""
 from unittest import TestCase
 
 import pytest
@@ -9,10 +9,8 @@ from lexicon.providers.rage4 import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-
-
 class Rage4ProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Rage4"""
     Provider = Provider
     provider_name = 'rage4'
     domain = 'capsulecd.com'

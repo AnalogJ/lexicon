@@ -1,3 +1,4 @@
+"""Integration tests for Hetzner"""
 from unittest import TestCase
 import os
 import mock
@@ -20,9 +21,9 @@ def _no_dns_lookup():
     return True
 
 class HetznerIntegrationTests(IntegrationTests):
-
+    """Base TestCase for Hetzner"""
     @pytest.fixture(autouse=True)
-    def dns_cname_mock(self, request):
+    def _dns_cname_mock(self, request):
         _ignore_mock = request.node.get_marker('ignore_dns_cname_mock')
         _domain_mock = self.domain
         if request.node.name == 'test_provider_authenticate_with_unmanaged_domain_should_fail':
@@ -36,16 +37,16 @@ class HetznerIntegrationTests(IntegrationTests):
 
     @pytest.mark.skipif(_no_dns_lookup(), reason='No DNS resolution possible.')
     @pytest.mark.ignore_dns_cname_mock
-    def test_get_dns_cname(self):
+    def _test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
-        _domain, _nameservers, _cname = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'
+        _domain, _nameservers, _cname = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'  # pylint: disable=protected-access
                                                                  .format(self.domain)), False)
         assert _domain == self.domain
         assert _nameservers
         assert not _cname
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
-
+    """TestCase for Hetzner Robot"""
     Provider = Provider
     provider_name = 'hetzner'
     provider_variant = 'Robot'
@@ -78,7 +79,7 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
         return options
 
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
-
+    """TestCase for KonsoleHP"""
     Provider = Provider
     provider_name = 'hetzner'
     provider_variant = 'KonsoleH'

@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for nsone"""
 from unittest import TestCase
 
 import pytest
@@ -9,10 +9,8 @@ from lexicon.providers.nsone import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-
-
 class Ns1ProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for nsone"""
     Provider = Provider
     provider_name = 'nsone'
     domain = 'lexicon-example.com'

@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for InternetBS"""
 import os
 from unittest import TestCase
 
@@ -9,10 +9,8 @@ from lexicon.providers.internetbs import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-
-
 class InternetbsProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for InternetBS"""
     Provider = Provider
     provider_name = 'internetbs'
     domain = 'world-of-ysera.com'
