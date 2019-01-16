@@ -307,7 +307,7 @@ class LegacyDictConfigSource(DictConfigSource):  # pylint: disable=too-few-publi
     """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
 
     def __init__(self, dict_object):
-        provider_name = dict_object.get('provider_name')
+        provider_name = dict_object.get('provider_name') or dict_object.get('provider')
         if not provider_name:
             raise AttributeError('Error, key provider_name is not defined.'
                                  'LegacyDictConfigSource cannot scope correctly '

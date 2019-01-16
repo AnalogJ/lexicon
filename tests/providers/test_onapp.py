@@ -1,3 +1,4 @@
+"""Integration tests for Onapp"""
 from unittest import TestCase
 
 from integration_tests import IntegrationTests
@@ -5,7 +6,7 @@ from lexicon.providers.onapp import Provider
 
 
 class OnappProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Oneapp"""
     Provider = Provider
     provider_name = 'onapp'
     domain = 'my-test.org'

@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for SakuraCloud"""
 from unittest import TestCase
 
 import pytest
@@ -9,10 +9,8 @@ from lexicon.providers.sakuracloud import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-
-
 class SakruaCloudProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for SakuraCloud"""
     Provider = Provider
     provider_name = 'sakuracloud'
     domain = 'example.com'
@@ -27,6 +25,6 @@ class SakruaCloudProviderTests(TestCase, IntegrationTests):
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
+    def _skip_suite(self, request):  # pylint: disable=no-self-use
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')

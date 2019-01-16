@@ -1,7 +1,8 @@
-# Test for one implementation of the interface
+"""Integration tests for Online.net"""
 from unittest import TestCase
 
 import pytest
+
 from integration_tests import IntegrationTests
 from lexicon.providers.online import Provider
 
@@ -9,10 +10,8 @@ from lexicon.providers.online import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-
-
 class OnlineProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Online.net"""
     Provider = Provider
     provider_name = 'online'
     domain = 'capsulecd.com'

@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for Linode"""
 from unittest import TestCase
 
 import pytest
@@ -9,10 +9,8 @@ from lexicon.providers.linode import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-
-
 class LinodeProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for Linode"""
     Provider = Provider
     provider_name = 'linode'
     domain = 'lexicon-example.com'

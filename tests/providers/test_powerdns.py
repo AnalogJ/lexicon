@@ -1,6 +1,8 @@
+"""Integration tests for PowerDNS"""
 from unittest import TestCase
 
 import pytest
+
 from integration_tests import IntegrationTests
 from lexicon.providers.powerdns import Provider
 
@@ -9,7 +11,7 @@ from lexicon.providers.powerdns import Provider
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class PowerdnsProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for PowerDNS"""
     Provider = Provider
     provider_name = 'powerdns'
     domain = 'example.com'
@@ -26,6 +28,6 @@ class PowerdnsProviderTests(TestCase, IntegrationTests):
         return
 
     @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
+    def _skip_suite(self, request):  # pylint: disable=no-self-use
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')

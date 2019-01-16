@@ -1,9 +1,10 @@
-# Test for one implementation of the interface
+"""Integration tests for Transip"""
 import os
 from tempfile import mkstemp
 from unittest import TestCase
 
 import pytest
+
 from integration_tests import IntegrationTests
 from lexicon.providers.transip import Provider
 
@@ -42,29 +43,33 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 # The following fields were removed from the test fixtures:
 #   getInfo: contacts, authcode, registrationDate, renewalDate
 # using:
-#   find tests/fixtures/cassettes/transip/ -name \*.json -exec sed -i 's/<contacts.*<\/contacts>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/ -name \*.json -exec sed -i 's/<authCode.*<\/authCode>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/ -name \*.json -exec sed -i 's/<registrationDate.*<\/registrationDate>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/ -name \*.json -exec sed -i 's/<renewalDate.*<\/renewalDate>//g' '{}' \;
+#   find tests/fixtures/cassettes/transip/
+#       -name \*.json -exec sed -i 's/<contacts.*<\/contacts>//g' '{}' \;
+#   find tests/fixtures/cassettes/transip/
+#       -name \*.json -exec sed -i 's/<authCode.*<\/authCode>//g' '{}' \;
+#   find tests/fixtures/cassettes/transip/
+#       -name \*.json -exec sed -i 's/<registrationDate.*<\/registrationDate>//g' '{}' \;
+#   find tests/fixtures/cassettes/transip/
+#       -name \*.json -exec sed -i 's/<renewalDate.*<\/renewalDate>//g' '{}' \;
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class TransipProviderTests(TestCase, IntegrationTests):
+    """TestCase for Transip"""
     Provider = Provider
     provider_name = 'transip'
     domain = 'hurrdurr.nl'
 
     # Disable setUp and tearDown, and set a real username and key in
     # provider_opts to execute real calls
-
     def _test_parameters_overrides(self):
         (_fake_fd, _fake_key) = mkstemp()
         _fake_file = os.fdopen(_fake_fd, 'wb', 1024)
         _fake_file.write(FAKE_KEY)
         _fake_file.close()
-        self._fake_key = _fake_key
+        self._fake_key = _fake_key  # pylint: disable=attribute-defined-outside-init
 
         options = {
             'auth_username': 'foo',
@@ -77,7 +82,8 @@ class TransipProviderTests(TestCase, IntegrationTests):
         try:
             os.unlink(self._fake_key)
         except AttributeError:
-            # Method _test_options may not have been executed, in this case self._fake_key does not exist.
+            # Method _test_options may not have been executed,
+            # in this case self._fake_key does not exist.
             pass
 
     def _filter_headers(self):
@@ -87,6 +93,6 @@ class TransipProviderTests(TestCase, IntegrationTests):
     def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
         return
 
-    @pytest.mark.skip(reason="adding docs.example.com as a CNAME target will result in a RFC 1035 error")
+    @pytest.mark.skip(reason=("adding docs.example.com as a CNAME target will result in a RFC 1035 error"))  # pylint: disable=line-too-long
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
         return

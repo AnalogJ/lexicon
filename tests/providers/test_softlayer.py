@@ -1,7 +1,8 @@
-# Test for one implementation of the interface
+"""Integration tests for Softlayer"""
 from unittest import TestCase
 
 import pytest
+
 from integration_tests import IntegrationTests
 from lexicon.providers.softlayer import Provider
 
@@ -9,10 +10,8 @@ from lexicon.providers.softlayer import Provider
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-
-
 class SoftLayerProviderTests(TestCase, IntegrationTests):
-
+    """TestCase for SoftLayer"""
     Provider = Provider
     provider_name = 'softlayer'
     domain = 'example.com'
@@ -29,6 +28,6 @@ class SoftLayerProviderTests(TestCase, IntegrationTests):
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
+    def _skip_suite(self, request):  # pylint: disable=no-self-use
         if request.node.get_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
