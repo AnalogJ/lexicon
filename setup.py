@@ -28,6 +28,34 @@ providers = list(sorted(set(providers)))
 providers.remove('base')
 providers.remove('__init__')
 
+# Define optional dependencies for specific providers.
+# Each key of the dict should match a provider name.
+extras_require = {
+    'namecheap': ['PyNamecheap'],
+    'route53': ['boto3'],
+    'softlayer': ['SoftLayer'],
+    'subreg': ['zeep'],
+    'transip': ['transip>=0.3.0'],
+    'plesk': ['xmltodict'],
+    'henet': ['beautifulsoup4'],
+    'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
+    'easyname': ['beautifulsoup4'],
+    'localzone': ['localzone'],
+}
+
+# Add a 'full' extra, gathering all external dependencies for providers
+extras_require['full'] = set([dep for deps in extras_require.values() for dep in deps])
+
+# Define dev/test dependencies
+extras_require['dev'] = [
+    'pytest==3.8.0',
+    'pytest-cov==2.6.0',
+    'pytest-xdist==1.23.0',
+    'python-coveralls==2.9.1',
+    'vcrpy==1.13.0',
+    'mock==2.0.0',
+]
+
 setup(
     name='dns-lexicon',
 
@@ -89,21 +117,7 @@ setup(
         'pyyaml',
     ],
 
-    # Each dependency group in extras_require should match a provider name
-    # When adding a new depenency group here, please ensure that it has been
-    # added to optional-requirements.txt as well.
-    extras_require={
-        'namecheap': ['PyNamecheap'],
-        'route53': ['boto3'],
-        'softlayer': ['SoftLayer'],
-        'subreg': ['zeep'],
-        'transip': ['transip>=0.3.0'],
-        'plesk': ['xmltodict'],
-        'henet': ['beautifulsoup4'],
-        'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
-        'easyname': ['beautifulsoup4'],
-        'localzone': ['localzone'],
-    },
+    extras_require=extras_require,
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
