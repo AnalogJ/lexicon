@@ -73,13 +73,13 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
 
     def _test_parameters_overrides(self):
         options = {'auth_account': 'robot',
-                   'concatenate': 'no',
+                   'linked': 'no',
                    'propagated': 'no',
                    'latency': 1}
         return options
 
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for KonsoleHP"""
+    """TestCase for KonsoleH"""
     Provider = Provider
     provider_name = 'hetzner'
     provider_variant = 'KonsoleH'
@@ -110,7 +110,7 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
         options = {'auth_account': 'konsoleh',
                    'auth_username': env_username,
                    'auth_password': env_password,
-                   'concatenate': 'no',
+                   'linked': 'no',
                    'propagated': 'no',
                    'latency': 1}
         return options
