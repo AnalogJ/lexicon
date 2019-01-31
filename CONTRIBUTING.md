@@ -187,7 +187,7 @@ You can also skip extended test suites by adding the following snipped:
 ```python
     @pytest.fixture(autouse=True)
     def _skip_suite(self, request):  # pylint: disable=no-self-use
-        if request.node.get_marker('ext_suite_1'):
+        if request.node.get_closest_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
 ```
 

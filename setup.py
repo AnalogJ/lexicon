@@ -48,11 +48,11 @@ extras_require['full'] = set([dep for deps in extras_require.values() for dep in
 
 # Define dev/test dependencies
 extras_require['dev'] = [
-    'pytest==3.8.0',
-    'pytest-cov==2.6.0',
-    'pytest-xdist==1.23.0',
+    'pytest==4.1.1',
+    'pytest-cov==2.6.1',
+    'pytest-xdist==1.26.1',
     'python-coveralls==2.9.1',
-    'vcrpy==1.13.0',
+    'vcrpy==2.0.1',
     'mock==2.0.0',
 ]
 
