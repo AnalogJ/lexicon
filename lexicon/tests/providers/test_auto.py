@@ -13,7 +13,7 @@ from lexicon.providers.auto import Provider, _get_ns_records_domains_for_domain
 # Then it will prevent errors where there is no network or tested domain do not exists anymore.
 @pytest.fixture(autouse=True)
 def _nslookup_mock(request):
-    _ignore_nslookup_mock = request.node.get_marker('ignore_nslookup_mock')
+    _ignore_nslookup_mock = request.node.get_closest_marker('ignore_nslookup_mock')
 
     if _ignore_nslookup_mock:
         # Do not mock if the test says so.

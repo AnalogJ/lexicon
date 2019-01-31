@@ -24,7 +24,7 @@ class HetznerIntegrationTests(IntegrationTests):
     """Base TestCase for Hetzner"""
     @pytest.fixture(autouse=True)
     def _dns_cname_mock(self, request):
-        _ignore_mock = request.node.get_marker('ignore_dns_cname_mock')
+        _ignore_mock = request.node.get_closest_marker('ignore_dns_cname_mock')
         _domain_mock = self.domain
         if request.node.name == 'test_provider_authenticate_with_unmanaged_domain_should_fail':
             _domain_mock = 'thisisadomainidonotown.com'
