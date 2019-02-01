@@ -27,7 +27,7 @@ class Provider(BaseProvider):
     """Provider class for exoscale"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.api_endpoint = 'https://api.exoscale.ch/dns'
+        self.api_endpoint = 'https://api.exoscale.com/dns'
 
     def _authenticate(self):
         """An innocent call to check that the credentials are okay."""

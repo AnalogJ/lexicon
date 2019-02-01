@@ -7,18 +7,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com
   response:
-    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2018-07-05T11:32:18Z","token":"aa2c71115e27af7806aa95b8859d94fd","id":384314,"whois_protected":false,"created_at":"2018-07-05T11:32:18Z","auto_renew":false}}'}
+    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2019-02-01T07:29:38Z","token":"9d30931ed5c454244b50855180e8ca75","id":440987,"whois_protected":false,"created_at":"2019-02-01T07:29:38Z","auto_renew":false}}'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:33:04 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:52 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [a6039c8c-784d-4833-930d-94c7e1dd4547]
+      X-Request-Id: [ea3b09f648732887879434e7391f186f]
       content-length: ['310']
     status: {code: 200, message: OK}
 - request:
@@ -29,20 +29,19 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.nameonly.test
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.nameonly.test
   response:
-    body: {string: '[{"record":{"record_type":"SOA","content":"ns1.exoscale.io admin.dnsimple.com
-        1530790370 86400 7200 604800 300","name":"","updated_at":"2018-07-05T11:33:04Z","ttl":3600,"id":14193225,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.net","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193226,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.ch","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193227,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.com","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193228,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.io","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193229,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"A","content":"127.0.0.1","name":"localhost","updated_at":"2018-07-05T11:32:32Z","ttl":3600,"id":14193232,"domain_id":384314,"created_at":"2018-07-05T11:32:32Z","prio":null}},{"record":{"record_type":"CNAME","content":"docs.example.com","name":"docs","updated_at":"2018-07-05T11:32:33Z","ttl":3600,"id":14193233,"domain_id":384314,"created_at":"2018-07-05T11:32:33Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.fqdn","updated_at":"2018-07-05T11:32:34Z","ttl":3600,"id":14193234,"domain_id":384314,"created_at":"2018-07-05T11:32:34Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.full","updated_at":"2018-07-05T11:32:35Z","ttl":3600,"id":14193235,"domain_id":384314,"created_at":"2018-07-05T11:32:35Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.test","updated_at":"2018-07-05T11:32:36Z","ttl":3600,"id":14193236,"domain_id":384314,"created_at":"2018-07-05T11:32:36Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:37Z","ttl":3600,"id":14193237,"domain_id":384314,"created_at":"2018-07-05T11:32:37Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:38Z","ttl":3600,"id":14193238,"domain_id":384314,"created_at":"2018-07-05T11:32:38Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.noop","updated_at":"2018-07-05T11:32:39Z","ttl":3600,"id":14193239,"domain_id":384314,"created_at":"2018-07-05T11:32:39Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.deleterecordinset","updated_at":"2018-07-05T11:32:49Z","ttl":3600,"id":14193247,"domain_id":384314,"created_at":"2018-07-05T11:32:49Z","prio":null}},{"record":{"record_type":"TXT","content":"ttlshouldbe3600","name":"ttl.fqdn","updated_at":"2018-07-05T11:32:54Z","ttl":3600,"id":14193250,"domain_id":384314,"created_at":"2018-07-05T11:32:54Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.listrecordset","updated_at":"2018-07-05T11:32:56Z","ttl":3600,"id":14193251,"domain_id":384314,"created_at":"2018-07-05T11:32:56Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.listrecordset","updated_at":"2018-07-05T11:32:57Z","ttl":3600,"id":14193252,"domain_id":384314,"created_at":"2018-07-05T11:32:57Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fqdntest","updated_at":"2018-07-05T11:32:58Z","ttl":3600,"id":14193253,"domain_id":384314,"created_at":"2018-07-05T11:32:58Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fulltest","updated_at":"2018-07-05T11:32:59Z","ttl":3600,"id":14193254,"domain_id":384314,"created_at":"2018-07-05T11:32:59Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.test","updated_at":"2018-07-05T11:33:01Z","ttl":3600,"id":14193255,"domain_id":384314,"created_at":"2018-07-05T11:33:01Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"updated.test","updated_at":"2018-07-05T11:33:04Z","ttl":3600,"id":14193256,"domain_id":384314,"created_at":"2018-07-05T11:33:03Z","prio":null}}]'}
+    body: {string: '[]'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:33:04 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:52 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [1c2f4419-70dd-4467-9bf4-e785660678de]
-      content-length: ['4524']
+      X-Request-Id: [f45b4f7ce433bbd968e0dedeb3b97b6d]
+      content-length: ['2']
     status: {code: 200, message: OK}
 - request:
     body: '{"record": {"record_type": "TXT", "name": "orig.nameonly.test", "content":
@@ -53,19 +52,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['106']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
   response:
-    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.nameonly.test","updated_at":"2018-07-05T11:33:05Z","ttl":3600,"id":14193257,"domain_id":384314,"created_at":"2018-07-05T11:33:05Z","prio":null}}'}
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.nameonly.test","updated_at":"2019-02-01T07:32:53Z","ttl":3600,"id":15204385,"domain_id":440987,"created_at":"2019-02-01T07:32:53Z","prio":null}}'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:33:05 GMT']
-      ETag: [W/"acb5f0f082cd3f1272bc0ee495039550"]
+      Date: ['Fri, 01 Feb 2019 07:32:53 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [78154d55-e79f-4ae6-8720-a48eb889e6d0]
+      X-Request-Id: [04ecebbfb0d3dfd0aa1e71d8e3057c05]
       content-length: ['215']
     status: {code: 201, message: Created}
 - request:
@@ -76,19 +74,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.nameonly.test
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=orig.nameonly.test
   response:
-    body: {string: '[{"record":{"record_type":"SOA","content":"ns1.exoscale.io admin.dnsimple.com
-        1530790371 86400 7200 604800 300","name":"","updated_at":"2018-07-05T11:33:05Z","ttl":3600,"id":14193225,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.net","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193226,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.ch","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193227,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.com","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193228,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.io","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193229,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"A","content":"127.0.0.1","name":"localhost","updated_at":"2018-07-05T11:32:32Z","ttl":3600,"id":14193232,"domain_id":384314,"created_at":"2018-07-05T11:32:32Z","prio":null}},{"record":{"record_type":"CNAME","content":"docs.example.com","name":"docs","updated_at":"2018-07-05T11:32:33Z","ttl":3600,"id":14193233,"domain_id":384314,"created_at":"2018-07-05T11:32:33Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.fqdn","updated_at":"2018-07-05T11:32:34Z","ttl":3600,"id":14193234,"domain_id":384314,"created_at":"2018-07-05T11:32:34Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.full","updated_at":"2018-07-05T11:32:35Z","ttl":3600,"id":14193235,"domain_id":384314,"created_at":"2018-07-05T11:32:35Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.test","updated_at":"2018-07-05T11:32:36Z","ttl":3600,"id":14193236,"domain_id":384314,"created_at":"2018-07-05T11:32:36Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:37Z","ttl":3600,"id":14193237,"domain_id":384314,"created_at":"2018-07-05T11:32:37Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:38Z","ttl":3600,"id":14193238,"domain_id":384314,"created_at":"2018-07-05T11:32:38Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.noop","updated_at":"2018-07-05T11:32:39Z","ttl":3600,"id":14193239,"domain_id":384314,"created_at":"2018-07-05T11:32:39Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.deleterecordinset","updated_at":"2018-07-05T11:32:49Z","ttl":3600,"id":14193247,"domain_id":384314,"created_at":"2018-07-05T11:32:49Z","prio":null}},{"record":{"record_type":"TXT","content":"ttlshouldbe3600","name":"ttl.fqdn","updated_at":"2018-07-05T11:32:54Z","ttl":3600,"id":14193250,"domain_id":384314,"created_at":"2018-07-05T11:32:54Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.listrecordset","updated_at":"2018-07-05T11:32:56Z","ttl":3600,"id":14193251,"domain_id":384314,"created_at":"2018-07-05T11:32:56Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.listrecordset","updated_at":"2018-07-05T11:32:57Z","ttl":3600,"id":14193252,"domain_id":384314,"created_at":"2018-07-05T11:32:57Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fqdntest","updated_at":"2018-07-05T11:32:58Z","ttl":3600,"id":14193253,"domain_id":384314,"created_at":"2018-07-05T11:32:58Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fulltest","updated_at":"2018-07-05T11:32:59Z","ttl":3600,"id":14193254,"domain_id":384314,"created_at":"2018-07-05T11:32:59Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.test","updated_at":"2018-07-05T11:33:01Z","ttl":3600,"id":14193255,"domain_id":384314,"created_at":"2018-07-05T11:33:01Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"updated.test","updated_at":"2018-07-05T11:33:04Z","ttl":3600,"id":14193256,"domain_id":384314,"created_at":"2018-07-05T11:33:03Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.nameonly.test","updated_at":"2018-07-05T11:33:05Z","ttl":3600,"id":14193257,"domain_id":384314,"created_at":"2018-07-05T11:33:05Z","prio":null}}]'}
+    body: {string: '[{"record":{"record_type":"TXT","content":"challengetoken","name":"orig.nameonly.test","updated_at":"2019-02-01T07:32:53Z","ttl":3600,"id":15204385,"domain_id":440987,"created_at":"2019-02-01T07:32:53Z","prio":null}}]'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:33:05 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:54 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [1c2f4419-70dd-4467-9bf4-e785660678de]
-      content-length: ['4740']
+      X-Request-Id: [6137ef48e0315010a76485a97b8dd803]
+      content-length: ['217']
     status: {code: 200, message: OK}
 version: 1
