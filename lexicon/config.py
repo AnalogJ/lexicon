@@ -28,8 +28,8 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
     Example:
         # This will resolve configuration parameters from environment variables,
         # then from a configuration file named '/my/path/to/lexicon.yml'.
-        $ from lexicon.config import Config
-        $ config = Config()
+        $ from lexicon.config import ConfigResolver
+        $ config = ConfigResolver()
         $ config.with_env().with_config_file()
         $ print(config.resolve('lexicon:delegated'))
         $ print(config.resolve('lexicon:cloudflare:auth_token))
