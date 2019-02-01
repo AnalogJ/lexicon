@@ -7,18 +7,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com
   response:
-    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2018-07-05T11:32:18Z","token":"aa2c71115e27af7806aa95b8859d94fd","id":384314,"whois_protected":false,"created_at":"2018-07-05T11:32:18Z","auto_renew":false}}'}
+    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2019-02-01T07:29:38Z","token":"9d30931ed5c454244b50855180e8ca75","id":440987,"whois_protected":false,"created_at":"2019-02-01T07:29:38Z","auto_renew":false}}'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:32:36 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:02 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [a6039c8c-784d-4833-930d-94c7e1dd4547]
+      X-Request-Id: [c507ceef92eb0cc24c18018248e460a5]
       content-length: ['310']
     status: {code: 200, message: OK}
 - request:
@@ -29,20 +29,19 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.createrecordset
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.createrecordset
   response:
-    body: {string: '[{"record":{"record_type":"SOA","content":"ns1.exoscale.io admin.dnsimple.com
-        1530790344 86400 7200 604800 300","name":"","updated_at":"2018-07-05T11:32:36Z","ttl":3600,"id":14193225,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.net","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193226,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.ch","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193227,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.com","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193228,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.io","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193229,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"A","content":"127.0.0.1","name":"localhost","updated_at":"2018-07-05T11:32:32Z","ttl":3600,"id":14193232,"domain_id":384314,"created_at":"2018-07-05T11:32:32Z","prio":null}},{"record":{"record_type":"CNAME","content":"docs.example.com","name":"docs","updated_at":"2018-07-05T11:32:33Z","ttl":3600,"id":14193233,"domain_id":384314,"created_at":"2018-07-05T11:32:33Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.fqdn","updated_at":"2018-07-05T11:32:34Z","ttl":3600,"id":14193234,"domain_id":384314,"created_at":"2018-07-05T11:32:34Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.full","updated_at":"2018-07-05T11:32:35Z","ttl":3600,"id":14193235,"domain_id":384314,"created_at":"2018-07-05T11:32:35Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.test","updated_at":"2018-07-05T11:32:36Z","ttl":3600,"id":14193236,"domain_id":384314,"created_at":"2018-07-05T11:32:36Z","prio":null}}]'}
+    body: {string: '[]'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:32:37 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:03 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [a6039c8c-784d-4833-930d-94c7e1dd4547]
-      content-length: ['2106']
+      X-Request-Id: [07dd2bfa8d4fe3615d15571af660b111]
+      content-length: ['2']
     status: {code: 200, message: OK}
 - request:
     body: '{"record": {"record_type": "TXT", "name": "_acme-challenge.createrecordset",
@@ -53,19 +52,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['120']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
   response:
-    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:37Z","ttl":3600,"id":14193237,"domain_id":384314,"created_at":"2018-07-05T11:32:37Z","prio":null}}'}
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2019-02-01T07:32:03Z","ttl":3600,"id":15204367,"domain_id":440987,"created_at":"2019-02-01T07:32:03Z","prio":null}}'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:32:37 GMT']
-      ETag: [W/"8db6afd3814febc46f30192664a24525"]
+      Date: ['Fri, 01 Feb 2019 07:32:03 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [1c2f4419-70dd-4467-9bf4-e785660678de]
+      X-Request-Id: [317f420938b09a823611c2d5dcebda9d]
       content-length: ['229']
     status: {code: 201, message: Created}
 - request:
@@ -76,20 +74,19 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['2']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.createrecordset
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.createrecordset
   response:
-    body: {string: '[{"record":{"record_type":"SOA","content":"ns1.exoscale.io admin.dnsimple.com
-        1530790345 86400 7200 604800 300","name":"","updated_at":"2018-07-05T11:32:37Z","ttl":3600,"id":14193225,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.net","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193226,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.ch","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193227,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.com","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193228,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.io","name":"","updated_at":"2018-07-05T11:32:18Z","ttl":3600,"id":14193229,"domain_id":384314,"created_at":"2018-07-05T11:32:18Z","prio":null}},{"record":{"record_type":"A","content":"127.0.0.1","name":"localhost","updated_at":"2018-07-05T11:32:32Z","ttl":3600,"id":14193232,"domain_id":384314,"created_at":"2018-07-05T11:32:32Z","prio":null}},{"record":{"record_type":"CNAME","content":"docs.example.com","name":"docs","updated_at":"2018-07-05T11:32:33Z","ttl":3600,"id":14193233,"domain_id":384314,"created_at":"2018-07-05T11:32:33Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.fqdn","updated_at":"2018-07-05T11:32:34Z","ttl":3600,"id":14193234,"domain_id":384314,"created_at":"2018-07-05T11:32:34Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.full","updated_at":"2018-07-05T11:32:35Z","ttl":3600,"id":14193235,"domain_id":384314,"created_at":"2018-07-05T11:32:35Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.test","updated_at":"2018-07-05T11:32:36Z","ttl":3600,"id":14193236,"domain_id":384314,"created_at":"2018-07-05T11:32:36Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:37Z","ttl":3600,"id":14193237,"domain_id":384314,"created_at":"2018-07-05T11:32:37Z","prio":null}}]'}
+    body: {string: '[{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2019-02-01T07:32:03Z","ttl":3600,"id":15204367,"domain_id":440987,"created_at":"2019-02-01T07:32:03Z","prio":null}}]'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:32:37 GMT']
+      Date: ['Fri, 01 Feb 2019 07:32:04 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [a6039c8c-784d-4833-930d-94c7e1dd4547]
-      content-length: ['2336']
+      X-Request-Id: [f21dc6e17998d1d6780cc9e7a78582f0]
+      content-length: ['231']
     status: {code: 200, message: OK}
 - request:
     body: '{"record": {"record_type": "TXT", "name": "_acme-challenge.createrecordset",
@@ -100,19 +97,18 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['120']
       Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.1]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: https://api.exoscale.ch/dns/v1/domains/lexicontest.com/records
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
   response:
-    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.createrecordset","updated_at":"2018-07-05T11:32:38Z","ttl":3600,"id":14193238,"domain_id":384314,"created_at":"2018-07-05T11:32:38Z","prio":null}}'}
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.createrecordset","updated_at":"2019-02-01T07:32:05Z","ttl":3600,"id":15204368,"domain_id":440987,"created_at":"2019-02-01T07:32:05Z","prio":null}}'}
     headers:
-      Connection: [keep-alive]
+      Connection: [close]
       Content-Type: [application/json; charset=utf-8]
-      Date: ['Thu, 05 Jul 2018 11:32:38 GMT']
-      ETag: [W/"e4d3934c76f233e22d627b59f6fac15c"]
+      Date: ['Fri, 01 Feb 2019 07:32:05 GMT']
       Strict-Transport-Security: [max-age=15724800; includeSubDomains]
       Transfer-Encoding: [chunked]
-      X-Request-Id: [78154d55-e79f-4ae6-8720-a48eb889e6d0]
+      X-Request-Id: [4d4ec61104b1353702d577dfb54e6b76]
       content-length: ['229']
     status: {code: 201, message: Created}
 version: 1
