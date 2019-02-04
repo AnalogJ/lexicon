@@ -11,7 +11,8 @@ import importlib
 import sys
 from types import ModuleType
 
-import pytest  as BaseProvider
+import pytest
+from lexicon.providers.base import Provider as BaseProvider
 
 
 class Provider(BaseProvider):

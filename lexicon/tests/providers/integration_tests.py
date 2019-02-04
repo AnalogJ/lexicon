@@ -129,7 +129,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         config = self._test_config()
         config.add_config_source(DictConfigSource(
             {'domain': 'thisisadomainidonotown.com'}), 0)
-        provider = self.Provider(config)
+        provider = self.provider_module.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
 
