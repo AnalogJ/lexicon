@@ -95,7 +95,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         self.provider_name = None
         self.provider_module = None
 
-    def setup_method(self, method):
+    def setup_method(self, _):
         self.provider_module = import_module('lexicon.providers.{0}'.format(self.provider_name))
 
     ###########################################################################

@@ -1,11 +1,11 @@
 """Integration tests for INWX"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests 
+from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
 class InwxProviderTests(TestCase, IntegrationTests):
-    """TestCase for INWX""" 
+    """TestCase for INWX"""
     provider_name = 'inwx'
     domain = 'lexicon-testrunner.com'
 

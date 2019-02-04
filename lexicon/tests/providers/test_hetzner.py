@@ -54,7 +54,7 @@ class HetznerIntegrationTests(IntegrationTests):
 
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for Hetzner Robot""" 
+    """TestCase for Hetzner Robot"""
     provider_name = 'hetzner'
     provider_variant = 'Robot'
     domain = 'rimek.info'
@@ -89,7 +89,7 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
 
 
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for KonsoleH""" 
+    """TestCase for KonsoleH"""
     provider_name = 'hetzner'
     provider_variant = 'KonsoleH'
     domain = 'bettilaila.com'
