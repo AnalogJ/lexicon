@@ -16,7 +16,7 @@ shared: &shared
         name: Execute tests through tox
         command: tox -e basic,full
   environment:
-    - PYTEST_ADDOPTS=--numprocesses 4
+    - PYTEST_ADDOPTS=--numprocesses 8
 
 jobs:
   "python-2.7":
