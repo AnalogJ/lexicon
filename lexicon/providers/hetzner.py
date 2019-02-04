@@ -192,8 +192,7 @@ class Provider(BaseProvider):
                                 content)
                     return True
 
-            ttl = (rrset.ttl if rrset.ttl > 0
-                   and rrset.ttl < self._get_lexicon_option('ttl')
+            ttl = (rrset.ttl if 0 < rrset.ttl < self._get_lexicon_option('ttl')
                    else self._get_lexicon_option('ttl'))
             rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype,
                                               ttl, self._convert_content(rtype, content))
@@ -268,8 +267,7 @@ class Provider(BaseProvider):
                         synced_change = True
                         break
                 if not synced_change:
-                    ttl = (rrset.ttl if rrset.ttl > 0
-                           and rrset.ttl < self._get_lexicon_option('ttl')
+                    ttl = (rrset.ttl if 0 < rrset.ttl < self._get_lexicon_option('ttl')
                            else self._get_lexicon_option('ttl'))
                     rdataset = dns.rdataset.from_text(rrset.rdclass, rrset.rdtype, ttl,
                                                       self._convert_content(rtype, content))
@@ -384,7 +382,7 @@ class Provider(BaseProvider):
                     and (not name or name == rname.to_text())):
                 for rdata in rdataset:
                     rdata = rdata.to_text()
-                    if (not content or self._convert_content(rtype, content) == rdata):
+                    if not content or self._convert_content(rtype, content) == rdata:
                         raw_rdata = self._clean_TXT_record({'type': rtype,
                                                             'content': rdata})['content']
                         data = {
