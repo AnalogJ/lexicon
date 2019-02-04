@@ -1,14 +1,19 @@
 """Integration tests for Hetzner"""
 from unittest import TestCase
 import os
+
 import mock
 import pytest
-from bs4 import BeautifulSoup
-import dns.resolver 
+
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
 def _no_dns_lookup():
+    try:
+        import dns.resolver
+    except ImportError:
+        return False
+
     _domains = ['rimek.info', 'bettilaila.com']
     _resolver = dns.resolver.Resolver()
     _resolver.lifetime = 1
@@ -40,8 +45,9 @@ class HetznerIntegrationTests(IntegrationTests):
     @pytest.mark.ignore_dns_cname_mock
     def _test_get_dns_cname(self):
         """Ensure that zone for name can be resolved through dns.resolver call."""
-        _domain, _nameservers, _cname = Provider._get_dns_cname(('_acme-challenge.fqdn.{}.'  # pylint: disable=protected-access
-                                                                 .format(self.domain)), False)
+        _domain, _nameservers, _cname = self.provider_module.Provider._get_dns_cname(  # pylint: disable=protected-access
+            ('_acme-challenge.fqdn.{}.'.format(self.domain)), False)
+
         assert _domain == self.domain
         assert _nameservers
         assert not _cname
@@ -60,6 +66,8 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
         return ['Cookie']
 
     def _filter_response(self, response):
+        from bs4 import BeautifulSoup
+
         for cookie in ['set-cookie', 'Set-Cookie']:
             if cookie in response['headers']:
                 del response['headers'][cookie]
@@ -93,6 +101,8 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
         return ['Cookie']
 
     def _filter_response(self, response):
+        from bs4 import BeautifulSoup
+
         for cookie in ['set-cookie', 'Set-Cookie']:
             if cookie in response['headers']:
                 del response['headers'][cookie]

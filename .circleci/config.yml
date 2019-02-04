@@ -14,7 +14,7 @@ shared: &shared
     - checkout
     - run:
         name: Execute tests through tox
-        command: tox -e basic,full
+        command: tox -e standard,full
   environment:
     - PYTEST_ADDOPTS=--numprocesses 8
 
