@@ -8,6 +8,7 @@ import dns.resolver
 from lexicon.providers.hetzner import Provider
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
+
 def _no_dns_lookup():
     _domains = ['rimek.info', 'bettilaila.com']
     _resolver = dns.resolver.Resolver()
@@ -19,6 +20,7 @@ def _no_dns_lookup():
     except dns.exception.DNSException:
         pass
     return True
+
 
 class HetznerIntegrationTests(IntegrationTests):
     """Base TestCase for Hetzner"""
@@ -44,6 +46,7 @@ class HetznerIntegrationTests(IntegrationTests):
         assert _domain == self.domain
         assert _nameservers
         assert not _cname
+
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
     """TestCase for Hetzner Robot"""
@@ -75,8 +78,9 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
         options = {'auth_account': 'robot',
                    'linked': 'no',
                    'propagated': 'no',
-                   'latency': 1}
+                   'latency': 0.00001}
         return options
+
 
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
     """TestCase for KonsoleH"""
@@ -112,5 +116,5 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
                    'auth_password': env_password,
                    'linked': 'no',
                    'propagated': 'no',
-                   'latency': 1}
+                   'latency': 0.00001}
         return options
