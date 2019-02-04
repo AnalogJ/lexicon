@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 
-from lexicon.client import Client
+from lexicon.client import Client, ProviderNotAvailableError
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
 

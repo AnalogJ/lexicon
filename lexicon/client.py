@@ -3,12 +3,16 @@ from __future__ import absolute_import
 import importlib
 
 import tldextract
+
+from lexicon import discovery
 from lexicon.config import (
-    ConfigResolver,
-    DictConfigSource,
-    legacy_config_resolver,
-    non_interactive_config_resolver,
+    ConfigResolver, DictConfigSource,
+    legacy_config_resolver, non_interactive_config_resolver,
 )
+
+
+class ProviderNotAvailableError(Exception):
+    pass
 
 
 class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
@@ -82,8 +86,21 @@ class Client(object):  # pylint: disable=useless-object-inheritance,too-few-publ
         raise ValueError('Invalid action statement: {0}'.format(self.action))
 
     def _validate_config(self):
+        provider_name = self.config.resolve('lexicon:provider_name')
         if not self.config.resolve('lexicon:provider_name'):
             raise AttributeError('provider_name')
+
+        try:
+            available = discovery.find_providers()[self.config.resolve('lexicon:provider_name')]
+        except KeyError:
+            raise ProviderNotAvailableError('This provider ({0}) is not supported by Lexicon.'
+                                            .format(provider_name))
+        else:
+            if not available:
+                raise ProviderNotAvailableError(
+                    'This provider ({0}) has required dependencies that are missing. '
+                    'Please install lexicon[{0}] first.'.format(provider_name))
+
         if not self.config.resolve('lexicon:action'):
             raise AttributeError('action')
         if not self.config.resolve('lexicon:domain'):
