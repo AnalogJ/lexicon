@@ -2,16 +2,14 @@
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.sakuracloud import Provider
+from lexicon.tests.providers.integration_tests import IntegrationTests 
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class SakruaCloudProviderTests(TestCase, IntegrationTests):
-    """TestCase for SakuraCloud"""
-    Provider = Provider
+    """TestCase for SakuraCloud""" 
     provider_name = 'sakuracloud'
     domain = 'example.com'
 

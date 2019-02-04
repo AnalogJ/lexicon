@@ -21,7 +21,6 @@ auth_psw = placeholder_auth_psw
 import os
 from unittest import TestCase
 
-from lexicon.providers.infoblox import Provider
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -29,7 +28,6 @@ from lexicon.tests.providers.integration_tests import IntegrationTests
 # pass, by inheritance from integration_tests.IntegrationTests
 class InfobloxProviderTests(TestCase, IntegrationTests):
     """TestCase for Infoblox"""
-    Provider = Provider
     provider_name = 'infoblox'
     domain = 'test.local'
 

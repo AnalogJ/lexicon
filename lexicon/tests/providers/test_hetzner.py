@@ -4,8 +4,7 @@ import os
 import mock
 import pytest
 from bs4 import BeautifulSoup
-import dns.resolver
-from lexicon.providers.hetzner import Provider
+import dns.resolver 
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 def _no_dns_lookup():
@@ -46,8 +45,7 @@ class HetznerIntegrationTests(IntegrationTests):
         assert not _cname
 
 class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for Hetzner Robot"""
-    Provider = Provider
+    """TestCase for Hetzner Robot""" 
     provider_name = 'hetzner'
     provider_variant = 'Robot'
     domain = 'rimek.info'
@@ -79,8 +77,7 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
         return options
 
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for KonsoleH"""
-    Provider = Provider
+    """TestCase for KonsoleH""" 
     provider_name = 'hetzner'
     provider_variant = 'KonsoleH'
     domain = 'bettilaila.com'

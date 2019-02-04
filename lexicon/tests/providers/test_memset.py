@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.memset import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.memset import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class MemsetProviderTests(TestCase, IntegrationTests):
     """TestCase for Memset"""
-    Provider = Provider
     provider_name = 'memset'
     domain = 'testzone.com'
 

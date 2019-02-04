@@ -1,13 +1,11 @@
 """Integration tests for EasyName"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.easyname import Provider
+from lexicon.tests.providers.integration_tests import IntegrationTests 
 
 
 class EasynameProviderTests(TestCase, IntegrationTests):
-    """TestCase for EasyName"""
-    Provider = Provider
+    """TestCase for EasyName""" 
     provider_name = 'easyname'
     domain = 'lexicontest.astzweig.de'
 

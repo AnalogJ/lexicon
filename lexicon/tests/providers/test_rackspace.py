@@ -2,7 +2,6 @@
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.rackspace import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -10,8 +9,6 @@ from lexicon.providers.rackspace import Provider
 # pass, by inheritance from define_tests.TheTests
 class RackspaceProviderTests(TestCase, IntegrationTests):
     """Tests the rackspace provider"""
-
-    Provider = Provider
     provider_name = 'rackspace'
     domain = 'capsulecd.com'
 

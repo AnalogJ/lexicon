@@ -2,16 +2,14 @@
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.glesys import Provider
+from lexicon.tests.providers.integration_tests import IntegrationTests 
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class GlesysProviderTests(TestCase, IntegrationTests):
-    """TestCase for Glesys"""
-    Provider = Provider
+    """TestCase for Glesys""" 
     provider_name = 'glesys'
     domain = "capsulecd.com"
 

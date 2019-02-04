@@ -5,7 +5,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.transip import Provider
 
 
 FAKE_KEY = b"""
@@ -57,7 +56,6 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 # pass, by inheritance from define_tests.TheTests
 class TransipProviderTests(TestCase, IntegrationTests):
     """TestCase for Transip"""
-    Provider = Provider
     provider_name = 'transip'
     domain = 'hurrdurr.nl'
 

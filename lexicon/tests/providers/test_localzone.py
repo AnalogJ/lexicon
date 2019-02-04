@@ -2,8 +2,7 @@
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.localzone import Provider
+from lexicon.tests.providers.integration_tests import IntegrationTests 
 
 try:
     from urllib.request import urlretrieve
@@ -15,8 +14,7 @@ except ImportError:
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class LocalzoneProviderTests(TestCase, IntegrationTests):
-    """Integration tests for Localzone"""
-    Provider = Provider
+    """Integration tests for Localzone""" 
     provider_name = "localzone"
     domain = "example.com"
     file_uri = "https://raw.githubusercontent.com/ags-slc/localzone/master/tests/zonefiles/db.example.com"  # pylint: disable=line-too-long

@@ -2,16 +2,14 @@
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.plesk import Provider
+from lexicon.tests.providers.integration_tests import IntegrationTests 
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class PleskProviderTests(TestCase, IntegrationTests):
-    """TestCase for Plesk"""
-    Provider = Provider
+    """TestCase for Plesk""" 
     provider_name = 'plesk'
     domain = 'lexicon-test.com'
 
