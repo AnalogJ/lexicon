@@ -11,6 +11,7 @@ NAMESERVER_DOMAINS = ['zilore.net']
 
 
 def provider_parser(subparser):
+    """Construct a subparser for Zilore provider"""
     subparser.description = '''
     Zilore API requires an API key that can be found in your Zilore profile, at the API tab.
     The API access is available only for paid plans.
@@ -116,7 +117,7 @@ class Provider(BaseProvider):
             'record_type': rtype if rtype else record['type'],
             'record_name': self._full_name(name) if name else record['name'],
             'record_ttl': self._get_lexicon_option('ttl')
-            if self._get_lexicon_option('ttl') else record['ttl']
+                          if self._get_lexicon_option('ttl') else record['ttl']
         }
 
         if content:
@@ -154,9 +155,9 @@ class Provider(BaseProvider):
 
         try:
             response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.HTTPError as error:
             LOGGER.error('Content of error response:')
             LOGGER.error(response.json())
-            raise e
+            raise error
 
         return response.json()
