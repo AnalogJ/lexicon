@@ -49,6 +49,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- Hover ([docs](https://hoverapi.docs.apiary.io/))
 - Hurricane Electric DNS ([docs](https://dns.he.net/))
 - Hetzner ([docs](https://wiki.hetzner.de/index.php/DNS_Zonendatei/en))
 - Infoblox ([docs](https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal))
