@@ -77,6 +77,7 @@ The current supported providers are:
 - Vultr ([docs](https://www.vultr.com/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
+- Zilore ([docs](https://zilore.com/en/help/api))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
@@ -112,7 +113,6 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - VSCALE
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
-- Zilore ([docs](https://zilore.com))
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - __Any others I missed__
 
