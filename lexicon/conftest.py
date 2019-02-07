@@ -17,7 +17,6 @@ def pytest_runtest_setup(item):
     except AttributeError:
         pass
     else:
-        print(skip_providers_with_optdeps)
         if skip_providers_with_optdeps:
             providers = discovery.find_providers()
             skip = [available for provider, available in providers.items()
