@@ -112,8 +112,8 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - VSCALE
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
-- Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - Zilore ([docs](https://zilore.com))
+- Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
 - __Any others I missed__
 
 ## Setup
