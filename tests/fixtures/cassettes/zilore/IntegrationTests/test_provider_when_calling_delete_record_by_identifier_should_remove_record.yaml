@@ -1,0 +1,159 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.zilore.com/dns/v1/domains
+  response:
+    body: {string: '{"status":"ok","response":[{"domain_id":"5432","domain_status":"DELEGATED","domain_name":"full4ir.tk"}]}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['104']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:08 GMT']
+      Server: [nginx/1.6.2]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains]
+      X-Frame-Options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records
+  response:
+    body: {string: '{"status":"ok","response":[{"record_id":"84560","record_status":"enabled","record_name":"full4ir.tk","record_type":"SOA","record_value":"ns1.zilore.net
+        support@zilore.com 1549468687","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84561","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns1.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84562","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns2.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84563","record_status":"enabled","record_name":"full4ir.tk","record_type":"A","record_value":"188.166.203.57","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84564","record_status":"enabled","record_name":"*.full4ir.tk","record_type":"CNAME","record_value":"full4ir.tk","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84619","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"8.8.8.8","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84620","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"1.1.1.1","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84621","record_status":"enabled","record_name":"docs.full4ir.tk","record_type":"CNAME","record_value":"docs.example.com","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84622","record_status":"enabled","record_name":"_acme-challenge.fqdn.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84623","record_status":"enabled","record_name":"_acme-challenge.full.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84624","record_status":"enabled","record_name":"_acme-challenge.test.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84625","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken1\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84626","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken2\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84627","record_status":"enabled","record_name":"_acme-challenge.noop.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"}]}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:08 GMT']
+      Server: [nginx/1.6.2]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+      content-length: ['2757']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records?record_type=TXT&record_name=delete.testid.full4ir.tk&record_value=%22challengetoken%22&record_ttl=3600
+  response:
+    body: {string: '{"status":"ok","response":{"record_id":84631,"record_status":"added"}}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['70']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:08 GMT']
+      Server: [nginx/1.6.2]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records
+  response:
+    body: {string: '{"status":"ok","response":[{"record_id":"84560","record_status":"enabled","record_name":"full4ir.tk","record_type":"SOA","record_value":"ns1.zilore.net
+        support@zilore.com 1549468688","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84561","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns1.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84562","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns2.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84563","record_status":"enabled","record_name":"full4ir.tk","record_type":"A","record_value":"188.166.203.57","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84564","record_status":"enabled","record_name":"*.full4ir.tk","record_type":"CNAME","record_value":"full4ir.tk","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84619","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"8.8.8.8","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84620","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"1.1.1.1","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84621","record_status":"enabled","record_name":"docs.full4ir.tk","record_type":"CNAME","record_value":"docs.example.com","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84622","record_status":"enabled","record_name":"_acme-challenge.fqdn.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84623","record_status":"enabled","record_name":"_acme-challenge.full.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84624","record_status":"enabled","record_name":"_acme-challenge.test.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84625","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken1\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84626","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken2\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84627","record_status":"enabled","record_name":"_acme-challenge.noop.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84631","record_status":"enabled","record_name":"delete.testid.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"}]}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:08 GMT']
+      Server: [nginx/1.6.2]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+      content-length: ['2955']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records
+  response:
+    body: {string: '{"status":"ok","response":[{"record_id":"84560","record_status":"enabled","record_name":"full4ir.tk","record_type":"SOA","record_value":"ns1.zilore.net
+        support@zilore.com 1549468688","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84561","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns1.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84562","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns2.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84563","record_status":"enabled","record_name":"full4ir.tk","record_type":"A","record_value":"188.166.203.57","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84564","record_status":"enabled","record_name":"*.full4ir.tk","record_type":"CNAME","record_value":"full4ir.tk","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84619","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"8.8.8.8","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84620","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"1.1.1.1","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84621","record_status":"enabled","record_name":"docs.full4ir.tk","record_type":"CNAME","record_value":"docs.example.com","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84622","record_status":"enabled","record_name":"_acme-challenge.fqdn.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84623","record_status":"enabled","record_name":"_acme-challenge.full.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84624","record_status":"enabled","record_name":"_acme-challenge.test.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84625","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken1\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84626","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken2\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84627","record_status":"enabled","record_name":"_acme-challenge.noop.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84631","record_status":"enabled","record_name":"delete.testid.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"}]}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:09 GMT']
+      Server: [nginx/1.6.2]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+      content-length: ['2955']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      User-Agent: [python-requests/2.21.0]
+    method: DELETE
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records?record_id=84631
+  response:
+    body: {string: '{"status":"ok","response":{"record_status":"deleted"}}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['54']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:09 GMT']
+      Server: [nginx/1.6.2]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.zilore.com/dns/v1/domains/full4ir.tk/records
+  response:
+    body: {string: '{"status":"ok","response":[{"record_id":"84560","record_status":"enabled","record_name":"full4ir.tk","record_type":"SOA","record_value":"ns1.zilore.net
+        support@zilore.com 1549468689","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84561","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns1.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84562","record_status":"enabled","record_name":"full4ir.tk","record_type":"NS","record_value":"ns2.zilore.net","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84563","record_status":"enabled","record_name":"full4ir.tk","record_type":"A","record_value":"188.166.203.57","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84564","record_status":"enabled","record_name":"*.full4ir.tk","record_type":"CNAME","record_value":"full4ir.tk","record_ttl":"600","is_geo":"no","is_failover":"no"},{"record_id":"84619","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"8.8.8.8","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84620","record_status":"enabled","record_name":"localhost.full4ir.tk","record_type":"A","record_value":"1.1.1.1","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84621","record_status":"enabled","record_name":"docs.full4ir.tk","record_type":"CNAME","record_value":"docs.example.com","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84622","record_status":"enabled","record_name":"_acme-challenge.fqdn.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84623","record_status":"enabled","record_name":"_acme-challenge.full.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84624","record_status":"enabled","record_name":"_acme-challenge.test.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84625","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken1\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84626","record_status":"enabled","record_name":"_acme-challenge.createrecordset.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken2\"","record_ttl":"3600","is_geo":"no","is_failover":"no"},{"record_id":"84627","record_status":"enabled","record_name":"_acme-challenge.noop.full4ir.tk","record_type":"TXT","record_value":"\"challengetoken\"","record_ttl":"3600","is_geo":"no","is_failover":"no"}]}'}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 06 Feb 2019 15:58:09 GMT']
+      Server: [nginx/1.6.2]
+      Transfer-Encoding: [chunked]
+      X-Content-Type-Options: [nosniff]
+      X-External-Url: [domains/full4ir.tk/records]
+      X-Frame-Options: [DENY]
+      content-length: ['2757']
+    status: {code: 200, message: OK}
+version: 1
