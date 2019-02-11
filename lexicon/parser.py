@@ -2,6 +2,7 @@
 import argparse
 import importlib
 import pkgutil
+import os
 
 import pkg_resources
 from lexicon import providers as providers_package
@@ -51,6 +52,10 @@ def generate_cli_main_parser():
     parser.add_argument('--version', help='show the current version of lexicon',
                         action='version', version='%(prog)s {0}'.format(version))
     parser.add_argument('--delegated', help='specify the delegated domain')
+    parser.add_argument('--config-dir', default=os.getcwd(),
+                        help='specify the directory where to search lexicon.yml and '
+                             'lexicon_[provider].yml configuration files '
+                             '(default: current directory).')
     subparsers = parser.add_subparsers(
         dest='provider_name', help='specify the DNS provider to use')
     subparsers.required = True

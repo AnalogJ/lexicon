@@ -108,9 +108,9 @@ def main():
     # In the CLI context, will get configuration interactively:
     #   * from the command line
     #   * from the environment variables
-    #   * from lexicon configuration files in working directory
+    #   * from lexicon configuration files found in given --config-dir (default is current dir)
     config = ConfigResolver()
-    config.with_args(parsed_args).with_env().with_config_dir(os.getcwd())
+    config.with_args(parsed_args).with_env().with_config_dir(parsed_args.config_dir)
 
     client = Client(config)
 
