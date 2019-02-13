@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import re
 # import pytest
-from integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTests
 from lexicon.providers.gratisdns import Provider
 
 
@@ -28,7 +28,7 @@ class GratisDNSProviderTests(TestCase, IntegrationTests):
                         'ORGID={};'.format(self.gratisdns_session),
                         cookie)
         return cookie
-    
+
     # Inspired by thehover provider
     def _filter_response(self, response):
         if 'basestring' not in globals():

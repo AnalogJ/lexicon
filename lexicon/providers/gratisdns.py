@@ -111,7 +111,7 @@ class Provider(BaseProvider):
                     'id': record_id,
                 }
                 all_records.append(processed_record)
-                
+
         records = self._filter_records(
             records=all_records,
             rtype=rtype,
@@ -136,11 +136,11 @@ class Provider(BaseProvider):
     def _get_content_entry(self, rtype):
         if rtype == 'TXT':
             return 'txtdata'
-        elif rtype == 'A':
+        if rtype == 'A':
             return 'ip'
-        elif rtype == 'AAAA':
+        if rtype == 'AAAA':
             return 'ip'
-        elif rtype == 'CNAME':
+        if rtype == 'CNAME':
             return 'cname'
         LOGGER.error('unknown record type')
         return None
