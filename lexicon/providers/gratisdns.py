@@ -1,7 +1,6 @@
 """Module provider for GratisDNS"""
 from __future__ import absolute_import
 
-import json
 import logging
 import requests
 # Due to optional requirement
@@ -74,6 +73,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
+    # pylint: disable=too-many-locals
     def _list_records(self, rtype=None, name=None, content=None):
         query_params = {'action': 'dns_primary_changeDNSsetup',
                         'user_domain': self.domain_id}
@@ -112,7 +112,6 @@ class Provider(BaseProvider):
                 }
                 all_records.append(processed_record)
                 
-                
         records = self._filter_records(
             records=all_records,
             rtype=rtype,
@@ -133,6 +132,7 @@ class Provider(BaseProvider):
                 _records.append(record)
         return _records
 
+    # pylint: disable=no-self-use
     def _get_content_entry(self, rtype):
         if rtype == 'TXT':
             return 'txtdata'
@@ -142,9 +142,8 @@ class Provider(BaseProvider):
             return 'ip'
         elif rtype == 'CNAME':
             return 'cname'
-        else:
-            LOGGER.error('unknown record type')
-            return None
+        LOGGER.error('unknown record type')
+        return None
 
     # Create record. If record already exists with the same content, do nothing
     def _create_record(self, rtype, name, content):
@@ -165,7 +164,8 @@ class Provider(BaseProvider):
                    'ttl': ttl,
                    content_entry: content,
                    'user_domain': self.domain_id}
-        response = self._post(query_params=query_params, data=payload)
+        self._post(query_params=query_params, data=payload)
+        # response = self._post(query_params=query_params, data=payload)
         # NOTE: We shouldn't return False on duplicate?
         #       The specification seems a little wage on this.
         # html = BeautifulSoup(response.content, "html.parser")

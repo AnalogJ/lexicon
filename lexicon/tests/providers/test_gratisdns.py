@@ -2,7 +2,7 @@
 from unittest import TestCase
 
 import re
-import pytest
+# import pytest
 from integration_tests import IntegrationTests
 from lexicon.providers.gratisdns import Provider
 
