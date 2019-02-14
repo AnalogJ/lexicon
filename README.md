@@ -173,13 +173,13 @@ and with Route 53 provider dependencies:
                                 [--auth-username AUTH_USERNAME]
                                 [--auth-token AUTH_TOKEN]
                                 {create,list,update,delete} domain
-                                {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
+                                {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC,CAA}
 
       positional arguments:
         {create,list,update,delete}
                               specify the action to take
         domain                specify the domain, supports subdomains as well
-        {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
+        {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC,CAA}
                               specify the entry type
 
       optional arguments:
