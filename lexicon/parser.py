@@ -16,7 +16,7 @@ def generate_base_provider_parser():
     parser.add_argument(
         'domain', help='specify the domain, supports subdomains as well')
     parser.add_argument('type', help='specify the entry type', default='TXT',
-                        choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC'])
+                        choices=['A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV', 'LOC', 'CAA'])
 
     parser.add_argument('--name', help='specify the record name')
     parser.add_argument('--content', help='specify the record content')
