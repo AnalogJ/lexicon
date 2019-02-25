@@ -103,7 +103,7 @@ Then you'll need to populate it with the following template:
 ```python
 # Test for one implementation of the interface
 from lexicon.providers.foo import Provider
-from integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
 import pytest
 
