@@ -44,7 +44,8 @@ class Provider(BaseProvider):
         for account in payload:
             if account['plan_identifier'] is None:
                 logging.warning(
-                    'Skipping unconfigured account %s (%d). To use this account, you must select a plan.',
+                    'Skipping unconfigured account %s (%d). ' \
+                    'To use this account, you must select a plan.',
                     account['email'], account['id'])
                 continue
 
