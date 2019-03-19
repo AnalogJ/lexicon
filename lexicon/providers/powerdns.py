@@ -86,7 +86,7 @@ class Provider(BaseProvider):
     def zone_data(self):
         """Get zone data"""
         if self._zone_data is None:
-            self._zone_data = self._get('/zones/' + self.domain).json()
+            self._zone_data = self._get('/zones/' + self._ensure_dot(self.domain)).json()
         return self._zone_data
 
     def _authenticate(self):
@@ -169,7 +169,7 @@ class Provider(BaseProvider):
         request = {'rrsets': [updated_data]}
         LOGGER.debug('request: %s', request)
 
-        self._patch('/zones/' + self.domain, data=request)
+        self._patch('/zones/' + self._ensure_dot(self.domain), data=request)
         self.notify_slaves()
         self._zone_data = None
         return True
@@ -205,8 +205,9 @@ class Provider(BaseProvider):
         request = {'rrsets': [update_data]}
         LOGGER.debug('request: %s', request)
 
-        self._patch('/zones/' + self.domain, data=request)
+        self._patch('/zones/' + self._ensure_dot(self.domain), data=request)
         self.notify_slaves()
+
         self._zone_data = None
         return True
 
@@ -231,3 +232,11 @@ class Provider(BaseProvider):
         LOGGER.debug('response: %s', response.text)
         response.raise_for_status()
         return response
+
+    def _ensure_dot(self, text):
+        """
+        This function makes sure a string contains a dot at the end
+        """
+        if not text.endswith("."):
+            text = text + "."
+        return text
