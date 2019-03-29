@@ -102,7 +102,7 @@ Then you'll need to populate it with the following template:
 
 ```python
 # Test for one implementation of the interface
-from integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

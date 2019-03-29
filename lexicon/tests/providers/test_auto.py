@@ -29,7 +29,7 @@ def _there_is_no_network():
     try:
         socket.create_connection(("www.google.com", 80))
         return False
-    except OSError:
+    except (OSError, IOError):
         pass
     return True
 

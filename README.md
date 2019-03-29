@@ -10,6 +10,7 @@
 Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 [![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
+[![Build status](https://ci.appveyor.com/api/projects/status/7m9kvestl4l1re9d/branch/master?svg=true)](https://ci.appveyor.com/project/AnalogJ/lexicon/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
@@ -49,6 +50,7 @@ The current supported providers are:
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
+- Hover ([docs](https://hoverapi.docs.apiary.io/))
 - Hurricane Electric DNS ([docs](https://dns.he.net/))
 - Hetzner ([docs](https://wiki.hetzner.de/index.php/DNS_Zonendatei/en))
 - Infoblox ([docs](https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal))
@@ -77,6 +79,7 @@ The current supported providers are:
 - Vultr ([docs](https://www.vultr.com/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
+- Zilore ([docs](https://zilore.com/en/help/api))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
@@ -113,7 +116,6 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
-- Zilore ([docs](https://zilore.com))
 - __Any others I missed__
 
 ## Setup
@@ -258,3 +260,4 @@ following the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/C
 ## References
 
     tox
+

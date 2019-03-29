@@ -41,6 +41,10 @@ def generate_cli_main_parser():
                         action='version', version='%(prog)s {0}'
                         .format(discovery.lexicon_version()))
     parser.add_argument('--delegated', help='specify the delegated domain')
+    parser.add_argument('--config-dir', default=os.getcwd(),
+                        help='specify the directory where to search lexicon.yml and '
+                             'lexicon_[provider].yml configuration files '
+                             '(default: current directory).')
     subparsers = parser.add_subparsers(
         dest='provider_name', help='specify the DNS provider to use')
     subparsers.required = True
