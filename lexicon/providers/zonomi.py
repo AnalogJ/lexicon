@@ -207,6 +207,5 @@ class Provider(BaseProvider):
         root = tree.getroot()
         if root.tag == 'error':
             raise Exception('An error occurred: {0}'.format(root.text))
-        else:
-            response.raise_for_status()
+        response.raise_for_status()
         return root
