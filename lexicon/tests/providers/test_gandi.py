@@ -23,7 +23,7 @@ class GandiRESTProviderTests(TestCase, IntegrationTests):
     """TestCase for Gandi on REST API"""
     Provider = Provider
     provider_name = 'gandi'
-    domain = 'reachfactory.ca'
+    domain = 't18s.fr'
     provider_variant = 'REST'
 
     def _filter_headers(self):
