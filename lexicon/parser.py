@@ -1,6 +1,7 @@
 """Parsers definition for the Lexicon command-line interface"""
 import argparse
 import importlib
+import os
 
 from lexicon import discovery
 
