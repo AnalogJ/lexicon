@@ -16,7 +16,6 @@ class ProviderNotAvailableError(Exception):
     Custom exception to raise when a provider is not available,
     typically because some optional dependencies are missing
     """
-    pass
 
 
 class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
