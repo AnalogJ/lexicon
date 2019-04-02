@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.zeit import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.zeit import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class ZeitProviderTests(TestCase, IntegrationTests):
     """TestCase for Zeit"""
-    Provider = Provider
     provider_name = 'zeit'
     domain = 'fullm3tal.tech'
 

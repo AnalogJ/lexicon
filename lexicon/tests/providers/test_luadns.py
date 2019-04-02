@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.luadns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.luadns import Provider
 # pass, by inheritance from define_tests.TheTests
 class LuaDNSProviderTests(TestCase, IntegrationTests):
     """TestCase for LuaDNS"""
-    Provider = Provider
     provider_name = 'luadns'
     domain = 'capsulecd.com'
 

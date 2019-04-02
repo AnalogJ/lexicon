@@ -14,8 +14,9 @@ shared: &shared
     - checkout
     - run:
         name: Execute tests through tox
-        command: tox -e basic,full
+        command: tox
   environment:
+    - TOXENV=light,standard
     - PYTEST_ADDOPTS=--numprocesses 8
 
 jobs:
@@ -35,20 +36,18 @@ jobs:
     <<: *shared
     docker:
       - image: python:3.6-slim
-  "python-3.7":
+  "python-3.7-cover":
     <<: *shared
     docker:
       - image: python:3.7-slim
+    environment:
+      - TOXENV=light,cover
   "lint":
-    steps:
-      - run:
-          <<: *install_dependencies
-      - checkout
-      - run:
-          name: Check code quality with pylint
-          command: tox -e lint
+    <<: *shared
     docker:
       - image: python:3.7-slim
+    environment:
+      - TOXENV=lint
 
 workflows:
   version: 2
@@ -58,5 +57,5 @@ workflows:
       - "python-3.4"
       - "python-3.5"
       - "python-3.6"
-      - "python-3.7"
+      - "python-3.7-cover"
       - "lint"

@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.plesk import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.plesk import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class PleskProviderTests(TestCase, IntegrationTests):
     """TestCase for Plesk"""
-    Provider = Provider
     provider_name = 'plesk'
     domain = 'lexicon-test.com'
 

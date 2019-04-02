@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.vultr import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.vultr import Provider
 # pass, by inheritance from define_tests.TheTests
 class VultrProviderTests(TestCase, IntegrationTests):
     """TestCase for Vultr"""
-    Provider = Provider
     provider_name = 'vultr'
     domain = 'capsulecd.com'
 

@@ -8,15 +8,8 @@ environment:
     # isn't covered by this document) at the time of writing.
 
     - PYTHON: "C:\\Python37"
-    - PYTHON: "C:\\Python36"
-    - PYTHON: "C:\\Python35"
     - PYTHON: "C:\\Python34"
     - PYTHON: "C:\\Python27"
-    - PYTHON: "C:\\Python37-x64"
-    - PYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python35-x64"
-    - PYTHON: "C:\\Python34-x64"
-    - PYTHON: "C:\\Python27-x64"
 
 install:
   # We need wheel installed to build wheels
@@ -36,7 +29,7 @@ test_script:
   # Note that you must use the environment variable %PYTHON% to refer to
   # the interpreter you're using - Appveyor does not do anything special
   # to put the Python version you want to use on PATH.
-  - "tox -e basic,full"
+  - "tox -e light,standard"
 
 
 #after_test:

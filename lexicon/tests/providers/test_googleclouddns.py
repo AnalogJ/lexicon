@@ -2,7 +2,6 @@
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.googleclouddns import Provider
 
 
 # All data in the following service_account base64-encoded file have been invalidated
@@ -15,7 +14,6 @@ SERVICE_ACCOUNT_INFO_BASE64 = 'ew0KICAidHlwZSI6ICJzZXJ2aWNlX2FjY291bnQiLA0KICAic
 
 class GoogleCloudDnsTests(TestCase, IntegrationTests):
     """TestCase for Google Cloud DNS"""
-    Provider = Provider
     provider_name = 'googleclouddns'
     domain = 'fullm3tal.tk'
 

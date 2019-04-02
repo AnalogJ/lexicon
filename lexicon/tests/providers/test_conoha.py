@@ -2,7 +2,6 @@
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.conoha import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -10,7 +9,6 @@ from lexicon.providers.conoha import Provider
 # pass, by inheritance from define_tests.TheTests
 class ConohaProviderTests(TestCase, IntegrationTests):
     """TestCase for Conoha"""
-    Provider = Provider
     provider_name = 'conoha'
     domain = 'narusejun.com'
 

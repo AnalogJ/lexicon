@@ -2,7 +2,6 @@
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.cloudns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -10,7 +9,6 @@ from lexicon.providers.cloudns import Provider
 # pass, by inheritance from define_tests.TheTests
 class CloudnsProviderTests(TestCase, IntegrationTests):
     """TestCase for CloudNS"""
-    Provider = Provider
     provider_name = 'cloudns'
     domain = 'api-example.com'
 

@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.linode import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.linode import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class LinodeProviderTests(TestCase, IntegrationTests):
     """TestCase for Linode"""
-    Provider = Provider
     provider_name = 'linode'
     domain = 'lexicon-example.com'
 

@@ -1,14 +1,12 @@
 """Base class for provider integration tests"""
 # pylint: disable=missing-docstring
 import os
-from builtins import object
 from functools import wraps
 from importlib import import_module
 
 import pytest
 import vcr
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
-from lexicon.providers.base import Provider as BaseProvider
 
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
@@ -21,6 +19,7 @@ PROVIDER_VCR = vcr.VCR(
     record_mode=RECORD_MODE,
     decode_compressed_response=True
 )
+
 
 # Prepare custom decorator: it will start a casette in relevant folder for current provider,
 # and using the name of the test method as the cassette's name.
@@ -89,13 +88,15 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         def _skip_suite(self, request):  # pylint: disable=no-self-use
             if request.node.get_closest_marker('ext_suite_1'):
                 pytest.skip('Skipping extended suite')
-
     """
 
     def __init__(self):
-        self.Provider = BaseProvider  # pylint: disable=invalid-name
         self.domain = None
         self.provider_name = None
+        self.provider_module = None
+
+    def setup_method(self, _):
+        self.provider_module = import_module('lexicon.providers.{0}'.format(self.provider_name))
 
     ###########################################################################
     # Provider module shape
@@ -128,7 +129,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         config = self._test_config()
         config.add_config_source(DictConfigSource(
             {'domain': 'thisisadomainidonotown.com'}), 0)
-        provider = self.Provider(config)
+        provider = self.provider_module.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
 
@@ -467,7 +468,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         """
         Construct a new provider, and authenticate it against the target DNS provider API.
         """
-        provider = self.Provider(self._test_config())
+        provider = self.provider_module.Provider(self._test_config())
         provider.authenticate()
         return provider
 

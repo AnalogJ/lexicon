@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.sakuracloud import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.sakuracloud import Provider
 # pass, by inheritance from define_tests.TheTests
 class SakruaCloudProviderTests(TestCase, IntegrationTests):
     """TestCase for SakuraCloud"""
-    Provider = Provider
     provider_name = 'sakuracloud'
     domain = 'example.com'
 
