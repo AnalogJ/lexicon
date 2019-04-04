@@ -43,7 +43,7 @@ def _resolve_requirements(provider, distribution):
         # Extra is defined
         try:
             for requirement in requirements:
-                pkg_resources.get_distribution(requirement)
+                pkg_resources.get_distribution(requirement.name)
         except (pkg_resources.DistributionNotFound, pkg_resources.VersionConflict):
             # At least one extra requirement is not fulfilled
             return False
