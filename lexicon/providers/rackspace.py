@@ -48,6 +48,16 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://dns.api.rackspacecloud.com/v1.0'
         self.auth_api_endpoint = 'https://identity.api.rackspacecloud.com/v2.0'
         self._auth_token = None
+        self._auth_account = None
+
+    def _get_rackspace_option(self, key):
+        private_key = '_' + key
+        result = None
+        if hasattr(self, private_key):
+            result = getattr(self, private_key)
+        if result is None:
+            result = self._get_provider_option(key)
+        return result
 
     def _authenticate(self):
         self._auth_token = self._get_provider_option('auth_token')
@@ -61,6 +71,7 @@ class Provider(BaseProvider):
                 }
             })
             self._auth_token = auth_response['access']['token']['id']
+            self._auth_account = auth_response['access']['token']['tenant']['id']
 
         payload = self._get('/domains', {
             'name': self.domain
@@ -178,12 +189,13 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
+        LOGGER.debug('request tenant ID: %s', self._get_rackspace_option('auth_account'))
         full_url = (self.api_endpoint +
-                    '/{0}' + url).format(self._get_provider_option('auth_account'))
+                    '/{0}' + url).format(self._get_rackspace_option('auth_account'))
         response = requests.request(action, full_url, params=query_params,
                                     data=json.dumps(data),
                                     headers={
-                                        'X-Auth-Token': self._get_provider_option('auth_token'),
+                                        'X-Auth-Token': self._get_rackspace_option('auth_token'),
                                         'Content-Type': 'application/json'
                                     })
         # if the request fails for any reason, throw an error.
@@ -194,7 +206,7 @@ class Provider(BaseProvider):
     def _request_and_wait(self, action='POST', url='/', data=None, query_params=None):
         result = self._request(action, url, data, query_params)
 
-        sleep_time = self._get_provider_option('sleep_time') or '1'
+        sleep_time = self._get_rackspace_option('sleep_time') or '1'
         sleep_time = float(sleep_time)
 
         while not _async_request_completed(result):
@@ -222,7 +234,7 @@ class Provider(BaseProvider):
         response = requests.request('GET', payload['callbackUrl'], params={'showDetails': 'true'},
                                     data={},
                                     headers={
-                                        'X-Auth-Token': self._get_provider_option('auth_token'),
+                                        'X-Auth-Token': self._get_rackspace_option('auth_token'),
                                         'Content-Type': 'application/json'})
 
         # if the request fails for any reason, throw an error.

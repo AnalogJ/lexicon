@@ -500,11 +500,11 @@ class Provider(BaseProvider):
         rdtype = self._get_lexicon_option('type')
         name = (self._fqdn_name(self._get_lexicon_option('name'))
                 if self._get_lexicon_option('name') else None)
-        link = True if self._get_provider_option('linked') == 'yes' else False
+        link = self._get_provider_option('linked')
         qname = name
         if identifier:
             rdtype, name, _ = self._parse_identifier(identifier)
-        if action != 'list' and rdtype in ('A', 'AAAA', 'TXT') and name and link:
+        if action != 'list' and rdtype in ('A', 'AAAA', 'TXT') and name and link == 'yes':
             if action != 'update' or name == qname or not qname:
                 LOGGER.info('Hetzner => Enable CNAME lookup '
                             '(see --linked parameter)')
@@ -520,8 +520,8 @@ class Provider(BaseProvider):
         if the publicly propagation was successful or not.
         """
         latency = self._get_provider_option('latency')
-        propagated = True if self._get_provider_option('propagated') == 'yes' else False
-        if propagated:
+        propagated = self._get_provider_option('propagated')
+        if propagated == 'yes':
             retry, max_retry = 0, 20
             while retry < max_retry:
                 for rdata in Provider._dns_lookup(name, rdtype, nameservers):

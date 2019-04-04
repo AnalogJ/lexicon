@@ -3,13 +3,11 @@ import json
 import re
 from unittest import TestCase
 
-from lexicon.providers.hover import Provider
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
 class HoverProviderTests(TestCase, IntegrationTests):
     """TestCase for Hover"""
-    Provider = Provider
     provider_name = 'hover'
     domain = 'novuslex.com'
     domain_id = 'dom1127777'

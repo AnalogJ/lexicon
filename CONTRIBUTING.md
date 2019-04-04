@@ -102,17 +102,14 @@ Then you'll need to populate it with the following template:
 
 ```python
 # Test for one implementation of the interface
-from lexicon.providers.foo import Provider
 from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
-import pytest
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class FooProviderTests(TestCase, IntegrationTests):
-
-	Provider = Provider
+    """Integration tests for Foo provider"""
 	provider_name = 'foo'
 	domain = 'example.com'
 	def _filter_post_data_parameters(self):

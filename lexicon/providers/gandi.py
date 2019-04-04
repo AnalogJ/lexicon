@@ -177,7 +177,7 @@ class Provider(BaseProvider):
                 data['rrset_values'] = list(content)
             else:
                 data['rrset_values'] = [content]
-        if rtype is None:
+        if rtype is not None:
             # replace the records of a specific rtype
             url = '/domains/{0}/records/{1}/{2}'.format(self.domain_id,
                                                         identifier or self._relative_name(

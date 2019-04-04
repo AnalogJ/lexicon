@@ -8,10 +8,14 @@ In particular:
 # pylint: disable=missing-docstring,redefined-outer-name
 from __future__ import absolute_import, print_function
 import importlib
-import sys
+import pkgutil
 from types import ModuleType
+import contextlib
 
 import pytest
+import mock
+
+from lexicon.client import ProviderNotAvailableError
 from lexicon.providers.base import Provider as BaseProvider
 
 
@@ -44,15 +48,39 @@ class Provider(BaseProvider):
         pass
 
 
-def _register_module():
+@contextlib.contextmanager
+def mock_fake_provider():
     """
-    Register at runtime our fake provider
-    as a module to allow lexicon to resolve it correctly
+    Create a fake provider module, and mock relevant
+    functions to make it appear as a real module.
     """
-    module = ModuleType('lexicon.providers.fakeprovider')
-    module.Provider = Provider
-    sys.modules['lexicon.providers.fakeprovider'] = module
-_register_module()
+    original_iter = pkgutil.iter_modules
+    original_import = importlib.import_module
+    with mock.patch('lexicon.discovery.pkgutil.iter_modules') as mock_iter,\
+            mock.patch('lexicon.client.importlib.import_module') as mock_import:
+        def return_iter(path):
+            """
+            This will include an adhoc fakeprovider module
+            to the normal return of pkgutil.iter_modules.
+            """
+            modules = list(original_iter(path))
+            modules.append((None, 'fakeprovider', None))
+            return modules
+        mock_iter.side_effect = return_iter
+
+        def return_import(module_name):
+            """
+            This will return a adhoc fakeprovider module if necessary,
+            or fallback to the normal return of importlib.import_module.
+            """
+            if module_name == 'lexicon.providers.fakeprovider':
+                module = ModuleType('lexicon.providers.fakeprovider')
+                setattr(module, 'Provider', Provider)
+                return module
+            return original_import(module_name)
+        mock_import.side_effect = return_import
+
+        yield
 
 
 @pytest.fixture
@@ -61,8 +89,15 @@ def lexicon_client():
     return importlib.import_module('lexicon.client')
 
 
+@pytest.fixture(autouse=True)
+def fake_provider():
+    """Activate the fake_provider mock"""
+    with mock_fake_provider():
+        yield
+
+
 def test_unknown_provider_raises_error(lexicon_client):
-    with pytest.raises(ImportError):
+    with pytest.raises(ProviderNotAvailableError):
         lexicon_client.Client({'action': 'list', 'provider_name': 'unknownprovider',
                                'domain': 'example.com', 'type': 'TXT',
                                'name': 'fake', 'content': 'fake'})
@@ -94,7 +129,6 @@ def test_missing_optional_client_config_parameter_does_not_raise_error(lexicon_c
 
 
 def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client):
-    lexicon_client = importlib.import_module('lexicon.client')
     client = lexicon_client.Client({'action': 'list', 'provider_name': 'fakeprovider',
                                     'domain': 'example.com', 'type': 'TXT',
                                     'name': 'fake', 'content': 'fake-content'})
@@ -111,7 +145,6 @@ def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client):
 
 
 def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client):
-    lexicon_client = importlib.import_module('lexicon.client')
     client = lexicon_client.Client({'action': 'create', 'provider_name': 'fakeprovider',
                                     'domain': 'example.com', 'type': 'TXT',
                                     'name': 'fake', 'content': 'fake-content'})
@@ -128,7 +161,6 @@ def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client):
 
 
 def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client):
-    lexicon_client = importlib.import_module('lexicon.client')
     client = lexicon_client.Client({'action': 'update', 'provider_name': 'fakeprovider',
                                     'domain': 'example.com', 'identifier': 'fake-id',
                                     'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})
@@ -146,7 +178,6 @@ def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client):
 
 
 def test_delete_action_is_correctly_handled_by_provider(capsys, lexicon_client):
-    lexicon_client = importlib.import_module('lexicon.client')
     client = lexicon_client.Client({'action': 'delete', 'provider_name': 'fakeprovider',
                                     'domain': 'example.com', 'identifier': 'fake-id',
                                     'type': 'TXT', 'name': 'fake', 'content': 'fake-content'})

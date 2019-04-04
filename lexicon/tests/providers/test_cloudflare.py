@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.cloudflare import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.cloudflare import Provider
 # pass, by inheritance from define_tests.TheTests
 class CloudflareProviderTests(TestCase, IntegrationTests):
     """TestCase for Cloudflare"""
-    Provider = Provider
     provider_name = 'cloudflare'
     domain = 'capsulecd.com'
 

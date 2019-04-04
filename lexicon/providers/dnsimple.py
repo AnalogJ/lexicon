@@ -79,7 +79,7 @@ class Provider(BaseProvider):
             record['regions'] = self._get_provider_option('regions')
 
         payload = self._post(
-            '{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
+            '/{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
 
         LOGGER.debug('create_record: %s', 'id' in payload)
         return 'id' in payload

@@ -1,136 +1,240 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.0]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr
   response:
-    body: {string: '{"zone_uuid": "d26f3afc-6e6a-11e8-a212-00163ee24379", "domain_keys_href":
-        "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/keys", "fqdn": "reachfactory.ca",
-        "zone_href": "https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379",
-        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records",
-        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records",
-        "domain_href": "https://dns.api.gandi.net/api/v5/domains/reachfactory.ca"}'}
+    body:
+      string: !!python/unicode '{"zone_uuid": "4fd93cb0-5c6c-11e8-b297-00163ee24379",
+        "domain_keys_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/keys",
+        "fqdn": "t18s.fr", "zone_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379",
+        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records",
+        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records",
+        "domain_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr"}'
     headers:
-      Accept-Ranges: [bytes]
-      Age: ['0']
-      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['531']
-      Content-Type: [application/json; charset=UTF-8]
-      Date: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Expires: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Last-Modified: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15768000;]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-      X-Content-Type-Options: [nosniff]
-      X-Frame-Options: [DENY]
-      X-XSS-Protection: [1; mode=block]
-    status: {code: 200, message: OK}
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '499'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.0]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/orig.nameonly.test/TXT
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/orig.nameonly.test/TXT
   response:
-    body: {string: '{"code": 404, "message": "Can''t find the DNS record orig.nameonly.test/TXT
-        in the zone", "object": "dns-record", "cause": "Not Found"}'}
+    body:
+      string: !!python/unicode '{"code": 404, "message": "Can''t find the DNS record
+        orig.nameonly.test/TXT in the zone", "object": "dns-record", "cause": "Not
+        Found"}'
     headers:
-      Age: ['0']
-      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['134']
-      Content-Type: [application/json; charset=UTF-8]
-      Date: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Expires: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Last-Modified: ['Tue, 12 Jun 2018 22:05:31 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-    status: {code: 404, message: Not Found}
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '134'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:35:11 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+    status:
+      code: 404
+      message: Not Found
 - request:
-    body: '{"rrset_values": ["challengetoken"], "rrset_ttl": 3600}'
+    body: !!python/unicode '{"rrset_values": ["challengetoken"], "rrset_ttl": 3600}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['55']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.0]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '55'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
     method: POST
-    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/orig.nameonly.test/TXT
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/orig.nameonly.test/TXT
   response:
-    body: {string: '{"message": "DNS Record Created"}'}
+    body:
+      string: !!python/unicode '{"message": "DNS Record Created"}'
     headers:
-      Age: ['0']
-      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['33']
-      Content-Type: [application/json; charset=UTF-8]
-      Date: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Expires: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Last-Modified: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Location: ['https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records/orig.nameonly.test/TXT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15768000;]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-      X-Content-Type-Options: [nosniff]
-      X-Frame-Options: [DENY]
-      X-XSS-Protection: [1; mode=block]
-    status: {code: 201, message: Created}
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '33'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      location:
+      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/orig.nameonly.test/TXT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
 - request:
-    body: '{"items": [{"rrset_type": "TXT", "rrset_name": "orig.nameonly.test", "rrset_values":
-      ["updated"]}]}'
+    body: !!python/unicode '{"rrset_type": "TXT", "rrset_name": "orig.nameonly.test",
+      "rrset_values": ["updated"]}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['99']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.19.0]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '86'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
     method: PUT
-    uri: https://dns.api.gandi.net/api/v5/domains/reachfactory.ca/records/orig.nameonly.test
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/orig.nameonly.test/TXT
   response:
-    body: {string: '{"message": "DNS Record Created"}'}
+    body:
+      string: !!python/unicode '{"message": "DNS Record Created"}'
     headers:
-      Age: ['0']
-      Cache-Control: ['max-age=0, must-revalidate, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['33']
-      Content-Type: [application/json; charset=UTF-8]
-      Date: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Expires: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Last-Modified: ['Tue, 12 Jun 2018 22:05:32 GMT']
-      Location: ['https://dns.api.gandi.net/api/v5/zones/d26f3afc-6e6a-11e8-a212-00163ee24379/records/orig.nameonly.test']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15768000;]
-      Via: ['1.1 varnish-v4, 1.1 varnish-v4']
-      X-Cache: [MISS]
-      X-Cache-Hits: ['0']
-      X-Content-Type-Options: [nosniff]
-      X-Frame-Options: [DENY]
-      X-XSS-Protection: [1; mode=block]
-    status: {code: 201, message: Created}
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '33'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:35:12 GMT
+      location:
+      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/orig.nameonly.test/TXT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
 version: 1

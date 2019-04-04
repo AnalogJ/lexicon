@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.cloudxns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -13,7 +12,6 @@ from lexicon.providers.cloudxns import Provider
 
 class CloudXNSProviderTests(TestCase, IntegrationTests):
     """TestCase for CloudXNS"""
-    Provider = Provider
     provider_name = 'cloudxns'
     domain = 'capsulecd.com'
 

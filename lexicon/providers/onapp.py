@@ -202,7 +202,6 @@ class Provider(BaseProvider):
             raise Exception(
                 'Identifier was not provided and several existing records '
                 'match the request for {0}/{1}'.format(rtype, name))
-        else:
-            raise Exception(
-                'Identifier was not provided and no existing records '
-                'match the request for {0}/{1}'.format(rtype, name))
+        raise Exception(
+            'Identifier was not provided and no existing records '
+            'match the request for {0}/{1}'.format(rtype, name))

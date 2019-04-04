@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.rage4 import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.rage4 import Provider
 # pass, by inheritance from define_tests.TheTests
 class Rage4ProviderTests(TestCase, IntegrationTests):
     """TestCase for Rage4"""
-    Provider = Provider
     provider_name = 'rage4'
     domain = 'capsulecd.com'
 

@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.powerdns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.powerdns import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class PowerdnsProviderTests(TestCase, IntegrationTests):
     """TestCase for PowerDNS"""
-    Provider = Provider
     provider_name = 'powerdns'
     domain = 'example.com'
 
