@@ -121,7 +121,7 @@ Potential providers are as follows. If you would like to contribute one, follow 
 ## Setup
 
 **Warning: it is strongly advised with pip to install Lexicon in a Python virtual environment, in order to avoid interference
-between Python modules preinstalled on you system as OS packages and modules installed by pip (see https://docs.python-guide.org/dev/virtualenvs/).**
+between Python modules preinstalled on your system as OS packages and modules installed by pip (see https://docs.python-guide.org/dev/virtualenvs/).**
 
 To use lexicon as a CLI application, do the following:
 
