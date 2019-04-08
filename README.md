@@ -119,6 +119,10 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - __Any others I missed__
 
 ## Setup
+
+**Warning: it is strongly advised with pip to install Lexicon in a Python virtual environment, in order to avoid interference
+between Python modules preinstalled on you system as OS packages and modules installed by pip (see https://docs.python-guide.org/dev/virtualenvs/).**
+
 To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
@@ -138,6 +142,8 @@ You can also install the latest version from the repository directly.
 and with Route 53 provider dependencies:
 
     pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
+    
+*As an alternative you can also install Lexicon using the OS packages available for major Linux distributions (see `lexicon` or `dns-lexicon` package in https://pkgs.org/download/lexicon).*
 
 ## Usage
 
