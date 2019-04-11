@@ -91,7 +91,7 @@ class Provider(BaseProvider):
             raise Exception('Api status: {0}'.format(payload['status']))
         if payload['total_records'] == 0:
             return []
-        
+
         record_list = payload['records']
         if name:
             cmp_name = self._relative_name(name.lower())
