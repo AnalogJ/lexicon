@@ -50,6 +50,10 @@ def provider_parser(subparser):
     subparser.add_argument(
         '--api-protocol',
         help="(optional) specify Gandi API protocol to use: rpc (default) or rest")
+    subparser.add_argument(
+        '--sharing-id',
+        help="Gandi sharing ID "
+             "(required if your domain is in an organization and using REST protocol)")
 
 
 class Provider(BaseProvider):
@@ -63,6 +67,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
         self.default_ttl = 3600
         self.protocol = self._get_provider_option('api_protocol') or 'rpc'
+        self.sharing_id = self._get_provider_option('sharing_id')
 
         if self.protocol != 'rpc' and self.protocol != 'rest':
             raise ValueError(
@@ -241,6 +246,8 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
+        if self.sharing_id is not None:
+            query_params['sharing_id'] = self.sharing_id
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

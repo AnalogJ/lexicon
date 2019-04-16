@@ -26,5 +26,8 @@ class GandiRESTProviderTests(TestCase, IntegrationTests):
     def _filter_headers(self):
         return ['X-Api-Key']
 
+    def _filter_query_parameters(self):
+        return ['sharing_id']
+
     def _test_parameters_overrides(self):
         return {'api_protocol': 'rest'}
