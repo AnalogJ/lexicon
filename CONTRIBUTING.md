@@ -24,11 +24,11 @@ Install `lexicon` in development mode with full providers support:
 
 Make sure the tests pass:
 
-    $ py.test tests
+    $ py.test lexicon/tests
 
 You can test a specific provider using:
 
-	$ py.test tests/providers/test_foo.py
+	$ py.test lexicon/tests/providers/test_foo.py
 
 _NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not against the real DNS provider APIs._
 
@@ -96,7 +96,7 @@ same as all other `lexicon` providers. `lexicon` uses `vcrpy` to make recordings
 
 The only thing you need to do is create the following file:
 
- - `tests/providers/test_foo.py`
+ - `lexicon/tests/providers/test_foo.py`
 
 Then you'll need to populate it with the following template:
 
