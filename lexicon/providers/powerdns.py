@@ -21,7 +21,6 @@ This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
 from __future__ import absolute_import
-import copy
 import json
 import logging
 
