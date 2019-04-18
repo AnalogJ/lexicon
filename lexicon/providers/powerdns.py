@@ -49,7 +49,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
 
         self.api_endpoint = self._get_provider_option('pdns_server')
-        self.disable_slave_notify = self._get_provider_option('pdns-no-slave-notify')
+        self.disable_slave_notify = self._get_provider_option('pdns-disable-notify')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
