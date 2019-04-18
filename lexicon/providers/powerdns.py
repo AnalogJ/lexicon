@@ -125,32 +125,37 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         content = self._clean_content(rtype, content)
         for rrset in self.zone_data()['rrsets']:
-            if rrset['name'] == name and rrset['type'] == rtype and rtype != 'TXT':
-                update_data = rrset
-                if 'comments' in update_data:
-                    del update_data['comments']
-                update_data['changetype'] = 'REPLACE'
-                break
-        else:
-            update_data = {
-                'name': name,
-                'type': rtype,
-                'records': [],
-                'ttl': self._get_lexicon_option('ttl') or 600,
-                'changetype': 'REPLACE'
-            }
+            if rrset['name'] == name and rrset['type'] == rtype:
+                updated_data = rrset
 
-        for record in update_data['records']:
-            if record['content'] == content:
-                return True
+                for record in updated_data['records']:
+                    if record['content'] == content:
+                        return True
+                    else:
+                        updated_data['records'].append(
+                            {
+                                'content': content,
+                                'disabled': False
+                            })
 
-        update_data['records'].append({
-            'content': content,
-            'disabled': False
-        })
+                if 'comments' in updated_data:
+                    del updated_data['comments']
+                    updated_data['changetype'] = 'REPLACE'
+            else:
+                update_data = {
+                    'name': name,
+                    'type': rtype,
+                    'records': [],
+                    'ttl': self._get_lexicon_option('ttl') or 600,
+                    'changetype': 'REPLACE'
+                }
+
+                update_data['records'].append({
+                    'content': content,
+                    'disabled': False
+                })
 
         update_data['name'] = self._fqdn_name(update_data['name'])
-
         request = {'rrsets': [update_data]}
         LOGGER.debug('request: %s', request)
 
