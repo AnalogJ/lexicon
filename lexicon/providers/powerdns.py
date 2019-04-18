@@ -21,6 +21,7 @@ This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
 from __future__ import absolute_import
+import copy
 import json
 import logging
 
@@ -40,7 +41,8 @@ def provider_parser(subparser):
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
     subparser.add_argument(
         "--pdns-server-id", help="Server ID to interact with")
-
+    subparser.add_argument(
+        "--pdns-disable-notify", help="Disable slave notifications from master")
 
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
@@ -48,6 +50,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
 
         self.api_endpoint = self._get_provider_option('pdns_server')
+        self.disable_slave_notify = self._get_provider_option('pdns-no-slave-notify')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -64,6 +67,23 @@ class Provider(BaseProvider):
         self.api_key = self._get_provider_option('auth_token')
         assert self.api_key is not None
         self._zone_data = None
+
+    def notifySlaves(self):
+        if self.disable_slave_notify != None:
+            LOGGER.debug('Slave notifications disabled')
+            return False
+
+        if self.zone_data()['kind'] == 'Master':
+            response_code = self._put('/zones/' + self.domain + '/notify').status_code
+            if response_code == 200:
+                LOGGER.debug('Slave(s) notified')
+                return True
+            else:
+                LOGGER.debug('Slave notification failed with code %i', response_code)
+                return False
+        else:
+            LOGGER.debug('Zone type should be \'Master\' for slave notifications')
+            return False
 
     def zone_data(self):
         """Get zone data"""
@@ -148,6 +168,7 @@ class Provider(BaseProvider):
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
+        self.notifySlaves()
         self._zone_data = None
         return True
 
@@ -182,6 +203,7 @@ class Provider(BaseProvider):
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
+        self.notifySlaves()
         self._zone_data = None
         return True
 
