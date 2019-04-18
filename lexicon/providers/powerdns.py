@@ -78,12 +78,10 @@ class Provider(BaseProvider):
             if response_code == 200:
                 LOGGER.debug('Slave(s) notified')
                 return True
-
             LOGGER.debug('Slave notification failed with code %i', response_code)
-            return False
         else:
             LOGGER.debug('Zone type should be \'Master\' for slave notifications')
-            return False
+        return False
 
     def zone_data(self):
         """Get zone data"""
@@ -163,8 +161,8 @@ class Provider(BaseProvider):
                     if record['content'] != newcontent:
                         updated_data['records'].append(
                             {
-                                 'content': record['content'],
-                                 'disabled': record['disabled']
+                                'content': record['content'],
+                                'disabled': record['disabled']
                             })
                 break
 
