@@ -185,21 +185,22 @@ class Provider(BaseProvider):
         for rrset in self.zone_data()['rrsets']:
             if rrset['type'] == rtype and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
                 update_data = rrset
+
                 if 'comments' in update_data:
                     del update_data['comments']
-                update_data['changetype'] = 'REPLACE'
+
+                if content is None:
+                    update_data['records'] = []
+                    update_data['changetype'] = 'DELETE'
+                else:
+                    new_record_list = []
+                    for record in update_data['records']:
+                        if self._clean_content(rrset['type'], content) != record['content']:
+                            new_record_list.append(record)
+
+                    update_data['records'] = new_record_list
+                    update_data['changetype'] = 'REPLACE'
                 break
-        else:
-            return True
-
-        new_records = []
-        for record in update_data['records']:
-            if content is None or self._unclean_content(
-                    rtype, record['content']) != self._unclean_content(rtype, content):
-                new_records.append(record)
-
-        update_data['name'] = self._fqdn_name(update_data['name'])
-        update_data['records'] = new_records
 
         request = {'rrsets': [update_data]}
         LOGGER.debug('request: %s', request)
