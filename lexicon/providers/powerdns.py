@@ -63,7 +63,6 @@ class Provider(BaseProvider):
 
         self.api_key = self._get_provider_option('auth_token')
         assert self.api_key is not None
-
         self._zone_data = None
 
     def zone_data(self):
@@ -123,40 +122,29 @@ class Provider(BaseProvider):
         return content
 
     def _create_record(self, rtype, name, content):
-        content = self._clean_content(rtype, content)
+        rname = self._fqdn_name(name)
+        newcontent = self._clean_content(rtype, content)
+
+        updated_data = {
+            'name': rname,
+            'type': rtype,
+            'records': [],
+            'ttl': self._get_lexicon_option('ttl') or 600,
+            'changetype': 'REPLACE'
+        }
+
+        updated_data['records'].append({'content': newcontent, 'disabled': False})
+
         for rrset in self.zone_data()['rrsets']:
-            if rrset['name'] == name and rrset['type'] == rtype:
-                updated_data = rrset
+            if rrset['name'] == rname and rrset['type'] == rtype:
+                updated_data['ttl'] = rrset['ttl']
 
-                for record in updated_data['records']:
-                    if record['content'] == content:
-                        return True
-                    else:
-                        updated_data['records'].append(
-                            {
-                                'content': content,
-                                'disabled': False
-                            })
+                for record in rrset['records']:
+                    if record['content'] != newcontent:
+                        updated_data['records'].append({'content': record['content'], 'disabled': record['disabled']})
+                break
 
-                if 'comments' in updated_data:
-                    del updated_data['comments']
-                    updated_data['changetype'] = 'REPLACE'
-            else:
-                update_data = {
-                    'name': name,
-                    'type': rtype,
-                    'records': [],
-                    'ttl': self._get_lexicon_option('ttl') or 600,
-                    'changetype': 'REPLACE'
-                }
-
-                update_data['records'].append({
-                    'content': content,
-                    'disabled': False
-                })
-
-        update_data['name'] = self._fqdn_name(update_data['name'])
-        request = {'rrsets': [update_data]}
+        request = {'rrsets': [updated_data]}
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
