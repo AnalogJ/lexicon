@@ -125,7 +125,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         content = self._clean_content(rtype, content)
         for rrset in self.zone_data()['rrsets']:
-            if rrset['name'] == name and rrset['type'] == rtype:
+            if rrset['name'] == name and rrset['type'] == rtype and rtype != 'TXT':
                 update_data = rrset
                 if 'comments' in update_data:
                     del update_data['comments']
