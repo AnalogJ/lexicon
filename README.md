@@ -62,6 +62,7 @@ The current supported providers are:
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- Netcup ([docs](https://ccp.netcup.net/run/webservice/servers/endpoint.php))
 - NFSN (NearlyFreeSpeech)
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))

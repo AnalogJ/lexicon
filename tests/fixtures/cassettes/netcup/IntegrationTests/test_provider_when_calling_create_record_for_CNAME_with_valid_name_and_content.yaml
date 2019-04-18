@@ -1,0 +1,119 @@
+interactions:
+- request:
+    body: '{"action": "login"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['190']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"TxeAUwGUc01I01902F12yROj5xcR","clientrequestid":"","action":"login","status":"success","statuscode":2000,"shortmessage":"Login
+        successful","longmessage":"Session has been created successful.","responsedata":{"apisessionid":"Mnl2ODQzMTU5bTc2NnZBbW9IYVRqR2JyU2ZCUm1RSTUxMjUzdD"}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:30 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:30 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['297']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsZone"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['225']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"12IUTl2ckUZw59T1ExTNx0W1My5Q","clientrequestid":"","action":"infoDnsZone","status":"success","statuscode":2000,"shortmessage":"DNS
+        zone found","longmessage":"DNS zone was found.","responsedata":{"name":"coldfix.de","ttl":"86400","serial":"2019042072","refresh":"28800","retry":"7200","expire":"1209600","dnssecstatus":false}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:31 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:31 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['345']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"0Rx0c52I1Z9LMSV25y25Myj10UU2","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:31 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:31 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['634']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "updateDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['338']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"MeR1xA12n5D9EyT5Vk3x0Ws2Tz5M","clientrequestid":"","action":"updateDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records successful updated","longmessage":"The given DNS records for this
+        zone were updated.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:33 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:33 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['799']
+    status: {code: 200, message: OK}
+version: 1
