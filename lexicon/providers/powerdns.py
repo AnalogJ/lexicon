@@ -67,8 +67,9 @@ class Provider(BaseProvider):
         assert self.api_key is not None
         self._zone_data = None
 
-    def notifySlaves(self):
-        if self.disable_slave_notify != None:
+    def notify_slaves(self):
+        """Checks to see if slaves should be notified, and notifies them if needed"""
+        if self.disable_slave_notify is not None:
             LOGGER.debug('Slave notifications disabled')
             return False
 
@@ -77,9 +78,9 @@ class Provider(BaseProvider):
             if response_code == 200:
                 LOGGER.debug('Slave(s) notified')
                 return True
-            else:
-                LOGGER.debug('Slave notification failed with code %i', response_code)
-                return False
+
+            LOGGER.debug('Slave notification failed with code %i', response_code)
+            return False
         else:
             LOGGER.debug('Zone type should be \'Master\' for slave notifications')
             return False
@@ -160,14 +161,18 @@ class Provider(BaseProvider):
 
                 for record in rrset['records']:
                     if record['content'] != newcontent:
-                        updated_data['records'].append({'content': record['content'], 'disabled': record['disabled']})
+                        updated_data['records'].append(
+                            {
+                                 'content': record['content'],
+                                 'disabled': record['disabled']
+                            })
                 break
 
         request = {'rrsets': [updated_data]}
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
-        self.notifySlaves()
+        self.notify_slaves()
         self._zone_data = None
         return True
 
@@ -202,7 +207,7 @@ class Provider(BaseProvider):
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
-        self.notifySlaves()
+        self.notify_slaves()
         self._zone_data = None
         return True
 
