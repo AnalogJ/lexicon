@@ -57,7 +57,7 @@ The current supported providers are:
 - Internet.bs ([docs](https://internetbs.net/ResellerRegistrarDomainNameAPI))
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
-- Linode v4 ([docs](https://developers.linode.com/v4))
+- Linode v4 ([docs](https://developers.linode.com/api/docs/v4#tag/Domains))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
