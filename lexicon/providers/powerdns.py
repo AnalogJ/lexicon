@@ -40,7 +40,8 @@ def provider_parser(subparser):
     subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
     subparser.add_argument(
         "--pdns-server-id", help="Server ID to interact with")
-
+    subparser.add_argument(
+        "--pdns-disable-notify", help="Disable slave notifications from master")
 
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
@@ -48,6 +49,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
 
         self.api_endpoint = self._get_provider_option('pdns_server')
+        self.disable_slave_notify = self._get_provider_option('pdns-disable-notify')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -63,8 +65,23 @@ class Provider(BaseProvider):
 
         self.api_key = self._get_provider_option('auth_token')
         assert self.api_key is not None
-
         self._zone_data = None
+
+    def notify_slaves(self):
+        """Checks to see if slaves should be notified, and notifies them if needed"""
+        if self.disable_slave_notify is not None:
+            LOGGER.debug('Slave notifications disabled')
+            return False
+
+        if self.zone_data()['kind'] == 'Master':
+            response_code = self._put('/zones/' + self.domain + '/notify').status_code
+            if response_code == 200:
+                LOGGER.debug('Slave(s) notified')
+                return True
+            LOGGER.debug('Slave notification failed with code %i', response_code)
+        else:
+            LOGGER.debug('Zone type should be \'Master\' for slave notifications')
+        return False
 
     def zone_data(self):
         """Get zone data"""
@@ -123,38 +140,37 @@ class Provider(BaseProvider):
         return content
 
     def _create_record(self, rtype, name, content):
-        content = self._clean_content(rtype, content)
+        rname = self._fqdn_name(name)
+        newcontent = self._clean_content(rtype, content)
+
+        updated_data = {
+            'name': rname,
+            'type': rtype,
+            'records': [],
+            'ttl': self._get_lexicon_option('ttl') or 600,
+            'changetype': 'REPLACE'
+        }
+
+        updated_data['records'].append({'content': newcontent, 'disabled': False})
+
         for rrset in self.zone_data()['rrsets']:
-            if rrset['name'] == name and rrset['type'] == rtype:
-                update_data = rrset
-                if 'comments' in update_data:
-                    del update_data['comments']
-                update_data['changetype'] = 'REPLACE'
+            if rrset['name'] == rname and rrset['type'] == rtype:
+                updated_data['ttl'] = rrset['ttl']
+
+                for record in rrset['records']:
+                    if record['content'] != newcontent:
+                        updated_data['records'].append(
+                            {
+                                'content': record['content'],
+                                'disabled': record['disabled']
+                            })
                 break
-        else:
-            update_data = {
-                'name': name,
-                'type': rtype,
-                'records': [],
-                'ttl': self._get_lexicon_option('ttl') or 600,
-                'changetype': 'REPLACE'
-            }
 
-        for record in update_data['records']:
-            if record['content'] == content:
-                return True
-
-        update_data['records'].append({
-            'content': content,
-            'disabled': False
-        })
-
-        update_data['name'] = self._fqdn_name(update_data['name'])
-
-        request = {'rrsets': [update_data]}
+        request = {'rrsets': [updated_data]}
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
+        self.notify_slaves()
         self._zone_data = None
         return True
 
@@ -169,26 +185,28 @@ class Provider(BaseProvider):
         for rrset in self.zone_data()['rrsets']:
             if rrset['type'] == rtype and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
                 update_data = rrset
+
                 if 'comments' in update_data:
                     del update_data['comments']
-                update_data['changetype'] = 'REPLACE'
+
+                if content is None:
+                    update_data['records'] = []
+                    update_data['changetype'] = 'DELETE'
+                else:
+                    new_record_list = []
+                    for record in update_data['records']:
+                        if self._clean_content(rrset['type'], content) != record['content']:
+                            new_record_list.append(record)
+
+                    update_data['records'] = new_record_list
+                    update_data['changetype'] = 'REPLACE'
                 break
-        else:
-            return True
-
-        new_records = []
-        for record in update_data['records']:
-            if content is None or self._unclean_content(
-                    rtype, record['content']) != self._unclean_content(rtype, content):
-                new_records.append(record)
-
-        update_data['name'] = self._fqdn_name(update_data['name'])
-        update_data['records'] = new_records
 
         request = {'rrsets': [update_data]}
         LOGGER.debug('request: %s', request)
 
         self._patch('/zones/' + self.domain, data=request)
+        self.notify_slaves()
         self._zone_data = None
         return True
 
