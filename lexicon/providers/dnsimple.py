@@ -61,7 +61,7 @@ class Provider(BaseProvider):
         if self.options.get('regions'):
             record['regions'] = self.options.get('regions')
 
-        payload = self._post('{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
+        payload = self._post('/{0}/zones/{1}/records'.format(self.account_id, self.options.get('domain')), record)
 
         logger.debug('create_record: %s', 'id' in payload)
         return 'id' in payload
