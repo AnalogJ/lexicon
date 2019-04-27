@@ -135,15 +135,14 @@ class Provider(BaseProvider):
 
     def _change_record_sets(self, action, rtype, name, content):
         ttl = self._get_lexicon_option('ttl')
-        ResourceRecords=[]
-        if(isinstance(content,list)):
+        resource_records = []
+        if isinstance(content, list):
             for i in content:
                 value = '"{0}"'.format(i) if rtype in ['TXT', 'SPF'] else i
-                ResourceRecords.append({'Value': value})
+                resource_records.append({'Value': value})
         else:
             value = '"{0}"'.format(content) if rtype in ['TXT', 'SPF'] else content
-            ResourceRecords.append({'Value': value})
-        
+            resource_records.append({'Value': value})
         try:
             self.r53_client.change_resource_record_sets(
                 HostedZoneId=self.domain_id,
@@ -158,7 +157,7 @@ class Provider(BaseProvider):
                                 'Name': self._fqdn_name(name),
                                 'Type': rtype,
                                 'TTL': ttl if ttl is not None else 300,
-                                'ResourceRecords': ResourceRecords
+                                'ResourceRecords': resource_records
                             }
                         }
                     ]
@@ -170,9 +169,9 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         """Create a record in the hosted zone."""
-        existing_records = self.list_records(rtype,name)
+        existing_records = self.list_records(rtype, name)
         if existing_records:
-            if (isinstance(existing_records[0]['content'],list)):
+            if isinstance(existing_records[0]['content'], list):
                 return self._change_record_sets('UPSERT', rtype, name, existing_records[0]['content']+[content])
             else:
                 return self._change_record_sets('UPSERT', rtype, name, [existing_records[0]['content']] + [content])
@@ -187,11 +186,11 @@ class Provider(BaseProvider):
         """Delete a record from the hosted zone."""
         existing_records = self.list_records(rtype,name,content)
         if existing_records:
-            if (len(existing_records)>1):
+            if len(existing_records) > 1:
                 raise Exception('The existing_records list has more than 1 element, this is not spported, so stopping to prevent zone damage')
-            if (isinstance(existing_records[0]['content'],list)):
+            if isinstance(existing_records[0]['content'], list):
                 # multiple values in record, just remove one value and only if it actually exist
-                if (content in existing_records[0]['content']):
+                if content in existing_records[0]['content']:
                     existing_records[0]['content'].remove(content)
                 return self._change_record_sets('UPSERT', rtype, name, existing_records[0]['content'])
             else:
