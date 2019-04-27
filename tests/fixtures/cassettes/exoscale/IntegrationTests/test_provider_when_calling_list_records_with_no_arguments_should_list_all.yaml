@@ -1,0 +1,47 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com
+  response:
+    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2019-02-01T07:29:38Z","token":"9d30931ed5c454244b50855180e8ca75","id":440987,"whois_protected":false,"created_at":"2019-02-01T07:29:38Z","auto_renew":false}}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:48 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [ec4d394b1fc29b90baaa15b354fa3a66]
+      content-length: ['310']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
+  response:
+    body: {string: '[{"record":{"record_type":"SOA","content":"ns1.exoscale.io admin.dnsimple.com
+        1549006209 86400 7200 604800 300","name":"","updated_at":"2019-02-01T07:32:47Z","ttl":3600,"id":15204351,"domain_id":440987,"created_at":"2019-02-01T07:29:39Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.net","name":"","updated_at":"2019-02-01T07:29:39Z","ttl":3600,"id":15204352,"domain_id":440987,"created_at":"2019-02-01T07:29:39Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.ch","name":"","updated_at":"2019-02-01T07:29:39Z","ttl":3600,"id":15204353,"domain_id":440987,"created_at":"2019-02-01T07:29:39Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.com","name":"","updated_at":"2019-02-01T07:29:39Z","ttl":3600,"id":15204354,"domain_id":440987,"created_at":"2019-02-01T07:29:39Z","prio":null}},{"record":{"record_type":"NS","content":"ns1.exoscale.io","name":"","updated_at":"2019-02-01T07:29:39Z","ttl":3600,"id":15204355,"domain_id":440987,"created_at":"2019-02-01T07:29:39Z","prio":null}},{"record":{"record_type":"A","content":"127.0.0.1","name":"localhost","updated_at":"2019-02-01T07:31:56Z","ttl":3600,"id":15204362,"domain_id":440987,"created_at":"2019-02-01T07:31:56Z","prio":null}},{"record":{"record_type":"CNAME","content":"docs.example.com","name":"docs","updated_at":"2019-02-01T07:31:57Z","ttl":3600,"id":15204363,"domain_id":440987,"created_at":"2019-02-01T07:31:57Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.fqdn","updated_at":"2019-02-01T07:31:59Z","ttl":3600,"id":15204364,"domain_id":440987,"created_at":"2019-02-01T07:31:59Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.full","updated_at":"2019-02-01T07:32:00Z","ttl":3600,"id":15204365,"domain_id":440987,"created_at":"2019-02-01T07:32:00Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.test","updated_at":"2019-02-01T07:32:02Z","ttl":3600,"id":15204366,"domain_id":440987,"created_at":"2019-02-01T07:32:02Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.createrecordset","updated_at":"2019-02-01T07:32:03Z","ttl":3600,"id":15204367,"domain_id":440987,"created_at":"2019-02-01T07:32:03Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.createrecordset","updated_at":"2019-02-01T07:32:05Z","ttl":3600,"id":15204368,"domain_id":440987,"created_at":"2019-02-01T07:32:05Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"_acme-challenge.noop","updated_at":"2019-02-01T07:32:06Z","ttl":3600,"id":15204369,"domain_id":440987,"created_at":"2019-02-01T07:32:06Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.deleterecordinset","updated_at":"2019-02-01T07:32:25Z","ttl":3600,"id":15204375,"domain_id":440987,"created_at":"2019-02-01T07:32:25Z","prio":null}},{"record":{"record_type":"TXT","content":"ttlshouldbe3600","name":"ttl.fqdn","updated_at":"2019-02-01T07:32:35Z","ttl":3600,"id":15204378,"domain_id":440987,"created_at":"2019-02-01T07:32:35Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.listrecordset","updated_at":"2019-02-01T07:32:37Z","ttl":3600,"id":15204379,"domain_id":440987,"created_at":"2019-02-01T07:32:37Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.listrecordset","updated_at":"2019-02-01T07:32:39Z","ttl":3600,"id":15204380,"domain_id":440987,"created_at":"2019-02-01T07:32:39Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fqdntest","updated_at":"2019-02-01T07:32:42Z","ttl":3600,"id":15204381,"domain_id":440987,"created_at":"2019-02-01T07:32:42Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.fulltest","updated_at":"2019-02-01T07:32:44Z","ttl":3600,"id":15204382,"domain_id":440987,"created_at":"2019-02-01T07:32:44Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken","name":"random.test","updated_at":"2019-02-01T07:32:47Z","ttl":3600,"id":15204383,"domain_id":440987,"created_at":"2019-02-01T07:32:47Z","prio":null}}]'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:48 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [527bc850eec9ce8f580abbee98fb31df]
+      content-length: ['4314']
+    status: {code: 200, message: OK}
+version: 1

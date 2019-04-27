@@ -1,78 +1,86 @@
+
+"""
+Lexicon Plesk Provider
+
+Author: Jens Reimann, 2018
+
+API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
+"""
 from __future__ import absolute_import
-
 import logging
-
-import requests
 from collections import OrderedDict
 
+import requests
+from lexicon.providers.base import Provider as BaseProvider
+
+
 try:
-    import xmltodict # optional dependency
+    import xmltodict  # optional dependency
 except ImportError:
     pass
 
-from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
-# Lexicon Plesk Provider
-#
-# Author: Jens Reimann, 2018
-#
-# API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
-#
-
-plesk_url_suffix = "/enterprise/control/agent.php"
+PLEX_URL_SUFFIX = "/enterprise/control/agent.php"
 
 NAMESERVER_DOMAINS = []
 
-def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
-    subparser.add_argument('--plesk-server', help="specify URL to the Plesk Web UI, including the port")
+
+def provider_parser(subparser):
+    """Configure provider parser for Plesk"""
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication")
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        '--plesk-server', help="specify URL to the Plesk Web UI, including the port")
+
 
 class Provider(BaseProvider):
+    """Provider class for Plesk"""
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
 
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
-
-        self.api_endpoint = self.options.get('plesk_server')
+        self.api_endpoint = self._get_provider_option('plesk_server')
 
         if self.api_endpoint.endswith('/'):
             self.api_endpoint = self.api_endpoint[:-1]
 
-        if not self.api_endpoint.endswith(plesk_url_suffix):
-            self.api_endpoint += plesk_url_suffix
+        if not self.api_endpoint.endswith(PLEX_URL_SUFFIX):
+            self.api_endpoint += PLEX_URL_SUFFIX
 
-        self.site_name = self.options.get('domain')
+        self.site_name = self.domain
         assert self.site_name is not None
 
         self.domain_id = None
 
-        self.username = self.options.get('auth_username')
+        self.username = self._get_provider_option('auth_username')
         assert self.username is not None
 
-        self.password = self.options.get('auth_password')
+        self.password = self._get_provider_option('auth_password')
         assert self.password is not None
 
-    def __simple_request(self, type, operation, req):
-        
+    def __simple_request(self, rtype, operation, req):
+
         response = self.__plesk_request({
-            type: {
+            rtype: {
                 operation: req
             }
-        })[type][operation]
-        
+        })[rtype][operation]
+
         result = response["result"]
-        
+
         if isinstance(result, list):
-            for r in result:
-                if r["status"] == "error":
-                    raise Exception("API returned at least one error: %s" % r["errtext"] )
+            for record in result:
+                if record["status"] == "error":
+                    raise Exception(
+                        "API returned at least one error: %s" % record["errtext"])
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception("API returned error: %s (%s)" % ( errcode, errtext ) )
-        
+            raise Exception("API returned error: %s (%s)" % (errcode, errtext))
+
         return response
 
     def __plesk_request(self, request):
@@ -84,17 +92,18 @@ class Provider(BaseProvider):
         headers["HTTP_AUTH_PASSWD"] = self.password
 
         xml = xmltodict.unparse({
-                "packet": request
-            }, pretty=True)
+            "packet": request
+        }, pretty=True)
 
-        logger.debug ( "Request: %s", xml)
+        LOGGER.debug("Request: %s", xml)
 
-        r = requests.post(self.api_endpoint, headers=headers, data=xml,  auth=(self.username, self.password))
+        response = requests.post(self.api_endpoint, headers=headers,
+                                 data=xml, auth=(self.username, self.password))
 
-        data = r.text
+        data = response.text
 
-        logger.debug ( "Response: %s", data )
-        result = xmltodict.parse(data )
+        LOGGER.debug("Response: %s", data)
+        result = xmltodict.parse(data)
         return result["packet"]
 
     def __find_site(self):
@@ -103,148 +112,149 @@ class Provider(BaseProvider):
             ('dataset', {})
         ]))["result"]["id"]
 
-    def authenticate(self):
+    def _authenticate(self):
         self.domain_id = self.__find_site()
-        
-        if self.domain_id == None:
+
+        if self.domain_id is None:
             raise Exception('Domain not found')
 
-    def create_record(self, type, name, content):
-        return self.__create_entry(type, name, content, None)
+    def _create_record(self, rtype, name, content):
+        return self.__create_entry(rtype, name, content, None)
 
-    def list_records(self, type=None, name=None, content=None):
-        entries = self.__find_dns_entries(type, name, content)
-        logger.debug("list_records: %s" % entries)
+    def _list_records(self, rtype=None, name=None, content=None):
+        entries = self.__find_dns_entries(rtype, name, content)
+        LOGGER.debug("list_records: %s", entries)
         return entries
 
-    def update_record(self, identifier, type=None, name=None, content=None):
-        
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
-            entries = self.__find_dns_entries(type, name, None)
-            logger.debug("Entries found: %s", entries)
-            
-            if len(entries) < 1:
+            entries = self.__find_dns_entries(rtype, name, None)
+            LOGGER.debug("Entries found: %s", entries)
+
+            if not entries:
                 raise Exception("No entry found for updating")
-            
+
             identifier = entries[0]["id"]
             entry = self.__get_dns_entry(identifier)
-            
+
             ids = []
-            for e in entries:
-                ids.append(e["id"])
-            
+            for an_entry in entries:
+                ids.append(an_entry["id"])
+
             self.__delete_dns_records_by_id(ids)
-            
+
         else:
-            
+
             entry = self.__get_dns_entry(identifier)
             self.__delete_dns_records_by_id([identifier])
 
         assert entry is not None
 
-        logger.debug("Updating: %s", entry)
+        LOGGER.debug("Updating: %s", entry)
 
-        if type:
-            entry["type"] = type
+        if rtype:
+            entry["type"] = rtype
         if name:
             entry["host"] = name
         if content:
             entry["value"] = content
-        
+
         return self.__create_entry(entry["type"], entry["host"], entry["value"], entry["opt"])
 
-    def __create_entry(self, type, host, value, opt):
-        entries = self.__find_dns_entries(type, self._fqdn_name(host), value)
-        
-        if entries:
-            return True # already exists
+    def __create_entry(self, rtype, host, value, opt):
+        entries = self.__find_dns_entries(rtype, self._fqdn_name(host), value)
 
-        self.__simple_request('dns','add_rec',OrderedDict([
+        if entries:
+            return True  # already exists
+
+        self.__simple_request('dns', 'add_rec', OrderedDict([
             ('site-id', self.domain_id),
-            ('type', type),
+            ('type', rtype),
             ('host', self._relative_name(host)),
             ('value', value),
             ('opt', opt)
         ]))
-        
+
         return True
 
-
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
-        
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            
             self.__delete_dns_records_by_id([identifier])
             return True
-            
-        else:
-            
-            entries = self.__find_dns_entries ( type, self._fqdn_name(name), content )
-            ids = []
-            
-            for entry in entries:
-                ids.append(entry["id"])
-            
-            self.__delete_dns_records_by_id(ids)
-            return len(ids) > 0
+        entries = self.__find_dns_entries(
+            rtype, self._fqdn_name(name), content)
+        ids = []
 
-    def __get_dns_entry(self, id):
+        for entry in entries:
+            ids.append(entry["id"])
+
+        self.__delete_dns_records_by_id(ids)
+        return bool(ids)
+
+    def __get_dns_entry(self, identifier):
         return self.__simple_request('dns', 'get_rec', {
             'filter': {
-                'id': id
+                'id': identifier
             }
         })["result"]["data"]
 
-    def __find_dns_entries(self, type = None, host = None, value = None):
-        logger.debug("Searching for: %s, %s, %s", type, host, value )
+    def __find_dns_entries(self, rtype=None, host=None, value=None):
+        LOGGER.debug("Searching for: %s, %s, %s", rtype, host, value)
 
-        if value and type and type in ["CNAME"]:
-            logger.debug("CNAME transformation")
+        if value and rtype and rtype in ["CNAME"]:
+            LOGGER.debug("CNAME transformation")
             value = value.rstrip('.') + "."
 
         if host:
             host = self._fqdn_name(host)
 
         result = self.__simple_request('dns', 'get_rec', {
-           'filter': {
+            'filter': {
                 'site-id': self.domain_id
             }
         })
 
         entries = []
 
-        for r in result["result"]:
+        for record in result["result"]:
 
-            logger.debug("Record: %s", r)
+            LOGGER.debug("Record: %s", record)
 
-            if ( type is not None ) and ( r["data"]["type"] != type ):
-                logger.debug("\tType doesn't match - expected: '%s', found: '%s'", type, r["data"]["type"])
+            if (rtype is not None) and (record["data"]["type"] != rtype):
+                LOGGER.debug(
+                    "\tType doesn't match - expected: '%s', found: '%s'",
+                    rtype, record["data"]["type"])
                 continue
-            
-            if ( host is not None ) and ( r["data"]["host"] != host ):
-                logger.debug("\tHost doesn't match - expected: '%s', found: '%s'", host, r["data"]["host"])
+
+            if (host is not None) and (record["data"]["host"] != host):
+                LOGGER.debug(
+                    "\tHost doesn't match - expected: '%s', found: '%s'",
+                    host, record["data"]["host"])
                 continue
-            
-            if ( value is not None ) and ( r["data"]["value"] != value ):
-                logger.debug("\tValue doesn't match - expected: '%s', found: '%s'", value, r["data"]["value"])
+
+            if (value is not None) and (record["data"]["value"] != value):
+                LOGGER.debug(
+                    "\tValue doesn't match - expected: '%s', found: '%s'",
+                    value,
+                    record["data"]["value"])
                 continue
 
             entry = {
-                'id': r["id"],
-                'type': r["data"]["type"],
-                'name': self._full_name(r["data"]["host"]),
+                'id': record["id"],
+                'type': record["data"]["type"],
+                'name': self._full_name(record["data"]["host"]),
                 'ttl': None,
                 'options': {}
             }
-            
-            if r["data"]["type"] in ("CNAME"):
-                entry['content'] = r["data"]["value"].rstrip('.')
-            else:
-                entry['content'] = r["data"]["value"]
 
-            if r["data"]["type"] == "MX":
+            if record["data"]["type"] in ["CNAME"]:
+                entry['content'] = record["data"]["value"].rstrip('.')
+            else:
+                entry['content'] = record["data"]["value"]
+
+            if record["data"]["type"] == "MX":
                 entry['options']['mx'] = {
-                    'priority': int(r["data"]["opt"])
+                    'priority': int(record["data"]["opt"])
                 }
 
             entries.append(entry)
@@ -268,3 +278,7 @@ class Provider(BaseProvider):
         self.__plesk_request({
             'dns': req
         })
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used for Plesk provider
+        pass

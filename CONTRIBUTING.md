@@ -13,19 +13,14 @@ Fork, then clone the repo:
 
     $ git clone git@github.com:your-username/lexicon.git
 
-Create a python virtual environment
+Create a python virtual environment:
 
 	$ virtualenv -p python2.7 venv
 	$ source venv/bin/activate
 
-Install all `lexicon` requirements:
+Install `lexicon` in development mode with full providers support:
 
-    $ pip install -r optional-requirements.txt
-    $ pip install -r test-requirements.txt
-
-Install `lexicon` in development mode
-
-    $ pip install -e .
+    $ pip install -e .[full,dev]
 
 Make sure the tests pass:
 
@@ -48,27 +43,34 @@ thing you'll really need to do is is create the following file.
 Where `foo` should be replaced with the name of the DNS service in lowercase
 and without spaces or special characters (eg. `cloudflare`)
 
-Your provider file should contain 2 things:
+Your provider file should contain 3 things:
 
-- a `ProviderParser` which is used to add provider specific commandline arguments.
+- a `NAMESERVER_DOMAINS` which contains the domain(s) used by the DNS provider nameservers FQDNs
+(eg. Google Cloud DNS uses nameservers that have the FQDN pattern `ns-cloud-cX-googledomains.com`,
+so `NAMESERVER_DOMAINS` will be `['googledomains.com']`).
+
+- a `provider_parser` which is used to add provider specific commandline arguments.
 eg. If you define two cli arguments: `--auth-username` and `--auth-token`,
- those values will be available to your provider via `self.options['auth_username']`
- or `self.options['auth_token']` respectively
+ those values will be available to your provider via `self._get_provider_option('auth_username')`
+ or `self._get_provider_option('auth_token')` respectively
 
 - a `Provider` class which inherits from [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py), which is in the `base.py` file.
 The [`BaseProvider`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py)
 defines the following functions, which must be overridden in your provider implementation:
 
-    - `authenticate`
-    - `create_record`
-    - `list_records`
-    - `update_record`
-    - `delete_record`
+    - `_authenticate`
+    - `_create_record`
+    - `_list_records`
+    - `_update_record`
+    - `_delete_record`
     - `_request`
 
 	It also provides a few helper functions which you can use to simplify your implemenation.
 	See the [`cloudflare.py`](https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py)
 	 file, or any provider in the [`lexicon/providers/`](https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers) folder for examples
+
+It's a good idea to review the provider [specification](https://github.com/AnalogJ/lexicon/blob/master/SPECIFICATION.md) to ensure that your interface follows
+the proper conventions.
 
 
 ## Testing your provider
@@ -100,17 +102,14 @@ Then you'll need to populate it with the following template:
 
 ```python
 # Test for one implementation of the interface
-from lexicon.providers.foo import Provider
-from integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
-import pytest
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class FooProviderTests(TestCase, IntegrationTests):
-
-	Provider = Provider
+    """Integration tests for Foo provider"""
 	provider_name = 'foo'
 	domain = 'example.com'
 	def _filter_post_data_parameters(self):
@@ -176,7 +175,7 @@ In your `tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to s
 
 ```python
 	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
-	def test_Provider_when_calling_list_records_after_setting_ttl(self):
+	def test_provider_when_calling_list_records_after_setting_ttl(self):
 		return
 ```
 
@@ -184,8 +183,8 @@ You can also skip extended test suites by adding the following snipped:
 
 ```python
     @pytest.fixture(autouse=True)
-    def skip_suite(self, request):
-        if request.node.get_marker('ext_suite_1'):
+    def _skip_suite(self, request):  # pylint: disable=no-self-use
+        if request.node.get_closest_marker('ext_suite_1'):
             pytest.skip('Skipping extended suite')
 ```
 

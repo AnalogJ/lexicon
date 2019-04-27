@@ -1,0 +1,485 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr
+  response:
+    body:
+      string: !!python/unicode '{"zone_uuid": "4fd93cb0-5c6c-11e8-b297-00163ee24379",
+        "domain_keys_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/keys",
+        "fqdn": "t18s.fr", "zone_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379",
+        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records",
+        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records",
+        "domain_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr"}'
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '499'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"code": 404, "message": "Can''t find the DNS record
+        _acme-challenge.deleterecordinset/TXT in the zone", "object": "dns-record",
+        "cause": "Not Found"}'
+    headers:
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '149'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:44 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: !!python/unicode '{"rrset_values": ["challengetoken1"], "rrset_ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '56'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"message": "DNS Record Created"}'
+    headers:
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '33'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      location:
+      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/_acme-challenge.deleterecordinset/TXT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"rrset_type": "TXT", "rrset_ttl": 3600, "rrset_name":
+        "_acme-challenge.deleterecordinset", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken1\""]}'
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '244'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:45 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"rrset_values": ["challengetoken1", "challengetoken2"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '56'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PUT
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"message": "DNS Record Created"}'
+    headers:
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '33'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:46 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:46 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:46 GMT
+      location:
+      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/_acme-challenge.deleterecordinset/TXT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"rrset_type": "TXT", "rrset_ttl": 10800, "rrset_name":
+        "_acme-challenge.deleterecordinset", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken1\"", "\"challengetoken2\""]}'
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '268'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"rrset_values": ["challengetoken2"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '37'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PUT
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"message": "DNS Record Created"}'
+    headers:
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '33'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:47 GMT
+      location:
+      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/_acme-challenge.deleterecordinset/TXT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: !!python/unicode '{"rrset_type": "TXT", "rrset_ttl": 10800, "rrset_name":
+        "_acme-challenge.deleterecordinset", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT",
+        "rrset_values": ["\"challengetoken2\""]}'
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '245'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:48 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:48 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:48 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000;
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,34 +1,43 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
-
 import logging
 import re
 
 from lexicon.providers.base import Provider as BaseProvider
 
+
 try:
-    import boto3 #optional dep
-    import botocore #optional dep
+    import boto3  # optional dep
+    import botocore  # optional dep
 except ImportError:
     pass
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = [re.compile(r'^awsdns-\d+\.\w+$')]
 
-def ProviderParser(subparser):
+
+def provider_parser(subparser):
     """Specify arguments for AWS Route 53 Lexicon Provider."""
-    subparser.add_argument("--auth-access-key", help="specify ACCESS_KEY for authentication")
-    subparser.add_argument("--auth-access-secret", help="specify ACCESS_SECRET for authentication")
-    subparser.add_argument("--private-zone", help="indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones")
+    subparser.add_argument("--auth-access-key",
+                           help="specify ACCESS_KEY for authentication")
+    subparser.add_argument("--auth-access-secret",
+                           help="specify ACCESS_SECRET for authentication")
+    subparser.add_argument(
+        "--private-zone",
+        help=("indicates what kind of hosted zone to use. If true, use "
+              "only private zones. If false, use only public zones"))
 
-    #TODO: these are only required for testing, we should figure out a way to remove them & update the integration tests
+    # TODO: these are only required for testing, we should figure out
+    # a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
-    subparser.add_argument("--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
-    subparser.add_argument("--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
+    subparser.add_argument(
+        "--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
+    subparser.add_argument(
+        "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
 
 
-class RecordSetPaginator(object):
+class RecordSetPaginator(object):  # pylint: disable=useless-object-inheritance
     """Paginate through complete list of record sets."""
 
     def __init__(self, r53_client, hosted_zone_id, max_items=None):
@@ -80,33 +89,37 @@ class RecordSetPaginator(object):
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
-    def __init__(self, options, engine_overrides=None):
+    def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
-        super(Provider, self).__init__(options, engine_overrides)
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.private_zone = options.get('private_zone', None)
+        self.private_zone = self._get_provider_option('private_zone')
         # instantiate the client
         self.r53_client = boto3.client(
             'route53',
-            aws_access_key_id=self.options.get('auth_access_key', self.options.get('auth_username')),
-            aws_secret_access_key=self.options.get('auth_access_secret', self.options.get('auth_token'))
+            aws_access_key_id=self._get_provider_option(
+                'auth_access_key') or self._get_provider_option('auth_username'),
+            aws_secret_access_key=self._get_provider_option(
+                'auth_access_secret') or self._get_provider_option('auth_token')
         )
 
-    def filter_zone(self, hz):
+    def filter_zone(self, data):
+        """Check if a zone is private"""
         if self.private_zone is not None:
-            if hz['Config']['PrivateZone'] != self.str2bool(self.private_zone):
+            if data['Config']['PrivateZone'] != self.str2bool(self.private_zone):
                 return False
 
-        if hz['Name'] != '{0}.'.format(self.options['domain']):
+        if data['Name'] != '{0}.'.format(self.domain):
             return False
 
         return True
 
     @staticmethod
     def str2bool(input_string):
+        """Convert a string to boolean"""
         return input_string.lower() in ('true', 'yes')
 
-    def authenticate(self):
+    def _authenticate(self):
         """Determine the hosted zone id for the domain."""
         try:
             hosted_zones = self.r53_client.list_hosted_zones_by_name()[
@@ -152,10 +165,10 @@ class Provider(BaseProvider):
                 }
             )
             return True
-        except botocore.exceptions.ClientError as e:
-            logger.debug(e.message, exc_info=True)
+        except botocore.exceptions.ClientError as error:
+            LOGGER.debug(str(error), exc_info=True)
 
-    def create_record(self, rtype, name, content):
+    def _create_record(self, rtype, name, content):
         """Create a record in the hosted zone."""
         existing_records = self.list_records(rtype,name)
         if existing_records:
@@ -166,11 +179,11 @@ class Provider(BaseProvider):
         else:
             return self._change_record_sets('CREATE', rtype, name, content)
 
-    def update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
         """Update a record from the hosted zone."""
         return self._change_record_sets('UPSERT', rtype, name, content)
 
-    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete a record from the hosted zone."""
         existing_records = self.list_records(rtype,name,content)
         if existing_records:
@@ -188,15 +201,15 @@ class Provider(BaseProvider):
             # you should probably not delete non existing record, but for sure
             return self._change_record_sets('DELETE', rtype, name, content)
 
-    def _format_content(self, type, content):
-        return content[1:-1] if type in ['TXT', 'SPF'] else content
+    def _format_content(self, rtype, content):  # pylint: disable=no-self-use
+        return content[1:-1] if rtype in ['TXT', 'SPF'] else content
 
-    def list_records(self, type=None, name=None, content=None):
+    def _list_records(self, rtype=None, name=None, content=None):
         """List all records for the hosted zone."""
         records = []
         paginator = RecordSetPaginator(self.r53_client, self.domain_id)
         for record in paginator.all_record_sets():
-            if type is not None and record['Type'] != type:
+            if rtype is not None and record['Type'] != rtype:
                 continue
             if name is not None and record['Name'] != self._fqdn_name(name):
                 continue
@@ -207,12 +220,16 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
-            logger.debug('record: %s', record)
+            LOGGER.debug('record: %s', record)
             records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
             })
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # Helper _request is not used in Route53 provider
+        pass

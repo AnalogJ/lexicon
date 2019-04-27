@@ -1,17 +1,23 @@
 version: 2
 
+dependencies: &install_dependencies
+  command: |
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
+    pip install --upgrade tox
+  name: Install required runtime dependencies
+  
 shared: &shared
   steps:
     - run:
-        name: Install required runtime dependencies
-        command: |
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
-          pip install --upgrade tox
+        <<: *install_dependencies
     - checkout
     - run:
         name: Execute tests through tox
         command: tox
+  environment:
+    - TOXENV=light,standard
+    - PYTEST_ADDOPTS=--numprocesses 8
 
 jobs:
   "python-2.7":
@@ -30,10 +36,18 @@ jobs:
     <<: *shared
     docker:
       - image: python:3.6-slim
-  "python-3.7":
+  "python-3.7-cover":
     <<: *shared
     docker:
       - image: python:3.7-slim
+    environment:
+      - TOXENV=light,cover
+  "lint":
+    <<: *shared
+    docker:
+      - image: python:3.7-slim
+    environment:
+      - TOXENV=lint
 
 workflows:
   version: 2
@@ -43,4 +57,5 @@ workflows:
       - "python-3.4"
       - "python-3.5"
       - "python-3.6"
-      - "python-3.7"
+      - "python-3.7-cover"
+      - "lint"

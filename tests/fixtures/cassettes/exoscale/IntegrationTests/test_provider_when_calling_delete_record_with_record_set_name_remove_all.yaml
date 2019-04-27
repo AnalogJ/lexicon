@@ -1,0 +1,202 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com
+  response:
+    body: {string: '{"domain":{"name":"lexicontest.com","expires_on":null,"service_count":0,"state":"hosted","unicode_name":"lexicontest.com","record_count":0,"updated_at":"2019-02-01T07:29:38Z","token":"9d30931ed5c454244b50855180e8ca75","id":440987,"whois_protected":false,"created_at":"2019-02-01T07:29:38Z","auto_renew":false}}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:28 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [0d8c044b409d20f27833a3b2f73a8217]
+      content-length: ['310']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:28 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [ed5830bf3ee16f81ce7c98014e943d45]
+      content-length: ['2']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"record": {"record_type": "TXT", "name": "_acme-challenge.deleterecordset",
+      "content": "challengetoken1", "ttl": 3600}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['120']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
+  response:
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.deleterecordset","updated_at":"2019-02-01T07:32:29Z","ttl":3600,"id":15204376,"domain_id":440987,"created_at":"2019-02-01T07:32:29Z","prio":null}}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:29 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [710060dc9c7c465988b2e156fb8c52b1]
+      content-length: ['229']
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.deleterecordset","updated_at":"2019-02-01T07:32:29Z","ttl":3600,"id":15204376,"domain_id":440987,"created_at":"2019-02-01T07:32:29Z","prio":null}}]'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:30 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [2bf9b61f5c3841fa7339e3ddd68dee62]
+      content-length: ['231']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"record": {"record_type": "TXT", "name": "_acme-challenge.deleterecordset",
+      "content": "challengetoken2", "ttl": 3600}}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['120']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records
+  response:
+    body: {string: '{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.deleterecordset","updated_at":"2019-02-01T07:32:30Z","ttl":3600,"id":15204377,"domain_id":440987,"created_at":"2019-02-01T07:32:30Z","prio":null}}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:31 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [483b31d7de2e536682ecdfe6aea05969]
+      content-length: ['229']
+    status: {code: 201, message: Created}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[{"record":{"record_type":"TXT","content":"challengetoken1","name":"_acme-challenge.deleterecordset","updated_at":"2019-02-01T07:32:29Z","ttl":3600,"id":15204376,"domain_id":440987,"created_at":"2019-02-01T07:32:29Z","prio":null}},{"record":{"record_type":"TXT","content":"challengetoken2","name":"_acme-challenge.deleterecordset","updated_at":"2019-02-01T07:32:30Z","ttl":3600,"id":15204377,"domain_id":440987,"created_at":"2019-02-01T07:32:30Z","prio":null}}]'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:31 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [d2bc7850498ef1bbabd2a045d0f5eee5]
+      content-length: ['461']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: DELETE
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records/15204376
+  response:
+    body: {string: '{}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:32 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [05478c7a3fd9234b02431d3ff81af688]
+      content-length: ['2']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: DELETE
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records/15204377
+  response:
+    body: {string: '{}'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:33 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [3f8005b0f035fc9686ffff96cacfdc55]
+      content-length: ['2']
+    status: {code: 200, message: OK}
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/lexicontest.com/records?record_type=TXT&name=_acme-challenge.deleterecordset
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [close]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:32:34 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [8e4f266ac276e1a4d89904fcb826bfdb]
+      content-length: ['2']
+    status: {code: 200, message: OK}
+version: 1

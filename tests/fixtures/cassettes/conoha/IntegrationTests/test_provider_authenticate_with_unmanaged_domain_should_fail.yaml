@@ -1,0 +1,23 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.20.0]
+    method: GET
+    uri: https://dns-service.tyo1.conoha.io/v1/domains?name=thisisadomainidonotown.com.
+  response:
+    body: {string: "{\n  \"domains\": []\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['19']
+      Content-Type: [application/json]
+      Date: ['Mon, 29 Oct 2018 06:36:05 GMT']
+      Server: [openresty/1.7.10.1]
+      X-Openstack-Request-Id: [req-44ed4d8a-e5cb-49fe-9cf8-86e36d8a09b5]
+    status: {code: 200, message: OK}
+version: 1

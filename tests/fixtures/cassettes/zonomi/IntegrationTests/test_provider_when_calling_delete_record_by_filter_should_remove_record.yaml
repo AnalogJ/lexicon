@@ -1,0 +1,120 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=%2A%2A.pcekper.com.ar&type=SOA
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"QUERY\"\n host=\"pcekper.com.ar\"\n\
+        \ type=\"SOA\">\n<record \n name=\"pcekper.com.ar\"\n type=\"SOA\"\n content=\"\
+        ns1.zonomi.com. soacontact.zonomi.com. 15 10800 3600 604800 3600\"\n ttl=\"\
+        86400 seconds\"\n prio=\"0\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['477']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:19 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=299951985; Expires=Wed, 28-Nov-2018 22:03:19 GMT; Path=/app;
+          HttpOnly', JSESSIONID=BE15578FD89AAA9B3DB10DE5F17466B0; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=SET&name=delete.testfilt.pcekper.com.ar&ttl=3600&type=TXT&value=challengetoken
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"1\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"SET\"\n host=\"delete.testfilt.pcekper.com.ar\"\
+        \n type=\"TXT\"\n value=\"challengetoken\"\n ttl=\"3600\">\n<record \n name=\"\
+        delete.testfilt.pcekper.com.ar\"\n type=\"TXT\"\n content=\"challengetoken\"\
+        \n ttl=\"3600 seconds\"\n prio=\"0\"\n added=\"\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['502']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:20 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=499951985; Expires=Wed, 28-Nov-2018 22:03:20 GMT; Path=/app;
+          HttpOnly', JSESSIONID=5DACB5BC320CFBF4585962426C999E29; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=DELETE&name=delete.testfilt.pcekper.com.ar&type=TXT&value=challengetoken
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        1\"/>\n<actions>\n\n<action \n action=\"DELETE\"\n host=\"delete.testfilt.pcekper.com.ar\"\
+        \n type=\"TXT\"\n value=\"challengetoken\">\n<record \n name=\"delete.testfilt.pcekper.com.ar\"\
+        \n type=\"TXT\"\n content=\"challengetoken\"\n ttl=\"3600 seconds\"\n prio=\"\
+        0\"\n deleted=\"\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['495']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:21 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=100061985; Expires=Wed, 28-Nov-2018 22:03:21 GMT; Path=/app;
+          HttpOnly', JSESSIONID=34CF9D7660D842A631434D8673BB3CA0; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=delete.testfilt.pcekper.com.ar&type=TXT
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"QUERY\"\n host=\"delete.testfilt.pcekper.com.ar\"\
+        \n type=\"TXT\"></action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['339']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:22 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=300061985; Expires=Wed, 28-Nov-2018 22:03:22 GMT; Path=/app;
+          HttpOnly', JSESSIONID=6C0D687DA69588E7F5A1A2FB0FABB8EE; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

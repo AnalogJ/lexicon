@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=QUERY&name=%2A%2A.pcekper.com.ar&type=SOA
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"0\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"QUERY\"\n host=\"pcekper.com.ar\"\n\
+        \ type=\"SOA\">\n<record \n name=\"pcekper.com.ar\"\n type=\"SOA\"\n content=\"\
+        ns1.zonomi.com. soacontact.zonomi.com. 7 10800 3600 604800 3600\"\n ttl=\"\
+        86400 seconds\"\n prio=\"0\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['476']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:10 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=959951985; Expires=Wed, 28-Nov-2018 22:03:10 GMT; Path=/app;
+          HttpOnly', JSESSIONID=A057DC5765F9AB1238A33FB5F6FAFAF8; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://zonomi.com/app/dns/dyndns.jsp?action=SET&name=docs.pcekper.com.ar&ttl=3600&type=CNAME&value=docs.example.com
+  response:
+    body: {string: !!python/unicode "<?xml version =\"1.0\"  ?><!DOCTYPE html [<!ENTITY\
+        \ nbsp '&#160;'><!ENTITY trade '&#8482;'><!ENTITY copy '&#169;'>]><dnsapi_result><is_ok>OK:</is_ok>\n\
+        <result_counts \n added=\"1\"\n changed=\"0\"\n unchanged=\"0\"\n deleted=\"\
+        0\"/>\n<actions>\n\n<action \n action=\"SET\"\n host=\"docs.pcekper.com.ar\"\
+        \n type=\"CNAME\"\n value=\"docs.example.com\"\n ttl=\"3600\">\n<record \n\
+        \ name=\"docs.pcekper.com.ar\"\n type=\"CNAME\"\n content=\"docs.example.com\"\
+        \n ttl=\"3600 seconds\"\n prio=\"0\"\n added=\"\"/>\t</action></actions></dnsapi_result>"}
+    headers:
+      cache-control: [no-store]
+      connection: [Keep-Alive]
+      content-length: ['488']
+      content-type: [text/xml;charset=UTF-8]
+      date: ['Tue, 28 Nov 2017 22:03:12 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache/2.4.25 (Debian)]
+      set-cookie: ['uv=269951985; Expires=Wed, 28-Nov-2018 22:03:12 GMT; Path=/app;
+          HttpOnly', JSESSIONID=BDB7EEE3444C90D074A71954194AE297; Path=/app/; Secure;
+          HttpOnly]
+      vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

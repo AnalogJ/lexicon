@@ -1,0 +1,25 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: https://api.exoscale.com/dns/v1/domains/thisisadomainidonotown.com
+  response:
+    body: {string: '{"message":"Domain `thisisadomainidonotown.com` not found"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [close]
+      Content-Type: [application/json;charset=utf-8]
+      Date: ['Fri, 01 Feb 2019 07:31:54 GMT']
+      Strict-Transport-Security: [max-age=15724800; includeSubDomains]
+      Transfer-Encoding: [chunked]
+      X-Request-Id: [011c5772ffb22bbdd109ad4582a34991]
+      content-length: ['59']
+    status: {code: 404, message: Not Found}
+version: 1

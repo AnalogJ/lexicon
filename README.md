@@ -10,6 +10,7 @@
 Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 [![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
+[![Build status](https://ci.appveyor.com/api/projects/status/7m9kvestl4l1re9d/branch/master?svg=true)](https://ci.appveyor.com/project/AnalogJ/lexicon/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
@@ -34,6 +35,7 @@ The current supported providers are:
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
+- ConoHa ([docs](https://www.conoha.jp/docs/))
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - DNSimple ([docs](https://developer.dnsimple.com/))
@@ -41,20 +43,27 @@ The current supported providers are:
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
-- ExoScale
+- Easyname ([docs](https://www.easyname.com/en))
+- ExoScale ([docs](https://community.exoscale.com/documentation/dns/api/))
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
-- Gehirn
+- Gehirn ([docs](https://support.gehirn.jp/apidocs/gis/dns/index.html))
 - Glesys ([docs](https://github.com/glesys/API/wiki/))
 - GoDaddy ([docs](https://developer.godaddy.com/getstarted#access))
 - Google Cloud DNS ([docs](https://cloud.google.com/dns/api/v1/))
-- Hurricane Electric DNS
+- Hover ([docs](https://hoverapi.docs.apiary.io/))
+- Hurricane Electric DNS ([docs](https://dns.he.net/))
+- Hetzner ([docs](https://wiki.hetzner.de/index.php/DNS_Zonendatei/en))
+- Infoblox ([docs](https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal))
+- Internet.bs ([docs](https://internetbs.net/ResellerRegistrarDomainNameAPI))
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
-- Linode v4 ([docs](https://developers.linode.com/v4))
+- Linode v4 ([docs](https://developers.linode.com/api/docs/v4#tag/Domains))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- Netcup ([docs](https://ccp.netcup.net/run/webservice/servers/endpoint.php))
+- NFSN (NearlyFreeSpeech)
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
 - Online
@@ -71,6 +80,7 @@ The current supported providers are:
 - Vultr ([docs](https://www.vultr.com/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
+- Zilore ([docs](https://zilore.com/en/help/api))
 - Zonomi ([docs](http://zonomi.com/app/dns/dyndns.jsp))
 
 Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
@@ -107,10 +117,13 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - WorldWideDns ([docs](https://www.worldwidedns.net/dns_api_protocol.asp)) :dollar: <sub>requires paid account</sub>
 - Zerigo ([docs](https://www.zerigo.com/managed-dns/rest-api)) :dollar: <sub>requires paid account</sub>
 - Zoneedit ([docs](http://forum.zoneedit.com/index.php?threads/dns-update-api.419/))
-- Zilore ([docs](https://zilore.com))
 - __Any others I missed__
 
 ## Setup
+
+**Warning: it is strongly advised with pip to install Lexicon in a Python virtual environment, in order to avoid interference
+between Python modules preinstalled on your system as OS packages and modules installed by pip (see https://docs.python-guide.org/dev/virtualenvs/).**
+
 To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
@@ -118,6 +131,10 @@ To use lexicon as a CLI application, do the following:
 Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L86-L97) separately:
 
     pip install dns-lexicon[route53]
+    
+To install lexicon with the additional dependencies of every provider, do the following:
+
+    pip install dns-lexicon[full]
 
 You can also install the latest version from the repository directly.
 
@@ -126,6 +143,8 @@ You can also install the latest version from the repository directly.
 and with Route 53 provider dependencies:
 
     pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
+    
+*As an alternative you can also install Lexicon using the OS packages available for major Linux distributions (see `lexicon` or `dns-lexicon` package in https://pkgs.org/download/lexicon).*
 
 ## Usage
 
@@ -248,3 +267,4 @@ following the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/C
 ## References
 
     tox
+

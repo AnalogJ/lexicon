@@ -1,65 +1,72 @@
+"""Module provider for EasyDNS"""
 from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['easydns.net']
 
-def ProviderParser(subparser):
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+
+def provider_parser(subparser):
+    """Configure provider parser for EasyDNS"""
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
 
 
 class Provider(BaseProvider):
-
-    def __init__(self, options, engine_overrides=None):
-        super(Provider, self).__init__(options, engine_overrides)
+    """Provider class for EasyDNS"""
+    def __init__(self, config):
+        super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = self.engine_overrides.get('api_endpoint', 'https://rest.easydns.net')
+        self.api_endpoint = self._get_provider_option(
+            'api_endpoint') or 'https://rest.easydns.net'
 
-    def authenticate(self):
+    def _authenticate(self):
 
-        payload = self._get('/domain/{0}'.format(self.options['domain']))
+        payload = self._get('/domain/{0}'.format(self.domain))
 
         if payload['data']['exists'] == 'N':
             raise Exception('No domain found')
 
         self.domain_id = payload['data']['id']
 
-
     # Create record. If record already exists with the same content, do nothing'
-    def create_record(self, type, name, content):
+
+    def _create_record(self, rtype, name, content):
         record = {
-            'type': type,
+            'type': rtype,
             'domain': self.domain_id,
             'host': self._relative_name(name),
-            'ttl': self.options['ttl'],
+            'ttl': self._get_lexicon_option('ttl'),
             'prio': 0,
             'rdata': content
         }
-        payload = {}
         try:
-            payload = self._put('/zones/records/add/{0}/{1}'.format(self.domain_id, type), record)
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 400:
-                payload = {}
-
-                # http 400 is ok here, because the record probably already exists
-        logger.debug('create_record: %s', True)
+            self._put(
+                '/zones/records/add/{0}/{1}'.format(self.domain_id, rtype), record)
+        except requests.exceptions.HTTPError as error:
+            # FIXME: adferrand 06/01/2019: Broken provider needs fixes.
+            # In fact, this except block will silently hide every HTTP error, as an except
+            # block without raise statement will implicitly hide the exception.
+            # In reality, tests of Easy DNS are failing...
+            # So this provider needs to be corrected.
+            if error.response.status_code == 400:
+                pass
+            # http 400 is ok here, because the record probably already exists
+        LOGGER.debug('create_record: %s', True)
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, type=None, name=None, content=None):
-        filter = {}
-
+    def _list_records(self, rtype=None, name=None, content=None):
         payload = self._get('/zones/records/all/{0}'.format(self.domain_id))
         records = []
         for record in payload['data']:
@@ -72,70 +79,74 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        if type:
-            records = [record for record in records if record['type'] == type]
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
         if name:
-            records = [record for record in records if record['name'] == self._full_name(name)]
+            records = [record for record in records if record['name']
+                       == self._full_name(name)]
         if content:
-            records = [record for record in records if record['content'] == content]
+            records = [
+                record for record in records if record['content'] == content]
 
-        logger.debug('list_records: %s', records)
+        LOGGER.debug('list_records: %s', records)
         return records
 
     # Create or update a record.
-    def update_record(self, identifier, type=None, name=None, content=None):
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         data = {
-            'ttl': self.options['ttl']
+            'ttl': self._get_lexicon_option('ttl')
         }
-        if type:
-            data['type'] = type
+        if rtype:
+            data['type'] = rtype
         if name:
             data['host'] = self._relative_name(name)
         if content:
             data['rdata'] = content
 
-        payload = self._post('/zones/records/{0}'.format(identifier), data)
+        self._post('/zones/records/{0}'.format(identifier), data)
 
-        logger.debug('update_record: %s', True)
+        LOGGER.debug('update_record: %s', True)
         return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, type=None, name=None, content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self.list_records(type, name, content)
+            records = self._list_records(rtype, name, content)
             delete_record_id = [record['id'] for record in records]
         else:
             delete_record_id.append(identifier)
-        
-        logger.debug('delete_records: %s', delete_record_id)
+
+        LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            payload = self._delete('/zones/records/{0}/{1}'.format(self.domain_id, record_id))
+            self._delete(
+                '/zones/records/{0}/{1}'.format(self.domain_id, record_id))
 
         # is always True at this point, if a non 200 response is returned an error is raised.
-        logger.debug('delete_record: %s', True)
+        LOGGER.debug('delete_record: %s', True)
         return True
 
-
     # Helpers
-    def _request(self, action='GET',  url='/', data=None, query_params=None):
+
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         query_params['format'] = 'json'
-        query_params['_user'] = self.options['auth_username']
-        query_params['_key'] = self.options['auth_token']
+        query_params['_user'] = self._get_provider_option('auth_username')
+        query_params['_key'] = self._get_provider_option('auth_token')
         default_headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
 
-        r = requests.request(action, self.api_endpoint + url, params=query_params,
-                             data=json.dumps(data),
-                             headers=default_headers)
-        r.raise_for_status()  # if the request fails for any reason, throw an error.
-        return r.json()
+        response = requests.request(action, self.api_endpoint + url, params=query_params,
+                                    data=json.dumps(data),
+                                    headers=default_headers)
+        # if the request fails for any reason, throw an error.
+        response.raise_for_status()
+        return response.json()

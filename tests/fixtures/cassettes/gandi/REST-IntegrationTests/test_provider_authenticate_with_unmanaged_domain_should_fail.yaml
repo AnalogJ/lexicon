@@ -1,0 +1,53 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://dns.api.gandi.net/api/v5/domains/thisisadomainidonotown.com
+  response:
+    body:
+      string: !!python/unicode '{"code": 404, "message": "The resource could not be
+        found.", "object": "HTTPNotFound", "cause": "Not Found"}'
+    headers:
+      age:
+      - '0'
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '108'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      pragma:
+      - no-cache
+      server:
+      - nginx
+      via:
+      - 1.1 varnish-v4, 1.1 varnish-v4
+      x-cache:
+      - MISS
+      x-cache-hits:
+      - '0'
+    status:
+      code: 404
+      message: Not Found
+version: 1
