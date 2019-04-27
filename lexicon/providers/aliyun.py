@@ -13,6 +13,8 @@ from aliyunsdkalidns.request.v20150109.DescribeDomainRecordsRequest import Descr
 from aliyunsdkalidns.request.v20150109.AddDomainRecordRequest import AddDomainRecordRequest
 from aliyunsdkalidns.request.v20150109.DeleteDomainRecordRequest import DeleteDomainRecordRequest
 from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
+from aliyunsdkalidns.request.v20150109.DescribeDomainRecordInfoRequest import DescribeDomainRecordInfoRequest
+from aliyunsdkalidns.request.v20150109.DescribeDomainInfoRequest import DescribeDomainInfoRequest
 
 LOGGER = logging.getLogger(__name__)
 
@@ -44,6 +46,25 @@ class Provider(BaseProvider):
         if self.client is None:
             raise Exception('aliyun authentication failed')
 
+        self.domain_id = self.__fetch_domain_id();       
+
+        return self
+
+    def __fetch_domain_id(self):
+        request = DescribeDomainInfoRequest()
+        request.set_accept_format('json')
+        request.set_DomainName(self.domain)
+
+        response = self.client.do_action_with_exception(request)
+        response = json.loads(response)
+
+        if 'DomainId' not in response:
+            raise Exception(response['Code'])
+
+        return response['DomainId']
+
+
+
     def _create_record(self, rtype, name, content):
         if not self._list_records(rtype, name, content):
             request = AddDomainRecordRequest()
@@ -51,8 +72,9 @@ class Provider(BaseProvider):
 
             request.set_Value(content)
             request.set_Type(rtype)
-            request.set_RR(name)
+            request.set_RR(self._relative_name(name))
             request.set_DomainName(self.domain)
+            request.set_TTL(self._get_lexicon_option('ttl'))
 
             response = self.client.do_action_with_exception(request)
 
@@ -71,7 +93,7 @@ class Provider(BaseProvider):
             request.set_TypeKeyWord(rtype)
 
         if name:
-            request.set_RRKeyWord(name)
+            request.set_RRKeyWord(self._relative_name(name))
         
         if content:
             request.set_ValueKeyWord(content)
@@ -93,11 +115,36 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', processed_records)
         return processed_records
 
+    def __get_record(self, identifier):
+        request = DescribeDomainRecordInfoRequest()
+        request.set_accept_format('json')
+        request.set_RecordId(identifier)
+
+        response = self.client.do_action_with_exception(request)
+        response = json.loads(response)
+
+        return {
+            'id': response['RecordId'],
+            'type': response['Type'],
+            'name': self._full_name(response['RR']),
+            'ttl': response['TTL'],
+            'content': response['Value']
+        }
+
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+        resources = self._list_records(rtype, name, None)
+
+        for record in resources:
+            if (rtype == record['type']) and (self._relative_name(name) == self._relative_name(record['name'])) and (content == record['content']):
+                return True
+
         if not identifier:
-            resources = self._list_records(rtype, name, None)
-            identifier = resources[0]['id'] if resources else None
+            record = resources[0] if resources and len(resources) > 0 else None
+            identifier = record['id'] if record else None
+
+        if not identifier:
+            self._create_record(rtype, name, content)
 
         LOGGER.debug('update_record: %s', identifier)
 
@@ -110,10 +157,12 @@ class Provider(BaseProvider):
             request.set_Type(rtype)
 
         if name:
-            request.set_RR(name)
+            request.set_RR(self._relative_name(name))
 
         if content:
             request.set_Value(content)
+
+        request.set_TTL(self._get_lexicon_option('ttl'))
 
         response = self.client.do_action_with_exception(request)
 
