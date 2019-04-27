@@ -172,11 +172,11 @@ class Provider(BaseProvider):
         existing_records = self.list_records(rtype, name)
         if existing_records:
             if isinstance(existing_records[0]['content'], list):
-                return self._change_record_sets('UPSERT', rtype, name, existing_records[0]['content']+[content])
-            else:
-                return self._change_record_sets('UPSERT', rtype, name, [existing_records[0]['content']] + [content])
-        else:
-            return self._change_record_sets('CREATE', rtype, name, content)
+                return self._change_record_sets(
+                    'UPSERT', rtype, name, existing_records[0]['content']+[content])
+            return self._change_record_sets(
+                'UPSERT', rtype, name, [existing_records[0]['content']] + [content])
+        return self._change_record_sets('CREATE', rtype, name, content)
 
     def _update_record(self, identifier=None, rtype=None, name=None, content=None):
         """Update a record from the hosted zone."""
@@ -184,15 +184,18 @@ class Provider(BaseProvider):
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete a record from the hosted zone."""
-        existing_records = self.list_records(rtype,name,content)
+        existing_records = self.list_records(rtype, name, content)
         if existing_records:
             if len(existing_records) > 1:
-                raise Exception('The existing_records list has more than 1 element, this is not spported, so stopping to prevent zone damage')
+                raise Exception(
+                    'The existing_records list has more than 1 element, this is not suported,\
+                    so stopping to prevent zone damage')
             if isinstance(existing_records[0]['content'], list):
                 # multiple values in record, just remove one value and only if it actually exist
                 if content in existing_records[0]['content']:
                     existing_records[0]['content'].remove(content)
-                return self._change_record_sets('UPSERT', rtype, name, existing_records[0]['content'])
+                return self._change_record_sets('UPSERT', rtype, name,
+                                                existing_records[0]['content'])
             else:
                 # if only one record exist, remove whole record
                 return self._change_record_sets('DELETE', rtype, name, content)
