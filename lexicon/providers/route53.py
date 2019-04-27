@@ -172,8 +172,10 @@ class Provider(BaseProvider):
 
     def delete_record(self, identifier=None, type=None, name=None, content=None):
         """Delete a record from the hosted zone."""
-        existing_records = self.list_records(type,name)
+        existing_records = self.list_records(type,name,content)
         if existing_records:
+            if (len(existing_records)>1):
+                raise Exception('The existing_records list has more than 1 element, this is not spported, so stopping to prevent zone damage')
             if (isinstance(existing_records[0]['content'],list)):
                 # multiple values in record, just remove one value
                 existing_records[0]['content'].remove(content)
