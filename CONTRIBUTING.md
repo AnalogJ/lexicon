@@ -143,7 +143,7 @@ with `LEXICON_FOO_`.
 For instance, if you had a `--auth-token` CLI argument, you can populate it
 using the `LEXICON_FOO_AUTH_TOKEN` environmental variable.
 
-Notice that can pass non-secrects arguments programmatically using `_test_parameters_override()` method. See
+Notice also that you should pass any required non-secrets arguments programmatically using the `_test_parameters_override()` method. See
 https://github.com/AnalogJ/lexicon/blob/5ee4d16f9d6206e212c2197f2e53a1db248f5eb9/lexicon/tests/providers/test_powerdns.py#L19
 for an example.
 
