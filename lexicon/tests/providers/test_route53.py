@@ -1,10 +1,13 @@
 """Test for route53 implementation of the interface."""
+# pylint: disable=missing-docstring
 from unittest import TestCase
 from contextlib import contextmanager
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import IntegrationTests, PROVIDER_VCR, EngineOverrideConfigSource
+from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import PROVIDER_VCR
+from lexicon.tests.providers.integration_tests import EngineOverrideConfigSource
 
 
 @pytest.mark.skip('Cassettes needs to be regenerated')
