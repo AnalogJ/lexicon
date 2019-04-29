@@ -9,3 +9,6 @@ class AliyunProviderTests(TestCase, IntegrationTests):
     """Integration tests for Foo provider"""
     provider_name = 'aliyun'
     domain = 'mean.space'
+
+    def _filter_query_params(self):
+        return ['AccessKeyId']
