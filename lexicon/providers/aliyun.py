@@ -6,20 +6,18 @@ import logging
 import requests
 from lexicon.providers.base import Provider as BaseProvider
 
-from aliyunsdkcore.client import AcsClient
-from aliyunsdkcore.acs_exception.exceptions import ClientException
-from aliyunsdkcore.acs_exception.exceptions import ServerException
-from aliyunsdkalidns.request.v20150109.DescribeDomainRecordsRequest import DescribeDomainRecordsRequest
-from aliyunsdkalidns.request.v20150109.AddDomainRecordRequest import AddDomainRecordRequest
-from aliyunsdkalidns.request.v20150109.DeleteDomainRecordRequest import DeleteDomainRecordRequest
-from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
-from aliyunsdkalidns.request.v20150109.DescribeDomainRecordInfoRequest import DescribeDomainRecordInfoRequest
-from aliyunsdkalidns.request.v20150109.DescribeDomainInfoRequest import DescribeDomainInfoRequest
+import time
+import datetime
+import random
+import urllib
+from hashlib import sha1
+import hmac
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['hichina.com']
 
+ALIYUN_DNS_API_ENDPOINT = 'https://alidns.aliyuncs.com'
 ALIYUN_DNS_DEFAULT_REGION = 'cn-hangzhou'
 
 def provider_parser(subparser):
@@ -37,46 +35,24 @@ class Provider(BaseProvider):
         self.client = None
 
     def _authenticate(self):
+        response = self._request('DescribeDomainInfo')
 
-        access_key_id = self._get_provider_option('access_key_id')
-        access_secret = self._get_provider_option('access_secret')
+        if 'DomainId' not in response:
+            raise Exception(response)
 
-        self.client = AcsClient(access_key_id, access_secret, ALIYUN_DNS_DEFAULT_REGION)
-
-        if self.client is None:
-            raise Exception('aliyun authentication failed')
-
-        self.domain_id = self.__fetch_domain_id();       
+        self.domain_id = response['DomainId']
 
         return self
 
-    def __fetch_domain_id(self):
-        request = DescribeDomainInfoRequest()
-        request.set_accept_format('json')
-        request.set_DomainName(self.domain)
-
-        response = self.client.do_action_with_exception(request)
-        response = json.loads(response)
-
-        if 'DomainId' not in response:
-            raise Exception(response['Code'])
-
-        return response['DomainId']
-
-
-
     def _create_record(self, rtype, name, content):
         if not self._list_records(rtype, name, content):
-            request = AddDomainRecordRequest()
-            request.set_accept_format('json')
-
-            request.set_Value(content)
-            request.set_Type(rtype)
-            request.set_RR(self._relative_name(name))
-            request.set_DomainName(self.domain)
-            request.set_TTL(self._get_lexicon_option('ttl'))
-
-            response = self.client.do_action_with_exception(request)
+            query_params = {
+                'Value': content,
+                'Type': rtype,
+                'RR': self._relative_name(name),
+                'TTL': self._get_lexicon_option('ttl')
+            }
+            self._request('AddDomainRecord', query_params=query_params)
 
         return True
 
@@ -84,23 +60,19 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        request = DescribeDomainRecordsRequest()
-        request.set_accept_format('json')
-
-        request.set_DomainName(self.domain)
+        query_params = {}
 
         if rtype:
-            request.set_TypeKeyWord(rtype)
+            query_params['TypeKeyWord'] = rtype
 
         if name:
-            request.set_RRKeyWord(self._relative_name(name))
+            query_params['RRKeyWord'] = self._relative_name(name)
         
         if content:
-            request.set_ValueKeyWord(content)
+            query_params['ValueKeyWord'] = content
 
-        response = self.client.do_action_with_exception(request)
+        response = self._request('DescribeDomainRecords', query_params=query_params)
 
-        response = json.loads(response)
         resource_list = response['DomainRecords']['Record']
 
         processed_records = []
@@ -116,12 +88,7 @@ class Provider(BaseProvider):
         return processed_records
 
     def __get_record(self, identifier):
-        request = DescribeDomainRecordInfoRequest()
-        request.set_accept_format('json')
-        request.set_RecordId(identifier)
-
-        response = self.client.do_action_with_exception(request)
-        response = json.loads(response)
+        response = self._request('DescribeDomainRecordInfo', query_params={'RecordId': identifier})
 
         return {
             'id': response['RecordId'],
@@ -148,23 +115,19 @@ class Provider(BaseProvider):
 
         LOGGER.debug('update_record: %s', identifier)
 
-        request = UpdateDomainRecordRequest()
-        request.set_accept_format('json')
-
-        request.set_RecordId(identifier)
+        query_params = {'RecordId': identifier}
 
         if rtype:
-            request.set_Type(rtype)
+            query_params['Type'] = rtype
 
         if name:
-            request.set_RR(self._relative_name(name))
+            query_params['RR'] = self._relative_name(name)
 
         if content:
-            request.set_Value(content)
+            query_params['Value'] = content
 
-        request.set_TTL(self._get_lexicon_option('ttl'))
-
-        response = self.client.do_action_with_exception(request)
+        query_params['TTL'] = self._get_lexicon_option('ttl')
+        self._request('UpdateDomainRecord', query_params=query_params)
 
         return True
 
@@ -181,11 +144,56 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_resource_id)
 
         for resource_id in delete_resource_id:
-            request = DeleteDomainRecordRequest()
-            request.set_accept_format('json')
-
-            request.set_RecordId(resource_id)
-
-            response = self.client.do_action_with_exception(request)
+            self._request('DeleteDomainRecord', query_params={'RecordId': resource_id})
 
         return True
+
+    def _request(self, action, url=ALIYUN_DNS_API_ENDPOINT, data=None, query_params=None):
+        if query_params is None:
+            query_params = {}
+
+        query_params.update(self._build_default_query_params(action))
+        query_params.update(self._build_signature_parameters())
+
+        query_params.update({'Signature': self._calculate_signature('GET', query_params)})
+
+        r = requests.request('GET', url, params=query_params)
+
+        # TODO: add exception handle
+        return r.json();
+
+    # @param query_params should be {} and not none
+    def _calculate_signature(self, http_method, query_params):
+        access_secret = self._get_provider_option('access_secret')
+        sign_secret = access_secret+'&'
+
+        query_list = list(query_params.items())
+        query_list.sort(key = lambda t: t[0])
+        
+        canonicalized_query_string = urllib.urlencode(query_list)
+
+        string_to_sign = '&'.join([http_method, urllib.quote_plus('/'), urllib.quote_plus(canonicalized_query_string)])
+
+        sign = hmac.new(sign_secret, string_to_sign, sha1)
+
+        return sign.digest().encode('base64').rstrip('\n')
+
+    def _build_signature_parameters(self):
+        access_key_id = self._get_provider_option('access_key_id')
+        signature_nonce = str(int(time.time())) + str(random.randint(1000,9999))
+
+        return {
+            'SignatureMethod': 'HMAC-SHA1',
+            'SignatureVersion': '1.0',
+            'SignatureNonce': signature_nonce,
+            'Timestamp': datetime.datetime.utcnow().replace(microsecond=0).isoformat() + 'Z',
+            'AccessKeyId': access_key_id
+        }
+
+    def _build_default_query_params(self, action):
+        return {
+            'Action': action,
+            'DomainName': self.domain,
+            'Format': 'json',
+            'Version': '2015-01-09'
+        }

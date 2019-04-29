@@ -40,8 +40,7 @@ extras_require = {
     'henet': ['beautifulsoup4'],
     'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
     'easyname': ['beautifulsoup4'],
-    'localzone': ['localzone'],
-    'aliyun': ['aliyun-python-sdk-alidns'],
+    'localzone': ['localzone']
 }
 
 # Add a 'full' extra, gathering all external dependencies for providers
