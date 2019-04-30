@@ -150,7 +150,10 @@ class Provider(BaseProvider):
 
         return True
 
-    def _request(self, action, url=ALIYUN_DNS_API_ENDPOINT, data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
+        # force set to the fixed api endpoint
+        url = ALIYUN_DNS_API_ENDPOINT
+
         if query_params is None:
             query_params = {}
 
@@ -179,16 +182,19 @@ class Provider(BaseProvider):
             urllib.parse.quote_plus('/'),
             urllib.parse.quote_plus(canonicalized_query_string)])
 
+        signature = ""
         if sys.version_info.major > 2:
             import base64
 
             sign_secret_bytes = bytes(sign_secret, 'utf-8')
             string_to_sign_bytes = bytes(string_to_sign, 'utf-8')
             sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
-            return base64.b64encode(sign.digest()).decode()
+            signature = base64.b64encode(sign.digest()).decode()
         else:
             sign = hmac.new(sign_secret, string_to_sign, sha1)
-            return sign.digest().encode('base64').rstrip('\n')
+            signature = sign.digest().encode('base64').rstrip('\n')
+
+        return signature
 
     def _build_signature_parameters(self):
         access_key_id = self._get_provider_option('access_key_id')
