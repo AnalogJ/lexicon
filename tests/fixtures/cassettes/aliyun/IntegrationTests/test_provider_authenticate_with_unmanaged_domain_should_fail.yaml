@@ -1,0 +1,41 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?SignatureVersion=1.0&DomainName=thisisadomainidonotown.com&Timestamp=2019-04-29T06%3A22%3A48Z&Format=json&AccessKeyId=LTAIrKlK05Pj2D0a&SignatureMethod=HMAC-SHA1&Version=2015-01-09&Signature=05e46c1cKFD8nI4KTOm46pbKM%2Fo%3D&Action=DescribeDomainInfo&SignatureNonce=15565189686010
+  response:
+    body:
+      string: !!python/unicode '{"RequestId":"A9B6A9E1-2243-474E-B7D9-EC78882CFAA2","HostId":"alidns.aliyuncs.com","Code":"InvalidDomainName.NoExist","Message":"The
+        specified domain name does not exist. Refresh the page and try again."}'
+    headers:
+      access-control-allow-headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '172800'
+      connection:
+      - keep-alive
+      content-length:
+      - '204'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Mon, 29 Apr 2019 06:22:48 GMT
+      server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 400
+      message: Bad Request
+version: 1

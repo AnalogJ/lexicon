@@ -1,0 +1,117 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?SignatureVersion=1.0&DomainName=mean.space&Timestamp=2019-04-29T06%3A23%3A03Z&Format=json&AccessKeyId=LTAIrKlK05Pj2D0a&SignatureMethod=HMAC-SHA1&Version=2015-01-09&Signature=Hh1Y8RkbydkgwdcJER9s9eA0hrA%3D&Action=DescribeDomainInfo&SignatureNonce=15565189838140
+  response:
+    body:
+      string: !!python/unicode '{"RecordLines":{"RecordLine":[]},"PunyCode":"mean.space","AliDomain":true,"DnsServers":{"DnsServer":["dns9.hichina.com","dns10.hichina.com"]},"VersionName":"Alibaba
+        Cloud DNS","RequestId":"CC22EF2D-FC60-4A83-94B8-7D9FE2C8B932","VersionCode":"mianfei","DomainName":"mean.space","DomainId":"3926e93f-3f49-405d-9d39-0d226e54b4b1","AvailableTtls":{"AvailableTtl":[]}}'
+    headers:
+      access-control-allow-headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '172800'
+      connection:
+      - keep-alive
+      content-length:
+      - '363'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Mon, 29 Apr 2019 06:23:03 GMT
+      server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?SignatureVersion=1.0&Format=json&Timestamp=2019-04-29T06%3A23%3A03Z&DomainName=mean.space&SignatureMethod=HMAC-SHA1&Signature=gRPpb9vEAKS3HgAjyI45hCfm3fY%3D&AccessKeyId=LTAIrKlK05Pj2D0a&TypeKeyWord=TXT&Version=2015-01-09&ValueKeyWord=ttlshouldbe3600&SignatureNonce=15565189831140&Action=DescribeDomainRecords&RRKeyWord=ttl.fqdn
+  response:
+    body:
+      string: !!python/unicode '{"PageNumber":1,"TotalCount":1,"PageSize":20,"RequestId":"6361D780-D5AB-4256-8A2E-F2310693D60A","DomainRecords":{"Record":[{"RR":"ttl.fqdn","Status":"ENABLE","Value":"ttlshouldbe3600","Weight":1,"RecordId":"17526889451100160","Type":"TXT","DomainName":"mean.space","Locked":false,"Line":"default","TTL":3600}]}}'
+    headers:
+      access-control-allow-headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '172800'
+      connection:
+      - keep-alive
+      content-length:
+      - '311'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Mon, 29 Apr 2019 06:23:03 GMT
+      server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?SignatureVersion=1.0&Format=json&Timestamp=2019-04-29T06%3A23%3A03Z&DomainName=mean.space&SignatureMethod=HMAC-SHA1&AccessKeyId=LTAIrKlK05Pj2D0a&TypeKeyWord=TXT&Version=2015-01-09&RRKeyWord=ttl.fqdn&Signature=uHcUiSfKpEqT9wTHrtDaWlhHb9c%3D&Action=DescribeDomainRecords&SignatureNonce=15565189833425
+  response:
+    body:
+      string: !!python/unicode '{"PageNumber":1,"TotalCount":1,"PageSize":20,"RequestId":"C85A90EA-664E-44F0-B8FA-8BF2F8A762F9","DomainRecords":{"Record":[{"RR":"ttl.fqdn","Status":"ENABLE","Value":"ttlshouldbe3600","Weight":1,"RecordId":"17526889451100160","Type":"TXT","DomainName":"mean.space","Locked":false,"Line":"default","TTL":3600}]}}'
+    headers:
+      access-control-allow-headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      access-control-allow-methods:
+      - POST, GET, OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '172800'
+      connection:
+      - keep-alive
+      content-length:
+      - '311'
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Mon, 29 Apr 2019 06:23:04 GMT
+      server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+version: 1
