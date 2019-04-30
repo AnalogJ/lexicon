@@ -1,0 +1,345 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainInfo&DomainName=mean.space&Format=json&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&Version=2015-01-09
+  response:
+    body:
+      string: '{"RecordLines":{"RecordLine":[]},"PunyCode":"mean.space","AliDomain":true,"DnsServers":{"DnsServer":["dns9.hichina.com","dns10.hichina.com"]},"VersionName":"Alibaba
+        Cloud DNS","RequestId":"C23ABCB9-1D1C-430C-A2F2-4F683CE6E86B","VersionCode":"mianfei","DomainName":"mean.space","DomainId":"3926e93f-3f49-405d-9d39-0d226e54b4b1","AvailableTtls":{"AvailableTtl":[]}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '363'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:02 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TypeKeyWord=TXT&ValueKeyWord=challengetoken1&Version=2015-01-09
+  response:
+    body:
+      string: '{"PageNumber":1,"TotalCount":0,"PageSize":20,"RequestId":"70B99583-3AA8-4DD2-8204-F24BC21F37D3","DomainRecords":{"Record":[]}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '126'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:02 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=AddDomainRecord&DomainName=mean.space&Format=json&RR=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TTL=3600&Type=TXT&Value=challengetoken1&Version=2015-01-09
+  response:
+    body:
+      string: '{"RecordId":"17549234524657664","RequestId":"3413FB39-E692-43E9-A52D-3E3934DFCE74"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:02 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TypeKeyWord=TXT&ValueKeyWord=challengetoken2&Version=2015-01-09
+  response:
+    body:
+      string: '{"PageNumber":1,"TotalCount":0,"PageSize":20,"RequestId":"8AD5F227-F807-46A2-AC6A-3FB4F93B8581","DomainRecords":{"Record":[]}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '126'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:02 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=AddDomainRecord&DomainName=mean.space&Format=json&RR=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TTL=3600&Type=TXT&Value=challengetoken2&Version=2015-01-09
+  response:
+    body:
+      string: '{"RecordId":"17549234561555456","RequestId":"4D6DDF6D-5F0A-43BD-8DDE-9755A2004193"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:03 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TypeKeyWord=TXT&Version=2015-01-09
+  response:
+    body:
+      string: '{"PageNumber":1,"TotalCount":2,"PageSize":20,"RequestId":"3C6E2DCA-0AC0-4A4A-A914-4B15ED279F1C","DomainRecords":{"Record":[{"RR":"_acme-challenge.deleterecordset","Status":"ENABLE","Value":"challengetoken2","Weight":1,"RecordId":"17549234561555456","Type":"TXT","DomainName":"mean.space","Locked":false,"Line":"default","TTL":3600},{"RR":"_acme-challenge.deleterecordset","Status":"ENABLE","Value":"challengetoken1","Weight":1,"RecordId":"17549234524657664","Type":"TXT","DomainName":"mean.space","Locked":false,"Line":"default","TTL":3600}]}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '543'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:03 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DeleteDomainRecord&DomainName=mean.space&Format=json&RecordId=17549234561555456&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&Version=2015-01-09
+  response:
+    body:
+      string: '{"RecordId":"17549234561555456","RequestId":"95CF50D6-8E44-438B-B3F3-8ACBBA4223FE"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:04 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DeleteDomainRecord&DomainName=mean.space&Format=json&RecordId=17549234524657664&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&Version=2015-01-09
+  response:
+    body:
+      string: '{"RecordId":"17549234524657664","RequestId":"9214793F-7933-4378-859F-757EAF5F66F2"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:04 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=_acme-challenge.deleterecordset&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TypeKeyWord=TXT&Version=2015-01-09
+  response:
+    body:
+      string: '{"PageNumber":1,"TotalCount":0,"PageSize":20,"RequestId":"8FCD481B-B610-4B90-AAB2-E5209BF6B43C","DomainRecords":{"Record":[]}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '172800'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '126'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 30 Apr 2019 09:04:05 GMT
+      Server:
+      - Jetty(7.2.2.v20101205)
+    status:
+      code: 200
+      message: OK
+version: 1
