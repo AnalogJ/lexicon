@@ -1,6 +1,6 @@
 # Test for one implementation of the interface
-from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
+from lexicon.tests.providers.integration_tests import IntegrationTests
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must

@@ -9,9 +9,10 @@ from lexicon.providers.base import Provider as BaseProvider
 import time
 import datetime
 import random
-import urllib
-from hashlib import sha1
 import hmac
+import sys
+from hashlib import sha1
+from six.moves import urllib
 
 LOGGER = logging.getLogger(__name__)
 
@@ -170,13 +171,20 @@ class Provider(BaseProvider):
         query_list = list(query_params.items())
         query_list.sort(key = lambda t: t[0])
         
-        canonicalized_query_string = urllib.urlencode(query_list)
+        canonicalized_query_string = urllib.parse.urlencode(query_list)
 
-        string_to_sign = '&'.join([http_method, urllib.quote_plus('/'), urllib.quote_plus(canonicalized_query_string)])
+        string_to_sign = '&'.join([http_method, urllib.parse.quote_plus('/'), urllib.parse.quote_plus(canonicalized_query_string)])
 
-        sign = hmac.new(sign_secret, string_to_sign, sha1)
+        if sys.version_info.major > 2:
+            import base64
 
-        return sign.digest().encode('base64').rstrip('\n')
+            sign_secret_bytes = bytes(sign_secret, 'utf-8')
+            string_to_sign_bytes = bytes(string_to_sign, 'utf-8')
+            sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
+            return base64.b64encode(sign.digest()).decode()
+        else:
+            sign = hmac.new(sign_secret, string_to_sign, sha1)
+            return sign.digest().encode('base64').rstrip('\n')
 
     def _build_signature_parameters(self):
         access_key_id = self._get_provider_option('access_key_id')
