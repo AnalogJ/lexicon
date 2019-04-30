@@ -1,11 +1,6 @@
 """Module provider for Aliyun"""
 from __future__ import absolute_import
-import json
 import logging
-
-import requests
-from lexicon.providers.base import Provider as BaseProvider
-
 import time
 import datetime
 import random
@@ -13,6 +8,10 @@ import hmac
 import sys
 from hashlib import sha1
 from six.moves import urllib
+
+import requests
+from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +67,7 @@ class Provider(BaseProvider):
 
         if name:
             query_params['RRKeyWord'] = self._relative_name(name)
-        
+
         if content:
             query_params['ValueKeyWord'] = content
 
@@ -104,11 +103,13 @@ class Provider(BaseProvider):
         resources = self._list_records(rtype, name, None)
 
         for record in resources:
-            if (rtype == record['type']) and (self._relative_name(name) == self._relative_name(record['name'])) and (content == record['content']):
+            if (rtype == record['type']) \
+                and (self._relative_name(name) == self._relative_name(record['name'])) \
+                and (content == record['content']):
                 return True
 
         if not identifier:
-            record = resources[0] if resources and len(resources) > 0 else None
+            record = resources[0] if resources else None
             identifier = record['id'] if record else None
 
         if not identifier:
@@ -158,10 +159,10 @@ class Provider(BaseProvider):
 
         query_params.update({'Signature': self._calculate_signature('GET', query_params)})
 
-        r = requests.request('GET', url, params=query_params)
+        response = requests.request('GET', url, params=query_params)
 
         # TODO: add exception handle
-        return r.json();
+        return response.json()
 
     # @param query_params should be {} and not none
     def _calculate_signature(self, http_method, query_params):
@@ -169,11 +170,14 @@ class Provider(BaseProvider):
         sign_secret = access_secret+'&'
 
         query_list = list(query_params.items())
-        query_list.sort(key = lambda t: t[0])
-        
+        query_list.sort(key=lambda t: t[0])
+
         canonicalized_query_string = urllib.parse.urlencode(query_list)
 
-        string_to_sign = '&'.join([http_method, urllib.parse.quote_plus('/'), urllib.parse.quote_plus(canonicalized_query_string)])
+        string_to_sign = '&'.join([
+            http_method,
+            urllib.parse.quote_plus('/'),
+            urllib.parse.quote_plus(canonicalized_query_string)])
 
         if sys.version_info.major > 2:
             import base64
@@ -188,7 +192,7 @@ class Provider(BaseProvider):
 
     def _build_signature_parameters(self):
         access_key_id = self._get_provider_option('access_key_id')
-        signature_nonce = str(int(time.time())) + str(random.randint(1000,9999))
+        signature_nonce = str(int(time.time())) + str(random.randint(1000, 9999))
 
         return {
             'SignatureMethod': 'HMAC-SHA1',

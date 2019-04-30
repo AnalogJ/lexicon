@@ -1,3 +1,5 @@
+"""test module for aliyun provider"""
+
 # Test for one implementation of the interface
 from unittest import TestCase
 from lexicon.tests.providers.integration_tests import IntegrationTests
@@ -10,5 +12,6 @@ class AliyunProviderTests(TestCase, IntegrationTests):
     provider_name = 'aliyun'
     domain = 'mean.space'
 
-    def _filter_query_params(self):
-        return ['AccessKeyId']
+    """filter access key id"""
+    def _filter_query_parameters(self):
+        return ['AccessKeyId', 'Signature', 'SignatureNonce', 'Timestamp']
