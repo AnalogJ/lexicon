@@ -55,7 +55,7 @@ class Provider(BaseProvider):
         return records
 
     def _create_record(self, rtype, name, content):
-        if not rtype or not name or not content:
+        if not rtype or (not name and not content):
             raise Exception('Error, rtype, name and content are mandatory to create a record.')
 
         identifier = _identifier(
@@ -83,29 +83,44 @@ class Provider(BaseProvider):
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        if not identifier and (not rtype or not name):
-            raise Exception(
-                'Error, identifier or rtype+name parameters are required.')
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        result = self._get('/{0}'.format(rtype if rtype else 'recordsets'))
 
-        if identifier:
-            records = self._list_records()
-            records_to_update = [
-                record for record in records if record['id'] == identifier]
-        else:
-            records_to_update = self._list_records(rtype=rtype, name=name)
+        to_delete = []
+        to_shrink = []
+        for record in result['value']:
+            record_rtype = record['type'].replace('Microsoft.Network/dnszones/', '')
+            new_values = []
+            values = _get_values_from_recordset(record_rtype, record)
+            for value in values:
+                if identifier is not None and identifier != _identifier(
+                        {'type': record_rtype,
+                         'name': self._full_name(record['name']),
+                         'content': value}):
+                    new_values.append(value)
+                matching_rtype = rtype is None or record_rtype == rtype
+                matching_name = name is None or self._full_name(name) == self._full_name(record['name'])
+                matching_content = content is None or value == content
+                if identifier is None and not (matching_rtype and matching_name and matching_content):
+                    new_values.append(value)
 
-        if not records_to_update:
-            if identifier:
-                raise Exception('Error, could not find a record for given identifier: {0}'
-                                .format(identifier))
-            else:
-                raise Exception('Error, could not find a record for given type and name: {0} {1}'
-                                .format(rtype, name))
+            to_modify = len(values) != len(new_values)
+            record['properties'].update(_build_recordset_from_values(record_rtype, new_values))
+            if to_modify and new_values:
+                to_shrink.append(record)
+            if to_modify and not new_values:
+                to_delete.append(record)
 
-        if len(records_to_update) > 1:
-            LOGGER.warning('Warning, multiple records found for given parameters, '
-                           'only first one will be updated: %s', records_to_update)
+        for record in to_delete:
+            self._delete('/{0}/{1}'.format(rtype, self._relative_name(record['name'])))
+        for record in to_shrink:
+            self._request('PATCH', '/{0}/{1}'.format(rtype, self._relative_name(record['name'])),
+                          data={'properties': record['properties']})
+
+        LOGGER.debug('delete_records: %s %s %s %s',
+                     identifier, rtype, name, content)
+
+        return True
 
     def _authenticate(self):
         tenant_id = self._get_provider_option('auth_tenant_id')
@@ -159,9 +174,10 @@ class Provider(BaseProvider):
                                    params=query_params,
                                    json=None if not data else data,
                                    headers={'Authorization': 'Bearer {0}'.format(self._access_token)})
-        print(request.json())
         request.raise_for_status()
-        return request.json()
+        if request.content:
+            return request.json()
+        return None
 
 
 def _get_values_from_recordset(rtype, record):
