@@ -24,11 +24,11 @@ Install `lexicon` in development mode with full providers support:
 
 Make sure the tests pass:
 
-    $ py.test tests
+    $ py.test lexicon/tests
 
 You can test a specific provider using:
 
-	$ py.test tests/providers/test_foo.py
+	$ py.test lexicon/tests/providers/test_foo.py
 
 _NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not against the real DNS provider APIs._
 
@@ -96,7 +96,7 @@ same as all other `lexicon` providers. `lexicon` uses `vcrpy` to make recordings
 
 The only thing you need to do is create the following file:
 
- - `tests/providers/test_foo.py`
+ - `lexicon/tests/providers/test_foo.py`
 
 Then you'll need to populate it with the following template:
 
@@ -137,12 +137,15 @@ The `_filter_*` methods ensure that your credentials are not included in the
 
 Then you'll need to setup your environment variables for testing. Unlike running
 `lexicon` via the CLI, the test suite cannot take user input, so we'll need to provide
-any `auth-*` secrets/arguments using environmental variables prefixed with `LEXICON_FOO_`.
+any CLI arguments containing secrets (like `--auth-*`) using environmental variables prefixed
+with `LEXICON_FOO_`.
 
-eg. if you had a `--auth-token` CLI argument, you can also populate it
-using the `LEXICON_FOO_TOKEN` environmental variable. Notice that only `--auth-*` arguments
-can be passed like this. All non-secret arguments should be specified in the `test_options`.
-See [powerdns test suite](https://github.com/AnalogJ/lexicon/blob/82fa5056df2122357af7f9bec94aebc58b247f91/tests/providers/test_powerdns.py#L18-L21) for an example.
+For instance, if you had a `--auth-token` CLI argument, you can populate it
+using the `LEXICON_FOO_AUTH_TOKEN` environmental variable.
+
+Notice also that you should pass any required non-secrets arguments programmatically using the `_test_parameters_override()` method. See
+https://github.com/AnalogJ/lexicon/blob/5ee4d16f9d6206e212c2197f2e53a1db248f5eb9/lexicon/tests/providers/test_powerdns.py#L19
+for an example.
 
 ## Test recordings
 

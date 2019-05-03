@@ -1,0 +1,266 @@
+interactions:
+- request:
+    body: '{"action": "login"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['190']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"311yzTEIZ2j9E0TE5z2VMcy01R3B","clientrequestid":"","action":"login","status":"success","statuscode":2000,"shortmessage":"Login
+        successful","longmessage":"Session has been created successful.","responsedata":{"apisessionid":"N01kMzlnNDU4MjE2OXZBbW9IYVRqR2JyU2ZCUm1RSTUydjU0aD"}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:04 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:04 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['297']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsZone"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['225']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"R31zUN325BDFFXOFj11aOzM50So9","clientrequestid":"","action":"infoDnsZone","status":"success","statuscode":2000,"shortmessage":"DNS
+        zone found","longmessage":"DNS zone was found.","responsedata":{"name":"coldfix.de","ttl":"86400","serial":"2019042087","refresh":"28800","retry":"7200","expire":"1209600","dnssecstatus":false}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:05 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:05 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['345']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"TMx2zW7e3MmcMz53d91AVWIpr01T","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:05 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:05 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['1696']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "updateDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['364']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"hz4aU3M1hR830Es5GOxj20MI19Vz","clientrequestid":"","action":"updateDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records successful updated","longmessage":"The given DNS records for this
+        zone were updated.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758172","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:07 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:06 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['1887']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"MRxBs9UOUljk34L5T19UMz3o1W02","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758172","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:07 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:07 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['1860']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "updateDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['364']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"1F4NT1bLjBa0MiN925AX0n0z3Q1M","clientrequestid":"","action":"updateDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records successful updated","longmessage":"The given DNS records for this
+        zone were updated.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758172","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758173","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:08 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:08 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['2051']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"2TMFS6wQYc111M5GT0I2xNL4G913","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758172","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758173","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['2024']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "updateDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['453']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"0HMy1195FY1wTylM4SEE3Ub2dMN2","clientrequestid":"","action":"updateDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records successful updated","longmessage":"The given DNS records for this
+        zone were updated.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758173","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['1887']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"2jz4MQ9Md31KF1BMW3JMTWDj150E","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758166","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758165","hostname":"_acme-challenge.createrecordset","type":"TXT","priority":"0","destination":"challengetoken1","deleterecord":false,"state":"unknown"},{"id":"11758173","hostname":"_acme-challenge.deleterecordinset","type":"TXT","priority":"0","destination":"challengetoken2","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758163","hostname":"_acme-challenge.full","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758167","hostname":"_acme-challenge.noop","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"},{"id":"11758164","hostname":"_acme-challenge.test","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:38:09 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['1860']
+    status: {code: 200, message: OK}
+version: 1

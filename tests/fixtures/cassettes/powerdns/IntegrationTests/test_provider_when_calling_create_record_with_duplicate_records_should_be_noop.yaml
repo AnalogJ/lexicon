@@ -29,8 +29,6 @@ interactions:
         "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
         [], "name": "docs.sometestdomain.com.", "records": [{"content": "docs.example.com.sometestdomain.com.",
         "disabled": false}], "ttl": 3600, "type": "CNAME"}, {"comments": [], "name":
-        "_acme-challenge.noop.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
-        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
         "_acme-challenge.fqdn.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
         "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
         "_acme-challenge.full.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
@@ -42,7 +40,7 @@ interactions:
       Connection:
       - close
       Content-Length:
-      - '1553'
+      - '1388'
       Content-Security-Policy:
       - default-src 'self'; style-src 'self' 'unsafe-inline'
       Content-Type:
@@ -61,9 +59,9 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"rrsets": [{"name": "delete.testfilt.sometestdomain.com.", "type": "TXT",
-      "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl": 3600,
-      "changetype": "REPLACE"}]}'
+    body: '{"rrsets": [{"name": "_acme-challenge.noop.sometestdomain.com.", "type":
+      "TXT", "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+      3600, "changetype": "REPLACE"}]}'
     headers:
       Accept:
       - '*/*'
@@ -72,7 +70,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '181'
+      - '186'
       Content-Type:
       - application/json
       User-Agent:
@@ -129,8 +127,6 @@ interactions:
         [], "name": "localhost.sometestdomain.com.", "records": [{"content": "127.0.0.1",
         "disabled": false}], "ttl": 3600, "type": "A"}, {"comments": [], "name": "_acme-challenge.test.sometestdomain.com.",
         "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
-        3600, "type": "TXT"}, {"comments": [], "name": "delete.testfilt.sometestdomain.com.",
-        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
         3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.createrecordset.sometestdomain.com.",
         "records": [{"content": "\"challengetoken1\"", "disabled": false}, {"content":
         "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
@@ -149,7 +145,7 @@ interactions:
       Connection:
       - close
       Content-Length:
-      - '1713'
+      - '1553'
       Content-Security-Policy:
       - default-src 'self'; style-src 'self' 'unsafe-inline'
       Content-Type:
@@ -168,8 +164,9 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"rrsets": [{"name": "delete.testfilt.sometestdomain.com.", "records":
-      [], "ttl": 3600, "type": "TXT", "changetype": "REPLACE"}]}'
+    body: '{"rrsets": [{"name": "_acme-challenge.noop.sometestdomain.com.", "type":
+      "TXT", "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+      3600, "changetype": "REPLACE"}]}'
     headers:
       Accept:
       - '*/*'
@@ -178,7 +175,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '129'
+      - '186'
       Content-Type:
       - application/json
       User-Agent:

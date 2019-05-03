@@ -57,11 +57,12 @@ The current supported providers are:
 - Internet.bs ([docs](https://internetbs.net/ResellerRegistrarDomainNameAPI))
 - INWX ([docs](https://www.inwx.de/en/offer/api))
 - Linode ([docs](https://www.linode.com/api/dns))
-- Linode v4 ([docs](https://developers.linode.com/v4))
+- Linode v4 ([docs](https://developers.linode.com/api/docs/v4#tag/Domains))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
+- Netcup ([docs](https://ccp.netcup.net/run/webservice/servers/endpoint.php))
 - NFSN (NearlyFreeSpeech)
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
@@ -119,6 +120,10 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - __Any others I missed__
 
 ## Setup
+
+**Warning: it is strongly advised with pip to install Lexicon in a Python virtual environment, in order to avoid interference
+between Python modules preinstalled on your system as OS packages and modules installed by pip (see https://docs.python-guide.org/dev/virtualenvs/).**
+
 To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
@@ -138,6 +143,8 @@ You can also install the latest version from the repository directly.
 and with Route 53 provider dependencies:
 
     pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
+    
+*As an alternative you can also install Lexicon using the OS packages available for major Linux distributions (see `lexicon` or `dns-lexicon` package in https://pkgs.org/download/lexicon).*
 
 ## Usage
 
