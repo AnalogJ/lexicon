@@ -1,3 +1,14 @@
+"""
+Implement the Azure DNS provider.
+The Azure DNS API is well documented, with meaningful examples.
+The major difficulties are the authentication, that uses OAuth, and require several authentication
+parameters, and the fact that records are manipulated as recordsets (entries with multiple values
+like TXT are hold on a unique TXTRecords object), and so require methods to go from the Azure
+representation of a DNS record to the Lexicon one. To simplify the implementation then, update
+actions are managed using the create and delete actions: updating a record consists in removing the
+old record, then creating a new record with updated parameters. Note also that Azure DNS does not
+support id on records (as they are hold in a recordset) so an id is generated on the fly.
+"""
 import binascii
 import logging
 
@@ -18,6 +29,7 @@ SUPPORTED_RECORDS = {'A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV'}
 
 
 def provider_parser(subparser):
+    """Generate a subparser for Azure DNS"""
     subparser.description = '''
         The Azure provider orchestrates the DNS zones hosted in a resource group for a subscription
         in Microsoft Azure Cloud. To authenticate, an App registration must be created in an Azure
@@ -37,6 +49,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
+    """Provider for Azure DNS"""
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
