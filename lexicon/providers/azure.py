@@ -8,18 +8,32 @@ import requests
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
+
 AZURE_AD_URL = 'https://login.microsoftonline.com'
 MANAGEMENT_URL = 'https://management.azure.com'
 API_VERSION = '2018-03-01-preview'
-NAMESERVER_DOMAINS = ['azure.com']
+NAMESERVER_DOMAINS = ['azure-dns.com', 'azure-dns.net', 'azure-dns.org', 'azure-dns.info']
+
+SUPPORTED_RECORDS = {'A', 'AAAA', 'CNAME', 'MX', 'NS', 'SOA', 'TXT', 'SRV'}
 
 
 def provider_parser(subparser):
-    subparser.add_argument('--auth-client-id')
-    subparser.add_argument('--auth-client-secret')
-    subparser.add_argument('--auth-tenant-id')
-    subparser.add_argument('--subscription-id')
-    subparser.add_argument('--resource-group')
+    subparser.description = '''
+        The Azure provider orchestrates the DNS zones hosted in a resource group for a subscription
+        in Microsoft Azure Cloud. To authenticate, an App registration must be created in an Azure
+        Active Directory. This App registration must be granted Admin for API permissions to
+        Domain.ReadWrite.All" to this Active Directory, and must have a usable Client secret.
+    '''
+    subparser.add_argument('--auth-client-id', help='specify the client ID (aka application ID) '
+                                                    'of the App registration')
+    subparser.add_argument('--auth-client-secret', help='specify the client secret of the App '
+                                                        'registration')
+    subparser.add_argument('--auth-tenant-id', help='specify the tenant ID (aka directory ID) of '
+                                                    'the App registration')
+    subparser.add_argument('--auth-subscription-id', help='specify the subscription ID attached '
+                                                          'to the resource group')
+    subparser.add_argument('--resource-group', help='specify the resource group hosting the DNS '
+                                                    'zone to edit')
 
 
 class Provider(BaseProvider):
@@ -35,6 +49,8 @@ class Provider(BaseProvider):
         records = []
         for raw_record in result['value']:
             rtype = raw_record['type'].replace('Microsoft.Network/dnszones/', '')
+            if rtype not in SUPPORTED_RECORDS:
+                continue
             for value in _get_values_from_recordset(rtype, raw_record):
                 record = {
                     'type': rtype,
@@ -55,7 +71,14 @@ class Provider(BaseProvider):
         return records
 
     def _create_record(self, rtype, name, content):
-        if not rtype or (not name and not content):
+        identifier = self._create_record_internal(rtype, name, content)
+
+        LOGGER.debug('create_record: %s', identifier)
+
+        return True
+
+    def _create_record_internal(self, rtype, name, content):
+        if not rtype or not name or not content:
             raise Exception('Error, rtype, name and content are mandatory to create a record.')
 
         identifier = _identifier(
@@ -79,17 +102,59 @@ class Provider(BaseProvider):
         self._put('/{0}/{1}'.format(rtype, self._relative_name(name)),
                   data={'properties': properties})
 
-        LOGGER.debug('create_record: %s', identifier)
+        return identifier
+
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if not identifier and (not rtype or not name):
+            raise Exception(
+                'Error, identifier or rtype+name parameters are required.')
+
+        if identifier:
+            records = self._list_records()
+            records_to_update = [
+                record for record in records if record['id'] == identifier]
+        else:
+            records_to_update = self._list_records(rtype=rtype, name=name)
+
+        if not records_to_update:
+            raise Exception(
+                'Error, could not find a record for given identifier: {0}'.format(identifier))
+
+        if len(records_to_update) > 1:
+            LOGGER.warning(
+                'Warning, multiple records found for given parameters, '
+                'only first one will be updated: %s', records_to_update)
+
+        identifier = identifier if identifier else records_to_update[0]['id']
+        rtype = rtype if rtype else records_to_update[0]['type']
+        name = name if name else records_to_update[0]['name']
+        content = content if content else records_to_update[0]['content']
+
+        self._delete_record_internal(identifier=identifier)
+        self._create_record_internal(rtype=rtype, name=name, content=content)
+
+        LOGGER.debug('update_record: %s => %s', identifier,
+                     _identifier({'type': rtype, 'name': name, 'content': content}))
 
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        self._delete_record_internal(identifier, rtype, name, content)
+
+        LOGGER.debug('delete_records: %s %s %s %s',
+                     identifier, rtype, name, content)
+
+        return True
+
+    def _delete_record_internal(self, identifier=None, rtype=None, name=None, content=None):
         result = self._get('/{0}'.format(rtype if rtype else 'recordsets'))
 
         to_delete = []
         to_shrink = []
         for record in result['value']:
             record_rtype = record['type'].replace('Microsoft.Network/dnszones/', '')
+            if record_rtype not in SUPPORTED_RECORDS:
+                continue
             new_values = []
             values = _get_values_from_recordset(record_rtype, record)
             for value in values:
@@ -98,35 +163,35 @@ class Provider(BaseProvider):
                          'name': self._full_name(record['name']),
                          'content': value}):
                     new_values.append(value)
-                matching_rtype = rtype is None or record_rtype == rtype
-                matching_name = name is None or self._full_name(name) == self._full_name(record['name'])
-                matching_content = content is None or value == content
-                if identifier is None and not (matching_rtype and matching_name and matching_content):
-                    new_values.append(value)
+                elif identifier is None:
+                    matching_rtype = rtype is None or record_rtype == rtype
+                    matching_name = name is None or self._full_name(name) == self._full_name(record['name'])
+                    matching_content = content is None or value == content
+                    if not (matching_rtype and matching_name and matching_content):
+                        new_values.append(value)
 
             to_modify = len(values) != len(new_values)
-            record['properties'].update(_build_recordset_from_values(record_rtype, new_values))
-            if to_modify and new_values:
-                to_shrink.append(record)
-            if to_modify and not new_values:
-                to_delete.append(record)
+            if to_modify:
+                record['properties'].update(_build_recordset_from_values(record_rtype, new_values))
+                if new_values:
+                    to_shrink.append(record)
+                else:
+                    to_delete.append(record)
 
         for record in to_delete:
-            self._delete('/{0}/{1}'.format(rtype, self._relative_name(record['name'])))
+            record_rtype = record['type'].replace('Microsoft.Network/dnszones/', '')
+            self._delete('/{0}/{1}'.format(record_rtype, self._relative_name(record['name'])))
         for record in to_shrink:
-            self._request('PATCH', '/{0}/{1}'.format(rtype, self._relative_name(record['name'])),
+            record_rtype = record['type'].replace('Microsoft.Network/dnszones/', '')
+            self._request('PATCH', '/{0}/{1}'
+                          .format(record_rtype, self._relative_name(record['name'])),
                           data={'properties': record['properties']})
-
-        LOGGER.debug('delete_records: %s %s %s %s',
-                     identifier, rtype, name, content)
-
-        return True
 
     def _authenticate(self):
         tenant_id = self._get_provider_option('auth_tenant_id')
         client_id = self._get_provider_option('auth_client_id')
         client_secret = self._get_provider_option('auth_client_secret')
-        self._subscription_id = self._get_provider_option('subscription_id')
+        self._subscription_id = self._get_provider_option('auth_subscription_id')
         self._resource_group = self._get_provider_option('resource_group')
 
         assert tenant_id
@@ -187,11 +252,13 @@ def _get_values_from_recordset(rtype, record):
     if rtype == 'AAAA':
         return [entry['ipv6Address'] for entry in properties['AAAARecords']]
     if rtype == 'CNAME':
-        return [entry['cname'] for entry in properties['CNAMERecords']]
+        return [properties['CNAMERecord']['cname']]
     if rtype == 'MX':
         return [entry['exchange'] for entry in properties['MXRecords']]
+    if rtype == 'NS':
+        return [entry['nsdname'] for entry in properties['NSRecords']]
     if rtype == 'SOA':
-        return [entry['email'] for entry in properties['SOARecord']]
+        return [properties['SOARecord']['email']]
     if rtype == 'TXT':
         return [value for entry in properties['TXTRecords'] for value in entry['value']]
     if rtype == 'SRV':
@@ -206,11 +273,13 @@ def _build_recordset_from_values(rtype, values):
     if rtype == 'AAAA':
         return {'AAAARecords': [{'ipv6Address': value} for value in values]}
     if rtype == 'CNAME':
-        return {'CNAMERecords': [{'cname': value} for value in values]}
+        return {'CNAMERecord': {'cname': values[0]} if values else {}}
     if rtype == 'MX':
         return {'MXRecords': [{'exchange': value} for value in values]}
+    if rtype == 'NS':
+        return {'NSRecords': [{'nsdname': value} for value in values]}
     if rtype == 'SOA':
-        return {'SOARecords': [{'email': value} for value in values]}
+        return {'SOARecord': {'email': values[0]} if values else {}}
     if rtype == 'TXT':
         return {'TXTRecords': [{'value': values}]}
     if rtype == 'SRV':
