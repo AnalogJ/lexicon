@@ -37,9 +37,9 @@ class AzureTests(TestCase, IntegrationTests):
     def _filter_response(self, response):
         # Hide access_token value in oauth token responses
         response['body']['string'] = re.sub(
-            rb'"access_token":"[\w.-]+"', '"access_token":"TOKEN"',
+            rb'"access_token":"[\w.-]+"', b'"access_token":"TOKEN"',
             response['body']['string'])
         response['body']['string'] = re.sub(
-            rb'\\/subscriptions\\/[\w-]+\\/', '\\/subscriptions\\/SUBSCRIPTION_ID\\/',
+            rb'\\/subscriptions\\/[\w-]+\\/', b'\\/subscriptions\\/SUBSCRIPTION_ID\\/',
             response['body']['string'])
         return response
