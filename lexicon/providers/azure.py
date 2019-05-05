@@ -54,7 +54,6 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self._access_token = None
-        self._subscription_id = None
 
     def _list_records(self, rtype=None, name=None, content=None):
         result = self._get('/{0}'.format(rtype if rtype else 'recordsets'))
@@ -159,7 +158,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record_internal(self, identifier=None, rtype=None, name=None, content=None):
+    def _delete_record_internal(self, identifier=None, rtype=None, name=None, content=None):  # pylint: disable=too-many-locals
         result = self._get('/{0}'.format(rtype if rtype else 'recordsets'))
 
         to_delete = []
@@ -178,7 +177,8 @@ class Provider(BaseProvider):
                     new_values.append(value)
                 elif identifier is None:
                     matching_rtype = rtype is None or record_rtype == rtype
-                    matching_name = name is None or self._full_name(name) == self._full_name(record['name'])
+                    matching_name = (name is None or
+                                     self._full_name(name) == self._full_name(record['name']))
                     matching_content = content is None or value == content
                     if not (matching_rtype and matching_name and matching_content):
                         new_values.append(value)
@@ -204,14 +204,14 @@ class Provider(BaseProvider):
         tenant_id = self._get_provider_option('auth_tenant_id')
         client_id = self._get_provider_option('auth_client_id')
         client_secret = self._get_provider_option('auth_client_secret')
-        self._subscription_id = self._get_provider_option('auth_subscription_id')
-        self._resource_group = self._get_provider_option('resource_group')
+        subscription_id = self._get_provider_option('auth_subscription_id')
+        resource_group = self._get_provider_option('resource_group')
 
         assert tenant_id
         assert client_id
         assert client_secret
-        assert self._subscription_id
-        assert self._resource_group
+        assert subscription_id
+        assert resource_group
 
         url = '{0}/{1}/oauth2/token'.format(AZURE_AD_URL, tenant_id)
         data = {
@@ -227,7 +227,7 @@ class Provider(BaseProvider):
         self._access_token = result.json()['access_token']
 
         url = ('{0}/subscriptions/{1}/resourceGroups/{2}/providers/Microsoft.Network/dnsZones'
-               .format(MANAGEMENT_URL, self._subscription_id, self._resource_group))
+               .format(MANAGEMENT_URL, subscription_id, resource_group))
         headers = {'Authorization': 'Bearer {0}'.format(self._access_token)}
         params = {'api-version': API_VERSION}
 
@@ -240,18 +240,18 @@ class Provider(BaseProvider):
 
         if not our_data:
             raise Exception('Resource group `{0}` in subscription `{1}` '
-                            'does not contain the DNS zone `{1}`'
-                            .format(self._resource_group, self._subscription_id, self.domain))
+                            'does not contain the DNS zone `{2}`'
+                            .format(resource_group, subscription_id, self.domain))
 
         self.domain_id = our_data[0]['id']
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         query_params = {} if not query_params else query_params.copy()
         query_params['api-version'] = API_VERSION
+        headers = {'Authorization': 'Bearer {0}'.format(self._access_token)}
         request = requests.request(action, MANAGEMENT_URL + self.domain_id + url,
-                                   params=query_params,
-                                   json=None if not data else data,
-                                   headers={'Authorization': 'Bearer {0}'.format(self._access_token)})
+                                   params=query_params, headers=headers,
+                                   json=None if not data else data)
         request.raise_for_status()
         if request.content:
             return request.json()
@@ -260,43 +260,51 @@ class Provider(BaseProvider):
 
 def _get_values_from_recordset(rtype, record):
     properties = record['properties']
+    values = None
     if rtype == 'A':
-        return [entry['ipv4Address'] for entry in properties['ARecords']]
+        values = [entry['ipv4Address'] for entry in properties['ARecords']]
     if rtype == 'AAAA':
-        return [entry['ipv6Address'] for entry in properties['AAAARecords']]
+        values = [entry['ipv6Address'] for entry in properties['AAAARecords']]
     if rtype == 'CNAME':
-        return [properties['CNAMERecord']['cname']]
+        values = [properties['CNAMERecord']['cname']]
     if rtype == 'MX':
-        return [entry['exchange'] for entry in properties['MXRecords']]
+        values = [entry['exchange'] for entry in properties['MXRecords']]
     if rtype == 'NS':
-        return [entry['nsdname'] for entry in properties['NSRecords']]
+        values = [entry['nsdname'] for entry in properties['NSRecords']]
     if rtype == 'SOA':
-        return [properties['SOARecord']['email']]
+        values = [properties['SOARecord']['email']]
     if rtype == 'TXT':
-        return [value for entry in properties['TXTRecords'] for value in entry['value']]
+        values = [value for entry in properties['TXTRecords'] for value in entry['value']]
     if rtype == 'SRV':
-        return [entry['target'] for entry in properties['SRVRecords']]
+        values = [entry['target'] for entry in properties['SRVRecords']]
+
+    if values:
+        return values
 
     raise Exception('Error, `{0}` entries are not supported by this provider.'.format(rtype))
 
 
 def _build_recordset_from_values(rtype, values):
+    recordset = None
     if rtype == 'A':
-        return {'ARecords': [{'ipv4Address': value} for value in values]}
+        recordset = {'ARecords': [{'ipv4Address': value} for value in values]}
     if rtype == 'AAAA':
-        return {'AAAARecords': [{'ipv6Address': value} for value in values]}
+        recordset = {'AAAARecords': [{'ipv6Address': value} for value in values]}
     if rtype == 'CNAME':
-        return {'CNAMERecord': {'cname': values[0]} if values else {}}
+        recordset = {'CNAMERecord': {'cname': values[0]} if values else {}}
     if rtype == 'MX':
-        return {'MXRecords': [{'exchange': value} for value in values]}
+        recordset = {'MXRecords': [{'exchange': value} for value in values]}
     if rtype == 'NS':
-        return {'NSRecords': [{'nsdname': value} for value in values]}
+        recordset = {'NSRecords': [{'nsdname': value} for value in values]}
     if rtype == 'SOA':
-        return {'SOARecord': {'email': values[0]} if values else {}}
+        recordset = {'SOARecord': {'email': values[0]} if values else {}}
     if rtype == 'TXT':
-        return {'TXTRecords': [{'value': values}]}
+        recordset = {'TXTRecords': [{'value': values}]}
     if rtype == 'SRV':
-        return {'SRVRecords': [{'target': value} for value in values]}
+        recordset = {'SRVRecords': [{'target': value} for value in values]}
+
+    if recordset:
+        return recordset
 
     raise Exception('Error, `{0}` entries are not supported by this provider.'.format(rtype))
 
