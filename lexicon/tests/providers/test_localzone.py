@@ -29,6 +29,7 @@ mail3         IN  A     192.0.2.5             ; IPv4 address for mail3.example.c
 
 @pytest.fixture
 def testfile(tmpdir):
+    """Create a local zone file in a temporary directory for testing."""
     test_dir = tmpdir.mkdir("localzone")
     test_file = test_dir.join(FILENAME)
     test_file.write(ZONEFILE)
