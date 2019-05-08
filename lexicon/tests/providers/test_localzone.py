@@ -34,6 +34,8 @@ def testfile(tmpdir):
     test_file = test_dir.join(FILENAME)
     test_file.write(ZONEFILE)
     os.chdir(str(test_dir))
+    yield
+    os.chdir(os.path.dirname(__file__))
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
