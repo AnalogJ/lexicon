@@ -1,8 +1,9 @@
 """Integration tests for Localzone"""
+import os
 from unittest import TestCase
 
-import os
 import pytest
+
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 FILENAME = "db.example.com"
@@ -27,20 +28,18 @@ mail3         IN  A     192.0.2.5             ; IPv4 address for mail3.example.c
 @             IN  TXT   "v=spf1 mx ~all"      ; SPFv1 record for example.com
 """
 
-@pytest.fixture
-def testfile(tmpdir):
-    """Create a local zone file in a temporary directory for testing."""
-    test_dir = tmpdir.mkdir("localzone")
-    test_file = test_dir.join(FILENAME)
+@pytest.fixture(scope="module", autouse=True)
+def testfile():
+    """Create a local zone file for testing."""
+    test_file = open(FILENAME, "w")
     test_file.write(ZONEFILE)
-    os.chdir(str(test_dir))
+    test_file.close()
     yield
-    os.chdir(os.path.dirname(__file__))
+    os.remove(FILENAME)
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-@pytest.mark.usefixtures("testfile")
 class LocalzoneProviderTests(TestCase, IntegrationTests):
     """Integration tests for Localzone"""
     provider_name = "localzone"
