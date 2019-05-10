@@ -11,11 +11,11 @@ interactions:
       User-Agent:
       - python-requests/2.21.0
     method: GET
-    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainInfo&DomainName=mean.space&Format=json&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&Version=2015-01-09
+    uri: https://alidns.aliyuncs.com/?AccessKeyId=DUMMY_KEY_ID&Action=DescribeDomainInfo&DomainName=mean.space&Format=json&Signature=DUMMY_SIGNATURE&SignatureMethod=HMAC-SHA1&SignatureNonce=DUMMY_SIGNATURE_NONCE&SignatureVersion=1.0&Timestamp=DUMMY_TIMESTAMP&Version=2015-01-09
   response:
     body:
       string: '{"RecordLines":{"RecordLine":[]},"PunyCode":"mean.space","AliDomain":true,"DnsServers":{"DnsServer":["dns9.hichina.com","dns10.hichina.com"]},"VersionName":"Alibaba
-        Cloud DNS","RequestId":"3A1D2B85-6C07-467F-9B91-3C574AEDD979","VersionCode":"mianfei","DomainName":"mean.space","DomainId":"3926e93f-3f49-405d-9d39-0d226e54b4b1","AvailableTtls":{"AvailableTtl":[]}}'
+        Cloud DNS","RequestId":"A50C65EE-AE31-4702-8BC1-C2DE9041C4D6","VersionCode":"mianfei","DomainName":"mean.space","DomainId":"3926e93f-3f49-405d-9d39-0d226e54b4b1","AvailableTtls":{"AvailableTtl":[]}}'
     headers:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
@@ -32,7 +32,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 30 Apr 2019 09:04:07 GMT
+      - Fri, 10 May 2019 10:31:42 GMT
       Server:
       - Jetty(7.2.2.v20101205)
     status:
@@ -50,10 +50,10 @@ interactions:
       User-Agent:
       - python-requests/2.21.0
     method: GET
-    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=filter.thisdoesnotexist&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&TypeKeyWord=TXT&Version=2015-01-09
+    uri: https://alidns.aliyuncs.com/?AccessKeyId=DUMMY_KEY_ID&Action=DescribeDomainRecords&DomainName=mean.space&Format=json&RRKeyWord=filter.thisdoesnotexist&Signature=DUMMY_SIGNATURE&SignatureMethod=HMAC-SHA1&SignatureNonce=DUMMY_SIGNATURE_NONCE&SignatureVersion=1.0&Timestamp=DUMMY_TIMESTAMP&TypeKeyWord=TXT&Version=2015-01-09
   response:
     body:
-      string: '{"PageNumber":1,"TotalCount":0,"PageSize":20,"RequestId":"6AF7F86D-8CE6-4C34-BD26-244966929635","DomainRecords":{"Record":[]}}'
+      string: '{"PageNumber":1,"TotalCount":0,"PageSize":20,"RequestId":"A8D8AC0B-3881-4270-8854-99F1D44BC7CB","DomainRecords":{"Record":[]}}'
     headers:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Sequence, _aop_secret, _aop_signature
@@ -70,7 +70,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 30 Apr 2019 09:04:07 GMT
+      - Fri, 10 May 2019 10:31:42 GMT
       Server:
       - Jetty(7.2.2.v20101205)
     status:

@@ -12,6 +12,9 @@ class AliyunProviderTests(TestCase, IntegrationTests):
     provider_name = 'aliyun'
     domain = 'mean.space'
 
-    """filter access key id"""
     def _filter_query_parameters(self):
-        return ['AccessKeyId', 'Signature', 'SignatureNonce', 'Timestamp']
+        """filter access key id && secret info"""
+        return [('AccessKeyId', 'DUMMY_KEY_ID'),
+                ('Signature', 'DUMMY_SIGNATURE'),
+                ('SignatureNonce', 'DUMMY_SIGNATURE_NONCE'),
+                ('Timestamp', 'DUMMY_TIMESTAMP')]

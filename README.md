@@ -30,6 +30,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
+- Aliyun.com ([docs](https://help.aliyun.com/document_detail/29739.html))
 - AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
@@ -85,7 +86,6 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
 
-- Aliyun.com
 - Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>

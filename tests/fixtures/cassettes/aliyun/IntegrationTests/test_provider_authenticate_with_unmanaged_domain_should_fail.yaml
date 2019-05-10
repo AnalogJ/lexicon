@@ -11,10 +11,10 @@ interactions:
       User-Agent:
       - python-requests/2.21.0
     method: GET
-    uri: https://alidns.aliyuncs.com/?Action=DescribeDomainInfo&DomainName=thisisadomainidonotown.com&Format=json&SignatureMethod=HMAC-SHA1&SignatureVersion=1.0&Version=2015-01-09
+    uri: https://alidns.aliyuncs.com/?AccessKeyId=DUMMY_KEY_ID&Action=DescribeDomainInfo&DomainName=thisisadomainidonotown.com&Format=json&Signature=DUMMY_SIGNATURE&SignatureMethod=HMAC-SHA1&SignatureNonce=DUMMY_SIGNATURE_NONCE&SignatureVersion=1.0&Timestamp=DUMMY_TIMESTAMP&Version=2015-01-09
   response:
     body:
-      string: '{"RequestId":"1609AF33-707D-4DC5-BA05-1B75E0BBA0FB","HostId":"alidns.aliyuncs.com","Code":"InvalidDomainName.NoExist","Message":"The
+      string: '{"RequestId":"52617F98-3E38-4DE2-A75D-82CB82569E84","HostId":"alidns.aliyuncs.com","Code":"InvalidDomainName.NoExist","Message":"The
         specified domain name does not exist. Refresh the page and try again."}'
     headers:
       Access-Control-Allow-Headers:
@@ -32,7 +32,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 30 Apr 2019 09:03:50 GMT
+      - Fri, 10 May 2019 10:31:18 GMT
       Server:
       - Jetty(7.2.2.v20101205)
     status:

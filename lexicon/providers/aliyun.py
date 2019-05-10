@@ -18,27 +18,28 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['hichina.com']
 
 ALIYUN_DNS_API_ENDPOINT = 'https://alidns.aliyuncs.com'
-ALIYUN_DNS_DEFAULT_REGION = 'cn-hangzhou'
 
 def provider_parser(subparser):
     """Module provider for Aliyun"""
+    subparser.description = '''
+        Aliyun Provider requires an access key id and access secret with full rights on dns.
+        Better to use RAM on Aliyun cloud to create a specified user for the dns operation.
+        The referrence for Aliyun DNS production: 
+        https://help.aliyun.com/product/29697.html'''
     subparser.add_argument(
-        "--access-key-id", help="specify api key for authentication")
+        "--auth-key-id", help="specify access key id for authentication")
     subparser.add_argument(
-        "--access-secret", help="specify api secret for authentication")
+        "--auth-secret", help="specify access secret for authentication")
 
 
 class Provider(BaseProvider):
-    """Provider class for Linode"""
-    def __init__(self, config):
-        super(Provider, self).__init__(config)
-        self.client = None
+    """Provider class for Aliyun"""
 
     def _authenticate(self):
-        response = self._request('DescribeDomainInfo')
+        response = self._request_aliyun('DescribeDomainInfo')
 
         if 'DomainId' not in response:
-            raise Exception(response)
+            raise ValueError("failed to fetch basic domain info for %s" % (self.domain))
 
         self.domain_id = response['DomainId']
 
@@ -52,7 +53,7 @@ class Provider(BaseProvider):
                 'RR': self._relative_name(name),
                 'TTL': self._get_lexicon_option('ttl')
             }
-            self._request('AddDomainRecord', query_params=query_params)
+            self._request_aliyun('AddDomainRecord', query_params=query_params)
 
         return True
 
@@ -71,7 +72,7 @@ class Provider(BaseProvider):
         if content:
             query_params['ValueKeyWord'] = content
 
-        response = self._request('DescribeDomainRecords', query_params=query_params)
+        response = self._request_aliyun('DescribeDomainRecords', query_params=query_params)
 
         resource_list = response['DomainRecords']['Record']
 
@@ -86,17 +87,6 @@ class Provider(BaseProvider):
             })
         LOGGER.debug('list_records: %s', processed_records)
         return processed_records
-
-    def __get_record(self, identifier):
-        response = self._request('DescribeDomainRecordInfo', query_params={'RecordId': identifier})
-
-        return {
-            'id': response['RecordId'],
-            'type': response['Type'],
-            'name': self._full_name(response['RR']),
-            'ttl': response['TTL'],
-            'content': response['Value']
-        }
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
@@ -113,7 +103,11 @@ class Provider(BaseProvider):
             identifier = record['id'] if record else None
 
         if not identifier:
-            self._create_record(rtype, name, content)
+            raise ValueError("updating %s identifier not exists" % identifier)
+
+        if len(resources) > 1:
+            LOGGER.warning('''There's more than one records match the given critiaria,
+             only the first one would be updated''')
 
         LOGGER.debug('update_record: %s', identifier)
 
@@ -129,7 +123,7 @@ class Provider(BaseProvider):
             query_params['Value'] = content
 
         query_params['TTL'] = self._get_lexicon_option('ttl')
-        self._request('UpdateDomainRecord', query_params=query_params)
+        self._request_aliyun('UpdateDomainRecord', query_params=query_params)
 
         return True
 
@@ -146,14 +140,21 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_resource_id)
 
         for resource_id in delete_resource_id:
-            self._request('DeleteDomainRecord', query_params={'RecordId': resource_id})
+            self._request_aliyun('DeleteDomainRecord', query_params={'RecordId': resource_id})
 
         return True
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
-        # force set to the fixed api endpoint
-        url = ALIYUN_DNS_API_ENDPOINT
+        response = requests.request('GET', ALIYUN_DNS_API_ENDPOINT, params=query_params)
+        response.raise_for_status()
 
+        try:
+            return response.json()
+        except ValueError as invalid_json_ve:
+            LOGGER.error("aliyun dns api responsed with invalid json content, %s", response.text)
+            raise invalid_json_ve
+
+    def _request_aliyun(self, action, query_params=None):
         if query_params is None:
             query_params = {}
 
@@ -162,14 +163,14 @@ class Provider(BaseProvider):
 
         query_params.update({'Signature': self._calculate_signature('GET', query_params)})
 
-        response = requests.request('GET', url, params=query_params)
+        return self._request(url=ALIYUN_DNS_API_ENDPOINT, query_params=query_params)
 
-        # TODO: add exception handle
-        return response.json()
-
-    # @param query_params should be {} and not none
     def _calculate_signature(self, http_method, query_params):
-        access_secret = self._get_provider_option('access_secret')
+        access_secret = self._get_provider_option('auth_secret')
+
+        if not access_secret:
+            raise ValueError("auth-secret (access secret) is not specified, did you forget that?")
+
         sign_secret = access_secret+'&'
 
         query_list = list(query_params.items())
@@ -197,7 +198,11 @@ class Provider(BaseProvider):
         return signature
 
     def _build_signature_parameters(self):
-        access_key_id = self._get_provider_option('access_key_id')
+        access_key_id = self._get_provider_option('auth_key_id')
+
+        if not access_key_id:
+            raise ValueError("auth-key-id (access key id) is not specified, did you forget that?")
+
         signature_nonce = str(int(time.time())) + str(random.randint(1000, 9999))
 
         return {
