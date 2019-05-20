@@ -233,10 +233,11 @@ class Provider(BaseProvider):
         response.raise_for_status()
         return response
 
-    def _ensure_dot(self, text):
+    @classmethod
+    def _ensure_dot(cls, text):
         """
         This function makes sure a string contains a dot at the end
         """
-        if not text.endswith("."):
-            text = text + "."
-        return text
+        if text.endswith("."):
+            return text
+        return text + "."
