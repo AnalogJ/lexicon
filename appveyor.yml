@@ -18,7 +18,7 @@ install:
 build: off
 
 before_test:
-  - "pip install tox"
+  - "%PYTHON%\\python.exe -m pip install tox"
 
 
 test_script:
@@ -29,7 +29,7 @@ test_script:
   # Note that you must use the environment variable %PYTHON% to refer to
   # the interpreter you're using - Appveyor does not do anything special
   # to put the Python version you want to use on PATH.
-  - "tox -e standard"
+  - "%PYTHON%\\python.exe -m tox -e standard"
 
 
 #after_test:
