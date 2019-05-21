@@ -31,10 +31,9 @@ def _vcr_integration_test(decorated):
                 self._cassette_path('IntegrationTests/{0}.yaml'
                                     .format(decorated.__name__)),
                 filter_headers=self._filter_headers(),
+                before_record_response=self._filter_response,
                 filter_query_parameters=self._filter_query_parameters(),
-                filter_post_data_parameters=self._filter_post_data_parameters(),
-                before_record_request=self._filter_request,
-                before_record_response=self._filter_response):
+                filter_post_data_parameters=self._filter_post_data_parameters()):
             decorated(self)
         # pylint: enable=protected-access
     return wrapper
@@ -485,26 +484,13 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
     def _filter_post_data_parameters(self):  # pylint: disable=no-self-use
         return []
 
-    def _filter_request(self, request):  # pylint: disable=no-self-use
-        """Filter any sensitive data out of the provider requests. `request`
-        is a Python object with the same structure as all the request sections
-        in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
-        sake of sparing you some time the most important values are:
-
-        request['body']['string']: Contains the HTML or JSON request body.
-        request['uri']: The URI used for this request (URL + parameters)
-        response['headers']: An object whose keys are HTTP header names
-                             e.g. request['headers']['Accept'].
-        """
-        return request
-
     def _filter_response(self, response):  # pylint: disable=no-self-use
-        """Filter any sensitive data out of the provider responses. `response`
+        """Filter any sensitive data out of the providers response. `response`
         is a Python object with the same structure as all the response sections
-        in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
+        in the YAML recordings at tests/fixtures/cassets/[provider]. For the
         sake of sparing you some time the most important values are:
 
-        response['body']['string']: Contains the HTML or JSON response body.
+        response['body']['string']: Contains the HTML or JSON response.
         response['headers']: An object whose keys are HTTP header names
                              e.g. response['headers']['content-length'].
         response['status']: An object that contains 'code' and 'message'

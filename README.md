@@ -32,7 +32,6 @@ The current supported providers are:
 
 - AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
-- Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
