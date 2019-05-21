@@ -1,0 +1,208 @@
+interactions:
+- request:
+    body: !!python/unicode 'client_secret=CLIENT_SECRET&grant_type=client_credentials&resource=https%3A%2F%2Fmanagement.azure.com&client_id=CLIENT_ID'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '179'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://login.microsoftonline.com/TENANT_ID/oauth2/token
+  response:
+    body:
+      string: !!python/unicode '{"token_type":"Bearer","expires_in":"3600","ext_expires_in":"3600","expires_on":"1557007348","not_before":"1557003448","resource":"https://management.azure.com","access_token":"TOKEN"}'
+    headers:
+      cache-control:
+      - no-cache, no-store
+      content-length:
+      - '1335'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 04 May 2019 21:02:28 GMT
+      expires:
+      - '-1'
+      p3p:
+      - CP="DSP CUR OTPi IND OTRi ONL FIN"
+      pragma:
+      - no-cache
+      set-cookie:
+      - fpc=AhFh6ZHBy_NKmkIgYLJ9CfuPpLAkAQAAAOT0X9QOAAAA; expires=Mon, 03-Jun-2019
+        21:02:28 GMT; path=/; secure; HttpOnly
+      - x-ms-gateway-slice=prod; path=/; secure; HttpOnly
+      - stsservicecookie=ests; path=/; secure; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-request-id:
+      - 7560890b-e7f4-4239-bef7-2108e79f1a00
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnsZones?api-version=2018-03-01-preview
+  response:
+    body:
+      string: !!python/unicode '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk","name":"full4ir.tk","type":"Microsoft.Network\/dnszones","etag":"00000002-0000-0000-a2fa-8fbbededd401","location":"global","tags":{},"properties":{"maxNumberOfRecordSets":10000,"maxNumberOfRecordsPerRecordSet":null,"nameServers":["ns1-07.azure-dns.com.","ns2-07.azure-dns.net.","ns3-07.azure-dns.org.","ns4-07.azure-dns.info."],"numberOfRecordSets":3,"zoneType":"Public"}}]}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '524'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 04 May 2019 21:02:29 GMT
+      server:
+      - Microsoft-IIS/10.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-correlation-request-id:
+      - d19cebef-8ef2-4496-afbc-90371f31f3cd
+      x-ms-ratelimit-remaining-subscription-resource-entities-read:
+      - '59997'
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '497'
+      x-ms-request-id:
+      - 276fc39e-ebea-4fbe-bbbc-89fa024c53e1
+      x-ms-routing-request-id:
+      - FRANCECENTRAL:20190504T210229Z:d19cebef-8ef2-4496-afbc-90371f31f3cd
+      x-powered-by:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/CNAME?api-version=2018-03-01-preview
+  response:
+    body:
+      string: !!python/unicode '{"value":[]}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '12'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 04 May 2019 21:02:29 GMT
+      server:
+      - Microsoft-IIS/10.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-correlation-request-id:
+      - fc603042-8887-4fd6-a47e-99680d41fa4d
+      x-ms-ratelimit-remaining-subscription-resource-entities-read:
+      - '60000'
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '499'
+      x-ms-request-id:
+      - 010e7ee5-21b4-45bd-b6ce-4f956a07f112
+      x-ms-routing-request-id:
+      - FRANCECENTRAL:20190504T210230Z:fc603042-8887-4fd6-a47e-99680d41fa4d
+      x-powered-by:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"properties": {"CNAMERecord": {"cname": "docs.example.com"},
+      "TTL": 3600}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '75'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PUT
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/CNAME/docs?api-version=2018-03-01-preview
+  response:
+    body:
+      string: !!python/unicode '{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/CNAME\/docs","name":"docs","type":"Microsoft.Network\/dnszones\/CNAME","etag":"5de5727e-a25c-4275-ab20-242ef343ce10","properties":{"fqdn":"docs.full4ir.tk.","TTL":3600,"CNAMERecord":{"cname":"docs.example.com"}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '352'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 04 May 2019 21:02:31 GMT
+      etag:
+      - 5de5727e-a25c-4275-ab20-242ef343ce10
+      server:
+      - Microsoft-IIS/10.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-correlation-request-id:
+      - 2d821783-88da-4fba-b1a4-d5406e68af68
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '11999'
+      x-ms-request-id:
+      - e268cac2-9fa3-44fd-8bd6-1278b5321897
+      x-ms-routing-request-id:
+      - FRANCECENTRAL:20190504T210231Z:2d821783-88da-4fba-b1a4-d5406e68af68
+      x-powered-by:
+      - ASP.NET
+    status:
+      code: 201
+      message: Created
+version: 1
