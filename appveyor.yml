@@ -8,7 +8,7 @@ environment:
 build: off
 
 before_test:
-  - "%PYTHON%\\python.exe -m pip install tox wheel"
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip tox wheel"
 
 test_script:
   - "%PYTHON%\\python.exe -m tox -e standard"
