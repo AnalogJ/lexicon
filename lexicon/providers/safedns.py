@@ -84,10 +84,11 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
 
-        # We ignore creation if a record already exists for given rtype/name/content
+        # Check whether the record already exists with the same  rtype, name & content.
+        # If so, claim to have added the record, but dont't do anything.
         records = self._list_records(rtype, name, content)
         if records:
-            LOGGER.debug('create_record (ignored, duplicate): %s',
+            LOGGER.debug('create_record: (ignored, duplicate record): %s',
                          records[0]['id'])
             return True
 
@@ -97,23 +98,57 @@ class Provider(BaseProvider):
             'content': content
         }
 
-        try:
-            result = self._post('/zones/{0}/records'.format(self.domain), data)
-        except requests.exceptions.HTTPError as err:
-            # LOGGER.debug('Error occurred: ', err)
-            raise
+        # As TTL is provided by Lexicon, not our provider, grab it separately here.
+        # NOTE, if you don't have custom SOA enabled, you'll get a 403 returned here.
+        # if self._get_lexicon_option('ttl'):
+        #     data['ttl'] = self._get_lexicon_option('ttl')
 
-        if not result['content']:
-            raise Exception('Error occured when inserting the new record.')
+        self._post('/zones/{0}/records'.format(self.domain), data)
 
         LOGGER.debug('create_record: %s', True)
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        ''''''
+        data = {}
+        if name:
+            data['name'] = self._relative_name(name)
+        if rtype:
+            data['type'] = rtype
+        if content:
+            data['content'] = content
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = self._get_lexicon_option('ttl')
+            
+        self._patch(
+            '/zones/{0}/records/{1}'.format(self.domain, identifier), data)
+
+        LOGGER.debug('update_record: %s', True)
+        return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        ''''''
+        delete_record_ids = []
+
+        # If we've not been given an identifier, search for matching records.
+        # NOTE, this could cause multiple records to be removed.
+        if not identifier:
+            records = self._list_records(rtype, name, content)
+            delete_record_ids = [record['id'] for record in records]
+        else:
+            delete_record_ids.append(identifier)
+
+        LOGGER.debug('delete_records: %s', delete_record_ids)
+
+        for delete_record_id in delete_record_ids:
+            self._delete(
+                '/zones/{0}/records/{1}'.format(self.domain, delete_record_id))
+
+        LOGGER.debug('delete_record: %s', True)
+        return True
+
+    # As there is no _patch method available from Provider, let's create our own
+    # by creating a _request with action 'PATCH'.
+    def _patch(self, url='/', data=None, query_params=None):
+        return self._request('PATCH', url, data=data, query_params=query_params)
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
@@ -131,8 +166,11 @@ class Provider(BaseProvider):
         response = requests.request(action, url, params=query_params,
                                     data=json.dumps(data),
                                     headers=default_headers)
-        # if the request fails for any reason, throw an error.
+        
+        # If the request fails for any reason, throw an error.
         response.raise_for_status()
-        if action == 'DELETE':
-            return ''
-        return response.json()
+
+        if not action == 'DELETE':
+            return response.json()
+
+        return True
