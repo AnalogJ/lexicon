@@ -56,15 +56,16 @@ class Provider(BaseProvider):
                     'id': record['id'],
                     'name': record['name'],
                     'type': record['type'],
-                    'content': record['content'],
+                    # Make sure TXT records are wrapped before sending
+                    'content': self._remove_quotes(record['type'],record['content']),
                     'updated_at': record['updated_at'],
                     'ttl': record['ttl'],
                     'priority': record['priority']
                 }
                 records.append(processed_record)
 
-        # This appears to be filtering logic to return only the record
-        # which matches what's passed in to the method
+        # This is filtering logic to return only the record which matches what has 
+        # been passed in to the method
         if rtype:
             records = [
                 record for record in records
@@ -92,30 +93,41 @@ class Provider(BaseProvider):
                          records[0]['id'])
             return True
 
+        # Make sure TXT records are wrapped in quotes
+        if content:
+            content = self._add_quotes(rtype, content)
+
         data = {
             'name': self._full_name(name),
             'type': rtype,
             'content': content
         }
 
-        # As TTL is provided by Lexicon, not our provider, grab it separately here.
+        # As TTL is a Lexicon option, not a provider option, grab it separately here.
         # NOTE, if you don't have custom SOA enabled, you'll get a 403 returned here.
         # if self._get_lexicon_option('ttl'):
         #     data['ttl'] = self._get_lexicon_option('ttl')
 
-        self._post('/zones/{0}/records'.format(self.domain), data)
-
+        result = self._post('/zones/{0}/records'.format(self.domain), data)
         LOGGER.debug('create_record: %s', True)
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+
+        # Make sure TXT records are wrapped in quotes
+        if content:
+            content = self._add_quotes(rtype, content)
+
         data = {}
         if name:
-            data['name'] = self._relative_name(name)
+            # data['name'] = self._relative_name(name)
+            data['name'] = self._full_name(name)
         if rtype:
             data['type'] = rtype
         if content:
             data['content'] = content
+
+        # As TTL is a Lexicon option, not a provider option, grab it separately here.
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
             
@@ -126,6 +138,11 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+
+        # # Make sure TXT records are wrapped in quotes
+        # if content:
+        #     content = self._add_quotes(rtype, content)
+
         delete_record_ids = []
 
         # If we've not been given an identifier, search for matching records.
@@ -166,11 +183,44 @@ class Provider(BaseProvider):
         response = requests.request(action, url, params=query_params,
                                     data=json.dumps(data),
                                     headers=default_headers)
-        
+
+        # Sort this out to work properly, writing errors to the correct place
+        if 'content' in response:
+            resp = json.loads(response.content)
+            if 'errors' in resp:
+                for error in resp['errors']:
+                    print("ERROR: " + error['detail'])
+
         # If the request fails for any reason, throw an error.
         response.raise_for_status()
 
+        # There is no JSON returned when calling with DELETE
         if not action == 'DELETE':
             return response.json()
 
         return True
+
+    # The content of TXT entries must be quoted. This static method ensures that.
+    # Lifted from `googleclouddns.py`
+    @staticmethod
+    def _add_quotes(rtype, content):
+        if rtype == 'TXT':
+            if not content.startswith('"') and not content.endswith('"'):
+                return '"{0}"'.format(content)
+        return content
+
+    @staticmethod
+    def _remove_quotes(rtype, content):
+        if rtype == 'TXT':
+            return content.strip('"')
+        return content
+
+    # Ensure every name has the FQDN attached
+    @staticmethod
+    def _add_domain_name(name, domain):
+        if not name.endswith(domain):
+            return '{0}.{1}'.format(name, domain)
+        return name
+
+        # if rtype == 'CNAME':
+        #     return '{0}.'.format(content) if not content.endswith('.') else content
