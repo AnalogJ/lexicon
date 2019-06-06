@@ -44,6 +44,7 @@ The current supported providers are:
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
+- Dreamhost ([docs](https://help.dreamhost.com/hc/en-us/articles/217560167-API_overview))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Easyname ([docs](https://www.easyname.com/en))
 - ExoScale ([docs](https://community.exoscale.com/documentation/dns/api/))
@@ -132,7 +133,7 @@ To use lexicon as a CLI application, do the following:
 Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L86-L97) separately:
 
     pip install dns-lexicon[route53]
-    
+
 To install lexicon with the additional dependencies of every provider, do the following:
 
     pip install dns-lexicon[full]
@@ -144,7 +145,7 @@ You can also install the latest version from the repository directly.
 and with Route 53 provider dependencies:
 
     pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
-    
+
 *As an alternative you can also install Lexicon using the OS packages available for major Linux distributions (see `lexicon` or `dns-lexicon` package in https://pkgs.org/download/lexicon).*
 
 ## Usage

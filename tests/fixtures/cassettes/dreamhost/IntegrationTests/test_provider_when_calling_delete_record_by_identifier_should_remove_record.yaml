@@ -1,0 +1,117 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=domain-list_domains&format=json
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":[{"domain":"lexicon-example.com"}]}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:53:58 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=dns-add_record&format=json&record=delete.testid.lexicon-example.com&value=challengetoken&type=TXT
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":"record_added"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:54:02 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=dns-list_records&format=json
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":[{"value":"challengetoken","record":"random.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"record":"docs.lexicon-example.com","value":"docs.example.com","type":"CNAME","zone":"lexicon-example.com"},{"record":"localhost.lexicon-example.com","value":"127.0.0.1","type":"A","zone":"lexicon-example.com","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.fqdn.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.full.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"orig.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"delete.testid.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"}]}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:53:58 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=dns-remove_record&format=json&record=delete.testid.lexicon-example.com&value=challengetoken&type=TXT
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":"record_removed"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:54:05 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=dns-list_records&format=json
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":[{"value":"challengetoken","record":"random.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"record":"docs.lexicon-example.com","value":"docs.example.com","type":"CNAME","zone":"lexicon-example.com"},{"record":"localhost.lexicon-example.com","value":"127.0.0.1","type":"A","zone":"lexicon-example.com","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.fqdn.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.full.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"_acme-challenge.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"},{"value":"challengetoken","record":"orig.test.lexicon-example.com","type":"TXT","zone":"lexicon-example.com"}]}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:54:07 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+version: 1
