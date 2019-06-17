@@ -1,8 +1,11 @@
 """Module provider for DirectAdmin hosts"""
+import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
+
+LOGGER = logging.getLogger(__name__)
 
 def provider_parser(subparser):
     """Return the parser for this provider"""
