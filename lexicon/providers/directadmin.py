@@ -98,7 +98,37 @@ class Provider(BaseProvider):
         None
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        None
+        # If the content contains spaces, the value needs to be wrapped in
+        # quotes. This needs to happen first as the result is used to finnd the
+        # index of the existing record below
+        if content is None:
+            content = ''
+        if content.find(' ') > 0:
+            content = '"{0}"'.format(content)
+
+        # The indicator for the record that needs to be removed is determined
+        # by the type of the record and its index within all records of that
+        # type. There's an additional check on the name and value which still
+        # need to match for the removal to actually occur
+        existing_records = self.list_records(rtype)
+        existing_record_index = 0
+        cmp_name = self._relative_name(name.lower())
+        for (index, record) in enumerate(existing_records):
+            if record['name'] == cmp_name and record['content'] == content:
+                existing_record_index = index
+
+        selecttype = '{0}recs{1}'.format(rtype, existing_record_index).lower()
+        value = 'name={0}&value={1}'.format(name, content)
+        query_params = { 'action': 'select', selecttype: value }
+
+        try:
+            response = self._get('/', query_params)
+        except requests.exceptions.HTTPError:
+            response = { 'success': False }
+
+        LOGGER.debug('delete_record: %s', response)
+
+        return response['success'].lower().find('deleted') > 0
 
     def _request(self, action='GET', url='/', data={}, query_params={}):
         if query_params is None:
