@@ -1,6 +1,7 @@
 """Module provider for DirectAdmin hosts"""
 import logging
 import requests
+import warnings
 
 from lexicon.providers.base import Provider as BaseProvider
 from requests.auth import HTTPBasicAuth
@@ -95,15 +96,56 @@ class Provider(BaseProvider):
         }
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        None
+        # Editing a record is a combination of removing the old record and
+        # adding a new one, but specifying 'edit' as the action while passing
+        # all parameters necessary for both deletion and creation
+
+        # The original value of record to edit is necessary to be able to
+        # create the appropriate delete payload
+        original_records = self.list_records(rtype, name)
+        if len(original_records) > 1:
+            warnings.warn('Found multiple records to edited. Cannot continue...')
+            return False
+        original_content = original_records[0]['content']
+
+        delete_key, delete_value = self._build_delete_payload(rtype, name, original_content)
+
+        query_params = {
+            'action': 'edit',
+            delete_key: delete_value,
+            'name': name, 'type': rtype, 'value': content
+        }
+
+        try:
+            response = self._get('/', query_params)
+        except requests.exceptions.HTTPError:
+            response = { 'success': False }
+
+        LOGGER.debug('update_record: %s', response)
+
+        return response['success'].lower().find('added') > 0
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        delete_key, delete_value = self._build_delete_payload(rtype, name, content)
+        query_params = { 'action': 'select', delete_key: delete_value }
+
+        try:
+            response = self._get('/', query_params)
+        except requests.exceptions.HTTPError:
+            response = { 'success': False }
+
+        LOGGER.debug('delete_record: %s', response)
+
+        return response['success'].lower().find('deleted') > 0
+
+    def _build_delete_payload(self, rtype=None, name=None, content=None):
         # If the content contains spaces, the value needs to be wrapped in
-        # quotes. This needs to happen first as the result is used to finnd the
-        # index of the existing record below
+        # quotes. This needs to happen first as the result is used to find the
+        # index of the existing record below. However, be sure to not requote
+        # already quoted values
         if content is None:
             content = ''
-        if content.find(' ') > 0:
+        if content.find(' ') > 0 and content[0] != '"':
             content = '"{0}"'.format(content)
 
         # The indicator for the record that needs to be removed is determined
@@ -119,16 +161,8 @@ class Provider(BaseProvider):
 
         selecttype = '{0}recs{1}'.format(rtype, existing_record_index).lower()
         value = 'name={0}&value={1}'.format(name, content)
-        query_params = { 'action': 'select', selecttype: value }
 
-        try:
-            response = self._get('/', query_params)
-        except requests.exceptions.HTTPError:
-            response = { 'success': False }
-
-        LOGGER.debug('delete_record: %s', response)
-
-        return response['success'].lower().find('deleted') > 0
+        return selecttype, value
 
     def _request(self, action='GET', url='/', data={}, query_params={}):
         if query_params is None:
