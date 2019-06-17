@@ -24,6 +24,8 @@ def provider_parser(subparser):
         help = "specify the DirectAdmin endpoint"
     )
 
+# See https://www.directadmin.com/features.php?id=504 for the specification of
+# the URIs for the different operations
 class Provider(BaseProvider):
     """Provider class for DirectAdmin"""
     def __init__(self, config):
@@ -46,7 +48,37 @@ class Provider(BaseProvider):
         None
 
     def _list_records(self, rtype=None, name=None, content=None):
-        None
+        response = { 'records': [] }
+        try:
+            response = self._get()
+        except requests.exceptions.HTTPError as err:
+            print(err.response.text)
+            raise
+
+        records = response['records']
+        if rtype:
+            records = [ record for record in records if record['type'] == rtype ]
+        if name:
+            cmp_name = self._relative_name(name.lower())
+            records = [ record for record in records if record['name'] == cmp_name ]
+        if content:
+            records = [ record for record in records if record['value'] == content ]
+
+        records = [ self._parse_response_record(record) for record in records ]
+
+        LOGGER.debug('list_records: %s', records)
+
+        return records
+
+    def _parse_response_record(self, response_record):
+        # Most fields in a record response match, except for content which is
+        # value
+        return {
+            'content': response_record['value'],
+            'name': response_record['name'],
+            'ttl': response_record['ttl'],
+            'type': response_record['type']
+        }
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         None
