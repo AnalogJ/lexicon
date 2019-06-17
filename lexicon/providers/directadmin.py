@@ -45,7 +45,21 @@ class Provider(BaseProvider):
             raise Exception(cause)
 
     def _create_record(self, rtype, name, content):
-        None
+        query_params = {
+            'action': 'add', 'name': name, 'type': rtype, 'value': content
+        }
+
+        if self._get_lexicon_option('ttl'):
+            query_params['ttl'] = self._get_lexicon_option('ttl')
+
+        try:
+            response = self._get('/', query_params)
+        except requests.exceptions.HTTPError:
+            response = { 'success': False }
+
+        LOGGER.debug('create_record: %s', response)
+
+        return response['success'].lower().find('added') >= 0
 
     def _list_records(self, rtype=None, name=None, content=None):
         response = { 'records': [] }
