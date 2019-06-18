@@ -81,16 +81,14 @@ class Provider(BaseProvider):
             print(err.response.text)
             raise
 
-        records = response['records']
+        records = [ self._parse_response_record(record) for record in response['records'] ]
         if rtype:
             records = [ record for record in records if record['type'] == rtype ]
         if name:
-            cmp_name = self._relative_name(name.lower())
+            cmp_name = self._full_name(name.lower())
             records = [ record for record in records if record['name'] == cmp_name ]
         if content:
-            records = [ record for record in records if record['value'] == content ]
-
-        records = [ self._parse_response_record(record) for record in records ]
+            records = [ record for record in records if record['content'] == content ]
 
         LOGGER.debug('list_records: %s', records)
 
