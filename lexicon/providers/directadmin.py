@@ -38,12 +38,20 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         try:
-            response = self._get()
+            response = self._get('/CMD_API_SHOW_DOMAINS')
         except requests.exceptions.HTTPError as err:
             # A 401 error will be returned in case of incorrect or missing
             # credentials
             cause = err.response.json()['error']
             raise Exception(cause)
+
+        # The response is a URL encoded array containing all available domains
+        domains = [ domain.split('=').pop() for domain in response.split('&') ]
+
+        try:
+            self.domain_id = domains.index(self.domain)
+        except:
+            raise Exception('Domain {0} not found'.format(self.domain))
 
     def _create_record(self, rtype, name, content):
         query_params = {
