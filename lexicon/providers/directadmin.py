@@ -67,7 +67,7 @@ class Provider(BaseProvider):
         try:
             response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
-            response = { 'success': False }
+            response = { 'success': 'Create Failed' }
 
         LOGGER.debug('create_record: %s', response)
 
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
         try:
             response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
-            response = { 'success': False }
+            response = { 'success': 'Update Failed' }
 
         LOGGER.debug('update_record: %s', response)
 
