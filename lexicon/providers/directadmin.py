@@ -102,7 +102,9 @@ class Provider(BaseProvider):
         return {
             'content': response_record['value'],
             'name': self._full_name(response_record['name']),
-            'ttl': response_record['ttl'],
+            # 4 hours appears to be the default shown by DirectAdmin if no TTL
+            # is set
+            'ttl': response_record.get('ttl', 14400),
             'type': response_record['type']
         }
 
