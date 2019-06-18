@@ -101,7 +101,7 @@ class Provider(BaseProvider):
         # value
         return {
             'content': response_record['value'],
-            'name': response_record['name'],
+            'name': self._full_name(response_record['name']),
             'ttl': response_record['ttl'],
             'type': response_record['type']
         }
