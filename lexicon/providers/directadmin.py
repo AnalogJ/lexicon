@@ -112,19 +112,21 @@ class Provider(BaseProvider):
         # adding a new one, but specifying 'edit' as the action while passing
         # all parameters necessary for both deletion and creation
 
-        # The original value of record to edit is necessary to be able to
-        # create the appropriate delete payload
-        original_records = self.list_records(rtype, name)
-        if len(original_records) > 1:
-            warnings.warn('Found multiple records to edited. Cannot continue...')
-            return False
-        original_content = original_records[0]['content']
+        if not identifier:
+            # The identifier of the original record to edit is necessary to be
+            # able to create the appropriate delete payload
+            original_records = self.list_records(rtype, name)
+            if len(original_records) > 1:
+                warnings.warn('Found multiple records to edited. Cannot continue...')
+                return False
 
-        delete_key, delete_value = self._build_delete_payload(rtype, name, original_content)
+            identifier = original_records[0]['id']
+
+        delete_key = self._determine_delete_key(name, rtype)
 
         query_params = {
             'action': 'edit', 'json': 'yes',
-            delete_key: delete_value,
+            delete_key: identifier,
             'name': name, 'type': rtype, 'value': content
         }
 
@@ -138,43 +140,37 @@ class Provider(BaseProvider):
         return response['success'].lower().find('added') > 0
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        delete_key, delete_value = self._build_delete_payload(rtype, name, content)
-        query_params = { 'action': 'select', 'json': 'yes', delete_key: delete_value }
+        if not identifier:
+            identifiers = [ record['id'] for record in self._list_records(rtype, name, content) ]
+        else:
+            identifiers = [ identifier ]
 
-        try:
-            response = self._get('/CMD_API_DNS_CONTROL', query_params)
-        except requests.exceptions.HTTPError:
-            response = { 'success': False }
+        response = { 'success': 'noop' }
+        for identifier in identifiers:
+            delete_key = self._determine_delete_key(name, rtype)
+            query_params = { 'action': 'select', 'json': 'yes', delete_key: identifier }
 
-        LOGGER.debug('delete_record: %s', response)
+            try:
+                response = self._get('/CMD_API_DNS_CONTROL', query_params)
+            except requests.exceptions.HTTPError:
+                response = { 'success': 'Delete Failed' }
+
+            LOGGER.debug('delete_record: %s', response)
 
         return response['success'].lower().find('deleted') > 0
 
-    def _build_delete_payload(self, rtype=None, name=None, content=None):
-        # If the content contains spaces, the value needs to be wrapped in
-        # quotes. This needs to happen first as the result is used to find the
-        # index of the existing record below. However, be sure to not requote
-        # already quoted values
-        if content is None:
-            content = ''
-        if content.find(' ') > 0 and content[0] != '"':
-            content = '"{0}"'.format(content)
-
+    def _determine_delete_key(self, identifier, rtype):
         # The indicator for the record that needs to be removed is determined
         # by the type of the record and its index within all records of that
         # type. There's an additional check on the name and value which still
         # need to match for the removal to actually occur
         existing_records = self.list_records(rtype)
         existing_record_index = 0
-        cmp_name = self._relative_name(name.lower())
         for (index, record) in enumerate(existing_records):
-            if record['name'] == cmp_name and record['content'] == content:
+            if record['id'] == identifier:
                 existing_record_index = index
 
-        selecttype = '{0}recs{1}'.format(rtype, existing_record_index).lower()
-        value = 'name={0}&value={1}'.format(name, content)
-
-        return selecttype, value
+        return '{0}recs{1}'.format(rtype, existing_record_index).lower()
 
     def _request(self, action='GET', url='/', data={}, query_params={}):
         if query_params is None:
