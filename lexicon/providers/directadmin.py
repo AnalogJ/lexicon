@@ -47,14 +47,14 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         query_params = {
-            'action': 'add', 'name': name, 'type': rtype, 'value': content
+            'action': 'add', 'json': 'yes', 'name': name, 'type': rtype, 'value': content
         }
 
         if self._get_lexicon_option('ttl'):
             query_params['ttl'] = self._get_lexicon_option('ttl')
 
         try:
-            response = self._get('/', query_params)
+            response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
             response = { 'success': False }
 
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         response = { 'records': [] }
         try:
-            response = self._get()
+            response = self._get('/CMD_API_DNS_CONTROL', { 'json': 'yes' })
         except requests.exceptions.HTTPError as err:
             print(err.response.text)
             raise
@@ -111,13 +111,13 @@ class Provider(BaseProvider):
         delete_key, delete_value = self._build_delete_payload(rtype, name, original_content)
 
         query_params = {
-            'action': 'edit',
+            'action': 'edit', 'json': 'yes',
             delete_key: delete_value,
             'name': name, 'type': rtype, 'value': content
         }
 
         try:
-            response = self._get('/', query_params)
+            response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
             response = { 'success': False }
 
@@ -127,10 +127,10 @@ class Provider(BaseProvider):
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_key, delete_value = self._build_delete_payload(rtype, name, content)
-        query_params = { 'action': 'select', delete_key: delete_value }
+        query_params = { 'action': 'select', 'json': 'yes', delete_key: delete_value }
 
         try:
-            response = self._get('/', query_params)
+            response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
             response = { 'success': False }
 
@@ -169,10 +169,9 @@ class Provider(BaseProvider):
             query_params = {}
 
         query_params['domain'] = self.domain
-        query_params['json'] = 'yes'
 
         response = requests.request(
-            action, self.endpoint + '/CMD_API_DNS_CONTROL',
+            action, self.endpoint + url,
             auth=HTTPBasicAuth(
                 self._get_provider_option('auth_username'),
                 self._get_provider_option('auth_password')
@@ -183,4 +182,7 @@ class Provider(BaseProvider):
         # If the request fails for any reason, throw an error
         response.raise_for_status()
 
-        return response.json()
+        if 'json' in query_params:
+            return response.json()
+        else:
+            return response.text
