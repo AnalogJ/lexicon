@@ -8,6 +8,9 @@ from requests.auth import HTTPBasicAuth
 
 LOGGER = logging.getLogger(__name__)
 
+# DirectAdmin is not tied to a specific domain, so there is nothing to specify here
+NAMESERVER_DOMAINS = []
+
 def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.add_argument(
