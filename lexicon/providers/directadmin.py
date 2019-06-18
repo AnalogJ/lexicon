@@ -99,6 +99,7 @@ class Provider(BaseProvider):
         # value
         return {
             'content': response_record['value'],
+            'id': response_record['combined'],
             'name': self._full_name(response_record['name']),
             # 4 hours appears to be the default shown by DirectAdmin if no TTL
             # is set
