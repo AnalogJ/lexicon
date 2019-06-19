@@ -80,7 +80,7 @@ class Provider(BaseProvider):
         try:
             response = self._get('/CMD_API_DNS_CONTROL', { 'json': 'yes' })
         except requests.exceptions.HTTPError as err:
-            print(err.response.text)
+            warnings.warn(err.response.text)
             raise
 
         records = [ self._parse_response_record(record) for record in response['records'] ]
