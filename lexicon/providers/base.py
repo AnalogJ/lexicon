@@ -147,6 +147,9 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
     def _put(self, url='/', data=None, query_params=None):
         return self._request('PUT', url, data=data, query_params=query_params)
 
+    def _patch(self, url='/', data=None, query_params=None):
+        return self._request('PATCH', url, data=data, query_params=query_params)
+
     def _delete(self, url='/', query_params=None):
         return self._request('DELETE', url, query_params=query_params)
 

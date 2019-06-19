@@ -145,11 +145,6 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_record: %s', True)
         return True
 
-    # As there is no _patch method available from Provider, let's create our own
-    # by creating a _request with action 'PATCH'.
-    def _patch(self, url='/', data=None, query_params=None):
-        return self._request('PATCH', url, data=data, query_params=query_params)
-
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
