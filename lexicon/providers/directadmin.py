@@ -58,7 +58,9 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         query_params = {
-            'action': 'add', 'json': 'yes', 'name': name, 'type': rtype, 'value': content
+            'action': 'add', 'json': 'yes',
+            'name': '{0}.'.format(self._full_name(name)), 'type': rtype,
+            'value': content
         }
 
         if self._get_lexicon_option('ttl'):
@@ -122,12 +124,13 @@ class Provider(BaseProvider):
 
             identifier = original_records[0]['id']
 
-        delete_key = self._determine_delete_key(name, rtype)
+        delete_key = self._determine_delete_key(identifier, rtype)
 
         query_params = {
             'action': 'edit', 'json': 'yes',
             delete_key: identifier,
-            'name': name, 'type': rtype, 'value': content
+            'name': '{0}.'.format(self._full_name(name)), 'type': rtype,
+            'value': content
         }
 
         try:
@@ -147,7 +150,7 @@ class Provider(BaseProvider):
 
         response = { 'success': 'noop' }
         for identifier in identifiers:
-            delete_key = self._determine_delete_key(name, rtype)
+            delete_key = self._determine_delete_key(identifier, rtype)
             query_params = { 'action': 'select', 'json': 'yes', delete_key: identifier }
 
             try:
@@ -164,6 +167,18 @@ class Provider(BaseProvider):
         # by the type of the record and its index within all records of that
         # type. There's an additional check on the name and value which still
         # need to match for the removal to actually occur
+        if not rtype:
+            # An rtype is necessary to create the delete_key. However, it may
+            # not be specified in which case an effort needs to be made to
+            # figure it out automatically. The necessary data can be recreated
+            # from the identifier
+            identifier_parts = identifier.split('&')
+            name = identifier_parts[0].split('=').pop()
+            content = identifier_parts[1].split('=').pop()
+
+            records = self.list_records(None, name, content)
+            rtype = records[0]['type']
+
         existing_records = self.list_records(rtype)
         existing_record_index = 0
         for (index, record) in enumerate(existing_records):
