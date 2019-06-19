@@ -105,6 +105,14 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if not identifier:
+            records = self._list_records(rtype, name)
+            if len(records) == 1:
+                identifier = records[0]['id']
+            elif len(records) > 1:
+                raise Exception('Several record identifiers match the request')
+            else:
+                raise Exception('Record identifier could not be found')
 
         # Make sure TXT records are wrapped in quotes
         if content:

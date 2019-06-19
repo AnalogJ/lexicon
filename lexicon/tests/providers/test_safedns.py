@@ -21,12 +21,3 @@ class SafednsProviderTests(TestCase, IntegrationTests):
     @pytest.mark.skip(reason="CNAME requires FQDN for this provider")
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
         return
-
-    @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
-        return
-
-    def _filter_response(self, response):
-        """See `IntegrationTests._filter_response` for more information on how
-        to filter the provider response."""
-        return response
