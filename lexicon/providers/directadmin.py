@@ -57,6 +57,11 @@ class Provider(BaseProvider):
             raise Exception('Domain {0} not found'.format(self.domain))
 
     def _create_record(self, rtype, name, content):
+        # Refuse to create duplicate records
+        existing_records = self._list_records(rtype, name, content)
+        if len(existing_records) > 0:
+            return True
+
         query_params = {
             'action': 'add', 'json': 'yes',
             'name': '{0}.'.format(self._full_name(name)), 'type': rtype,
