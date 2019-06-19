@@ -50,12 +50,12 @@ class Provider(BaseProvider):
 
             # Assign the returned attributes to the keys that lexicon expects
             for record in payload['data']:
+                record = self._clean_TXT_record(record)
                 processed_record = {
                     'id': record['id'],
                     'name': record['name'],
                     'type': record['type'],
-                    # Make sure TXT records are wrapped before sending
-                    'content': self._remove_quotes(record['type'], record['content']),
+                    'content': record['content'],
                     'updated_at': record['updated_at'],
                     'ttl': record['ttl'],
                     'priority': record['priority']
@@ -184,12 +184,4 @@ class Provider(BaseProvider):
         if rtype == 'TXT':
             if not content.startswith('"') and not content.endswith('"'):
                 return '"{0}"'.format(content)
-        return content
-
-    # When we're getting a response, we don't want quotes to wrap the content.
-    # This method removes them
-    @staticmethod
-    def _remove_quotes(rtype, content):
-        if rtype == 'TXT':
-            return content.strip('"')
         return content
