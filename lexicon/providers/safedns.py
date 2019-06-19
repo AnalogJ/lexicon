@@ -105,6 +105,13 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+
+        # Make sure the update won't cause a duplicate entry. If it will, fail silently
+        records = self._list_records(rtype, name, content)
+        if len(records) >= 1:
+            LOGGER.debug('update_record: (ignored, update would cause a duplicate record): $s', records[0]['id'])
+            return True
+        
         if not identifier:
             records = self._list_records(rtype, name)
             if len(records) == 1:
