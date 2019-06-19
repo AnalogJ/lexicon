@@ -127,6 +127,10 @@ class Provider(BaseProvider):
                 warnings.warn('Found multiple records to edited. Cannot continue...')
                 return False
 
+            if len(original_records) == 0:
+                warnings.warn('Found no records to edit. Cannot continue...')
+                return False
+
             identifier = original_records[0]['id']
 
         delete_key = self._determine_delete_key(identifier, rtype)
