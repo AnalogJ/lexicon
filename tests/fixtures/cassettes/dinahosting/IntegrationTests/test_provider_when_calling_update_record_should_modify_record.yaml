@@ -1,0 +1,338 @@
+interactions:
+- request:
+    body: command=Services_GetDomains&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a712fc0c6.65532424","responseCode":1000,"message":"Success.","data":[{"domain":"isawonderfulserenity.com","tld":"com","startDate":"2019-01-14","endDate":"2020-01-14"},{"domain":"isawonderfulserenity.net","tld":"net","startDate":"2019-01-14","endDate":"2020-01-14"},{"domain":"itslikethesesweet.info","tld":"info","startDate":"2019-02-23","endDate":"2020-02-23"},{"domain":"itslikethesesweet.fr","tld":"fr","startDate":"2019-02-28","endDate":"2020-02-28"},{"domain":"themorningsofspring.com","tld":"com","startDate":"2019-04-13","endDate":"2020-04-13"},{"domain":"themorningsofspring.net","tld":"net","startDate":"2019-12-03","endDate":"2020-12-03"}],"command":"Services_GetDomains"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:05 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=rs7hjt5tbp0t1c7l0bs2fhph94; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '698'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: domain=itslikethesesweet.info&hostname=orig.test&command=Domain_Zone_AddTypeTXT&text=challengetoken&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '117'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a7162ab87.23837272","responseCode":1000,"message":"Success.","data":null,"command":"Domain_Zone_AddTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:05 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=dp770que81g1ubpgaehkndmc71; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: command=Domain_Zone_GetTypeTXT&domain=itslikethesesweet.info&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '78'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a735cab83.54065125","responseCode":1000,"message":"Success.","data":[{"host":"_acme-challenge.listrecordset","text":"challengetoken1"},{"host":"_acme-challenge.createrecordset","text":"challengetoken1"},{"host":"_acme-challenge.listrecordset","text":"challengetoken2"},{"host":"_acme-challenge.full","text":"challengetoken"},{"host":"_acme-challenge.fqdn","text":"challengetoken"},{"host":"orig.test","text":"challengetoken"},{"host":"_acme-challenge.deleterecordinset","text":"challengetoken2"},{"host":"random.fulltest","text":"challengetoken"},{"host":"random.test","text":"challengetoken"},{"host":"_acme-challenge.createrecordset","text":"challengetoken2"},{"host":"_acme-challenge.noop","text":"challengetoken"},{"host":"random.fqdntest","text":"challengetoken"},{"host":"_acme-challenge.test","text":"challengetoken"}],"command":"Domain_Zone_GetTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:07 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=qcdqkgjimq5i3s6696hfqv3t37; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '877'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: command=Domain_Zone_GetTypeTXT&domain=itslikethesesweet.info&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '78'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a73864e93.97250453","responseCode":1000,"message":"Success.","data":[{"host":"_acme-challenge.listrecordset","text":"challengetoken1"},{"host":"_acme-challenge.createrecordset","text":"challengetoken1"},{"host":"_acme-challenge.listrecordset","text":"challengetoken2"},{"host":"_acme-challenge.full","text":"challengetoken"},{"host":"_acme-challenge.fqdn","text":"challengetoken"},{"host":"orig.test","text":"challengetoken"},{"host":"_acme-challenge.deleterecordinset","text":"challengetoken2"},{"host":"random.fulltest","text":"challengetoken"},{"host":"random.test","text":"challengetoken"},{"host":"_acme-challenge.createrecordset","text":"challengetoken2"},{"host":"_acme-challenge.noop","text":"challengetoken"},{"host":"random.fqdntest","text":"challengetoken"},{"host":"_acme-challenge.test","text":"challengetoken"}],"command":"Domain_Zone_GetTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:07 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=2jhpckl4ktd0g384mrfej6ng01; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '877'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: command=Domain_Zone_GetTypeTXT&domain=itslikethesesweet.info&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '78'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a73b13417.02806876","responseCode":1000,"message":"Success.","data":[{"host":"_acme-challenge.listrecordset","text":"challengetoken1"},{"host":"_acme-challenge.createrecordset","text":"challengetoken1"},{"host":"_acme-challenge.listrecordset","text":"challengetoken2"},{"host":"_acme-challenge.full","text":"challengetoken"},{"host":"_acme-challenge.fqdn","text":"challengetoken"},{"host":"orig.test","text":"challengetoken"},{"host":"_acme-challenge.deleterecordinset","text":"challengetoken2"},{"host":"random.fulltest","text":"challengetoken"},{"host":"random.test","text":"challengetoken"},{"host":"_acme-challenge.createrecordset","text":"challengetoken2"},{"host":"_acme-challenge.noop","text":"challengetoken"},{"host":"random.fqdntest","text":"challengetoken"},{"host":"_acme-challenge.test","text":"challengetoken"}],"command":"Domain_Zone_GetTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:07 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=dcmtsit7sj6g62smufm1ktmjk5; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '877'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: domain=itslikethesesweet.info&hostname=orig.test&command=Domain_Zone_DeleteTypeTXT&text=challengetoken&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '120'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a73e461a4.38595661","responseCode":1000,"message":"Success.","data":null,"command":"Domain_Zone_DeleteTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:07 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=5ps333v342cf1h083ejps0l285; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '127'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: domain=itslikethesesweet.info&hostname=updated.test&command=Domain_Zone_AddTypeTXT&text=challengetoken&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '120'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a77508519.44739397","responseCode":1000,"message":"Success.","data":null,"command":"Domain_Zone_AddTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:57:11 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=ju7e0vg3nmu5do1d493usf5ld6; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+version: 1

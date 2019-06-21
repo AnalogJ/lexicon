@@ -1,0 +1,194 @@
+interactions:
+- request:
+    body: command=Services_GetDomains&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a658a3958.74492203","responseCode":1000,"message":"Success.","data":[{"domain":"isawonderfulserenity.com","tld":"com","startDate":"2019-01-14","endDate":"2020-01-14"},{"domain":"isawonderfulserenity.net","tld":"net","startDate":"2019-01-14","endDate":"2020-01-14"},{"domain":"itslikethesesweet.info","tld":"info","startDate":"2019-02-23","endDate":"2020-02-23"},{"domain":"itslikethesesweet.fr","tld":"fr","startDate":"2019-02-28","endDate":"2020-02-28"},{"domain":"themorningsofspring.com","tld":"com","startDate":"2019-04-13","endDate":"2020-04-13"},{"domain":"themorningsofspring.net","tld":"net","startDate":"2019-12-03","endDate":"2020-12-03"}],"command":"Services_GetDomains"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:56:53 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=4qik4lmepc27l13f3uqe7jsec1; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '698'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: domain=itslikethesesweet.info&hostname=_acme-challenge.listrecordset&command=Domain_Zone_AddTypeTXT&text=challengetoken1&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '138'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a65b26e59.02791670","responseCode":1000,"message":"Success.","data":null,"command":"Domain_Zone_AddTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:56:53 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=ksmpvtg26afj84vllqeelvd4c2; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: domain=itslikethesesweet.info&hostname=_acme-challenge.listrecordset&command=Domain_Zone_AddTypeTXT&text=challengetoken2&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '138'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a677d25a3.70361142","responseCode":1000,"message":"Success.","data":null,"command":"Domain_Zone_AddTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:56:55 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=hhnlusrvhrumjq252bd2dnv9n1; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: command=Domain_Zone_GetTypeTXT&domain=itslikethesesweet.info&responseType=Json
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '78'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.21.0
+    method: POST
+    uri: https://dinahosting.com/special/api.php
+  response:
+    body:
+      string: '{"trId":"dh5d0d1a696dddf1.46009187","responseCode":1000,"message":"Success.","data":[{"host":"_acme-challenge.listrecordset","text":"challengetoken2"},{"host":"_acme-challenge.full","text":"challengetoken"},{"host":"_acme-challenge.fqdn","text":"challengetoken"},{"host":"_acme-challenge.listrecordset","text":"challengetoken1"},{"host":"_acme-challenge.createrecordset","text":"challengetoken1"},{"host":"_acme-challenge.createrecordset","text":"challengetoken2"},{"host":"_acme-challenge.noop","text":"challengetoken"},{"host":"_acme-challenge.deleterecordinset","text":"challengetoken2"},{"host":"_acme-challenge.test","text":"challengetoken"}],"command":"Domain_Zone_GetTypeTXT"}'
+    headers:
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Fri, 21 Jun 2019 17:56:57 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Set-Cookie:
+      - PHPSESSID=sds86cp0u2193ejcungd4ajqc5; path=/
+      Strict-Transport-Security:
+      - max-age=2629750
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '683'
+    status:
+      code: 200
+      message: OK
+version: 1
