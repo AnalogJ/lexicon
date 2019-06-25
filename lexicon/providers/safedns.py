@@ -118,7 +118,10 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]['id']
             elif len(records) > 1:
-                raise Exception('Several record identifiers match the request')
+                identifier = records[0]['id']
+                LOGGER.warning(
+                    'Warning, multiple records found for given parameters, '
+                    'only first one will be updated: %s', records)
             else:
                 raise Exception('Record identifier could not be found')
 
