@@ -200,7 +200,7 @@ Next, you should add yourself to the [CODEOWNERS file](https://github.com/Analog
 Please keep in mind the following:
 
 - `lexicon` is designed to work with multiple versions of python. That means
-your code will be tested against python 2.7, 3.4, 3.5
+your code will be tested against python 2.7, 3.5, 3.6 and 3.7
 - any provider specific dependenices should be added to the `setup.py` file,
  under the `extra_requires` heading. The group name should be the name of the
  provider. eg:
