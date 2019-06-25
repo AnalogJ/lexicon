@@ -15,11 +15,10 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/thisisadomainidonotown.com
+    uri: https://api.ukfast.io/safedns/v1/zones/calv.tk
   response:
     body:
-      string: !!python/unicode '{"errors":[{"title":"Zone Not Found","detail":"Zone
-        name not found","status":404,"source":"zone_uri"}]}'
+      string: !!python/unicode '{"data":{"name":"calv.tk","description":""},"meta":{}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
@@ -28,13 +27,13 @@ interactions:
       connection:
       - close
       content-length:
-      - '103'
+      - '54'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 19:58:06 GMT
+      - Mon, 03 Jun 2019 05:26:28 GMT
       request-id:
-      - d017bb3a-39d1-46b4-8ef1-16f7c3ed2576
+      - 9d88f79c-0304-4f97-8bf8-a59bdbef4ec3
       server:
       - UKFast Web Services
       transfer-encoding:
@@ -42,6 +41,6 @@ interactions:
       vary:
       - Origin
     status:
-      code: 404
-      message: Not Found
+      code: 200
+      message: OK
 version: 1
