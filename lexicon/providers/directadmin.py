@@ -16,7 +16,7 @@ def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.add_argument(
         "--auth-password",
-        help="specify password for authentication (or login key in case of two-factor-authentication)"
+        help="specify password for authentication (or login key for two-factor authentication)"
     )
 
     subparser.add_argument(
