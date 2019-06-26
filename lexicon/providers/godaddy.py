@@ -48,6 +48,7 @@ class Provider(BaseProvider):
     because identifier value is tied to the content of the record, and will change anytime
     something is changed in the record.
     """
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

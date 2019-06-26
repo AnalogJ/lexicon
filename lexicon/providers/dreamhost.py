@@ -1,5 +1,6 @@
 """Module provider for Dreamhost"""
 from __future__ import absolute_import
+import base64
 import json
 import logging
 import time
@@ -12,20 +13,85 @@ LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dreamhost.com']
 
+_DATA_NON_EXIST_ERROR_LIST = [
+    'no_record',
+    'no_type',
+    'no_value',
+    'no_such_record',
+    'no_such_type',
+    'no_such_value',
+    'no_such_zone',
+]
+
+_DATA_ALREADY_EXIST_ERROR_LIST = [
+    'record_already_exists_not_editable',
+    'record_already_exists_remove_first',
+    'CNAME_already_on_record',
+]
+
+
+class NonExistError(Exception):
+    """NonExistError"""
+
+
+class AlreadyExistError(Exception):
+    """AlreadyExistError"""
+
 
 def provider_parser(subparser):
-    """Module provider for Linode"""
+    """Module provider for Dreamhost"""
     subparser.add_argument(
         "--auth-token", help="specify api key for authentication")
 
 
 class Provider(BaseProvider):
-    """Provider class for Linode"""
+    """Provider class for Dreamhost"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = 'https://api.dreamhost.com/'
+
+    # Dreamhost provides no identifier for a record.
+    # Furthermore, Dreamhost requires type, record, value to delete a record.
+    # The record defined in lexicon is {type, name, content, id}
+    # We use base64(json({'type', 'name', 'content'}))
+    # as the identifier of Dreamhost record.
+    @staticmethod
+    def _identifier(dreamhost_record):
+        id_struct = {
+            'type': dreamhost_record['type'],
+            'name': dreamhost_record['record'],
+            'content': dreamhost_record['value'],
+        }
+        return base64.urlsafe_b64encode(json.dumps(id_struct).encode('utf-8')).decode('utf-8')
+
+    # The information in identifier follows the record in lexicon.
+    # Provider._record_to_dreamhost_record transfers to dreamhost-based record.
+    @staticmethod
+    def _id_to_dreamhost_record(identifier):
+        record = json.loads(base64.urlsafe_b64decode(identifier.encode('utf-8')).decode('utf-8'))
+        dreamhost_record = Provider._record_to_dreamhost_record(record)
+        return dreamhost_record
+
+    # The information in identifier follows the record in lexicon.
+    # 'id' is added in the record.
+    @staticmethod
+    def _id_to_record(identifier):
+        record = json.loads(base64.urlsafe_b64decode(identifier.encode('utf-8')).decode('utf-8'))
+        record['id'] = identifier
+
+        return record
+
+    # Transferring lexicon-based record to Dreamhost-based record.
+    @staticmethod
+    def _record_to_dreamhost_record(record):
+        dreamhost_record = {
+            'type': record['type'],
+            'record': record['name'],
+            'value': record['content'],
+        }
+        return dreamhost_record
 
     def _authenticate(self):
         self.domain_id = None
@@ -42,16 +108,15 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         name = self._full_name(name)
-        payload = self._get('dns-add_record', query_params={
-            'record': name,
-            'type': rtype,
-            'value': content,
-        })
 
-        if (payload.get('result', '') != 'success' and
-                payload.get('data', '') != 'record_already_exists_remove_first' and
-                payload.get('data', '') != 'record_already_exists_not_editable'):
-            raise Exception('unable to add record: %s' % payload)
+        try:
+            self._get('dns-add_record', query_params={
+                'record': name,
+                'type': rtype,
+                'value': content,
+            })
+        except AlreadyExistError:
+            pass
 
         return True
 
@@ -62,11 +127,8 @@ class Provider(BaseProvider):
 
         payload = self._get('dns-list_records')
 
-        if payload.get('result', '') != 'success':
-            raise Exception('unable to get records: %s' % payload)
-
         resource_list = payload.get('data', None)
-        if resource_list is None:
+        if not isinstance(resource_list, list):
             raise Exception('unable to get records: %s' % payload)
 
         resource_list = [
@@ -83,77 +145,55 @@ class Provider(BaseProvider):
                 resource for resource in resource_list if resource['value'] == content]
 
         processed_records = []
-        for resource in resource_list:
+        for dreamhost_record in resource_list:
             processed_records.append({
-                'id': resource['type'] + '|' + resource['record'] + '|' + resource['value'],
-                'type': resource['type'],
-                'name': resource['record'],
-                'content': resource['value'],
+                'id': Provider._identifier(dreamhost_record),
+                'type': dreamhost_record['type'],
+                'name': dreamhost_record['record'],
+                'content': dreamhost_record['value'],
             })
 
         return processed_records
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        if identifier == '':
-            identifier = None
-        if identifier is not None:
-            id_list = identifier.split('|')
-            if len(id_list) != 3:
-                raise Exception('invalid identifier: %s' % (identifier))
-
-            id_type, id_name, id_content = id_list
-
+        if identifier:
             try:
-                self._delete_record(rtype=id_type, name=id_name, content=id_content)
-            except:  # pylint: disable=bare-except
+                self._delete_record(identifier)
+            except NonExistError:
                 pass
 
         return self._create_record(rtype=rtype, name=name, content=content)
 
-    # Delete an existing record.
+    # Delete existing records.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
-        id_type = None
-        id_name = None
-        id_content = None
-        if identifier is not None:
-            id_list = identifier.split('|')
-            if len(id_list) != 3:
-                raise Exception('invalid identifier: %s' % (identifier))
-
-            id_type, id_name, id_content = id_list
-
-        if rtype is None:
-            rtype = id_type
-        if name is None:
-            name = id_name
-        if content is None:
-            content = id_content
-
-        if name is not None:
-            name = self._full_name(name)
-
         to_deletes = []
-        if rtype is None or name is None or content is None:
-            if identifier is None:
-                records = self._list_records(rtype=rtype, name=name, content=content)
-                to_deletes = records
+        if identifier:
+            record = Provider._id_to_record(identifier)
+            to_deletes.append(record)
         else:
-            to_deletes = [{'record': name, "type": rtype, "value": content}]
+            records = self._list_records(rtype=rtype, name=name, content=content)
+            to_deletes = records
 
+        # for-loop to delete deletes.
+        err = None
         for each in to_deletes:
             try:
-                self._get('dns-remove_record', query_params=each)
-            except:  # pylint: disable=bare-except
-                pass
+                dreamhost_record = Provider._record_to_dreamhost_record(each)
+                self._get('dns-remove_record', query_params=dreamhost_record)
+            except Exception as exception:  # pylint: disable=broad-except
+                err = exception
+        if err is not None:
+            raise err
 
         return True
 
     # Helpers
     def _request(self, action='GET', url='', data=None, query_params=None):
+        # Sleeping for 1-second to avoid trigerring ddos protecting in case of looped requests
         time.sleep(1)
+
         if data is None:
             data = {}
 
@@ -165,7 +205,7 @@ class Provider(BaseProvider):
             'Content-Type': 'application/json'
         }
 
-        query_params['api_key'] = self._get_provider_option('auth_token')
+        query_params['key'] = self._get_provider_option('auth_token')
         query_params['format'] = 'json'
         if 'cmd' not in query_params:
             query_params['cmd'] = url
@@ -173,9 +213,15 @@ class Provider(BaseProvider):
         response = requests.request(action, self.api_endpoint, params=query_params,
                                     data=json.dumps(data),
                                     headers=default_headers)
+
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         result = response.json()
         if result.get('result', '') != 'success':
+            err_msg = result.get('data', '')
+            if err_msg in _DATA_NON_EXIST_ERROR_LIST:
+                raise NonExistError('Dreamhost non-exist error: {0}'.format(result))
+            if err_msg in _DATA_ALREADY_EXIST_ERROR_LIST:
+                raise AlreadyExistError('Dreamhost already-exist error: {0}'.format(result))
             raise Exception('Dreamhost api error: {0}'.format(result))
         return result
