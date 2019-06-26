@@ -219,5 +219,5 @@ class Provider(BaseProvider):
 
         if 'json' in query_params:
             return response.json()
-        else:
-            return response.text
+
+        return response.text
