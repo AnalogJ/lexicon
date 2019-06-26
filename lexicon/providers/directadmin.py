@@ -1,10 +1,11 @@
 """Module provider for DirectAdmin hosts"""
 import logging
-import requests
 import warnings
 
-from lexicon.providers.base import Provider as BaseProvider
+import requests
 from requests.auth import HTTPBasicAuth
+
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
