@@ -76,6 +76,7 @@ The current supported providers are:
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
 - Sakura Cloud by SAKURA Internet Inc. ([docs](https://developer.sakura.ad.jp/cloud/api/1.1/))
+- SafeDNS by UKFast ([docs](https://developers.ukfast.io/documentation/safedns))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Subreg ([docs](https://subreg.cz/manual/))
 - Transip ([docs](https://www.transip.nl/transip/api/))
