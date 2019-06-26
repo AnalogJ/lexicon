@@ -1,4 +1,4 @@
-# Test for one implementation of the interface
+"""Integration tests for DirectAdmin"""
 from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
 
