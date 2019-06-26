@@ -15,17 +15,17 @@ def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.add_argument(
         "--auth-password",
-        help = "specify password for authentication (or login key in case of two-factor-authentication)"
+        help="specify password for authentication (or login key in case of two-factor-authentication)"
     )
 
     subparser.add_argument(
         "--auth-username",
-        help = "specify username for authentication"
+        help="specify username for authentication"
     )
 
     subparser.add_argument(
         "--endpoint",
-        help = "specify the DirectAdmin endpoint"
+        help="specify the DirectAdmin endpoint"
     )
 
 # See https://www.directadmin.com/features.php?id=504 for the specification of
@@ -49,7 +49,7 @@ class Provider(BaseProvider):
             raise Exception(cause)
 
         # The response is a URL encoded array containing all available domains
-        domains = [ domain.split('=').pop() for domain in response.split('&') ]
+        domains = [domain.split('=').pop() for domain in response.split('&')]
 
         try:
             self.domain_id = domains.index(self.domain)
@@ -74,28 +74,28 @@ class Provider(BaseProvider):
         try:
             response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
-            response = { 'success': 'Create Failed' }
+            response = {'success': 'Create Failed'}
 
         LOGGER.debug('create_record: %s', response)
 
         return response['success'].lower().find('added') >= 0
 
     def _list_records(self, rtype=None, name=None, content=None):
-        response = { 'records': [] }
+        response = {'records': []}
         try:
-            response = self._get('/CMD_API_DNS_CONTROL', { 'json': 'yes' })
+            response = self._get('/CMD_API_DNS_CONTROL', {'json': 'yes'})
         except requests.exceptions.HTTPError as err:
             warnings.warn(err.response.text)
             raise
 
-        records = [ self._parse_response_record(record) for record in response['records'] ]
+        records = [self._parse_response_record(record) for record in response['records']]
         if rtype:
-            records = [ record for record in records if record['type'] == rtype ]
+            records = [record for record in records if record['type'] == rtype]
         if name:
             cmp_name = self._full_name(name.lower())
-            records = [ record for record in records if record['name'] == cmp_name ]
+            records = [record for record in records if record['name'] == cmp_name]
         if content:
-            records = [ record for record in records if record['content'] == content ]
+            records = [record for record in records if record['content'] == content]
 
         LOGGER.debug('list_records: %s', records)
 
@@ -145,7 +145,7 @@ class Provider(BaseProvider):
         try:
             response = self._get('/CMD_API_DNS_CONTROL', query_params)
         except requests.exceptions.HTTPError:
-            response = { 'success': 'Update Failed' }
+            response = {'success': 'Update Failed'}
 
         LOGGER.debug('update_record: %s', response)
 
@@ -153,19 +153,19 @@ class Provider(BaseProvider):
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
-            identifiers = [ record['id'] for record in self._list_records(rtype, name, content) ]
+            identifiers = [record['id'] for record in self._list_records(rtype, name, content)]
         else:
-            identifiers = [ identifier ]
+            identifiers = [identifier]
 
-        response = { 'success': 'noop' }
+        response = {'success': 'noop'}
         for identifier in identifiers:
             delete_key = self._determine_delete_key(identifier, rtype)
-            query_params = { 'action': 'select', 'json': 'yes', delete_key: identifier }
+            query_params = {'action': 'select', 'json': 'yes', delete_key: identifier}
 
             try:
                 response = self._get('/CMD_API_DNS_CONTROL', query_params)
             except requests.exceptions.HTTPError:
-                response = { 'success': 'Delete Failed' }
+                response = {'success': 'Delete Failed'}
 
             LOGGER.debug('delete_record: %s', response)
 

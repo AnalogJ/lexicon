@@ -17,7 +17,7 @@ class DirectAdminProviderTests(TestCase, IntegrationTests):
         return []
 
     def _filter_headers(self):
-        return [ 'Authorization' ]
+        return ['Authorization']
 
     def _filter_query_parameters(self):
         return []
@@ -33,9 +33,9 @@ class DirectAdminProviderTests(TestCase, IntegrationTests):
             # The only non-JSON capable response is the domain list overview,
             # which should be cleaned of unrelated domain information
             response['body']['string'] = 'list[]={0}&list[]=anotherdomain.com'.format(self.domain)
-            response['headers']['content-length'] = [ '{0}'.format(len(response['body']['string'])) ]
+            response['headers']['content-length'] = ['{0}'.format(len(response['body']['string']))]
 
         return response
 
     def _test_parameters_overrides(self):
-        return { 'endpoint': self.endpoint }
+        return {'endpoint': self.endpoint}
