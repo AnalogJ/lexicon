@@ -60,7 +60,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         # Refuse to create duplicate records
         existing_records = self._list_records(rtype, name, content)
-        if len(existing_records) > 0:
+        if not existing_records:
             return True
 
         query_params = {
@@ -128,7 +128,7 @@ class Provider(BaseProvider):
                 warnings.warn('Found multiple records to edited. Cannot continue...')
                 return False
 
-            if len(original_records) == 0:
+            if not original_records:
                 warnings.warn('Found no records to edit. Cannot continue...')
                 return False
 
