@@ -159,9 +159,9 @@ class Provider(BaseProvider):
             identifiers = [identifier]
 
         response = {'success': 'noop'}
-        for identifier in identifiers:
-            delete_key = self._determine_delete_key(identifier, rtype)
-            query_params = {'action': 'select', 'json': 'yes', delete_key: identifier}
+        for identifier_to_delete in identifiers:
+            delete_key = self._determine_delete_key(identifier_to_delete, rtype)
+            query_params = {'action': 'select', 'json': 'yes', delete_key: identifier_to_delete}
 
             try:
                 response = self._get('/CMD_API_DNS_CONTROL', query_params)
