@@ -1,5 +1,3 @@
-import json
-
 # Test for one implementation of the interface
 from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
