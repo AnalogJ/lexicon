@@ -60,7 +60,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         # Refuse to create duplicate records
         existing_records = self._list_records(rtype, name, content)
-        if not existing_records:
+        if existing_records:
             return True
 
         query_params = {
