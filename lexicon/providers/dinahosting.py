@@ -15,6 +15,12 @@ NAMESERVER_DOMAINS = ['dinahosting.com']
 # These record types are either not supported by the API or are non-compliant
 UNSUPPORTED_TYPES = ['MX', 'SRV', 'NS', 'SOA', 'LOC']
 
+# The API returns the record's content in any of these keys
+CONTENT_KEYS = ['ip', 'address', 'text', 'destinationHostname']
+
+# The API returns the record's name in any of these keys
+NAME_KEYS = ['host', 'hostname']
+
 # API response codes
 RC_SUCCESS = 1000
 RC_SUCCESS_PENDING = 1001
@@ -67,7 +73,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):
-        self._check_unsupported_type(rtype)
+        Provider._check_unsupported_type(rtype)
 
         rel_name = self._relative_name(name)
         data = {
@@ -114,35 +120,27 @@ class Provider(BaseProvider):
 
         payload = self._post('', data)
 
-        #content_obj = self._parse_record_content(rtype, content)
-        #content = content_obj['data']
-
         records = []
         for record in payload['data']:
-            raw_type = self._parse_record_type(record)
-            raw_content = self._find_matching_record_value(
-                ['ip', 'address', 'text', 'destinationHostname'], record)
-            raw_name = self._find_matching_record_value(['host', 'hostname'], record)
-            fqdn_name = self._fqdn_name(raw_name)
-            full_name = self._full_name(raw_name)
-            ptype = rtype if rtype else raw_type
+            precord = self._parse_record(record)
+            ptype = rtype if rtype else precord['type']
 
-            if name and name not in [raw_name, fqdn_name, full_name]:
+            if name and name not in precord['name_variants']:
                 continue
 
-            if content and content != raw_content:
+            if content and content != precord['content']:
                 continue
 
-            if rtype and raw_type and rtype != raw_type:
+            if rtype and precord['type'] and rtype != precord['type']:
                 continue
 
             processed_record = {
                 'type': ptype,
-                'name': full_name,
-                'content': raw_content,
-                'ttl': None, # The API does not expose the record's ttl
-                'id': hashlib.md5((ptype+full_name+raw_content).encode('utf-8')).hexdigest()
+                'name': precord['name_variants'][0],
+                'content': precord['content'],
+                'ttl': None # The API does not expose the record's ttl
             }
+            processed_record['id'] = Provider._identifier(processed_record)
             records.append(processed_record)
 
         LOGGER.debug('list_records: %s', records)
@@ -150,7 +148,7 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records(rtype)
+            records = self._list_records()
             matching_records = [record for record in records if record['id'] == identifier]
         else:
             matching_records = self._list_records(rtype, name)
@@ -172,14 +170,14 @@ class Provider(BaseProvider):
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records(rtype)
+            records = self._list_records()
             delete_records = [record for record in records if record['id'] == identifier]
         else:
             delete_records = self._list_records(rtype, name, content)
 
         for delete_record in delete_records:
             ptype = rtype if rtype else delete_record['type']
-            self._check_unsupported_type(ptype)
+            Provider._check_unsupported_type(ptype)
 
             rel_name = self._relative_name(delete_record['name'])
             data = {
@@ -235,7 +233,27 @@ class Provider(BaseProvider):
             raise requests.exceptions.HTTPError(api_error_message, response=response)
         return rjson
 
-    def _find_matching_record_value(self, keys, record):
+    def _parse_record(self, record):
+        parsed_record = {}
+        parsed_record['type'] = Provider._parse_record_type(record)
+        parsed_record['content'] = Provider._find_matching_record_value(CONTENT_KEYS, record)
+        raw_name = Provider._find_matching_record_value(NAME_KEYS, record)
+        fqdn_name = self._fqdn_name(raw_name)
+        full_name = self._full_name(raw_name)
+        parsed_record['name_variants'] = [full_name, fqdn_name, raw_name]
+
+        return parsed_record
+
+    @staticmethod
+    def _identifier(record):
+        md5 = hashlib.md5()
+        md5.update((record.get('type', '')).encode('utf-8'))
+        md5.update((record.get('name', '')).encode('utf-8'))
+        md5.update((record.get('data', '')).encode('utf-8'))
+        return md5.hexdigest()
+
+    @staticmethod
+    def _find_matching_record_value(keys, record):
         if record is None or keys is None:
             return None
 
@@ -246,13 +264,15 @@ class Provider(BaseProvider):
                 break
         return matched_value
 
-    def _parse_record_type(self, record):
+    @staticmethod
+    def _parse_record_type(record):
         if not record or 'type' not in record:
             return None
         if record['type'].startswith('MX'):
             return 'MX'
         return record['type']
 
-    def _check_unsupported_type(self, rtype):
+    @staticmethod
+    def _check_unsupported_type(rtype):
         if rtype in UNSUPPORTED_TYPES:
             raise Exception('Record type {0} is not supported by the API'.format(rtype))
