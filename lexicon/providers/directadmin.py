@@ -217,7 +217,7 @@ class Provider(BaseProvider):
         # If the request fails for any reason, throw an error
         response.raise_for_status()
 
-        if 'json' in query_params:
+        if 'json' in response.headers['Content-Type'].lower():
             return response.json()
 
         return response.text
