@@ -40,6 +40,7 @@ The current supported providers are:
 - ConoHa ([docs](https://www.conoha.jp/docs/))
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
+- Dinahosting ([docs](https://en.dinahosting.com/api))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
