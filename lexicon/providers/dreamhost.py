@@ -182,8 +182,13 @@ class Provider(BaseProvider):
             try:
                 dreamhost_record = Provider._record_to_dreamhost_record(each)
                 self._get('dns-remove_record', query_params=dreamhost_record)
+
             except Exception as exception:  # pylint: disable=broad-except
                 err = exception
+
+            # Sleeping for 1-second to avoid trigerring ddos protecting in case of looped requests
+            time.sleep(1)
+
         if err is not None:
             raise err
 
@@ -191,9 +196,6 @@ class Provider(BaseProvider):
 
     # Helpers
     def _request(self, action='GET', url='', data=None, query_params=None):
-        # Sleeping for 1-second to avoid trigerring ddos protecting in case of looped requests
-        time.sleep(1)
-
         if data is None:
             data = {}
 
