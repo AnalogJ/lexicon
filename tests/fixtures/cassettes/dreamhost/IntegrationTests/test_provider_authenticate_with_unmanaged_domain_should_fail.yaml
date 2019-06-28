@@ -1,0 +1,25 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://api.dreamhost.com/?cmd=domain-list_domains&format=json
+  response:
+    body: {string: !!python/unicode '{"result":"success","data":[{"domain":"lexicon-example.com"}]}'}
+    headers:
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json;charset=UTF-8]
+      date: ['Tue, 20 Mar 2018 11:52:42 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=31536000]
+      transfer-encoding: [chunked]
+      x-powered-by: [Tiger Blood]
+    status: {code: 200, message: OK}
+version: 1
