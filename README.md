@@ -132,7 +132,7 @@ To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
 
-Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L86-L97) separately:
+Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L34-L44) separately:
 
     pip install dns-lexicon[route53]
 
