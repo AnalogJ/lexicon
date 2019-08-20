@@ -69,8 +69,7 @@ class Provider(BaseProvider):
             subfilter.append({"field": "RecordName", "value": self._full_name(name)})
         if subfilter:
             data.update(
-                {"filter":{"subFilterConnective": "AND",
-        	           "subFilter": subfilter}})
+                {"filter":{"subFilterConnective": "AND", "subFilter": subfilter}})
 
         LOGGER.debug('list_records filter: %s', data)
         raw_records = self._request(action='POST', url='/recordsFind', data=data)
