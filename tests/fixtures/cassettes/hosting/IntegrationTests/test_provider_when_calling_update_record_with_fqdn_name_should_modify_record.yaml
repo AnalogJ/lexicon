@@ -1,0 +1,1354 @@
+interactions:
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "eruza.de"},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165146539-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@eruza.de\",\n                \"id\":
+        \"190402ie2pps4ds4zx4\",\n                \"lastChangeDate\": \"2019-08-20T16:51:46Z\",\n
+        \               \"masterIp\": \"\",\n                \"name\": \"eruza.de\",\n
+        \               \"nameUnicode\": \"eruza.de\",\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"blocked\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '1284'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:46 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}, {"field": "RecordType",
+      "value": "TXT"}, {"field": "RecordName", "value": "orig.testfqdn.eruza.de"}]},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '306'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165146708-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '394'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:48 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "eruza.de"},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165148823-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@eruza.de\",\n                \"id\":
+        \"190402ie2pps4ds4zx4\",\n                \"lastChangeDate\": \"2019-08-20T16:51:47Z\",\n
+        \               \"masterIp\": \"\",\n                \"name\": \"eruza.de\",\n
+        \               \"nameUnicode\": \"eruza.de\",\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"active\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '1283'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:48 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"zoneConfig": {"status": "active", "masterIp": "", "nameUnicode":
+      "eruza.de", "addDate": "2019-04-02T14:19:31Z", "zoneTransferWhitelist": [],
+      "soaValues": {"negativeTtl": 900, "expire": 3600000, "retry": 7200, "refresh":
+      86400, "ttl": 86400}, "dnsServerGroupId": null, "accountId": "190402dqdf2q2ra7qjq",
+      "emailAddress": "hostmaster@eruza.de", "templateValues": null, "lastChangeDate":
+      "2019-08-20T16:51:47Z", "dnsSecMode": "off", "type": "NATIVE", "id": "190402ie2pps4ds4zx4",
+      "name": "eruza.de"}, "limit": 25, "recordsToAdd": [{"content": "challengetoken",
+      "type": "TXT", "name": "orig.testfqdn.eruza.de", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '699'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165148960-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"records\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns1.hosting.de\",\n                \"id\":
+        \"190402gl4kgqz5rnscq\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:19:31Z\",\n                \"content\":
+        \"ns2.hosting.de\",\n                \"id\": \"190402w3oaepotopuf4\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:19:31Z\",\n                \"name\": \"eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"NS\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns3.hosting.de\",\n                \"id\":
+        \"190402p63ucdmd6nnqk\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:31:58Z\",\n                \"content\":
+        \"www.initit.de\",\n                \"id\": \"190402zwiwzxbv4wkfo\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:31:58Z\",\n                \"name\": \"www.eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"CNAME\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:46:43Z\",\n
+        \               \"content\": \"127.0.0.1\",\n                \"id\": \"190820ynk44leczto6m\",\n
+        \               \"lastChangeDate\": \"2019-08-20T16:46:43Z\",\n                \"name\":
+        \"localhost.eruza.de\",\n                \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"content\": \"docs.example.com\",\n
+        \               \"id\": \"190820ft6jmq7l33aqa\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"name\": \"docs.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"CNAME\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820m2e2owjdmji5g\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"name\": \"_acme-challenge.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908207ayw3kcsiboxm\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"name\": \"_acme-challenge.full.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908202vc5heobujrru\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"name\": \"_acme-challenge.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820aacbpemsc3izo\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908204hjyum6pjwpso\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820wvbakmuz3atwu\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"name\": \"_acme-challenge.noop.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"190820itecdvxw6dxng\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"name\": \"_acme-challenge.deleterecordinset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"1908202wktsb4pb3jha\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"name\": \"ttl.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820byfruaesrpzzw\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908202fr6jwoldvohe\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"19082072rp2cdugdhjk\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"name\": \"random.fqdntest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820ntr7s62y3a57s\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"name\": \"random.fulltest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820zvpy7jcbssrdg\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"name\": \"random.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908204xalmg2hhwpfc\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"name\": \"updated.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"190820vqnruw2vu55m6\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"name\": \"orig.nameonly.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820s7xasbsrdbr4i\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"name\": \"orig.testfqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"content\": \"ns1.hosting.de.
+        hostmaster.eruza.de. 20190820154 86400 7200 3600000 900\",\n                \"id\":
+        \"190820uimd6w5luwpg2\",\n                \"lastChangeDate\": \"2019-08-20T16:51:49Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"SOA\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           }\n        ],\n        \"zoneConfig\": {\n            \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n            \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \           \"dnsSecMode\": \"off\",\n            \"dnsServerGroupId\": null,\n
+        \           \"emailAddress\": \"hostmaster@eruza.de\",\n            \"id\":
+        \"190402ie2pps4ds4zx4\",\n            \"lastChangeDate\": \"2019-08-20T16:51:49Z\",\n
+        \           \"masterIp\": \"\",\n            \"name\": \"eruza.de\",\n            \"nameUnicode\":
+        \"eruza.de\",\n            \"soaValues\": {\n                \"expire\": 3600000,\n
+        \               \"negativeTtl\": 900,\n                \"refresh\": 86400,\n
+        \               \"retry\": 7200,\n                \"ttl\": 86400\n            },\n
+        \           \"status\": \"blocked\",\n            \"templateValues\": null,\n
+        \           \"type\": \"NATIVE\",\n            \"zoneTransferWhitelist\":
+        [\n            ]\n        }\n    },\n    \"status\": \"pending\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '13190'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}, {"field": "RecordType",
+      "value": "TXT"}, {"field": "RecordName", "value": "orig.testfqdn.eruza.de"}]},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '306'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165149249-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:51:49Z\",\n
+        \               \"content\": \"\\\"challengetoken\\\"\",\n                \"id\":
+        \"190820s7xasbsrdbr4i\",\n                \"lastChangeDate\": \"2019-08-20T16:51:49Z\",\n
+        \               \"name\": \"orig.testfqdn.eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            }\n        ],\n        \"limit\": 25,\n
+        \       \"page\": 1,\n        \"totalEntries\": 1,\n        \"totalPages\":
+        1,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '917'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}]}, "limit": 25, "page":
+      1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '205'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165149376-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:46:56Z\",\n
+        \               \"content\": \"\\\"challengetoken1\\\"\",\n                \"id\":
+        \"190820aacbpemsc3izo\",\n                \"lastChangeDate\": \"2019-08-20T16:46:56Z\",\n
+        \               \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908204hjyum6pjwpso\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"190820itecdvxw6dxng\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"name\": \"_acme-challenge.deleterecordinset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820m2e2owjdmji5g\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"name\": \"_acme-challenge.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908207ayw3kcsiboxm\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"name\": \"_acme-challenge.full.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820byfruaesrpzzw\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908202fr6jwoldvohe\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820wvbakmuz3atwu\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"name\": \"_acme-challenge.noop.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908202vc5heobujrru\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"name\": \"_acme-challenge.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"content\": \"docs.example.com\",\n
+        \               \"id\": \"190820ft6jmq7l33aqa\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"name\": \"docs.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"CNAME\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"content\": \"ns1.hosting.de.
+        hostmaster.eruza.de. 20190820154 86400 7200 3600000 900\",\n                \"id\":
+        \"190820uimd6w5luwpg2\",\n                \"lastChangeDate\": \"2019-08-20T16:51:49Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"SOA\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:19:31Z\",\n                \"content\":
+        \"ns1.hosting.de\",\n                \"id\": \"190402gl4kgqz5rnscq\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:19:31Z\",\n                \"name\": \"eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"NS\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns2.hosting.de\",\n                \"id\":
+        \"190402w3oaepotopuf4\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:19:31Z\",\n                \"content\":
+        \"ns3.hosting.de\",\n                \"id\": \"190402p63ucdmd6nnqk\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:19:31Z\",\n                \"name\": \"eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"NS\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:46:43Z\",\n
+        \               \"content\": \"127.0.0.1\",\n                \"id\": \"190820ynk44leczto6m\",\n
+        \               \"lastChangeDate\": \"2019-08-20T16:46:43Z\",\n                \"name\":
+        \"localhost.eruza.de\",\n                \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"190820vqnruw2vu55m6\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"name\": \"orig.nameonly.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820s7xasbsrdbr4i\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:49Z\",\n                \"name\": \"orig.testfqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"19082072rp2cdugdhjk\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"name\": \"random.fqdntest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820ntr7s62y3a57s\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"name\": \"random.fulltest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820zvpy7jcbssrdg\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"name\": \"random.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"1908202wktsb4pb3jha\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"name\": \"ttl.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908204xalmg2hhwpfc\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"name\": \"updated.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-04-02T14:31:58Z\",\n                \"content\": \"www.initit.de\",\n
+        \               \"id\": \"190402zwiwzxbv4wkfo\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:31:58Z\",\n                \"name\": \"www.eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"CNAME\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            }\n        ],\n        \"limit\": 25,\n
+        \       \"page\": 1,\n        \"totalEntries\": 23,\n        \"totalPages\":
+        1,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '12512'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "eruza.de"},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165149511-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@eruza.de\",\n                \"id\":
+        \"190402ie2pps4ds4zx4\",\n                \"lastChangeDate\": \"2019-08-20T16:51:49Z\",\n
+        \               \"masterIp\": \"\",\n                \"name\": \"eruza.de\",\n
+        \               \"nameUnicode\": \"eruza.de\",\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"blocked\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '1284'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"zoneConfig": {"status": "blocked", "masterIp": "", "nameUnicode":
+      "eruza.de", "addDate": "2019-04-02T14:19:31Z", "zoneTransferWhitelist": [],
+      "soaValues": {"negativeTtl": 900, "expire": 3600000, "retry": 7200, "refresh":
+      86400, "ttl": 86400}, "dnsServerGroupId": null, "accountId": "190402dqdf2q2ra7qjq",
+      "emailAddress": "hostmaster@eruza.de", "templateValues": null, "lastChangeDate":
+      "2019-08-20T16:51:49Z", "dnsSecMode": "off", "type": "NATIVE", "id": "190402ie2pps4ds4zx4",
+      "name": "eruza.de"}, "recordsToDelete": [{"id": "190820s7xasbsrdbr4i"}], "limit":
+      25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '641'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n        {\n            \"code\":
+        10205,\n            \"contextObject\": \"\",\n            \"contextPath\":
+        \"\",\n            \"details\": [\n            ],\n            \"text\": \"The
+        current status of an object you are trying to use does not allow that operation.\",\n
+        \           \"value\": \"blocked\"\n        }\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165149640-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"status\": \"error\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '500'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"zoneConfig": {"status": "blocked", "masterIp": "", "nameUnicode":
+      "eruza.de", "addDate": "2019-04-02T14:19:31Z", "zoneTransferWhitelist": [],
+      "soaValues": {"negativeTtl": 900, "expire": 3600000, "retry": 7200, "refresh":
+      86400, "ttl": 86400}, "dnsServerGroupId": null, "accountId": "190402dqdf2q2ra7qjq",
+      "emailAddress": "hostmaster@eruza.de", "templateValues": null, "lastChangeDate":
+      "2019-08-20T16:51:49Z", "dnsSecMode": "off", "type": "NATIVE", "id": "190402ie2pps4ds4zx4",
+      "name": "eruza.de"}, "recordsToDelete": [{"id": "190820s7xasbsrdbr4i"}], "limit":
+      25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '641'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165152808-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"records\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns1.hosting.de\",\n                \"id\":
+        \"190402gl4kgqz5rnscq\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:19:31Z\",\n                \"content\":
+        \"ns2.hosting.de\",\n                \"id\": \"190402w3oaepotopuf4\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:19:31Z\",\n                \"name\": \"eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"NS\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns3.hosting.de\",\n                \"id\":
+        \"190402p63ucdmd6nnqk\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:31:58Z\",\n                \"content\":
+        \"www.initit.de\",\n                \"id\": \"190402zwiwzxbv4wkfo\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:31:58Z\",\n                \"name\": \"www.eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"CNAME\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:46:43Z\",\n
+        \               \"content\": \"127.0.0.1\",\n                \"id\": \"190820ynk44leczto6m\",\n
+        \               \"lastChangeDate\": \"2019-08-20T16:46:43Z\",\n                \"name\":
+        \"localhost.eruza.de\",\n                \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"content\": \"docs.example.com\",\n
+        \               \"id\": \"190820ft6jmq7l33aqa\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"name\": \"docs.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"CNAME\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820m2e2owjdmji5g\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"name\": \"_acme-challenge.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908207ayw3kcsiboxm\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"name\": \"_acme-challenge.full.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908202vc5heobujrru\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"name\": \"_acme-challenge.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820aacbpemsc3izo\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908204hjyum6pjwpso\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820wvbakmuz3atwu\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"name\": \"_acme-challenge.noop.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"190820itecdvxw6dxng\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"name\": \"_acme-challenge.deleterecordinset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"1908202wktsb4pb3jha\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"name\": \"ttl.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820byfruaesrpzzw\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908202fr6jwoldvohe\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"19082072rp2cdugdhjk\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"name\": \"random.fqdntest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820ntr7s62y3a57s\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"name\": \"random.fulltest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820zvpy7jcbssrdg\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"name\": \"random.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908204xalmg2hhwpfc\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"name\": \"updated.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"190820vqnruw2vu55m6\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"name\": \"orig.nameonly.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:52Z\",\n                \"content\": \"ns1.hosting.de.
+        hostmaster.eruza.de. 20190820155 86400 7200 3600000 900\",\n                \"id\":
+        \"1908205eohhsb44dqlo\",\n                \"lastChangeDate\": \"2019-08-20T16:51:52Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"SOA\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           }\n        ],\n        \"zoneConfig\": {\n            \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n            \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \           \"dnsSecMode\": \"off\",\n            \"dnsServerGroupId\": null,\n
+        \           \"emailAddress\": \"hostmaster@eruza.de\",\n            \"id\":
+        \"190402ie2pps4ds4zx4\",\n            \"lastChangeDate\": \"2019-08-20T16:51:52Z\",\n
+        \           \"masterIp\": \"\",\n            \"name\": \"eruza.de\",\n            \"nameUnicode\":
+        \"eruza.de\",\n            \"soaValues\": {\n                \"expire\": 3600000,\n
+        \               \"negativeTtl\": 900,\n                \"refresh\": 86400,\n
+        \               \"retry\": 7200,\n                \"ttl\": 86400\n            },\n
+        \           \"status\": \"blocked\",\n            \"templateValues\": null,\n
+        \           \"type\": \"NATIVE\",\n            \"zoneTransferWhitelist\":
+        [\n            ]\n        }\n    },\n    \"status\": \"pending\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '12666'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:53 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}, {"field": "RecordType",
+      "value": "190820s7xasbsrdbr4i"}]}, "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '262'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165153113-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '394'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:55 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}, {"field": "RecordType",
+      "value": "TXT"}, {"field": "RecordName", "value": "updated.testfqdn.eruza.de"}]},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '309'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165155264-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '394'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "eruza.de"},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165157360-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@eruza.de\",\n                \"id\":
+        \"190402ie2pps4ds4zx4\",\n                \"lastChangeDate\": \"2019-08-20T16:51:54Z\",\n
+        \               \"masterIp\": \"\",\n                \"name\": \"eruza.de\",\n
+        \               \"nameUnicode\": \"eruza.de\",\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"active\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '1283'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"zoneConfig": {"status": "active", "masterIp": "", "nameUnicode":
+      "eruza.de", "addDate": "2019-04-02T14:19:31Z", "zoneTransferWhitelist": [],
+      "soaValues": {"negativeTtl": 900, "expire": 3600000, "retry": 7200, "refresh":
+      86400, "ttl": 86400}, "dnsServerGroupId": null, "accountId": "190402dqdf2q2ra7qjq",
+      "emailAddress": "hostmaster@eruza.de", "templateValues": null, "lastChangeDate":
+      "2019-08-20T16:51:54Z", "dnsSecMode": "off", "type": "NATIVE", "id": "190402ie2pps4ds4zx4",
+      "name": "eruza.de"}, "limit": 25, "recordsToAdd": [{"content": "challengetoken",
+      "type": "TXT", "name": "updated.testfqdn.eruza.de", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '702'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820165157517-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"records\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns1.hosting.de\",\n                \"id\":
+        \"190402gl4kgqz5rnscq\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:19:31Z\",\n                \"content\":
+        \"ns2.hosting.de\",\n                \"id\": \"190402w3oaepotopuf4\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:19:31Z\",\n                \"name\": \"eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"NS\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"content\": \"ns3.hosting.de\",\n                \"id\":
+        \"190402p63ucdmd6nnqk\",\n                \"lastChangeDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"NS\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           },\n            {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n
+        \               \"addDate\": \"2019-04-02T14:31:58Z\",\n                \"content\":
+        \"www.initit.de\",\n                \"id\": \"190402zwiwzxbv4wkfo\",\n                \"lastChangeDate\":
+        \"2019-04-02T14:31:58Z\",\n                \"name\": \"www.eruza.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        86400,\n                \"type\": \"CNAME\",\n                \"zoneConfigId\":
+        \"190402ie2pps4ds4zx4\"\n            },\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-08-20T16:46:43Z\",\n
+        \               \"content\": \"127.0.0.1\",\n                \"id\": \"190820ynk44leczto6m\",\n
+        \               \"lastChangeDate\": \"2019-08-20T16:46:43Z\",\n                \"name\":
+        \"localhost.eruza.de\",\n                \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"content\": \"docs.example.com\",\n
+        \               \"id\": \"190820ft6jmq7l33aqa\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:45Z\",\n                \"name\": \"docs.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"CNAME\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820m2e2owjdmji5g\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:48Z\",\n                \"name\": \"_acme-challenge.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908207ayw3kcsiboxm\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:51Z\",\n                \"name\": \"_acme-challenge.full.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908202vc5heobujrru\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:53Z\",\n                \"name\": \"_acme-challenge.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820aacbpemsc3izo\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:46:56Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908204hjyum6pjwpso\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:00Z\",\n                \"name\": \"_acme-challenge.createrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820wvbakmuz3atwu\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:47:03Z\",\n                \"name\": \"_acme-challenge.noop.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"190820itecdvxw6dxng\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:50:39Z\",\n                \"name\": \"_acme-challenge.deleterecordinset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"1908202wktsb4pb3jha\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:05Z\",\n                \"name\": \"ttl.fqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"190820byfruaesrpzzw\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:08Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"content\": \"\\\"challengetoken2\\\"\",\n
+        \               \"id\": \"1908202fr6jwoldvohe\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:12Z\",\n                \"name\": \"_acme-challenge.listrecordset.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"19082072rp2cdugdhjk\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:15Z\",\n                \"name\": \"random.fqdntest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820ntr7s62y3a57s\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:17Z\",\n                \"name\": \"random.fulltest.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"190820zvpy7jcbssrdg\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:22Z\",\n                \"name\": \"random.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"1908204xalmg2hhwpfc\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:34Z\",\n                \"name\": \"updated.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"190820vqnruw2vu55m6\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:46Z\",\n                \"name\": \"orig.nameonly.test.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:57Z\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"19082046x4uglajfoa2\",\n                \"lastChangeDate\":
+        \"2019-08-20T16:51:57Z\",\n                \"name\": \"updated.testfqdn.eruza.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n            },\n
+        \           {\n                \"accountId\": \"190402dqdf2q2ra7qjq\",\n                \"addDate\":
+        \"2019-08-20T16:51:57Z\",\n                \"content\": \"ns1.hosting.de.
+        hostmaster.eruza.de. 20190820156 86400 7200 3600000 900\",\n                \"id\":
+        \"190820zboht2xju4mwq\",\n                \"lastChangeDate\": \"2019-08-20T16:51:57Z\",\n
+        \               \"name\": \"eruza.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 86400,\n
+        \               \"type\": \"SOA\",\n                \"zoneConfigId\": \"190402ie2pps4ds4zx4\"\n
+        \           }\n        ],\n        \"zoneConfig\": {\n            \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n            \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \           \"dnsSecMode\": \"off\",\n            \"dnsServerGroupId\": null,\n
+        \           \"emailAddress\": \"hostmaster@eruza.de\",\n            \"id\":
+        \"190402ie2pps4ds4zx4\",\n            \"lastChangeDate\": \"2019-08-20T16:51:57Z\",\n
+        \           \"masterIp\": \"\",\n            \"name\": \"eruza.de\",\n            \"nameUnicode\":
+        \"eruza.de\",\n            \"soaValues\": {\n                \"expire\": 3600000,\n
+        \               \"negativeTtl\": 900,\n                \"refresh\": 86400,\n
+        \               \"retry\": 7200,\n                \"ttl\": 86400\n            },\n
+        \           \"status\": \"blocked\",\n            \"templateValues\": null,\n
+        \           \"type\": \"NATIVE\",\n            \"zoneTransferWhitelist\":
+        [\n            ]\n        }\n    },\n    \"status\": \"pending\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '13193'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:51:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1

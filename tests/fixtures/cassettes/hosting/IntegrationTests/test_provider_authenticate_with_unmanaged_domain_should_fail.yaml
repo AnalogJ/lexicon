@@ -1,0 +1,46 @@
+interactions:
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "thisisadomainidonotown.com"},
+      "limit": 25, "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '161'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190820164936213-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '398'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 20 Aug 2019 16:49:36 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1
