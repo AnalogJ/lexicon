@@ -236,7 +236,7 @@ class Provider(BaseProvider):
                 time.sleep(3)
                 continue
 
-            if status != 'success' and status != 'pending':
+            if status not in ('success', 'pending'):
                 raise Exception('Api error: {0}'.format(response_json.get('errors', '')))
             # check if there a data object
             read_data = response_json.get('response', {}).get('data', None)
@@ -251,7 +251,7 @@ class Provider(BaseProvider):
 
             # is there pagination and more data available?
             total_pages = response_json.get('response', {}).get('totalPages', 0)
-            if read_page == total_pages or total_pages == 0:
+            if total_pages in (read_page, 0):
                 break
 
             read_page = read_page + 1
