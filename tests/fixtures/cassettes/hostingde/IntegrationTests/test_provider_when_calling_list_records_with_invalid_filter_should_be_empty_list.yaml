@@ -1,0 +1,108 @@
+interactions:
+- request:
+    body: !!python/unicode '{"filter": {"field": "ZoneName", "value": "eruza.de"},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '130'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190822084332759-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"190402dqdf2q2ra7qjq\",\n                \"addDate\": \"2019-04-02T14:19:31Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@eruza.de\",\n                \"id\":
+        \"190402ie2pps4ds4zx4\",\n                \"lastChangeDate\": \"2019-08-22T08:43:32Z\",\n
+        \               \"masterIp\": \"\",\n                \"name\": \"eruza.de\",\n
+        \               \"nameUnicode\": \"eruza.de\",\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"blocked\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '1284'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 22 Aug 2019 08:43:32 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"filter": {"subFilterConnective": "AND", "subFilter":
+      [{"field": "zoneConfigId", "value": "190402ie2pps4ds4zx4"}, {"field": "RecordType",
+      "value": "TXT"}, {"field": "RecordName", "value": "filter.thisdoesnotexist.eruza.de"}]},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '303'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://secure.hosting.de/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: !!python/unicode "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n
+        \       \"clientTransactionId\": \"\",\n        \"serverTransactionId\": \"20190822084332894-dnsrobot-robots1-23691-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '394'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 22 Aug 2019 08:43:35 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1
