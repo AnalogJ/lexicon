@@ -73,7 +73,7 @@ class Provider(BaseProvider):
                     'type': record['type'],
                     'name': "{0}.{1}".format(record['subdomain'], self.domain_id),
                     'ttl': record['ttl'],
-                    'content': record['content'],
+                    'content': record.get('content'),
                     'id': record['record_id']
                 }
                 records.append(processed_record)
