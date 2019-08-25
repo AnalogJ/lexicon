@@ -1,0 +1,212 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost/CMD_API_SHOW_DOMAINS?domain=example.com
+  response:
+    body: {string: 'list[]=example.com&list[]=anotherdomain.com'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Type: [text/plain]
+      Date: ['Thu, 27 Jun 2019 21:43:30 GMT']
+      Keep-Alive: ['timeout=2, max=100']
+      Server: [DirectAdmin Daemon v1.57.2]
+      Set-Cookie: ['session=; path=/; expires=Fri, 28 Jun 2019 21:43:30 GMT; HttpOnly']
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [sameorigin]
+      content-length: ['147']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost/CMD_API_DNS_CONTROL?json=yes&domain=example.com
+  response:
+    body: {string: "{\n\t\"records\": [\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\":
+        \"ftp\",\n\t\t\t\"value\": \"10.0.0.1\",\n\t\t\t\"combined\": \"name=ftp&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"localhost.example.com.\",\n\t\t\t\"value\":
+        \"127.0.0.1\",\n\t\t\t\"combined\": \"name=localhost.example.com.&value=127.0.0.1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=mail&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=example.com.&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"pop\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=pop&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"smtp\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=smtp&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"www\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=www&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"NS\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"ns1.example.com.\",\n\t\t\t\"combined\": \"name=example.com.&value=ns1.example.com.\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"NS\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\": \"ns2.example.com.\",\n\t\t\t\"combined\":
+        \"name=example.com.&value=ns2.example.com.\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"MX\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\": \"10\",\n\t\t\t\"combined\":
+        \"name=mail&value=10\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"CNAME\",\n\t\t\t\"name\":
+        \"docs.example.com.\",\n\t\t\t\"value\": \"docs.example.com\",\n\t\t\t\"combined\":
+        \"name=docs.example.com.&value=docs.example.com\",\n\t\t\t\"ttl\": \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.createrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken1\",\n\t\t\t\"combined\": \"name=_acme-challenge.createrecordset.example.com.&value=challengetoken1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.createrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.createrecordset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.deleterecordinset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.deleterecordinset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.fqdn.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.fqdn.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.full.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.full.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.listrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken1\",\n\t\t\t\"combined\": \"name=_acme-challenge.listrecordset.example.com.&value=challengetoken1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.listrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.listrecordset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.noop.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.noop.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.test.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.test.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"random.fqdntest.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=random.fqdntest.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"ttl.fqdn.example.com.\",\n\t\t\t\"value\":
+        \"ttlshouldbe3600\",\n\t\t\t\"combined\": \"name=ttl.fqdn.example.com.&value=ttlshouldbe3600\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"ftp\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=ftp&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=mail&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=example.com.&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"pop\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=pop&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"smtp\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=smtp&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"www\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=www&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t}\n\t],\n\t\"dnssec\": \"1\",\n\t\"user_dnssec_control\": \"1\",\n\t\"dns_spf\":
+        \"0\",\n\t\"dns_ttl\": \"1\",\n\t\"dns_tlsa\": \"1\",\n\t\"dns_caa\": \"1\",\n\t\"allow_dns_underscore\":
+        \"1\",\n\t\"full_mx_records\": \"1\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 27 Jun 2019 21:43:30 GMT']
+      Keep-Alive: ['timeout=2, max=100']
+      Server: [DirectAdmin Daemon v1.57.2]
+      Set-Cookie: ['session=; path=/; expires=Fri, 28 Jun 2019 21:43:30 GMT; HttpOnly']
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [sameorigin]
+      content-length: ['5118']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost/CMD_API_DNS_CONTROL?action=add&json=yes&name=random.fulltest.example.com.&type=TXT&value=challengetoken&ttl=3600&domain=example.com
+  response:
+    body: {string: "{\n\t\"result\": \"\",\n\t\"success\": \"record added\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 27 Jun 2019 21:43:31 GMT']
+      Keep-Alive: ['timeout=2, max=100']
+      Server: [DirectAdmin Daemon v1.57.2]
+      Set-Cookie: ['session=; path=/; expires=Fri, 28 Jun 2019 21:43:31 GMT; HttpOnly']
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [sameorigin]
+      content-length: ['46']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost/CMD_API_DNS_CONTROL?json=yes&domain=example.com
+  response:
+    body: {string: "{\n\t\"records\": [\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\":
+        \"ftp\",\n\t\t\t\"value\": \"10.0.0.1\",\n\t\t\t\"combined\": \"name=ftp&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"localhost.example.com.\",\n\t\t\t\"value\":
+        \"127.0.0.1\",\n\t\t\t\"combined\": \"name=localhost.example.com.&value=127.0.0.1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=mail&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=example.com.&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"pop\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=pop&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"smtp\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=smtp&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"A\",\n\t\t\t\"name\": \"www\",\n\t\t\t\"value\":
+        \"10.0.0.1\",\n\t\t\t\"combined\": \"name=www&value=10.0.0.1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"NS\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"ns1.example.com.\",\n\t\t\t\"combined\": \"name=example.com.&value=ns1.example.com.\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"NS\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\": \"ns2.example.com.\",\n\t\t\t\"combined\":
+        \"name=example.com.&value=ns2.example.com.\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"MX\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\": \"10\",\n\t\t\t\"combined\":
+        \"name=mail&value=10\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"CNAME\",\n\t\t\t\"name\":
+        \"docs.example.com.\",\n\t\t\t\"value\": \"docs.example.com\",\n\t\t\t\"combined\":
+        \"name=docs.example.com.&value=docs.example.com\",\n\t\t\t\"ttl\": \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\":
+        \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.createrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken1\",\n\t\t\t\"combined\": \"name=_acme-challenge.createrecordset.example.com.&value=challengetoken1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.createrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.createrecordset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.deleterecordinset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.deleterecordinset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.fqdn.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.fqdn.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.full.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.full.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.listrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken1\",\n\t\t\t\"combined\": \"name=_acme-challenge.listrecordset.example.com.&value=challengetoken1\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.listrecordset.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken2\",\n\t\t\t\"combined\": \"name=_acme-challenge.listrecordset.example.com.&value=challengetoken2\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.noop.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.noop.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"_acme-challenge.test.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=_acme-challenge.test.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"random.fqdntest.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=random.fqdntest.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"random.fulltest.example.com.\",\n\t\t\t\"value\":
+        \"challengetoken\",\n\t\t\t\"combined\": \"name=random.fulltest.example.com.&value=challengetoken\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"TXT\",\n\t\t\t\"name\": \"ttl.fqdn.example.com.\",\n\t\t\t\"value\":
+        \"ttlshouldbe3600\",\n\t\t\t\"combined\": \"name=ttl.fqdn.example.com.&value=ttlshouldbe3600\",\n\t\t\t\"ttl\":
+        \"3600\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"ftp\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=ftp&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"mail\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=mail&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"example.com.\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=example.com.&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"pop\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=pop&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"smtp\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=smtp&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"AAAA\",\n\t\t\t\"name\": \"www\",\n\t\t\t\"value\":
+        \"::1\",\n\t\t\t\"combined\": \"name=www&value=::1\",\n\t\t\t\"ttl\":
+        \"14400\"\n\t\t}\n\t],\n\t\"dnssec\": \"1\",\n\t\"user_dnssec_control\": \"1\",\n\t\"dns_spf\":
+        \"0\",\n\t\"dns_ttl\": \"1\",\n\t\"dns_tlsa\": \"1\",\n\t\"dns_caa\": \"1\",\n\t\"allow_dns_underscore\":
+        \"1\",\n\t\"full_mx_records\": \"1\"\n}\n"}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Thu, 27 Jun 2019 21:43:31 GMT']
+      Keep-Alive: ['timeout=2, max=100']
+      Server: [DirectAdmin Daemon v1.57.2]
+      Set-Cookie: ['session=; path=/; expires=Fri, 28 Jun 2019 21:43:31 GMT; HttpOnly']
+      Transfer-Encoding: [chunked]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [sameorigin]
+      content-length: ['5306']
+    status: {code: 200, message: OK}
+version: 1

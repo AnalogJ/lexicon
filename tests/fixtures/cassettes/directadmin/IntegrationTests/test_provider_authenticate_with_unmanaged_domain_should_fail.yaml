@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost/CMD_API_SHOW_DOMAINS?domain=thisisadomainidonotown.com
+  response:
+    body: {string: 'list[]=example.com&list[]=anotherdomain.com'}
+    headers:
+      Connection: [Keep-Alive]
+      Content-Type: [text/plain]
+      Date: ['Thu, 27 Jun 2019 21:43:14 GMT']
+      Keep-Alive: ['timeout=2, max=100']
+      Server: [DirectAdmin Daemon v1.57.2]
+      Set-Cookie: ['session=; path=/; expires=Fri, 28 Jun 2019 21:43:14 GMT; HttpOnly']
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [sameorigin]
+      content-length: ['147']
+    status: {code: 200, message: OK}
+version: 1

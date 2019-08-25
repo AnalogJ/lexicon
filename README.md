@@ -41,6 +41,7 @@ The current supported providers are:
 - Constellix ([docs](https://api-dns-docs.constellix.com/))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
 - Dinahosting ([docs](https://en.dinahosting.com/api))
+- DirectAdmin ([docs](https://www.directadmin.com/features.php?id=504))
 - DNSimple ([docs](https://developer.dnsimple.com/))
 - DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
@@ -96,7 +97,6 @@ Potential providers are as follows. If you would like to contribute one, follow 
 - cyon.ch
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
 - Dynu
-- DirectAdmin
 - EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
