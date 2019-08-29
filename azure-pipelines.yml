@@ -12,7 +12,6 @@ jobs:
       vmImage: ubuntu-latest
     variables:
       TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses 8
     strategy:
       matrix:
         python-2.7:
@@ -37,6 +36,32 @@ jobs:
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
           pip install --upgrade tox
+        displayName: Install required runtime dependencies
+      - script: tox
+        displayName: Execute tests through tox
+
+  - job: windows
+    pool:
+      vmImage: windows-latest
+    variables:
+      TOXENV: standard
+    strategy:
+      matrix:
+        python-2.7:
+          PYTHON_VERSION: 2.7
+        python-3.5:
+          PYTHON_VERSION: 3.5
+        python-3.6:
+          PYTHON_VERSION: 3.6
+        python-3.7:
+          PYTHON_VERSION: 3.7
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: pip install --upgrade pip tox wheel virtualenv setuptools
         displayName: Install required runtime dependencies
       - script: tox
         displayName: Execute tests through tox
