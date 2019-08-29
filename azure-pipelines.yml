@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -12,6 +7,7 @@ jobs:
       vmImage: ubuntu-latest
     variables:
       TOXENV: light,standard
+      PYTEST_ADDOPTS: --numprocesses auto
     strategy:
       matrix:
         python-2.7:
@@ -35,9 +31,9 @@ jobs:
       - script: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
-          pip install --upgrade tox
+          python -m pip install --upgrade pip tox
         displayName: Install required runtime dependencies
-      - script: tox
+      - script: python -m tox
         displayName: Execute tests through tox
 
   - job: windows
@@ -61,7 +57,7 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           addToPath: true
         displayName: Enable the targeted python version
-      - script: pip install --upgrade pip tox wheel virtualenv setuptools
+      - script: python -m pip install --upgrade pip tox wheel virtualenv setuptools
         displayName: Install required runtime dependencies
-      - script: tox
+      - script: python -m tox
         displayName: Execute tests through tox
