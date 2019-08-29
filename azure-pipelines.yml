@@ -6,14 +6,37 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+  - job: linux
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      TOXENV: light,standard
+      PYTEST_ADDOPTS: --numprocesses 8
+    strategy:
+      matrix:
+        python-2.7:
+          PYTHON_VERSION: 2.7
+        python-3.5:
+          PYTHON_VERSION: 3.5
+        python-3.6:
+          PYTHON_VERSION: 3.6
+        python-3.7-cover:
+          PYTHON_VERSION: 3.7
+          TOXENV: light,cover
+        lint:
+          PYTHON_VERSION: 3.7
+          TOXENV: lint
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
+          pip install --upgrade tox
+        displayName: Install required runtime dependencies
+      - script: tox
+        displayName: Execute tests through tox
