@@ -7,7 +7,7 @@ jobs:
       vmImage: ubuntu-latest
     variables:
       TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses auto
+      PYTEST_ADDOPTS: --numprocesses 4
     strategy:
       matrix:
         python-2.7:
