@@ -1,6 +1,12 @@
 trigger:
 - master
 
+variables:
+  CI_NAME: Azure DevOps
+  CI_BRANCH: $(Build.SourceBranch)
+  CI_BUILD_NUMBER: $(Build.BuildNumber)
+  CI_BUILD_URL: $(Build.BuildUri)
+
 jobs:
   - job: linux
     pool:
