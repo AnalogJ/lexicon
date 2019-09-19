@@ -1,16 +1,13 @@
-version: 2
+version: 2.1
 
-dependencies: &install_dependencies
-  command: |
-    apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
-    pip install --upgrade tox
-  name: Install required runtime dependencies
-  
-shared: &shared
+shared: &shared_linux
   steps:
     - run:
-        <<: *install_dependencies
+        name: Install required runtime dependencies
+        command: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git dnsutils
+          pip install --upgrade tox
     - checkout
     - run:
         name: Execute tests through tox
@@ -18,39 +15,60 @@ shared: &shared
   environment:
     - TOXENV=light,standard
     - PYTEST_ADDOPTS=--numprocesses 8
+  
+shared: &shared_windows
+  steps:
+    - run:
+        name: Install required runtime dependencies
+        command:
+          choco install --no-progress -y python --version "$PYTHON_VERSION"
+          python -m pip install tox
+    - checkout
+    - run:
+        name: Execute tests through tox
+        command: python -m tox
+  environment:
+    - TOXENV=light,standard
+    - PYTEST_ADDOPTS=--numprocesses 8
 
 jobs:
-  "python-2.7":
-    <<: *shared
+  "python-2.7-linux":
+    <<: *shared_linux
     docker:
       - image: python:2.7-slim
-  "python-3.5":
-    <<: *shared
+  "python-3.5-linux":
+    <<: *shared_linux
     docker:
       - image: python:3.5-slim
-  "python-3.6":
-    <<: *shared
+  "python-3.6-linux":
+    <<: *shared_linux
     docker:
       - image: python:3.6-slim
-  "python-3.7-cover":
-    <<: *shared
+  "python-3.7-cover-linux":
+    <<: *shared_linux
     docker:
       - image: python:3.7-slim
     environment:
       - TOXENV=light,cover
-  "lint":
-    <<: *shared
+  "lint-linux":
+    <<: *shared_linux
     docker:
       - image: python:3.7-slim
     environment:
       - TOXENV=lint
+  "python-3.7-windows":
+    <<: *shared_windows
+    executor: win/vs2019
+    environment:
+      - PYTHON_VERSION=3.7.4
 
 workflows:
   version: 2
   build:
     jobs:
-      - "python-2.7"
-      - "python-3.5"
-      - "python-3.6"
-      - "python-3.7-cover"
-      - "lint"
+      - "python-2.7-linux"
+      - "python-3.5-linux"
+      - "python-3.6-linux"
+      - "python-3.7-cover-linux"
+      - "lint-linux"
+      - "python-3.7-windows"
