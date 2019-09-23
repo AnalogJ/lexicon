@@ -83,7 +83,7 @@ class Provider(BaseProvider):
                 'ttl': record['ttl'],
                 'id': record['id'],
                 'content': self._clean_TXT_record(record['content'])
-                } 
+                }
             if record['priority']:
                 processed_record['priority'] = record['priority']
 
