@@ -82,9 +82,8 @@ class Provider(BaseProvider):
                 'name': self._full_name(record['name']),
                 'ttl': record['ttl'],
                 'id': record['id'],
-                'content': record['content'][1:-1] if record['type'] == 'TXT'
-                           else record['content']
-                } # remove " from start & end of string
+                'content': self._clean_TXT_record(record['content'])
+                } 
             if record['priority']:
                 processed_record['priority'] = record['priority']
 
