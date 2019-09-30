@@ -6,14 +6,29 @@ import logging
 from builtins import bytes
 from email.utils import formatdate
 from hashlib import sha1
+from urllib3.util.retry import Retry
 
 import requests
+from requests.adapters import HTTPAdapter
 from lexicon.providers.base import Provider as BaseProvider
 
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dnsmadeeasy']
+
+
+class _RetryRateLimit(Retry):
+    # Standard urllib3 Retry objects trigger retries only based on HTTP status code or HTTP method.
+    # However we need to differentiate the 400 errors with body `{"error": ["Rate limit exceeded"]}`
+    # from the other 400 errors. The internal _RetryRateLimit class does that.
+    def increment(self, method=None, url=None, response=None, error=None, _pool=None, _stacktrace=None):
+        if response:
+            body = json.loads(response.data)
+            if 'Rate limit exceeded' in body.get('error', []):
+                return super(_RetryRateLimit, self).increment(method, url, response, error, _pool, _stacktrace)
+
+        raise RuntimeError('URL {0} returned a HTTP 400 status code.'.format(url))
 
 
 def provider_parser(subparser):
@@ -165,14 +180,29 @@ class Provider(BaseProvider):
         default_headers['x-dnsme-requestDate'] = request_date
         default_headers['x-dnsme-hmac'] = hashed.hexdigest()
 
-        response = requests.request(action, self.api_endpoint + url, params=query_params,
-                                    data=json.dumps(data),
-                                    headers=default_headers,
-                                    auth=default_auth)
-        # if the request fails for any reason, throw an error.
-        response.raise_for_status()
+        session = requests.Session()
+        try:
+            # DNSMadeEasy allows only 150 requests in a floating 5 min time window. So we implement a retry
+            # strategy on requests returned as 400 with body `{"error": ["Rate limit exceeded"]}`.
+            # 10 retries with backoff = 0.6 gives following retry delays (in seconds) after first attempt:
+            # 1.2, 2.4, 4.8, 9.6, 19.2, 38.4, 76.8, 153.6, 307.2
+            # So last attempt is done 5 min 7 seconds after first try, so the size of the floating window.
+            # Beyond it we can assume something else is wrong and so give up.
+            session_retries = _RetryRateLimit(total=10, backoff_factor=0.6, status_forcelist=[400])
+            session_adapter = HTTPAdapter(max_retries=session_retries)
+            session.mount('http://', session_adapter)
+            session.mount('https://', session_adapter)
+            response = session.request(action, self.api_endpoint + url, params=query_params,
+                                       data=json.dumps(data),
+                                       headers=default_headers,
+                                       auth=default_auth)
+            print(response.headers)
+            # if the request fails for any reason, throw an error.
+            response.raise_for_status()
 
-        # PUT and DELETE actions dont return valid json.
-        if action in ['DELETE', 'PUT']:
-            return response.text
-        return response.json()
+            # PUT and DELETE actions dont return valid json.
+            if action in ['DELETE', 'PUT']:
+                return response.text
+            return response.json()
+        finally:
+            session.close()
