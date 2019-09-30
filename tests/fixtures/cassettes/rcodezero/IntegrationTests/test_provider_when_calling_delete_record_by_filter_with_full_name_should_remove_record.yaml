@@ -1,0 +1,326 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at
+  response:
+    body:
+      string: !!python/unicode '{"id":544219,"domain":"lexicon-test.at","type":"MASTER","masters":[""],"serial":2019093214,"created":"2019-09-30T12:57:51Z","last_check":null,"dnssec_status":"Unsigned","dnssec_status_detail":"Unsigned"}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '203'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:03 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6Imgxb3ladGFkZGVMSDNaYWVIU3l4ZGc9PSIsInZhbHVlIjoiOGJyNzhUUE5ad3ZyajNhcFl4ZWdUMitOd0dVOTMrcHcrUWRvZWRONlwvWnNkd3ZcL0pEVmZuUUFnenZGN3NtWjhKIiwibWFjIjoiZTg3ODE1ODJjYmM2MDE0ZTkxZDgyMTU0NzBhZWViMTNlMWVkMjFmYjIwOGNjMDk0N2RjNjFmN2Y3NWNmYWE5YyJ9;
+        expires=Mon, 30-Sep-2019 15:26:03 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6IndpSzhBdzFmZkYrendlWHdyQ0pcL1V3PT0iLCJ2YWx1ZSI6ImRTU1NRMnFVTWpEVUR6YnFBMkQ3WklWcnI5OWkzMDJcL1NXem9ieThSOGFhTTJwWUVTV1FPM3RyXC9pdW85b0VxYiIsIm1hYyI6ImZhODg3NDU2NDNjOTMwYjdkYmMxNDQyNzc3MzZjYmNiNmFmZDBlOGJiMDY3NDNmNGUzMmJkODk4YzRmODJmMzEifQ%3D%3D;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization,Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '147'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at/rrsets?page_size=-1
+  response:
+    body:
+      string: !!python/unicode '{"current_page":1,"data":[{"name":"localhost.lexicon-test.at.","type":"A","ttl":3600,"records":[{"content":"127.0.0.1","disabled":false}]},{"name":"random.fqdntest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"random.fulltest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"orig.nameonly.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"updated\"","disabled":false}]},{"name":"random.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.deleterecordinset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.listrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.createrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"docs.lexicon-test.at.","type":"CNAME","ttl":3600,"records":[{"content":"docs.example.com.lexicon-test.at.","disabled":false}]},{"name":"_acme-challenge.noop.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"ttl.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"ttlshouldbe3600\"","disabled":false}]},{"name":"_acme-challenge.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfull.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.full.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"lexicon-test.at.","type":"SOA","ttl":3600,"records":[{"content":"sec1.rcode0.net.
+        rcodezero-soa.ipcom.at. 2019093214 10800 3600 604800 3600","disabled":false}]}],"first_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","next_page_url":null,"path":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets","per_page":-1,"prev_page_url":null,"to":18,"total":19}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '2925'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:03 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6InJiZiswY050RHZBbzFmUGdWVU1KWUE9PSIsInZhbHVlIjoicjU4SVZBcFlkNFErOGNRdCs4eUxuekVBMEZDeThNVW00OEdWTUdiY24zTzlNM3Y5MVAwNStwMGYyT3hOYlQ4dSIsIm1hYyI6IjUyZjk3NGVjZjllZTg3NmVlYzIxMjMxZmRkOWM2ZTE3ZjdhNGY0NDgyZmNhOWJlOWUyYTg5NGNkMjVkMWMzNzUifQ%3D%3D;
+        expires=Mon, 30-Sep-2019 15:26:04 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6IjVMM2RlSGV0aTYrcWFPeEJwZVBjMVE9PSIsInZhbHVlIjoiVngyN3NtZlJURHJlTVdsTjYxMHZXa3ZNU1JsaFp0TlNkblRvbmZEWjE4RENldmczdnBRSHZvVGhYdXBuOWRuRCIsIm1hYyI6IjVhOTViY2ZiYjAwYTFhN2RkMDIwNWYzYTAzNjYyZDUxYTYxODlmNzQxNzY0MDgyMGZkNDBjNDJiN2JhNDNhYzYifQ%3D%3D;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization,Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '146'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '[{"records": [{"content": "\"challengetoken\"", "disabled":
+      false}], "changetype": "ADD", "type": "TXT", "name": "delete.testfull.lexicon-test.at.",
+      "ttl": 3600}]'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '162'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: PATCH
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at/rrsets
+  response:
+    body:
+      string: !!python/unicode '{"status":"ok","message":"RRsets updated"}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '42'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:04 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6IlM3ZXBzWUt6Zk11TExWd2hxRURpZ3c9PSIsInZhbHVlIjoiTHh2dGJ5QkNEeFdtU0tTT25pcFNcL3c3WjRGVkpRMUdmYVpWWEpMV0ZMbXNRbXhZWktCMEVZeWtXdDFlK1VLdTgiLCJtYWMiOiJmMzMwYmE2MDM1NjkwNjM5MDdhNTg3MDA2NzZiNjJkYTZiZjU0YWJlMzFhZjhhYTFhZjJhMTAzNDAwYjU0MThlIn0%3D;
+        expires=Mon, 30-Sep-2019 15:26:04 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6IlwveW9DUUwxTkZyMkIrQVZcL2thWHFidz09IiwidmFsdWUiOiIzMndlQkFQMTY2K2VoV3RhaTJnSnVkcHZzUDFQQzk2c3JEcHBHcWJYb0xiUXVpOTZwRGtQRnpPbW16ZVZmN2VHIiwibWFjIjoiNmRiOGNlMDJjODFlNDA2Nzg0ZmFkMzkwNTkwMzBlOGM3ZWRkMzY0YzMzZmE3NjEwMjMzZjlkOGU4ZmVmMjQzNSJ9;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '145'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at/rrsets?page_size=-1
+  response:
+    body:
+      string: !!python/unicode '{"current_page":1,"data":[{"name":"localhost.lexicon-test.at.","type":"A","ttl":3600,"records":[{"content":"127.0.0.1","disabled":false}]},{"name":"random.fqdntest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"random.fulltest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"orig.nameonly.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"updated\"","disabled":false}]},{"name":"random.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.deleterecordinset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.listrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.createrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"docs.lexicon-test.at.","type":"CNAME","ttl":3600,"records":[{"content":"docs.example.com.lexicon-test.at.","disabled":false}]},{"name":"_acme-challenge.noop.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"ttl.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"ttlshouldbe3600\"","disabled":false}]},{"name":"_acme-challenge.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"delete.testfull.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfull.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.full.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"lexicon-test.at.","type":"SOA","ttl":3600,"records":[{"content":"sec1.rcode0.net.
+        rcodezero-soa.ipcom.at. 2019093215 10800 3600 604800 3600","disabled":false}]}],"first_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","next_page_url":null,"path":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets","per_page":-1,"prev_page_url":null,"to":19,"total":20}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '3055'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:04 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6ImwzY3hEcnB3SXRkVXc0VWlIalwvbUtnPT0iLCJ2YWx1ZSI6ImZ3NkhMZ3FhUFwvV05aVzhzR1pXZXQ2dHl2SVJCbEZhRm4wXC8zYzEra1k1cTFtNm5BZUtQYUx4OU80V0J4S3psNyIsIm1hYyI6ImI5ZWM5MzEzYTZmYjQ2MTBmYjUxMDRiNzc5MDA4YThhMTlmMTU4OTliZTdiZGU1MzczODQyMDY4NWM3YWY1ZGQifQ%3D%3D;
+        expires=Mon, 30-Sep-2019 15:26:05 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6IkQrK1ZMaDk1TU51UUdRdTZndnQraXc9PSIsInZhbHVlIjoiNkZHeWZLVjZcL0xCZDlRN3Q5RjhWZWlPZ2dkanpRSElMbzZyeVwvaW03cUpQY1ZcL3lvaTdGVGlyeFo4WmN5RjV3MiIsIm1hYyI6ImNmNjlhYmQzNDkxOTYzMmQxMmE1ZGI2NjZkMGQzZjU0MGQzMGMyMWUwZTRmMmExMTRjYTgwZDNjNTkzYzhkZDkifQ%3D%3D;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization,Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '144'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '[{"records": [], "changetype": "UPDATE", "type": "TXT",
+      "name": "delete.testfull.lexicon-test.at.", "ttl": 3600}]'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '113'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: PATCH
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at/rrsets
+  response:
+    body:
+      string: !!python/unicode '{"status":"ok","message":"RRsets updated"}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '42'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:05 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6Ikc5djFPMHo0UFlENUgxMkw4WCsxUlE9PSIsInZhbHVlIjoidXdkb3ZZbDlSQUMxVXNvSXV3elM0N1RGTWRwRnlvSENrV1NqSFpXUDh0cE81dHh3eGJMVkJzbW9OaGFOQVBseSIsIm1hYyI6ImE5MDdkZjU2MTdkMDk3MDI0YTM0ODcxMDVmMjUzYjcwZTFkZWUwMTVhMThjNjFlNjQ4ZmU2ZDQyZTU5ZGRmYjAifQ%3D%3D;
+        expires=Mon, 30-Sep-2019 15:26:05 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6Ik1UZGxJU0FXMmJmcXExMWZZM2hkZEE9PSIsInZhbHVlIjoiSVJMZVB4cGFldEtpYm8rdlFnUVc3ckhUN3ZKZmtuM1BsVld1Y2JWY2Vscm0yUUxHUHI4SU5rRjY4NjZtMHg4MSIsIm1hYyI6Ijc3OTYxZGRlYmQ2ZWE5ZTZiZDkzM2MyMzk0YzI1MDVlYWY2M2E3ZmYwN2I1NDUxZmNiYzY3ZDI3ZGYwNzlhYjAifQ%3D%3D;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '143'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at/rrsets?page_size=-1
+  response:
+    body:
+      string: !!python/unicode '{"current_page":1,"data":[{"name":"localhost.lexicon-test.at.","type":"A","ttl":3600,"records":[{"content":"127.0.0.1","disabled":false}]},{"name":"random.fqdntest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"random.fulltest.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"orig.nameonly.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"updated\"","disabled":false}]},{"name":"random.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.test.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.deleterecordinset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.listrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"_acme-challenge.createrecordset.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken1\"","disabled":false},{"content":"\"challengetoken2\"","disabled":false}]},{"name":"docs.lexicon-test.at.","type":"CNAME","ttl":3600,"records":[{"content":"docs.example.com.lexicon-test.at.","disabled":false}]},{"name":"_acme-challenge.noop.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"ttl.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"ttlshouldbe3600\"","disabled":false}]},{"name":"_acme-challenge.fqdn.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"updated.testfull.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"_acme-challenge.full.lexicon-test.at.","type":"TXT","ttl":3600,"records":[{"content":"\"challengetoken\"","disabled":false}]},{"name":"lexicon-test.at.","type":"SOA","ttl":3600,"records":[{"content":"sec1.rcode0.net.
+        rcodezero-soa.ipcom.at. 2019093216 10800 3600 604800 3600","disabled":false}]}],"first_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","from":1,"last_page":1,"last_page_url":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets?page=1","next_page_url":null,"path":"https:\/\/my.rcodezero.at\/api\/v1\/zones\/lexicon-test.at\/rrsets","per_page":-1,"prev_page_url":null,"to":18,"total":19}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '2925'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:26:05 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6Ikh0b1BHeG5PbDVabm42Nzc1c1lPSHc9PSIsInZhbHVlIjoiOG9jWEJKOENzVHhuYjQwTWdSQVVsaGlQMDBxYnlQQUtsRFkzNldKVUhraGRDWWlDUUJ6TkVlZ1ZlQ3I2NVZ0MyIsIm1hYyI6IjQ0NzczMjI1OTMzZDkwM2JiZTI1NTQ0N2FjM2NjZTIwNTMwMWIyYWY2YTQ4MTZmZTViY2MwYzMyNjliNGIzODUifQ%3D%3D;
+        expires=Mon, 30-Sep-2019 15:26:06 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6ImRrZU1vaDJlM0kxN0N2SEZuZytzM1E9PSIsInZhbHVlIjoiY3I4eWxrUDVuaWRNSit4NVJCZXY4Y01YSlJjV0w4WW5sSVZzU0oyVmtoTFpJVDd2MlU4V0JxMkM2WTZEc1gzUSIsIm1hYyI6ImZlNGZjYmU5NmY5MWM2YTVlOTE1MTlhNTM0YTJhMjg5ZjZkODU5OGY3ZmQ2ZmU5NTNmMDBjMzI3MGI0MmVlOWUifQ%3D%3D;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization,Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '142'
+    status:
+      code: 200
+      message: OK
+version: 1
