@@ -1,7 +1,5 @@
 """Integration tests for RcodeZero"""
 from unittest import TestCase
-
-import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
@@ -15,4 +13,3 @@ class RcodezeroProviderTests(TestCase, IntegrationTests):
 
     def _filter_headers(self):
         return ['Authorization']
-

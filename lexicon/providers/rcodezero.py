@@ -62,7 +62,7 @@ class Provider(BaseProvider):
                                 'content': record['content'],
                                 'disabled': record['disabled']
                             })
-                    updated_data['changetype']='UPDATE'
+                    updated_data['changetype'] = 'UPDATE'
                 break
 
         request = [updated_data]
@@ -156,12 +156,13 @@ class Provider(BaseProvider):
         response = requests.request(action, self.api_endpoint + url, params=query_params,
                                     data=json.dumps(data),
                                     headers={
-                                        'Authorization': 'Bearer ' + self._get_provider_option('auth_token'),
+                                        'Authorization': 'Bearer ' +
+                                                         self._get_provider_option('auth_token'),
                                         'Content-Type': 'application/json'
                                     })
         # if the request fails for any reason, throw an error.
         if response.status_code >= 400:
-            LOGGER.error('Bad Request: %s',response.text) 
+            LOGGER.error('Bad Request: %s', response.text)
         response.raise_for_status()
         return response.json()
 
