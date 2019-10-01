@@ -100,7 +100,10 @@ class Provider(BaseProvider):
 
         if not identifier:
             record = resources[0] if resources else None
-            identifier = record['id'] if record else None
+            if record is not None:
+                identifier = record['id']
+            else:
+                identifier = None
 
         if not identifier:
             raise ValueError("updating %s identifier not exists" % identifier)
