@@ -27,7 +27,8 @@ class _RetryRateLimit(Retry):
         if response:
             body = json.loads(response.data)
             if 'Rate limit exceeded' in body.get('error', []):
-                return super(_RetryRateLimit, self).increment(method, url, response, error, _pool, _stacktrace)
+                return super(_RetryRateLimit, self).increment(
+                    method, url, response, error, _pool, _stacktrace)
 
         raise RuntimeError('URL {0} returned a HTTP 400 status code.'.format(url))
 
