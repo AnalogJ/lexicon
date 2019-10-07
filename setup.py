@@ -44,7 +44,7 @@ extras_require = {
     'gratisdns': ['beautifulsoup4'],
     # Define dev/test dependencies
     'dev': [
-        'pytest==5.2.1',
+        'pytest==4.6.5',
         'pytest-cov==2.8.1',
         'pytest-xdist==1.30.0',
         'python-coveralls==2.9.3',
