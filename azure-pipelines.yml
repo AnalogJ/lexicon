@@ -13,7 +13,7 @@ jobs:
       vmImage: ubuntu-16.04
     variables:
       TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses 16
+      PYTEST_ADDOPTS: --numprocesses 32
     strategy:
       matrix:
         python-2.7:
@@ -47,7 +47,7 @@ jobs:
       vmImage: vs2017-win2016
     variables:
       TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses 16
+      PYTEST_ADDOPTS: --numprocesses 32
     strategy:
       matrix:
         python-2.7:
