@@ -10,7 +10,7 @@ variables:
 jobs:
   - job: linux
     pool:
-      vmImage: ubuntu-latest
+      vmImage: ubuntu-16.04
     variables:
       TOXENV: light,standard
       PYTEST_ADDOPTS: --numprocesses auto
@@ -44,7 +44,7 @@ jobs:
 
   - job: windows
     pool:
-      vmImage: windows-latest
+      vmImage: vs2017-win2016
     variables:
       TOXENV: light,standard
       PYTEST_ADDOPTS: --numprocesses auto
