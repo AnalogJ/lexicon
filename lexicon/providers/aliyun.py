@@ -93,17 +93,14 @@ class Provider(BaseProvider):
         resources = self._list_records(rtype, name, None)
 
         for record in resources:
-            if (rtype == record['type']) \
-                and (self._relative_name(name) == self._relative_name(record['name'])) \
-                and (content == record['content']):
+            if (rtype == record['type']
+                    and (self._relative_name(name) == self._relative_name(record['name']))
+                    and (content == record['content'])):
                 return True
 
         if not identifier:
             record = resources[0] if resources else None
-            if record is not None:
-                identifier = record['id']
-            else:
-                identifier = None
+            identifier = record['id'] if record else None  # pylint: disable=unsubscriptable-object
 
         if not identifier:
             raise ValueError("updating %s identifier not exists" % identifier)
