@@ -73,9 +73,9 @@ class Provider(BaseProvider):
                 }
             else:
                 processed_record = {
-                    'name': self._full_name(record['name']), 
-                    'type': record['type'], 
-                    'content': record['content'], 
+                    'name': self._full_name(record['name']),
+                    'type': record['type'],
+                    'content': record['content'],
                     'ttl': record['ttl']
                 }
             records.append(processed_record)
