@@ -63,13 +63,21 @@ class Provider(BaseProvider):
 
         records = []
         for record in payload:
-            processed_record = {
-                'type': record['type'],
-                'name': self._full_name(record['name']),
-                'ttl': record['ttl'],
-                'content': record['content'],
-                'id': record['id']
-            }
+            if record['type'] != "FORWARD":
+                processed_record = {
+                    'type': record['type'],
+                    'name': self._full_name(record['name']),
+                    'ttl': record['ttl'],
+                    'content': record['content'],
+                    'id': record['id']
+                }
+            else:
+                processed_record = {
+                    'name': self._full_name(record['name']), 
+                    'type': record['type'], 
+                    'content': record['content'], 
+                    'ttl': record['ttl']
+                }
             records.append(processed_record)
 
         if rtype:
