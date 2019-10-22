@@ -12,8 +12,8 @@ jobs:
     pool:
       vmImage: ubuntu-16.04
     variables:
-      TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses 8
+      TOXENV: standard
+      PYTEST_ADDOPTS: --numprocesses 4
     strategy:
       matrix:
         python-2.7:
@@ -46,8 +46,8 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     variables:
-      TOXENV: light,standard
-      PYTEST_ADDOPTS: --numprocesses 8
+      TOXENV: standard
+      PYTEST_ADDOPTS: --numprocesses 4
     strategy:
       matrix:
         python-2.7:
