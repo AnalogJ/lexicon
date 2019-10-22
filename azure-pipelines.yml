@@ -6,15 +6,14 @@ variables:
   CI_BRANCH: $(Build.SourceBranch)
   CI_BUILD_NUMBER: $(Build.BuildNumber)
   CI_BUILD_URL: $(Build.BuildUri)
+  TOXENV: standard
+  PYTEST_ADDOPTS: --numprocesses 4
+  PYTHONHASHSEED: 0
 
 jobs:
   - job: linux
     pool:
       vmImage: ubuntu-16.04
-    variables:
-      TOXENV: standard
-      PYTEST_ADDOPTS: --numprocesses 4
-      PYTHONHASHSEED: 0
     strategy:
       matrix:
         python-2.7-light:
@@ -46,10 +45,6 @@ jobs:
   - job: windows
     pool:
       vmImage: vs2017-win2016
-    variables:
-      TOXENV: standard
-      PYTEST_ADDOPTS: --numprocesses 4
-      PYTHONHASHSEED: 0
     strategy:
       matrix:
         python-2.7:
