@@ -32,7 +32,7 @@ class Provider(BaseProvider):
 
     URLS = {
         'login': 'https://my.easyname.com/en/login',
-        'domain_list': 'https://my.easyname.com/domains',
+        'domain_list': 'https://my.easyname.com/domains/',
         'overview': 'https://my.easyname.com/hosting/view-user.php',
         'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
         'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
@@ -379,7 +379,7 @@ class Provider(BaseProvider):
         self._log('Login', login_response)
         assert login_response.status_code == 200, \
             'Could not login due to a network error.'
-        assert login_response.url == self.URLS['overview'], \
+        assert login_response.url == self.URLS['domain_list'], \
             'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
 
     def _get_domain_text_of_authoritative_zone(self):
