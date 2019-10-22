@@ -4,7 +4,7 @@ trigger:
 variables:
   TOXENV: standard
   PYTEST_ADDOPTS: --numprocesses 4
-  BRANCH_NAME: $(Build.SourceBranchName)
+  BRANCH_NAME: $(Build.SourceBranch)
 
 jobs:
   - job: linux
