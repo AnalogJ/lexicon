@@ -13,10 +13,13 @@ jobs:
       vmImage: ubuntu-16.04
     variables:
       TOXENV: standard
-      PYTEST_ADDOPTS: --numprocesses 2
+      PYTEST_ADDOPTS: --numprocesses 4
       PYTHONHASHSEED: 0
     strategy:
       matrix:
+        python-2.7-light:
+          PYTHON_VERSION: 2.7
+          TOXENV: light
         python-2.7:
           PYTHON_VERSION: 2.7
         python-3.5:
@@ -25,7 +28,7 @@ jobs:
           PYTHON_VERSION: 3.6
         python-3.7-cover:
           PYTHON_VERSION: 3.7
-          TOXENV: light,cover
+          TOXENV: cover
         lint:
           PYTHON_VERSION: 3.7
           TOXENV: lint
@@ -35,10 +38,7 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           addToPath: true
         displayName: Enable the targeted python version
-      - script: |
-          sudo apt-get update
-          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends git dnsutils
-          python -m pip install --upgrade pip tox
+      - script: python -m pip install --upgrade pip tox
         displayName: Install required runtime dependencies
       - script: python -m tox
         displayName: Execute tests through tox
@@ -48,7 +48,7 @@ jobs:
       vmImage: vs2017-win2016
     variables:
       TOXENV: standard
-      PYTEST_ADDOPTS: --numprocesses 2
+      PYTEST_ADDOPTS: --numprocesses 4
       PYTHONHASHSEED: 0
     strategy:
       matrix:
