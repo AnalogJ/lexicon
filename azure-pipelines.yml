@@ -4,12 +4,6 @@ trigger:
 variables:
   TOXENV: standard
   PYTEST_ADDOPTS: --numprocesses 4
-  CI_NAME: Azure DevOps
-  CI_BRANCH: $(Build.SourceBranch)
-  CI_BUILD_NUMBER: $(Build.BuildNumber)
-  CI_BUILD_URL: $(Build.BuildUri)
-  PYTHONHASHSEED: 0
-  TOX_TESTENV_PASSENV: CI_* PYTHONHASHSEED
 
 jobs:
   - job: linux
@@ -43,10 +37,11 @@ jobs:
       - script: python -m tox
         displayName: Execute tests through tox
       - script: |
-          python -m pip install python-coveralls
+          python -m pip install coveralls
           coveralls
         condition: eq(variables['TOXENV'], 'cover')
         env:
+          COVERALLS_SERVICE_NAME: azure-pipelines
           COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
         displayName: Publish code coverage
 
