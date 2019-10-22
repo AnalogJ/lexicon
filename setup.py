@@ -47,7 +47,6 @@ extras_require = {
         'pytest==4.6.5',
         'pytest-cov==2.8.1',
         'pytest-xdist==1.30.0',
-        'python-coveralls==2.9.3',
         'vcrpy==2.1.0',
         'mock==3.0.5',
     ]
