@@ -276,3 +276,4 @@ following the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/C
 
     tox
 
+Test
