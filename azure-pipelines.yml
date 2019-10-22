@@ -14,6 +14,7 @@ jobs:
     variables:
       TOXENV: standard
       PYTEST_ADDOPTS: --numprocesses 4
+      PYTHONHASHSEED: 0
     strategy:
       matrix:
         python-2.7:
@@ -48,6 +49,7 @@ jobs:
     variables:
       TOXENV: standard
       PYTEST_ADDOPTS: --numprocesses 4
+      PYTHONHASHSEED: 0
     strategy:
       matrix:
         python-2.7:
