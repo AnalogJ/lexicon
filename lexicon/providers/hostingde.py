@@ -82,10 +82,11 @@ class Provider(BaseProvider):
                 'name': self._full_name(record['name']),
                 'ttl': record['ttl'],
                 'id': record['id'],
-                'content': self._clean_TXT_record(record['content'])
+                'content': record['content']
                 }
             if record['priority']:
                 processed_record['priority'] = record['priority']
+            processed_record = self._clean_TXT_record(processed_record)
 
             processed_records.append(processed_record)
 

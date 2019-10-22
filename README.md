@@ -43,7 +43,7 @@ The current supported providers are:
 - Dinahosting ([docs](https://en.dinahosting.com/api))
 - DirectAdmin ([docs](https://www.directadmin.com/features.php?id=504))
 - DNSimple (docs: [v1](https://developer.dnsimple.com/), [v2](https://developer.dnsimple.com/v2/))
-- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
+- DnsMadeEasy ([docs](https://api-docs.dnsmadeeasy.com/?version=latest))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
 - Dreamhost ([docs](https://help.dreamhost.com/hc/en-us/articles/217560167-API_overview))
