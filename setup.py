@@ -38,24 +38,22 @@ extras_require = {
     'transip': ['transip>=0.3.0'],
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
-    'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
+    'hetzner': ['dnspython>=1.15.0', 'beautifulsoup4'],
     'easyname': ['beautifulsoup4'],
     'localzone': ['localzone'],
     'gratisdns': ['beautifulsoup4'],
+    # Define dev/test dependencies
+    'dev': [
+        'pytest==4.6.5',
+        'pytest-cov==2.8.1',
+        'pytest-xdist==1.30.0',
+        'vcrpy==2.1.0',
+        'mock==3.0.5',
+    ]
 }
 
 # Add a 'full' extra, gathering all external dependencies for providers
-extras_require['full'] = set([dep for deps in extras_require.values() for dep in deps])
-
-# Define dev/test dependencies
-extras_require['dev'] = [
-    'pytest==4.1.1',
-    'pytest-cov==2.6.1',
-    'pytest-xdist==1.26.1',
-    'python-coveralls==2.9.1',
-    'vcrpy==2.0.1',
-    'mock==2.0.0',
-]
+extras_require['full'] = [dep for name, deps in extras_require.items() if name != 'dev' for dep in deps]
 
 setup(
     name='dns-lexicon',
