@@ -240,6 +240,10 @@ Every DNS service and auth flag maps to an Environmental Variable as follows: `L
 So instead of specifying `--auth-username` and `--auth-token` flags when calling `lexicon cloudflare ...`,
 you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_TOKEN` environmental variables.
 
+If you've got a subdomain delegation configured and need records configured within that (eg, you're trying to set `test.foo.example.com` where `foo.example.com` is configured as a separate zone), set `LEXICON_DELEGATED` to the delegated domain.
+
+    LEXICON_DELEGATED=foo.example.com
+
 ### Letsencrypt Instructions
 Lexicon has an example [dehydrated hook file](examples/dehydrated.default.sh) that you can use for any supported provider.
 All you need to do is set the PROVIDER env variable.
