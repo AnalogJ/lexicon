@@ -9,8 +9,7 @@
 # lexicon
 Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
-[![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
-[![Build status](https://ci.appveyor.com/api/projects/status/7m9kvestl4l1re9d/branch/master?svg=true)](https://ci.appveyor.com/project/AnalogJ/lexicon/branch/master)
+[![Build Status](https://dev.azure.com/AnalogJ/lexicon/_apis/build/status/AnalogJ.lexicon?branchName=master)](https://dev.azure.com/AnalogJ/lexicon/_build/latest?definitionId=1&branchName=master)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
