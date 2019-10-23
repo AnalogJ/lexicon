@@ -5,12 +5,18 @@ import os
 import mock
 import pytest
 
+# Optional dependency handling
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    pass
+
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
 def _no_dns_lookup():
     try:
-        import dns.resolver
+        import dns.resolver  # pylint: disable=import-outside-toplevel
     except ImportError:
         return False
 
@@ -66,8 +72,6 @@ class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
         return ['Cookie']
 
     def _filter_response(self, response):
-        from bs4 import BeautifulSoup
-
         for cookie in ['set-cookie', 'Set-Cookie']:
             if cookie in response['headers']:
                 del response['headers'][cookie]
@@ -101,8 +105,6 @@ class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
         return ['Cookie']
 
     def _filter_response(self, response):
-        from bs4 import BeautifulSoup
-
         for cookie in ['set-cookie', 'Set-Cookie']:
             if cookie in response['headers']:
                 del response['headers'][cookie]

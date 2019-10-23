@@ -1,5 +1,6 @@
 """Module provider for Aliyun"""
 from __future__ import absolute_import
+import base64
 import logging
 import time
 import datetime
@@ -18,6 +19,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ['hichina.com']
 
 ALIYUN_DNS_API_ENDPOINT = 'https://alidns.aliyuncs.com'
+
 
 def provider_parser(subparser):
     """Module provider for Aliyun"""
@@ -183,10 +185,7 @@ class Provider(BaseProvider):
             urllib.parse.quote_plus('/'),
             urllib.parse.quote_plus(canonicalized_query_string)])
 
-        signature = ""
         if sys.version_info.major > 2:
-            import base64
-
             sign_secret_bytes = bytes(sign_secret, 'utf-8')
             string_to_sign_bytes = bytes(string_to_sign, 'utf-8')
             sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
