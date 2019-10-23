@@ -6,7 +6,7 @@ from requests import Response, Session
 
 # Handling optional dependency for this provider
 try:
-    from bs4 import BeautifulSoup
+    from bs4 import BeautifulSoup, Tag
 except ImportError:
     pass
 
