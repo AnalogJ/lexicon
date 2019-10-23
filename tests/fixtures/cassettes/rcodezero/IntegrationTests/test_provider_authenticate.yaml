@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://my.rcodezero.at/api/v1/zones/lexicon-test.at
+  response:
+    body:
+      string: !!python/unicode '{"id":544219,"domain":"lexicon-test.at","type":"MASTER","masters":[""],"serial":2019093201,"created":"2019-09-30T12:57:51Z","last_check":null,"dnssec_status":"Unsigned","dnssec_status_detail":"Unsigned"}'
+    headers:
+      cache-control:
+      - no-cache, private
+      connection:
+      - Keep-Alive
+      content-length:
+      - '203'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Sep 2019 13:25:39 GMT
+      keep-alive:
+      - timeout=5, max=100
+      server:
+      - Apache
+      strict-transport-security:
+      - max-age=15768000
+      vary:
+      - Authorization,Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - '200'
+      x-ratelimit-remaining:
+      - '187'
+    status:
+      code: 200
+      message: OK
+version: 1
