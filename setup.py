@@ -45,7 +45,7 @@ extras_require = {
     # Define dev/test dependencies
     'dev': [
         'pytest>=5.2 ; python_version >= "3.0"',
-        'pytest>=5.2 ; python_version >= "2.7"',
+        'pytest>=4.6 ; python_version >= "2.7"',
         'pytest-cov>=2.8',
         'pytest-xdist>=1.30',
         'vcrpy>=2.1',
