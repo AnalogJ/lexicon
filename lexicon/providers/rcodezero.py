@@ -32,7 +32,7 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-    # Create record. If record already exists with the same content, do nothing'
+    # Create record.
 
     def _create_record(self, rtype, name, content):
         rname = self._fqdn_name(name)
