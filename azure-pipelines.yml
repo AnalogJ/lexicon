@@ -21,11 +21,13 @@ jobs:
           PYTHON_VERSION: 3.5
         python-3.6:
           PYTHON_VERSION: 3.6
-        python-3.7-cover:
+        python-3.7:
           PYTHON_VERSION: 3.7
+        python-3.8-cover:
+          PYTHON_VERSION: 3.8
           TOXENV: cover
         lint:
-          PYTHON_VERSION: 3.7
+          PYTHON_VERSION: 3.8
           TOXENV: lint
     steps:
       - task: UsePythonVersion@0
@@ -59,6 +61,8 @@ jobs:
           PYTHON_VERSION: 3.6
         python-3.7:
           PYTHON_VERSION: 3.7
+        python-3.8:
+          PYTHON_VERSION: 3.8
     steps:
       - task: UsePythonVersion@0
         inputs:
