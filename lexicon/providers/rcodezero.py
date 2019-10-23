@@ -1,5 +1,6 @@
 """Module provider for RcodeZero"""
 from __future__ import absolute_import
+import hashlib
 import json
 import logging
 
@@ -20,6 +21,7 @@ def provider_parser(subparser):
 
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -28,7 +30,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         if self._zone_data is None:
-            self._zone_data = self._get('/zones/' +self.domain)
+            self._zone_data = self._get('/zones/' + self.domain)
 
         self.domain_id = self.domain
 
@@ -46,7 +48,8 @@ class Provider(BaseProvider):
             'changetype': 'ADD'
         }
 
-        updated_data['records'].append({'content': newcontent, 'disabled': False})
+        updated_data['records'].append(
+            {'content': newcontent, 'disabled': False})
 
         payload = self._get(
             '/zones/{0}/rrsets?page_size=-1'.format(self.domain_id))
@@ -92,7 +95,7 @@ class Provider(BaseProvider):
                     name)) and (rtype is None or rrset['type'] == rtype):
                 for record in rrset['records']:
                     if content is None or record['content'] == self._clean_content(rtype, content):
-                    # rcode0 does not have a record id, so lets create one
+                        # rcode0 does not have a record id, so lets create one
                         processed_record = {
                             'type': rrset['type'],
                             'name': self._full_name(rrset['name']),
@@ -114,16 +117,17 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
 
-        if identifier is not None:
-            rtype, name, content = self._parse_identifier(identifier)
-
-        LOGGER.debug("delete %s %s %s", rtype, name, content)
-        if rtype is None or name is None:
-            raise Exception("Must specify at least both rtype and name")
+        LOGGER.debug("delete %s %s %s %s", identifier, rtype, name, content)
+        if identifier is None and (rtype is None or name is None):
+            raise Exception("Must specify at least id or  both rtype and name")
 
         payload = self._get(
             '/zones/{0}/rrsets?page_size=-1'.format(self.domain_id))
 
+        if identifier is not None:
+            rtype, name, content = self._parse_identifier(identifier, payload)
+
+        update_data = None
         for rrset in payload['data']:
             if rrset['type'] == rtype and self._fqdn_name(rrset['name']) == self._fqdn_name(name):
                 update_data = rrset
@@ -138,13 +142,17 @@ class Provider(BaseProvider):
                             new_record_list.append(record)
 
                     update_data['records'] = new_record_list
-                    update_data['changetype'] = 'UPDATE'
+                    if new_record_list:
+                        update_data['changetype'] = 'UPDATE'
+                    else:
+                        update_data['changetype'] = 'DELETE'
                 break
 
-        request = [update_data]
-        LOGGER.debug('request: %s', request)
+        if update_data is not None:
+            request = [update_data]
+            LOGGER.debug('request: %s', request)
+            self._patch('/zones/' + self.domain + '/rrsets', data=request)
 
-        self._patch('/zones/' + self.domain + '/rrsets', data=request)
         return True
 
     # Helpers
@@ -157,7 +165,8 @@ class Provider(BaseProvider):
                                     data=json.dumps(data),
                                     headers={
                                         'Authorization': 'Bearer ' +
-                                                         self._get_provider_option('auth_token'),
+                                                         self._get_provider_option(
+                                                             'auth_token'),
                                         'Content-Type': 'application/json'
                                     })
         # if the request fails for any reason, throw an error.
@@ -168,15 +177,26 @@ class Provider(BaseProvider):
 
     # generate a unique id for a give record
     def _make_identifier(self, rtype, name, content):  # pylint: disable=no-self-use
-        return "{}/{}={}".format(rtype, name, content)
+        sha256 = hashlib.sha256()
+        sha256.update(('type=' + rtype + ',').encode('utf-8'))
+        sha256.update(('name=' + name + ',').encode('utf-8'))
+        sha256.update(('content=' + content + ',').encode('utf-8'))
+        return sha256.hexdigest()[0:7]
 
-    def _parse_identifier(self, identifier):  # pylint: disable=no-self-use
-        parts = identifier.split('/')
-        rtype = parts[0]
-        parts = parts[1].split('=')
-        name = parts[0]
-        content = "=".join(parts[1:])
-        return rtype, name, content
+    def _parse_identifier(self, identifier, payload):  # pylint: disable=no-self-use
+
+        for rrset in payload['data']:
+            for record in rrset['records']:
+                if self._make_identifier(
+                        rrset['type'], rrset['name'], record['content']) == identifier:
+                    rtype = rrset['type']
+                    name = self._full_name(rrset['name'])
+                    content = self._unclean_content(
+                        rrset['type'], record['content'])
+                    return rtype, name, content
+
+        raise Exception("Record with ID {} not found ".format(identifier))
+
 
     def _clean_content(self, rtype, content):
         if rtype in ("TXT", "LOC"):
