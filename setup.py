@@ -44,11 +44,12 @@ extras_require = {
     'gratisdns': ['beautifulsoup4'],
     # Define dev/test dependencies
     'dev': [
-        'pytest==4.6.5',
-        'pytest-cov==2.8.1',
-        'pytest-xdist==1.30.0',
-        'vcrpy==2.1.0',
-        'mock==3.0.5',
+        'pytest>=5.2 ; python_version >= "3.0"',
+        'pytest>=4.6 ; python_version >= "2.7"',
+        'pytest-cov>=2.8',
+        'pytest-xdist>=1.30',
+        'vcrpy>=2.1',
+        'mock>=3.0',
     ]
 }
 
@@ -75,6 +76,8 @@ setup(
     author_email='jason@thesparktree.com',
 
     license='MIT',
+
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
