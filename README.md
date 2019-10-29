@@ -9,8 +9,7 @@
 # lexicon
 Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
-[![Circle CI](https://circleci.com/gh/AnalogJ/lexicon.svg?style=shield)](https://circleci.com/gh/AnalogJ/lexicon)
-[![Build status](https://ci.appveyor.com/api/projects/status/7m9kvestl4l1re9d/branch/master?svg=true)](https://ci.appveyor.com/project/AnalogJ/lexicon/branch/master)
+[![Build Status](https://dev.azure.com/AnalogJ/lexicon/_apis/build/status/AnalogJ.lexicon?branchName=master)](https://dev.azure.com/AnalogJ/lexicon/_build/latest?definitionId=1&branchName=master)
 [![Coverage Status](https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg)](https://coveralls.io/github/AnalogJ/lexicon?branch=master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/analogj/lexicon.svg)](https://hub.docker.com/r/analogj/lexicon)
 [![PyPI](https://img.shields.io/pypi/v/dns-lexicon.svg)](https://pypi.python.org/pypi/dns-lexicon)
@@ -30,18 +29,23 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
+- Aliyun.com ([docs](https://help.aliyun.com/document_detail/29739.html))
 - AuroraDNS ([docs](https://www.pcextreme.com/aurora/dns))
 - AWS Route53 ([docs](https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html))
+- Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - Cloudflare ([docs](https://api.cloudflare.com/#endpoints))
 - ClouDNS ([docs](https://www.cloudns.net/wiki/article/56/))
 - CloudXNS ([docs](https://www.cloudxns.net/Support/lists/cid/17.html))
 - ConoHa ([docs](https://www.conoha.jp/docs/))
-- Constellix ([docs](https://api-dns-docs.constellix.com/))
+- Constellix ([docs](https://api-docs.constellix.com/?version=latest))
 - DigitalOcean ([docs](https://developers.digitalocean.com/documentation/v2/#create-a-new-domain))
-- DNSimple ([docs](https://developer.dnsimple.com/))
-- DnsMadeEasy ([docs](http://www.dnsmadeeasy.com/pdf/API-Docv2.pdf))
+- Dinahosting ([docs](https://en.dinahosting.com/api))
+- DirectAdmin ([docs](https://www.directadmin.com/features.php?id=504))
+- DNSimple (docs: [v1](https://developer.dnsimple.com/), [v2](https://developer.dnsimple.com/v2/))
+- DnsMadeEasy ([docs](https://api-docs.dnsmadeeasy.com/?version=latest))
 - DNSPark ([docs](https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation))
 - DNSPod ([docs](https://support.dnspod.cn/Support/api))
+- Dreamhost ([docs](https://help.dreamhost.com/hc/en-us/articles/217560167-API_overview))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Easyname ([docs](https://www.easyname.com/en))
 - ExoScale ([docs](https://community.exoscale.com/documentation/dns/api/))
@@ -73,7 +77,9 @@ The current supported providers are:
 - PowerDNS ([docs](https://doc.powerdns.com/md/httpapi/api_spec/))
 - Rackspace ([docs](https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/))
 - Rage4 ([docs](https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api))
+- RcodeZero ([docs](https://my.rcodezero.at/api-doc))
 - Sakura Cloud by SAKURA Internet Inc. ([docs](https://developer.sakura.ad.jp/cloud/api/1.1/))
+- SafeDNS by UKFast ([docs](https://developers.ukfast.io/documentation/safedns))
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Subreg ([docs](https://subreg.cz/manual/))
 - Transip ([docs](https://www.transip.nl/transip/api/))
@@ -85,14 +91,11 @@ The current supported providers are:
 
 Potential providers are as follows. If you would like to contribute one, follow the [CONTRIBUTING.md](https://github.com/AnalogJ/lexicon/blob/master/CONTRIBUTING.md) and then open a pull request.
 
-- Aliyun.com
-- Azure DNS ([docs](https://docs.microsoft.com/en-us/rest/api/dns/))
 - AHNames ([docs](https://ahnames.com/en/resellers?tab=2))
 - ~~DurableDNS ([docs](https://durabledns.com/wiki/doku.php/ddns))~~ <sub>Can't set TXT records</sub>
 - cyon.ch
 - Dyn ([docs](https://help.dyn.com/dns-api-knowledge-base/)) :dollar: <sub>requires paid account</sub>
 - Dynu
-- DirectAdmin
 - EntryDNS ([docs](https://entrydns.net/help)) :dollar: <sub>requires paid account</sub>
 - FreeDNS ([docs](https://freedns.afraid.org/scripts/freedns.clients.php))
 - Host Virtual DNS ([docs](https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py)) :dollar: <sub>requires paid account</sub>
@@ -128,10 +131,10 @@ To use lexicon as a CLI application, do the following:
 
     pip install dns-lexicon
 
-Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L86-L97) separately:
+Some providers (like Route53 and TransIP) require additional dependencies. You can install [provider specific dependencies](https://github.com/AnalogJ/lexicon/blob/master/setup.py#L34-L44) separately:
 
     pip install dns-lexicon[route53]
-    
+
 To install lexicon with the additional dependencies of every provider, do the following:
 
     pip install dns-lexicon[full]
@@ -143,7 +146,7 @@ You can also install the latest version from the repository directly.
 and with Route 53 provider dependencies:
 
     pip install git+https://github.com/AnalogJ/lexicon.git#egg=dns-lexicon[route53]
-    
+
 *As an alternative you can also install Lexicon using the OS packages available for major Linux distributions (see `lexicon` or `dns-lexicon` package in https://pkgs.org/download/lexicon).*
 
 ## Usage
@@ -235,6 +238,10 @@ Every DNS service and auth flag maps to an Environmental Variable as follows: `L
 
 So instead of specifying `--auth-username` and `--auth-token` flags when calling `lexicon cloudflare ...`,
 you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_TOKEN` environmental variables.
+
+If you've got a subdomain delegation configured and need records configured within that (eg, you're trying to set `test.foo.example.com` where `foo.example.com` is configured as a separate zone), set `LEXICON_DELEGATED` to the delegated domain.
+
+    LEXICON_DELEGATED=foo.example.com
 
 ### Letsencrypt Instructions
 Lexicon has an example [dehydrated hook file](examples/dehydrated.default.sh) that you can use for any supported provider.
