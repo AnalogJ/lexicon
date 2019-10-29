@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         data = self._get('/dns')
         domains = data['domains']
         for domain in domains:
-            if domain['name'] is self.domain:
+            if domain['name'] == self.domain:
                 self.domain_id = domain['id']
                 break
 
@@ -41,7 +41,36 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        pass
+        payload = self._get('/dns/{0}/record'.format(self.domain_id))
+
+        records = []
+        for record in payload['dnsRecords']:
+            processed_record = {
+                'id': record['id'],
+                'type': record['recordType'],
+                'name': record['hostname'],
+                'content': record['textData'],
+                'ttl': record['ttl'],
+            }
+            records.append(processed_record)
+
+        len_records_all = len(records)
+
+        if rtype:
+            records = [record for record in records if record['type'] == rtype]
+
+        if name:
+            records = [record for record in records if record['name'] == self._full_name(name)]
+
+        if content:
+            records = [record for record in records if record['content'] == content]
+
+        removed_records = len_records_all - len(records)
+        if removed_records:
+            LOGGER.debug('list_records: removed %d, total %d', removed_records, len_records_all)
+
+        LOGGER.debug('list_records: %s', records)
+        return records
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
