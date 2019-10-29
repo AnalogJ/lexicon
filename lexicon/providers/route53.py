@@ -199,9 +199,8 @@ class Provider(BaseProvider):
             else:
                 # if only one record exist, remove whole record
                 return self._change_record_sets('DELETE', rtype, name, content)
-        else:
-            # you should probably not delete non existing record, but for sure
-            return self._change_record_sets('DELETE', rtype, name, content)
+        # you should probably not delete non existing record, but for sure
+        return self._change_record_sets('DELETE', rtype, name, content)
 
     def _format_content(self, rtype, content):  # pylint: disable=no-self-use
         return content[1:-1] if rtype in ['TXT', 'SPF'] else content
