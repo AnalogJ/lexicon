@@ -65,9 +65,9 @@ class Provider(BaseProvider):
         if content:
             records = [record for record in records if record['content'] == content]
 
-        removed_records = len_records_all - len(records)
-        if removed_records:
-            LOGGER.debug('list_records: removed %d, total %d', removed_records, len_records_all)
+        len_removed = len_all - len(records)
+        if len_removed:
+            LOGGER.debug('list_records: removed %d, total %d', len_removed, len_all)
 
         LOGGER.debug('list_records: %s', records)
         return records
