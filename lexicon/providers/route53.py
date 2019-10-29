@@ -196,9 +196,8 @@ class Provider(BaseProvider):
                     existing_records[0]['content'].remove(content)
                 return self._change_record_sets('UPSERT', rtype, name,
                                                 existing_records[0]['content'])
-            else:
-                # if only one record exist, remove whole record
-                return self._change_record_sets('DELETE', rtype, name, content)
+            # if only one record exist, remove whole record
+            return self._change_record_sets('DELETE', rtype, name, content)
         # you should probably not delete non existing record, but for sure
         return self._change_record_sets('DELETE', rtype, name, content)
 
