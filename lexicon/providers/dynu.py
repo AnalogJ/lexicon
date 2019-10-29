@@ -26,7 +26,12 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.dynu.com/v2'
 
     def _authenticate(self):
-        pass
+        data = self._get('/dns')
+        domains = data['domains']
+        for domain in domains:
+            if domain['name'] is self.domain:
+                self.domain_id = domain['id']
+                break
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):
