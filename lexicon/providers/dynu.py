@@ -54,7 +54,7 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
 
-        len_records_all = len(records)
+        len_all = len(records)
 
         if rtype:
             records = [record for record in records if record['type'] == rtype]
