@@ -135,7 +135,7 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        headers = { 'Content-Type': 'application/json' }
+        headers = {'Content-Type': 'application/json'}
         if self._get_provider_option('auth_username'):
             headers['X-Auth-Email'] = self._get_provider_option('auth_username')
             headers['X-Auth-Key'] = self._get_provider_option('auth_token')
