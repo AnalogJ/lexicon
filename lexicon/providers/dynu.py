@@ -35,7 +35,27 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):
-        pass
+        record = {
+            'recordType': rtype,
+            'nodeName': self._relative_name(name),
+            'textData': content,
+            'state': True,
+        }
+
+        if self._get_lexicon_option('ttl'):
+            record['ttl'] = self._get_lexicon_option('ttl')
+
+        try:
+            self._post('/dns/{0}/record'.format(self.domain_id), record)
+        except requests.exceptions.HTTPError as error:
+            # HTTP 501 is expected when a record with the same type and content is sent to the
+            # server.
+            if error.response.status_code == 501:
+                pass
+            else:
+                raise error
+        LOGGER.debug('create_record: %s', True)
+        return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
