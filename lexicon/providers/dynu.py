@@ -99,7 +99,20 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        pass
+        delete_record_id = []
+        if not identifier:
+            records = self._list_records(rtype, name, content)
+            delete_record_id = [record['id'] for record in records]
+        else:
+            delete_record_id.append(identifier)
+
+        LOGGER.debug('delete_records: %s', delete_record_id)
+
+        for record_id in delete_record_id:
+            self._delete('/dns/{0}/record'.format(record_id))
+
+        LOGGER.debug('delete_record: %s', True)
+        return True
 
     # Helpers
     def _request(self, action='GET', url='/', data=None, query_params=None):
