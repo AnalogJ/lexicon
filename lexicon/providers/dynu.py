@@ -124,7 +124,7 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete('/dns/{0}/record'.format(record_id))
+            self._delete('/dns/{0}/record/{1}'.format(self.domain_id, record_id))
 
         LOGGER.debug('delete_record: %s', True)
         return True
