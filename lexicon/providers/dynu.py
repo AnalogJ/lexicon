@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         data = self._get('/dns')
         domains = data['domains']
         for domain in domains:
-            if domain['name'] == self.domain:
+            if domain['name'].lower() == self.domain.lower():
                 self.domain_id = domain['id']
                 break
 
