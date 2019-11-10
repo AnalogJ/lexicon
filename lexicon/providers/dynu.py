@@ -46,7 +46,7 @@ class Provider(BaseProvider):
             record['ttl'] = self._get_lexicon_option('ttl')
 
         try:
-            self._post('/dns/{0}/record'.format(self.domain_id), record)
+            payload = self._post('/dns/{0}/record'.format(self.domain_id), record)
         except requests.exceptions.HTTPError as error:
             # HTTP 501 is expected when a record with the same type and content is sent to the
             # server.
@@ -54,8 +54,9 @@ class Provider(BaseProvider):
                 pass
             else:
                 raise error
-        LOGGER.debug('create_record: %s', True)
-        return True
+        created = __class__._format_record(payload)
+        LOGGER.debug('create_record: %s', created)
+        return created
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -65,13 +66,7 @@ class Provider(BaseProvider):
 
         records = []
         for record in payload['dnsRecords']:
-            processed_record = {
-                'id': record['id'],
-                'type': record['recordType'],
-                'name': record['hostname'],
-                'content': record['textData'],
-                'ttl': record['ttl'],
-            }
+            processed_record = __class__._format_record(record)
             records.append(processed_record)
 
         len_all = len(records)
@@ -101,13 +96,7 @@ class Provider(BaseProvider):
         }
 
         payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, identifier), record)
-        update = {
-            'id': payload['id'],
-            'type': payload['recordType'],
-            'name': payload['hostname'],
-            'content': payload['textData'],
-            'ttl': payload['ttl'],
-        }
+        update = __class__._format_record(payload)
         LOGGER.debug('update_record: %s', update)
         return update
 
@@ -142,3 +131,14 @@ class Provider(BaseProvider):
                                     })
         response.raise_for_status()
         return response.json()
+
+    # Takes a Dynu.com record and puts it into lexicon-shape
+    @staticmethod
+    def _format_record(record):
+        return {
+            'id': record['id'],
+            'type': record['recordType'],
+            'name': record['hostname'],
+            'content': record['textData'],
+            'ttl': record['ttl'],
+        }
