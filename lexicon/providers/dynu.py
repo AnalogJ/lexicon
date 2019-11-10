@@ -94,7 +94,22 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        pass
+        record = {
+            'recordType': rtype,
+            'name': name,
+            'content': content,
+        }
+
+        payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, identifier), record)
+        update = {
+            'id': payload['id'],
+            'type': payload['recordType'],
+            'name': payload['hostname'],
+            'content': payload['textData'],
+            'ttl': payload['ttl'],
+        }
+        LOGGER.debug('update_record: %s', update)
+        return update
 
     # Delete an existing record.
     # If record does not exist, do nothing.
