@@ -120,10 +120,10 @@ class Provider(BaseProvider):
 
     # Helpers
     def _request(self, action='GET', url='/', data=None, query_params=None):
-        if data is None:
-            data = {}
+        if data:
+            data = json.dumps(data)
         # Dynu API does not respond to query parameters at all, so we ignore them
-        response = requests.request(action, self.api_endpoint + url, data=json.dumps(data),
+        response = requests.request(action, self.api_endpoint + url, data=data,
                                     headers={
                                         'API-Key': self._get_provider_option('auth_token'),
                                         'Accept': 'application/json',
