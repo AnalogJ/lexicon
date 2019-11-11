@@ -37,10 +37,11 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         record = {
             'recordType': rtype,
-            'nodeName': self._relative_name(name),
             'textData': content,
             'state': True,
         }
+        if name:
+            record['nodeName'] = self._relative_name(name)
 
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
