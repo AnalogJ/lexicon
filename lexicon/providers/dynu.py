@@ -140,6 +140,6 @@ class Provider(BaseProvider):
             'id': record['id'],
             'type': record['recordType'],
             'name': record['hostname'],
-            'content': record['textData'],
+            'content': record['content'],
             'ttl': record['ttl'],
         }
