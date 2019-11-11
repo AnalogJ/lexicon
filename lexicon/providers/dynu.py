@@ -57,7 +57,7 @@ class Provider(BaseProvider):
                 pass
             else:
                 raise error
-        created = __class__._format_record(payload)
+        created = self._format_record(payload)
         LOGGER.debug('create_record: %s', created)
         return created
 
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
 
         records = []
         for record in payload['dnsRecords']:
-            processed_record = __class__._format_record(record)
+            processed_record = self._format_record(record)
             records.append(processed_record)
 
         len_all = len(records)
@@ -99,7 +99,7 @@ class Provider(BaseProvider):
         }
 
         payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, identifier), record)
-        update = __class__._format_record(payload)
+        update = self._format_record(payload)
         LOGGER.debug('update_record: %s', update)
         return update
 
