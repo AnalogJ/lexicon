@@ -20,7 +20,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-    """Provider class for Cloudflare"""
+    """Provider class for RcodeZero"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -167,7 +167,8 @@ class Provider(BaseProvider):
                                         'Authorization': 'Bearer ' +
                                                          self._get_provider_option(
                                                              'auth_token'),
-                                        'Content-Type': 'application/json'
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
                                     })
         # if the request fails for any reason, throw an error.
         if response.status_code >= 400:
