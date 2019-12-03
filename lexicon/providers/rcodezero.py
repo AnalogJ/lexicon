@@ -172,7 +172,7 @@ class Provider(BaseProvider):
                                     })
         # if the request fails for any reason, throw an error.
         if response.status_code >= 400:
-            LOGGER.error('Bad Request: %s', response.text)
+            LOGGER.debug('Bad Request: %s', response.text)
         response.raise_for_status()
         return response.json()
 
