@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         payload = self._get('domain.list')
         for domain in payload['DATA']:
-            if domain['DOMAIN'] == self.domain:
+            if domain['DOMAIN'].lower() == self.domain.lower():
                 self.domain_id = domain['DOMAINID']
         if self.domain_id is None:
             raise Exception('Domain not found')
@@ -38,7 +38,7 @@ class Provider(BaseProvider):
         if not self._list_records(rtype, name, content):
             self._get('domain.resource.create', query_params={
                 'DomainID': self.domain_id,
-                'Name': self._relative_name(name),
+                'Name': self._relative_name(name).lower(),
                 'Type': rtype,
                 'Target': content,
                 'TTL_sec': 0
@@ -57,9 +57,9 @@ class Provider(BaseProvider):
             resource_list = [
                 resource for resource in resource_list if resource['TYPE'] == rtype]
         if name:
-            cmp_name = self._relative_name(name.lower())
+            cmp_name = self._relative_name(name).lower()
             resource_list = [
-                resource for resource in resource_list if resource['NAME'] == cmp_name]
+                resource for resource in resource_list if resource['NAME'].lower() == cmp_name]
         if content:
             resource_list = [
                 resource for resource in resource_list if resource['TARGET'] == content]
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
             processed_records.append({
                 'id': resource['RESOURCEID'],
                 'type': resource['TYPE'],
-                'name': self._full_name(resource['NAME']),
+                'name': self._full_name(resource['NAME']).lower(),
                 'ttl': resource['TTL_SEC'],
                 'content': resource['TARGET']
             })
