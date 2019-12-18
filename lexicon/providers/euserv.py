@@ -63,6 +63,7 @@ class Provider(BaseProvider):
 
                 if order_description[1] == self.domain:
                     self.order_id = order['ord_no']['value']
+                    break
 
         if self.order_id is None:
             raise Exception('Order for domain not found')
@@ -71,6 +72,17 @@ class Provider(BaseProvider):
         self._get('choose_order', {
                 'ord_no': self.order_id
             })
+
+        # Retrieve domain ID
+        domains = self._get('kc2_domain_dns_get_records')
+
+        for domain in domains['result']['domains']:
+            if domain['dom_domain']['value'] == self.domain:
+                self.domain_id = domain['dom_id']['value']
+                break
+
+        if self.domain_id is None:
+            raise Exception('Domain not found in DNS records')
 
     def _create_record(self, rtype, name, content):
         pass
