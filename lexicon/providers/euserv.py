@@ -175,7 +175,24 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        pass
+        record_ids = []
+
+        if identifier is None:
+            LOGGER.info('No identifier for record provided, trying to find it...')
+            records = self._list_records(rtype, name, content)
+            record_ids = [record['id'] for record in records]
+        else:
+            record_ids.append(identifier)
+
+        LOGGER.debug('record IDs to be deleted: %s', record_ids)
+
+        for record_id in record_ids:
+            data = { 'dns_record_id': record_id }
+
+            response = response = self._get('kc2_domain_dns_remove', data)
+            LOGGER.debug('delete_record: %s', response)
+
+        return True
 
     # Helpers
     # url param used as subaction
