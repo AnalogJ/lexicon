@@ -88,7 +88,36 @@ class Provider(BaseProvider):
         pass
 
     def _list_records(self, rtype=None, name=None, content=None):
-        pass
+        query_params = { 'dns_records_load_only_for_dom_id': self.domain_id }
+
+        if rtype is not None:
+            query_params['dns_records_load_type'] = rtype
+
+        if name is not None:
+            query_params['dns_records_load_subdomain'] = name
+
+        if content is not None:
+            query_params['dns_records_load_content'] = content
+
+        payload = self._get('kc2_domain_dns_get_records', query_params)
+
+        response = payload['result']['domains'][0]
+
+        records = []
+
+        if 'dns_records' in response:
+            for record in response['dns_records']:
+                processed_record = {
+                    'type': record['type']['value'],
+                    'name': record['name']['value'],
+                    'ttl': record['ttl']['value'],
+                    'content': record['content']['value'],
+                    'id': record['id']['value']
+                }
+
+                records.append(processed_record)
+
+        return records
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         pass
