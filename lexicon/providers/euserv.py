@@ -44,9 +44,11 @@ class Provider(BaseProvider):
             raise Exception('username and password must be specified, add --help for details')
 
         # Get a session ID first.
+        LOGGER.info('Getting Session ID...')
         response = self._get()
         self.session_id = response['result']['sess_id']['value']
 
+        LOGGER.info('Logging in...')
         auth_response = self._get('login', {
             'email': self._get_provider_option('auth_username'),
             'password': self._get_provider_option('auth_password')
@@ -69,11 +71,13 @@ class Provider(BaseProvider):
             raise Exception('Order for domain not found')
 
         # Select the order for the given domain so we can use the DNS actions
+        LOGGER.info('Choosing order {}'.format(self.order_id))
         self._get('choose_order', {
                 'ord_no': self.order_id
             })
 
         # Retrieve domain ID
+        LOGGER.info('Retrieving DNS records to find domain id for {}...'.format(self.domain))
         domains = self._get('kc2_domain_dns_get_records')
 
         for domain in domains['result']['domains']:
@@ -88,20 +92,26 @@ class Provider(BaseProvider):
         pass
 
     def _list_records(self, rtype=None, name=None, content=None):
+        LOGGER.info('Listing records for type={}, name={}, content={}'.format(rtype, name, content))
+
         query_params = { 'dns_records_load_only_for_dom_id': self.domain_id }
 
-        if rtype is not None:
+        if rtype:
             query_params['dns_records_load_type'] = rtype
 
-        if name is not None:
+        if name:
             query_params['dns_records_load_subdomain'] = name
 
-        if content is not None:
+        if content:
             query_params['dns_records_load_content'] = content
+
+        LOGGER.debug('list_records filter params: %s', query_params)
 
         payload = self._get('kc2_domain_dns_get_records', query_params)
 
         response = payload['result']['domains'][0]
+
+        LOGGER.debug('list_records raw response: %s', response)
 
         records = []
 
@@ -112,7 +122,8 @@ class Provider(BaseProvider):
                     'name': record['name']['value'],
                     'ttl': record['ttl']['value'],
                     'content': record['content']['value'],
-                    'id': record['id']['value']
+                    'id': record['id']['value'],
+                    'priority': record['prio']['value']
                 }
 
                 records.append(processed_record)
@@ -135,10 +146,10 @@ class Provider(BaseProvider):
 
         query_params['method'] = 'json';
 
-        if self.session_id is not None:
+        if self.session_id:
             query_params['sess_id'] = self.session_id
 
-        if url is not None:
+        if url:
             query_params['subaction'] = url
 
         response = requests.request(action, self.api_endpoint, params=query_params,
