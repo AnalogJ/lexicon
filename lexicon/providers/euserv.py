@@ -152,7 +152,27 @@ class Provider(BaseProvider):
         return records
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        pass
+        if identifier is None:
+            raise Exception('No identifier for record provided')
+
+        data = { 'dns_record_id': identifier }
+
+        if rtype:
+            data['type'] = rtype
+
+        if name:
+            data['subdomain'] = name
+
+        if content:
+            data['content'] = content
+
+        self._add_ttl(data)
+        self._add_priority(data)
+
+        response = self._get('kc2_domain_dns_set', data)
+        LOGGER.debug('update_record: %s', response)
+
+        return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         pass
