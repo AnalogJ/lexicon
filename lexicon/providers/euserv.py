@@ -89,7 +89,31 @@ class Provider(BaseProvider):
             raise Exception('Domain not found in DNS records')
 
     def _create_record(self, rtype, name, content):
-        pass
+        records = self._list_records(rtype, name, content)
+
+        if records:
+            LOGGER.debug('record already exists: %s', records[0])
+            return True
+
+        data = {
+            'dom_id': self.domain_id,
+            'type': rtype,
+            'content': content
+        }
+
+        if name:
+            data['subdomain'] = name
+
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = int(self._get_lexicon_option('ttl'))
+
+        if self._get_lexicon_option('priority'):
+            data['prio'] = int(self._get_lexicon_option('priority'))
+
+        response = self._get('kc2_domain_dns_set', data)
+        LOGGER.debug('create_record: %s', response)
+
+        return True
 
     def _list_records(self, rtype=None, name=None, content=None):
         LOGGER.info('Listing records for type={}, name={}, content={}'.format(rtype, name, content))
