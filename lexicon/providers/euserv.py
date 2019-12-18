@@ -104,11 +104,8 @@ class Provider(BaseProvider):
         if name:
             data['subdomain'] = name
 
-        if self._get_lexicon_option('ttl'):
-            data['ttl'] = int(self._get_lexicon_option('ttl'))
-
-        if self._get_lexicon_option('priority'):
-            data['prio'] = int(self._get_lexicon_option('priority'))
+        self._add_ttl(data)
+        self._add_priority(data)
 
         response = self._get('kc2_domain_dns_set', data)
         LOGGER.debug('create_record: %s', response)
@@ -189,3 +186,13 @@ class Provider(BaseProvider):
             raise Exception('Error {0} in request: {1}'.format(response_json['code'], response_json['message']))
 
         return response_json
+
+    # Adds TTL parameter if passed as argument to lexicon.
+    def _add_ttl(self, data):
+        if self._get_lexicon_option('ttl'):
+            data['ttl'] = int(self._get_lexicon_option('ttl'))
+
+    # Adds priority parameter if passed as argument to lexicon.
+    def _add_priority(self, data):
+        if self._get_lexicon_option('priority'):
+            data['prio'] = int(self._get_lexicon_option('priority'))
