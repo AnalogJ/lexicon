@@ -1,4 +1,10 @@
-'''Module provider for EUserv'''
+'''
+Module provider for EUserv
+
+Author: Matthias Schoettle (mschoettle), 2019
+
+EUserv API Docs: https://support.euserv.com/api-doc/
+'''
 from __future__ import absolute_import
 
 import json
@@ -151,7 +157,8 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
-            raise Exception('No identifier for record provided')
+            LOGGER.info('No identifier for record provided, trying to find it...')
+            identifier = self._find_record_identifier(rtype, name, None)
 
         data = { 'dns_record_id': identifier }
 
@@ -231,6 +238,17 @@ class Provider(BaseProvider):
     def _add_priority(self, data):
         if self._get_lexicon_option('priority'):
             data['prio'] = int(self._get_lexicon_option('priority'))
+
+    # Find identifier of a record with the given properties.
+    def _find_record_identifier(self, rtype, name, content):
+        records = self._list_records(rtype, name, content)
+
+        LOGGER.debug('records: %s', records)
+
+        if len(records) == 1:
+            return records[0]['id']
+
+        raise Exception('No record identifier found')
 
     # Get the subdomain name only for the given name.
     # This provider automatically suffixes the name with the domain name.
