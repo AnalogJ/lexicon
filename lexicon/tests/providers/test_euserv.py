@@ -3,11 +3,11 @@ Integration tests for EUserv provider
 
 Author: Matthias Schoettle (@mschoettle), 2019
 """
-from lexicon.tests.providers.integration_tests import IntegrationTests
-from unittest import TestCase
-
 import re
 import json
+
+from unittest import TestCase
+from lexicon.tests.providers.integration_tests import IntegrationTests
 
 # EUserv has a limit of 10 TXT entries. Therefore, the live recordings were
 # and entries removed manually during the execution of the tests.
@@ -26,7 +26,7 @@ class EUservProviderTests(TestCase, IntegrationTests):
         return ['set-cookie']
 
     def _filter_query_parameters(self):
-       return [
+        return [
             ('password', 'PASSWORD'),
             ('email', 'EMAIL'),
             ('sess_id', 'SESSION_ID'),
@@ -53,9 +53,9 @@ class EUservProviderTests(TestCase, IntegrationTests):
             if 'result' in filtered_body and 'orders' in filtered_body['result']:
                 filtered_body['result']['orders'] = [
                     {
-                        'ord_no': { 'value': 'ORDER_ID' },
-                        'pg_id': { 'value': self.product_id_domain },
-                        'ord_description': { 'value': 'Contract Name\n' + self.domain },
+                        'ord_no': {'value': 'ORDER_ID'},
+                        'pg_id': {'value': self.product_id_domain},
+                        'ord_description': {'value': 'Contract Name\n' + self.domain},
                     },
                 ]
 
