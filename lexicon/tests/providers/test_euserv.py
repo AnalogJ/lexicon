@@ -1,7 +1,7 @@
 """
 Integration tests for EUserv provider
 
-Author: Matthias Schoettle (mschoettle), 2019
+Author: Matthias Schoettle (@mschoettle), 2019
 """
 from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase

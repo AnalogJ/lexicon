@@ -1,7 +1,7 @@
 '''
 Module provider for EUserv
 
-Author: Matthias Schoettle (mschoettle), 2019
+Author: Matthias Schoettle (@mschoettle), 2019
 
 EUserv API Docs: https://support.euserv.com/api-doc/
 '''
