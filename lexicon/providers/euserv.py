@@ -102,13 +102,13 @@ class Provider(BaseProvider):
         }
 
         if name:
-            data['subdomain'] = name
+            data['subdomain'] = self._subdomain_name(name)
 
         self._add_ttl(data)
         self._add_priority(data)
 
         response = self._get('kc2_domain_dns_set', data)
-        LOGGER.debug('create_record: %s', response)
+        LOGGER.debug('create_record response: %s', response)
 
         return True
 
@@ -121,12 +121,10 @@ class Provider(BaseProvider):
             query_params['dns_records_load_type'] = rtype
 
         if name:
-            query_params['dns_records_load_subdomain'] = name
+            query_params['dns_records_load_subdomain'] = self._subdomain_name(name)
 
         if content:
             query_params['dns_records_load_content'] = content
-
-        LOGGER.debug('list_records filter params: %s', query_params)
 
         payload = self._get('kc2_domain_dns_get_records', query_params)
 
@@ -161,7 +159,7 @@ class Provider(BaseProvider):
             data['type'] = rtype
 
         if name:
-            data['subdomain'] = name
+            data['subdomain'] = self._subdomain_name(name)
 
         if content:
             data['content'] = content
@@ -196,7 +194,7 @@ class Provider(BaseProvider):
 
     # Helpers
     # url param used as subaction
-    def _request(self, action='GET', url=None, data=None, query_params=None):
+    def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
@@ -207,7 +205,7 @@ class Provider(BaseProvider):
         if self.session_id:
             query_params['sess_id'] = self.session_id
 
-        if url:
+        if url is not '/':
             query_params['subaction'] = url
 
         response = requests.request(action, self.api_endpoint, params=query_params,
@@ -233,3 +231,15 @@ class Provider(BaseProvider):
     def _add_priority(self, data):
         if self._get_lexicon_option('priority'):
             data['prio'] = int(self._get_lexicon_option('priority'))
+
+    # Get the subdomain name only for the given name.
+    # This provider automatically suffixes the name with the domain name.
+    def _subdomain_name(self, name):
+        subdomain = self._full_name(name)
+        domain_suffix = '.' + self.domain
+
+        # Remove domain name since it will be automatically added by the provider
+        if subdomain.endswith(domain_suffix):
+            subdomain = subdomain[:len(subdomain)-len(domain_suffix)]
+
+        return subdomain
