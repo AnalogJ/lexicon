@@ -51,7 +51,6 @@ class EUservProviderTests(TestCase, IntegrationTests):
             filtered_body = json.loads(response['body']['string'].decode('UTF-8'))
 
             if 'result' in filtered_body and 'orders' in filtered_body['result']:
-                print filtered_body['result']['orders']
                 filtered_body['result']['orders'] = [
                     {
                         'ord_no': { 'value': 'ORDER_ID' },
