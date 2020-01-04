@@ -13,7 +13,7 @@ except BaseException:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['subreg.cz']
+NAMESERVER_DOMAINS = ['gransy.com']
 
 
 def provider_parser(subparser):
@@ -22,7 +22,8 @@ def provider_parser(subparser):
         "--auth-username", help="specify username for authentication")
     subparser.add_argument(
         "--auth-password", help="specify password for authentication")
-
+    subparser.description = "One API for all users with domains registered at " + \
+        "the following Gransy company sites: subreg.cz, regtons.com and regnames.eu."
 
 class Provider(BaseProvider):
     """Provider class for Subreg"""
