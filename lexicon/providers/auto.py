@@ -182,7 +182,7 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
                         self.domain, provider_name)
 
         new_config = ConfigResolver()
-        new_config.with_dict({'lexicon:provider_name': provider_name})
+        new_config.with_dict({'provider_name': provider_name})
 
         target_prefix = 'auto_{0}_'.format(provider_name)
         for config_source in self.config._config_sources:  # pylint: disable=protected-access
@@ -196,10 +196,11 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
                     if key.startswith(target_prefix):
                         new_param_name = re.sub(
                             '^{0}'.format(target_prefix), '', key)
-                        new_dict['lexicon:{0}:{1}'.format(
-                            provider_name, new_param_name)] = value
+                        if provider_name not in new_dict:
+                            new_dict[provider_name] = {}
+                        new_dict[provider_name][new_param_name] = value
                     elif not key.startswith('auto_'):
-                        new_dict['lexicon:{0}'.format(key)] = value
+                        new_dict[key] = value
                 new_config.with_dict(new_dict)
 
         self.proxy_provider = provider_module.Provider(new_config)
