@@ -47,7 +47,7 @@ def _get_ns_records_domains_for_domain(domain):
 def _get_ns_records_for_domain(domain):
     # Available both for Windows and Linux (if dnsutils is installed for the latter)
     try:
-        output = subprocess.check_output(['nslookup', '-querytype=NS', domain],
+        output = subprocess.check_output(['nslookup', '-querytype=NS', domain + "."],
                                          stderr=subprocess.STDOUT, universal_newlines=True)
     except subprocess.CalledProcessError as error:
         if 'NXDOMAIN' in error.output:
