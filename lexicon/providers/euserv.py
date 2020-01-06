@@ -55,7 +55,8 @@ class Provider(BaseProvider):
         self.session_id = response['result']['sess_id']['value']
 
         LOGGER.info('Logging in...')
-        auth_response = self._get('login', {
+        auth_response = self._get(query_params={
+            'subaction': 'login',
             'email': self._get_provider_option('auth_username'),
             'password': self._get_provider_option('auth_password')
             })
@@ -78,11 +79,14 @@ class Provider(BaseProvider):
 
         # Select the order for the given domain so we can use the DNS actions
         LOGGER.info('Choosing order %s', self.order_id)
-        self._get('choose_order', {'ord_no': self.order_id})
+        self._get(query_params={
+            'subaction': 'choose_order',
+            'ord_no': self.order_id
+            })
 
         # Retrieve domain ID
         LOGGER.info('Retrieving DNS records to find domain id for %s...', self.domain)
-        domains = self._get('kc2_domain_dns_get_records')
+        domains = self._get(query_params={'subaction': 'kc2_domain_dns_get_records'})
 
         for domain in domains['result']['domains']:
             if domain['dom_domain']['value'] == self.domain:
@@ -99,19 +103,20 @@ class Provider(BaseProvider):
             LOGGER.debug('record already exists: %s', records[0])
             return True
 
-        data = {
+        query_params = {
+            'subaction': 'kc2_domain_dns_set',
             'dom_id': self.domain_id,
             'type': rtype,
             'content': content
         }
 
         if name:
-            data['subdomain'] = self._subdomain_name(name)
+            query_params['subdomain'] = self._subdomain_name(name)
 
-        self._add_ttl(data)
-        self._add_priority(data)
+        self._add_ttl(query_params)
+        self._add_priority(query_params)
 
-        response = self._get('kc2_domain_dns_set', data)
+        response = self._get(query_params=query_params)
         LOGGER.debug('create_record response: %s', response)
 
         return True
@@ -119,7 +124,10 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         LOGGER.info('Listing records for type=%s, name=%s, content=%s', rtype, name, content)
 
-        query_params = {'dns_records_load_only_for_dom_id': self.domain_id}
+        query_params = {
+            'subaction': 'kc2_domain_dns_get_records',
+            'dns_records_load_only_for_dom_id': self.domain_id
+        }
 
         if rtype:
             query_params['dns_records_load_type'] = rtype
@@ -130,7 +138,7 @@ class Provider(BaseProvider):
         if content:
             query_params['dns_records_load_content'] = content
 
-        payload = self._get('kc2_domain_dns_get_records', query_params)
+        payload = self._get(query_params=query_params)
 
         response = payload['result']['domains'][0]
 
@@ -158,21 +166,24 @@ class Provider(BaseProvider):
             LOGGER.info('No identifier for record provided, trying to find it...')
             identifier = self._find_record_identifier(rtype, name, None)
 
-        data = {'dns_record_id': identifier}
+        query_params = {
+            'subaction': 'kc2_domain_dns_set',
+            'dns_record_id': identifier
+        }
 
         if rtype:
-            data['type'] = rtype
+            query_params['type'] = rtype
 
         if name:
-            data['subdomain'] = self._subdomain_name(name)
+            query_params['subdomain'] = self._subdomain_name(name)
 
         if content:
-            data['content'] = content
+            query_params['content'] = content
 
-        self._add_ttl(data)
-        self._add_priority(data)
+        self._add_ttl(query_params)
+        self._add_priority(query_params)
 
-        response = self._get('kc2_domain_dns_set', data)
+        response = self._get(query_params=query_params)
         LOGGER.debug('update_record: %s', response)
 
         return True
@@ -190,15 +201,17 @@ class Provider(BaseProvider):
         LOGGER.debug('record IDs to be deleted: %s', record_ids)
 
         for record_id in record_ids:
-            data = {'dns_record_id': record_id}
+            query_params = {
+                'subaction': 'kc2_domain_dns_remove',
+                'dns_record_id': record_id
+            }
 
-            response = response = self._get('kc2_domain_dns_remove', data)
+            response = response = self._get(query_params=query_params)
             LOGGER.debug('delete_record: %s', response)
 
         return True
 
     # Helpers
-    # url param used as subaction
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data is None:
             data = {}
@@ -209,9 +222,6 @@ class Provider(BaseProvider):
 
         if self.session_id:
             query_params['sess_id'] = self.session_id
-
-        if url != '/':
-            query_params['subaction'] = url
 
         response = requests.request(action, self.api_endpoint, params=query_params,
                                     data=json.dumps(data),
