@@ -48,6 +48,7 @@ The current supported providers are:
 - Dreamhost ([docs](https://help.dreamhost.com/hc/en-us/articles/217560167-API_overview))
 - EasyDNS ([docs](http://docs.sandbox.rest.easydns.net/))
 - Easyname ([docs](https://www.easyname.com/en))
+- EUserv ([docs](https://support.euserv.com/api-doc/))
 - ExoScale ([docs](https://community.exoscale.com/documentation/dns/api/))
 - Gandi (docs: [RPC (old)](http://doc.rpc.gandi.net/) / [LiveAPI](http://doc.livedns.gandi.net/))
 - Gehirn ([docs](https://support.gehirn.jp/apidocs/gis/dns/index.html))
