@@ -1,6 +1,7 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import absolute_import
 import importlib
+import os
 
 import tldextract
 
@@ -10,6 +11,9 @@ from lexicon.config import (
     legacy_config_resolver, non_interactive_config_resolver,
 )
 
+TLDEXTRACT_CACHE_FILE_DEFAULT = os.path.join('~', '.lexicon_tld_set')
+TLDEXTRACT_CACHE_FILE = os.path.expanduser(os.environ.get("LEXICON_TLDEXTRACT_CACHE",
+                                                          TLDEXTRACT_CACHE_FILE_DEFAULT))
 
 class ProviderNotAvailableError(Exception):
     """
@@ -38,7 +42,9 @@ class Client(object):  # pylint: disable=useless-object-inheritance,too-few-publ
         runtime_config = {}
 
         # Process domain, strip subdomain
-        domain_parts = tldextract.extract(
+        domain_extractor = tldextract.TLDExtract(cache_file=TLDEXTRACT_CACHE_FILE,
+                                                 include_psl_private_domains=True)
+        domain_parts = domain_extractor(
             self.config.resolve('lexicon:domain'))
         runtime_config['domain'] = '{0}.{1}'.format(
             domain_parts.domain, domain_parts.suffix)

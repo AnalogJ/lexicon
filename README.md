@@ -233,6 +233,9 @@ Lexicon attempts to standardize authentication around the following CLI flags:
 You can see all the `--auth-*` flags for a specific service by reading the DNS service specific help: `lexicon cloudflare -h`
 
 ### Environmental Variables
+
+#### Authentication
+
 Instead of providing Authentication information via the CLI, you can also specify them via Environmental Variables.
 Every DNS service and auth flag maps to an Environmental Variable as follows: `LEXICON_{DNS Provider Name}_{Auth Type}`
 
@@ -242,6 +245,17 @@ you could instead set the `LEXICON_CLOUDFLARE_USERNAME` and `LEXICON_CLOUDFLARE_
 If you've got a subdomain delegation configured and need records configured within that (eg, you're trying to set `test.foo.example.com` where `foo.example.com` is configured as a separate zone), set `LEXICON_DELEGATED` to the delegated domain.
 
     LEXICON_DELEGATED=foo.example.com
+
+#### TLD Cache
+
+The [tldextract](https://pypi.org/project/tldextract/) library is used by Lexicon to find the actual domain name
+from the provided FQDN (eg. `domain.net` is the actual domain in `www.domain.net`). Lexicon stores `tldextract` cache
+by default in `~/.lexicon_tld_set` where `~` is the current user's home directory. You can change this path using
+the `LEXICON_TLDEXTRACT_CACHE` environment variable.
+
+For instance, to store `tldextract` cache in `/my/path/to/tld_cache`, you can invoke Lexicon like this from a Linux shell:
+
+    LEXICON_TLDEXTRACT_CACHE=/my/path/to/tld_cache lexicon myprovider create www.example.net TXT ...
 
 ### Letsencrypt Instructions
 Lexicon has an example [dehydrated hook file](examples/dehydrated.default.sh) that you can use for any supported provider.
