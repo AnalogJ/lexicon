@@ -13,7 +13,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['godaddy.com']
+NAMESERVER_DOMAINS = ['godaddy.com', 'domaincontrol.com']
 
 
 def provider_parser(subparser):
