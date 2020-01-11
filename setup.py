@@ -35,6 +35,7 @@ extras_require = {
     'route53': ['boto3'],
     'softlayer': ['SoftLayer'],
     'subreg': ['zeep'],
+    'gransy': ['zeep'],
     'transip': ['transip>=0.3.0'],
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
