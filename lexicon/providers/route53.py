@@ -127,18 +127,19 @@ class Provider(BaseProvider):
     def _authenticate(self):
         # if this was set via the command-line argument, we don't need to look it up
         if self.domain_id is None:
-            """Determine the hosted zone id for the domain."""
-            try:
-                hosted_zones = self.r53_client.list_hosted_zones_by_name()[
-                    'HostedZones'
-                ]
-                hosted_zone = next(
-                    hz for hz in hosted_zones
-                    if self.filter_zone(hz)
-                )
-                self.domain_id = hosted_zone['Id']
-            except StopIteration:
-                raise Exception('No domain found')
+            return
+        """Determine the hosted zone id for the domain."""
+        try:
+            hosted_zones = self.r53_client.list_hosted_zones_by_name()[
+                'HostedZones'
+            ]
+            hosted_zone = next(
+                hz for hz in hosted_zones
+                if self.filter_zone(hz)
+            )
+            self.domain_id = hosted_zone['Id']
+        except StopIteration:
+            raise Exception('No domain found')
 
     def _change_record_sets(self, action, rtype, name, content):
         ttl = self._get_lexicon_option('ttl')
