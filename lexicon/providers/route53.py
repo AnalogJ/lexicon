@@ -126,7 +126,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         # if this was set via the command-line argument, we don't need to look it up
-        if self.domain_id is None:
+        if self.domain_id is not None:
             return
         """Determine the hosted zone id for the domain."""
         try:
