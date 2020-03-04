@@ -39,7 +39,7 @@ def provider_parser(subparser):
         "--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
     subparser.add_argument(
         "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
-    
+
 
 class RecordSetPaginator(object):  # pylint: disable=useless-object-inheritance
     """Paginate through complete list of record sets."""
