@@ -29,8 +29,7 @@ def provider_parser(subparser):
               "only private zones. If false, use only public zones"))
               
     # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
-    subparser.add_argument("--zone-id",
-        help=("the AWS zone ID to use, should be something like A1B2ZABCDEFGHI"))
+    subparser.add_argument("--zone-id", help="the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'")
 
     # TODO: these are only required for testing, we should figure out
     # a way to remove them & update the integration tests
