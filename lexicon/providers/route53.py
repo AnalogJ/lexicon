@@ -27,7 +27,7 @@ def provider_parser(subparser):
         "--private-zone",
         help=("indicates what kind of hosted zone to use. If true, use "
               "only private zones. If false, use only public zones"))
-              
+
     # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
     subparser.add_argument("--zone-id", help="the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'")
 
@@ -124,10 +124,11 @@ class Provider(BaseProvider):
         return input_string.lower() in ('true', 'yes')
 
     def _authenticate(self):
+        """Determine the hosted zone id for the domain."""
         # if this was set via the command-line argument, we don't need to look it up
         if self.domain_id is not None:
             return
-        """Determine the hosted zone id for the domain."""
+
         try:
             hosted_zones = self.r53_client.list_hosted_zones_by_name()[
                 'HostedZones'
