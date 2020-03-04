@@ -27,6 +27,10 @@ def provider_parser(subparser):
         "--private-zone",
         help=("indicates what kind of hosted zone to use. If true, use "
               "only private zones. If false, use only public zones"))
+              
+    # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
+    subparser.add_argument("--zone-id",
+        help=("the AWS zone ID to use, should be something like A1B2ZABCDEFGHI"))
 
     # TODO: these are only required for testing, we should figure out
     # a way to remove them & update the integration tests
@@ -35,7 +39,7 @@ def provider_parser(subparser):
         "--auth-username", help="alternative way to specify the ACCESS_KEY for authentication")
     subparser.add_argument(
         "--auth-token", help="alternative way to specify the ACCESS_SECRET for authentication")
-
+    
 
 class RecordSetPaginator(object):  # pylint: disable=useless-object-inheritance
     """Paginate through complete list of record sets."""
@@ -92,7 +96,8 @@ class Provider(BaseProvider):
     def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(config)
-        self.domain_id = None
+        # Allow setting domain_id from the command line
+        self.domain_id = self._get_provider_option('zone_id') or None
         self.private_zone = self._get_provider_option('private_zone')
         # instantiate the client
         self.r53_client = boto3.client(
@@ -120,18 +125,20 @@ class Provider(BaseProvider):
         return input_string.lower() in ('true', 'yes')
 
     def _authenticate(self):
-        """Determine the hosted zone id for the domain."""
-        try:
-            hosted_zones = self.r53_client.list_hosted_zones_by_name()[
-                'HostedZones'
-            ]
-            hosted_zone = next(
-                hz for hz in hosted_zones
-                if self.filter_zone(hz)
-            )
-            self.domain_id = hosted_zone['Id']
-        except StopIteration:
-            raise Exception('No domain found')
+        # if this was set via the command-line argument, we don't need to look it up
+        if self.domain_id is None:
+            """Determine the hosted zone id for the domain."""
+            try:
+                hosted_zones = self.r53_client.list_hosted_zones_by_name()[
+                    'HostedZones'
+                ]
+                hosted_zone = next(
+                    hz for hz in hosted_zones
+                    if self.filter_zone(hz)
+                )
+                self.domain_id = hosted_zone['Id']
+            except StopIteration:
+                raise Exception('No domain found')
 
     def _change_record_sets(self, action, rtype, name, content):
         ttl = self._get_lexicon_option('ttl')
