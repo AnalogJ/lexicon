@@ -42,16 +42,17 @@ class Provider(BaseProvider):
         if self._get_lexicon_option('ttl'):
             record['ttl'] = self._get_lexicon_option('ttl')
 
+        created = False
         try:
             payload = self._post('/dns/{0}/record'.format(self.domain_id), record)
+            created = self._from_dynu_record(payload)
         except requests.exceptions.HTTPError as error:
             # HTTP 501 is expected when a record with the same type and content is sent to the
             # server.
             if error.response.status_code == 501:
-                pass
+                created = True
             else:
                 raise error
-        created = self._from_dynu_record(payload)
         LOGGER.debug('create_record: %s', created)
         return created
 
