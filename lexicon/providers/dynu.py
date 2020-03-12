@@ -10,6 +10,8 @@ from lexicon.providers.base import Provider as BaseProvider
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['dynu.com']
+FREE_SERVICE_LIMIT = 4
+MEMBERSHIP_DETAILS = "https://www.dynu.com/en-US/Membership"
 
 
 def provider_parser(subparser):
@@ -85,14 +87,36 @@ class Provider(BaseProvider):
         LOGGER.debug('list_records: %s', records)
         return records
 
-    # Create or update a record.
+    # Update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        record = self._to_dynu_record(rtype, name, content)
+        records = {}
+        if identifier is None:
+            records = self._list_records(rtype, name, None)
+            records = {rec['id']: rec for rec in records}
+        else:
+            if name is not None:
+                # check if new name matches old one
+                # dynu prohibits changing the node name, so we have to delete
+                # and create a new record then
+                original = self._fetch_record(identifier)
+                orig_name = self._relative_name(original['name']).lower()
+                new_name = self._relative_name(name).lower()
+                if orig_name != new_name:
+                    LOGGER.info(
+                        "Cannot change node name from {0} to {1}, deleting {2} and creating new"
+                        .format(orig_name, new_name, identifier)
+                    )
+                    self._delete_record(identifier)
+                    return self._create_record(rtype, name, content)
 
-        payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, identifier), record)
-        update = self._from_dynu_record(payload)
-        LOGGER.debug('update_record: %s', update)
-        return update
+            records = {identifier: self._to_dynu_record(rtype, None, content)}
+
+        for ident, rec in records.items():
+            add_rec = self._to_dynu_record(rec['type'], self._relative_name(rec['name']), rec['content'])
+            payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, ident), add_rec)
+            update = self._from_dynu_record(payload)
+            LOGGER.debug('update_record: %s', update)
+        return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -107,33 +131,59 @@ class Provider(BaseProvider):
         LOGGER.debug('delete_records: %s', delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete('/dns/{0}/record/{1}'.format(self.domain_id, record_id))
+            try:
+                self._delete('/dns/{0}/record/{1}'.format(self.domain_id, record_id))
+                LOGGER.debug('delete_record: %s', record_id)
+            except requests.exceptions.HTTPError as error:
+                if error.response.status_code == 501:
+                    LOGGER.info("delete_record: {0} does not exist".format(record_id))
+                    continue
+                else:
+                    raise error
 
-        LOGGER.debug('delete_record: %s', True)
         return True
+
 
     # Helpers
     def _request(self, action='GET', url='/', data=None, query_params=None):
         if data:
             data = json.dumps(data)
-        # Dynu API does not respond to query parameters at all, so we ignore them
+
+        LOGGER.debug('Request: {0} {1} with data {2}'.format(action, url, data))
+
         response = requests.request(action, self.api_endpoint + url, data=data,
                                     headers={
-                                        'API-Key': self._get_provider_option('auth_token'),
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json'
+                                    'API-Key': self._get_provider_option('auth_token'),
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
                                     })
+        LOGGER.debug('Response: {0}'.format(response))
+        # if the request fails for any reason, throw an error.
+        if response.status_code == 503:
+            raise RuntimeError(
+                "Too many entries, limit for free service is {0}, see {1}"
+                .format(FREE_SERVICE_LIMIT, MEMBERSHIP_DETAILS)
+                )
         response.raise_for_status()
         return response.json()
+
+
+    # Fetch a record by its ID
+    def _fetch_record(self, identifier):
+        payload = self._get('/dns/{0}/record/{1}'.format(self.domain_id, identifier))
+        return self._from_dynu_record(payload)
+
 
     # Takes a Dynu.com record and puts it into lexicon-shape
     @staticmethod
     def _from_dynu_record(record):
         rtype = record['recordType']
         options = {
-            'enabled': record['state'],
-            'lastUpdate': record['updatedOn'],
+            'enabled': 'state',
+            'lastUpdate': 'updatedOn',
         }
+        options = {k: record[v] for k, v in options.items() if v in record}
+        options['raw'] = record
 
         # map additional fields depending on the record type
         # the result takes the record type as key, and all options of the
@@ -144,25 +194,33 @@ class Provider(BaseProvider):
         #         'host': 'example.com'
         #     }
         # }
-        options.update({rtype: {
-            'A': {'ipv4': record['ipv4Address'], 'group': record['group']},
-            'AAAA': {'ipv6': record['ipv6Address'], 'group': record['group']},
-            'CNAME': {'host': record['host']},
+        mapping = {
+            'A': {'ipv4': 'ipv4Address', 'group': 'group'},
+            'AAAA': {'ipv6': 'ipv6Address', 'group': 'group'},
+            'CNAME': {'host': 'host'},
             'LOC': {
-                'lat': record['latitude'],
-                'long': record['longitude'],
-                'alt': {record['altitude']},
-                'size': {record['size']},
-                'hPrec': {record['horizontalPrecision']},
-                'vPrec': {record['verticalPrecision']},
+                'lat': 'latitude',
+                'long': 'longitude',
+                'alt': 'altitude',
+                'size': 'size',
+                'hPrec': 'horizontalPrecision',
+                'vPrec': 'verticalPrecision',
             },
-            'MX': {'host': record['host'], 'priority': record['priority']},
-            'NS': {'host': record['host']},
-            'PTR': {'host': record['host']},
-            'SPF': {'data': record['textData']},
-            'SRV': {'host': record['host'], 'priority': record['priority'], 'weight': record['weight']},
-            'TXT': {'data': record['textData']},
-        }[rtype]})
+            'MX': {'host': 'host', 'priority': 'priority'},
+            'NS': {'host': 'host'},
+            'PTR': {'host': 'host'},
+            'SRV': {'host': 'host', 'priority': 'priority', 'weight': 'weight'},
+            'TXT': {'data': 'textData'},
+        }.get(rtype, {})
+        options[rtype] = {k: record[v] for k, v in mapping.items() if v in record}
+
+        out_record = {
+            'id': record['id'],
+            'type': rtype,
+            'name': record['hostname'],
+            'ttl': record['ttl'],
+            'options': options
+        }
 
         # format the content as noted in the spec, e.g. take everything
         # in the raw DNS response after the record type, and remove quotations
@@ -170,38 +228,40 @@ class Provider(BaseProvider):
         #   example.com. 120 IN TXT \"txt-value=thisIsATest\"
         # Becomes:
         #   txt-value=thisIsATest
-        content = record['content'].split(rtype)[1].strip().replace('"', '')
-        return {
-            'id': record['id'],
-            'type': rtype,
-            'name': record['hostname'],
-            'ttl': record['ttl'],
-            'content': content,
-            'options': options
-        }
+        if record['content']:
+            content = record['content']
+            content = content.split(rtype)[1]
+            content = content.strip()
+            content = content.replace('"', '')
+            out_record['content'] = content
+
+        return out_record
 
 
     # Takes record input and puts it into a format the Dynu.com API supports
     def _to_dynu_record(self, rtype, name, content):
         if rtype == 'LOC':
-            raise NotImplementedError
+            raise NotImplementedError("LOC is not available for this provider")
+
+        if rtype == 'SPF':
+            raise NotImplementedError('SPF entries are not supported')
 
         output = {
             'recordType': rtype,
-            'nodeName': self._relative_name(name),
             'state': True,
         }
+        if name is not None:
+            output['nodeName'] = self._relative_name(name)
 
         cnt_split = content.split(' ')
         output.update({
-            'A': {'ipv4Address': content},
-            'AAAA': {'ipv6Address': content},
-            'CNAME': {'host': content},
-            'MX': {'priority': cnt_split[0], 'host': cnt_split[1]},
-            'NS': {'host': content},
-            'PTR': {'host': content},
-            'SPF': {'textData': content},
-            'SRV': {'priority': cnt_split[0], 'weight': cnt_split[1], 'port': cnt_split[2], 'host': cnt_split[3]},
-            'TXT': {'textData': content},
-        }[rtype])
+            'A':     (lambda: {'ipv4Address': content}),
+            'AAAA':  (lambda: {'ipv6Address': content}),
+            'CNAME': (lambda: {'host': content}),
+            'MX':    (lambda: {'priority': cnt_split[0], 'host': cnt_split[1]}),
+            'NS':    (lambda: {'host': content}),
+            'PTR':   (lambda: {'host': content}),
+            'SRV':   (lambda: {'priority': cnt_split[0], 'weight': cnt_split[1], 'port': cnt_split[2], 'host': cnt_split[3]}),
+            'TXT':   (lambda: {'textData': content}),
+        }.get(rtype, lambda: {})())
         return output
