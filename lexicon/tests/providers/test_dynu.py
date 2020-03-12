@@ -17,14 +17,6 @@ class DynuProviderTests(TestCase, IntegrationTests):
         return ['API-Key']
 
     def _filter_response(self, response):
-        resp = json.loads(response['body']['string'])
-        for resp_domain in resp['domains']:
-            resp_domain['name'] = 'example.com'
-            resp_domain['unicodeName'] = 'example.com'
-            resp_domain['location'] = 'lexicon-dns'
-            resp_domain['group'] = 'lexicon-dns'
-            resp_domain['ipv4Address'] = '127.0.0.1'
-            resp_domain['ipv6Address'] = '::1'
-
-        response['body']['string'] = json.dumps(resp)
+        if response['status']['code'] not in [200, 503]:
+            return None
         return response
