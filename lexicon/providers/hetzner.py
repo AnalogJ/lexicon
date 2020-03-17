@@ -547,7 +547,7 @@ class Provider(BaseProvider):
         have no match.
         """
         if isinstance(dom, string_types):
-            dom = BeautifulSoup(dom, 'html.parser')
+            dom = BeautifulSoup(dom, 'html5lib')
         for idx, find in enumerate(filters, start=1):
             if not dom:
                 break
