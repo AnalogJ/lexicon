@@ -8,14 +8,14 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['graphiterack.com']
+NAMESERVER_DOMAINS = ['ukfast.net']
 
 def provider_parser(subparser):
     """Configure provider parser for SafeDNS"""
     subparser.description = '''
-        SafeDNS Provider requires an API key to access its API.
+        SafeDNS provider requires an API key in all interactions.
         You can generate one for your account on the following URL:
-        https://my.ukfast.co.uk/api/index.php'''
+        https://my.ukfast.co.uk/applications/index.php'''
     subparser.add_argument('--auth-token', help='specify the API key to authenticate with')
 
 class Provider(BaseProvider):
