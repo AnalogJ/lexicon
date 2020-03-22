@@ -9,7 +9,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTests
 class SafednsProviderTests(TestCase, IntegrationTests):
     """Integration tests for SafeDNS provider"""
     provider_name = 'safedns'
-    domain = 'tests.lexicon.com'
+    domain = 'lexicon.tests'
 
     def _filter_headers(self):
         return ['Authorization']
