@@ -18,17 +18,6 @@ def provider_parser(subparser):
         https://my.ukfast.co.uk/applications/index.php'''
     subparser.add_argument('--auth-token', help='specify the API key to authenticate with')
 
-class ZoneNotFoundError(Exception):
-    """Exception raised when DNS zone does not exist in the customer account.
-
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
-    """
-
-    def __init__(self, message):
-        self.message = message
-
 class Provider(BaseProvider):
     """Provider SafeDNS implementation of Lexicon Provider interface."""
     def __init__(self, config):
@@ -36,14 +25,14 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.ukfast.io/safedns/v1'
 
-    def _authenticate(self):
-        try:
-            self._get('/zones/{0}'.format(self.domain))
-            self.domain_id = self.domain
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
-                raise ZoneNotFoundError("Zone '{0}' not not found in the account: {1}"
-                                        .format(self.domain, e))
+def _authenticate(self):
+    try:
+        self._get('/zones/{0}'.format(self.domain))
+        self.domain_id = self.domain
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            raise Exception('No domain found')
+        raise e
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
