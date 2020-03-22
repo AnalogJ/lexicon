@@ -42,7 +42,8 @@ class Provider(BaseProvider):
             self.domain_id = self.domain
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
-                raise ZoneNotFoundError("Zone '{0}' not not found in the account: {1}".format(self.domain, e))
+                raise ZoneNotFoundError("Zone '{0}' not not found in the account: {1}"
+                                        .format(self.domain, e))
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
