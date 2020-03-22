@@ -29,10 +29,10 @@ class Provider(BaseProvider):
         try:
             self._get('/zones/{0}'.format(self.domain))
             self.domain_id = self.domain
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+        except requests.exceptions.HTTPError as err:
+            if err.response.status_code == 404:
                 raise Exception('No domain found')
-            raise e
+            raise err
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
