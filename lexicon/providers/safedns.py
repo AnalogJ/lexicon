@@ -25,14 +25,14 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = 'https://api.ukfast.io/safedns/v1'
 
-def _authenticate(self):
-    try:
-        self._get('/zones/{0}'.format(self.domain))
-        self.domain_id = self.domain
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 404:
-            raise Exception('No domain found')
-        raise e
+    def _authenticate(self):
+        try:
+            self._get('/zones/{0}'.format(self.domain))
+            self.domain_id = self.domain
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                raise Exception('No domain found')
+            raise e
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
