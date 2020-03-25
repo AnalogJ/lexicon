@@ -66,7 +66,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        filter_obj = {'per_page': 100}
+        filter_obj = {'per_page': 100 }
         if rtype:
             filter_obj['type'] = rtype
         if name:
@@ -74,21 +74,31 @@ class Provider(BaseProvider):
         if content:
             filter_obj['content'] = content
 
-        payload = self._get(
-            '/zones/{0}/dns_records'.format(self.domain_id), filter_obj)
-
         records = []
-        for record in payload['result']:
-            processed_record = {
-                'type': record['type'],
-                'name': record['name'],
-                'ttl': record['ttl'],
-                'content': record['content'],
-                'id': record['id']
-            }
-            records.append(processed_record)
+        while True:
+            payload = self._get(
+                '/zones/{0}/dns_records'.format(self.domain_id), filter_obj)
+
+            LOGGER.debug("payload: %s", payload)
+
+            for record in payload['result']:
+                processed_record = {
+                    'type': record['type'],
+                    'name': record['name'],
+                    'ttl': record['ttl'],
+                    'content': record['content'],
+                    'id': record['id']
+                }
+                records.append(processed_record)
+
+            pages = payload['result_info']['total_pages']
+            page = payload['result_info']['page']
+            if page >= pages:
+                break
+            filter_obj['page'] = page + 1
 
         LOGGER.debug('list_records: %s', records)
+        LOGGER.debug('Number of records retrieved: %d', len(records))
         return records
 
     # Create or update a record.
