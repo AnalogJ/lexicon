@@ -8,14 +8,14 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['graphiterack.com']
+NAMESERVER_DOMAINS = ['ukfast.net']
 
 def provider_parser(subparser):
     """Configure provider parser for SafeDNS"""
     subparser.description = '''
-        SafeDNS Provider requires an API key to access its API.
+        SafeDNS provider requires an API key in all interactions.
         You can generate one for your account on the following URL:
-        https://my.ukfast.co.uk/api/index.php'''
+        https://my.ukfast.co.uk/applications/index.php'''
     subparser.add_argument('--auth-token', help='specify the API key to authenticate with')
 
 class Provider(BaseProvider):
@@ -26,8 +26,13 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.ukfast.io/safedns/v1'
 
     def _authenticate(self):
-        self._get('/zones/{0}'.format(self.domain))
-        self.domain_id = self.domain
+        try:
+            self._get('/zones/{0}'.format(self.domain))
+            self.domain_id = self.domain
+        except requests.exceptions.HTTPError as err:
+            if err.response.status_code == 404:
+                raise Exception('No domain found')
+            raise err
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
