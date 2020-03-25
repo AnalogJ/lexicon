@@ -2,116 +2,226 @@ interactions:
 - request:
     body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.digitalocean.com/v2/domains/capsulecd.com
+    uri: https://api.digitalocean.com/v2/domains/foxwoodswebsites.com
   response:
-    body: {string: !!python/unicode '{"domain":{"name":"capsulecd.com","ttl":1800,"zone_file":"$ORIGIN
-        capsulecd.com.\n$TTL 1800\ncapsulecd.com. IN SOA ns1.digitalocean.com. hostmaster.capsulecd.com.
-        1521528422 10800 3600 604800 1800\ncapsulecd.com. 1800 IN NS ns1.digitalocean.com.\ncapsulecd.com.
-        1800 IN NS ns2.digitalocean.com.\ncapsulecd.com. 1800 IN NS ns3.digitalocean.com.\ncapsulecd.com.
-        1800 IN A 127.0.0.1\nlocalhost.capsulecd.com. 1800 IN A 127.0.0.1\ndocs.capsulecd.com.
-        1800 IN CNAME docs.example.com.\n"}}'}
+    body:
+      string: !!python/unicode '{"domain":{"name":"foxwoodswebsites.com","ttl":1800,"zone_file":"$ORIGIN
+        foxwoodswebsites.com.\n$TTL 1800\nfoxwoodswebsites.com. IN SOA ns1.digitalocean.com.
+        hostmaster.foxwoodswebsites.com. 1583891130 10800 3600 604800 1800\nfoxwoodswebsites.com.
+        1800 IN NS ns1.digitalocean.com.\nfoxwoodswebsites.com. 1800 IN NS ns2.digitalocean.com.\nfoxwoodswebsites.com.
+        1800 IN NS ns3.digitalocean.com.\nlocalhost.foxwoodswebsites.com. 3600 IN
+        A 127.0.0.1\ndocs.foxwoodswebsites.com. 3600 IN CNAME docs.example.com.\n_acme-challenge.fqdn.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\n_acme-challenge.full.foxwoodswebsites.com. 3600
+        IN TXT challengetoken\n_acme-challenge.test.foxwoodswebsites.com. 3600 IN
+        TXT challengetoken\n_acme-challenge.createrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken1\n_acme-challenge.createrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\n_acme-challenge.noop.foxwoodswebsites.com. 3600
+        IN TXT challengetoken\n_acme-challenge.deleterecordinset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\nttl.fqdn.foxwoodswebsites.com. 3600 IN TXT ttlshouldbe3600\n_acme-challenge.listrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken1\n_acme-challenge.listrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\nrandom.fqdntest.foxwoodswebsites.com. 3600 IN
+        TXT challengetoken\nrandom.fulltest.foxwoodswebsites.com. 3600 IN TXT challengetoken\nrandom.test.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\nupdated.test.foxwoodswebsites.com. 3600 IN TXT
+        challengetoken\nupdated.testfqdn.foxwoodswebsites.com. 3600 IN TXT challengetoken\nupdated.testfull.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\n"}}'
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      cf-ray: [3fe639a5cdcf929a-SJC]
-      connection: [keep-alive]
-      content-length: ['483']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 20 Mar 2018 06:47:03 GMT']
-      etag: [W/"2db1ebc3c6f69e677c58db5646092a54"]
-      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
-      ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4823']
-      ratelimit-reset: ['1521525195']
-      server: [cloudflare]
-      set-cookie: ['__cfduid=ddc9639be1ece62f7fea4eebe998c6c9d1521528423; expires=Wed,
-          20-Mar-19 06:47:03 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-gateway: [Edge-Gateway]
-      x-request-id: [98d2ca24-e1d9-4fb3-86a3-e025bbe1e696]
-      x-response-from: [service]
-      x-runtime: ['0.173532']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 57219cf4ba9598ed-LAX
+      connection:
+      - keep-alive
+      content-length:
+      - '1658'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 11 Mar 2020 01:48:26 GMT
+      etag:
+      - W/"70e163fd0c446609dd88b19cdbc82579"
+      expect-ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      ratelimit-limit:
+      - '5000'
+      ratelimit-remaining:
+      - '4879'
+      ratelimit-reset:
+      - '1583891032'
+      server:
+      - cloudflare
+      set-cookie:
+      - __cfduid=ded55261295a07a64ae23b039c427cf871583891305; expires=Fri, 10-Apr-20
+        01:48:25 GMT; path=/; domain=.digitalocean.com; HttpOnly; SameSite=Lax
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-gateway:
+      - Edge-Gateway
+      x-request-id:
+      - 74e63451-7b22-4d56-a824-f638dc73ba17
+      x-response-from:
+      - service
+      x-runtime:
+      - '0.108012'
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 - request:
     body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.digitalocean.com/v2/domains/capsulecd.com/records
+    uri: https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records
   response:
-    body: {string: !!python/unicode '{"domain_records":[{"id":13310015,"type":"NS","name":"@","data":"ns1.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":13310016,"type":"NS","name":"@","data":"ns2.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":13310017,"type":"NS","name":"@","data":"ns3.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":13310018,"type":"A","name":"@","data":"127.0.0.1","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":38629349,"type":"A","name":"localhost","data":"127.0.0.1","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":38629350,"type":"CNAME","name":"docs","data":"docs.example.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null}],"links":{},"meta":{"total":6}}'}
+    body:
+      string: !!python/unicode '{"domain_records":[{"id":78210035,"type":"SOA","name":"@","data":"1800","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":78210036,"type":"NS","name":"@","data":"ns1.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":78210037,"type":"NS","name":"@","data":"ns2.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":78210038,"type":"NS","name":"@","data":"ns3.digitalocean.com","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null},{"id":92264100,"type":"A","name":"localhost","data":"127.0.0.1","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264101,"type":"CNAME","name":"docs","data":"docs.example.com","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264103,"type":"TXT","name":"_acme-challenge.fqdn","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264104,"type":"TXT","name":"_acme-challenge.full","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264105,"type":"TXT","name":"_acme-challenge.test","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264107,"type":"TXT","name":"_acme-challenge.createrecordset","data":"challengetoken1","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264108,"type":"TXT","name":"_acme-challenge.createrecordset","data":"challengetoken2","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264111,"type":"TXT","name":"_acme-challenge.noop","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264118,"type":"TXT","name":"_acme-challenge.deleterecordinset","data":"challengetoken2","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264128,"type":"TXT","name":"ttl.fqdn","data":"ttlshouldbe3600","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264132,"type":"TXT","name":"_acme-challenge.listrecordset","data":"challengetoken1","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264133,"type":"TXT","name":"_acme-challenge.listrecordset","data":"challengetoken2","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264134,"type":"TXT","name":"random.fqdntest","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264142,"type":"TXT","name":"random.fulltest","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264153,"type":"TXT","name":"random.test","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264156,"type":"TXT","name":"updated.test","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null}],"links":{"pages":{"last":"https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records?page=2","next":"https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records?page=2"}},"meta":{"total":22}}'
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      cf-ray: [3fe639a9dde593ba-SJC]
-      connection: [keep-alive]
-      content-length: ['912']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 20 Mar 2018 06:47:04 GMT']
-      etag: [W/"91f34071825f1260b872df382789d257"]
-      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
-      ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4822']
-      ratelimit-reset: ['1521525195']
-      server: [cloudflare]
-      set-cookie: ['__cfduid=d33de990338b6381a755f2daca5f52d1e1521528423; expires=Wed,
-          20-Mar-19 06:47:03 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-gateway: [Edge-Gateway]
-      x-request-id: [fce3201d-9550-48f1-b522-de6c6f647029]
-      x-response-from: [service]
-      x-runtime: ['0.161374']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 57219cfc9e3877fa-LAX
+      connection:
+      - keep-alive
+      content-length:
+      - '3349'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 11 Mar 2020 01:48:27 GMT
+      etag:
+      - W/"177a914f44c719360aaf2e03dbadf8c4"
+      expect-ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      ratelimit-limit:
+      - '5000'
+      ratelimit-remaining:
+      - '4878'
+      ratelimit-reset:
+      - '1583891032'
+      server:
+      - cloudflare
+      set-cookie:
+      - __cfduid=d78f496c9522b7fcb06651b4897bec6671583891307; expires=Fri, 10-Apr-20
+        01:48:27 GMT; path=/; domain=.digitalocean.com; HttpOnly; SameSite=Lax
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-gateway:
+      - Edge-Gateway
+      x-request-id:
+      - fb92bb5f-d9c9-41d2-a981-0cfdcf6ce3bd
+      x-response-from:
+      - service
+      x-runtime:
+      - '0.114665'
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 - request:
-    body: !!python/unicode '{"data": "challengetoken", "type": "TXT", "name": "_acme-challenge.fqdn"}'
+    body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['73']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: https://api.digitalocean.com/v2/domains/capsulecd.com/records
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records?page=2
   response:
-    body: {string: !!python/unicode '{"domain_record":{"id":38629351,"type":"TXT","name":"_acme-challenge.fqdn","data":"challengetoken","priority":null,"port":null,"ttl":1800,"weight":null,"flags":null,"tag":null}}'}
+    body:
+      string: !!python/unicode '{"domain_records":[{"id":92264158,"type":"TXT","name":"updated.testfqdn","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null},{"id":92264161,"type":"TXT","name":"updated.testfull","data":"challengetoken","priority":null,"port":null,"ttl":3600,"weight":null,"flags":null,"tag":null}],"links":{"pages":{"first":"https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records?page=1","prev":"https://api.digitalocean.com/v2/domains/foxwoodswebsites.com/records?page=1"}},"meta":{"total":22}}'
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      cf-ray: [3fe639ac0c8292f4-SJC]
-      connection: [keep-alive]
-      content-length: ['177']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 20 Mar 2018 06:47:06 GMT']
-      etag: ['"b819a1f16e14b2852812bea14f90582b"']
-      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
-      ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4821']
-      ratelimit-reset: ['1521525195']
-      server: [cloudflare]
-      set-cookie: ['__cfduid=d59de3d795b27d934162ae0f2a338ed111521528424; expires=Wed,
-          20-Mar-19 06:47:04 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-gateway: [Edge-Gateway]
-      x-request-id: [86b59b89-506b-47a1-b1d6-85914e6a3779]
-      x-response-from: [service]
-      x-runtime: ['2.140992']
-      x-xss-protection: [1; mode=block]
-    status: {code: 201, message: Created}
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 57219d025d91e7b1-LAX
+      connection:
+      - keep-alive
+      content-length:
+      - '543'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 11 Mar 2020 01:48:28 GMT
+      etag:
+      - W/"350858b8adccedb5696a9672eed038b9"
+      expect-ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      ratelimit-limit:
+      - '5000'
+      ratelimit-remaining:
+      - '4877'
+      ratelimit-reset:
+      - '1583891032'
+      server:
+      - cloudflare
+      set-cookie:
+      - __cfduid=dc1acfdddde75e939e2eb30567571a72b1583891307; expires=Fri, 10-Apr-20
+        01:48:27 GMT; path=/; domain=.digitalocean.com; HttpOnly; SameSite=Lax
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-gateway:
+      - Edge-Gateway
+      x-request-id:
+      - 243121f1-974d-4ee3-a476-4444f6ac4dfb
+      x-response-from:
+      - service
+      x-runtime:
+      - '0.126003'
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 version: 1
