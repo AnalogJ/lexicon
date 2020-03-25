@@ -11,14 +11,10 @@ from lexicon.tests.providers.integration_tests import IntegrationTests
 class DigitalOceanProviderTests(TestCase, IntegrationTests):
     """TestCase for DigitalOcean"""
     provider_name = 'digitalocean'
-    domain = 'capsulecd.com'
+    domain = 'foxwoodswebsites.com'
 
     def _filter_headers(self):
         return ['Authorization']
-
-    @pytest.mark.skip(reason="can not set ttl when creating/updating records")
-    def test_provider_when_calling_list_records_after_setting_ttl(self):
-        return
 
     @pytest.mark.skip(reason="new test, missing recording")
     def test_provider_when_calling_update_record_should_modify_record_name_specified(self):

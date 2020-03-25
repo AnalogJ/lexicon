@@ -1,0 +1,466 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?method=json
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"sess_id":
+        {"value": "SESSION_ID"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '121'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:31 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?email=EMAIL&method=json&password=PASSWORD&sess_id=SESSION_ID&subaction=login
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"sess_id":
+        {"value": "SESSION_ID"}, "orders": [{"pg_id": {"value": 1}, "ord_description":
+        {"value": "Contract Name\nschoettle.it"}, "ord_no": {"value": "ORDER_ID"}}]}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '1147'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:32 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?method=json&ord_no=ORDER_ID&sess_id=SESSION_ID&subaction=choose_order
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": []}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '46'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:35 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?method=json&sess_id=SESSION_ID&subaction=kc2_domain_dns_get_records
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"dns_records_search_query":
+        {"value": ""}, "dns_records_load_page": {"value": "1"}, "sess_id": {"value":
+        "SESSION_ID"}, "domains": [{"dns_records": [{"can_edit": {"value": "1"}, "name":
+        {"value": "_acme-challenge.full.schoettle.it"}, "prio": {"value": ""}, "content":
+        {"value": "challengetoken"}, "ttl": {"value": "3600"}, "subdomain": {"value":
+        "_acme-challenge.full"}, "type": {"value": "TXT"}, "id": {"value": "1094415"}},
+        {"can_edit": {"value": "1"}, "name": {"value": "_acme-challenge.fqdn.schoettle.it"},
+        "prio": {"value": ""}, "content": {"value": "challengetoken"}, "ttl": {"value":
+        "3600"}, "subdomain": {"value": "_acme-challenge.fqdn"}, "type": {"value":
+        "TXT"}, "id": {"value": "1094414"}}, {"can_edit": {"value": "1"}, "name":
+        {"value": "_acme-challenge.test.schoettle.it"}, "prio": {"value": ""}, "content":
+        {"value": "challengetoken"}, "ttl": {"value": "3600"}, "subdomain": {"value":
+        "_acme-challenge.test"}, "type": {"value": "TXT"}, "id": {"value": "1094416"}}],
+        "dom_id": {"value": "63532"}, "dns_record_count": {"value": "3"}, "dom_domain":
+        {"value": "schoettle.it"}, "nameservers_using_default": {"value": "1"}}],
+        "dns_record_count_max": {"value": "100"}, "dns_record_count_total": {"value":
+        "3"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '1206'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:35 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?dns_records_load_content=challengetoken1&dns_records_load_only_for_dom_id=63532&dns_records_load_subdomain=_acme-challenge.createrecordset&dns_records_load_type=TXT&method=json&sess_id=SESSION_ID&subaction=kc2_domain_dns_get_records
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"dns_records_load_subdomain":
+        {"value": "_acme-challenge.createrecordset"}, "dns_records_load_only_for_dom_id":
+        {"value": "63532"}, "dns_records_load_page": {"value": "1"}, "dns_records_load_type":
+        {"value": "TXT"}, "dns_records_load_content": {"value": "challengetoken1"},
+        "sess_id": {"value": "SESSION_ID"}, "domains": [{"dom_id": {"value": "63532"},
+        "dom_domain": {"value": "schoettle.it"}, "nameservers_using_default": {"value":
+        "1"}}], "dns_records_search_query": {"value": "dns_records_load_only_for_dom_id=63532&dns_records_load_subdomain=_acme-challenge.createrecordset&dns_records_load_type=TXT&dns_records_load_content=challengetoken1"},
+        "dns_record_count_max": {"value": "100"}, "dns_record_count_total": {"value":
+        "0"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '783'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:38 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?content=challengetoken1&dom_id=63532&method=json&sess_id=SESSION_ID&subaction=kc2_domain_dns_set&subdomain=_acme-challenge.createrecordset&ttl=3600&type=TXT
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"dns_records_load_page":
+        {"value": "1"}, "dns_record_set": {"prio": {"value": "", "maxlength": "6"},
+        "content": {"value": "", "maxlength": "1000"}, "dom_id": {"options": [{"caption":
+        "schoettle.it", "value": "63532"}], "value": "63532"}, "ttl": {"value": "86400",
+        "maxlength": "6"}, "subdomain": {"value": "", "maxlength": "255"}, "type":
+        {"options": [{"caption": "A", "value": "A"}, {"caption": "AAAA", "value":
+        "AAAA"}, {"caption": "AFSDB", "value": "AFSDB"}, {"caption": "CERT", "value":
+        "CERT"}, {"caption": "CNAME", "value": "CNAME"}, {"caption": "DNSKEY", "value":
+        "DNSKEY"}, {"caption": "DS", "value": "DS"}, {"caption": "HINFO", "value":
+        "HINFO"}, {"caption": "KEY", "value": "KEY"}, {"caption": "LOC", "value":
+        "LOC"}, {"caption": "MX", "value": "MX"}, {"caption": "NAPTR", "value": "NAPTR"},
+        {"caption": "NSEC", "value": "NSEC"}, {"caption": "RP", "value": "RP"}, {"caption":
+        "RRSIG", "value": "RRSIG"}, {"caption": "SPF", "value": "SPF"}, {"caption":
+        "SRV", "value": "SRV"}, {"caption": "SSHFP", "value": "SSHFP"}, {"caption":
+        "TXT", "value": "TXT"}], "value": "A"}}, "dns_record_search": {"dom_id": {"options":
+        [{"caption": "Any", "value": "%"}, {"caption": "schoettle.it", "value": "63532"}]},
+        "subdomain": {"value": ""}, "type": {"options": [{"caption": "Any", "value":
+        ""}, {"caption": "A", "value": "A"}, {"caption": "AAAA", "value": "AAAA"},
+        {"caption": "AFSDB", "value": "AFSDB"}, {"caption": "CAA", "value": "CAA"},
+        {"caption": "CDNSKEY", "value": "CDNSKEY"}, {"caption": "CDS", "value": "CDS"},
+        {"caption": "CERT", "value": "CERT"}, {"caption": "CNAME", "value": "CNAME"},
+        {"caption": "DNSKEY", "value": "DNSKEY"}, {"caption": "DS", "value": "DS"},
+        {"caption": "HINFO", "value": "HINFO"}, {"caption": "KEY", "value": "KEY"},
+        {"caption": "LOC", "value": "LOC"}, {"caption": "MX", "value": "MX"}, {"caption":
+        "NAPTR", "value": "NAPTR"}, {"caption": "NSEC", "value": "NSEC"}, {"caption":
+        "NSEC3", "value": "NSEC3"}, {"caption": "NSEC3PARAM", "value": "NSEC3PARAM"},
+        {"caption": "OPENPGPKEY", "value": "OPENPGPKEY"}, {"caption": "RP", "value":
+        "RP"}, {"caption": "RRSIG", "value": "RRSIG"}, {"caption": "SMIMEA", "value":
+        "SMIMEA"}, {"caption": "SPF", "value": "SPF"}, {"caption": "SRV", "value":
+        "SRV"}, {"caption": "SSHFP", "value": "SSHFP"}, {"caption": "TKEY", "value":
+        "TKEY"}, {"caption": "TLSA", "value": "TLSA"}, {"caption": "TSIG", "value":
+        "TSIG"}, {"caption": "TXT", "value": "TXT"}, {"caption": "URI", "value": "URI"}]}},
+        "dns_records_search_query": {"value": ""}, "dns_record_restore": {"dom_id":
+        {"options": [{"caption": "schoettle.it", "value": "63532"}], "value": "63532"}},
+        "sess_id": {"value": "SESSION_ID"}, "domains": [{"dns_records": [{"can_edit":
+        {"value": "1"}, "name": {"value": "_acme-challenge.test.schoettle.it"}, "prio":
+        {"value": ""}, "content": {"value": "challengetoken"}, "ttl": {"value": "3600"},
+        "subdomain": {"value": "_acme-challenge.test"}, "type": {"value": "TXT"},
+        "id": {"value": "1094416"}}, {"can_edit": {"value": "1"}, "name": {"value":
+        "_acme-challenge.createrecordset.schoettle.it"}, "prio": {"value": ""}, "content":
+        {"value": "challengetoken1"}, "ttl": {"value": "3600"}, "subdomain": {"value":
+        "_acme-challenge.createrecordset"}, "type": {"value": "TXT"}, "id": {"value":
+        "1094417"}}], "dom_id": {"value": "63532"}, "dns_record_count": {"value":
+        "2"}, "dom_domain": {"value": "schoettle.it"}, "nameservers_using_default":
+        {"value": "1"}}], "dns_record_count_max": {"value": "100"}, "dns_record_count_total":
+        {"value": "2"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '3241'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:42 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?dns_records_load_content=challengetoken2&dns_records_load_only_for_dom_id=63532&dns_records_load_subdomain=_acme-challenge.createrecordset&dns_records_load_type=TXT&method=json&sess_id=SESSION_ID&subaction=kc2_domain_dns_get_records
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"dns_records_load_subdomain":
+        {"value": "_acme-challenge.createrecordset"}, "dns_records_load_only_for_dom_id":
+        {"value": "63532"}, "dns_records_load_page": {"value": "1"}, "dns_records_load_type":
+        {"value": "TXT"}, "dns_records_load_content": {"value": "challengetoken2"},
+        "sess_id": {"value": "SESSION_ID"}, "domains": [{"dom_id": {"value": "63532"},
+        "dom_domain": {"value": "schoettle.it"}, "nameservers_using_default": {"value":
+        "1"}}], "dns_records_search_query": {"value": "dns_records_load_only_for_dom_id=63532&dns_records_load_subdomain=_acme-challenge.createrecordset&dns_records_load_type=TXT&dns_records_load_content=challengetoken2"},
+        "dns_record_count_max": {"value": "100"}, "dns_record_count_total": {"value":
+        "0"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '783'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:46 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://support.euserv.com/?content=challengetoken2&dom_id=63532&method=json&sess_id=SESSION_ID&subaction=kc2_domain_dns_set&subdomain=_acme-challenge.createrecordset&ttl=3600&type=TXT
+  response:
+    body:
+      string: !!python/unicode '{"message": "success", "code": "100", "result": {"dns_records_load_page":
+        {"value": "1"}, "dns_record_set": {"prio": {"value": "", "maxlength": "6"},
+        "content": {"value": "", "maxlength": "1000"}, "dom_id": {"options": [{"caption":
+        "schoettle.it", "value": "63532"}], "value": "63532"}, "ttl": {"value": "86400",
+        "maxlength": "6"}, "subdomain": {"value": "", "maxlength": "255"}, "type":
+        {"options": [{"caption": "A", "value": "A"}, {"caption": "AAAA", "value":
+        "AAAA"}, {"caption": "AFSDB", "value": "AFSDB"}, {"caption": "CERT", "value":
+        "CERT"}, {"caption": "CNAME", "value": "CNAME"}, {"caption": "DNSKEY", "value":
+        "DNSKEY"}, {"caption": "DS", "value": "DS"}, {"caption": "HINFO", "value":
+        "HINFO"}, {"caption": "KEY", "value": "KEY"}, {"caption": "LOC", "value":
+        "LOC"}, {"caption": "MX", "value": "MX"}, {"caption": "NAPTR", "value": "NAPTR"},
+        {"caption": "NSEC", "value": "NSEC"}, {"caption": "RP", "value": "RP"}, {"caption":
+        "RRSIG", "value": "RRSIG"}, {"caption": "SPF", "value": "SPF"}, {"caption":
+        "SRV", "value": "SRV"}, {"caption": "SSHFP", "value": "SSHFP"}, {"caption":
+        "TXT", "value": "TXT"}], "value": "A"}}, "dns_record_search": {"dom_id": {"options":
+        [{"caption": "Any", "value": "%"}, {"caption": "schoettle.it", "value": "63532"}]},
+        "subdomain": {"value": ""}, "type": {"options": [{"caption": "Any", "value":
+        ""}, {"caption": "A", "value": "A"}, {"caption": "AAAA", "value": "AAAA"},
+        {"caption": "AFSDB", "value": "AFSDB"}, {"caption": "CAA", "value": "CAA"},
+        {"caption": "CDNSKEY", "value": "CDNSKEY"}, {"caption": "CDS", "value": "CDS"},
+        {"caption": "CERT", "value": "CERT"}, {"caption": "CNAME", "value": "CNAME"},
+        {"caption": "DNSKEY", "value": "DNSKEY"}, {"caption": "DS", "value": "DS"},
+        {"caption": "HINFO", "value": "HINFO"}, {"caption": "KEY", "value": "KEY"},
+        {"caption": "LOC", "value": "LOC"}, {"caption": "MX", "value": "MX"}, {"caption":
+        "NAPTR", "value": "NAPTR"}, {"caption": "NSEC", "value": "NSEC"}, {"caption":
+        "NSEC3", "value": "NSEC3"}, {"caption": "NSEC3PARAM", "value": "NSEC3PARAM"},
+        {"caption": "OPENPGPKEY", "value": "OPENPGPKEY"}, {"caption": "RP", "value":
+        "RP"}, {"caption": "RRSIG", "value": "RRSIG"}, {"caption": "SMIMEA", "value":
+        "SMIMEA"}, {"caption": "SPF", "value": "SPF"}, {"caption": "SRV", "value":
+        "SRV"}, {"caption": "SSHFP", "value": "SSHFP"}, {"caption": "TKEY", "value":
+        "TKEY"}, {"caption": "TLSA", "value": "TLSA"}, {"caption": "TSIG", "value":
+        "TSIG"}, {"caption": "TXT", "value": "TXT"}, {"caption": "URI", "value": "URI"}]}},
+        "dns_records_search_query": {"value": ""}, "dns_record_restore": {"dom_id":
+        {"options": [{"caption": "schoettle.it", "value": "63532"}], "value": "63532"}},
+        "sess_id": {"value": "SESSION_ID"}, "domains": [{"dns_records": [{"can_edit":
+        {"value": "1"}, "name": {"value": "_acme-challenge.test.schoettle.it"}, "prio":
+        {"value": ""}, "content": {"value": "challengetoken"}, "ttl": {"value": "3600"},
+        "subdomain": {"value": "_acme-challenge.test"}, "type": {"value": "TXT"},
+        "id": {"value": "1094416"}}, {"can_edit": {"value": "1"}, "name": {"value":
+        "_acme-challenge.createrecordset.schoettle.it"}, "prio": {"value": ""}, "content":
+        {"value": "challengetoken1"}, "ttl": {"value": "3600"}, "subdomain": {"value":
+        "_acme-challenge.createrecordset"}, "type": {"value": "TXT"}, "id": {"value":
+        "1094417"}}, {"can_edit": {"value": "1"}, "name": {"value": "_acme-challenge.createrecordset.schoettle.it"},
+        "prio": {"value": ""}, "content": {"value": "challengetoken2"}, "ttl": {"value":
+        "3600"}, "subdomain": {"value": "_acme-challenge.createrecordset"}, "type":
+        {"value": "TXT"}, "id": {"value": "1094418"}}], "dom_id": {"value": "63532"},
+        "dns_record_count": {"value": "3"}, "dom_domain": {"value": "schoettle.it"},
+        "nameservers_using_default": {"value": "1"}}], "dns_record_count_max": {"value":
+        "100"}, "dns_record_count_total": {"value": "3"}}}'
+    headers:
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      connection:
+      - Keep-Alive
+      content-length:
+      - '3517'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 20 Dec 2019 17:08:48 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      keep-alive:
+      - timeout=10, max=500
+      pragma:
+      - no-cache
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+version: 1
