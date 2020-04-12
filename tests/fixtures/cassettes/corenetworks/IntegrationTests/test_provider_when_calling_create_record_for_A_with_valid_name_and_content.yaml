@@ -1,0 +1,166 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/
+  response:
+    body:
+      string: '[{"name":"***REMOVED***","type":"master"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 23 Apr 2020 22:12:50 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=15, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '44'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?data=127.0.0.1&name=localhost&type=A
+  response:
+    body:
+      string: '[{"name":"localhost","ttl":"3600","type":"A","data":"127.0.0.1"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 23 Apr 2020 22:12:50 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=15, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '65'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "localhost", "data": "127.0.0.1", "type": "A", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '68'
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Thu, 23 Apr 2020 22:12:51 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=15, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Thu, 23 Apr 2020 22:12:51 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=15, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+version: 1
