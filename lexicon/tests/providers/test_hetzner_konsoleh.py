@@ -43,7 +43,7 @@ class HetznerIntegrationTests(IntegrationTests):
         if _ignore_mock:
             yield
         else:
-            with mock.patch('lexicon.providers.hetzner.Provider._get_dns_cname',
+            with mock.patch('lexicon.providers.hetzner_konsoleh.Provider._get_dns_cname',
                             return_value=(_domain_mock, [], None)) as fixture:
                 yield fixture
 
@@ -59,42 +59,9 @@ class HetznerIntegrationTests(IntegrationTests):
         assert not _cname
 
 
-class HetznerRobotProviderTests(TestCase, HetznerIntegrationTests):
-    """TestCase for Hetzner Robot"""
-    provider_name = 'hetzner'
-    provider_variant = 'Robot'
-    domain = 'rimek.info'
-
-    def _filter_post_data_parameters(self):
-        return ['_username', '_password', '_csrf_token']
-
-    def _filter_headers(self):
-        return ['Cookie']
-
-    def _filter_response(self, response):
-        for cookie in ['set-cookie', 'Set-Cookie']:
-            if cookie in response['headers']:
-                del response['headers'][cookie]
-        if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-            filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
-                           .find(id='center_col'))
-            if not filter_body:
-                filter_body = (BeautifulSoup(response['body']['string'], 'html.parser')
-                               .find(id='login-form'))
-            response['body']['string'] = str(filter_body).encode('UTF-8')
-        return response
-
-    def _test_parameters_overrides(self):
-        options = {'auth_account': 'robot',
-                   'linked': 'no',
-                   'propagated': 'no',
-                   'latency': 0.00001}
-        return options
-
-
 class HetznerKonsoleHProviderTests(TestCase, HetznerIntegrationTests):
     """TestCase for KonsoleH"""
-    provider_name = 'hetzner'
+    provider_name = 'hetzner_konsoleh'
     provider_variant = 'KonsoleH'
     domain = 'bettilaila.com'
 
