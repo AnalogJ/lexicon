@@ -32,4 +32,8 @@ class CorenetworksProviderTests(TestCase, IntegrationTests):
         return response
 
     def _test_parameters_overrides(self):
-        return {'api_endpoint': 'https://beta.api.core-networks.de'}
+        return {
+            'api_endpoint': 'https://beta.api.core-networks.de',
+#            'auth_username': 'apiaccount',
+#            'auth_password': 'apipassword'
+            }

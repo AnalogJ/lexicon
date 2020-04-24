@@ -5,7 +5,6 @@ import hashlib
 import logging
 import time
 import os
-import re
 
 import requests
 from lexicon.providers.base import Provider as BaseProvider
@@ -36,8 +35,8 @@ class Provider(BaseProvider):
         # Core Networks enforces a limit on the amount of logins per minute.
         # As the token is valid for 1 hour it's sensible to store it for
         # later usage.
-        self.auth_file_path = self._get_provider_option('auth-file') or '/tmp/corenetworks_auth.json'
-        self.api_endpoint = self._get_provider_option('api_endpoint') or 'https://beta.api.core-networks.de'
+        self.auth_file_path = self._get_provider_option('auth_file') or '/tmp/corenetworks_auth.json'
+        self.api_endpoint = 'https://beta.api.core-networks.de'
 
     def __del__(self):
         # Changes to the zone need to be committed.
@@ -193,6 +192,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
+        self._log( "url: %s with data %s and query_params %s" % ( url, str(data), str(query_params) ) )
         default_headers = {}
 
         if self.token:
@@ -219,8 +219,7 @@ class Provider(BaseProvider):
         return hashlib.sha1('/'.join([ rtype, name, content ]).encode('utf-8')).hexdigest()
 
     def _refresh_auth_file(self):
-        """Retrieve token, zones and last API calls from json file"""
-        LOGGER.debug("Entering _refresh_auth_file.")
+        """Retrieve token and zones from json file"""
         try:
             auth = open(self.auth_file_path, "r")
             if auth.mode == "r":
@@ -237,7 +236,6 @@ class Provider(BaseProvider):
 
     def _commit_auth_file(self):
         """Store authentication into json file."""
-        LOGGER.debug("Entering _commit_auth_file.")
         try:
             auth = open(self.auth_file_path, "w")
             if auth.mode == "w":
@@ -255,10 +253,12 @@ class Provider(BaseProvider):
     def _get_token(self):
         """Request new token via API call"""
         LOGGER.debug("Entering _get_token.")
-        payload = self._post('/auth/token', data = {
+        data = {
             'login'   : self._get_provider_option('auth_username'),
             'password': self._get_provider_option('auth_password')
-        })
+        }
+        self._log(str(data))
+        payload = self._post('/auth/token', data = data)
         LOGGER.debug("%s", str(payload))
         self.token  = payload['token']
         self.expiry = payload['expires'] + time.time()
@@ -267,3 +267,13 @@ class Provider(BaseProvider):
         self.auth_file['token']  = self.token
         self.auth_file['expiry'] = self.expiry
         self._commit_auth_file()
+
+    def _log(self, message):
+        l = open('/tmp/corenetworks.log', 'a+')
+        l.write(message+"\n")
+        l.close()
+
+#    def _get_provider_option(self, option):
+#        opt = self.config.resolve('lexicon:{0}:{1}'.format(self.provider_name, option))
+#        self._log("corenetworks: lexicon:%s:%s = %s" % (self.provider_name, option, opt) )
+#        return opt
