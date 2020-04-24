@@ -25,7 +25,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
+      - Fri, 24 Apr 2020 19:30:17 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -60,7 +60,7 @@ interactions:
     uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?data=challengetoken1&name=_acme-challenge.createrecordset&type=TXT
   response:
     body:
-      string: '[]'
+      string: '[{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -69,7 +69,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
+      - Fri, 24 Apr 2020 19:30:18 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -83,49 +83,10 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '2'
+      - '95'
     status:
       code: 200
       message: OK
-- request:
-    body: '{"name": "_acme-challenge.createrecordset", "data": "challengetoken1",
-      "type": "TXT", "ttl": 3600}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '98'
-      User-Agent:
-      - python-requests/2.23.0
-    method: POST
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/
-  response:
-    body:
-      string: ''
-    headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - Upgrade, Keep-Alive
-      Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
-      Expires:
-      - '0'
-      Keep-Alive:
-      - timeout=15, max=100
-      Pragma:
-      - no-cache
-      Server:
-      - Apache
-      Upgrade:
-      - h2,h2c
-    status:
-      code: 204
-      message: No Content
 - request:
     body: '{}'
     headers:
@@ -143,7 +104,7 @@ interactions:
     uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?data=challengetoken2&name=_acme-challenge.createrecordset&type=TXT
   response:
     body:
-      string: '[]'
+      string: '[{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -152,7 +113,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
+      - Fri, 24 Apr 2020 19:30:18 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -166,85 +127,8 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '2'
+      - '95'
     status:
       code: 200
       message: OK
-- request:
-    body: '{"name": "_acme-challenge.createrecordset", "data": "challengetoken2",
-      "type": "TXT", "ttl": 3600}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '98'
-      User-Agent:
-      - python-requests/2.23.0
-    method: POST
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/
-  response:
-    body:
-      string: ''
-    headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - Upgrade, Keep-Alive
-      Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
-      Expires:
-      - '0'
-      Keep-Alive:
-      - timeout=15, max=100
-      Pragma:
-      - no-cache
-      Server:
-      - Apache
-      Upgrade:
-      - h2,h2c
-    status:
-      code: 204
-      message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      User-Agent:
-      - python-requests/2.23.0
-    method: POST
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
-  response:
-    body:
-      string: ''
-    headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - Upgrade, Keep-Alive
-      Date:
-      - Thu, 23 Apr 2020 22:13:11 GMT
-      Expires:
-      - '0'
-      Keep-Alive:
-      - timeout=15, max=100
-      Pragma:
-      - no-cache
-      Server:
-      - Apache
-      Upgrade:
-      - h2,h2c
-    status:
-      code: 204
-      message: No Content
 version: 1

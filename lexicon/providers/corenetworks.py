@@ -145,17 +145,13 @@ class Provider(BaseProvider):
             if self._delete_record(identifier):
                 new_id = self._create_record(rtype = record['type'], name = record['name'], content = record['content'])
                 return new_id
-#        else:
-            # This branch should never be called as we either have an
-            # ID and the if-branch is used or we do not have an ID and
-            # no idea which record to change as the parameters describe
-            # the updated values.
-#            records = self._list_records( rtype, name, content)
-#            if len(records) > 0:
-#                for record in records:
-#                    return self._update_record( record['id'], rtype, name, content )
-#            else:
-#                return True
+        else:
+            records = self._list_records( rtype=rtype, name=self._relative_name(name) )
+            if len(records) > 0:
+                for record in records:
+                    return self._update_record( record['id'], rtype, name, content )
+            else:
+                return True
         return False
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -179,7 +175,6 @@ class Provider(BaseProvider):
             self.modified = True
         else:
             records = self._list_records( rtype, name, content)
-            self._log( "Records: %s\n" % str(records) )
             if len(records) > 0:
                 for record in records:
                     self._delete_record(identifier = record['id'], rtype = record['type'], name = record['name'], content = record['content'] )
