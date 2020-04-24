@@ -230,8 +230,8 @@ class Provider(BaseProvider):
             else:
                 auth.close()
                 return False
-        except FileNotFoundError:
-            LOGGER.debug("No stored authentication found. Acquiring token via API call.")
+        except IOError as e:
+            LOGGER.debug("No stored authentication found: %s. Acquiring token via API call." % os.strerror(e.errno))
             self._get_token()
             return True
 
@@ -247,8 +247,8 @@ class Provider(BaseProvider):
                 return True
             else:
                 return False
-        except IOError:
-            LOGGER.debug("Could not write authentication file.")
+        except IOError as e:
+            LOGGER.debug("Could not write authentication file: %s" % os.strerror(e.errno))
         finally:
             auth.close()
 
