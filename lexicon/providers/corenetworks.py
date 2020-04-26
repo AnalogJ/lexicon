@@ -48,6 +48,7 @@ class Provider(BaseProvider):
 
     # Ref: https://beta.api.core-networks.de/doc/#functon_auth_token
     def _authenticate(self):
+        self._log("Domain %s" % self.domain)
         self._refresh_auth_file()
         if 'token' in self.auth_file:
             self.token = self.auth_file['token']
@@ -67,7 +68,7 @@ class Provider(BaseProvider):
         #Check if requested zone is in zones list
         zone = next((zone for zone in self.zones if zone["name"] == self.domain), None)
         if not zone:
-            raise Exception('Domain not found')
+            raise Exception('No domain found like %s.' % self.domain)
         else:
             self.domain_id = zone['name']
         return True
