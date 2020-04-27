@@ -1,6 +1,5 @@
 """Module provider for Njalla"""
 from __future__ import absolute_import
-import json
 import logging
 
 import requests
@@ -65,17 +64,17 @@ class Provider(BaseProvider):
         result = self._api_call('list-records', params)
 
         records = result['records']
-        processed_records = list(map(lambda record: {
-                'id': record['id'],
-                'type': record['type'],
-                'name': self._full_name(record['name']),
-                'ttl': record['ttl'],
-                'content': record['content'],
-            }, records))
-        filtered_records = list(filter(lambda record:
+        processed_records = [{
+            'id': record['id'],
+            'type': record['type'],
+            'name': self._full_name(record['name']),
+            'ttl': record['ttl'],
+            'content': record['content'],
+        } for record in records]
+        filtered_records = [record for record in processed_records if (
             (rtype is None or record['type'] == rtype) and
-                (name is None or record['name'] == self._full_name(name)) and
-                (content is None or record['content'] == content), processed_records))
+            (name is None or record['name'] == self._full_name(name)) and
+            (content is None or record['content'] == content))]
 
         LOGGER.debug('list_records: %s', filtered_records)
         return filtered_records
@@ -105,7 +104,7 @@ class Provider(BaseProvider):
             'domain': self.domain,
             'id': identifier,
         }
-        result = self._api_call('remove-record', params)
+        self._api_call('remove-record', params)
 
         LOGGER.debug('delete_record: %s', True)
         return True
@@ -139,8 +138,8 @@ class Provider(BaseProvider):
         records = self._list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]['id']
-        else:
-            raise Exception('Unambiguous record could not be found.')
+
+        raise Exception('Unambiguous record could not be found.')
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
-         return {}
+        return {}
