@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: !!python/unicode '{"params": {"domain": "example.com"}, "method": "get-domain"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '59'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
+        "expiry": "2020-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '154'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 26 Apr 2020 23:58:47 GMT
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx/1.14.2
+      set-cookie:
+      - csrftoken=J2j8T2RCx2vUgwVTPk2Drt3dPOFmfMmvHqixZM9Qaauie2KOpK7eBdzRjexanvBg;
+        expires=Sun, 25-Apr-2021 23:58:47 GMT; Max-Age=31449600; Path=/
+      - sessionid=8yp555c99ho77ccxbdwn8x9egkst26pk; expires=Sun, 10-May-2020 23:58:47
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"params": {"content": "challengetoken", "domain": "example.com",
+      "type": "TXT", "name": "_acme-challenge.test", "ttl": 3600}, "method": "add-record"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '148'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"id": 133767, "name": "_acme-challenge.test",
+        "type": "TXT", "content": "challengetoken", "ttl": 3600}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '134'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 26 Apr 2020 23:58:48 GMT
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx/1.14.2
+      set-cookie:
+      - csrftoken=sRpeXZo3Ab6luTX0CmkNM8NfIt4UmVEjxweDdyvKXLYqAMGX2b9TI9rxM2rRSnrj;
+        expires=Sun, 25-Apr-2021 23:58:48 GMT; Max-Age=31449600; Path=/
+      - sessionid=kac1aoqo2hpeidd69fdd3b1cz0aii4vr; expires=Sun, 10-May-2020 23:58:48
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

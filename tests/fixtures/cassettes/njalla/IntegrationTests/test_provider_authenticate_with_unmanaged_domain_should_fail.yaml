@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: !!python/unicode '{"params": {"domain": "thisisadomainidonotown.com"}, "method":
+      "get-domain"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '76'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"error": {"code": 403, "message": "permission denied"},
+        "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '75'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 26 Apr 2020 23:58:36 GMT
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx/1.14.2
+      set-cookie:
+      - csrftoken=YsHmF5B9tclB3CtWaQZ43gzYt9by4t8B0A9aX3IW13oNRp1DbStIoCDCaPOCUAgI;
+        expires=Sun, 25-Apr-2021 23:58:36 GMT; Max-Age=31449600; Path=/
+      - sessionid=w0bmsvzfv74o48eh5h13b6en0ovb43y7; expires=Sun, 10-May-2020 23:58:36
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

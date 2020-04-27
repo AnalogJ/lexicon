@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: !!python/unicode '{"params": {"domain": "example.com"}, "method": "get-domain"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '59'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
+        "expiry": "2020-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '154'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 26 Apr 2020 23:58:37 GMT
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx/1.14.2
+      set-cookie:
+      - csrftoken=07OihP6HQBsll5llk8zWMh6AajB3cuah7Cl3NwGg9DakSehVRNCyEefiJMf3Y5d5;
+        expires=Sun, 25-Apr-2021 23:58:37 GMT; Max-Age=31449600; Path=/
+      - sessionid=ap9xif4d44vgykfaj94yfzeptvm6geud; expires=Sun, 10-May-2020 23:58:37
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"params": {"content": "127.0.0.1", "domain": "example.com",
+      "type": "A", "name": "localhost", "ttl": 3600}, "method": "add-record"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '130'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"id": 133763, "name": "localhost", "type":
+        "A", "content": "127.0.0.1", "ttl": 3600}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '116'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 26 Apr 2020 23:58:38 GMT
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx/1.14.2
+      set-cookie:
+      - csrftoken=V9QxysNpXpmsyANf4roiahWrEn3WW7bE5rFQE9csSRynVVguxEHYRxA3viLObZdI;
+        expires=Sun, 25-Apr-2021 23:58:38 GMT; Max-Age=31449600; Path=/
+      - sessionid=5l6e3tml1xpndsd1e0tp6hzza07jxf24; expires=Sun, 10-May-2020 23:58:38
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
