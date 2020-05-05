@@ -14,10 +14,15 @@ NAMESERVER_DOMAINS = ['cloudflare.com']
 
 def provider_parser(subparser):
     """Return the parser for this provider"""
+    subparser.description = '''
+        There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+        1 - A Global API key, with both --auth-username and --auth-token flags.
+        2 - An API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with only --auth-token flag.
+    '''
     subparser.add_argument(
-        "--auth-username", help="specify email address for authentication")
+        "--auth-username", help="specify email address for authentication (for Global API key only)")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication")
+        "--auth-token", help="specify token for authentication (Global API key or API token)")
 
 
 class Provider(BaseProvider):
@@ -103,6 +108,14 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if identifier is None:
+            records = self._list_records(rtype, name)
+            if len(records) == 1:
+                identifier = records[0]['id']
+            elif len(records) < 1:
+                raise Exception('No records found matching type and name - won\'t update')
+            else:
+                raise Exception('Multiple records found matching type and name - won\'t update')
 
         data = {}
         if rtype:
