@@ -21,13 +21,13 @@ interactions:
   response:
     body:
       string: '{"result":[{"id":"4f282fede870f505f531b56a761ecd44","name":"pacalis.net","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["christian.ns.cloudflare.com","dina.ns.cloudflare.com"],"original_name_servers":["ns1.digitalocean.com","ns2.digitalocean.com","ns3.digitalocean.com"],"original_registrar":"ovh
-        sas (id: 433)","original_dnshost":null,"modified_on":"2020-05-05T21:31:15.623814Z","created_on":"2020-05-05T20:18:21.026572Z","activated_on":"2020-05-05T21:07:04.803131Z","meta":{"step":2,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"id":"66de559ecaa0169df8e3c950a86b4664","type":"user","email":"aferrand@ecomundo.eu"},"account":{"id":"5da32e1ae729aa30839477d7ff488fa0","name":"aferrand@ecomundo.eu"},"permissions":["#access:edit","#access:read","#analytics:read","#app:edit","#auditlogs:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#legal:edit","#legal:read","#logs:edit","#logs:read","#member:edit","#member:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#stream:edit","#stream:read","#subscription:edit","#subscription:read","#teams:edit","#teams:read","#teams:report","#waf:edit","#waf:read","#webhooks:edit","#webhooks:read","#worker:edit","#worker:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        sas (id: 433)","original_dnshost":null,"modified_on":"2020-05-05T21:31:11.231877Z","created_on":"2020-05-05T20:18:21.026572Z","activated_on":"2020-05-05T21:07:04.803131Z","meta":{"step":2,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"id":"66de559ecaa0169df8e3c950a86b4664","type":"user","email":"aferrand@ecomundo.eu"},"account":{"id":"5da32e1ae729aa30839477d7ff488fa0","name":"aferrand@ecomundo.eu"},"permissions":["#access:edit","#access:read","#analytics:read","#app:edit","#auditlogs:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#legal:edit","#legal:read","#logs:edit","#logs:read","#member:edit","#member:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#stream:edit","#stream:read","#subscription:edit","#subscription:read","#teams:edit","#teams:read","#teams:report","#waf:edit","#waf:read","#webhooks:edit","#webhooks:read","#worker:edit","#worker:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
         Website","price":0,"currency":"USD","frequency":"","is_subscribed":false,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-Ray:
-      - 58ed9140be10ee07-CDG
+      - 58ed91251ab4048f-CDG
       Cache-Control:
       - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
       Connection:
@@ -35,7 +35,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 May 2020 21:31:16 GMT
+      - Tue, 05 May 2020 21:31:11 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Expires:
@@ -45,8 +45,8 @@ interactions:
       Server:
       - cloudflare
       Set-Cookie:
-      - __cfduid=d423db294a6fc5eaa3cbecfec5edb85fa1588714275; expires=Thu, 04-Jun-20
-        21:31:15 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      - __cfduid=d466f0c9f3faab6107fc7b720d08630411588714271; expires=Thu, 04-Jun-20
+        21:31:11 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=31536000
       Transfer-Encoding:
@@ -58,14 +58,14 @@ interactions:
       X-Frame-Options:
       - SAMEORIGIN
       cf-request-id:
-      - 0288591c750000ee07349ff200000001
+      - 0288590b310000048f6e2f4200000001
       content-length:
       - '1819'
     status:
       code: 200
       message: OK
 - request:
-    body: '{"type": "TXT", "name": "orig.testfull.pacalis.net", "content": "challengetoken",
+    body: '{"type": "TXT", "name": "orig.nameonly.test.pacalis.net", "content": "challengetoken",
       "ttl": 3600}'
     headers:
       Accept:
@@ -77,7 +77,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '94'
+      - '99'
       Content-Type:
       - application/json
       User-Agent:
@@ -86,44 +86,44 @@ interactions:
     uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records
   response:
     body:
-      string: "{\n  \"result\": {\n    \"id\": \"ff69f5afc29afa24c53d22cbfdcf8f3c\"\
+      string: "{\n  \"result\": {\n    \"id\": \"fc41671ac13f223989c83da62c8d67e5\"\
         ,\n    \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n    \"zone_name\"\
-        : \"pacalis.net\",\n    \"name\": \"orig.testfull.pacalis.net\",\n    \"type\"\
-        : \"TXT\",\n    \"content\": \"challengetoken\",\n    \"proxiable\": false,\n\
-        \    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n   \
-        \ \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\": false,\n\
-        \      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\n\
-        \    },\n    \"created_on\": \"2020-05-05T21:31:16.649693Z\",\n    \"modified_on\"\
-        : \"2020-05-05T21:31:16.649693Z\"\n  },\n  \"success\": true,\n  \"errors\"\
+        : \"pacalis.net\",\n    \"name\": \"orig.nameonly.test.pacalis.net\",\n  \
+        \  \"type\": \"TXT\",\n    \"content\": \"challengetoken\",\n    \"proxiable\"\
+        : false,\n    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n\
+        \    \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\"\
+        : false,\n      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\
+        \n    },\n    \"created_on\": \"2020-05-05T21:31:12.292209Z\",\n    \"modified_on\"\
+        : \"2020-05-05T21:31:12.292209Z\"\n  },\n  \"success\": true,\n  \"errors\"\
         : [],\n  \"messages\": []\n}\n"
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-Ray:
-      - 58ed91438907a8c7-CDG
+      - 58ed91287b81bd59-CDG
       Connection:
       - keep-alive
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 05 May 2020 21:31:16 GMT
+      - Tue, 05 May 2020 21:31:12 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Set-Cookie:
-      - __cfduid=d264c486691695c7f3c420800fc2133681588714276; expires=Thu, 04-Jun-20
-        21:31:16 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      - __cfduid=defd9917da02af373ce1118891e36b5ae1588714272; expires=Thu, 04-Jun-20
+        21:31:12 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
       Transfer-Encoding:
       - chunked
       Vary:
       - Accept-Encoding
       cf-request-id:
-      - 0288591e390000a8c7129f1200000001
+      - 0288590d480000bd5901a5c200000001
       content-length:
-      - '624'
+      - '629'
       x-envoy-upstream-service-time:
-      - '11'
+      - '10'
     status:
       code: 200
       message: OK
@@ -145,54 +145,54 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: GET
-    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records?per_page=100&type=TXT&name=orig.testfull.pacalis.net
+    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records?per_page=100&type=TXT&name=orig.nameonly.test.pacalis.net
   response:
     body:
-      string: "{\n  \"result\": [\n    {\n      \"id\": \"ff69f5afc29afa24c53d22cbfdcf8f3c\"\
+      string: "{\n  \"result\": [\n    {\n      \"id\": \"fc41671ac13f223989c83da62c8d67e5\"\
         ,\n      \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n      \"zone_name\"\
-        : \"pacalis.net\",\n      \"name\": \"orig.testfull.pacalis.net\",\n     \
-        \ \"type\": \"TXT\",\n      \"content\": \"challengetoken\",\n      \"proxiable\"\
-        : false,\n      \"proxied\": false,\n      \"ttl\": 3600,\n      \"locked\"\
-        : false,\n      \"meta\": {\n        \"auto_added\": false,\n        \"managed_by_apps\"\
-        : false,\n        \"managed_by_argo_tunnel\": false,\n        \"source\":\
-        \ \"primary\"\n      },\n      \"created_on\": \"2020-05-05T21:31:16.649693Z\"\
-        ,\n      \"modified_on\": \"2020-05-05T21:31:16.649693Z\"\n    }\n  ],\n \
-        \ \"success\": true,\n  \"errors\": [],\n  \"messages\": [],\n  \"result_info\"\
-        : {\n    \"page\": 1,\n    \"per_page\": 100,\n    \"count\": 1,\n    \"total_count\"\
-        : 1,\n    \"total_pages\": 1\n  }\n}\n"
+        : \"pacalis.net\",\n      \"name\": \"orig.nameonly.test.pacalis.net\",\n\
+        \      \"type\": \"TXT\",\n      \"content\": \"challengetoken\",\n      \"\
+        proxiable\": false,\n      \"proxied\": false,\n      \"ttl\": 3600,\n   \
+        \   \"locked\": false,\n      \"meta\": {\n        \"auto_added\": false,\n\
+        \        \"managed_by_apps\": false,\n        \"managed_by_argo_tunnel\":\
+        \ false,\n        \"source\": \"primary\"\n      },\n      \"created_on\"\
+        : \"2020-05-05T21:31:12.292209Z\",\n      \"modified_on\": \"2020-05-05T21:31:12.292209Z\"\
+        \n    }\n  ],\n  \"success\": true,\n  \"errors\": [],\n  \"messages\": [],\n\
+        \  \"result_info\": {\n    \"page\": 1,\n    \"per_page\": 100,\n    \"count\"\
+        : 1,\n    \"total_count\": 1,\n    \"total_pages\": 1\n  }\n}\n"
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-Ray:
-      - 58ed91470e7acd77-CDG
+      - 58ed912bf8ecee0f-CDG
       Connection:
       - keep-alive
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 05 May 2020 21:31:17 GMT
+      - Tue, 05 May 2020 21:31:12 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Set-Cookie:
-      - __cfduid=dda22ef792b05d3543a4b178fec21401f1588714276; expires=Thu, 04-Jun-20
-        21:31:16 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      - __cfduid=d1adb7bfedd5ff7e7c769261f85ab763c1588714272; expires=Thu, 04-Jun-20
+        21:31:12 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
       Transfer-Encoding:
       - chunked
       Vary:
       - Accept-Encoding
       cf-request-id:
-      - 02885920640000cd77bcbcd200000001
+      - 0288590f770000ee0f5d2c2200000001
       content-length:
-      - '791'
+      - '796'
       x-envoy-upstream-service-time:
-      - '5'
+      - '9'
     status:
       code: 200
       message: OK
 - request:
-    body: '{"type": "TXT", "name": "updated.testfull.pacalis.net", "content": "challengetoken",
+    body: '{"type": "TXT", "name": "orig.nameonly.test.pacalis.net", "content": "updated",
       "ttl": 3600}'
     headers:
       Accept:
@@ -204,51 +204,51 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '97'
+      - '92'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.22.0
     method: PUT
-    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records/ff69f5afc29afa24c53d22cbfdcf8f3c
+    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records/fc41671ac13f223989c83da62c8d67e5
   response:
     body:
-      string: "{\n  \"result\": {\n    \"id\": \"ff69f5afc29afa24c53d22cbfdcf8f3c\"\
+      string: "{\n  \"result\": {\n    \"id\": \"fc41671ac13f223989c83da62c8d67e5\"\
         ,\n    \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n    \"zone_name\"\
-        : \"pacalis.net\",\n    \"name\": \"updated.testfull.pacalis.net\",\n    \"\
-        type\": \"TXT\",\n    \"content\": \"challengetoken\",\n    \"proxiable\"\
-        : false,\n    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n\
-        \    \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\"\
-        : false,\n      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\
-        \n    },\n    \"created_on\": \"2020-05-05T21:31:17.734013Z\",\n    \"modified_on\"\
-        : \"2020-05-05T21:31:17.734013Z\"\n  },\n  \"success\": true,\n  \"errors\"\
+        : \"pacalis.net\",\n    \"name\": \"orig.nameonly.test.pacalis.net\",\n  \
+        \  \"type\": \"TXT\",\n    \"content\": \"updated\",\n    \"proxiable\": false,\n\
+        \    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n   \
+        \ \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\": false,\n\
+        \      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\n\
+        \    },\n    \"created_on\": \"2020-05-05T21:31:13.325176Z\",\n    \"modified_on\"\
+        : \"2020-05-05T21:31:13.325176Z\"\n  },\n  \"success\": true,\n  \"errors\"\
         : [],\n  \"messages\": []\n}\n"
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-Ray:
-      - 58ed914a882008af-CDG
+      - 58ed912f0c8d048f-CDG
       Connection:
       - keep-alive
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 05 May 2020 21:31:17 GMT
+      - Tue, 05 May 2020 21:31:13 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Set-Cookie:
-      - __cfduid=dd41b542bbf8ff54ad49070ba064a591f1588714277; expires=Thu, 04-Jun-20
-        21:31:17 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      - __cfduid=d1f7596ad4f334d7640dc2ff4753432db1588714273; expires=Thu, 04-Jun-20
+        21:31:13 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
       Transfer-Encoding:
       - chunked
       Vary:
       - Accept-Encoding
       cf-request-id:
-      - 0288592295000008af8a884200000001
+      - 02885911610000048f46396200000001
       content-length:
-      - '627'
+      - '622'
       x-envoy-upstream-service-time:
       - '11'
     status:
