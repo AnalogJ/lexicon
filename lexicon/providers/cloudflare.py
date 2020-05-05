@@ -20,9 +20,11 @@ def provider_parser(subparser):
         2 - An API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with only --auth-token flag.
     '''
     subparser.add_argument(
-        "--auth-username", help="specify email address for authentication (for Global API key only)")
+        "--auth-username",
+        help="specify email address for authentication (for Global API key only)")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication (Global API key or API token)")
+        "--auth-token",
+        help="specify token for authentication (Global API key or API token)")
 
 
 class Provider(BaseProvider):
