@@ -31,12 +31,14 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         # check if record already exists
+        ttl = self._get_lexicon_option('ttl')
+
         if not self._list_records(rtype, name, content):
             record = {
                 'type': rtype,
                 'name': self._relative_name(name),
                 'data': content,
-
+                'ttl': ttl,
             }
             if rtype == 'CNAME':
                 # make sure a the data is always a FQDN for CNAMe.
@@ -69,7 +71,7 @@ class Provider(BaseProvider):
                 processed_record = {
                     'type': record['type'],
                     'name': "{0}.{1}".format(record['name'], self.domain_id),
-                    'ttl': '',
+                    'ttl': record['ttl'],
                     'content': record['data'],
                     'id': record['id']
                 }
@@ -97,6 +99,10 @@ class Provider(BaseProvider):
             data['name'] = self._relative_name(name)
         if content:
             data['data'] = content
+
+        ttl = self._get_lexicon_option('ttl')
+        if ttl:
+            data['ttl'] = ttl
 
         self._put(
             '/domains/{0}/records/{1}'.format(self.domain_id, identifier), data)

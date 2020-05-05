@@ -13,33 +13,31 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests
   response:
     body:
-      string: !!python/unicode '{"data":{"name":"tests.lexicon.com","description":"Lexicon
-        Test zone"},"meta":{}}'
+      string: !!python/unicode '{"data":{"name":"lexicon.tests","description":""},"meta":{}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '81'
+      - '60'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:15 GMT
+      - Fri, 20 Mar 2020 22:02:17 GMT
       request-id:
-      - ab9d6099-ada3-4c9a-9508-7d0cbe679652
+      - b8fcb19d-661b-420e-b8e8-8ddb1cb033c5
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
@@ -58,32 +56,32 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records
   response:
     body:
-      string: !!python/unicode '{"data":[{"id":3836012,"name":"tests.lexicon.com","type":"NS","content":"ns0.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3836015,"name":"tests.lexicon.com","type":"NS","content":"ns1.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3849554,"name":"localhost.tests.lexicon.com","type":"A","content":"127.0.0.1","updated_at":"2019-06-25T19:58:10+00:00","ttl":86400,"priority":0},{"id":3849557,"name":"_acme-challenge.fqdn.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:13+00:00","ttl":86400,"priority":0},{"id":3849560,"name":"_acme-challenge.full.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:17+00:00","ttl":86400,"priority":0},{"id":3849563,"name":"_acme-challenge.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:21+00:00","ttl":86400,"priority":0},{"id":3849566,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:58:24+00:00","ttl":86400,"priority":0},{"id":3849569,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:58:27+00:00","ttl":86400,"priority":0},{"id":3849572,"name":"_acme-challenge.noop.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:30+00:00","ttl":86400,"priority":0},{"id":3849590,"name":"_acme-challenge.deleterecordinset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:06+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":16,"count":10,"per_page":10,"current_page":1,"total_pages":2,"links":{"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2"}}}}'
+      string: !!python/unicode '{"data":[{"id":4291172,"name":"lexicon.tests","type":"SOA","content":"ns0.ukfast.net
+        support@ukfast.co.uk 2020032002 300 300 300 300","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291175,"name":"lexicon.tests","type":"NS","content":"ns0.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291178,"name":"lexicon.tests","type":"NS","content":"ns1.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291181,"name":"localhost.lexicon.tests","type":"A","content":"127.0.0.1","updated_at":"2020-03-20T21:44:28+00:00","ttl":86400,"priority":null},{"id":4291184,"name":"_acme-challenge.fqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291187,"name":"_acme-challenge.full.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291190,"name":"_acme-challenge.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291193,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291196,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null},{"id":4291199,"name":"_acme-challenge.noop.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":1,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":null,"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '1983'
+      - '2067'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:16 GMT
+      - Fri, 20 Mar 2020 22:02:18 GMT
       request-id:
-      - 165188fb-9d7a-4816-afac-c97361b59e75
+      - d0e11a30-3d1d-4d23-a51a-4b849afb3e31
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
@@ -102,119 +100,31 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records?page=2
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=2
   response:
     body:
-      string: !!python/unicode '{"data":[{"id":3849599,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:59:26+00:00","ttl":86400,"priority":0},{"id":3849602,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:30+00:00","ttl":86400,"priority":0},{"id":3849605,"name":"random.fqdntest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:37+00:00","ttl":86400,"priority":0},{"id":3849608,"name":"random.fulltest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:44+00:00","ttl":86400,"priority":0},{"id":3849611,"name":"random.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:55+00:00","ttl":86400,"priority":0},{"id":3849614,"name":"updated.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T20:00:14+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":16,"count":6,"per_page":10,"current_page":2,"total_pages":2,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1"}}}}'
+      string: !!python/unicode '{"data":[{"id":4291217,"name":"_acme-challenge.deleterecordinset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:38+00:00","ttl":86400,"priority":null},{"id":4291226,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:42+00:00","ttl":86400,"priority":null},{"id":4291229,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:43+00:00","ttl":86400,"priority":null},{"id":4291232,"name":"random.fqdntest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:44+00:00","ttl":86400,"priority":null},{"id":4291235,"name":"random.fulltest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:45+00:00","ttl":86400,"priority":null},{"id":4291238,"name":"random.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:46+00:00","ttl":86400,"priority":null},{"id":4291241,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:49+00:00","ttl":86400,"priority":null},{"id":4291244,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"updated\"","updated_at":"2020-03-20T21:55:27+00:00","ttl":86400,"priority":null},{"id":4291247,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:52+00:00","ttl":86400,"priority":null},{"id":4291250,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:54+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":2,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '1324'
+      - '2164'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:17 GMT
+      - Fri, 20 Mar 2020 22:02:18 GMT
       request-id:
-      - dd8f5907-41d7-4840-868a-4547e9d20556
+      - 5116bc1b-42bf-4ecf-b105-f5a06e9441c8
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
-      - Origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: !!python/unicode '{"content": "\"challengetoken\"", "type": "TXT", "name":
-      "orig.nameonly.test.tests.lexicon.com"}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '96'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.22.0
-    method: POST
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records
-  response:
-    body:
-      string: !!python/unicode '{"data":{"id":3849617},"meta":{"location":"http:\/\/apio-safedns\/v1\/zones\/tests.lexicon.com\/records\/3849617"}}'
-    headers:
-      access-control-allow-origin:
-      - https://developers.ukfast.io
-      cache-control:
-      - no-cache, private
-      connection:
-      - close
-      content-type:
-      - application/json
-      date:
-      - Tue, 25 Jun 2019 20:00:18 GMT
-      request-id:
-      - b49bf9cc-f05e-4dd8-a493-59fe4d28eaf0
-      server:
-      - UKFast Web Services
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin
-    status:
-      code: 201
-      message: Created
-- request:
-    body: !!python/unicode '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.22.0
-    method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records
-  response:
-    body:
-      string: !!python/unicode '{"data":[{"id":3836012,"name":"tests.lexicon.com","type":"NS","content":"ns0.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3836015,"name":"tests.lexicon.com","type":"NS","content":"ns1.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3849554,"name":"localhost.tests.lexicon.com","type":"A","content":"127.0.0.1","updated_at":"2019-06-25T19:58:10+00:00","ttl":86400,"priority":0},{"id":3849557,"name":"_acme-challenge.fqdn.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:13+00:00","ttl":86400,"priority":0},{"id":3849560,"name":"_acme-challenge.full.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:17+00:00","ttl":86400,"priority":0},{"id":3849563,"name":"_acme-challenge.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:21+00:00","ttl":86400,"priority":0},{"id":3849566,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:58:24+00:00","ttl":86400,"priority":0},{"id":3849569,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:58:27+00:00","ttl":86400,"priority":0},{"id":3849572,"name":"_acme-challenge.noop.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:30+00:00","ttl":86400,"priority":0},{"id":3849590,"name":"_acme-challenge.deleterecordinset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:06+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":17,"count":10,"per_page":10,"current_page":1,"total_pages":2,"links":{"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2"}}}}'
-    headers:
-      access-control-allow-origin:
-      - https://developers.ukfast.io
-      cache-control:
-      - no-cache, private
-      connection:
-      - close
-      content-length:
-      - '1983'
-      content-type:
-      - application/json
-      date:
-      - Tue, 25 Jun 2019 20:00:20 GMT
-      request-id:
-      - 330b06c3-9654-45f0-a0f6-2785edf5ecc9
-      server:
-      - UKFast Web Services
-      transfer-encoding:
-      - chunked
-      vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
@@ -233,32 +143,31 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records?page=2
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=3
   response:
     body:
-      string: !!python/unicode '{"data":[{"id":3849599,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:59:26+00:00","ttl":86400,"priority":0},{"id":3849602,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:30+00:00","ttl":86400,"priority":0},{"id":3849605,"name":"random.fqdntest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:37+00:00","ttl":86400,"priority":0},{"id":3849608,"name":"random.fulltest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:44+00:00","ttl":86400,"priority":0},{"id":3849611,"name":"random.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:55+00:00","ttl":86400,"priority":0},{"id":3849614,"name":"updated.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T20:00:14+00:00","ttl":86400,"priority":0},{"id":3849617,"name":"orig.nameonly.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T20:00:18+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":17,"count":7,"per_page":10,"current_page":2,"total_pages":2,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1"}}}}'
+      string: !!python/unicode '{"data":[{"id":4291274,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:25+00:00","ttl":86400,"priority":null},{"id":4291277,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:26+00:00","ttl":86400,"priority":null},{"id":4291280,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:29+00:00","ttl":86400,"priority":null},{"id":4291283,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:31+00:00","ttl":86400,"priority":null},{"id":4291307,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T22:02:17+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":5,"per_page":10,"current_page":3,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","next":null,"last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '1495'
+      - '1215'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:21 GMT
+      - Fri, 20 Mar 2020 22:02:18 GMT
       request-id:
-      - 398198b8-1027-4ffe-941a-b6aa63f79a19
+      - c28e9832-2478-4b10-a9cc-e9d6c2081c85
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
@@ -277,32 +186,32 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records
   response:
     body:
-      string: !!python/unicode '{"data":[{"id":3836012,"name":"tests.lexicon.com","type":"NS","content":"ns0.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3836015,"name":"tests.lexicon.com","type":"NS","content":"ns1.ukfast.net","updated_at":"2019-06-19T17:20:09+00:00","ttl":86400,"priority":0},{"id":3849554,"name":"localhost.tests.lexicon.com","type":"A","content":"127.0.0.1","updated_at":"2019-06-25T19:58:10+00:00","ttl":86400,"priority":0},{"id":3849557,"name":"_acme-challenge.fqdn.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:13+00:00","ttl":86400,"priority":0},{"id":3849560,"name":"_acme-challenge.full.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:17+00:00","ttl":86400,"priority":0},{"id":3849563,"name":"_acme-challenge.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:21+00:00","ttl":86400,"priority":0},{"id":3849566,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:58:24+00:00","ttl":86400,"priority":0},{"id":3849569,"name":"_acme-challenge.createrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:58:27+00:00","ttl":86400,"priority":0},{"id":3849572,"name":"_acme-challenge.noop.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:58:30+00:00","ttl":86400,"priority":0},{"id":3849590,"name":"_acme-challenge.deleterecordinset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:06+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":17,"count":10,"per_page":10,"current_page":1,"total_pages":2,"links":{"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=2"}}}}'
+      string: !!python/unicode '{"data":[{"id":4291172,"name":"lexicon.tests","type":"SOA","content":"ns0.ukfast.net
+        support@ukfast.co.uk 2020032002 300 300 300 300","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291175,"name":"lexicon.tests","type":"NS","content":"ns0.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291178,"name":"lexicon.tests","type":"NS","content":"ns1.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291181,"name":"localhost.lexicon.tests","type":"A","content":"127.0.0.1","updated_at":"2020-03-20T21:44:28+00:00","ttl":86400,"priority":null},{"id":4291184,"name":"_acme-challenge.fqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291187,"name":"_acme-challenge.full.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291190,"name":"_acme-challenge.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291193,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291196,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null},{"id":4291199,"name":"_acme-challenge.noop.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":1,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":null,"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '1983'
+      - '2067'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:22 GMT
+      - Fri, 20 Mar 2020 22:02:18 GMT
       request-id:
-      - c6c0f1eb-6fc6-44c6-9dfa-85a134625cc6
+      - e2fb2678-81ba-4c8a-8632-b7609b320238
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
@@ -321,38 +230,37 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records?page=2
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=2
   response:
     body:
-      string: !!python/unicode '{"data":[{"id":3849599,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken1\"","updated_at":"2019-06-25T19:59:26+00:00","ttl":86400,"priority":0},{"id":3849602,"name":"_acme-challenge.listrecordset.tests.lexicon.com","type":"TXT","content":"\"challengetoken2\"","updated_at":"2019-06-25T19:59:30+00:00","ttl":86400,"priority":0},{"id":3849605,"name":"random.fqdntest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:37+00:00","ttl":86400,"priority":0},{"id":3849608,"name":"random.fulltest.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:44+00:00","ttl":86400,"priority":0},{"id":3849611,"name":"random.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T19:59:55+00:00","ttl":86400,"priority":0},{"id":3849614,"name":"updated.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T20:00:14+00:00","ttl":86400,"priority":0},{"id":3849617,"name":"orig.nameonly.test.tests.lexicon.com","type":"TXT","content":"\"challengetoken\"","updated_at":"2019-06-25T20:00:18+00:00","ttl":86400,"priority":0}],"meta":{"pagination":{"total":17,"count":7,"per_page":10,"current_page":2,"total_pages":2,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/tests.lexicon.com\/records?page=1"}}}}'
+      string: !!python/unicode '{"data":[{"id":4291217,"name":"_acme-challenge.deleterecordinset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:38+00:00","ttl":86400,"priority":null},{"id":4291226,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:42+00:00","ttl":86400,"priority":null},{"id":4291229,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:43+00:00","ttl":86400,"priority":null},{"id":4291232,"name":"random.fqdntest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:44+00:00","ttl":86400,"priority":null},{"id":4291235,"name":"random.fulltest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:45+00:00","ttl":86400,"priority":null},{"id":4291238,"name":"random.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:46+00:00","ttl":86400,"priority":null},{"id":4291241,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:49+00:00","ttl":86400,"priority":null},{"id":4291244,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"updated\"","updated_at":"2020-03-20T21:55:27+00:00","ttl":86400,"priority":null},{"id":4291247,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:52+00:00","ttl":86400,"priority":null},{"id":4291250,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:54+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":2,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '1495'
+      - '2164'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:23 GMT
+      - Fri, 20 Mar 2020 22:02:18 GMT
       request-id:
-      - 9d07ad50-10e7-4f34-881a-2d5a7adb92cf
+      - e85ab26f-d3e3-498d-b1af-b514534ac9db
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{"content": "\"updated\"", "type": "TXT", "name": "orig.nameonly.test.tests.lexicon.com"}'
+    body: !!python/unicode '{}'
     headers:
       Accept:
       - application/json
@@ -361,36 +269,208 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '89'
+      - '2'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=3
+  response:
+    body:
+      string: !!python/unicode '{"data":[{"id":4291274,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:25+00:00","ttl":86400,"priority":null},{"id":4291277,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:26+00:00","ttl":86400,"priority":null},{"id":4291280,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:29+00:00","ttl":86400,"priority":null},{"id":4291283,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:31+00:00","ttl":86400,"priority":null},{"id":4291307,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T22:02:17+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":5,"per_page":10,"current_page":3,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","next":null,"last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
+    headers:
+      access-control-allow-origin:
+      - https://developers.ukfast.io
+      cache-control:
+      - no-cache, private
+      content-length:
+      - '1215'
+      content-type:
+      - application/json
+      date:
+      - Fri, 20 Mar 2020 22:02:18 GMT
+      request-id:
+      - aed25b72-345e-4a33-8054-06e978b3dd40
+      server:
+      - UKFast Web Services
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records
+  response:
+    body:
+      string: !!python/unicode '{"data":[{"id":4291172,"name":"lexicon.tests","type":"SOA","content":"ns0.ukfast.net
+        support@ukfast.co.uk 2020032002 300 300 300 300","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291175,"name":"lexicon.tests","type":"NS","content":"ns0.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291178,"name":"lexicon.tests","type":"NS","content":"ns1.ukfast.net","updated_at":"2020-03-20T21:43:19+00:00","ttl":300,"priority":null},{"id":4291181,"name":"localhost.lexicon.tests","type":"A","content":"127.0.0.1","updated_at":"2020-03-20T21:44:28+00:00","ttl":86400,"priority":null},{"id":4291184,"name":"_acme-challenge.fqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291187,"name":"_acme-challenge.full.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:29+00:00","ttl":86400,"priority":null},{"id":4291190,"name":"_acme-challenge.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291193,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:30+00:00","ttl":86400,"priority":null},{"id":4291196,"name":"_acme-challenge.createrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null},{"id":4291199,"name":"_acme-challenge.noop.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:31+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":1,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":null,"next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
+    headers:
+      access-control-allow-origin:
+      - https://developers.ukfast.io
+      cache-control:
+      - no-cache, private
+      content-length:
+      - '2067'
+      content-type:
+      - application/json
+      date:
+      - Fri, 20 Mar 2020 22:02:19 GMT
+      request-id:
+      - 405ef568-dcd5-4231-b95d-dc8c2b408d81
+      server:
+      - UKFast Web Services
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=2
+  response:
+    body:
+      string: !!python/unicode '{"data":[{"id":4291217,"name":"_acme-challenge.deleterecordinset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:38+00:00","ttl":86400,"priority":null},{"id":4291226,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken1\"","updated_at":"2020-03-20T21:44:42+00:00","ttl":86400,"priority":null},{"id":4291229,"name":"_acme-challenge.listrecordset.lexicon.tests","type":"TXT","content":"\"challengetoken2\"","updated_at":"2020-03-20T21:44:43+00:00","ttl":86400,"priority":null},{"id":4291232,"name":"random.fqdntest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:44+00:00","ttl":86400,"priority":null},{"id":4291235,"name":"random.fulltest.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:45+00:00","ttl":86400,"priority":null},{"id":4291238,"name":"random.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:46+00:00","ttl":86400,"priority":null},{"id":4291241,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:49+00:00","ttl":86400,"priority":null},{"id":4291244,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"updated\"","updated_at":"2020-03-20T21:55:27+00:00","ttl":86400,"priority":null},{"id":4291247,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:52+00:00","ttl":86400,"priority":null},{"id":4291250,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:44:54+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":10,"per_page":10,"current_page":2,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","next":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3","last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
+    headers:
+      access-control-allow-origin:
+      - https://developers.ukfast.io
+      cache-control:
+      - no-cache, private
+      content-length:
+      - '2164'
+      content-type:
+      - application/json
+      date:
+      - Fri, 20 Mar 2020 22:02:19 GMT
+      request-id:
+      - 4b73a0e5-f8c2-48bd-b012-ddcc389b4a77
+      server:
+      - UKFast Web Services
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records?page=3
+  response:
+    body:
+      string: !!python/unicode '{"data":[{"id":4291274,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:25+00:00","ttl":86400,"priority":null},{"id":4291277,"name":"orig.nameonly.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:26+00:00","ttl":86400,"priority":null},{"id":4291280,"name":"updated.testfqdn.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:29+00:00","ttl":86400,"priority":null},{"id":4291283,"name":"updated.testfull.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T21:55:31+00:00","ttl":86400,"priority":null},{"id":4291307,"name":"updated.test.lexicon.tests","type":"TXT","content":"\"challengetoken\"","updated_at":"2020-03-20T22:02:17+00:00","ttl":86400,"priority":null}],"meta":{"pagination":{"total":25,"count":5,"per_page":10,"current_page":3,"total_pages":3,"links":{"first":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=1","previous":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=2","next":null,"last":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records?page=3"}}}}'
+    headers:
+      access-control-allow-origin:
+      - https://developers.ukfast.io
+      cache-control:
+      - no-cache, private
+      content-length:
+      - '1215'
+      content-type:
+      - application/json
+      date:
+      - Fri, 20 Mar 2020 22:02:19 GMT
+      request-id:
+      - fd1f4b86-9443-463b-8d17-75fece4a7399
+      server:
+      - UKFast Web Services
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"content": "\"updated\"", "type": "TXT", "name": "orig.nameonly.test.lexicon.tests"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '85'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: PATCH
-    uri: https://api.ukfast.io/safedns/v1/zones/tests.lexicon.com/records/3849617
+    uri: https://api.ukfast.io/safedns/v1/zones/lexicon.tests/records/4291244
   response:
     body:
-      string: !!python/unicode '{"data":{"id":3849617},"meta":{"location":"v1\/zones\/tests.lexicon.com\/records\/3849617"}}'
+      string: !!python/unicode '{"data":{"id":4291244},"meta":{"location":"https:\/\/api.ukfast.io\/safedns\/v1\/zones\/lexicon.tests\/records\/4291244"}}'
     headers:
       access-control-allow-origin:
       - https://developers.ukfast.io
       cache-control:
       - no-cache, private
-      connection:
-      - close
       content-length:
-      - '92'
+      - '122'
       content-type:
       - application/json
       date:
-      - Tue, 25 Jun 2019 20:00:24 GMT
+      - Fri, 20 Mar 2020 22:02:19 GMT
       request-id:
-      - e5a254eb-9437-48f8-9d08-d529ad85db32
+      - 3ce9eb12-b6a2-4cf5-8211-17ea1a22b18c
       server:
       - UKFast Web Services
       transfer-encoding:
       - chunked
       vary:
+      - Accept-Encoding
       - Origin
     status:
       code: 200

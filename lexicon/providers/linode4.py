@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         payload = self._get('domains', query_params={
             'filter': {
-                'domain': self.domain
+                'domain': self.domain.lower()
             }
         })
         if payload['data']:
@@ -40,7 +40,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         if not self._list_records(rtype, name, content):
             if name:
-                name = self._relative_name(name)
+                name = self._relative_name(name).lower()
 
             self._post('domains/{0}/records'.format(self.domain_id), data={
                 'name': name,
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         resources_url = "domains/{0}/records".format(self.domain_id)
 
         if name:
-            name = self._relative_name(name)
+            name = self._relative_name(name).lower()
 
         processed_records = []
 
@@ -75,7 +75,7 @@ class Provider(BaseProvider):
                     resource for resource in resource_list if resource['type'] == rtype]
             if name:
                 resource_list = [resource for resource in resource_list if self._relative_name(
-                    resource['name']) == name]
+                    resource['name']).lower() == name]
             if content:
                 resource_list = [
                     resource for resource in resource_list if resource['target'] == content]
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
                 processed_records.append({
                     'id': resource['id'],
                     'type': resource['type'],
-                    'name': self._full_name(resource['name']),
+                    'name': self._full_name(resource['name']).lower(),
                     'ttl': resource['ttl_sec'],
                     'content': resource['target']
                 })
@@ -101,7 +101,7 @@ class Provider(BaseProvider):
         LOGGER.debug('update_record: %s', identifier)
 
         if name:
-            name = self._relative_name(name)
+            name = self._relative_name(name).lower()
 
         url = 'domains/{0}/records/{1}'.format(self.domain_id, identifier)
         self._put(url, data={

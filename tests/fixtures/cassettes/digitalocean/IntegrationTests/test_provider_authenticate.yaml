@@ -2,42 +2,88 @@ interactions:
 - request:
     body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
-    uri: https://api.digitalocean.com/v2/domains/capsulecd.com
+    uri: https://api.digitalocean.com/v2/domains/foxwoodswebsites.com
   response:
-    body: {string: !!python/unicode '{"domain":{"name":"capsulecd.com","ttl":1800,"zone_file":"$ORIGIN
-        capsulecd.com.\n$TTL 1800\ncapsulecd.com. IN SOA ns1.digitalocean.com. hostmaster.capsulecd.com.
-        1521528334 10800 3600 604800 1800\ncapsulecd.com. 1800 IN NS ns1.digitalocean.com.\ncapsulecd.com.
-        1800 IN NS ns2.digitalocean.com.\ncapsulecd.com. 1800 IN NS ns3.digitalocean.com.\ncapsulecd.com.
-        1800 IN A 127.0.0.1\n"}}'}
+    body:
+      string: !!python/unicode '{"domain":{"name":"foxwoodswebsites.com","ttl":1800,"zone_file":"$ORIGIN
+        foxwoodswebsites.com.\n$TTL 1800\nfoxwoodswebsites.com. IN SOA ns1.digitalocean.com.
+        hostmaster.foxwoodswebsites.com. 1583891130 10800 3600 604800 1800\nfoxwoodswebsites.com.
+        1800 IN NS ns1.digitalocean.com.\nfoxwoodswebsites.com. 1800 IN NS ns2.digitalocean.com.\nfoxwoodswebsites.com.
+        1800 IN NS ns3.digitalocean.com.\nlocalhost.foxwoodswebsites.com. 3600 IN
+        A 127.0.0.1\ndocs.foxwoodswebsites.com. 3600 IN CNAME docs.example.com.\n_acme-challenge.fqdn.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\n_acme-challenge.full.foxwoodswebsites.com. 3600
+        IN TXT challengetoken\n_acme-challenge.test.foxwoodswebsites.com. 3600 IN
+        TXT challengetoken\n_acme-challenge.createrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken1\n_acme-challenge.createrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\n_acme-challenge.noop.foxwoodswebsites.com. 3600
+        IN TXT challengetoken\n_acme-challenge.deleterecordinset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\nttl.fqdn.foxwoodswebsites.com. 3600 IN TXT ttlshouldbe3600\n_acme-challenge.listrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken1\n_acme-challenge.listrecordset.foxwoodswebsites.com.
+        3600 IN TXT challengetoken2\nrandom.fqdntest.foxwoodswebsites.com. 3600 IN
+        TXT challengetoken\nrandom.fulltest.foxwoodswebsites.com. 3600 IN TXT challengetoken\nrandom.test.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\nupdated.test.foxwoodswebsites.com. 3600 IN TXT
+        challengetoken\nupdated.testfqdn.foxwoodswebsites.com. 3600 IN TXT challengetoken\nupdated.testfull.foxwoodswebsites.com.
+        3600 IN TXT challengetoken\n"}}'
     headers:
-      cache-control: ['max-age=0, private, must-revalidate']
-      cf-ray: [3fe63986eabc93ba-SJC]
-      connection: [keep-alive]
-      content-length: ['384']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 20 Mar 2018 06:46:58 GMT']
-      etag: [W/"14737b4e9755da61fdc598b65a8acfef"]
-      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
-      ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4831']
-      ratelimit-reset: ['1521525195']
-      server: [cloudflare]
-      set-cookie: ['__cfduid=d4d58f93be576a6ce11836df58a77a36a1521528418; expires=Wed,
-          20-Mar-19 06:46:58 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-gateway: [Edge-Gateway]
-      x-request-id: [3b0268bb-cd71-4d06-b9c8-a488fea3b5d9]
-      x-response-from: [service]
-      x-runtime: ['0.139256']
-      x-xss-protection: [1; mode=block]
-    status: {code: 200, message: OK}
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 57219ccc09ae7940-LAX
+      connection:
+      - keep-alive
+      content-length:
+      - '1658'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 11 Mar 2020 01:48:19 GMT
+      etag:
+      - W/"70e163fd0c446609dd88b19cdbc82579"
+      expect-ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      ratelimit-limit:
+      - '5000'
+      ratelimit-remaining:
+      - '4887'
+      ratelimit-reset:
+      - '1583891032'
+      server:
+      - cloudflare
+      set-cookie:
+      - __cfduid=dcbf918f694182987b1fa5bc04083a3251583891299; expires=Fri, 10-Apr-20
+        01:48:19 GMT; path=/; domain=.digitalocean.com; HttpOnly; SameSite=Lax
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-gateway:
+      - Edge-Gateway
+      x-request-id:
+      - 706c67c8-167a-4101-ba19-96be31e424a3
+      x-response-from:
+      - service
+      x-runtime:
+      - '0.098797'
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 version: 1
