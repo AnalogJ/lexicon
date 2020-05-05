@@ -16,8 +16,12 @@ def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.description = '''
         There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
-        1 - A Global API key, with both --auth-username and --auth-token flags.
-        2 - An API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with only --auth-token flag.
+        1 - A Global API key,
+            with --auth-username and --auth-token flags.
+        2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones),
+            with --auth-token flag.
+        3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone),
+            with --auth-token and --zone-id flags.
     '''
     subparser.add_argument(
         "--auth-username",
@@ -25,6 +29,10 @@ def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token",
         help="specify token for authentication (Global API key or API token)")
+    subparser.add_argument(
+        "--zone-id",
+        help="specify the zone id (if set, API token can be scoped to the target zone)"
+    )
 
 
 class Provider(BaseProvider):
@@ -35,21 +43,28 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.cloudflare.com/client/v4'
 
     def _authenticate(self):
+        zone_id = self._get_provider_option('zone_id')
+        if not zone_id:
+            payload = self._get('/zones', {
+                'name': self.domain,
+                'status': 'active'
+            })
 
-        payload = self._get('/zones', {
-            'name': self.domain,
-            'status': 'active'
-        })
+            if not payload['result']:
+                raise Exception('No domain found')
+            if len(payload['result']) > 1:
+                raise Exception('Too many domains found. This should not happen')
 
-        if not payload['result']:
-            raise Exception('No domain found')
-        if len(payload['result']) > 1:
-            raise Exception('Too many domains found. This should not happen')
+            self.domain_id = payload['result'][0]['id']
+        else:
+            payload = self._get('/zones/{0}'.format(zone_id))
 
-        self.domain_id = payload['result'][0]['id']
+            if not payload['result']:
+                raise Exception('No domain found for Zone ID {0}'.format(zone_id))
+
+            self.domain_id = zone_id
 
     # Create record. If record already exists with the same content, do nothing'
-
     def _create_record(self, rtype, name, content):
         data = {'type': rtype, 'name': self._full_name(
             name), 'content': content}
