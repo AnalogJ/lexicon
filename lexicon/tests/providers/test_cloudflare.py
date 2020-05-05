@@ -1,7 +1,6 @@
 """Integration tests for Cloudflare"""
 from unittest import TestCase
 
-import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
