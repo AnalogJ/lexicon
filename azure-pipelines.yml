@@ -9,20 +9,16 @@ variables:
 jobs:
   - job: linux
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-18.04
     strategy:
       matrix:
-        python-2.7-light:
-          PYTHON_VERSION: 2.7
-          TOXENV: light
         python-2.7:
           PYTHON_VERSION: 2.7
         python-3.5:
           PYTHON_VERSION: 3.5
-        python-3.6:
-          PYTHON_VERSION: 3.6
-        python-3.7:
-          PYTHON_VERSION: 3.7
+        python-3.8-light:
+          PYTHON_VERSION: 3.8
+          TOXENV: light
         python-3.8-cover:
           PYTHON_VERSION: 3.8
           TOXENV: cover
@@ -57,10 +53,6 @@ jobs:
           PYTHON_VERSION: 2.7
         python-3.5:
           PYTHON_VERSION: 3.5
-        python-3.6:
-          PYTHON_VERSION: 3.6
-        python-3.7:
-          PYTHON_VERSION: 3.7
         python-3.8:
           PYTHON_VERSION: 3.8
     steps:
