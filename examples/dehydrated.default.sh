@@ -16,27 +16,16 @@ function deploy_challenge {
 
         echo "deploy_challenge called: ${DOMAIN}, ${TOKEN_FILENAME}, ${TOKEN_VALUE}"
 
-        if [ "${PROVIDER}" != "hetzner" ]; then
-            lexicon $PROVIDER create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." \
-            --content="${TOKEN_VALUE}"
-        else
-            local PROPAGATED="yes"
-            if ((i < $# - 3)); then
-                local PROPAGATED="no"
-            fi
-            lexicon $PROVIDER create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." \
-            --content="${TOKEN_VALUE}" --propagated="${PROPAGATED}"
-        fi
+        lexicon $PROVIDER create ${DOMAIN} TXT --name="_acme-challenge.${DOMAIN}." \
+        --content="${TOKEN_VALUE}"
     done
 
-    if [ "${PROVIDER}" != "hetzner" ]; then
-        local DELAY_COUNTDOWN=$PROVIDER_UPDATE_DELAY
-        while [ $DELAY_COUNTDOWN -gt 0 ]; do
-            echo -ne "${DELAY_COUNTDOWN}\033[0K\r"
-            sleep 1
-            : $((DELAY_COUNTDOWN--))
-        done
-    fi
+    local DELAY_COUNTDOWN=$PROVIDER_UPDATE_DELAY
+    while [ $DELAY_COUNTDOWN -gt 0 ]; do
+        echo -ne "${DELAY_COUNTDOWN}\033[0K\r"
+        sleep 1
+        : $((DELAY_COUNTDOWN--))
+    done
 
     # This hook is called once for every domain chain that needs to be
     # validated, including any alternative names you may have listed.
