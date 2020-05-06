@@ -11,7 +11,7 @@ from lexicon.tests.providers.integration_tests import EngineOverrideConfigSource
 
 
 class Route53ProviderTests(TestCase, IntegrationTests):
-    """Route53 Proivder Tests."""
+    """Route53 Provider Tests."""
 
     provider_name = 'route53'
     domain = 'fullcr1stal.tk'
@@ -46,13 +46,3 @@ class Route53ProviderTests(TestCase, IntegrationTests):
                 filter_query_parameters=self._filter_query_parameters(),
                 filter_post_data_parameters=self._filter_post_data_parameters()):
             yield
-
-    # TODO: the following skipped suite and fixtures should be enabled
-    @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
-        return
-
-    @pytest.fixture(autouse=True)
-    def _skip_suite(self, request):  # pylint: disable=no-self-use
-        if request.node.get_closest_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')

@@ -166,17 +166,22 @@ class Provider(BaseProvider):
             )
             return True
         except botocore.exceptions.ClientError as error:
-            LOGGER.debug(str(error), exc_info=True)
+            if "Duplicate Resource Record" in error.response['Error']['Message']:
+                # Duplicate resource, that have been a noop. This is expected.
+                return True
+            LOGGER.error(str(error), exc_info=True)
+            return False
 
     def _create_record(self, rtype, name, content):
         """Create a record in the hosted zone."""
-        existing_records = self.list_records(rtype, name)
+        existing_records = self._list_record_sets(rtype, name)
         if existing_records:
+            existing_record = existing_records[0]
             if isinstance(existing_records[0]['content'], list):
                 return self._change_record_sets(
-                    'UPSERT', rtype, name, existing_records[0]['content']+[content])
+                    'UPSERT', existing_record['type'], existing_record['name'], existing_record['content'] + [content])
             return self._change_record_sets(
-                'UPSERT', rtype, name, [existing_records[0]['content']] + [content])
+                'UPSERT', rtype, name, [existing_record['content']] + [content])
         return self._change_record_sets('CREATE', rtype, name, content)
 
     def _update_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -190,33 +195,75 @@ class Provider(BaseProvider):
             rtype = record['type']
             name = record['name']
 
-        return self._change_record_sets('UPSERT', rtype, name, content)
+        existing_records = self._list_record_sets(rtype, name)
+        if not existing_records:
+            raise ValueError('No matching record to update was found.')
+
+        for existing_record in existing_records:
+            if isinstance(existing_record['content'], list):
+                # Multiple values in record.
+                LOGGER.warning(
+                    'Warning, multiple records found for given parameters, '
+                    'only first entry will be updated: %s', existing_record)
+                new_content = existing_record['content'].copy()
+                new_content[0] = content
+            else:
+                new_content = content
+
+            self._change_record_sets('UPSERT', existing_record['type'], existing_record['name'], new_content)
+
+        return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete a record from the hosted zone."""
         if identifier:
-            existing_records = [record for record in self._list_records()
+            matching_records = [record for record in self._list_records()
                                 if identifier == _identifier(record)]
-            if not existing_records:
+            if not matching_records:
                 raise ValueError('No record found for identifier {0}'.format(identifier))
-        else:
-            existing_records = self.list_records(rtype, name, content)
-            if not existing_records:
-                raise ValueError('No record found for the provided type, name and content')
+            rtype = matching_records[0]['type']
+            name = matching_records[0]['name']
+            content = matching_records[0]['content']
+
+        existing_records = self._list_record_sets(rtype, name, content)
+        if not existing_records:
+            raise ValueError('No record found for the provided type, name and content')
 
         for existing_record in existing_records:
-            if isinstance(existing_record['content'], list):
+            if isinstance(existing_record['content'], list) and content is not None:
                 # multiple values in record, just remove one value and only if it actually exist
                 if content in existing_record['content']:
                     existing_record['content'].remove(content)
-                    self._change_record_sets('UPSERT', rtype, name,
-                                             existing_records[0]['content'])
+                    self._change_record_sets(
+                        'UPSERT', existing_record['type'], existing_record['name'], existing_record['content'])
             else:
-                # if only one record exist, remove whole record
-                return self._change_record_sets('DELETE', rtype, name, content)
+                # if only one record exist, or if content is not specified, remove whole record
+                self._change_record_sets(
+                    'DELETE', existing_record['type'], existing_record['name'], existing_record['content'])
+
+        return True
 
     def _list_records(self, rtype=None, name=None, content=None):
         """List all records for the hosted zone."""
+        records = self._list_record_sets(rtype, name, content)
+
+        flatten_records = []
+        for record in records:
+            if isinstance(record['content'], list):
+                for content in record['content']:
+                    flatten_record = record.copy()
+                    flatten_record['content'] = content
+                    flatten_record['id'] = _identifier(flatten_record)
+                    flatten_records.append(flatten_record)
+            else:
+                record['id'] = _identifier(record)
+                flatten_records.append(record)
+
+        LOGGER.debug('list_records: %s', records)
+
+        return flatten_records
+
+    def _list_record_sets(self, rtype=None, name=None, content=None):
         records = []
         paginator = RecordSetPaginator(self.r53_client, self.domain_id)
         for record in paginator.all_record_sets():
@@ -232,16 +279,14 @@ class Provider(BaseProvider):
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
+
             LOGGER.debug('record: %s', record)
-            record = {
+            records.append({
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
-            }
-            record['id'] = _identifier(record)
-            records.append(record)
-        LOGGER.debug('list_records: %s', records)
+            })
         return records
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
