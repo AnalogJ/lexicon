@@ -154,7 +154,7 @@ In default test mode, tests are replayed from existing recordings. In live mode,
 
 To execute the `py.test` suite using the live tests mode, execute py.test with the environment variable `LEXICON_LIVE_TESTS` set to `true` like below:
 
-	LEXICON_LIVE_TESTS=true py.test tests/providers/test_foo.py
+	LEXICON_LIVE_TESTS=true py.test lexicon/tests/providers/test_foo.py
 
 If any of the integration tests fail on your provider, you'll need to delete the recordings that were created,
 make your changes and then try again.
@@ -174,7 +174,7 @@ Finally, push your changes to your Github fork, and open a PR.
 
 Neither of the snippets below should be used unless necessary. They are only included in the interest of documentation.
 
-In your `tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to skip any individual test that does not apply (and will never pass)
+In your `lexicon/tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to skip any individual test that does not apply (and will never pass)
 
 ```python
 	@pytest.mark.skip(reason="can not set ttl when creating/updating records")

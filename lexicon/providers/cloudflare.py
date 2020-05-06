@@ -14,10 +14,25 @@ NAMESERVER_DOMAINS = ['cloudflare.com']
 
 def provider_parser(subparser):
     """Return the parser for this provider"""
+    subparser.description = '''
+        There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+        1 - A Global API key,
+            with --auth-username and --auth-token flags.
+        2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones),
+            with --auth-token flag.
+        3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone),
+            with --auth-token and --zone-id flags.
+    '''
     subparser.add_argument(
-        "--auth-username", help="specify email address for authentication")
+        "--auth-username",
+        help="specify email address for authentication (for Global API key only)")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication")
+        "--auth-token",
+        help="specify token for authentication (Global API key or API token)")
+    subparser.add_argument(
+        "--zone-id",
+        help="specify the zone id (if set, API token can be scoped to the target zone)"
+    )
 
 
 class Provider(BaseProvider):
@@ -28,21 +43,28 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://api.cloudflare.com/client/v4'
 
     def _authenticate(self):
+        zone_id = self._get_provider_option('zone_id')
+        if not zone_id:
+            payload = self._get('/zones', {
+                'name': self.domain,
+                'status': 'active'
+            })
 
-        payload = self._get('/zones', {
-            'name': self.domain,
-            'status': 'active'
-        })
+            if not payload['result']:
+                raise Exception('No domain found')
+            if len(payload['result']) > 1:
+                raise Exception('Too many domains found. This should not happen')
 
-        if not payload['result']:
-            raise Exception('No domain found')
-        if len(payload['result']) > 1:
-            raise Exception('Too many domains found. This should not happen')
+            self.domain_id = payload['result'][0]['id']
+        else:
+            payload = self._get('/zones/{0}'.format(zone_id))
 
-        self.domain_id = payload['result'][0]['id']
+            if not payload['result']:
+                raise Exception('No domain found for Zone ID {0}'.format(zone_id))
+
+            self.domain_id = zone_id
 
     # Create record. If record already exists with the same content, do nothing'
-
     def _create_record(self, rtype, name, content):
         data = {'type': rtype, 'name': self._full_name(
             name), 'content': content}
@@ -74,25 +96,43 @@ class Provider(BaseProvider):
         if content:
             filter_obj['content'] = content
 
-        payload = self._get(
-            '/zones/{0}/dns_records'.format(self.domain_id), filter_obj)
-
         records = []
-        for record in payload['result']:
-            processed_record = {
-                'type': record['type'],
-                'name': record['name'],
-                'ttl': record['ttl'],
-                'content': record['content'],
-                'id': record['id']
-            }
-            records.append(processed_record)
+        while True:
+            payload = self._get(
+                '/zones/{0}/dns_records'.format(self.domain_id), filter_obj)
+
+            LOGGER.debug("payload: %s", payload)
+
+            for record in payload['result']:
+                processed_record = {
+                    'type': record['type'],
+                    'name': record['name'],
+                    'ttl': record['ttl'],
+                    'content': record['content'],
+                    'id': record['id']
+                }
+                records.append(processed_record)
+
+            pages = payload['result_info']['total_pages']
+            page = payload['result_info']['page']
+            if page >= pages:
+                break
+            filter_obj['page'] = page + 1
 
         LOGGER.debug('list_records: %s', records)
+        LOGGER.debug('Number of records retrieved: %d', len(records))
         return records
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if identifier is None:
+            records = self._list_records(rtype, name)
+            if len(records) == 1:
+                identifier = records[0]['id']
+            elif len(records) < 1:
+                raise Exception('No records found matching type and name - won\'t update')
+            else:
+                raise Exception('Multiple records found matching type and name - won\'t update')
 
         data = {}
         if rtype:
@@ -135,13 +175,15 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
+        headers = {'Content-Type': 'application/json'}
+        if self._get_provider_option('auth_username'):
+            headers['X-Auth-Email'] = self._get_provider_option('auth_username')
+            headers['X-Auth-Key'] = self._get_provider_option('auth_token')
+        else:
+            headers['Authorization'] = 'Bearer {}'.format(self._get_provider_option('auth_token'))
         response = requests.request(action, self.api_endpoint + url, params=query_params,
                                     data=json.dumps(data),
-                                    headers={
-                                        'X-Auth-Email': self._get_provider_option('auth_username'),
-                                        'X-Auth-Key': self._get_provider_option('auth_token'),
-                                        'Content-Type': 'application/json'
-                                    })
+                                    headers=headers)
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()

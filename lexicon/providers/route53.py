@@ -1,5 +1,6 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
 from __future__ import absolute_import
+import hashlib
 import logging
 import re
 
@@ -180,35 +181,46 @@ class Provider(BaseProvider):
 
     def _update_record(self, identifier=None, rtype=None, name=None, content=None):
         """Update a record from the hosted zone."""
+        if identifier:
+            records = [record for record in self._list_records()
+                       if identifier == _identifier(record)]
+            if not records:
+                raise ValueError('No record found for identifier {0}'.format(identifier))
+            record = records[0]
+            rtype = record['type']
+            name = record['name']
+
         return self._change_record_sets('UPSERT', rtype, name, content)
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete a record from the hosted zone."""
-        existing_records = self.list_records(rtype, name, content)
-        if existing_records:
-            if len(existing_records) > 1:
-                raise Exception(
-                    'The existing_records list has more than 1 element, this is not suported,\
-                    so stopping to prevent zone damage')
-            if isinstance(existing_records[0]['content'], list):
-                # multiple values in record, just remove one value and only if it actually exist
-                if content in existing_records[0]['content']:
-                    existing_records[0]['content'].remove(content)
-                return self._change_record_sets('UPSERT', rtype, name,
-                                                existing_records[0]['content'])
-            # if only one record exist, remove whole record
-            return self._change_record_sets('DELETE', rtype, name, content)
-        # you should probably not delete non existing record, but for sure
-        return self._change_record_sets('DELETE', rtype, name, content)
+        if identifier:
+            existing_records = [record for record in self._list_records()
+                                if identifier == _identifier(record)]
+            if not existing_records:
+                raise ValueError('No record found for identifier {0}'.format(identifier))
+        else:
+            existing_records = self.list_records(rtype, name, content)
+            if not existing_records:
+                raise ValueError('No record found for the provided type, name and content')
 
-    def _format_content(self, rtype, content):  # pylint: disable=no-self-use
-        return content[1:-1] if rtype in ['TXT', 'SPF'] else content
+        for existing_record in existing_records:
+            if isinstance(existing_record['content'], list):
+                # multiple values in record, just remove one value and only if it actually exist
+                if content in existing_record['content']:
+                    existing_record['content'].remove(content)
+                    self._change_record_sets('UPSERT', rtype, name,
+                                             existing_records[0]['content'])
+            else:
+                # if only one record exist, remove whole record
+                return self._change_record_sets('DELETE', rtype, name, content)
 
     def _list_records(self, rtype=None, name=None, content=None):
         """List all records for the hosted zone."""
         records = []
         paginator = RecordSetPaginator(self.r53_client, self.domain_id)
         for record in paginator.all_record_sets():
+            record_content = []
             if rtype is not None and record['Type'] != rtype:
                 continue
             if name is not None and record['Name'] != self._fqdn_name(name):
@@ -216,20 +228,34 @@ class Provider(BaseProvider):
             if record.get('AliasTarget', None) is not None:
                 record_content = [record['AliasTarget'].get('DNSName', None)]
             if record.get('ResourceRecords', None) is not None:
-                record_content = [self._format_content(record['Type'], value['Value']) for value
+                record_content = [_format_content(record['Type'], value['Value']) for value
                                   in record['ResourceRecords']]
             if content is not None and content not in record_content:
                 continue
             LOGGER.debug('record: %s', record)
-            records.append({
+            record = {
                 'type': record['Type'],
                 'name': self._full_name(record['Name']),
                 'ttl': record.get('TTL', None),
                 'content': record_content[0] if len(record_content) == 1 else record_content,
-            })
+            }
+            record['id'] = _identifier(record)
+            records.append(record)
         LOGGER.debug('list_records: %s', records)
         return records
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         # Helper _request is not used in Route53 provider
         pass
+
+
+def _format_content(rtype, content):
+    return content[1:-1] if rtype in ['TXT', 'SPF'] else content
+
+
+def _identifier(record):
+    sha256 = hashlib.sha256()
+    sha256.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
+    sha256.update(('name=' + record.get('name', '') + ',').encode('utf-8'))
+    sha256.update(('data=' + record.get('data', '') + ',').encode('utf-8'))
+    return sha256.hexdigest()[0:7]

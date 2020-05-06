@@ -2,119 +2,256 @@ interactions:
 - request:
     body: '{}'
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
     method: GET
-    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=capsulecd.com
+    uri: https://api.cloudflare.com/client/v4/zones?name=pacalis.net&status=active
   response:
-    body: {string: !!python/unicode '{"result":[{"id":"fac516c650e5a737bdc3e1e3dc1047f3","name":"capsulecd.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["dawn.ns.cloudflare.com","owen.ns.cloudflare.com"],"original_name_servers":["ns1glr.name.com","ns2bls.name.com","ns3nrz.name.com","ns4hny.name.com"],"original_registrar":null,"original_dnshost":null,"modified_on":"2016-03-24T17:04:38.265363Z","created_on":"2016-03-09T07:39:40.476430Z","meta":{"step":4,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":"3","phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"type":"user","id":"521a961001d9333c8191f53a9f70eb31","email":"darkmethodz@gmail.com"},"permissions":["#analytics:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#logs:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#waf:edit","#waf:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
-        Website","price":0,"currency":"USD","frequency":"","legacy_id":"free","is_subscribed":true,"can_subscribe":true,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    body:
+      string: '{"result":[{"id":"4f282fede870f505f531b56a761ecd44","name":"pacalis.net","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["christian.ns.cloudflare.com","dina.ns.cloudflare.com"],"original_name_servers":["ns1.digitalocean.com","ns2.digitalocean.com","ns3.digitalocean.com"],"original_registrar":"ovh
+        sas (id: 433)","original_dnshost":null,"modified_on":"2020-05-05T21:31:13.325176Z","created_on":"2020-05-05T20:18:21.026572Z","activated_on":"2020-05-05T21:07:04.803131Z","meta":{"step":2,"wildcard_proxiable":false,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false,"multiple_railguns_allowed":false},"owner":{"id":"66de559ecaa0169df8e3c950a86b4664","type":"user","email":"aferrand@ecomundo.eu"},"account":{"id":"5da32e1ae729aa30839477d7ff488fa0","name":"aferrand@ecomundo.eu"},"permissions":["#access:edit","#access:read","#analytics:read","#app:edit","#auditlogs:read","#billing:edit","#billing:read","#cache_purge:edit","#dns_records:edit","#dns_records:read","#lb:edit","#lb:read","#legal:edit","#legal:read","#logs:edit","#logs:read","#member:edit","#member:read","#organization:edit","#organization:read","#ssl:edit","#ssl:read","#stream:edit","#stream:read","#subscription:edit","#subscription:read","#teams:edit","#teams:read","#teams:report","#waf:edit","#waf:read","#webhooks:edit","#webhooks:read","#worker:edit","#worker:read","#zone:edit","#zone:read","#zone_settings:edit","#zone_settings:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","is_subscribed":false,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}}],"result_info":{"page":1,"per_page":20,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'
     headers:
-      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [28b7f551f059012c-SJC]
-      connection: [keep-alive]
-      content-length: ['1343']
-      content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:58:44 GMT']
-      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
-      pragma: [no-cache]
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d24e7f143ef6c578b76c5e8fc51193bc21459303124; expires=Thu,
-          30-Mar-17 01:58:44 GMT; path=/; domain=.cloudflare.com; HttpOnly']
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 58ed91326f03ee5c-CDG
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 May 2020 21:31:13 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Expires:
+      - Sun, 25 Jan 1981 05:00:00 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d739986dd5c099b5fd71c2542961d3fdd1588714273; expires=Thu, 04-Jun-20
+        21:31:13 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      cf-request-id:
+      - 02885913820000ee5ccd2a5200000001
+      content-length:
+      - '1819'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: '{"content": "challengetoken", "type": "TXT", "name": "orig.testfqdn.capsulecd.com."}'
+    body: '{"type": "TXT", "name": "orig.testfqdn.pacalis.net", "content": "challengetoken",
+      "ttl": 3600}'
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['84']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '94'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
     method: POST
-    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records
+    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records
   response:
-    body: {string: !!python/unicode '{"result":{"id":"473fbde34f64d8b0ca4049926d6f3068","type":"TXT","name":"orig.testfqdn.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-30T01:59:41.141523Z","created_on":"2016-03-30T01:59:41.141523Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
+    body:
+      string: "{\n  \"result\": {\n    \"id\": \"819129f149f7c8823fa11db7970d4bc4\"\
+        ,\n    \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n    \"zone_name\"\
+        : \"pacalis.net\",\n    \"name\": \"orig.testfqdn.pacalis.net\",\n    \"type\"\
+        : \"TXT\",\n    \"content\": \"challengetoken\",\n    \"proxiable\": false,\n\
+        \    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n   \
+        \ \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\": false,\n\
+        \      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\n\
+        \    },\n    \"created_on\": \"2020-05-05T21:31:14.491078Z\",\n    \"modified_on\"\
+        : \"2020-05-05T21:31:14.491078Z\"\n  },\n  \"success\": true,\n  \"errors\"\
+        : [],\n  \"messages\": []\n}\n"
     headers:
-      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [28b7f6b1e8091e9b-SJC]
-      connection: [keep-alive]
-      content-length: ['415']
-      content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:59:41 GMT']
-      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
-      pragma: [no-cache]
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d343be9655b4bbdc19126892111e56ac11459303181; expires=Thu,
-          30-Mar-17 01:59:41 GMT; path=/; domain=.cloudflare.com; HttpOnly']
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 58ed91355848ee23-CDG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 05 May 2020 21:31:14 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d197719ce5848c4d5ba6bd95b1f7babc51588714274; expires=Thu, 04-Jun-20
+        21:31:14 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      cf-request-id:
+      - 02885915550000ee23e4b11200000001
+      content-length:
+      - '624'
+      x-envoy-upstream-service-time:
+      - '14'
+    status:
+      code: 200
+      message: OK
 - request:
     body: '{}'
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
     method: GET
-    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records?per_page=100&type=TXT&name=orig.testfqdn.capsulecd.com
+    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records?per_page=100&type=TXT&name=orig.testfqdn.pacalis.net
   response:
-    body: {string: !!python/unicode '{"result":[{"id":"473fbde34f64d8b0ca4049926d6f3068","type":"TXT","name":"orig.testfqdn.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-30T01:59:41.141523Z","created_on":"2016-03-30T01:59:41.141523Z","meta":{"auto_added":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":1,"total_count":1},"success":true,"errors":[],"messages":[]}'}
+    body:
+      string: "{\n  \"result\": [\n    {\n      \"id\": \"819129f149f7c8823fa11db7970d4bc4\"\
+        ,\n      \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n      \"zone_name\"\
+        : \"pacalis.net\",\n      \"name\": \"orig.testfqdn.pacalis.net\",\n     \
+        \ \"type\": \"TXT\",\n      \"content\": \"challengetoken\",\n      \"proxiable\"\
+        : false,\n      \"proxied\": false,\n      \"ttl\": 3600,\n      \"locked\"\
+        : false,\n      \"meta\": {\n        \"auto_added\": false,\n        \"managed_by_apps\"\
+        : false,\n        \"managed_by_argo_tunnel\": false,\n        \"source\":\
+        \ \"primary\"\n      },\n      \"created_on\": \"2020-05-05T21:31:14.491078Z\"\
+        ,\n      \"modified_on\": \"2020-05-05T21:31:14.491078Z\"\n    }\n  ],\n \
+        \ \"success\": true,\n  \"errors\": [],\n  \"messages\": [],\n  \"result_info\"\
+        : {\n    \"page\": 1,\n    \"per_page\": 100,\n    \"count\": 1,\n    \"total_count\"\
+        : 1,\n    \"total_pages\": 1\n  }\n}\n"
     headers:
-      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [28b7f7677eca012c-SJC]
-      connection: [keep-alive]
-      content-length: ['499']
-      content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 02:00:10 GMT']
-      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
-      pragma: [no-cache]
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d3ae1c3ee7c0ebb461c930364899e3cee1459303210; expires=Thu,
-          30-Mar-17 02:00:10 GMT; path=/; domain=.cloudflare.com; HttpOnly']
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 58ed9139ed200482-CDG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 05 May 2020 21:31:15 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=db9243863b519a2861918c6b95dc20fee1588714274; expires=Thu, 04-Jun-20
+        21:31:14 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      cf-request-id:
+      - 028859182d00000482f73a5200000001
+      content-length:
+      - '791'
+      x-envoy-upstream-service-time:
+      - '3'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: '{"content": "challengetoken", "type": "TXT", "name": "updated.testfqdn.capsulecd.com."}'
+    body: '{"type": "TXT", "name": "updated.testfqdn.pacalis.net", "content": "challengetoken",
+      "ttl": 3600}'
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['87']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '97'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
     method: PUT
-    uri: https://api.cloudflare.com/client/v4/zones/fac516c650e5a737bdc3e1e3dc1047f3/dns_records/473fbde34f64d8b0ca4049926d6f3068
+    uri: https://api.cloudflare.com/client/v4/zones/4f282fede870f505f531b56a761ecd44/dns_records/819129f149f7c8823fa11db7970d4bc4
   response:
-    body: {string: !!python/unicode '{"result":{"id":"473fbde34f64d8b0ca4049926d6f3068","type":"TXT","name":"updated.testfqdn.capsulecd.com","content":"challengetoken","proxiable":false,"proxied":false,"ttl":1,"locked":false,"zone_id":"fac516c650e5a737bdc3e1e3dc1047f3","zone_name":"capsulecd.com","modified_on":"2016-03-30T02:00:25.091818Z","created_on":"2016-03-30T02:00:25.091818Z","meta":{"auto_added":false}},"success":true,"errors":[],"messages":[]}'}
+    body:
+      string: "{\n  \"result\": {\n    \"id\": \"819129f149f7c8823fa11db7970d4bc4\"\
+        ,\n    \"zone_id\": \"4f282fede870f505f531b56a761ecd44\",\n    \"zone_name\"\
+        : \"pacalis.net\",\n    \"name\": \"updated.testfqdn.pacalis.net\",\n    \"\
+        type\": \"TXT\",\n    \"content\": \"challengetoken\",\n    \"proxiable\"\
+        : false,\n    \"proxied\": false,\n    \"ttl\": 3600,\n    \"locked\": false,\n\
+        \    \"meta\": {\n      \"auto_added\": false,\n      \"managed_by_apps\"\
+        : false,\n      \"managed_by_argo_tunnel\": false,\n      \"source\": \"primary\"\
+        \n    },\n    \"created_on\": \"2020-05-05T21:31:15.623814Z\",\n    \"modified_on\"\
+        : \"2020-05-05T21:31:15.623814Z\"\n  },\n  \"success\": true,\n  \"errors\"\
+        : [],\n  \"messages\": []\n}\n"
     headers:
-      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [28b7f7c493370657-SJC]
-      connection: [keep-alive]
-      content-length: ['418']
-      content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 02:00:25 GMT']
-      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
-      pragma: [no-cache]
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d7d1010bb6ca370c9c71e122af6eba2c21459303225; expires=Thu,
-          30-Mar-17 02:00:25 GMT; path=/; domain=.cloudflare.com; HttpOnly']
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 58ed913ccfc6cd9f-CDG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 05 May 2020 21:31:15 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=dc847e469f8b0e1138ee7a7a9a877b16c1588714275; expires=Thu, 04-Jun-20
+        21:31:15 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      cf-request-id:
+      - 02885919f80000cd9fbb8d0200000001
+      content-length:
+      - '627'
+      x-envoy-upstream-service-time:
+      - '12'
+    status:
+      code: 200
+      message: OK
 version: 1

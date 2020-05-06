@@ -1,0 +1,111 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://dns.hetzner.com/api/v1/zones
+  response:
+    body:
+      string: '{"zones":[{"id":"xyncsydKx5x44qDZQCzpNM","name":"alt.coop","ttl":300,"registrar":"","legacy_dns_host":"","legacy_ns":["helium.ns.hetzner.com.","oxygen.ns.hetzner.com.","hydrogen.ns.hetzner.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
+        01:23:59 +0000 UTC","verified":"2020-04-07 01:53:05.934062806 +0000 UTC m=+578.060435172","modified":"2020-04-08
+        10:38:16.278 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":75},{"id":"JkBqVJDW3PpqefBb274BCZ","name":"softwarekollektiv.de","ttl":86400,"registrar":"","legacy_dns_host":"","legacy_ns":[],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-08
+        18:53:25.589 +0000 UTC","verified":"2020-04-08T18:53:27Z","modified":"2020-04-13
+        15:17:43.767 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":16}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":2}}}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1330'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:36:34 GMT
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '2'
+      X-Kong-Upstream-Latency:
+      - '208'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://dns.hetzner.com/api/v1/records?per_page=100&zone_id=JkBqVJDW3PpqefBb274BCZ
+  response:
+    body:
+      string: '{"records":[{"id":"8jEciPwo7wF2obPTuBe3Yg","type":"SOA","name":"@","value":"ns1.your-server.de.
+        dns.hetzner.com. 2020041592 86400 7200 3600000 3600","zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        15:17:43.061 +0000 UTC","modified":"2020-04-13 20:36:30.58 +0000 UTC"},{"id":"ccLnXePkikrTK7MjNY2fqb","type":"A","name":"localhost.softwarekollektiv.de.","value":"127.0.0.1","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:37.644 +0000 UTC","modified":"2020-04-13 20:32:37.644 +0000 UTC"},{"id":"JQmTbgVAzdx4AADJeLMM3X","type":"CNAME","name":"docs.softwarekollektiv.de.","value":"docs.example.com","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:43.98 +0000 UTC","modified":"2020-04-13 20:32:43.98 +0000 UTC"},{"id":"PJpHrVw6wqik5CTzECpacD","type":"TXT","name":"_acme-challenge.fqdn.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:51.209 +0000 UTC","modified":"2020-04-13 20:32:51.209 +0000 UTC"},{"id":"JB9a4EZrNKbRTLKKAmT6M4","type":"TXT","name":"_acme-challenge.full.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:59.487 +0000 UTC","modified":"2020-04-13 20:32:59.487 +0000 UTC"},{"id":"3KU7EYhoWvAzTENjVAsqwB","type":"TXT","name":"_acme-challenge.test.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:33:08.017 +0000 UTC","modified":"2020-04-13 20:33:08.017 +0000 UTC"},{"id":"JmFdAr7ZKkv3WFyxnEJL43","type":"TXT","name":"_acme-challenge.createrecordset.softwarekollektiv.de.","value":"challengetoken1","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:33:18.136 +0000 UTC","modified":"2020-04-13 20:33:18.136 +0000 UTC"},{"id":"XJBbqzDiukFE3f2YGcTokY","type":"TXT","name":"_acme-challenge.createrecordset.softwarekollektiv.de.","value":"challengetoken2","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:33:25.929 +0000 UTC","modified":"2020-04-13 20:33:25.929 +0000 UTC"},{"id":"fdSKTmeja8M8pc5vztxb64","type":"TXT","name":"_acme-challenge.noop.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:33:33.653 +0000 UTC","modified":"2020-04-13 20:33:33.653 +0000 UTC"},{"id":"uDPTMe8hikMxgVAGznkN5S","type":"TXT","name":"_acme-challenge.deleterecordinset.softwarekollektiv.de.","value":"challengetoken2","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:34:55.913 +0000 UTC","modified":"2020-04-13 20:34:55.913 +0000 UTC"},{"id":"pwek8RBHdnTi2eS3NGEkCG","type":"TXT","name":"ttl.fqdn.softwarekollektiv.de.","value":"ttlshouldbe3600","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:35:33.676 +0000 UTC","modified":"2020-04-13 20:35:33.676 +0000 UTC"},{"id":"wei55NH2jLAWwwnmB6ZFjf","type":"TXT","name":"_acme-challenge.listrecordset.softwarekollektiv.de.","value":"challengetoken1","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:35:43.97 +0000 UTC","modified":"2020-04-13 20:35:43.97 +0000 UTC"},{"id":"jGjWxzipctQH5C3oFV7NeJ","type":"TXT","name":"_acme-challenge.listrecordset.softwarekollektiv.de.","value":"challengetoken2","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:35:51.62 +0000 UTC","modified":"2020-04-13 20:35:51.62 +0000 UTC"},{"id":"jRamHUs2Xyt4Gh3BP4UaCd","type":"TXT","name":"random.fqdntest.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:36:02.609 +0000 UTC","modified":"2020-04-13 20:36:02.609 +0000 UTC"},{"id":"SZspS6AU4CT7ux7M6LaDrG","type":"TXT","name":"random.fulltest.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:36:12.704 +0000 UTC","modified":"2020-04-13 20:36:12.704 +0000 UTC"},{"id":"drrxjb4ddap8EjFbQw9p8f","type":"TXT","name":"random.test.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:36:27.598 +0000 UTC","modified":"2020-04-13 20:36:27.598 +0000 UTC"}]}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:36:38 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '2'
+      X-Kong-Upstream-Latency:
+      - '3671'
+    status:
+      code: 200
+      message: OK
+version: 1
