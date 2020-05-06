@@ -179,7 +179,8 @@ class Provider(BaseProvider):
             existing_record = existing_records[0]
             if isinstance(existing_records[0]['content'], list):
                 return self._change_record_sets(
-                    'UPSERT', existing_record['type'], existing_record['name'], existing_record['content'] + [content])
+                    'UPSERT', existing_record['type'], existing_record['name'],
+                    existing_record['content'] + [content])
             return self._change_record_sets(
                 'UPSERT', rtype, name, [existing_record['content']] + [content])
         return self._change_record_sets('CREATE', rtype, name, content)
@@ -210,7 +211,8 @@ class Provider(BaseProvider):
             else:
                 new_content = content
 
-            self._change_record_sets('UPSERT', existing_record['type'], existing_record['name'], new_content)
+            self._change_record_sets('UPSERT', existing_record['type'],
+                                     existing_record['name'], new_content)
 
         return True
 
@@ -234,12 +236,12 @@ class Provider(BaseProvider):
                 # multiple values in record, just remove one value and only if it actually exist
                 if content in existing_record['content']:
                     existing_record['content'].remove(content)
-                    self._change_record_sets(
-                        'UPSERT', existing_record['type'], existing_record['name'], existing_record['content'])
+                    self._change_record_sets('UPSERT', existing_record['type'],
+                                             existing_record['name'], existing_record['content'])
             else:
                 # if only one record exist, or if content is not specified, remove whole record
-                self._change_record_sets(
-                    'DELETE', existing_record['type'], existing_record['name'], existing_record['content'])
+                self._change_record_sets('DELETE', existing_record['type'],
+                                         existing_record['name'], existing_record['content'])
 
         return True
 
@@ -250,9 +252,9 @@ class Provider(BaseProvider):
         flatten_records = []
         for record in records:
             if isinstance(record['content'], list):
-                for content in record['content']:
+                for one_content in record['content']:
                     flatten_record = record.copy()
-                    flatten_record['content'] = content
+                    flatten_record['content'] = one_content
                     flatten_record['id'] = _identifier(flatten_record)
                     flatten_records.append(flatten_record)
             else:
