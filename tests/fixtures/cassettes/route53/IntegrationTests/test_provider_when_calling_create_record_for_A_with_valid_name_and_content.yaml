@@ -7,7 +7,7 @@ interactions:
         Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
       X-Amz-Date:
       - !!binary |
-        MjAyMDA1MDZUMDczOTA1Wg==
+        MjAyMDA1MDZUMDkyODM3Wg==
     method: GET
     uri: https://route53.amazonaws.com/2013-04-01/hostedzonesbyname
   response:
@@ -21,9 +21,38 @@ interactions:
       Content-Type:
       - text/xml
       Date:
-      - Wed, 06 May 2020 07:39:05 GMT
+      - Wed, 06 May 2020 09:28:37 GMT
       x-amzn-RequestId:
-      - db5a5bef-a0e4-4909-92d6-fa7d5f5fa8d1
+      - ddae99b7-1caf-4f89-9e38-1f535fea5dfe
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODM3Wg==
+    method: GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.</Value></ResourceRecord><ResourceRecord><Value>ns-714.awsdns-25.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1610.awsdns-09.co.uk.</Value></ResourceRecord><ResourceRecord><Value>ns-1141.awsdns-14.org.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.
+        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'
+    headers:
+      Content-Length:
+      - '908'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:37 GMT
+      x-amzn-RequestId:
+      - 06f772e7-81b9-443c-8846-25b1b047f0bb
     status:
       code: 200
       message: OK
@@ -38,14 +67,14 @@ interactions:
         Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
       X-Amz-Date:
       - !!binary |
-        MjAyMDA1MDZUMDczOTA1Wg==
+        MjAyMDA1MDZUMDkyODM3Wg==
     method: POST
     uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset/
   response:
     body:
       string: '<?xml version="1.0"?>
 
-        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C0659269253OS9CWIQ16Q</Id><Status>PENDING</Status><SubmittedAt>2020-05-06T07:39:06.122Z</SubmittedAt><Comment>CREATE
+        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C02726741IBL0UADCO68R</Id><Status>PENDING</Status><SubmittedAt>2020-05-06T09:28:38.266Z</SubmittedAt><Comment>CREATE
         using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'
     headers:
       Content-Length:
@@ -53,9 +82,9 @@ interactions:
       Content-Type:
       - text/xml
       Date:
-      - Wed, 06 May 2020 07:39:05 GMT
+      - Wed, 06 May 2020 09:28:38 GMT
       x-amzn-RequestId:
-      - 550b4715-2861-47b5-82a3-f712e457ff5b
+      - 7924168a-6fb1-4d6e-a598-4a408a50a389
     status:
       code: 200
       message: OK
