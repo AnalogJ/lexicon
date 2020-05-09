@@ -70,6 +70,7 @@ The current supported providers are:
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - Netcup ([docs](https://ccp.netcup.net/run/webservice/servers/endpoint.php))
 - NFSN (NearlyFreeSpeech)
+- Njalla ([docs](https://njal.la/api/))
 - NS1 ([docs](https://ns1.com/api/))
 - OnApp ([docs](https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide))
 - Online
