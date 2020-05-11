@@ -94,26 +94,16 @@ class Provider(BaseProvider):
         relative_name = self._relative_name(name)
         ttl = self._get_lexicon_option('ttl')
 
-        # Retrieve existing data in DNS zone.
-        records = self._get('/domains/{0}/records'.format(domain))
-
-        # Check if a record already matches given parameters
-        for record in records:
-            if (record['type'] == rtype and self._relative_name(record['name']) == relative_name
-                    and record['data'] == content):
-                LOGGER.debug(
-                    'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
-                return True
-
         # Append a new entry corresponding to given parameters.
         data = {'type': rtype, 'name': relative_name, 'data': content}
         if ttl:
             data['ttl'] = ttl
 
-        records.append(data)
+        records = [ data ]
+        print(records)
 
-        # Synchronize data with inserted record into DNS zone.
-        self._put('/domains/{0}/records'.format(domain), records)
+        # Insert the record
+        self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, name), records)
 
         LOGGER.debug('create_record: %s %s %s', rtype, name, content)
 
@@ -139,6 +129,7 @@ class Provider(BaseProvider):
         if name:
             relative_name = self._relative_name(name)
 
+        updated_record = None
         # Retrieve existing data in DNS zone.
         records = self._get('/domains/{0}/records'.format(domain))
 
@@ -152,12 +143,14 @@ class Provider(BaseProvider):
                      and self._relative_name(record['name']) == relative_name
                      and record['data'] != content)):
                 record['data'] = content
+                updated_record = record
                 break
 
         # Synchronize data with updated records into DNS zone.
-        self._put('/domains/{0}/records'.format(domain), records)
+        if updated_record is not None:
+            self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, relative_name), updated_record)
 
-        LOGGER.debug('update_record: %s %s %s', rtype, name, content)
+            LOGGER.debug('update_record: %s %s %s', rtype, name, content)
 
         return True
 
