@@ -64,7 +64,7 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
         Make any requests required to get the domain's id for this provider,
         so it can be used in subsequent calls.
         Should throw an error if authentication fails for any reason,
-        of if the domain does not exist.
+        or if the domain does not exist.
         """
         return self._authenticate()
 

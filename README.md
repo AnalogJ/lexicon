@@ -66,6 +66,7 @@ The current supported providers are:
 - Linode v4 ([docs](https://developers.linode.com/api/docs/v4#tag/Domains))
 - LuaDNS ([docs](http://www.luadns.com/api.html))
 - Memset ([docs](https://www.memset.com/apidocs/methods_dns.html))
+- Name.com ([docs](https://www.name.com/api-docs/DNS))
 - Namecheap ([docs](https://www.namecheap.com/support/api/methods.aspx))
 - Namesilo ([docs](https://www.namesilo.com/api_reference.php))
 - Netcup ([docs](https://ccp.netcup.net/run/webservice/servers/endpoint.php))

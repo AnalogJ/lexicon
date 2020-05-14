@@ -1,0 +1,259 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.name.com/v4/domains?page=1
+  response:
+    body:
+      string: '{"domains":[{"domainName":"aur.im","locked":true,"autorenewEnabled":true,"expireDate":"2021-06-02T00:59:57Z","createDate":"2014-05-30T18:20:13Z"},{"domainName":"mim.pw","locked":true,"autorenewEnabled":true,"expireDate":"2021-05-30T23:59:59Z","createDate":"2014-05-30T18:20:16Z"}]}
+
+        '
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 14 May 2020 12:12:38 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding,User-Agent
+      Via:
+      - 1.1 fra1-bit21
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "host": "delete.testfqdn", "answer": "challengetoken",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://api.name.com/v4/domains/mim.pw/records
+  response:
+    body:
+      string: '{"id":178073552,"domainName":"mim.pw","host":"delete.testfqdn","fqdn":"delete.testfqdn.mim.pw.","type":"TXT","answer":"challengetoken","ttl":3600}
+
+        '
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 14 May 2020 12:12:39 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=99
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding,User-Agent
+      Via:
+      - 1.1 fra1-bit21
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.name.com/v4/domains/mim.pw/records?page=1
+  response:
+    body:
+      string: '{"records": [{"id": 178073536, "domainName": "mim.pw", "host": "localhost",
+        "fqdn": "localhost.mim.pw.", "type": "A", "answer": "127.0.0.1", "ttl": 3600},
+        {"id": 178073537, "domainName": "mim.pw", "host": "docs", "fqdn": "docs.mim.pw.",
+        "type": "CNAME", "answer": "docs.example.com", "ttl": 3600}, {"id": 178073538,
+        "domainName": "mim.pw", "host": "_acme-challenge.fqdn", "fqdn": "_acme-challenge.fqdn.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073539,
+        "domainName": "mim.pw", "host": "_acme-challenge.full", "fqdn": "_acme-challenge.full.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073540,
+        "domainName": "mim.pw", "host": "_acme-challenge.test", "fqdn": "_acme-challenge.test.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073541,
+        "domainName": "mim.pw", "host": "_acme-challenge.createrecordset", "fqdn":
+        "_acme-challenge.createrecordset.mim.pw.", "type": "TXT", "answer": "challengetoken1",
+        "ttl": 3600}, {"id": 178073542, "domainName": "mim.pw", "host": "_acme-challenge.createrecordset",
+        "fqdn": "_acme-challenge.createrecordset.mim.pw.", "type": "TXT", "answer":
+        "challengetoken2", "ttl": 3600}, {"id": 178073543, "domainName": "mim.pw",
+        "host": "_acme-challenge.noop", "fqdn": "_acme-challenge.noop.mim.pw.", "type":
+        "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073552, "domainName":
+        "mim.pw", "host": "delete.testfqdn", "fqdn": "delete.testfqdn.mim.pw.", "type":
+        "TXT", "answer": "challengetoken", "ttl": 3600}]}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 14 May 2020 12:12:39 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=98
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding,User-Agent
+      Via:
+      - 1.1 fra1-bit21
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.23.0
+    method: DELETE
+    uri: https://api.name.com/v4/domains/mim.pw/records/178073552
+  response:
+    body:
+      string: '{}
+
+        '
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 14 May 2020 12:12:40 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=97
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding,User-Agent
+      Via:
+      - 1.1 fra1-bit21
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.name.com/v4/domains/mim.pw/records?page=1
+  response:
+    body:
+      string: '{"records": [{"id": 178073536, "domainName": "mim.pw", "host": "localhost",
+        "fqdn": "localhost.mim.pw.", "type": "A", "answer": "127.0.0.1", "ttl": 3600},
+        {"id": 178073537, "domainName": "mim.pw", "host": "docs", "fqdn": "docs.mim.pw.",
+        "type": "CNAME", "answer": "docs.example.com", "ttl": 3600}, {"id": 178073538,
+        "domainName": "mim.pw", "host": "_acme-challenge.fqdn", "fqdn": "_acme-challenge.fqdn.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073539,
+        "domainName": "mim.pw", "host": "_acme-challenge.full", "fqdn": "_acme-challenge.full.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073540,
+        "domainName": "mim.pw", "host": "_acme-challenge.test", "fqdn": "_acme-challenge.test.mim.pw.",
+        "type": "TXT", "answer": "challengetoken", "ttl": 3600}, {"id": 178073541,
+        "domainName": "mim.pw", "host": "_acme-challenge.createrecordset", "fqdn":
+        "_acme-challenge.createrecordset.mim.pw.", "type": "TXT", "answer": "challengetoken1",
+        "ttl": 3600}, {"id": 178073542, "domainName": "mim.pw", "host": "_acme-challenge.createrecordset",
+        "fqdn": "_acme-challenge.createrecordset.mim.pw.", "type": "TXT", "answer":
+        "challengetoken2", "ttl": 3600}, {"id": 178073543, "domainName": "mim.pw",
+        "host": "_acme-challenge.noop", "fqdn": "_acme-challenge.noop.mim.pw.", "type":
+        "TXT", "answer": "challengetoken", "ttl": 3600}]}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 14 May 2020 12:12:40 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Keep-Alive:
+      - timeout=5, max=96
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding,User-Agent
+      Via:
+      - 1.1 fra1-bit21
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1
