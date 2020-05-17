@@ -98,6 +98,8 @@ class Provider(BaseProvider):
                 self.domain_id, self._relative_name(name), rtype)
             if current_values:
                 record = {'rrset_values': current_values + [content]}
+                if self._get_lexicon_option('ttl'):
+                    record['rrset_ttl'] = self._get_lexicon_option('ttl')
                 self._put(url, record)
             else:
                 record = {'rrset_values': [content]}
