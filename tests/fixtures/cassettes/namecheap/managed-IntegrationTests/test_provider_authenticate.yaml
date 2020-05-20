@@ -2,48 +2,65 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.23.0
     method: POST
-    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=example-aptise-2.com
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=unittest-seconddomain.dev
   response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult\
-        \ Status=\"Ok\" ID=\"277442\" DomainName=\"example-aptise-2.com\" OwnerName=\"\
-        jvsandbox2\" IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\
-        \n        <CreatedDate>03/26/2018</CreatedDate>\r\n        <ExpiredDate>03/26/2019</ExpiredDate>\r\
-        \n        <NumYears>0</NumYears>\r\n      </DomainDetails>\r\n      <LockDetails\
-        \ />\r\n      <Whoisguard Enabled=\"True\">\r\n        <ID>233216</ID>\r\n\
-        \        <ExpiredDate>03/25/2019</ExpiredDate>\r\n        <EmailDetails WhoisGuardEmail=\"\
-        bdf487b65d844ddfafe33163f0e709f0.protect@whoisguard.com\" ForwardedTo=\"namecheap.sandbox.2@2xlp.com\"\
-        \ LastAutoEmailChangeDate=\"\" AutoEmailChangeFrequencyDays=\"0\" />\r\n \
-        \     </Whoisguard>\r\n      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\
-        \n        <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\
-        \n        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n       \
-        \ <IsActive>false</IsActive>\r\n      </PremiumDnsSubscription>\r\n      <DnsDetails\
-        \ ProviderType=\"FREE\" IsUsingOurDNS=\"true\" HostCount=\"17\" EmailType=\"\
-        FWD\" DynamicDNSStatus=\"false\" IsFailover=\"false\">\r\n        <Nameserver>dns1.registrar-servers.com</Nameserver>\r\
-        \n        <Nameserver>dns2.registrar-servers.com</Nameserver>\r\n      </DnsDetails>\r\
-        \n      <Modificationrights All=\"false\">\r\n        <Rights Type=\"dns\"\
-        >OK</Rights>\r\n        <Rights Type=\"hosts\">OK</Rights>\r\n        <Rights\
-        \ Type=\"ddns\">OK</Rights>\r\n        <Rights Type=\"nameserver\">OK</Rights>\r\
-        \n        <Rights Type=\"premiumDns\">OK</Rights>\r\n        <Rights Type=\"\
-        dnsSec\">OK</Rights>\r\n      </Modificationrights>\r\n    </DomainGetInfoResult>\r\
-        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.683</ExecutionTime>\r\n</ApiResponse>"}
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ApiResponse Status=\"OK\"
+        xmlns=\"http://api.namecheap.com/xml.response\">\r\n  <Errors />\r\n  <Warnings
+        />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\n
+        \ <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult
+        Status=\"Ok\" ID=\"589668\" DomainName=\"unittest-seconddomain.dev\" OwnerName=\"phassberg2\"
+        IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\n        <CreatedDate>05/20/2020</CreatedDate>\r\n
+        \       <ExpiredDate>05/20/2021</ExpiredDate>\r\n        <NumYears>0</NumYears>\r\n
+        \     </DomainDetails>\r\n      <LockDetails />\r\n      <Whoisguard Enabled=\"True\">\r\n
+        \       <ID>481122</ID>\r\n        <ExpiredDate>05/20/2021</ExpiredDate>\r\n
+        \       <EmailDetails WhoisGuardEmail=\"af9bb0ea7b894617af45bb0fa4809b21.protect@whoisguard.com\"
+        ForwardedTo=\"drdoddo@gmail.com\" LastAutoEmailChangeDate=\"05/20/2020\" AutoEmailChangeFrequencyDays=\"3\"
+        />\r\n      </Whoisguard>\r\n      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\n
+        \       <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\n
+        \       <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n        <IsActive>false</IsActive>\r\n
+        \     </PremiumDnsSubscription>\r\n      <DnsDetails ProviderType=\"FREE\"
+        IsUsingOurDNS=\"true\" HostCount=\"2\" EmailType=\"FWD\" DynamicDNSStatus=\"false\"
+        IsFailover=\"false\">\r\n        <Nameserver>dns1.registrar-servers.com</Nameserver>\r\n
+        \       <Nameserver>dns2.registrar-servers.com</Nameserver>\r\n      </DnsDetails>\r\n
+        \     <Modificationrights All=\"false\">\r\n        <Rights Type=\"dns\">OK</Rights>\r\n
+        \       <Rights Type=\"eforward\">OK</Rights>\r\n        <Rights Type=\"rlock\">OK</Rights>\r\n
+        \       <Rights Type=\"parkpage\">OK</Rights>\r\n        <Rights Type=\"hosts\">OK</Rights>\r\n
+        \       <Rights Type=\"ddns\">OK</Rights>\r\n        <Rights Type=\"extend\">OK</Rights>\r\n
+        \       <Rights Type=\"nameserver\">OK</Rights>\r\n        <Rights Type=\"autorenew\">OK</Rights>\r\n
+        \       <Rights Type=\"whoisguard\">OK</Rights>\r\n        <Rights Type=\"premiumDns\">OK</Rights>\r\n
+        \       <Rights Type=\"dnsSec\">OK</Rights>\r\n      </Modificationrights>\r\n
+        \   </DomainGetInfoResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPIEXT01</Server>\r\n
+        \ <GMTTimeDifference>--4:00</GMTTimeDifference>\r\n  <ExecutionTime>0.434</ExecutionTime>\r\n</ApiResponse>"
     headers:
-      cache-control: [private]
-      content-length: ['2034']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:43:42 GMT']
-      server: [Microsoft-IIS/8.5]
-      vary: [Accept-Encoding]
-      x-aspnet-version: [4.0.30319]
-      x-powered-by: [ASP.NET]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Wed, 20 May 2020 19:02:09 GMT
+      Server:
+      - Microsoft-IIS/8.5
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      content-length:
+      - '2308'
+    status:
+      code: 200
+      message: OK
 version: 1
