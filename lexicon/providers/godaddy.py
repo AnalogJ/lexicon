@@ -99,7 +99,7 @@ class Provider(BaseProvider):
 
         # Check if a record already matches
         for record in records:
-            if (record['data'] == content):
+            if record['data'] == content:
                 LOGGER.debug(
                     'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
                 return True
@@ -157,10 +157,11 @@ class Provider(BaseProvider):
 
         # Synchronize data with updated records into DNS zone.
         if updated_record is not None:
-            if identifier and self._relative_name(record['name']) != relative_name:
+            if identifier and self._relative_name(updated_record['name']) != relative_name:
                 self._put('/domains/{0}/records/{1}'.format(domain, rtype), records)
             else:
-                self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, relative_name), updated_record)
+                self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, relative_name),
+                          updated_record)
 
             LOGGER.debug('update_record: %s %s %s', rtype, name, content)
 
@@ -200,7 +201,8 @@ class Provider(BaseProvider):
                     if Provider._identifier(record) == identifier:
                         rtype = record['type']
             filtered_records = [
-                record for record in records if Provider._identifier(record) != identifier and record['type'] == rtype]
+                record for record in records if Provider._identifier(record) != identifier
+                and record['type'] == rtype]
         else:
             for record in records:
                 if ((not rtype and not relative_name and not content)  # pylint: disable=too-many-boolean-expressions
