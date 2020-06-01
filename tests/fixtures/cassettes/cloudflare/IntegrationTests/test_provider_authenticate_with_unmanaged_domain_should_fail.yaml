@@ -2,31 +2,65 @@ interactions:
 - request:
     body: '{}'
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
     method: GET
-    uri: https://api.cloudflare.com/client/v4/zones?status=active&name=thisisadomainidonotown.com
+    uri: https://api.cloudflare.com/client/v4/zones?name=thisisadomainidonotown.com&status=active
   response:
-    body: {string: !!python/unicode '{"result":[],"result_info":{"page":1,"per_page":20,"total_pages":0,"count":0,"total_count":0},"success":true,"errors":[],"messages":[]}'}
+    body:
+      string: '{"success":false,"errors":[{"code":0,"message":"Actor ''com.cloudflare.api.token.a633057935c0c4ff1a07cfd50ae97df6''
+        requires permission ''com.cloudflare.api.account.zone.list'' to list zones"}],"messages":[],"result":null}'
     headers:
-      cache-control: ['no-store, no-cache, must-revalidate, post-check=0, pre-check=0']
-      cf-ray: [28b7f5403aad120d-SJC]
-      connection: [keep-alive]
-      content-length: ['135']
-      content-type: [application/json]
-      date: ['Wed, 30 Mar 2016 01:58:41 GMT']
-      expires: ['Sun, 25 Jan 1981 05:00:00 GMT']
-      pragma: [no-cache]
-      server: [cloudflare-nginx]
-      set-cookie: ['__cfduid=d769cb15312a13abdcd1dfe57f873eac71459303121; expires=Thu,
-          30-Mar-17 01:58:41 GMT; path=/; domain=.cloudflare.com; HttpOnly']
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 58ed9026ed9d0847-CDG
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 May 2020 21:30:31 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Expires:
+      - Sun, 25 Jan 1981 05:00:00 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d98ce1f6d6f23be2e3915420f1f2366bf1588714230; expires=Thu, 04-Jun-20
+        21:30:30 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      cf-request-id:
+      - 0288586c54000008475db95200000001
+      content-length:
+      - '218'
+    status:
+      code: 403
+      message: Forbidden
 version: 1

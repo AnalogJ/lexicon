@@ -58,7 +58,7 @@ The current supported providers are:
 - Gransy (sites subreg.cz, regtons.com and regnames.eu, [docs](https://subreg.cz/manual/))
 - Hover ([docs](https://hoverapi.docs.apiary.io/))
 - Hurricane Electric DNS ([docs](https://dns.he.net/))
-- Hetzner ([docs](https://wiki.hetzner.de/index.php/DNS_Zonendatei/en))
+- Hetzner ([docs](https://dns.hetzner.com/api-docs/))
 - Infoblox ([docs](https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal))
 - Internet.bs ([docs](https://internetbs.net/ResellerRegistrarDomainNameAPI))
 - INWX ([docs](https://www.inwx.de/en/offer/api))

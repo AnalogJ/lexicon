@@ -2,18 +2,29 @@ interactions:
 - request:
     body: null
     headers:
-      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
-      X-Amz-Date: [20161009T013235Z]
-    method: !!python/unicode GET
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODM1Wg==
+    method: GET
     uri: https://route53.amazonaws.com/2013-04-01/hostedzonesbyname
   response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
+    body:
+      string: '<?xml version="1.0"?>
 
-        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/ZBEJSHF5L79VI</Id><Name>capsulecd.com.</Name><CallerReference>CD167CD7-84D9-E9B6-A9CA-368CF9590C4F</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>2</ResourceRecordSetCount></HostedZone><HostedZone><Id>/hostedzone/Z26VK10YTMHFYG</Id><Name>eadmundo.com.</Name><CallerReference>D3154B90-A6B5-C702-9EC1-F2C63DCCF274</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>17</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'}
+        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/Z0748009194T9V149ZJ4F</Id><Name>fullcr1stal.tk.</Name><CallerReference>5690397D-6924-5D5D-9590-8F324E67569A</CallerReference><Config><Comment></Comment><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>2</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'
     headers:
-      content-length: ['735']
-      content-type: [text/xml]
-      date: ['Sun, 09 Oct 2016 01:32:36 GMT']
-      x-amzn-requestid: [4259fe5f-8dc0-11e6-86bb-25110d14e1d9]
-    status: {code: 200, message: OK}
+      Content-Length:
+      - '506'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:36 GMT
+      x-amzn-RequestId:
+      - f7f00a65-5bc0-43ac-9bbb-8a6abdc709eb
+    status:
+      code: 200
+      message: OK
 version: 1
