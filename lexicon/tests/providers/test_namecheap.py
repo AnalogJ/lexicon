@@ -62,7 +62,7 @@ class NamecheapProviderTests(TestCase, IntegrationTests):
             LEXICON_NAMECHEAP_DOMAIN
         """
         env_domain = os.environ.get('LEXICON_NAMECHEAP_DOMAIN', None)
-        return env_domain or 'example-aptise.com'
+        return env_domain or 'unittest2.dev'
 
     def _filter_query_parameters(self):
         return ['ApiKey', 'UserName', 'ApiUser']
@@ -98,4 +98,4 @@ class NamecheapManagedProviderTests(NamecheapProviderTests):
             LEXICON_NAMECHEAP_DOMAINMANAGED
         """
         env_domain = os.environ.get('LEXICON_NAMECHEAP_DOMAINMANAGED', None)
-        return env_domain or 'example-aptise-2.com'
+        return env_domain or 'unittest-seconddomain.dev'

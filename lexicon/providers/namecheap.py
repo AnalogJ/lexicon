@@ -190,8 +190,18 @@ class Provider(BaseProvider):
             # required
             'Type': rtype,
             'Name': self._relative_name(name),
-            'Address': content,
         }
+
+        # MX records needd special treatment
+        if rtype == 'MX':
+            mxpref, address = content.split()
+            record.update({
+                'MxPref': int(mxpref),
+                'Address': address
+            })
+        else:
+            record.update({'Address': content})
+
         # inject the ttl if specified
         option_ttl = self.option_ttl()
         if option_ttl:
@@ -249,18 +259,31 @@ class Provider(BaseProvider):
         """ converts from lexicon format record to namecheap format record,
         suitable to sending through the api to namecheap"""
 
+        processed_record = {}
+
         name = record['name']
         if name.endswith('.'):
             name = name[:-1]
 
         short_name = name[:name.find(self.domain) - 1]
-        processed_record = {
+
+        if record['type'] == 'MX':
+            # MX records needs to have separate treatment.
+            mxpref, address = record['content'].split()
+            processed_record.update({
+                'MxPref': mxpref,
+                'Address': address
+            })
+        else:
+            processed_record.update({
+                'Address': record['content']})
+
+        processed_record.update({
             'Type': record['type'],
             'Name': short_name,
             'TTL': record['ttl'],
-            'Address': record['content'],
             'HostId': record['id']
-        }
+        })
 
         return processed_record
 
@@ -269,14 +292,18 @@ class Provider(BaseProvider):
         """
 
         name = record['Name']
-        if self.domain not in name:
-            name = "{}.{}".format(name, self.domain)
+
+        if not name.endswith(self.domain):
+            name += ".{}".format(self.domain)
+
+        content = '{} {}'.format(record['MXPref'], record['Address']) \
+            if record['Type'] == 'MX' else record['Address']
 
         processed_record = {
             'type': record['Type'],
-            'name': '{0}.{1}'.format(record['Name'], self.domain),
+            'name': name,
             'ttl': record['TTL'],
-            'content': record['Address'],
+            'content': content,
             'id': record['HostId']
         }
 
