@@ -85,6 +85,7 @@ The current supported providers are:
 - SoftLayer ([docs](https://sldn.softlayer.com/article/REST#HTTP_Request_Types))
 - Subreg (deprecated, use Gransy)
 - Transip ([docs](https://www.transip.nl/transip/api/))
+- UltraDNS ([docs](https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf))
 - Vultr ([docs](https://www.vultr.com/api/))
 - Yandex ([docs](https://tech.yandex.com/domain/doc/reference/dns-add-docpage/))
 - Zeit ([docs](https://zeit.co/api#post-domain-records))
