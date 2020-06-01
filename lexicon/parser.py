@@ -1,11 +1,9 @@
 """Parsers definition for the Lexicon command-line interface"""
 import argparse
 import importlib
-import pkgutil
 import os
 
-import pkg_resources
-from lexicon import providers as providers_package
+from lexicon import discovery
 
 
 def generate_base_provider_parser():
@@ -37,20 +35,12 @@ def generate_base_provider_parser():
 
 def generate_cli_main_parser():
     """Using all providers available, generate a parser that will be used by Lexicon CLI"""
-    providers = []
-    for _, modname, _ in pkgutil.iter_modules(providers_package.__path__):
-        if modname != 'base':
-            providers.append(modname)
-    providers = sorted(providers)
-
     parser = argparse.ArgumentParser(
         description='Create, Update, Delete, List DNS entries')
-    try:
-        version = pkg_resources.get_distribution('dns-lexicon').version
-    except pkg_resources.DistributionNotFound:
-        version = 'unknown'
+
     parser.add_argument('--version', help='show the current version of lexicon',
-                        action='version', version='%(prog)s {0}'.format(version))
+                        action='version', version='%(prog)s {0}'
+                        .format(discovery.lexicon_version()))
     parser.add_argument('--delegated', help='specify the delegated domain')
     parser.add_argument('--config-dir', default=os.getcwd(),
                         help='specify the directory where to search lexicon.yml and '
@@ -60,7 +50,7 @@ def generate_cli_main_parser():
         dest='provider_name', help='specify the DNS provider to use')
     subparsers.required = True
 
-    for provider in providers:
+    for provider, available in discovery.find_providers().items():
         provider_module = importlib.import_module(
             'lexicon.providers.' + provider)
         provider_parser = getattr(provider_module, 'provider_parser')
@@ -68,5 +58,10 @@ def generate_cli_main_parser():
         subparser = subparsers.add_parser(provider, help='{0} provider'.format(provider),
                                           parents=[generate_base_provider_parser()])
         provider_parser(subparser)
+
+        if not available:
+            subparser.epilog = ('WARNING: some required dependencies for this provider are not '
+                                'installed. Please install lexicon[{0}] first before using it.'
+                                .format(provider))
 
     return parser

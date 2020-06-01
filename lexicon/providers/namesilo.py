@@ -144,7 +144,7 @@ class Provider(BaseProvider):
         if root.find('reply').find('code').text == '280':
             raise ValueError('An error occurred: {0}, {1}'.format(
                 root.find('reply').find('detail').text, root.find('reply').find('code').text))
-        elif root.find('reply').find('code').text != '300':
+        if root.find('reply').find('code').text != '300':
             raise Exception('An error occurred: {0}, {1}'.format(
                 root.find('reply').find('detail').text, root.find('reply').find('code').text))
 

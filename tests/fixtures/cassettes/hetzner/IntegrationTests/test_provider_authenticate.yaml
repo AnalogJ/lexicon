@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://dns.hetzner.com/api/v1/zones
+  response:
+    body:
+      string: '{"zones":[{"id":"xyncsydKx5x44qDZQCzpNM","name":"alt.coop","ttl":300,"registrar":"","legacy_dns_host":"","legacy_ns":["hydrogen.ns.hetzner.com.","helium.ns.hetzner.com.","oxygen.ns.hetzner.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
+        01:23:59 +0000 UTC","verified":"2020-04-07 01:53:05.934062806 +0000 UTC m=+578.060435172","modified":"2020-04-08
+        10:38:16.278 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":75},{"id":"JkBqVJDW3PpqefBb274BCZ","name":"softwarekollektiv.de","ttl":86400,"registrar":"","legacy_dns_host":"","legacy_ns":[],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-08
+        18:53:25.589 +0000 UTC","verified":"2020-04-08T18:53:27Z","modified":"2020-04-13
+        15:17:43.767 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":1}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":2}}}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1329'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:32:33 GMT
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '1'
+      X-Kong-Upstream-Latency:
+      - '193'
+    status:
+      code: 200
+      message: OK
+version: 1

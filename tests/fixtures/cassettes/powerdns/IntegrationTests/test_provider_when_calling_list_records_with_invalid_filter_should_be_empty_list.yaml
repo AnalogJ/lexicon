@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: http://127.0.0.1:8081/api/v1/servers/localhost/zones/sometestdomain.com.
+  response:
+    body:
+      string: '{"account": "", "api_rectify": false, "dnssec": false, "id": "sometestdomain.com.",
+        "kind": "Master", "last_check": 0, "masters": [], "name": "sometestdomain.com.",
+        "notified_serial": 0, "nsec3narrow": false, "nsec3param": "", "rrsets": [{"comments":
+        [], "name": "localhost.sometestdomain.com.", "records": [{"content": "127.0.0.1",
+        "disabled": false}], "ttl": 3600, "type": "A"}, {"comments": [], "name": "random.fqdntest.sometestdomain.com.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.fulltest.sometestdomain.com.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.test.sometestdomain.com.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.deleterecordinset.sometestdomain.com.",
+        "records": [{"content": "\"challengetoken2\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.listrecordset.sometestdomain.com.",
+        "records": [{"content": "\"challengetoken1\"", "disabled": false}, {"content":
+        "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
+        [], "name": "_acme-challenge.createrecordset.sometestdomain.com.", "records":
+        [{"content": "\"challengetoken1\"", "disabled": false}, {"content": "\"challengetoken2\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "docs.sometestdomain.com.", "records": [{"content": "docs.example.com.sometestdomain.com.",
+        "disabled": false}], "ttl": 3600, "type": "CNAME"}, {"comments": [], "name":
+        "_acme-challenge.noop.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "ttl.fqdn.sometestdomain.com.", "records": [{"content": "\"ttlshouldbe3600\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.fqdn.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.full.sometestdomain.com.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}], "serial": 0, "soa_edit":
+        "", "soa_edit_api": "", "url": "/api/v1/servers/localhost/zones/sometestdomain.com."}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '2436'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Content-Type:
+      - application/json
+      Server:
+      - PowerDNS/4.1.5
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

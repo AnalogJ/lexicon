@@ -5,11 +5,19 @@ import pytest
 
 import lexicon.client
 from lexicon.config import ConfigResolver
+from lexicon.tests.test_library import mock_fake_provider
+
+
+@pytest.fixture(autouse=True)
+def fake_provider():
+    """Activate the fake_provider mock"""
+    with mock_fake_provider():
+        yield
 
 
 def test_client_basic_init():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'example.com',
         'type': 'TXT'
@@ -24,7 +32,7 @@ def test_client_basic_init():
 
 def test_client_legacy_init():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'example.com',
         'type': 'TXT'
@@ -39,7 +47,7 @@ def test_client_legacy_init():
 
 def test_client_init_when_domain_includes_subdomain_should_strip():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.example.com',
         'type': 'TXT'
@@ -54,7 +62,7 @@ def test_client_init_when_domain_includes_subdomain_should_strip():
 
 def test_client_init_with_delegated_domain_name():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.sub.example.com',
         'delegated': 'sub',
@@ -70,7 +78,7 @@ def test_client_init_with_delegated_domain_name():
 
 def test_client_init_with_delegated_domain_fqdn():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.sub.example.com',
         'delegated': 'sub.example.com',
@@ -86,7 +94,7 @@ def test_client_init_with_delegated_domain_fqdn():
 
 def test_client_init_with_same_delegated_domain_fqdn():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.example.com',
         'delegated': 'example.com',
@@ -112,7 +120,7 @@ def test_client_init_when_missing_provider_should_fail():
 
 def test_client_init_when_missing_action_should_fail():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'domain': 'example.com',
         'type': 'TXT'
     }
@@ -122,7 +130,7 @@ def test_client_init_when_missing_action_should_fail():
 
 def test_client_init_when_missing_domain_should_fail():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'type': 'TXT'
     }
@@ -132,7 +140,7 @@ def test_client_init_when_missing_domain_should_fail():
 
 def test_client_init_when_missing_type_should_fail():
     options = {
-        'provider_name': 'base',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'example.com',
     }
@@ -141,12 +149,12 @@ def test_client_init_when_missing_type_should_fail():
 
 
 def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
-    if os.environ.get('LEXICON_CLOUDFLARE_TOKEN'):
-        monkeypatch.delenv('LEXICON_CLOUDFLARE_TOKEN')
-    if os.environ.get('LEXICON_CLOUDFLARE_USERNAME'):
-        monkeypatch.delenv('LEXICON_CLOUDFLARE_USERNAME')
+    if os.environ.get('LEXICON_FAKEPROVIDER_TOKEN'):
+        monkeypatch.delenv('LEXICON_FAKEPROVIDER_TOKEN')
+    if os.environ.get('LEXICON_FAKEPROVIDER_USERNAME'):
+        monkeypatch.delenv('LEXICON_FAKEPROVIDER_USERNAME')
     options = {
-        'provider_name': 'cloudflare',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.example.com',
         'type': 'TXT'
@@ -157,16 +165,16 @@ def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
     assert client.action == options['action']
     assert client.config.resolve('lexicon:domain') == 'example.com'
     assert client.config.resolve('lexicon:type') == options['type']
-    assert client.config.resolve('lexicon:cloudflare:auth_token') is None
-    assert client.config.resolve('lexicon:cloudflare:auth_username') is None
+    assert client.config.resolve('lexicon:fakeprovider:auth_token') is None
+    assert client.config.resolve('lexicon:fakeprovider:auth_username') is None
 
 
 def test_client_parse_env_with_auth_keys(monkeypatch):
-    monkeypatch.setenv('LEXICON_CLOUDFLARE_TOKEN', 'test-token')
-    monkeypatch.setenv('LEXICON_CLOUDFLARE_USERNAME',
+    monkeypatch.setenv('LEXICON_FAKEPROVIDER_TOKEN', 'test-token')
+    monkeypatch.setenv('LEXICON_FAKEPROVIDER_USERNAME',
                        'test-username@example.com')
     options = {
-        'provider_name': 'cloudflare',
+        'provider_name': 'fakeprovider',
         'action': 'list',
         'domain': 'www.example.com',
         'type': 'TXT'
@@ -178,8 +186,8 @@ def test_client_parse_env_with_auth_keys(monkeypatch):
     assert client.config.resolve('lexicon:domain') == 'example.com'
     assert client.config.resolve('lexicon:type') == options['type']
     assert client.config.resolve(
-        'lexicon:cloudflare:auth_token') == 'test-token'
+        'lexicon:fakeprovider:auth_token') == 'test-token'
     assert client.config.resolve(
-        'lexicon:cloudflare:auth_username') == 'test-username@example.com'
+        'lexicon:fakeprovider:auth_username') == 'test-username@example.com'
 
 # TODO: add tests for Provider loading?

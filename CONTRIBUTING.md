@@ -24,11 +24,11 @@ Install `lexicon` in development mode with full providers support:
 
 Make sure the tests pass:
 
-    $ py.test tests
+    $ py.test lexicon/tests
 
 You can test a specific provider using:
 
-	$ py.test tests/providers/test_foo.py
+	$ py.test lexicon/tests/providers/test_foo.py
 
 _NB: Please note that by default, tests are replayed from recordings located in `tests/fixtures/cassettes`, not against the real DNS provider APIs._
 
@@ -96,23 +96,20 @@ same as all other `lexicon` providers. `lexicon` uses `vcrpy` to make recordings
 
 The only thing you need to do is create the following file:
 
- - `tests/providers/test_foo.py`
+ - `lexicon/tests/providers/test_foo.py`
 
 Then you'll need to populate it with the following template:
 
 ```python
 # Test for one implementation of the interface
-from lexicon.providers.foo import Provider
-from integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
-import pytest
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class FooProviderTests(TestCase, IntegrationTests):
-
-	Provider = Provider
+    """Integration tests for Foo provider"""
 	provider_name = 'foo'
 	domain = 'example.com'
 	def _filter_post_data_parameters(self):
@@ -140,12 +137,15 @@ The `_filter_*` methods ensure that your credentials are not included in the
 
 Then you'll need to setup your environment variables for testing. Unlike running
 `lexicon` via the CLI, the test suite cannot take user input, so we'll need to provide
-any `auth-*` secrets/arguments using environmental variables prefixed with `LEXICON_FOO_`.
+any CLI arguments containing secrets (like `--auth-*`) using environmental variables prefixed
+with `LEXICON_FOO_`.
 
-eg. if you had a `--auth-token` CLI argument, you can also populate it
-using the `LEXICON_FOO_TOKEN` environmental variable. Notice that only `--auth-*` arguments
-can be passed like this. All non-secret arguments should be specified in the `test_options`.
-See [powerdns test suite](https://github.com/AnalogJ/lexicon/blob/82fa5056df2122357af7f9bec94aebc58b247f91/tests/providers/test_powerdns.py#L18-L21) for an example.
+For instance, if you had a `--auth-token` CLI argument, you can populate it
+using the `LEXICON_FOO_AUTH_TOKEN` environmental variable.
+
+Notice also that you should pass any required non-secrets arguments programmatically using the `_test_parameters_override()` method. See
+https://github.com/AnalogJ/lexicon/blob/5ee4d16f9d6206e212c2197f2e53a1db248f5eb9/lexicon/tests/providers/test_powerdns.py#L19
+for an example.
 
 ## Test recordings
 
@@ -154,7 +154,7 @@ In default test mode, tests are replayed from existing recordings. In live mode,
 
 To execute the `py.test` suite using the live tests mode, execute py.test with the environment variable `LEXICON_LIVE_TESTS` set to `true` like below:
 
-	LEXICON_LIVE_TESTS=true py.test tests/providers/test_foo.py
+	LEXICON_LIVE_TESTS=true py.test lexicon/tests/providers/test_foo.py
 
 If any of the integration tests fail on your provider, you'll need to delete the recordings that were created,
 make your changes and then try again.
@@ -174,7 +174,7 @@ Finally, push your changes to your Github fork, and open a PR.
 
 Neither of the snippets below should be used unless necessary. They are only included in the interest of documentation.
 
-In your `tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to skip any individual test that does not apply (and will never pass)
+In your `lexicon/tests/providers/test_foo.py` file, you can use `@pytest.mark.skip` to skip any individual test that does not apply (and will never pass)
 
 ```python
 	@pytest.mark.skip(reason="can not set ttl when creating/updating records")
@@ -200,7 +200,7 @@ Next, you should add yourself to the [CODEOWNERS file](https://github.com/Analog
 Please keep in mind the following:
 
 - `lexicon` is designed to work with multiple versions of python. That means
-your code will be tested against python 2.7, 3.4, 3.5
+your code will be tested against python 2.7, 3.5, 3.6 and 3.7
 - any provider specific dependenices should be added to the `setup.py` file,
  under the `extra_requires` heading. The group name should be the name of the
  provider. eg:

@@ -4,6 +4,12 @@ import logging
 
 from requests import Response, Session
 
+# Handling optional dependency for this provider
+try:
+    from bs4 import BeautifulSoup, Tag
+except ImportError:
+    pass
+
 from lexicon.providers.base import Provider as BaseProvider
 
 
@@ -32,7 +38,7 @@ class Provider(BaseProvider):
 
     URLS = {
         'login': 'https://my.easyname.com/en/login',
-        'domain_list': 'https://my.easyname.com/domains',
+        'domain_list': 'https://my.easyname.com/domains/',
         'overview': 'https://my.easyname.com/hosting/view-user.php',
         'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
         'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
@@ -258,6 +264,7 @@ class Provider(BaseProvider):
         Build and return the post date that is needed to create a DNS entry.
         """
         is_update = identifier is not None
+        record = None
         if is_update:
             records = self._list_records_internal(identifier=identifier)
             assert len(records) == 1, 'ID is not unique or does not exist'
@@ -307,7 +314,6 @@ class Provider(BaseProvider):
         """
         Return the TR elements holding the DNS entries.
         """
-        from bs4 import BeautifulSoup
         dns_list_response = self.session.get(
             self.URLS['dns'].format(self.domain_id))
         self._log('DNS list', dns_list_response)
@@ -353,7 +359,6 @@ class Provider(BaseProvider):
 
     def _get_csrf_token(self):
         """Return the CSRF Token of easyname login form."""
-        from bs4 import BeautifulSoup
         home_response = self.session.get(self.URLS['login'])
         self._log('Home', home_response)
         assert home_response.status_code == 200, \
@@ -379,13 +384,12 @@ class Provider(BaseProvider):
         self._log('Login', login_response)
         assert login_response.status_code == 200, \
             'Could not login due to a network error.'
-        assert login_response.url == self.URLS['overview'], \
-            'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.'
+        assert login_response.url == self.URLS['domain_list'], \
+            'Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s' % login_response.url
 
     def _get_domain_text_of_authoritative_zone(self):
         """Get the authoritative name zone."""
         # We are logged in, so get the domain list
-        from bs4 import BeautifulSoup
         zones_response = self.session.get(self.URLS['domain_list'])
         self._log('Zone', zones_response)
         assert zones_response.status_code == 200, \
@@ -439,7 +443,6 @@ class Provider(BaseProvider):
         """
         Log Response and Tag elements. Do nothing if elements is none of them.
         """
-        from bs4 import BeautifulSoup, Tag
         if isinstance(element, Response):
             LOGGER.debug('%s response: URL=%s Code=%s', name, element.url, element.status_code)
         elif isinstance(element, (BeautifulSoup, Tag)):

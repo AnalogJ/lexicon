@@ -35,26 +35,26 @@ extras_require = {
     'route53': ['boto3'],
     'softlayer': ['SoftLayer'],
     'subreg': ['zeep'],
+    'gransy': ['zeep'],
     'transip': ['transip>=0.3.0'],
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
-    'hetzner': ['dnspython>=1.15.0','beautifulsoup4'],
     'easyname': ['beautifulsoup4'],
     'localzone': ['localzone'],
+    'gratisdns': ['beautifulsoup4'],
+    # Define dev/test dependencies
+    'dev': [
+        'pytest>=5.2 ; python_version >= "3.0"',
+        'pytest>=4.6 ; python_version >= "2.7"',
+        'pytest-cov>=2.8',
+        'pytest-xdist>=1.30',
+        'vcrpy>=2.1',
+        'mock>=3.0',
+    ]
 }
 
 # Add a 'full' extra, gathering all external dependencies for providers
-extras_require['full'] = set([dep for deps in extras_require.values() for dep in deps])
-
-# Define dev/test dependencies
-extras_require['dev'] = [
-    'pytest==4.1.1',
-    'pytest-cov==2.6.1',
-    'pytest-xdist==1.26.1',
-    'python-coveralls==2.9.1',
-    'vcrpy==2.0.1',
-    'mock==2.0.0',
-]
+extras_require['full'] = [dep for name, deps in extras_require.items() if name != 'dev' for dep in deps]
 
 setup(
     name='dns-lexicon',
@@ -77,6 +77,8 @@ setup(
 
     license='MIT',
 
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -95,10 +97,10 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
 
     keywords='dns lexicon dns-lexicon dehydrated letsencrypt ' + ' '.join(providers),

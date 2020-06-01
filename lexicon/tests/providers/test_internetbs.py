@@ -3,7 +3,6 @@ import os
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.internetbs import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +10,6 @@ from lexicon.providers.internetbs import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class InternetbsProviderTests(TestCase, IntegrationTests):
     """TestCase for InternetBS"""
-    Provider = Provider
     provider_name = 'internetbs'
     domain = 'world-of-ysera.com'
 

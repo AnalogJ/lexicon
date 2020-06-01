@@ -1,0 +1,119 @@
+interactions:
+- request:
+    body: '{"action": "login"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['190']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"eW5THYEVMy0Dj29FTym1M42Ik01T","clientrequestid":"","action":"login","status":"success","statuscode":2000,"shortmessage":"Login
+        successful","longmessage":"Session has been created successful.","responsedata":{"apisessionid":"MzQ3NncyazU5ODFzM3ZBbW9IYVRqR2JyU2ZCUm1RSTU3VTI5NT"}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:33 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:33 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['297']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsZone"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['225']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"Y11VTTzT9y0221E6mAczj45MMh55","clientrequestid":"","action":"infoDnsZone","status":"success","statuscode":2000,"shortmessage":"DNS
+        zone found","longmessage":"DNS zone was found.","responsedata":{"name":"coldfix.de","ttl":"86400","serial":"2019042073","refresh":"28800","retry":"7200","expire":"1209600","dnssecstatus":false}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:34 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:33 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['345']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "infoDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['228']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"R2TM2A90VyK6l2JjZNU1FG1xG53N","clientrequestid":"","action":"infoDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records found","longmessage":"DNS Records for this zone were found.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:34 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:34 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['772']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"action": "updateDnsRecords"}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['350']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: https://ccp.netcup.net/run/webservice/servers/endpoint.php?JSON
+  response:
+    body: {string: '{"serverrequestid":"23b09DRM2kAz1V5y2yIFWA71ZN4c","clientrequestid":"","action":"updateDnsRecords","status":"success","statuscode":2000,"shortmessage":"DNS
+        records successful updated","longmessage":"The given DNS records for this
+        zone were updated.","responsedata":{"dnsrecords":[{"id":"405422","hostname":"@","type":"A","priority":"0","destination":"37.120.171.171","deleterecord":false,"state":"unknown"},{"id":"11758161","hostname":"docs","type":"CNAME","priority":"0","destination":"docs.example.com","deleterecord":false,"state":"unknown"},{"id":"11758160","hostname":"localhost","type":"A","priority":"0","destination":"127.0.0.1","deleterecord":false,"state":"unknown"},{"id":"405423","hostname":"www","type":"CNAME","priority":"0","destination":"@","deleterecord":false,"state":"unknown"},{"id":"11758162","hostname":"_acme-challenge.fqdn","type":"TXT","priority":"0","destination":"challengetoken","deleterecord":false,"state":"unknown"}]}}'}
+    headers:
+      Cache-Control: ['no-store, no-cache, must-revalidate, max-age=0', 'post-check=0,
+          pre-check=0']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 19 Apr 2019 01:37:35 GMT']
+      Expires: ['Tue, 03 Jul 2001 06:00:00 GMT']
+      Last-Modified: ['Fri, 19 Apr 2019 01:37:35 GMT']
+      Pragma: [no-cache]
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=15768000]
+      Vary: ['Accept-Encoding,User-Agent']
+      X-Frame-Options: [SAMEORIGIN]
+      content-length: ['949']
+    status: {code: 200, message: OK}
+version: 1

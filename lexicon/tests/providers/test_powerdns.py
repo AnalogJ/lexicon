@@ -3,7 +3,6 @@ from unittest import TestCase
 
 import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.powerdns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,22 +10,16 @@ from lexicon.providers.powerdns import Provider
 # pass, by inheritance from integration_tests.IntegrationTests
 class PowerdnsProviderTests(TestCase, IntegrationTests):
     """TestCase for PowerDNS"""
-    Provider = Provider
     provider_name = 'powerdns'
-    domain = 'example.com'
+    domain = 'sometestdomain.com'
 
     def _filter_headers(self):
         return ['X-API-Key']
 
     def _test_parameters_overrides(self):
-        return {'pdns_server': 'https://dnsadmin.hhome.me', 'pdns_server_id': 'localhost'}
+        return {'pdns_server': 'http://127.0.0.1:8081', 'pdns_server_id': 'localhost'}
 
     # TODO: the following skipped suite and fixtures should be enabled
     @pytest.mark.skip(reason="new test, missing recording")
     def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
         return
-
-    @pytest.fixture(autouse=True)
-    def _skip_suite(self, request):  # pylint: disable=no-self-use
-        if request.node.get_closest_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')

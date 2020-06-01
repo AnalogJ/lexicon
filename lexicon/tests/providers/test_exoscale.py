@@ -14,7 +14,6 @@ Set the following environment variables.
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.exoscale import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -22,7 +21,6 @@ from lexicon.providers.exoscale import Provider
 # pass, by inheritance from define_tests.TheTests
 class ExoscaleProviderTests(TestCase, IntegrationTests):
     """TestCase for Exoscale"""
-    Provider = Provider
     provider_name = "exoscale"
     domain = "lexicontest.com"
 

@@ -1,14 +1,25 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import absolute_import
 import importlib
+import os
 
 import tldextract
+
+from lexicon import discovery
 from lexicon.config import (
-    ConfigResolver,
-    DictConfigSource,
-    legacy_config_resolver,
-    non_interactive_config_resolver,
+    ConfigResolver, DictConfigSource,
+    legacy_config_resolver, non_interactive_config_resolver,
 )
+
+TLDEXTRACT_CACHE_FILE_DEFAULT = os.path.join('~', '.lexicon_tld_set')
+TLDEXTRACT_CACHE_FILE = os.path.expanduser(os.environ.get("LEXICON_TLDEXTRACT_CACHE",
+                                                          TLDEXTRACT_CACHE_FILE_DEFAULT))
+
+class ProviderNotAvailableError(Exception):
+    """
+    Custom exception to raise when a provider is not available,
+    typically because some optional dependencies are missing
+    """
 
 
 class Client(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
@@ -31,7 +42,9 @@ class Client(object):  # pylint: disable=useless-object-inheritance,too-few-publ
         runtime_config = {}
 
         # Process domain, strip subdomain
-        domain_parts = tldextract.extract(
+        domain_extractor = tldextract.TLDExtract(cache_file=TLDEXTRACT_CACHE_FILE,
+                                                 include_psl_private_domains=True)
+        domain_parts = domain_extractor(
             self.config.resolve('lexicon:domain'))
         runtime_config['domain'] = '{0}.{1}'.format(
             domain_parts.domain, domain_parts.suffix)
@@ -82,8 +95,21 @@ class Client(object):  # pylint: disable=useless-object-inheritance,too-few-publ
         raise ValueError('Invalid action statement: {0}'.format(self.action))
 
     def _validate_config(self):
+        provider_name = self.config.resolve('lexicon:provider_name')
         if not self.config.resolve('lexicon:provider_name'):
             raise AttributeError('provider_name')
+
+        try:
+            available = discovery.find_providers()[self.config.resolve('lexicon:provider_name')]
+        except KeyError:
+            raise ProviderNotAvailableError('This provider ({0}) is not supported by Lexicon.'
+                                            .format(provider_name))
+        else:
+            if not available:
+                raise ProviderNotAvailableError(
+                    'This provider ({0}) has required dependencies that are missing. '
+                    'Please install lexicon[{0}] first.'.format(provider_name))
+
         if not self.config.resolve('lexicon:action'):
             raise AttributeError('action')
         if not self.config.resolve('lexicon:domain'):

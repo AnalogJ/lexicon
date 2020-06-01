@@ -2,12 +2,10 @@
 from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
-from lexicon.providers.easyname import Provider
 
 
 class EasynameProviderTests(TestCase, IntegrationTests):
     """TestCase for EasyName"""
-    Provider = Provider
     provider_name = 'easyname'
     domain = 'lexicontest.astzweig.de'
 

@@ -48,7 +48,7 @@ class Provider(BaseProvider):
         # Build parameters for adding a new record
         params = {
             'domain-name': self.domain_id,
-            'record-rtype': rtype,
+            'record-type': rtype,
             'host': self._relative_name(name),
             'record': content
         }

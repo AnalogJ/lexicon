@@ -42,6 +42,13 @@ class Provider(BaseProvider):
             raise Exception('No account id found')
 
         for account in payload:
+            if account['plan_identifier'] is None:
+                logging.warning(
+                    'Skipping unconfigured account %s (%d). ' \
+                    'To use this account, you must select a plan.',
+                    account['email'], account['id'])
+                continue
+
             dompayload = self._get(
                 '/{0}/domains'.format(account['id']), query_params={'name_like': self.domain})
             if dompayload and dompayload[0]['id']:
@@ -72,7 +79,7 @@ class Provider(BaseProvider):
             record['regions'] = self._get_provider_option('regions')
 
         payload = self._post(
-            '{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
+            '/{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
 
         LOGGER.debug('create_record: %s', 'id' in payload)
         return 'id' in payload

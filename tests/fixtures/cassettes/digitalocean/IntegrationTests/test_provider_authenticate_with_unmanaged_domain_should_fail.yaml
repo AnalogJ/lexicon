@@ -2,38 +2,69 @@ interactions:
 - request:
     body: !!python/unicode '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
     uri: https://api.digitalocean.com/v2/domains/thisisadomainidonotown.com
   response:
-    body: {string: !!python/unicode '{"id":"not_found","message":"The resource you
-        were accessing could not be found."}'}
+    body:
+      string: !!python/unicode '{"id":"not_found","message":"The resource you were
+        accessing could not be found."}'
     headers:
-      cache-control: [no-cache]
-      cf-ray: [3fe6398a38c0963d-SJC]
-      connection: [keep-alive]
-      content-length: ['82']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 20 Mar 2018 06:46:59 GMT']
-      expect-ct: ['max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"']
-      ratelimit-limit: ['5000']
-      ratelimit-remaining: ['4830']
-      ratelimit-reset: ['1521525195']
-      server: [cloudflare]
-      set-cookie: ['__cfduid=d960d81cd97950f5062b63cce419b9c041521528418; expires=Wed,
-          20-Mar-19 06:46:58 GMT; path=/; domain=.digitalocean.com; HttpOnly']
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-gateway: [Edge-Gateway]
-      x-request-id: [08079df0-6e9f-4ddf-8eef-9d5c3a8978df]
-      x-response-from: [service]
-      x-runtime: ['0.180951']
-      x-xss-protection: [1; mode=block]
-    status: {code: 404, message: Not Found}
+      cache-control:
+      - no-cache
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - 57219cd17b57d352-LAX
+      connection:
+      - keep-alive
+      content-length:
+      - '82'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 11 Mar 2020 01:48:20 GMT
+      expect-ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      ratelimit-limit:
+      - '5000'
+      ratelimit-remaining:
+      - '4886'
+      ratelimit-reset:
+      - '1583891032'
+      server:
+      - cloudflare
+      set-cookie:
+      - __cfduid=d676c10cec85b9b44e9e13ff6c2ed206d1583891300; expires=Fri, 10-Apr-20
+        01:48:20 GMT; path=/; domain=.digitalocean.com; HttpOnly; SameSite=Lax
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-gateway:
+      - Edge-Gateway
+      x-request-id:
+      - 64328469-0370-42fc-8c4c-3a6f34c5269a
+      x-response-from:
+      - service
+      x-runtime:
+      - '0.054610'
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 404
+      message: Not Found
 version: 1

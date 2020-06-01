@@ -1,14 +1,12 @@
 """Base class for provider integration tests"""
 # pylint: disable=missing-docstring
 import os
-from builtins import object
 from functools import wraps
 from importlib import import_module
 
 import pytest
 import vcr
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
-from lexicon.providers.base import Provider as BaseProvider
 
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
@@ -22,6 +20,7 @@ PROVIDER_VCR = vcr.VCR(
     decode_compressed_response=True
 )
 
+
 # Prepare custom decorator: it will start a casette in relevant folder for current provider,
 # and using the name of the test method as the cassette's name.
 def _vcr_integration_test(decorated):
@@ -32,9 +31,10 @@ def _vcr_integration_test(decorated):
                 self._cassette_path('IntegrationTests/{0}.yaml'
                                     .format(decorated.__name__)),
                 filter_headers=self._filter_headers(),
-                before_record_response=self._filter_response,
                 filter_query_parameters=self._filter_query_parameters(),
-                filter_post_data_parameters=self._filter_post_data_parameters()):
+                filter_post_data_parameters=self._filter_post_data_parameters(),
+                before_record_request=self._filter_request,
+                before_record_response=self._filter_response):
             decorated(self)
         # pylint: enable=protected-access
     return wrapper
@@ -89,13 +89,15 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         def _skip_suite(self, request):  # pylint: disable=no-self-use
             if request.node.get_closest_marker('ext_suite_1'):
                 pytest.skip('Skipping extended suite')
-
     """
 
     def __init__(self):
-        self.Provider = BaseProvider  # pylint: disable=invalid-name
         self.domain = None
         self.provider_name = None
+        self.provider_module = None
+
+    def setup_method(self, _):
+        self.provider_module = import_module('lexicon.providers.{0}'.format(self.provider_name))
 
     ###########################################################################
     # Provider module shape
@@ -128,7 +130,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         config = self._test_config()
         config.add_config_source(DictConfigSource(
             {'domain': 'thisisadomainidonotown.com'}), 0)
-        provider = self.Provider(config)
+        provider = self.provider_module.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
 
@@ -467,7 +469,7 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
         """
         Construct a new provider, and authenticate it against the target DNS provider API.
         """
-        provider = self.Provider(self._test_config())
+        provider = self.provider_module.Provider(self._test_config())
         provider.authenticate()
         return provider
 
@@ -483,13 +485,26 @@ class IntegrationTests(object):  # pylint: disable=useless-object-inheritance,to
     def _filter_post_data_parameters(self):  # pylint: disable=no-self-use
         return []
 
-    def _filter_response(self, response):  # pylint: disable=no-self-use
-        """Filter any sensitive data out of the providers response. `response`
-        is a Python object with the same structure as all the response sections
-        in the YAML recordings at tests/fixtures/cassets/[provider]. For the
+    def _filter_request(self, request):  # pylint: disable=no-self-use
+        """Filter any sensitive data out of the provider requests. `request`
+        is a Python object with the same structure as all the request sections
+        in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
         sake of sparing you some time the most important values are:
 
-        response['body']['string']: Contains the HTML or JSON response.
+        request['body']['string']: Contains the HTML or JSON request body.
+        request['uri']: The URI used for this request (URL + parameters)
+        response['headers']: An object whose keys are HTTP header names
+                             e.g. request['headers']['Accept'].
+        """
+        return request
+
+    def _filter_response(self, response):  # pylint: disable=no-self-use
+        """Filter any sensitive data out of the provider responses. `response`
+        is a Python object with the same structure as all the response sections
+        in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
+        sake of sparing you some time the most important values are:
+
+        response['body']['string']: Contains the HTML or JSON response body.
         response['headers']: An object whose keys are HTTP header names
                              e.g. response['headers']['content-length'].
         response['status']: An object that contains 'code' and 'message'
