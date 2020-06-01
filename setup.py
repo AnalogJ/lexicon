@@ -39,7 +39,6 @@ extras_require = {
     'transip': ['transip>=0.3.0'],
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
-    'hetzner': ['dnspython>=1.15.0', 'beautifulsoup4', 'html5lib'],
     'easyname': ['beautifulsoup4'],
     'localzone': ['localzone'],
     'gratisdns': ['beautifulsoup4'],

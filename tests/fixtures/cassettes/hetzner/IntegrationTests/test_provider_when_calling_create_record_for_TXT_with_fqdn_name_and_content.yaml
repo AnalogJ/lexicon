@@ -1,0 +1,144 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://dns.hetzner.com/api/v1/zones
+  response:
+    body:
+      string: '{"zones":[{"id":"xyncsydKx5x44qDZQCzpNM","name":"alt.coop","ttl":300,"registrar":"","legacy_dns_host":"","legacy_ns":["helium.ns.hetzner.com.","oxygen.ns.hetzner.com.","hydrogen.ns.hetzner.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
+        01:23:59 +0000 UTC","verified":"2020-04-07 01:53:05.934062806 +0000 UTC m=+578.060435172","modified":"2020-04-08
+        10:38:16.278 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":75},{"id":"JkBqVJDW3PpqefBb274BCZ","name":"softwarekollektiv.de","ttl":86400,"registrar":"","legacy_dns_host":"","legacy_ns":[],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-08
+        18:53:25.589 +0000 UTC","verified":"2020-04-08T18:53:27Z","modified":"2020-04-13
+        15:17:43.767 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":3}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":2}}}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1329'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:32:47 GMT
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '1'
+      X-Kong-Upstream-Latency:
+      - '195'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://dns.hetzner.com/api/v1/records?per_page=100&zone_id=JkBqVJDW3PpqefBb274BCZ
+  response:
+    body:
+      string: '{"records":[{"id":"kPbit4mpJa5pNU6dbFXpp3","type":"SOA","name":"@","value":"ns1.your-server.de.
+        dns.hetzner.com. 2020041572 86400 7200 3600000 3600","zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        15:17:43.061 +0000 UTC","modified":"2020-04-13 20:32:46.168 +0000 UTC"},{"id":"xbSVZRkvraCx2ZJkB5Stwh","type":"A","name":"localhost.softwarekollektiv.de.","value":"127.0.0.1","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:37.644 +0000 UTC","modified":"2020-04-13 20:32:37.644 +0000 UTC"},{"id":"BotQ9nkmc8HHJpnkDNH9NS","type":"CNAME","name":"docs.softwarekollektiv.de.","value":"docs.example.com","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:43.98 +0000 UTC","modified":"2020-04-13 20:32:43.98 +0000 UTC"}]}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '770'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:32:50 GMT
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '2'
+      X-Kong-Upstream-Latency:
+      - '3698'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "_acme-challenge.fqdn.softwarekollektiv.de.", "type": "TXT", "value":
+      "challengetoken", "zone_id": "JkBqVJDW3PpqefBb274BCZ", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '146'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://dns.hetzner.com/api/v1/records
+  response:
+    body:
+      string: '{"record":{"id":"625NbWVVrL96oBE972Si5F","type":"TXT","name":"_acme-challenge.fqdn.softwarekollektiv.de.","value":"challengetoken","ttl":3600,"zone_id":"JkBqVJDW3PpqefBb274BCZ","created":"2020-04-13
+        20:32:51.209 +0000 UTC","modified":"2020-04-13 20:32:51.209 +0000 UTC"}}
+
+        '
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '272'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 13 Apr 2020 20:32:54 GMT
+      Vary:
+      - Origin
+      Via:
+      - kong/2.0.2
+      X-Kong-Proxy-Latency:
+      - '2'
+      X-Kong-Upstream-Latency:
+      - '3584'
+    status:
+      code: 200
+      message: OK
+version: 1
