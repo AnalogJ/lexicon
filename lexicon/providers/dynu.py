@@ -140,7 +140,7 @@ class Provider(BaseProvider):
                 LOGGER.debug('delete_record: %s', record_id)
             except requests.exceptions.HTTPError as error:
                 if error.response.status_code == 501:
-                    LOGGER.info("delete_record: {0} does not exist".format(record_id))
+                    LOGGER.info("delete_record: %s does not exist", record_id)
                     continue
                 raise error
 
@@ -269,8 +269,7 @@ class Provider(BaseProvider):
                 'weight': cnt_split[1],
                 'port': cnt_split[2],
                 'host': cnt_split[3]
-                }
-            ),
+                }),
             'TXT':   (lambda: {'textData': content}),
         }.get(rtype, lambda: {})())
         return output
