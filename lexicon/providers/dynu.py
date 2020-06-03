@@ -103,8 +103,8 @@ class Provider(BaseProvider):
                 new_name = self._relative_name(name).lower()
                 if orig_name != new_name:
                     LOGGER.info(
-                        "Cannot change node name from {0} to {1}, deleting {2} and creating new"
-                        .format(orig_name, new_name, identifier)
+                        "Cannot change node name from %s to %s, deleting %s and creating new",
+                        orig_name, new_name, identifier
                     )
                     self._delete_record(identifier)
                     return self._create_record(rtype, name, content)
@@ -152,7 +152,7 @@ class Provider(BaseProvider):
         if data:
             data = json.dumps(data)
 
-        LOGGER.debug('Request: {0} {1} with data {2}'.format(action, url, data))
+        LOGGER.debug('Request: %s %s with data %s', action, url, data)
 
         response = requests.request(action, self.api_endpoint + url, data=data,
                                     headers={
@@ -160,7 +160,7 @@ class Provider(BaseProvider):
                                         'Accept': 'application/json',
                                         'Content-Type': 'application/json'
                                     })
-        LOGGER.debug('Response: {0}'.format(response))
+        LOGGER.debug('Response: %s', response)
         # if the request fails for any reason, throw an error.
         if response.status_code == 503:
             raise RuntimeError(
