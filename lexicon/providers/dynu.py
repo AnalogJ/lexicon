@@ -112,7 +112,11 @@ class Provider(BaseProvider):
             records = {identifier: self._to_dynu_record(rtype, None, content)}
 
         for ident, rec in records.items():
-            add_rec = self._to_dynu_record(rec['type'], self._relative_name(rec['name']), rec['content'])
+            add_rec = self._to_dynu_record(
+                rec['type'],
+                self._relative_name(rec['name']),
+                rec['content']
+            )
             payload = self._post('/dns/{0}/record/{1}'.format(self.domain_id, ident), add_rec)
             update = self._from_dynu_record(payload)
             LOGGER.debug('update_record: %s', update)
@@ -138,8 +142,7 @@ class Provider(BaseProvider):
                 if error.response.status_code == 501:
                     LOGGER.info("delete_record: {0} does not exist".format(record_id))
                     continue
-                else:
-                    raise error
+                raise error
 
         return True
 
@@ -153,9 +156,9 @@ class Provider(BaseProvider):
 
         response = requests.request(action, self.api_endpoint + url, data=data,
                                     headers={
-                                    'API-Key': self._get_provider_option('auth_token'),
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
+                                        'API-Key': self._get_provider_option('auth_token'),
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
                                     })
         LOGGER.debug('Response: {0}'.format(response))
         # if the request fails for any reason, throw an error.
@@ -224,7 +227,7 @@ class Provider(BaseProvider):
 
         # format the content as noted in the spec, e.g. take everything
         # in the raw DNS response after the record type, and remove quotations
-        # Example: 
+        # Example:
         #   example.com. 120 IN TXT \"txt-value=thisIsATest\"
         # Becomes:
         #   txt-value=thisIsATest
@@ -261,7 +264,13 @@ class Provider(BaseProvider):
             'MX':    (lambda: {'priority': cnt_split[0], 'host': cnt_split[1]}),
             'NS':    (lambda: {'host': content}),
             'PTR':   (lambda: {'host': content}),
-            'SRV':   (lambda: {'priority': cnt_split[0], 'weight': cnt_split[1], 'port': cnt_split[2], 'host': cnt_split[3]}),
+            'SRV': (lambda: {
+                'priority': cnt_split[0],
+                'weight': cnt_split[1],
+                'port': cnt_split[2],
+                'host': cnt_split[3]
+                }
+            ),
             'TXT':   (lambda: {'textData': content}),
         }.get(rtype, lambda: {})())
         return output
