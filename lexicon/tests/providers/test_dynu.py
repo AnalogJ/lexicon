@@ -1,6 +1,5 @@
 """Integration tests for Dynu.com"""
 from unittest import TestCase
-import json
 
 from lexicon.tests.providers.integration_tests import IntegrationTests
 
