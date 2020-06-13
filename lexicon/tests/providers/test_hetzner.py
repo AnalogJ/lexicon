@@ -10,7 +10,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTests
 class HetznerProviderTests(TestCase, IntegrationTests):
     """TestCase for Hetzner"""
     provider_name = 'hetzner'
-    domain = 'softwarekollektiv.de'
+    domain = 'hetzner-api-test.de'
 
     def _filter_headers(self):
         return ['Auth-API-Token']
