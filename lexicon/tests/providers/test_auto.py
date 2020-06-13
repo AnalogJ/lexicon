@@ -4,7 +4,7 @@ from unittest import TestCase
 
 import mock
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 from lexicon.providers.auto import _get_ns_records_domains_for_domain
 
 
@@ -35,7 +35,7 @@ def _there_is_no_network():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class AutoProviderTests(TestCase, IntegrationTests):
+class AutoProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for auto"""
     provider_name = 'auto'
     domain = 'pacalis.net'

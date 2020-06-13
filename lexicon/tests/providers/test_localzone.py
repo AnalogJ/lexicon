@@ -4,7 +4,7 @@ from unittest import TestCase
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 FILENAME = "db.example.com"
 ZONEFILE = """
@@ -40,7 +40,7 @@ def testfile():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class LocalzoneProviderTests(TestCase, IntegrationTests):
+class LocalzoneProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Localzone"""
     provider_name = "localzone"
     domain = "example.com"
