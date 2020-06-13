@@ -102,13 +102,13 @@ Then you'll need to populate it with the following template:
 
 ```python
 # Test for one implementation of the interface
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 from unittest import TestCase
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class FooProviderTests(TestCase, IntegrationTests):
+class FooProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Foo provider"""
 	provider_name = 'foo'
 	domain = 'example.com'
@@ -182,13 +182,14 @@ In your `lexicon/tests/providers/test_foo.py` file, you can use `@pytest.mark.sk
 		return
 ```
 
-You can also skip extended test suites by adding the following snipped:
+You can also skip extended test suites by inheriting your provider test class from ``IntegrationTestsV1`` instead of ``IntegrationTestsV2``:
 
 ```python
-    @pytest.fixture(autouse=True)
-    def _skip_suite(self, request):  # pylint: disable=no-self-use
-        if request.node.get_closest_marker('ext_suite_1'):
-            pytest.skip('Skipping extended suite')
+from lexicon.tests.providers.integration_tests import IntegrationTestsV1
+from unittest import TestCase
+
+class FooProviderTests(TestCase, IntegrationTestsV1):
+    """Integration tests for Foo provider"""
 ```
 
 ## CODEOWNERS file

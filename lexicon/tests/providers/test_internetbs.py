@@ -2,13 +2,13 @@
 import os
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class InternetbsProviderTests(TestCase, IntegrationTests):
+class InternetbsProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for InternetBS"""
     provider_name = 'internetbs'
     domain = 'world-of-ysera.com'

@@ -2,14 +2,14 @@
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 from lexicon.providers.dreamhost import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class DreamhostProviderTests(TestCase, IntegrationTests):
+class DreamhostProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Dreamhost"""
     provider_name = 'dreamhost'
     domain = 'lexicon-example.com'

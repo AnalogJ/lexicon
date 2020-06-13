@@ -4,7 +4,7 @@ from tempfile import mkstemp
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 FAKE_KEY = b"""
@@ -54,7 +54,7 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class TransipProviderTests(TestCase, IntegrationTests):
+class TransipProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Transip"""
     provider_name = 'transip'
     domain = 'hurrdurr.nl'

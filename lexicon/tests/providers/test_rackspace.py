@@ -1,13 +1,13 @@
 """"Test for rackspace implementation of the lexicon interface"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class RackspaceProviderTests(TestCase, IntegrationTests):
+class RackspaceProviderTests(TestCase, IntegrationTestsV2):
     """Tests the rackspace provider"""
     provider_name = 'rackspace'
     domain = 'capsulecd.com'
