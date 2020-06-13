@@ -3,7 +3,7 @@ import re
 
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -11,7 +11,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTests
 # pass, by inheritance from integration_tests.IntegrationTests
 
 
-class AzureTests(TestCase, IntegrationTests):
+class AzureTests(TestCase, IntegrationTestsV2):
     """TestCase for Google Cloud DNS"""
     provider_name = 'azure'
     domain = 'full4ir.tk'

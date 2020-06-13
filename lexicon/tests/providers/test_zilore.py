@@ -1,14 +1,14 @@
 """Integration tests for Zilore"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests, _vcr_integration_test  # pylint: disable=protected-access
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2, _vcr_integration_test  # pylint: disable=protected-access
 from lexicon.providers.zilore import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class ZiloreProviderTests(TestCase, IntegrationTests):
+class ZiloreProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Zeit"""
     Provider = Provider
     provider_name = 'zilore'
