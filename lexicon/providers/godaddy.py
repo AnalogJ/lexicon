@@ -95,11 +95,12 @@ class Provider(BaseProvider):
         ttl = self._get_lexicon_option('ttl')
 
         # Retrieve existing data in DNS zone.
-        records = self._get('/domains/{0}/records/{1}/{2}'.format(domain, rtype, name))
+        records = self._get('/domains/{0}/records'.format(domain))
 
-        # Check if a record already matches
+        # Check if a record already matches given parameters
         for record in records:
-            if record['data'] == content:
+            if (record['type'] == rtype and self._relative_name(record['name']) == relative_name
+                    and record['data'] == content):
                 LOGGER.debug(
                     'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
                 return True
@@ -111,8 +112,8 @@ class Provider(BaseProvider):
 
         records.append(data)
 
-        # Insert the record
-        self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, name), records)
+        # Synchronize data with inserted record into DNS zone.
+        self._put('/domains/{0}/records'.format(domain), records)
 
         LOGGER.debug('create_record: %s %s %s', rtype, name, content)
 
@@ -138,7 +139,6 @@ class Provider(BaseProvider):
         if name:
             relative_name = self._relative_name(name)
 
-        updated_record = None
         # Retrieve existing data in DNS zone.
         records = self._get('/domains/{0}/records'.format(domain))
 
@@ -152,33 +152,22 @@ class Provider(BaseProvider):
                      and self._relative_name(record['name']) == relative_name
                      and record['data'] != content)):
                 record['data'] = content
-                updated_record = record
                 break
 
         # Synchronize data with updated records into DNS zone.
-        if updated_record is not None:
-            if identifier and self._relative_name(updated_record['name']) != relative_name:
-                self._put('/domains/{0}/records/{1}'.format(domain, rtype), records)
-            else:
-                self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, relative_name),
-                          updated_record)
+        self._put('/domains/{0}/records'.format(domain), records)
 
-            LOGGER.debug('update_record: %s %s %s', rtype, name, content)
+        LOGGER.debug('update_record: %s %s %s', rtype, name, content)
 
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        # GoDaddy does not accept an empty array when updating a particular
-        # set of records.  It means that you cannot request to remove all
-        # records matching a particular rtype.
-        # Instead, if you're trying to delete a particular record, we get ALL
-        # the records in the DNS zone, update the set, and replace EVERYTHING
-        # in the DNS zone for that record type.  We have to get ALL the records
-        # in the DNS zone because the identifier isn't reversible, and if we're
-        # only passed the identifier, we don't know which type to get.
-        # Note that if you try to delete a CAA record, this will fail.  It will
-        # also fail if you try to delete all records of a given type if the DNS
-        # Zone contains CAA records.
+        # For the LOL. GoDaddy does not accept an empty array
+        # when updating a particular set of records.
+        # It means that you cannot request to remove all records
+        # matching a particular rtype and/or name.
+        # Instead, we get ALL records in the DNS zone, update the set,
+        # and replace EVERYTHING in the DNS zone.
         # You will always have at minimal NS/SRV entries in the array,
         # otherwise your DNS zone is broken, and updating the zone is the least of your problem ...
         domain = self.domain
@@ -194,15 +183,8 @@ class Provider(BaseProvider):
         # or some combination of rtype/name/content).
         filtered_records = []
         if identifier:
-            # Make sure we know what type the deleted record is, so we
-            # limit what we upload
-            if rtype is None:
-                for record in records:
-                    if Provider._identifier(record) == identifier:
-                        rtype = record['type']
             filtered_records = [
-                record for record in records if Provider._identifier(record) != identifier
-                and record['type'] == rtype]
+                record for record in records if Provider._identifier(record) != identifier]
         else:
             for record in records:
                 if ((not rtype and not relative_name and not content)  # pylint: disable=too-many-boolean-expressions
@@ -226,10 +208,7 @@ class Provider(BaseProvider):
                     filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone.
-        if (rtype and name) or identifier:
-            self._put('/domains/{0}/records/{1}'.format(domain, rtype), filtered_records)
-        else:
-            self._put('/domains/{0}/records'.format(domain), filtered_records)
+        self._put('/domains/{0}/records'.format(domain), filtered_records)
 
         LOGGER.debug('delete_records: %s %s %s', rtype, name, content)
 
