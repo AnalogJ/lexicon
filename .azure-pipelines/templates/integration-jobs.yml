@@ -1,0 +1,50 @@
+jobs:
+  - job: test
+    variables:
+      IMAGE: ubuntu-18.04
+      TOXENV: standard
+      PYTEST_ADDOPTS: --numprocesses 4
+      BRANCH_NAME: $(Build.SourceBranch)
+    strategy:
+      matrix:
+        linux-python-2.7:
+          PYTHON_VERSION: 2.7
+        linux-python-3.5:
+          PYTHON_VERSION: 3.5
+        linux-python-3.8-light:
+          PYTHON_VERSION: 3.8
+          TOXENV: light
+        linux-python-3.8-cover:
+          PYTHON_VERSION: 3.8
+          TOXENV: cover
+        linux-lint:
+          PYTHON_VERSION: 3.8
+          TOXENV: lint
+        windows-python-2.7:
+          IMAGE: vs2017-win2016
+          PYTHON_VERSION: 2.7
+        windows-python-3.5:
+          IMAGE: vs2017-win2016
+          PYTHON_VERSION: 3.5
+        windows-python-3.8:
+          IMAGE: vs2017-win2016
+          PYTHON_VERSION: 3.8
+      vmImage: $(IMAGE)
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: $(PYTHON_VERSION)
+            addToPath: true
+          displayName: Enable the targeted python version
+        - script: python -m pip install --upgrade pip tox wheel virtualenv setuptools
+          displayName: Install required runtime dependencies
+        - script: python -m tox
+          displayName: Execute tests through tox
+        - script: |
+            python -m pip install coveralls
+            coveralls
+          condition: eq(variables['TOXENV'], 'cover')
+          env:
+            COVERALLS_SERVICE_NAME: azure-pipelines
+            COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
+          displayName: Publish code coverage
