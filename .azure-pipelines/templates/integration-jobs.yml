@@ -29,7 +29,8 @@ jobs:
         windows-python-3.8:
           IMAGE: vs2017-win2016
           PYTHON_VERSION: 3.8
-    vmImage: $(IMAGE)
+    pool:
+      vmImage: $(IMAGE)
     steps:
       - task: UsePythonVersion@0
         inputs:
