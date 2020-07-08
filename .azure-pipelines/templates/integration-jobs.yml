@@ -29,22 +29,22 @@ jobs:
         windows-python-3.8:
           IMAGE: vs2017-win2016
           PYTHON_VERSION: 3.8
-      vmImage: $(IMAGE)
-      steps:
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: $(PYTHON_VERSION)
-            addToPath: true
-          displayName: Enable the targeted python version
-        - script: python -m pip install --upgrade pip tox wheel virtualenv setuptools
-          displayName: Install required runtime dependencies
-        - script: python -m tox
-          displayName: Execute tests through tox
-        - script: |
-            python -m pip install coveralls
-            coveralls
-          condition: eq(variables['TOXENV'], 'cover')
-          env:
-            COVERALLS_SERVICE_NAME: azure-pipelines
-            COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
-          displayName: Publish code coverage
+    vmImage: $(IMAGE)
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: python -m pip install --upgrade pip tox wheel virtualenv setuptools
+        displayName: Install required runtime dependencies
+      - script: python -m tox
+        displayName: Execute tests through tox
+      - script: |
+          python -m pip install coveralls
+          coveralls
+        condition: eq(variables['TOXENV'], 'cover')
+        env:
+          COVERALLS_SERVICE_NAME: azure-pipelines
+          COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
+        displayName: Publish code coverage
