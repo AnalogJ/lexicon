@@ -129,11 +129,13 @@ class Provider(BaseProvider):
         # if this was set via the command-line argument, we don't need to look it up
         if self.domain_id is None:
             self._lookup_hosted_zone()
-
         # per https://github.com/AnalogJ/lexicon/pull/481#issuecomment-623203995
         # authenticate should do something even if we already know the ZoneID.
-        # This will raise an exception if the credentials are wrong:
-        self.r53_client.get_hosted_zone(self.domain_id)
+        # This will raise an exception if the credentials are wrong. 
+        # However, we do not want to do this if they have not specified the 
+        # ZoneID, since this may break existing user IAM roles. 
+        else:
+            self.r53_client.get_hosted_zone(Id=self.domain_id)
 
     def _lookup_hosted_zone(self):
         """Determine the hosted zone id for the domain."""
