@@ -124,10 +124,19 @@ class Provider(BaseProvider):
         return input_string.lower() in ('true', 'yes')
 
     def _authenticate(self):
-        """Determine the hosted zone id for the domain."""
+        """Authenticate the credentials early in the process"""
+
         # if this was set via the command-line argument, we don't need to look it up
-        if self.domain_id is not None:
-            return
+        if self.domain_id is None:
+            self._lookup_hosted_zone()
+
+        # per https://github.com/AnalogJ/lexicon/pull/481#issuecomment-623203995
+        # authenticate should do something even if we already know the ZoneID.
+        # This will raise an exception if the credentials are wrong:
+        self.r53_client.get_hosted_zone(self.domain_id)
+
+    def _lookup_hosted_zone(self):
+        """Determine the hosted zone id for the domain."""
 
         try:
             hosted_zones = self.r53_client.list_hosted_zones_by_name()[
