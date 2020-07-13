@@ -121,9 +121,10 @@ class Provider(BaseProvider):
         return input_string.lower() in ('true', 'yes')
 
     def _authenticate(self):
+        dns_name = self.config.resolve('lexicon:domain')
         """Determine the hosted zone id for the domain."""
         try:
-            hosted_zones = self.r53_client.list_hosted_zones_by_name()[
+            hosted_zones = self.r53_client.list_hosted_zones_by_name(DNSName=dns_name, MaxItems='100')[
                 'HostedZones'
             ]
             hosted_zone = next(
