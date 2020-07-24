@@ -1,13 +1,13 @@
 """Integration tests for Conoha"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class ConohaProviderTests(TestCase, IntegrationTests):
+class ConohaProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Conoha"""
     provider_name = 'conoha'
     domain = 'narusejun.com'

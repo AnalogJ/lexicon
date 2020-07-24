@@ -24,17 +24,12 @@ class Provider(BaseProvider):
     "Domain Robot" which are supported by the ``lexicon.providers.hetzner_legacy`` module.
     """
 
-    API_VERSION = '0.9b'
+    API_VERSION = '1.0'
 
     """Provider class for Cloudflare"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        LOGGER.warning(
-            "Hetzner did not yet officially released version 1.0 of their API\n"
-            "This client uses the %s API specification and might be subject to change",
-            self.API_VERSION
-        )
         self.domain_id = None
         self.api_endpoint = 'https://dns.hetzner.com/api/v1'
 
@@ -50,8 +45,8 @@ class Provider(BaseProvider):
         """
 
         data = {
-            # hetzner needs the FQDN name even for names that suffix with domain name
-            'name': self._fqdn_name(name),
+            # hetzner needs the FQDN name if it does not belong to the managed domain itself
+            'name': self._get_record_name(self.domain, name),
             'type': rtype,
             'value': content,
             'zone_id': self.domain_id
@@ -104,7 +99,7 @@ class Provider(BaseProvider):
         """
         data = {
             'type': rtype,
-            'name': self._full_name(name),
+            'name': self._get_record_name(self.domain, name),
             'value': content,
             'zone_id': self.domain_id
         }
@@ -174,6 +169,19 @@ class Provider(BaseProvider):
             if zone['name'] == domain:
                 return zone
         raise Exception("No zone was found in account matching {0}".format(domain))
+
+    def _get_record_name(self, domain, record_name):
+        """
+        Get the name attribute appropriate for hetzner api. This means it's the name
+        without domain name if record name ends with managed domain name else a fqdn
+        :param domain: Name of domain for which dns zone should be searched
+        :param record_name: The record name to convert
+        :rtype: str
+        :return: The record name in an appropriate format for hetzner api
+        """
+        if record_name.rstrip('.').endswith(domain):
+            record_name = self._relative_name(record_name)
+        return record_name
 
     @staticmethod
     def _pretty_json(data):

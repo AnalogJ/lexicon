@@ -5,12 +5,12 @@ from contextlib import contextmanager
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 from lexicon.tests.providers.integration_tests import PROVIDER_VCR
 from lexicon.tests.providers.integration_tests import EngineOverrideConfigSource
 
 
-class Route53ProviderTests(TestCase, IntegrationTests):
+class Route53ProviderTests(TestCase, IntegrationTestsV2):
     """Route53 Provider Tests."""
 
     provider_name = 'route53'
