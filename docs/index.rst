@@ -1,6 +1,7 @@
-==============
-|logo| Lexicon
-==============
+|logo|
+=======
+Lexicon
+=======
 
 .. |logo| image:: images/logo.svg
     :alt: DNS-Lexicon
