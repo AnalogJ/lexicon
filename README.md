@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/AnalogJ/lexicon">
-  <img width="300" alt="lexicon_view" src="https://github.com/AnalogJ/lexicon/blob/master/logo.svg">
+  <img width="300" alt="lexicon_view" src="https://github.com/AnalogJ/lexicon/blob/master/docs/images/logo.svg">
   </a>
 </p>
 
