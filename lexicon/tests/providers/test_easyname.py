@@ -7,7 +7,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 class EasynameProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for EasyName"""
     provider_name = 'easyname'
-    domain = 'lexicontest.astzweig.de'
+    domain = 'nigl.it'
 
     def _filter_post_data_parameters(self):
         return ['username', 'password']
