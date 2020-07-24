@@ -136,7 +136,6 @@ class Provider(BaseProvider):
           bool: True if the record(s) were deleted successfully, False
                 otherwise.
         """
-        success_url = self.URLS['dns'].format(self.domain_id)
         record_ids = self._get_matching_dns_entry_ids(identifier, rtype,
                                                       name, content)
         LOGGER.debug('Record IDs to delete: %s', record_ids)
@@ -219,9 +218,10 @@ class Provider(BaseProvider):
         name = self._full_name(name) if name is not None else name
         if self._records is None:
             records = []
-            rows = self._get_dns_entry_trs()[1:] # skip the first record which contains the table header
+            # skip the first record which contains the table header
+            rows = self._get_dns_entry_trs()[1:]
 
-            for index, row in enumerate(rows):
+            for row in rows:
                 self._log('DNS list entry', row)
                 try:
                     rec = {}
