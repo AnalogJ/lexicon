@@ -40,10 +40,12 @@ class Provider(BaseProvider):
         'login': 'https://my.easyname.com/en/login',
         'domain_list': 'https://my.easyname.com/domains/',
         'overview': 'https://my.easyname.com/hosting/view-user.php',
-        'dns': 'https://my.easyname.com/domains/settings/dns.php?domain={}',
-        'dns_create_entry': 'https://my.easyname.com/domains/settings/form.php?domain={}',
+        'dns': 'https://my.easyname.com/en/domain/dns/index/domain/{}/',
+        'dns_create_entry': 'https://my.easyname.com/en/domain/dns/create/domain/{}',
         'dns_delete_entry':
-            'https://my.easyname.com/domains/settings/delete_record.php?domain={}&confirm=1&id={}'
+            'https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}',
+        'dns_delete_entry_confirm':
+            'https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}/confirm/1',
     }
 
     def __init__(self, config):
@@ -143,9 +145,12 @@ class Provider(BaseProvider):
         for rec_id in record_ids:
             delete_response = self.session.get(
                 self.URLS['dns_delete_entry'].format(self.domain_id, rec_id))
+            delete_response_confirm = self.session.post(
+                self.URLS['dns_delete_entry_confirm'].format(self.domain_id, rec_id))
             self._invalidate_records_cache()
             self._log('Delete DNS entry {}'.format(rec_id), delete_response)
-            success = success and delete_response.url == success_url
+            #success = success and delete_response_confirm.url == success_url
+            success = 'feedback-message--success' in delete_response_confirm.text
 
         return success
 
@@ -214,24 +219,19 @@ class Provider(BaseProvider):
         name = self._full_name(name) if name is not None else name
         if self._records is None:
             records = []
-            rows = self._get_dns_entry_trs()
+            rows = self._get_dns_entry_trs()[1:] # skip the first record which contains the table header
 
             for index, row in enumerate(rows):
                 self._log('DNS list entry', row)
                 try:
                     rec = {}
-                    if row.has_attr('ondblclick'):
-                        rec['id'] = int(row['ondblclick'].split(
-                            'id=')[1].split("'")[0])
-                    else:
-                        rec['id'] = -index
-
                     columns = row.find_all('td')
                     rec['name'] = (columns[0].string or '').strip()
                     rec['type'] = (columns[1].contents[1] or '').strip()
                     rec['content'] = (columns[2].string or '').strip()
                     rec['priority'] = (columns[3].string or '').strip()
                     rec['ttl'] = (columns[4].string or '').strip()
+                    rec['id'] = int(columns[5].find("a")["href"].rsplit('/', 1)[-1])
 
                     if rec['priority']:
                         rec['priority'] = int(rec['priority'])
@@ -273,13 +273,11 @@ class Provider(BaseProvider):
 
         data = {
             'id': str(identifier) if is_update else '',
-            'action': 'save',
             'name': name,
             'type': rtype,
             'content': content,
-            'prio': str(record['priority']) if is_update else '10',
+            'priority': str(record['priority']) if is_update else '10',
             'ttl': str(record['ttl']) if is_update else '360',
-            'commit': ''
         }
         ttl = self._get_lexicon_option('ttl')
         if ttl and ttl > 360:
@@ -287,7 +285,7 @@ class Provider(BaseProvider):
 
         prio = self._get_lexicon_option('priority')
         if prio and prio > 0:
-            data['prio'] = str(prio)
+            data['priority'] = str(prio)
 
         return data
 
@@ -326,9 +324,7 @@ class Provider(BaseProvider):
         assert dns_table is not None, 'Could not find DNS entry table'
 
         def _is_zone_tr(elm):
-            has_ondblclick = elm.has_attr('ondblclick')
-            has_class = elm.has_attr('class')
-            return elm.name.lower() == 'tr' and (has_class or has_ondblclick)
+            return elm.name.lower() == 'tr' and (not elm.has_attr('class'))
 
         rows = dns_table.findAll(_is_zone_tr)
         assert rows is not None and rows, 'Could not find any DNS entries'
