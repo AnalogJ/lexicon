@@ -2,7 +2,7 @@
 |logo|
 ======
 
-.. |logo| image:: images/logo.svg
+.. |logo| image:: images/logo_named.svg
     :alt: DNS-Lexicon
     :width: 250px
 
