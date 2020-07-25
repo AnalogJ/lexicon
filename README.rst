@@ -44,7 +44,7 @@ Lexicon can be used as:
 .. code-block:: bash
 
     # Create a TXT entry in domain.net zone hosted by CloudFlare
-    lexicon cloudflare TXT domain.net --name foo --content bar
+    lexicon cloudflare create domain.net TXT --name foo --content bar
 
 - or a Python library:
 

@@ -12,19 +12,15 @@ def main():
     ]
 
     output = f"""\
-=================
-Providers options
-=================
-
-List of providers
-=================
+Providers available
+-------------------
 
 The following Lexicon providers are available:
 
 {_generate_table(["{0}_".format(provider) for provider in providers])}
 
-Providers options
-=================
+List of options
+---------------
 
 """
 
@@ -52,25 +48,18 @@ Providers options
 
 
 def _generate_table(items):
-    nb_colums = 4
-    table = []
+    nb_columns = 4
     max_width = max(len(item) for item in items) + 1
-    delimitator = "+{0}+".format("+".join(["-" * max_width] * nb_colums))
+    delimiter = f"+{'-' * (max_width + 1)}" * nb_columns + "+"
 
-    table.append(delimitator)
+    table = [delimiter]
 
-    normalized = [
-        "{0}{1}".format(item, " " * (max_width - len(item))) for item in items
-    ]
-    divided = [
-        normalized[n : n + nb_colums] for n in range(0, len(normalized), nb_colums)
-    ]
+    divided = [items[n:n + nb_columns] for n in range(0, len(items), nb_columns)]
+    divided[-1] = [divided[-1][i] if len(divided[-1]) > i else '' for i in range(0, nb_columns)]
 
-    for division in divided:
-        entry = [*division, *[" " * max_width] * (nb_colums - len(division))]
-        line = "|{0}|".format("|".join(entry))
-        table.append(line)
-        table.append(delimitator)
+    for data in divided:
+        line = "".join(f"| {item:<{max_width}}" for item in data) + "|"
+        table = [*table, line, delimiter]
 
     return "\n".join(table)
 

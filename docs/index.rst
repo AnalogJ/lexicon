@@ -13,4 +13,5 @@
 
    introduction
    user_guide
+   configuration_reference
    developer_guide

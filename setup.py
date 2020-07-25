@@ -50,7 +50,6 @@ extras_require = {
         'pytest-xdist>=1.30',
         'vcrpy>=2.1',
         'mock>=3.0',
-        'tabulate>=0.8.7',
     ]
 }
 
