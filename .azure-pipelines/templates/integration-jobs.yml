@@ -51,8 +51,8 @@ jobs:
         displayName: Publish code coverage
   - job: trigger_readthedoc
     steps:
-      - script: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=${RTF_TOKEN}" ${RTF_URL}
+      - bash: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=${RTF_TOKEN}" ${RTF_URL}
+        env:
+          RTF_TOKEN: $(RTF_TOKEN)
+          RTF_URL: $(RTF_URL)
     condition: ne(variables['Build.Reason'], 'PullRequest')
-    env:
-      RTF_TOKEN: $(RTF_TOKEN)
-      RTF_URL: $(RTF_URL)
