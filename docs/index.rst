@@ -1,11 +1,10 @@
+======
 |logo|
-=======
-Lexicon
-=======
+======
 
 .. |logo| image:: images/logo.svg
     :alt: DNS-Lexicon
-    :width: 170px
+    :width: 250px
 
 .. toctree::
    :caption: Table of Contents
