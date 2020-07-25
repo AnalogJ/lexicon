@@ -165,6 +165,6 @@ Licensing
 =========
 
 - MIT
-- Logo_: transform by Mike Rowe from the Noun Project]
+- Logo_: transform by Mike Rowe from the Noun Project
 
 .. _Logo: https://thenounproject.com/term/transform/397964
