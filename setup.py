@@ -40,7 +40,7 @@ extras_require = {
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
     'easyname': ['beautifulsoup4'],
-    'localzone': ['localzone'],
+    'localzone': ['localzone', 'dnspython<2'],
     'gratisdns': ['beautifulsoup4'],
     # Define dev/test dependencies
     'dev': [
@@ -112,6 +112,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        'dnspython<2'  # dnspython 2.x has some non-backward compatible changes that breaks localzone for now
         'requests[security]',
         'tldextract',
         'future',
