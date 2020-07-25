@@ -49,3 +49,7 @@ jobs:
           COVERALLS_SERVICE_NAME: azure-pipelines
           COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
         displayName: Publish code coverage
+  - job: trigger_readthedoc
+    steps:
+      - script: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=$(RTF_TOKEN)" $(RTF_URL)
+    condition: ne(variables['Build.Reason'], 'PullRequest')
