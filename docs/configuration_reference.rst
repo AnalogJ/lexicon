@@ -36,7 +36,7 @@ provider option is named ``auth_token``:
 
   .. note::
 
-        Lexicon will look to two types of configuration files in the provided path to ``--config-dir``
+        Lexicon will look for two types of configuration files in the provided path to ``--config-dir``
         (current workdir by default): a general configuration file named ``lexicon.yml`` and a provider-specific
         configuration file named ``lexicon_[PROVIDER_NAME].yml``.
 
