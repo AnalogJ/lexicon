@@ -18,7 +18,7 @@ with open(path.join(path.dirname(path.abspath(__file__)), 'VERSION'), encoding='
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get a list of all the providers
@@ -50,6 +50,7 @@ extras_require = {
         'pytest-xdist>=1.30',
         'vcrpy>=2.1',
         'mock>=3.0',
+        'tabulate>=0.8.7',
     ]
 }
 
@@ -66,7 +67,7 @@ setup(
 
     description='Manipulate DNS records on various DNS providers in a standardized/agnostic way',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
 
     # The project's main homepage.
     url='https://github.com/AnalogJ/lexicon',
