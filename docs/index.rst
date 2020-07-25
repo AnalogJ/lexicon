@@ -2,8 +2,9 @@
 |logo|
 ======
 
-.. |logo| image:: images/logo.svg
+.. |logo| image:: images/logo_named.svg
     :alt: DNS-Lexicon
+    :width: 250px
 
 .. toctree::
    :caption: Table of Contents
@@ -12,4 +13,5 @@
 
    introduction
    user_guide
+   configuration_reference
    developer_guide
