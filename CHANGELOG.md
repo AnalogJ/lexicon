@@ -1,6 +1,10 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Some optional dependencies have been integrated to the core ones for generic purpose.
+  As a consequence `subreg`, `gransy`, `henet`, `easyname` and `gratisdns` do not have
+  optional dependencies anymore.
 
 ## 3.3.28 - 26/07/2020
 ### Added
