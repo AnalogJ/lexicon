@@ -20,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = []
 
 
-# Monkeypatch localzone.models.Zone method _increment_serial to make it compatible with dnspython 2.x
+# Monkeypatch localzone.models.Zone._increment_serial to make it compatible with dnspython 2.x
 def _increment_serial(self):
     next_serial = int(strftime("%Y%m%d00", localtime(time())))
 
@@ -28,13 +28,13 @@ def _increment_serial(self):
         next_serial = self.soa.rdata.serial + 1
 
     if hasattr(self.soa.rdata, 'replace'):
-        self.soa._data = self.soa._data._replace(rdata=self.soa.rdata.replace(serial=next_serial))
+        self.soa._data = self.soa._data._replace(rdata=self.soa.rdata.replace(serial=next_serial))  # pylint: disable=protected-access
     else:
         self.soa.rdata.serial = next_serial
 
 
 def _patch_zone(zone):
-    zone._increment_serial = types.MethodType(_increment_serial, zone)
+    zone._increment_serial = types.MethodType(_increment_serial, zone)  # pylint: disable=protected-access
 
 
 def provider_parser(subparser):
