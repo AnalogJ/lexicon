@@ -11,8 +11,8 @@ import subprocess
 import six
 import tldextract
 
+from lexicon import config as helper_config
 from lexicon import providers
-from lexicon.config import ArgsConfigSource, ConfigResolver, legacy_config_resolver
 
 LOGGER = logging.getLogger(__name__)
 
@@ -165,11 +165,11 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
     """
 
     def __init__(self, config):
-        if not isinstance(config, ConfigResolver):
+        if not isinstance(config, helper_config.ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
             # correctly defined ConfigResolver.
-            self.config = legacy_config_resolver(config)
+            self.config = helper_config.legacy_config_resolver(config)
         else:
             self.config = config
 
@@ -212,14 +212,14 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
                 "Provider discovered for domain %s: %s.", self.domain, provider_name
             )
 
-        new_config = ConfigResolver()
+        new_config = helper_config.ConfigResolver()
         new_config.with_dict({"provider_name": provider_name})
 
         target_prefix = "auto_{0}_".format(provider_name)
         for (
             config_source
         ) in self.config._config_sources:  # pylint: disable=protected-access
-            if not isinstance(config_source, ArgsConfigSource):
+            if not isinstance(config_source, helper_config.ArgsConfigSource):
                 new_config.with_config_source(config_source)
             else:
                 # ArgsConfigSource needs to be reprocessed to rescope the provided

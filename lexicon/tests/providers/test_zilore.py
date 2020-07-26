@@ -2,16 +2,13 @@
 from unittest import TestCase
 
 from lexicon.providers.zilore import Provider
-from lexicon.tests.providers.integration_tests import (  # pylint: disable=protected-access
-    IntegrationTestsV2,
-    _vcr_integration_test,
-)
+from lexicon.tests.providers import integration_tests
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class ZiloreProviderTests(TestCase, IntegrationTestsV2):
+class ZiloreProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     """TestCase for Zeit"""
 
     Provider = Provider
@@ -22,7 +19,7 @@ class ZiloreProviderTests(TestCase, IntegrationTestsV2):
         return ["X-Auth-Key"]
 
     # We override this test because Zilore refuses to create a A record with '127.0.0.1' value.
-    @_vcr_integration_test
+    @integration_tests._vcr_integration_test  # pylint: disable=protected-access
     def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
         self,
     ):  # pylint: disable=invalid-name

@@ -3,8 +3,6 @@ import re
 from unittest import TestCase
 
 from lexicon.providers.gratisdns import Provider
-
-# import pytest
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 

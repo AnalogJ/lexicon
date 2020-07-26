@@ -5,14 +5,10 @@ from unittest import TestCase
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import (
-    PROVIDER_VCR,
-    EngineOverrideConfigSource,
-    IntegrationTestsV2,
-)
+from lexicon.tests.providers import integration_tests
 
 
-class Route53ProviderTests(TestCase, IntegrationTestsV2):
+class Route53ProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     """Route53 Provider Tests."""
 
     provider_name = "route53"
@@ -36,12 +32,14 @@ class Route53ProviderTests(TestCase, IntegrationTestsV2):
 
     def _build_provider_with_overrides(self, overrides):
         config = self._test_config()
-        config.add_config_source(EngineOverrideConfigSource(overrides), 0)
+        config.add_config_source(
+            integration_tests.EngineOverrideConfigSource(overrides), 0
+        )
         return self.provider_module.Provider(config)
 
     @contextmanager
     def _use_vcr(self, path):
-        with PROVIDER_VCR.use_cassette(
+        with integration_tests.PROVIDER_VCR.use_cassette(
             self._cassette_path(path),
             filter_headers=self._filter_headers(),
             before_record_response=self._filter_response,

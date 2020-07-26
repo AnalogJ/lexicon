@@ -6,13 +6,8 @@ import os
 
 import tldextract
 
+from lexicon import config as helper_config
 from lexicon import discovery
-from lexicon.config import (
-    ConfigResolver,
-    DictConfigSource,
-    legacy_config_resolver,
-    non_interactive_config_resolver,
-)
 
 TLDEXTRACT_CACHE_FILE_DEFAULT = os.path.join("~", ".lexicon_tld_set")
 TLDEXTRACT_CACHE_FILE = os.path.expanduser(
@@ -35,11 +30,11 @@ class Client(
     def __init__(self, config=None):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
-            self.config = non_interactive_config_resolver()
-        elif not isinstance(config, ConfigResolver):
+            self.config = helper_config.non_interactive_config_resolver()
+        elif not isinstance(config, helper_config.ConfigResolver):
             # If config is not a ConfigResolver, we are in a legacy situation.
             # We protect this part of the Client API.
-            self.config = legacy_config_resolver(config)
+            self.config = helper_config.legacy_config_resolver(config)
         else:
             self.config = config
 
@@ -75,7 +70,7 @@ class Client(
             "lexicon:provider_name"
         ) or self.config.resolve("lexicon:provider")
 
-        self.config.add_config_source(DictConfigSource(runtime_config), 0)
+        self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
         provider_module = importlib.import_module(
             "lexicon.providers." + self.provider_name
