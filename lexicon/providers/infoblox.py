@@ -40,8 +40,6 @@ IB_TYPE2CONTENT = {
     "AAAA": ["ipv6addr", "record:aaaa", ",ttl,use_ttl"],
     "CNAME": ["canonical", "record:cname", ",ttl,use_ttl"],
     "MX": ["mail_exchanger", "record:mx", ",ttl,use_ttl"],
-    #'NS':['nameserver','record:ns',''],
-    #'SOA':['nameserver','record:ns',''],
     "TXT": ["text", "record:txt", ",ttl,use_ttl"],
     "SRV": ["target", "record:srv", ",ttl,use_ttl"],
 }
@@ -148,7 +146,7 @@ class Provider(BaseProvider):
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
-            except:
+            except BaseException:
                 LOGGER.error("Connection Error during create")
                 raise Exception("Connection Error")
             if response.status_code == 201:
@@ -188,7 +186,7 @@ class Provider(BaseProvider):
             )
             try:
                 response = self.session.get(uri)
-            except:
+            except BaseException:
                 raise Exception("Connection Error")
 
             results = response.json()
@@ -263,7 +261,7 @@ class Provider(BaseProvider):
         del payload["name"]
         try:
             response = self.session.put(uri, data=json.dumps(payload))
-        except:
+        except BaseException:
             LOGGER.error("Connection Error during create")
             raise Exception("Connection Error")
         if response.status_code == 200:
@@ -290,7 +288,7 @@ class Provider(BaseProvider):
             uri = "{0}{1}".format(self.api_endpoint, identifier,)
             try:
                 response = self.session.delete(uri)
-            except:
+            except BaseException:
                 LOGGER.error("Connection Error during create")
                 raise Exception("Connection Error")
             if response.status_code == 200:

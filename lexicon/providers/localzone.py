@@ -30,15 +30,13 @@ def _increment_serial(self):
     if hasattr(self.soa.rdata, "replace"):
         self.soa._data = self.soa._data._replace(
             rdata=self.soa.rdata.replace(serial=next_serial)
-        )  # pylint: disable=protected-access
+        )
     else:
         self.soa.rdata.serial = next_serial
 
 
 def _patch_zone(zone):
-    zone._increment_serial = types.MethodType(
-        _increment_serial, zone
-    )  # pylint: disable=protected-access
+    zone._increment_serial = types.MethodType(_increment_serial, zone)
 
 
 def provider_parser(subparser):
@@ -76,9 +74,7 @@ class Provider(BaseProvider):
         with localzone.manage(self.filename, self.origin, autosave=True) as zone:
             # TODO: Remove this monkeypatch once upstream Class is fixed.
             _patch_zone(zone)
-            if zone.add_record(
-                name, rtype, content, ttl=ttl
-            ):  # pylint: disable=no-member
+            if zone.add_record(name, rtype, content, ttl=ttl):
                 result = True
 
         LOGGER.debug("create_record: %s", result)
@@ -100,7 +96,7 @@ class Provider(BaseProvider):
         with localzone.manage(self.filename, self.origin, autosave=True) as zone:
             # TODO: Remove this monkeypatch once upstream Class is fixed.
             _patch_zone(zone)
-            records = zone.find_record(**filter_query)  # pylint: disable=no-member
+            records = zone.find_record(**filter_query)
 
         result = []
         for record in records:
@@ -138,7 +134,7 @@ class Provider(BaseProvider):
             with localzone.manage(self.filename, self.origin, autosave=True) as zone:
                 # TODO: Remove this monkeypatch once upstream Class is fixed.
                 _patch_zone(zone)
-                if zone.update_record(identifier, content):  # pylint: disable=no-member
+                if zone.update_record(identifier, content):
                     result = True
 
         LOGGER.debug("update_record: %s", result)
@@ -164,7 +160,7 @@ class Provider(BaseProvider):
                 # TODO: Remove this monkeypatch once upstream Class is fixed.
                 _patch_zone(zone)
                 for hashid in ids:
-                    zone.remove_record(hashid)  # pylint: disable=no-member
+                    zone.remove_record(hashid)
                     LOGGER.debug("delete_record: %s", hashid)
 
         return True

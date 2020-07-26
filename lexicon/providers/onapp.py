@@ -188,7 +188,7 @@ class Provider(BaseProvider):
             return result.json()
         return None
 
-    def _key_for_record_type(self, record_type):  # pylint: disable=no-self-use
+    def _key_for_record_type(self, record_type):
         if record_type in ("A", "AAAA"):
             return "ip"
         if record_type == "CNAME":

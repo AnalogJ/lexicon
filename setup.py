@@ -52,7 +52,7 @@ extras_require = {
         "pytest-xdist>=1.30",
         "vcrpy>=2.1",
         "mock>=3.0",
-        'pylint>=2.5.3 ; python_version >= "3"',
+        "flake8>=3.8.3",
         'black>=19.10b0 ; python_version >= "3.6"',
         "isort>=4.3.21",  # isort 5.x is incompatible with pylint and Python <= 3.5 at this time.
     ],

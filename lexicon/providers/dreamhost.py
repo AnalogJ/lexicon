@@ -118,7 +118,7 @@ class Provider(BaseProvider):
         try:
             self._get(
                 "dns-add_record",
-                query_params={"record": name, "type": rtype, "value": content,},
+                query_params={"record": name, "type": rtype, "value": content},
             )
         except AlreadyExistError:
             pass
@@ -194,7 +194,7 @@ class Provider(BaseProvider):
                 dreamhost_record = Provider._record_to_dreamhost_record(each)
                 self._get("dns-remove_record", query_params=dreamhost_record)
 
-            except Exception as exception:  # pylint: disable=broad-except
+            except Exception as exception:
                 err = exception
 
             # Sleeping for 1-second to avoid trigerring ddos protecting in case of looped requests

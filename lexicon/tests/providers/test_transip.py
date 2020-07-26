@@ -67,7 +67,7 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
         _fake_file = os.fdopen(_fake_fd, "wb", 1024)
         _fake_file.write(FAKE_KEY)
         _fake_file.close()
-        self._fake_key = _fake_key  # pylint: disable=attribute-defined-outside-init
+        self._fake_key = _fake_key
 
         options = {"auth_username": "foo", "auth_api_key": _fake_key}
 
@@ -94,7 +94,7 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
         reason=(
             "adding docs.example.com as a CNAME target will result in a RFC 1035 error"
         )
-    )  # pylint: disable=line-too-long
+    )
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
         self,
     ):

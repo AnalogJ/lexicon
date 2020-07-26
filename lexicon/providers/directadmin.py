@@ -53,7 +53,7 @@ class Provider(BaseProvider):
 
         try:
             self.domain_id = domains.index(self.domain)
-        except:
+        except BaseException:
             raise Exception("Domain {0} not found".format(self.domain))
 
     def _create_record(self, rtype, name, content):

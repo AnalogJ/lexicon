@@ -97,10 +97,10 @@ class Provider(BaseProvider):
         self.zone_data()
         self.domain_id = self.domain
 
-    def _make_identifier(self, rtype, name, content):  # pylint: disable=no-self-use
+    def _make_identifier(self, rtype, name, content):
         return "{}/{}={}".format(rtype, name, content)
 
-    def _parse_identifier(self, identifier):  # pylint: disable=no-self-use
+    def _parse_identifier(self, identifier):
         parts = identifier.split("/")
         rtype = parts[0]
         parts = parts[1].split("=")

@@ -77,7 +77,7 @@ class Provider(BaseProvider):
     def _make_identifier(self, rtype, name, content):
         return "{}/{}={}".format(rtype, self._full_name(name), content)
 
-    def _parse_identifier(self, identifier):  # pylint: disable=no-self-use
+    def _parse_identifier(self, identifier):
         parts = identifier.split("/")
         rtype = parts[0]
         parts = parts[1].split("=")

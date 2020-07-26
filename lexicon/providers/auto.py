@@ -138,13 +138,13 @@ def provider_parser(subparser):
         parser = argparse.ArgumentParser(add_help=False)
         provider_module.provider_parser(parser)
 
-        for action in parser._actions:  # pylint: disable=protected-access
+        for action in parser._actions:
             action.option_strings = [
                 re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
                 for option in action.option_strings
             ]
             action.dest = "auto_{0}_{1}".format(provider_name, action.dest)
-            subparser._add_action(action)  # pylint: disable=protected-access
+            subparser._add_action(action)
 
 
 # Take care of the fact that this provider extends object, not BaseProvider !
@@ -152,7 +152,7 @@ def provider_parser(subparser):
 # but __getattr__ is called only if the parameter/method cannot be found in the
 # current Provider hierarchy. If it is object, it will be the case for every relevant
 # call in the Lexicon library.
-class Provider(object):  # pylint: disable=useless-object-inheritance
+class Provider(object):
     """
     Implementation of the provider 'auto'.
     For the given domain, it will resolve the actual Provider class to use by inspecting the
@@ -176,7 +176,7 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
         self.domain = config.resolve("lexicon:domain")
         self.proxy_provider = None
 
-    def authenticate(self):  # pylint: disable=too-many-locals
+    def authenticate(self):
         """
         Launch the authentication process: for 'auto' provider, it means first to find the relevant
         provider, then call its authenticate() method. Almost every subsequent operation will then
@@ -216,21 +216,14 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
         new_config.with_dict({"provider_name": provider_name})
 
         target_prefix = "auto_{0}_".format(provider_name)
-        for (
-            config_source
-        ) in self.config._config_sources:  # pylint: disable=protected-access
+        for config_source in self.config._config_sources:
             if not isinstance(config_source, helper_config.ArgsConfigSource):
                 new_config.with_config_source(config_source)
             else:
                 # ArgsConfigSource needs to be reprocessed to rescope the provided
                 # args to the delegate provider
                 new_dict = {}
-                for (
-                    key,
-                    value,
-                ) in (
-                    config_source._parameters.items()
-                ):  # pylint: disable=protected-access
+                for (key, value,) in config_source._parameters.items():
                     if key.startswith(target_prefix):
                         new_param_name = re.sub("^{0}".format(target_prefix), "", key)
                         if provider_name not in new_dict:

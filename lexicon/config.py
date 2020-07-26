@@ -12,7 +12,7 @@ import yaml
 LOGGER = logging.getLogger(__name__)
 
 
-class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
+class ConfigResolver(object):
     """
     Highly customizable configuration resolver object, that gets configuration parameters
     from various sources with a precedence order. Sources and their priority are configured
@@ -201,9 +201,7 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
         return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
 
-class ConfigSource(
-    object
-):  # pylint: disable=useless-object-inheritance,too-few-public-methods
+class ConfigSource(object):
     """
     Base class to implement a configuration source for a ConfigResolver.
     The relevant method to override is resolve(self, config_parameter).
@@ -224,7 +222,7 @@ class ConfigSource(
         )
 
 
-class EnvironmentConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class EnvironmentConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against existing environment variables."""
 
     def __init__(self):
@@ -265,7 +263,7 @@ class EnvironmentConfigSource(ConfigSource):  # pylint: disable=too-few-public-m
         return None
 
 
-class ArgsConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class ArgsConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against an argparse namespace."""
 
     def __init__(self, namespace):
@@ -281,7 +279,7 @@ class ArgsConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         return self._parameters.get(splitted_config_key[-1], None)
 
 
-class DictConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class DictConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against a dict object."""
 
     def __init__(self, dict_object):
@@ -299,7 +297,7 @@ class DictConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         return cursor.get(splitted_config_key[-1], None)
 
 
-class FileConfigSource(DictConfigSource):  # pylint: disable=too-few-public-methods
+class FileConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a lexicon config file."""
 
     def __init__(self, file_path):
@@ -309,9 +307,7 @@ class FileConfigSource(DictConfigSource):  # pylint: disable=too-few-public-meth
         super(FileConfigSource, self).__init__(yaml_object)
 
 
-class ProviderFileConfigSource(
-    FileConfigSource
-):  # pylint: disable=too-few-public-methods
+class ProviderFileConfigSource(FileConfigSource):
     """ConfigSource that resolve configuration against an provider config file."""
 
     def __init__(self, provider_name, file_path):
@@ -320,9 +316,7 @@ class ProviderFileConfigSource(
         self._parameters = {provider_name: self._parameters}
 
 
-class LegacyDictConfigSource(
-    DictConfigSource
-):  # pylint: disable=too-few-public-methods
+class LegacyDictConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
 
     def __init__(self, dict_object):

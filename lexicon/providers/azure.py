@@ -190,7 +190,7 @@ class Provider(BaseProvider):
 
     def _delete_record_internal(
         self, identifier=None, rtype=None, name=None, content=None
-    ):  # pylint: disable=too-many-locals
+    ):
         result = self._get("/{0}".format(rtype if rtype else "recordsets"))
 
         to_delete = []

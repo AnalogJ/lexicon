@@ -170,9 +170,7 @@ class Provider(BaseProvider):
         response = self._request_domains_list()
         return response["domains"] if "domains" in response else list()
 
-    def _create_request_record(
-        self, identifier, rtype, name, content, ttl, priority
-    ):  # pylint: disable=too-many-arguments
+    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):
         """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
 

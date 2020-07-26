@@ -22,9 +22,7 @@ class ProviderNotAvailableError(Exception):
     """
 
 
-class Client(
-    object
-):  # pylint: disable=useless-object-inheritance,too-few-public-methods
+class Client(object):
     """This is the Lexicon client, that will execute all the logic."""
 
     def __init__(self, config=None):

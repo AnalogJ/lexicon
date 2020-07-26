@@ -27,7 +27,7 @@ def provider_parser(subparser):
     subparser.description = """
         Aliyun Provider requires an access key id and access secret with full rights on dns.
         Better to use RAM on Aliyun cloud to create a specified user for the dns operation.
-        The referrence for Aliyun DNS production: 
+        The referrence for Aliyun DNS production:
         https://help.aliyun.com/product/29697.html"""
     subparser.add_argument(
         "--auth-key-id", help="specify access key id for authentication"
@@ -111,9 +111,7 @@ class Provider(BaseProvider):
 
         if not identifier:
             record = resources[0] if resources else None
-            identifier = (
-                record["id"] if record else None
-            )  # pylint: disable=unsubscriptable-object
+            identifier = record["id"] if record else None
 
         if not identifier:
             raise ValueError("updating %s identifier not exists" % identifier)

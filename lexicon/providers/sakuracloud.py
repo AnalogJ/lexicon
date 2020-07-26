@@ -174,14 +174,12 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
+    def _bind_format_target(self, rtype, target):
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _find_resource_record_set(
-        self, records, rtype=None, name=None, content=None
-    ):  # pylint: disable=no-self-use
+    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
         for index, record in enumerate(records):
             if rtype and record["Type"] != rtype:
                 continue

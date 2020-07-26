@@ -5,7 +5,6 @@ In particular:
     - config should be passed correctly to provider,
     - relevant provider method should be invoked for a given config.
 """
-# pylint: disable=missing-docstring,redefined-outer-name
 from __future__ import absolute_import, print_function
 
 import contextlib

@@ -187,14 +187,14 @@ class Provider(BaseProvider):
         return response.json()
 
     # generate a unique id for a give record
-    def _make_identifier(self, rtype, name, content):  # pylint: disable=no-self-use
+    def _make_identifier(self, rtype, name, content):
         sha256 = hashlib.sha256()
         sha256.update(("type=" + rtype + ",").encode("utf-8"))
         sha256.update(("name=" + name + ",").encode("utf-8"))
         sha256.update(("content=" + content + ",").encode("utf-8"))
         return sha256.hexdigest()[0:7]
 
-    def _parse_identifier(self, identifier, payload):  # pylint: disable=no-self-use
+    def _parse_identifier(self, identifier, payload):
 
         for rrset in payload["data"]:
             for record in rrset["records"]:

@@ -164,7 +164,7 @@ class Provider(BaseProvider):
         if not all(auth.values()):
             raise Exception("No valid authentication mechanism found")
         data = self._request(
-            "POST", url="", data={"action": method, "param": dict(params, **auth),}
+            "POST", url="", data={"action": method, "param": dict(params, **auth)}
         )
         if data["status"] != "success":
             raise Exception("{} ({})".format(data["longmessage"], data["statuscode"]))

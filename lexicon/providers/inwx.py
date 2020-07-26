@@ -50,9 +50,7 @@ class Provider(BaseProvider):
 
         self._api = xmlrpclib.ServerProxy(endpoint, allow_none=True)
 
-    def _validate_response(
-        self, response, message, exclude_code=None
-    ):  # pylint: disable=no-self-use
+    def _validate_response(self, response, message, exclude_code=None):
         """
         validate an api server response
 

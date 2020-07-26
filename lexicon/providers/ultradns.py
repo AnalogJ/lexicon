@@ -89,7 +89,7 @@ class Provider(BaseProvider):
         # Test auth works
         self.zone_data()
 
-    def _make_identifier(self, rtype, name, content):  # pylint: disable=no-self-use
+    def _make_identifier(self, rtype, name, content):
         sha256 = hashlib.sha256()
         sha256.update(("type=" + rtype + ",").encode("utf-8"))
         sha256.update(("name=" + name + ",").encode("utf-8"))
@@ -121,7 +121,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _clean_rrtype(self, rtype):  # pylint: disable=no-self-use
+    def _clean_rrtype(self, rtype):
         """ UltraDNS returns records with types like 'MX (15)' """
         return rtype.split()[0]
 
@@ -179,7 +179,6 @@ class Provider(BaseProvider):
 
         return True
 
-    # pylint: disable=too-many-branches
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
 
         data = self.zone_data()

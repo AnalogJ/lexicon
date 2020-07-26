@@ -186,7 +186,7 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
+    def _bind_format_target(self, rtype, target):
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
@@ -223,7 +223,7 @@ class Provider(BaseProvider):
         for record in records:
             if (
                 (not rtype or record["type"] == rtype)
-                and (  # pylint: disable=too-many-boolean-expressions
+                and (
                     not name or self._full_name(record["name"]) == self._full_name(name)
                 )
                 and (not content or record["content"] == content)

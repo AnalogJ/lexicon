@@ -174,7 +174,7 @@ class Provider(BaseProvider):
             return ""
         return response.json()
 
-    def _check_exitcode(self, payload, title):  # pylint: disable=no-self-use
+    def _check_exitcode(self, payload, title):
         if payload["success"] == "ok":
             LOGGER.debug("%s: %s", title, payload["success"])
             return True

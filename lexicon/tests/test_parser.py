@@ -1,5 +1,4 @@
 """Unit tests for the Lexicon CLI parser"""
-# pylint: disable=missing-docstring
 from __future__ import absolute_import
 
 import pytest

@@ -1,5 +1,4 @@
 """ Ensure that stdout corresponds to the given reference output """
-# pylint: disable=missing-docstring
 from __future__ import absolute_import
 
 import json

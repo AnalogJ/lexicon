@@ -1,5 +1,4 @@
 """Base class for provider integration tests"""
-# pylint: disable=missing-docstring
 import os
 from functools import wraps
 from importlib import import_module
@@ -27,7 +26,6 @@ PROVIDER_VCR = vcr.VCR(
 def _vcr_integration_test(decorated):
     @wraps(decorated)
     def wrapper(self):
-        # pylint: disable=protected-access
         with PROVIDER_VCR.use_cassette(
             self._cassette_path("IntegrationTests/{0}.yaml".format(decorated.__name__)),
             filter_headers=self._filter_headers(),
@@ -42,9 +40,7 @@ def _vcr_integration_test(decorated):
     return wrapper
 
 
-class EngineOverrideConfigSource(
-    ConfigSource
-):  # pylint: disable=too-few-public-methods
+class EngineOverrideConfigSource(ConfigSource):
     """Config source to override some provider parameters during tests"""
 
     def __init__(self, overrides):
@@ -57,7 +53,7 @@ class EngineOverrideConfigSource(
         return self.overrides.get(config_key)
 
 
-class FallbackConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class FallbackConfigSource(ConfigSource):
     """Config source to provider fallback to provider parameters during tests"""
 
     def __init__(self, fallback_fn):
@@ -72,11 +68,9 @@ class FallbackConfigSource(ConfigSource):  # pylint: disable=too-few-public-meth
         return None
 
 
-class IntegrationTestsV1(
-    object
-):  # pylint: disable=useless-object-inheritance,too-many-public-methods
+class IntegrationTestsV1(object):
     """
-    https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface  # pylint: disable=line-too-long
+    https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface
     Single, reusable definition of tests for the interface. Authors of
     new implementations of the interface merely have to provide the test
     data, as class attributes of a class which inherits
@@ -144,28 +138,28 @@ class IntegrationTestsV1(
     @_vcr_integration_test
     def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record("A", "localhost", "127.0.0.1")
 
     @_vcr_integration_test
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record("CNAME", "docs", "docs.example.com")
 
     @_vcr_integration_test
     def test_provider_when_calling_create_record_for_TXT_with_valid_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record("TXT", "_acme-challenge.test", "challengetoken")
 
     @_vcr_integration_test
     def test_provider_when_calling_create_record_for_TXT_with_full_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT", "_acme-challenge.full.{0}".format(self.domain), "challengetoken"
@@ -174,7 +168,7 @@ class IntegrationTestsV1(
     @_vcr_integration_test
     def test_provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT", "_acme-challenge.fqdn.{0}.".format(self.domain), "challengetoken"
@@ -335,7 +329,7 @@ class IntegrationTestsV1(
     @_vcr_integration_test
     def test_provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(
         self,
-    ):  # pylint: disable=line-too-long
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT", "delete.testfull.{0}".format(self.domain), "challengetoken"
@@ -351,7 +345,7 @@ class IntegrationTestsV1(
     @_vcr_integration_test
     def test_provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(
         self,
-    ):  # pylint: disable=line-too-long
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT", "delete.testfqdn.{0}.".format(self.domain), "challengetoken"
@@ -405,7 +399,7 @@ class IntegrationTestsV1(
 
         return config
 
-    def _test_parameters_overrides(self):  # pylint: disable=no-self-use
+    def _test_parameters_overrides(self):
         """
         This method gives an object whose keys are some provider
         or lexicon parameters expected during a test.
@@ -420,7 +414,7 @@ class IntegrationTestsV1(
         """
         return {}
 
-    def _test_fallback_fn(self):  # pylint: disable=no-self-use
+    def _test_fallback_fn(self):
         """
         This method gives a fallback lambda for any provider parameter that have not been resolved.
         By default it will return 'placeholder_[parameter_name]' for a particular parameter
@@ -453,16 +447,16 @@ class IntegrationTestsV1(
     # Optional. Used to identify the test variant, if any.
     provider_variant = None
 
-    def _filter_headers(self):  # pylint: disable=no-self-use
+    def _filter_headers(self):
         return []
 
-    def _filter_query_parameters(self):  # pylint: disable=no-self-use
+    def _filter_query_parameters(self):
         return []
 
-    def _filter_post_data_parameters(self):  # pylint: disable=no-self-use
+    def _filter_post_data_parameters(self):
         return []
 
-    def _filter_request(self, request):  # pylint: disable=no-self-use
+    def _filter_request(self, request):
         """Filter any sensitive data out of the provider requests. `request`
         is a Python object with the same structure as all the request sections
         in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
@@ -475,7 +469,7 @@ class IntegrationTestsV1(
         """
         return request
 
-    def _filter_response(self, response):  # pylint: disable=no-self-use
+    def _filter_response(self, response):
         """Filter any sensitive data out of the provider responses. `response`
         is a Python object with the same structure as all the response sections
         in the YAML recordings at tests/fixtures/cassettes/[provider]. For the
@@ -585,7 +579,7 @@ class IntegrationTestsV2(IntegrationTestsV1):
     @_vcr_integration_test
     def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(
         self,
-    ):  # pylint: disable=line-too-long
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT",

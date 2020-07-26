@@ -6,7 +6,7 @@ import warnings
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
-class Provider(object):  # pylint: disable=useless-object-inheritance
+class Provider(object):
     """
     This is the base class for all lexicon Providers.
     It provides common functionality and ensures that all implemented
@@ -195,7 +195,7 @@ class Provider(object):  # pylint: disable=useless-object-inheritance
             record_name = record_name.rstrip(".")
         return record_name
 
-    def _clean_TXT_record(self, record):  # pylint: disable=no-self-use,invalid-name
+    def _clean_TXT_record(self, record):
         if record["type"] == "TXT":
             # Some providers have quotes around the TXT records,
             # so we're going to remove those extra quotes

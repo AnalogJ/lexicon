@@ -115,9 +115,7 @@ class Provider(BaseProvider):
         }
 
         try:
-            xml = self.client._call(
-                "namecheap.domains.getInfo", extra_payload
-            )  # pylint: disable=protected-access
+            xml = self.client._call("namecheap.domains.getInfo", extra_payload)
         except namecheap.ApiError as err:
             # this will happen if there is an API connection error
             # OR if the user is not permissioned to manage this domain

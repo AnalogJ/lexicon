@@ -208,7 +208,7 @@ class Provider(BaseProvider):
             return response.json()
         return response.text
 
-    def _record_name(self, name):  # pylint: disable=no-self-use
+    def _record_name(self, name):
         return "%s." % name.rstrip(".") if name else None
 
     def _record_payload(self, rtype, name, content):

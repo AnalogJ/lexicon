@@ -47,7 +47,7 @@ def provider_parser(subparser):
     )
 
 
-class RecordSetPaginator(object):  # pylint: disable=useless-object-inheritance
+class RecordSetPaginator(object):
     """Paginate through complete list of record sets."""
 
     def __init__(self, r53_client, hosted_zone_id, max_items=None):

@@ -1,5 +1,4 @@
 """Test for route53 implementation of the interface."""
-# pylint: disable=missing-docstring
 from contextlib import contextmanager
 from unittest import TestCase
 

@@ -58,6 +58,6 @@ class AutoProviderTests(TestCase, IntegrationTestsV2):
     @pytest.mark.skipif(
         _there_is_no_network(), reason="No network, no nslookup call possible."
     )
-    def test_nslookup_resolution(self):  #  pylint: disable=no-self-use
+    def test_nslookup_resolution(self):
         """Ensure that nameservers can be resolved through os nslookup call."""
         assert _get_ns_records_domains_for_domain("google.com")

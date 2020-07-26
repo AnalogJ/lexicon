@@ -11,7 +11,7 @@ from lexicon.client import Client
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
 
-logger = logging.getLogger(__name__)  # pylint: disable=C0103
+logger = logging.getLogger(__name__)
 
 
 def generate_list_table_result(lexicon_logger, output=None, without_header=None):

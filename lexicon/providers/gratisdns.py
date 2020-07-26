@@ -73,7 +73,6 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    # pylint: disable=too-many-locals
     def _list_records(self, rtype=None, name=None, content=None):
         query_params = {
             "action": "dns_primary_changeDNSsetup",
@@ -127,7 +126,7 @@ class Provider(BaseProvider):
         for record in records:
             if (
                 (not rtype or record["type"] == rtype)
-                and (  # pylint: disable=too-many-boolean-expressions
+                and (
                     not name or self._full_name(record["name"]) == self._full_name(name)
                 )
                 and (not content or record["content"] == content)
@@ -135,7 +134,6 @@ class Provider(BaseProvider):
                 _records.append(record)
         return _records
 
-    # pylint: disable=no-self-use
     def _get_content_entry(self, rtype):
         if rtype == "TXT":
             return "txtdata"

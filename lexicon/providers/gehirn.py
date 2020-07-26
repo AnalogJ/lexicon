@@ -254,14 +254,12 @@ class Provider(BaseProvider):
             record_name += "."
         return record_name
 
-    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
+    def _bind_format_target(self, rtype, target):
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _filter_records(
-        self, records, identifier=None, rtype=None, name=None
-    ):  # pylint: disable=no-self-use
+    def _filter_records(self, records, identifier=None, rtype=None, name=None):
         filtered_records = []
 
         if identifier:
@@ -295,10 +293,10 @@ class Provider(BaseProvider):
         path = "/zones/{}/versions/{}/records".format(self.domain_id, self.version_id,)
         return self._post(path, record)
 
-    def _build_content(self, rtype, record):  # pylint: disable=no-self-use
+    def _build_content(self, rtype, record):
         return BUILD_FORMATS[rtype].format(**record)
 
-    def _parse_content(self, rtype, content):  # pylint: disable=no-self-use
+    def _parse_content(self, rtype, content):
         return FORMAT_RE[rtype].match(content).groupdict()
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

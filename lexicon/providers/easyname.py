@@ -324,7 +324,7 @@ class Provider(BaseProvider):
 
     def _filter_records(
         self, records, rtype=None, name=None, content=None, identifier=None
-    ):  # pylint: disable=too-many-arguments,no-self-use
+    ):
         """
         Filter dns entries based on type, name or content.
         """
@@ -421,7 +421,7 @@ class Provider(BaseProvider):
         assert domain_text is not None, "The domain does not exist on Easyname."
         return domain_text
 
-    def _get_domain_id(self, domain_text_element):  # pylint: disable=no-self-use
+    def _get_domain_id(self, domain_text_element):
         """Return the easyname id of the domain."""
         try:
             # Hierarchy: TR > TD > SPAN > Domain Text
@@ -439,7 +439,7 @@ class Provider(BaseProvider):
             LOGGER.warning(errmsg)
             raise AssertionError(errmsg)
 
-    def _log(self, name, element):  # pylint: disable=no-self-use
+    def _log(self, name, element):
         """
         Log Response and Tag elements. Do nothing if elements is none of them.
         """

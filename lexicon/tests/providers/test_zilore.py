@@ -19,9 +19,9 @@ class ZiloreProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return ["X-Auth-Key"]
 
     # We override this test because Zilore refuses to create a A record with '127.0.0.1' value.
-    @integration_tests._vcr_integration_test  # pylint: disable=protected-access
+    @integration_tests._vcr_integration_test
     def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
         self,
-    ):  # pylint: disable=invalid-name
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record("A", "localhost", "1.1.1.1")

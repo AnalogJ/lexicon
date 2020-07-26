@@ -286,15 +286,13 @@ class Provider(BaseProvider):
         return response.json()
 
 
-class GandiRPCSubProvider(object):  # pylint: disable=useless-object-inheritance
+class GandiRPCSubProvider(object):
     """Provide Gandi RPCXML API implementation of Lexicon Provider interface.
     This implementation is called through the main LiveDNS implementation
     is RPC protocol is used.
     """
 
-    def __init__(
-        self, api_key, api_endpoint, domain, relative_name_fn, full_name_fn
-    ):  # pylint: disable=too-many-arguments
+    def __init__(self, api_key, api_endpoint, domain, relative_name_fn, full_name_fn):
         """Initialize Gandi RCPXML API provider."""
         super(GandiRPCSubProvider, self).__init__()
 
@@ -388,9 +386,7 @@ class GandiRPCSubProvider(object):  # pylint: disable=useless-object-inheritance
         return records
 
     # Update a record. Identifier or type+name+content
-    def update_record(
-        self, identifier, rtype=None, name=None, content=None
-    ):  # pylint: disable=too-many-branches
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates the specified record in a new Gandi zone."""
         if not identifier:
             records = self.list_records(rtype, name)

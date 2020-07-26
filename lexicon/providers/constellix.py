@@ -222,7 +222,7 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
-    def _check_type(self, rtype=None):  # pylint: disable=no-self-use
+    def _check_type(self, rtype=None):
         # Constellix doesn't treat SOA as a separate record type, so we bail on SOA modificiations.
         # It looks like it would be possible to fake SOA CRUD, so an area for possible future
         # improvement
@@ -238,14 +238,12 @@ class Provider(BaseProvider):
 
     def _filter_records(
         self, records, rtype=None, name=None, content=None, identifier=None
-    ):  # pylint: disable=too-many-arguments
+    ):
         _records = []
         for record in records:
             if (
                 (not identifier or record["id"] == identifier)
-                and (  # pylint: disable=too-many-boolean-expressions
-                    not rtype or record["type"] == rtype
-                )
+                and (not rtype or record["type"] == rtype)
                 and (not name or record["name"] == self._full_name(name))
                 and (not content or record["content"] == content)
             ):

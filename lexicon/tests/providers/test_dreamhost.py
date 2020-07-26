@@ -25,8 +25,6 @@ class DreamhostProviderTests(TestCase, IntegrationTestsV2):
 
     def test_identifier(self):
         """Test _identifier"""
-        # pylint: disable=protected-access
-        # pylint: disable=no-self-use
         dreamhost_record = {
             "type": "A",
             "record": "www.example.com",
@@ -40,8 +38,6 @@ class DreamhostProviderTests(TestCase, IntegrationTestsV2):
 
     def test_id_to_record(self):
         """Test _id_to_record and _record_to_dreamhost_record"""
-        # pylint: disable=protected-access
-        # pylint: disable=no-self-use
         dreamhost_record = {
             "type": "A",
             "record": "www.example.com",
@@ -57,8 +53,6 @@ class DreamhostProviderTests(TestCase, IntegrationTestsV2):
 
     def test_id_to_dreamhost_record(self):
         """Test _id_to_dreamhost_record"""
-        # pylint: disable=protected-access
-        # pylint: disable=no-self-use
         dreamhost_record = {
             "type": "A",
             "record": "www.example.com",
