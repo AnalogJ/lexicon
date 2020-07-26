@@ -32,9 +32,9 @@ jobs:
           path: $(Build.SourcesDirectory)/changelog
         displayName: Retrieve release changelog
       - script: |
-          version=$(cat VERSION)`
-          echo "Version is: $version"
-          echo "##vso[task.setvariable variable=ReleaseVersion;]$version"
+          version="$(cat VERSION)"
+          echo "Version is: ${version}"
+          echo "##vso[task.setvariable variable=ReleaseVersion;]${version}"
       - task: GithubRelease@0
         inputs:
           gitHubConnection: github.com_lexicon

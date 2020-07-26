@@ -38,9 +38,9 @@ jobs:
           python -m pip install --upgrade pip
         displayName: Prepare environment
       - script: |
-          version=$(cat VERSION)`
+          version="$(cat VERSION)"
           echo "Version is: $version"
-          python utils/extract_changelog.py $version > $(Build.ArtifactStagingDirectory)/release_$version.md
+          python utils/extract_changelog.py "${version}" > "$(Build.ArtifactStagingDirectory)/release_${version}.md"
         displayName: Generate release changelog
       - task: PublishPipelineArtifact@1
         inputs:
