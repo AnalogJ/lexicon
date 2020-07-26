@@ -6,7 +6,7 @@ Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 |build_status| |coverage_status| |docker_pulls| |pypy_version| |pypy_python_support| |github_license|
 
-.. |logo_named| image:: https://github.com/AnalogJ/lexicon/blob/readthedoc/docs/images/logo_named.svg
+.. |logo_named| image:: https://raw.githubusercontent.com/AnalogJ/lexicon/master/docs/images/logo_named.svg
     :alt: Lexicon
 
 .. |build_status| image:: https://dev.azure.com/AnalogJ/lexicon/_apis/build/status/AnalogJ.lexicon?branchName=master
