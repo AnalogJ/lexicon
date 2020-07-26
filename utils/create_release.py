@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import os
 import datetime
+import os
 import subprocess
+import sys
 from distutils.version import StrictVersion
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -49,6 +50,15 @@ def main():
 
         with open(os.path.join(PROJECT_ROOT, "VERSION"), "w") as file_h:
             file_h.write(new_version)
+
+        subprocess.check_call(
+            [sys.executable, "-m", "isort", "lexicon", "utils", "setup.py"],
+            cwd=PROJECT_ROOT,
+        )
+        subprocess.check_call(
+            [sys.executable, "-m", "black", "lexicon", "utils", "setup.py"],
+            cwd=PROJECT_ROOT,
+        )
 
         subprocess.check_call(
             'git commit -a -m "Version {0}"'.format(new_version), shell=True

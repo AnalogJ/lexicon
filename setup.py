@@ -5,12 +5,12 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
-
 # To use a consistent encoding
 from codecs import open
-from os import path, listdir
+from os import listdir, path
+
+# Always prefer setuptools over distutils
+from setuptools import find_packages, setup
 
 version = "unknown"
 with open(
