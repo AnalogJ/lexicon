@@ -3,7 +3,7 @@ from __future__ import absolute_import, print_function
 
 import logging
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from requests import Response, Session
 
 from lexicon.providers.base import Provider as BaseProvider

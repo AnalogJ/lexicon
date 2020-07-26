@@ -53,7 +53,7 @@ extras_require = {
         "vcrpy>=2.1",
         "mock>=3.0",
         "black>=19.10b0",
-        "isort>=5.1.4",
+        "isort>=4.3.21",  # isort 5.x is incompatible with pylint and Python <= 3.5 at this time.
     ],
 }
 
