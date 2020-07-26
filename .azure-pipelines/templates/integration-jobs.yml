@@ -62,6 +62,8 @@ jobs:
           testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
         displayName: Publish tests reports
   - job: trigger_readthedoc
+    pool:
+      vmImage: ubuntu-18.04
     steps:
       - bash: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=$(RTD_TOKEN)" $(RTD_URL)
     condition: ne(variables['Build.Reason'], 'PullRequest')
