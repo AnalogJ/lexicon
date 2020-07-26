@@ -34,14 +34,9 @@ extras_require = {
     'namecheap': ['PyNamecheap'],
     'route53': ['boto3'],
     'softlayer': ['SoftLayer'],
-    'subreg': ['zeep'],
-    'gransy': ['zeep'],
     'transip': ['transip>=0.3.0'],
     'plesk': ['xmltodict'],
-    'henet': ['beautifulsoup4'],
-    'easyname': ['beautifulsoup4'],
-    'localzone': ['localzone', 'dnspython<2'],
-    'gratisdns': ['beautifulsoup4'],
+    'localzone': ['localzone'],
     # Define dev/test dependencies
     'dev': [
         'pytest>=5.2 ; python_version >= "3.0"',
@@ -112,12 +107,17 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'dnspython<2'  # dnspython 2.x has some non-backward compatible changes that breaks localzone for now
-        'requests[security]',
+        # Core dependencies
         'tldextract',
         'future',
         'cryptography',
         'pyyaml',
+        # REST APIs
+        'requests[security]',
+        # SOAP APIs
+        'zeep',
+        # HTML scraping
+        'beautifulsoup4',
     ],
 
     extras_require=extras_require,

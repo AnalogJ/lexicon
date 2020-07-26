@@ -3,11 +3,7 @@ from __future__ import absolute_import
 
 import logging
 import requests
-# Due to optional requirement
-try:
-    from bs4 import BeautifulSoup
-except ImportError:
-    pass
+from bs4 import BeautifulSoup
 
 from lexicon.providers.base import Provider as BaseProvider
 

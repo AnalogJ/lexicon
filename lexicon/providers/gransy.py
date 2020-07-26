@@ -5,16 +5,15 @@ from builtins import staticmethod
 import collections
 import logging
 
+import zeep
+
 from lexicon.providers.base import Provider as BaseProvider
 
-try:
-    import zeep  # Optional dependency
-except BaseException:
-    pass
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ['gransy.com']
+
 
 def gransy_provider_parser(subparser):
     """Gransy provider parser"""
@@ -23,12 +22,14 @@ def gransy_provider_parser(subparser):
     subparser.add_argument(
         "--auth-password", help="specify password for authentication")
 
+
 def provider_parser(subparser):
     """Configure provider parser"""
     gransy_provider_parser(subparser)
 
     subparser.description = "DNS manipulation provider for Gransy sites " + \
         "subreg.cz, regtons.com and regnames.eu."
+
 
 class Provider(BaseProvider):
     """Provider class for Gransy"""
@@ -313,6 +314,7 @@ class Provider(BaseProvider):
     @staticmethod
     def _raise_error(major, minor, message):
         raise GransyError(major, minor, message)
+
 
 class GransyError(Exception):
     """Specific error for Gransy provider"""

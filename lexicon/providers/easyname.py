@@ -3,12 +3,7 @@ from __future__ import absolute_import, print_function
 import logging
 
 from requests import Response, Session
-
-# Handling optional dependency for this provider
-try:
-    from bs4 import BeautifulSoup, Tag
-except ImportError:
-    pass
+from bs4 import BeautifulSoup
 
 from lexicon.providers.base import Provider as BaseProvider
 
