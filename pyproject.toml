@@ -1,0 +1,68 @@
+[build-system]
+requires = [
+    "poetry>=0.12",
+]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "dns-lexicon"
+version = "3.3.28"
+description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
+license = "MIT"
+keywords = [
+    "dns", "lexicon", "dns-lexicon", "dehydrated", "letsencrypt",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+]
+authors = [
+    "Jason Kulatunga", "Adrien Ferrand"
+]
+readme = "README.rst"
+repository = "https://github.com/AnalogJ/lexicon"
+packages = [
+    { include = "lexicon" },
+]
+
+[tool.poetry.dependencies]
+python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+tldextract = "^2.2.2"
+future = "^0.18.2"
+cryptography = "^3.0"
+pyyaml = "^5.3.1"
+requests = {extras = ["security"], version = "^2.24.0"}
+zeep = "^3.4.0"
+beautifulsoup4 = "^4.9.1"
+# Extra dependencies for some providers
+pynamecheap = {version = "^0.0.3", extras = ["namecheap", "full"]}
+boto3 = {version = "^1.14.28", extras = ["route53", "full"]}
+transip = {version = "^2.1.2", extras = ["transip", "full"]}
+xmltodict = {version = "^0.12.0", extras = ["plesk", "full"]}
+localzone = {version = "^0.9.6", extras = ["localzone", "full"]}
+softlayer = {version = "^5.5.0", extras = ["softlayer", "full"]}
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+pytest-cov = "^2.10.0"
+pytest-xdist = "^1.33.0"
+vcrpy = "^4.0.2"
+mock = "^3.0"
+flake8 = "^3.8.3"
+isort = "^4.3.21"
+
+[tool.poetry.scripts]
+lexicon = "lexicon.cli:main"
