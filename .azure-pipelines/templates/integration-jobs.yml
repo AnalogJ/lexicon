@@ -42,6 +42,7 @@ jobs:
       - script: python -m tox
         displayName: Execute tests through tox
       - script: |
+          echo $(Build.DefinitionName)
           python -m pip install coveralls
           coveralls
         condition: eq(variables['TOXENV'], 'cover')
