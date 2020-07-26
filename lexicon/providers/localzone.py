@@ -1,6 +1,8 @@
 """Module provider for a localzone"""
 from __future__ import absolute_import, print_function
 import logging
+import types
+from time import localtime, strftime, time
 
 from .base import Provider as BaseProvider
 
@@ -16,6 +18,23 @@ except ImportError:
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = []
+
+
+# Monkeypatch localzone.models.Zone method _increment_serial to make it compatible with dnspython 2.x
+def _increment_serial(self):
+    next_serial = int(strftime("%Y%m%d00", localtime(time())))
+
+    if next_serial <= self.soa.rdata.serial:
+        next_serial = self.soa.rdata.serial + 1
+
+    if hasattr(self.soa.rdata, 'replace'):
+        self.soa._data = self.soa._data._replace(rdata=self.soa.rdata.replace(serial=next_serial))
+    else:
+        self.soa.rdata.serial = next_serial
+
+
+def _patch_zone(zone):
+    zone._increment_serial = types.MethodType(_increment_serial, zone)
 
 
 def provider_parser(subparser):
@@ -51,6 +70,8 @@ class Provider(BaseProvider):
             ttl = self.ttl
 
         with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+            # TODO: Remove this monkeypatch once upstream Class is fixed.
+            _patch_zone(zone)
             if zone.add_record(name, rtype, content, ttl=ttl):  # pylint: disable=no-member
                 result = True
 
@@ -71,6 +92,8 @@ class Provider(BaseProvider):
         filter_query = {"rdtype": rtype, "name": name, "content": content}
 
         with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+            # TODO: Remove this monkeypatch once upstream Class is fixed.
+            _patch_zone(zone)
             records = zone.find_record(**filter_query)  # pylint: disable=no-member
 
         result = []
@@ -107,6 +130,8 @@ class Provider(BaseProvider):
 
         if identifier and content:
             with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+                # TODO: Remove this monkeypatch once upstream Class is fixed.
+                _patch_zone(zone)
                 if zone.update_record(identifier, content):  # pylint: disable=no-member
                     result = True
 
@@ -130,6 +155,8 @@ class Provider(BaseProvider):
         if ids:
             LOGGER.debug("delete_records: %s", ids)
             with localzone.manage(self.filename, self.origin, autosave=True) as zone:
+                # TODO: Remove this monkeypatch once upstream Class is fixed.
+                _patch_zone(zone)
                 for hashid in ids:
                     zone.remove_record(hashid)  # pylint: disable=no-member
                     LOGGER.debug("delete_record: %s", hashid)
