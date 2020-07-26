@@ -28,6 +28,7 @@ mail3         IN  A     192.0.2.5             ; IPv4 address for mail3.example.c
 @             IN  TXT   "v=spf1 mx ~all"      ; SPFv1 record for example.com
 """
 
+
 @pytest.fixture(scope="module", autouse=True)
 def testfile():
     """Create a local zone file for testing."""
@@ -37,18 +38,18 @@ def testfile():
     yield
     os.remove(FILENAME)
 
+
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class LocalzoneProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Localzone"""
+
     provider_name = "localzone"
     domain = "example.com"
 
     def _test_parameters_overrides(self):
-        options = {
-            "filename": FILENAME
-        }
+        options = {"filename": FILENAME}
 
         return options
 

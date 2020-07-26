@@ -26,8 +26,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class NFSNProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for NFSN"""
-    provider_name = 'nfsn'
-    domain = 'koupia.xyz'
+
+    provider_name = "nfsn"
+    domain = "koupia.xyz"
 
     def _filter_headers(self):
-        return ['X-NFSN-Authentication']
+        return ["X-NFSN-Authentication"]

@@ -9,5 +9,6 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class GransyProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Gransy"""
-    provider_name = 'gransy'
-    domain = 'oldium.xyz'
+
+    provider_name = "gransy"
+    domain = "oldium.xyz"

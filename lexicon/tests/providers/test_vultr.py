@@ -12,13 +12,16 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class VultrProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for Vultr"""
-    provider_name = 'vultr'
-    domain = 'capsulecd.com'
+
+    provider_name = "vultr"
+    domain = "capsulecd.com"
 
     def _filter_headers(self):
-        return ['API-Key']
+        return ["API-Key"]
 
     # TODO: enable the skipped tests
     @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(
+        self,
+    ):
         return

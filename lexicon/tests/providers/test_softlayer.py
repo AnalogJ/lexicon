@@ -10,8 +10,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class SoftLayerProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for SoftLayer"""
-    provider_name = 'softlayer'
-    domain = 'example.com'
+
+    provider_name = "softlayer"
+    domain = "example.com"
 
     # SoftLayer does not provide a sandbox API; actual credentials are required
     # Keeping this here for when fixtures need to be regenerated

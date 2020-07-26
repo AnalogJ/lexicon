@@ -9,14 +9,15 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class RackspaceProviderTests(TestCase, IntegrationTestsV2):
     """Tests the rackspace provider"""
-    provider_name = 'rackspace'
-    domain = 'capsulecd.com'
+
+    provider_name = "rackspace"
+    domain = "capsulecd.com"
 
     def _filter_post_data_parameters(self):
-        return ['auth']
+        return ["auth"]
 
     def _filter_headers(self):
-        return ['X-Auth-Token']
+        return ["X-Auth-Token"]
 
     # Rackspace does not provide a sandbox API; actual credentials are required
     # Replace the auth_account, auth_username and auth_api_key as well as the
@@ -29,8 +30,8 @@ class RackspaceProviderTests(TestCase, IntegrationTestsV2):
         # the initial request and then make update calls to see if the action
         # is complete and has a response.
         return {
-            'sleep_time': '0',
+            "sleep_time": "0",
         }
 
     def _test_fallback_fn(self):
-        return lambda x: 'placeholder_' + x if x != 'auth_token' else None
+        return lambda x: "placeholder_" + x if x != "auth_token" else None

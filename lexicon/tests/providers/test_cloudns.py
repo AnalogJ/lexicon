@@ -9,11 +9,12 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class CloudnsProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for CloudNS"""
-    provider_name = 'cloudns'
-    domain = 'api-example.com'
+
+    provider_name = "cloudns"
+    domain = "api-example.com"
 
     def _filter_query_parameters(self):
-        return ['auth-id', 'sub-auth-id', 'sub-auth-user', 'auth-password']
+        return ["auth-id", "sub-auth-id", "sub-auth-user", "auth-password"]
 
     def _filter_post_data_parameters(self):
-        return ['auth-id', 'sub-auth-id', 'sub-auth-user', 'auth-password']
+        return ["auth-id", "sub-auth-id", "sub-auth-user", "auth-password"]

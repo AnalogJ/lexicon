@@ -9,8 +9,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class HetznerProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Hetzner"""
-    provider_name = 'hetzner'
-    domain = 'hetzner-api-test.de'
+
+    provider_name = "hetzner"
+    domain = "hetzner-api-test.de"
 
     def _filter_headers(self):
-        return ['Auth-API-Token']
+        return ["Auth-API-Token"]

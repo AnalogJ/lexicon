@@ -9,14 +9,15 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class DnsimpleProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for DNSSimple"""
-    provider_name = 'dnsimple'
-    domain = 'lexicontest.us'
+
+    provider_name = "dnsimple"
+    domain = "lexicontest.us"
 
     def _test_parameters_overrides(self):
         return {
-            'api_endpoint': 'https://api.sandbox.dnsimple.com/v2',
-            'region': 'global'
+            "api_endpoint": "https://api.sandbox.dnsimple.com/v2",
+            "region": "global",
         }
 
     def _filter_headers(self):
-        return ['Authorization', 'set-cookie', 'X-Dnsimple-OTP']
+        return ["Authorization", "set-cookie", "X-Dnsimple-OTP"]

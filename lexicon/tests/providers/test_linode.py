@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 import pytest
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
@@ -10,8 +11,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class LinodeProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Linode"""
-    provider_name = 'linode'
-    domain = 'lexicon-example.com'
+
+    provider_name = "linode"
+    domain = "lexicon-example.com"
 
     def _filter_post_data_parameters(self):
         return []
@@ -20,7 +22,7 @@ class LinodeProviderTests(TestCase, IntegrationTestsV2):
         return []
 
     def _filter_query_parameters(self):
-        return ['api_key']
+        return ["api_key"]
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_provider_when_calling_list_records_after_setting_ttl(self):

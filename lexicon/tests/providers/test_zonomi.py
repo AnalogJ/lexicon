@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 import pytest
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 
 
@@ -11,16 +12,19 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class ZonomiProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for Zonomi"""
-    provider_name = 'zonomi'
-    domain = 'pcekper.com.ar'
+
+    provider_name = "zonomi"
+    domain = "pcekper.com.ar"
 
     def _filter_query_parameters(self):
-        return ['api_key']
+        return ["api_key"]
 
     # TODO: enable the skipped tests
     @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(
+        self,
+    ):
         return
 
     def _test_parameters_overrides(self):
-        return {'auth_entrypoint': 'zonomi'}
+        return {"auth_entrypoint": "zonomi"}

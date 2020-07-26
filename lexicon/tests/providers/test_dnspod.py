@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 import pytest
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 
 
@@ -11,15 +12,18 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class DnsPodProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for DNSPod"""
-    provider_name = 'dnspod'
-    domain = 'capsulecd.com'
+
+    provider_name = "dnspod"
+    domain = "capsulecd.com"
 
     def _filter_post_data_parameters(self):
-        return ['login_token']
+        return ["login_token"]
 
     # TODO: enable the skipped tests
     @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="new test, missing recording")

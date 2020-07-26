@@ -10,8 +10,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class GehirnProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for Gehirn"""
-    provider_name = 'gehirn'
-    domain = 'example.com'
+
+    provider_name = "gehirn"
+    domain = "example.com"
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]

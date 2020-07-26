@@ -1,11 +1,11 @@
 """Module provider for a localzone"""
 from __future__ import absolute_import, print_function
+
 import logging
 import types
 from time import localtime, strftime, time
 
 from .base import Provider as BaseProvider
-
 
 # localzone is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
@@ -27,24 +27,28 @@ def _increment_serial(self):
     if next_serial <= self.soa.rdata.serial:
         next_serial = self.soa.rdata.serial + 1
 
-    if hasattr(self.soa.rdata, 'replace'):
-        self.soa._data = self.soa._data._replace(rdata=self.soa.rdata.replace(serial=next_serial))  # pylint: disable=protected-access
+    if hasattr(self.soa.rdata, "replace"):
+        self.soa._data = self.soa._data._replace(
+            rdata=self.soa.rdata.replace(serial=next_serial)
+        )  # pylint: disable=protected-access
     else:
         self.soa.rdata.serial = next_serial
 
 
 def _patch_zone(zone):
-    zone._increment_serial = types.MethodType(_increment_serial, zone)  # pylint: disable=protected-access
+    zone._increment_serial = types.MethodType(
+        _increment_serial, zone
+    )  # pylint: disable=protected-access
 
 
 def provider_parser(subparser):
     """Configure provider parserfor a localzone"""
-    subparser.add_argument(
-        "--filename", help="specify location of zone master file")
+    subparser.add_argument("--filename", help="specify location of zone master file")
 
 
 class Provider(BaseProvider):
     """Provider class for a localzone"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.ttl = self._get_lexicon_option("ttl")
@@ -72,7 +76,9 @@ class Provider(BaseProvider):
         with localzone.manage(self.filename, self.origin, autosave=True) as zone:
             # TODO: Remove this monkeypatch once upstream Class is fixed.
             _patch_zone(zone)
-            if zone.add_record(name, rtype, content, ttl=ttl):  # pylint: disable=no-member
+            if zone.add_record(
+                name, rtype, content, ttl=ttl
+            ):  # pylint: disable=no-member
                 result = True
 
         LOGGER.debug("create_record: %s", result)
@@ -163,6 +169,6 @@ class Provider(BaseProvider):
 
         return True
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Not required
         pass

@@ -6,18 +6,19 @@ from importlib import import_module
 
 import pytest
 import vcr
+
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 
-
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
-RECORD_MODE = 'none'
-if os.environ.get('LEXICON_LIVE_TESTS', 'false') == 'true':
-    RECORD_MODE = 'once'
+RECORD_MODE = "none"
+if os.environ.get("LEXICON_LIVE_TESTS", "false") == "true":
+    RECORD_MODE = "once"
 PROVIDER_VCR = vcr.VCR(
-    cassette_library_dir=os.environ.get('LEXICON_VCRPY_CASSETTES_PATH',
-                                        'tests/fixtures/cassettes'),
+    cassette_library_dir=os.environ.get(
+        "LEXICON_VCRPY_CASSETTES_PATH", "tests/fixtures/cassettes"
+    ),
     record_mode=RECORD_MODE,
-    decode_compressed_response=True
+    decode_compressed_response=True,
 )
 
 
@@ -28,45 +29,52 @@ def _vcr_integration_test(decorated):
     def wrapper(self):
         # pylint: disable=protected-access
         with PROVIDER_VCR.use_cassette(
-                self._cassette_path('IntegrationTests/{0}.yaml'
-                                    .format(decorated.__name__)),
-                filter_headers=self._filter_headers(),
-                filter_query_parameters=self._filter_query_parameters(),
-                filter_post_data_parameters=self._filter_post_data_parameters(),
-                before_record_request=self._filter_request,
-                before_record_response=self._filter_response):
+            self._cassette_path("IntegrationTests/{0}.yaml".format(decorated.__name__)),
+            filter_headers=self._filter_headers(),
+            filter_query_parameters=self._filter_query_parameters(),
+            filter_post_data_parameters=self._filter_post_data_parameters(),
+            before_record_request=self._filter_request,
+            before_record_response=self._filter_response,
+        ):
             decorated(self)
         # pylint: enable=protected-access
+
     return wrapper
 
 
-class EngineOverrideConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class EngineOverrideConfigSource(
+    ConfigSource
+):  # pylint: disable=too-few-public-methods
     """Config source to override some provider parameters during tests"""
+
     def __init__(self, overrides):
         super(EngineOverrideConfigSource, self).__init__()
         self.overrides = overrides
 
     def resolve(self, config_key):
         # We extract the key from existing namespace.
-        config_key = config_key.split(':')[-1]
+        config_key = config_key.split(":")[-1]
         return self.overrides.get(config_key)
 
 
 class FallbackConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
     """Config source to provider fallback to provider parameters during tests"""
+
     def __init__(self, fallback_fn):
         super(FallbackConfigSource, self).__init__()
         self.fallback_fn = fallback_fn
 
     def resolve(self, config_key):
-        config_key = config_key.split(':')
-        if not config_key[-2] == 'lexicon':
+        config_key = config_key.split(":")
+        if not config_key[-2] == "lexicon":
             return self.fallback_fn(config_key[-1])
 
         return None
 
 
-class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,too-many-public-methods
+class IntegrationTestsV1(
+    object
+):  # pylint: disable=useless-object-inheritance,too-many-public-methods
     """
     https://stackoverflow.com/questions/26266481/pytest-reusable-tests-for-different-implementations-of-the-same-interface  # pylint: disable=line-too-long
     Single, reusable definition of tests for the interface. Authors of
@@ -92,24 +100,24 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
         self.provider_module = None
 
     def setup_method(self, _):
-        self.provider_module = import_module('lexicon.providers.{0}'.format(self.provider_name))
+        self.provider_module = import_module(
+            "lexicon.providers.{0}".format(self.provider_name)
+        )
 
     ###########################################################################
     # Provider module shape
     ###########################################################################
     def test_provider_module_shape(self):
-        module = import_module(
-            'lexicon.providers.{0}'.format(
-                self.provider_name))
+        module = import_module("lexicon.providers.{0}".format(self.provider_name))
 
-        assert hasattr(module, 'provider_parser')
-        assert hasattr(module, 'Provider')
-        if self.provider_name != 'auto':
-            assert hasattr(module, 'NAMESERVER_DOMAINS')
+        assert hasattr(module, "provider_parser")
+        assert hasattr(module, "Provider")
+        if self.provider_name != "auto":
+            assert hasattr(module, "NAMESERVER_DOMAINS")
 
         assert callable(module.provider_parser)
         assert callable(module.Provider)
-        if self.provider_name != 'auto':
+        if self.provider_name != "auto":
             assert isinstance(module.NAMESERVER_DOMAINS, list)
 
     ###########################################################################
@@ -123,8 +131,9 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
     @_vcr_integration_test
     def test_provider_authenticate_with_unmanaged_domain_should_fail(self):
         config = self._test_config()
-        config.add_config_source(DictConfigSource(
-            {'domain': 'thisisadomainidonotown.com'}), 0)
+        config.add_config_source(
+            DictConfigSource({"domain": "thisisadomainidonotown.com"}), 0
+        )
         provider = self.provider_module.Provider(config)
         with pytest.raises(Exception):
             provider.authenticate()
@@ -133,32 +142,43 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
     # Provider.create_record()
     ###########################################################################
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(self):  # pylint: disable=invalid-name
+    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
+        self,
+    ):  # pylint: disable=invalid-name
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('A', 'localhost', '127.0.0.1')
+        assert provider.create_record("A", "localhost", "127.0.0.1")
 
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):  # pylint: disable=invalid-name
+    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
+        self,
+    ):  # pylint: disable=invalid-name
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('CNAME', 'docs', 'docs.example.com')
+        assert provider.create_record("CNAME", "docs", "docs.example.com")
 
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_for_TXT_with_valid_name_and_content(self):  # pylint: disable=invalid-name
+    def test_provider_when_calling_create_record_for_TXT_with_valid_name_and_content(
+        self,
+    ):  # pylint: disable=invalid-name
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("TXT", "_acme-challenge.test", "challengetoken")
+
+    @_vcr_integration_test
+    def test_provider_when_calling_create_record_for_TXT_with_full_name_and_content(
+        self,
+    ):  # pylint: disable=invalid-name
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', '_acme-challenge.test', 'challengetoken')
+            "TXT", "_acme-challenge.full.{0}".format(self.domain), "challengetoken"
+        )
 
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_for_TXT_with_full_name_and_content(self):  # pylint: disable=invalid-name
+    def test_provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(
+        self,
+    ):  # pylint: disable=invalid-name
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "_acme-challenge.full.{0}".format(self.domain), 'challengetoken')
-
-    @_vcr_integration_test
-    def test_provider_when_calling_create_record_for_TXT_with_fqdn_name_and_content(self):  # pylint: disable=invalid-name
-        provider = self._construct_authenticated_provider()
-        assert provider.create_record(
-            'TXT', "_acme-challenge.fqdn.{0}.".format(self.domain), 'challengetoken')
+            "TXT", "_acme-challenge.fqdn.{0}.".format(self.domain), "challengetoken"
+        )
 
     ###########################################################################
     # Provider.list_records()
@@ -169,52 +189,66 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
         assert isinstance(provider.list_records(), list)
 
     @_vcr_integration_test
-    def test_provider_when_calling_list_records_with_name_filter_should_return_record(self):
+    def test_provider_when_calling_list_records_with_name_filter_should_return_record(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT', 'random.test', 'challengetoken')
-        records = provider.list_records('TXT', 'random.test')
+        provider.create_record("TXT", "random.test", "challengetoken")
+        records = provider.list_records("TXT", "random.test")
         assert len(records) == 1
-        assert records[0]['content'] == 'challengetoken'
-        assert records[0]['type'] == 'TXT'
-        assert records[0]['name'] == 'random.test.{0}'.format(self.domain)
+        assert records[0]["content"] == "challengetoken"
+        assert records[0]["type"] == "TXT"
+        assert records[0]["name"] == "random.test.{0}".format(self.domain)
 
     @_vcr_integration_test
-    def test_provider_when_calling_list_records_with_full_name_filter_should_return_record(self):
+    def test_provider_when_calling_list_records_with_full_name_filter_should_return_record(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT', 'random.fulltest.{0}'.format(
-            self.domain), 'challengetoken')
+        provider.create_record(
+            "TXT", "random.fulltest.{0}".format(self.domain), "challengetoken"
+        )
         records = provider.list_records(
-            'TXT', 'random.fulltest.{0}'.format(self.domain))
+            "TXT", "random.fulltest.{0}".format(self.domain)
+        )
         assert len(records) == 1
-        assert records[0]['content'] == 'challengetoken'
-        assert records[0]['type'] == 'TXT'
-        assert records[0]['name'] == 'random.fulltest.{0}'.format(self.domain)
+        assert records[0]["content"] == "challengetoken"
+        assert records[0]["type"] == "TXT"
+        assert records[0]["name"] == "random.fulltest.{0}".format(self.domain)
 
     @_vcr_integration_test
-    def test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(self):
+    def test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
-        provider.create_record('TXT', 'random.fqdntest.{0}.'.format(
-            self.domain), 'challengetoken')
+        provider.create_record(
+            "TXT", "random.fqdntest.{0}.".format(self.domain), "challengetoken"
+        )
         records = provider.list_records(
-            'TXT', 'random.fqdntest.{0}.'.format(self.domain))
+            "TXT", "random.fqdntest.{0}.".format(self.domain)
+        )
         assert len(records) == 1
-        assert records[0]['content'] == 'challengetoken'
-        assert records[0]['type'] == 'TXT'
-        assert records[0]['name'] == 'random.fqdntest.{0}'.format(self.domain)
+        assert records[0]["content"] == "challengetoken"
+        assert records[0]["type"] == "TXT"
+        assert records[0]["name"] == "random.fqdntest.{0}".format(self.domain)
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_after_setting_ttl(self):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "ttl.fqdn.{0}.".format(self.domain), 'ttlshouldbe3600')
-        records = provider.list_records(
-            'TXT', 'ttl.fqdn.{0}'.format(self.domain))
+            "TXT", "ttl.fqdn.{0}.".format(self.domain), "ttlshouldbe3600"
+        )
+        records = provider.list_records("TXT", "ttl.fqdn.{0}".format(self.domain))
         assert len(records) == 1
-        assert str(records[0]['ttl']) == str(3600)
+        assert str(records[0]["ttl"]) == str(3600)
 
-    @pytest.mark.skip(reason="not sure how to test empty list across multiple providers")
+    @pytest.mark.skip(
+        reason="not sure how to test empty list across multiple providers"
+    )
     @_vcr_integration_test
-    def test_provider_when_calling_list_records_should_return_empty_list_if_no_records_found(self):
+    def test_provider_when_calling_list_records_should_return_empty_list_if_no_records_found(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
         assert isinstance(provider.list_records(), list)
 
@@ -230,81 +264,104 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
     @_vcr_integration_test
     def test_provider_when_calling_update_record_should_modify_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT', 'orig.test', 'challengetoken')
-        records = provider.list_records('TXT', 'orig.test')
-        assert provider.update_record(records[0].get(
-            'id', None), 'TXT', 'updated.test', 'challengetoken')
-
-    @_vcr_integration_test
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(self):
-        provider = self._construct_authenticated_provider()
-        assert provider.create_record(
-            'TXT', 'orig.nameonly.test', 'challengetoken')
+        assert provider.create_record("TXT", "orig.test", "challengetoken")
+        records = provider.list_records("TXT", "orig.test")
         assert provider.update_record(
-            None, 'TXT', 'orig.nameonly.test', 'updated')
+            records[0].get("id", None), "TXT", "updated.test", "challengetoken"
+        )
 
     @_vcr_integration_test
-    def test_provider_when_calling_update_record_with_full_name_should_modify_record(self):
+    def test_provider_when_calling_update_record_should_modify_record_name_specified(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record(
-            'TXT', 'orig.testfull.{0}'.format(self.domain), 'challengetoken')
-        records = provider.list_records(
-            'TXT', 'orig.testfull.{0}'.format(self.domain))
-        assert provider.update_record(records[0].get(
-            'id', None), 'TXT', 'updated.testfull.{0}'.format(self.domain), 'challengetoken')
+        assert provider.create_record("TXT", "orig.nameonly.test", "challengetoken")
+        assert provider.update_record(None, "TXT", "orig.nameonly.test", "updated")
 
     @_vcr_integration_test
-    def test_provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
+    def test_provider_when_calling_update_record_with_full_name_should_modify_record(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', 'orig.testfqdn.{0}.'.format(self.domain), 'challengetoken')
-        records = provider.list_records(
-            'TXT', 'orig.testfqdn.{0}.'.format(self.domain))
-        assert provider.update_record(records[0].get(
-            'id', None), 'TXT', 'updated.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+            "TXT", "orig.testfull.{0}".format(self.domain), "challengetoken"
+        )
+        records = provider.list_records("TXT", "orig.testfull.{0}".format(self.domain))
+        assert provider.update_record(
+            records[0].get("id", None),
+            "TXT",
+            "updated.testfull.{0}".format(self.domain),
+            "challengetoken",
+        )
+
+    @_vcr_integration_test
+    def test_provider_when_calling_update_record_with_fqdn_name_should_modify_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record(
+            "TXT", "orig.testfqdn.{0}.".format(self.domain), "challengetoken"
+        )
+        records = provider.list_records("TXT", "orig.testfqdn.{0}.".format(self.domain))
+        assert provider.update_record(
+            records[0].get("id", None),
+            "TXT",
+            "updated.testfqdn.{0}.".format(self.domain),
+            "challengetoken",
+        )
 
     ###########################################################################
     # Provider.delete_record()
     ###########################################################################
     @_vcr_integration_test
-    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record('TXT', 'delete.testid', 'challengetoken')
-        records = provider.list_records('TXT', 'delete.testid')
-        assert provider.delete_record(records[0]['id'])
-        records = provider.list_records('TXT', 'delete.testid')
+        assert provider.create_record("TXT", "delete.testid", "challengetoken")
+        records = provider.list_records("TXT", "delete.testid")
+        assert provider.delete_record(records[0]["id"])
+        records = provider.list_records("TXT", "delete.testid")
         assert not records
 
     @_vcr_integration_test
     def test_provider_when_calling_delete_record_by_filter_should_remove_record(self):
         provider = self._construct_authenticated_provider()
-        assert provider.create_record(
-            'TXT', 'delete.testfilt', 'challengetoken')
-        assert provider.delete_record(
-            None, 'TXT', 'delete.testfilt', 'challengetoken')
-        records = provider.list_records('TXT', 'delete.testfilt')
+        assert provider.create_record("TXT", "delete.testfilt", "challengetoken")
+        assert provider.delete_record(None, "TXT", "delete.testfilt", "challengetoken")
+        records = provider.list_records("TXT", "delete.testfilt")
         assert not records
 
     @_vcr_integration_test
-    def test_provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(self):  # pylint: disable=line-too-long
+    def test_provider_when_calling_delete_record_by_filter_with_full_name_should_remove_record(
+        self,
+    ):  # pylint: disable=line-too-long
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', 'delete.testfull.{0}'.format(self.domain), 'challengetoken')
+            "TXT", "delete.testfull.{0}".format(self.domain), "challengetoken"
+        )
         assert provider.delete_record(
-            None, 'TXT', 'delete.testfull.{0}'.format(self.domain), 'challengetoken')
+            None, "TXT", "delete.testfull.{0}".format(self.domain), "challengetoken"
+        )
         records = provider.list_records(
-            'TXT', 'delete.testfull.{0}'.format(self.domain))
+            "TXT", "delete.testfull.{0}".format(self.domain)
+        )
         assert not records
 
     @_vcr_integration_test
-    def test_provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(self):  # pylint: disable=line-too-long
+    def test_provider_when_calling_delete_record_by_filter_with_fqdn_name_should_remove_record(
+        self,
+    ):  # pylint: disable=line-too-long
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', 'delete.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+            "TXT", "delete.testfqdn.{0}.".format(self.domain), "challengetoken"
+        )
         assert provider.delete_record(
-            None, 'TXT', 'delete.testfqdn.{0}.'.format(self.domain), 'challengetoken')
+            None, "TXT", "delete.testfqdn.{0}.".format(self.domain), "challengetoken"
+        )
         records = provider.list_records(
-            'TXT', 'delete.testfqdn.{0}.'.format(self.domain))
+            "TXT", "delete.testfqdn.{0}.".format(self.domain)
+        )
         assert not records
 
     # Private helpers, mimicking the auth_* options provided by the Client
@@ -336,16 +393,15 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
         config = ConfigResolver()
         # First we load the overrides
         overrides = self._test_parameters_overrides()
-        overrides['domain'] = self.domain
-        overrides['provider_name'] = self.provider_name
+        overrides["domain"] = self.domain
+        overrides["provider_name"] = self.provider_name
         config.with_config_source(EngineOverrideConfigSource(overrides))
 
         # Then we get environment variables
         config.with_env()
 
         # And finally we provide the fallback function
-        config.with_config_source(
-            FallbackConfigSource(self._test_fallback_fn()))
+        config.with_config_source(FallbackConfigSource(self._test_fallback_fn()))
 
         return config
 
@@ -370,7 +426,7 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
         By default it will return 'placeholder_[parameter_name]' for a particular parameter
         (eg. placeholder_auth_token for auth_token).
         """
-        return lambda x: 'placeholder_' + x
+        return lambda x: "placeholder_" + x
 
     def _cassette_path(self, fixture_subpath):
         """
@@ -381,7 +437,9 @@ class IntegrationTestsV1(object):  # pylint: disable=useless-object-inheritance,
             {provider}/{variant_name}-IntegrationTests
         """
         if self.provider_variant:
-            return "{0}/{1}-{2}".format(self.provider_name, self.provider_variant, fixture_subpath)
+            return "{0}/{1}-{2}".format(
+                self.provider_name, self.provider_variant, fixture_subpath
+            )
         return "{0}/{1}".format(self.provider_name, fixture_subpath)
 
     def _construct_authenticated_provider(self):
@@ -441,68 +499,112 @@ class IntegrationTestsV2(IntegrationTestsV1):
     IntegrationTestsV2 should be used for new providers, and for existing providers during
     their refactoring.
     """
+
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_with_duplicate_records_should_be_noop(self):
+    def test_provider_when_calling_create_record_with_duplicate_records_should_be_noop(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "_acme-challenge.noop.{0}.".format(self.domain), 'challengetoken')
+            "TXT", "_acme-challenge.noop.{0}.".format(self.domain), "challengetoken"
+        )
         assert provider.create_record(
-            'TXT', "_acme-challenge.noop.{0}.".format(self.domain), 'challengetoken')
+            "TXT", "_acme-challenge.noop.{0}.".format(self.domain), "challengetoken"
+        )
         records = provider.list_records(
-            'TXT', "_acme-challenge.noop.{0}.".format(self.domain))
+            "TXT", "_acme-challenge.noop.{0}.".format(self.domain)
+        )
         assert len(records) == 1
 
     @_vcr_integration_test
-    def test_provider_when_calling_create_record_multiple_times_should_create_record_set(self):
+    def test_provider_when_calling_create_record_multiple_times_should_create_record_set(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "_acme-challenge.createrecordset.{0}.".format(self.domain), 'challengetoken1')
+            "TXT",
+            "_acme-challenge.createrecordset.{0}.".format(self.domain),
+            "challengetoken1",
+        )
         assert provider.create_record(
-            'TXT', "_acme-challenge.createrecordset.{0}.".format(self.domain), 'challengetoken2')
+            "TXT",
+            "_acme-challenge.createrecordset.{0}.".format(self.domain),
+            "challengetoken2",
+        )
 
     @_vcr_integration_test
-    def test_provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(self):
+    def test_provider_when_calling_list_records_with_invalid_filter_should_be_empty_list(
+        self,
+    ):
         provider = self._construct_authenticated_provider()
         records = provider.list_records(
-            'TXT', 'filter.thisdoesnotexist.{0}'.format(self.domain))
+            "TXT", "filter.thisdoesnotexist.{0}".format(self.domain)
+        )
         assert not records
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_should_handle_record_sets(self):
         provider = self._construct_authenticated_provider()
         provider.create_record(
-            'TXT', "_acme-challenge.listrecordset.{0}.".format(self.domain), 'challengetoken1')
+            "TXT",
+            "_acme-challenge.listrecordset.{0}.".format(self.domain),
+            "challengetoken1",
+        )
         provider.create_record(
-            'TXT', "_acme-challenge.listrecordset.{0}.".format(self.domain), 'challengetoken2')
+            "TXT",
+            "_acme-challenge.listrecordset.{0}.".format(self.domain),
+            "challengetoken2",
+        )
         records = provider.list_records(
-            'TXT', '_acme-challenge.listrecordset.{0}.'.format(self.domain))
+            "TXT", "_acme-challenge.listrecordset.{0}.".format(self.domain)
+        )
         assert len(records) == 2
 
     @_vcr_integration_test
     def test_provider_when_calling_delete_record_with_record_set_name_remove_all(self):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "_acme-challenge.deleterecordset.{0}.".format(self.domain), 'challengetoken1')
+            "TXT",
+            "_acme-challenge.deleterecordset.{0}.".format(self.domain),
+            "challengetoken1",
+        )
         assert provider.create_record(
-            'TXT', "_acme-challenge.deleterecordset.{0}.".format(self.domain), 'challengetoken2')
+            "TXT",
+            "_acme-challenge.deleterecordset.{0}.".format(self.domain),
+            "challengetoken2",
+        )
 
         assert provider.delete_record(
-            None, 'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+            None, "TXT", "_acme-challenge.deleterecordset.{0}.".format(self.domain)
+        )
         records = provider.list_records(
-            'TXT', '_acme-challenge.deleterecordset.{0}.'.format(self.domain))
+            "TXT", "_acme-challenge.deleterecordset.{0}.".format(self.domain)
+        )
         assert not records
 
     @_vcr_integration_test
-    def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):  # pylint: disable=line-too-long
+    def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(
+        self,
+    ):  # pylint: disable=line-too-long
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            'TXT', "_acme-challenge.deleterecordinset.{0}.".format(self.domain), 'challengetoken1')
+            "TXT",
+            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            "challengetoken1",
+        )
         assert provider.create_record(
-            'TXT', "_acme-challenge.deleterecordinset.{0}.".format(self.domain), 'challengetoken2')
+            "TXT",
+            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            "challengetoken2",
+        )
 
         assert provider.delete_record(
-            None, 'TXT', '_acme-challenge.deleterecordinset.{0}.'
-            .format(self.domain), 'challengetoken1')
+            None,
+            "TXT",
+            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            "challengetoken1",
+        )
         records = provider.list_records(
-            'TXT', '_acme-challenge.deleterecordinset.{0}.'.format(self.domain))
+            "TXT", "_acme-challenge.deleterecordinset.{0}.".format(self.domain)
+        )
         assert len(records) == 1

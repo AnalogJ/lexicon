@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 import pytest
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 
 
@@ -11,13 +12,16 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV1
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
 class SakruaCloudProviderTests(TestCase, IntegrationTestsV1):
     """TestCase for SakuraCloud"""
-    provider_name = 'sakuracloud'
-    domain = 'example.com'
+
+    provider_name = "sakuracloud"
+    domain = "example.com"
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]
 
     # TODO: enable the skipped tests
     @pytest.mark.skip(reason="record id is not exists")
-    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(
+        self,
+    ):
         return

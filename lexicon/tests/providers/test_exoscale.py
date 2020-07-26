@@ -21,6 +21,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class ExoscaleProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Exoscale"""
+
     provider_name = "exoscale"
     domain = "lexicontest.com"
 

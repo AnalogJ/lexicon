@@ -9,11 +9,12 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class CloudflareProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Cloudflare"""
-    provider_name = 'cloudflare'
-    domain = 'pacalis.net'
+
+    provider_name = "cloudflare"
+    domain = "pacalis.net"
 
     def _filter_headers(self):
-        return ['X-Auth-Email', 'X-Auth-Key', 'set-cookie']
+        return ["X-Auth-Email", "X-Auth-Key", "set-cookie"]
 
     # We do not want to have "placeholder_auth_username" as default value for `--auth-username`
     # if Bearer tokens are used to execute the tests, because the non-emptiness of this flags
@@ -21,4 +22,8 @@ class CloudflareProviderTests(TestCase, IntegrationTestsV2):
     # Similarly for `--zone-id`, we want to control when its value is not empty, because
     # it will change the logic of the authentication process.
     def _test_fallback_fn(self):
-        return lambda x: 'placeholder_' + x if x not in ('auth_username', 'zone_id') else ''
+        return (
+            lambda x: "placeholder_" + x
+            if x not in ("auth_username", "zone_id")
+            else ""
+        )

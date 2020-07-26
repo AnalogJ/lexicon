@@ -9,17 +9,18 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 class ConohaProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Conoha"""
-    provider_name = 'conoha'
-    domain = 'narusejun.com'
+
+    provider_name = "conoha"
+    domain = "narusejun.com"
 
     def _test_parameters_overrides(self):
-        return {'region': 'tyo1'}
+        return {"region": "tyo1"}
 
     def _test_fallback_fn(self):
-        return lambda x: None if x in ('priority') else 'placeholder_' + x
+        return lambda x: None if x in ("priority") else "placeholder_" + x
 
     def _filter_post_data_parameters(self):
-        return ['auth']
+        return ["auth"]
 
     def _filter_headers(self):
-        return ['X-Auth-Token']
+        return ["X-Auth-Token"]

@@ -9,8 +9,9 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class GoDaddyProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Godaddy"""
-    provider_name = 'godaddy'
-    domain = 'fullm3tal.online'
+
+    provider_name = "godaddy"
+    domain = "fullm3tal.online"
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]

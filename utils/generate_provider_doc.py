@@ -29,19 +29,23 @@ List of options
         parser = argparse.ArgumentParser()
         provider_module.provider_parser(parser)
 
-        provider_content = [f"""\
+        provider_content = [
+            f"""\
 .. _{provider}:
 
 {provider}
-"""]
+"""
+        ]
         for action in parser._actions:
-            if action.dest == 'help':
+            if action.dest == "help":
                 continue
 
-            provider_content.append(f"""\
+            provider_content.append(
+                f"""\
     * ``{action.dest}`` {action.help.capitalize().replace("`", "'")}
-""")
-        output = (output + "".join(provider_content) + "\n")
+"""
+            )
+        output = output + "".join(provider_content) + "\n"
 
     with open(os.path.join("docs", "providers_options.rst"), "w") as f:
         f.write(output)
@@ -54,8 +58,10 @@ def _generate_table(items):
 
     table = [delimiter]
 
-    divided = [items[n:n + nb_columns] for n in range(0, len(items), nb_columns)]
-    divided[-1] = [divided[-1][i] if len(divided[-1]) > i else '' for i in range(0, nb_columns)]
+    divided = [items[n : n + nb_columns] for n in range(0, len(items), nb_columns)]
+    divided[-1] = [
+        divided[-1][i] if len(divided[-1]) > i else "" for i in range(0, nb_columns)
+    ]
 
     for data in divided:
         line = "".join(f"| {item:<{max_width}}" for item in data) + "|"

@@ -9,13 +9,14 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 class DynuProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Dynu.com"""
-    provider_name = 'dynu'
-    domain = 'example.com'
+
+    provider_name = "dynu"
+    domain = "example.com"
 
     def _filter_headers(self):
-        return ['API-Key']
+        return ["API-Key"]
 
     def _filter_response(self, response):
-        if response['status']['code'] not in [200, 503]:
+        if response["status"]["code"] not in [200, 503]:
             return None
         return response
