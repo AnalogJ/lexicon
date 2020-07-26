@@ -54,13 +54,12 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
-          reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
         displayName: Publish coverage reports (Azure Pipelines)
       - task: PublishTestResults@2
         condition: ne(variables['TOXENV'], 'lint')
         inputs:
           testResultsFiles: '**/test-*.xml'
-          testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE_NAME)'
+          testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
         displayName: Publish tests reports
   - job: trigger_readthedoc
     steps:
