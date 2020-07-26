@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.3.28 - 26/07/2020
 ### Added
 * Redesign of the release process using Azure Pipelines
 * Create a dedicated documentation on ReadTheDoc, refactor README.md into README.rst
