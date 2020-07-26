@@ -145,7 +145,7 @@ The current supported providers are:
 Documentation
 =============
 
-Online documentation (user guide, configuration reference) is available in the `Lexicon documentation`_
+Online documentation (user guide, configuration reference) is available in the `Lexicon documentation`_.
 
 For a quick start, please have a look in particular at the `User guide`_.
 
