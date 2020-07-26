@@ -57,7 +57,7 @@ jobs:
           reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
         displayName: Publish coverage reports (Azure Pipelines)
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
+        condition: ne(variables['TOXENV'], 'lint')
         inputs:
           testResultsFiles: '**/test-*.xml'
           testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE_NAME)'
