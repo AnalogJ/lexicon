@@ -3,6 +3,10 @@
 ## master - CURRENT
 ### Added
 * Redesign of the release process using Azure Pipelines
+* Create a dedicated documentation on ReadTheDoc, refactor README.md into README.rst
+
+### Modified
+* Fix localzone provider to make it work with dnspython 2.x
 
 ## 3.3.27 - 08/07/2020
 ## 3.3.26 - 14/06/2020

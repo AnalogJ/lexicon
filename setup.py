@@ -18,7 +18,7 @@ with open(path.join(path.dirname(path.abspath(__file__)), 'VERSION'), encoding='
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get a list of all the providers
@@ -40,7 +40,7 @@ extras_require = {
     'plesk': ['xmltodict'],
     'henet': ['beautifulsoup4'],
     'easyname': ['beautifulsoup4'],
-    'localzone': ['localzone'],
+    'localzone': ['localzone', 'dnspython<2'],
     'gratisdns': ['beautifulsoup4'],
     # Define dev/test dependencies
     'dev': [
@@ -66,7 +66,7 @@ setup(
 
     description='Manipulate DNS records on various DNS providers in a standardized/agnostic way',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
 
     # The project's main homepage.
     url='https://github.com/AnalogJ/lexicon',
@@ -112,6 +112,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        'dnspython<2'  # dnspython 2.x has some non-backward compatible changes that breaks localzone for now
         'requests[security]',
         'tldextract',
         'future',

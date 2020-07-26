@@ -48,4 +48,20 @@ jobs:
         env:
           COVERALLS_SERVICE_NAME: azure-pipelines
           COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
-        displayName: Publish code coverage
+        displayName: Publish coverage reports (Coveralls)
+      - task: PublishCodeCoverageResults@1
+        condition: eq(variables['TOXENV'], 'cover')
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+        displayName: Publish coverage reports (Azure Pipelines)
+      - task: PublishTestResults@2
+        condition: ne(variables['TOXENV'], 'lint')
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
+        displayName: Publish tests reports
+  - job: trigger_readthedoc
+    steps:
+      - bash: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=$(RTD_TOKEN)" $(RTD_URL)
+    condition: ne(variables['Build.Reason'], 'PullRequest')
