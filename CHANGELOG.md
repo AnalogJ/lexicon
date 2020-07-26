@@ -7,6 +7,7 @@
 
 ### Modified
 * Fix localzone provider to make it work with dnspython 2.x
+* Update easyname provider against the recent API changes
 
 ## 3.3.27 - 08/07/2020
 ## 3.3.26 - 14/06/2020
