@@ -7,6 +7,42 @@ paid accounts, which makes it hard for us to develop ``lexicon`` providers on ou
 it as easy as possible to contribute to ``lexicon``, so that you can automate your favorite DNS service.
 There are a few guidelines that we need contributors to follow so that we can keep on top of things.
 
+Potential providers
+===================
+
+Potential providers are as follows. If you would like to contribute one, please follow the
+current document instructions and open a pull request.
+
+- `AHNames <https://ahnames.com/en/resellers?tab=2>`_
+- `DurableDNS <https://durabledns.com/wiki/doku.php/ddns>`_ (?? Can't set TXT records ??)
+- cyon.ch
+- `Dyn <https://help.dyn.com/dns-api-knowledge-base/>`_ ($$ requires paid account $$)
+- `EntryDNS <https://entrydns.net/help>`_ ($$ requires paid account $$)
+- `FreeDNS <https://freedns.afraid.org/scripts/freedns.clients.php>`_
+- `Host Virtual DNS <https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py>`_ ($$ requires paid account $$)
+- HostEurope
+- Infoblox NIOS
+- `ironDNS <https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0>`_ ($$ requires paid account $$)
+- ISPConfig
+- `InternetX autoDNS <https://internetx.com>`_
+- Knot DNS
+- KingHost
+- `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
+- `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
+- `Mythic Beasts <https://www.mythic-beasts.com/support/api/primary>`_
+- `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
+- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
+- `Servercow <https://servercow.de>`_
+- selectel.com
+- `TELE3 <https://www.tele3.cz>`_
+- `UltraDNS <https://restapi.ultradns.com/v1/docs>`_ ($$ requires paid account $$)
+- UnoEuro API
+- VSCALE
+- `WorldWideDns <https://www.worldwidedns.net/dns_api_protocol.asp>`_ ($$ requires paid account $$)
+- `Zerigo <https://www.zerigo.com/managed-dns/rest-api>`_ ($$ requires paid account $$)
+- `Zoneedit <http://forum.zoneedit.com/index.php?threads/dns-update-api.419/>`_
+- **Any others I missed**
+
 Setup a development environment
 ===============================
 
@@ -105,7 +141,7 @@ the proper conventions.
 .. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
 .. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py
 .. _lexicon/providers/: https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers
-.. _provider specification: https://github.com/AnalogJ/lexicon/blob/master/SPECIFICATION.md
+.. _provider specification: https://dns-lexicon.readthedocs.io/en/latest/provider_specification.html
 
 Testing your provider
 =====================
@@ -255,42 +291,6 @@ It's my way of keeping track of who to ping when I need updated recordings as th
 test suites expand & change.
 
 .. _CODEOWNERS file: https://github.com/AnalogJ/lexicon/blob/master/CODEOWNERS
-
-Potential providers
-===================
-
-Potential providers are as follows. If you would like to contribute one, please follow the
-current document instructions and open a pull request.
-
-- `AHNames <https://ahnames.com/en/resellers?tab=2>`_
-- `DurableDNS <https://durabledns.com/wiki/doku.php/ddns>`_ (?? Can't set TXT records ??)
-- cyon.ch
-- `Dyn <https://help.dyn.com/dns-api-knowledge-base/>`_ ($$ requires paid account $$)
-- `EntryDNS <https://entrydns.net/help>`_ ($$ requires paid account $$)
-- `FreeDNS <https://freedns.afraid.org/scripts/freedns.clients.php>`_
-- `Host Virtual DNS <https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py>`_ ($$ requires paid account $$)
-- HostEurope
-- Infoblox NIOS
-- `ironDNS <https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0>`_ ($$ requires paid account $$)
-- ISPConfig
-- `InternetX autoDNS <https://internetx.com>`_
-- Knot DNS
-- KingHost
-- `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
-- `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
-- `Mythic Beasts <https://www.mythic-beasts.com/support/api/primary>`_
-- `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
-- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
-- `Servercow <https://servercow.de>`_
-- selectel.com
-- `TELE3 <https://www.tele3.cz>`_
-- `UltraDNS <https://restapi.ultradns.com/v1/docs>`_ ($$ requires paid account $$)
-- UnoEuro API
-- VSCALE
-- `WorldWideDns <https://www.worldwidedns.net/dns_api_protocol.asp>`_ ($$ requires paid account $$)
-- `Zerigo <https://www.zerigo.com/managed-dns/rest-api>`_ ($$ requires paid account $$)
-- `Zoneedit <http://forum.zoneedit.com/index.php?threads/dns-update-api.419/>`_
-- **Any others I missed**
 
 TODO list
 =========

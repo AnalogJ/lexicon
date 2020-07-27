@@ -15,3 +15,4 @@
    user_guide
    configuration_reference
    developer_guide
+   provider_specification
