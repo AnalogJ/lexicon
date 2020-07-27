@@ -44,16 +44,26 @@ tldextract = "^2.2.2"
 future = "^0.18.2"
 cryptography = "^3.0"
 pyyaml = "^5.3.1"
-requests = {extras = ["security"], version = "^2.24.0"}
+requests = { version = "^2.24.0", extras = ["security"] }
 zeep = "^3.4.0"
 beautifulsoup4 = "^4.9.1"
-# Extra dependencies for some providers
-pynamecheap = {version = "^0.0.3", extras = ["namecheap", "full"]}
-boto3 = {version = "^1.14.28", extras = ["route53", "full"]}
-transip = {version = "^2.1.2", extras = ["transip", "full"]}
-xmltodict = {version = "^0.12.0", extras = ["plesk", "full"]}
-localzone = {version = "^0.9.6", extras = ["localzone", "full"]}
-softlayer = {version = "^5.5.0", extras = ["softlayer", "full"]}
+# Optional dependencies required by some providers
+pynamecheap = { version = "^0.0.3", optional = true }
+boto3 = { version = "^1.14.28", optional = true }
+transip = { version = "^2.1.2", optional = true }
+xmltodict = { version = "^0.12.0", optional = true }
+localzone = { version = "^0.9.6", optional = true }
+softlayer = { version = "^5.5.0", optional = true }
+
+[tool.poetry.extras]
+namecheap = ["pynamecheap"]
+route53 = ["boto3"]
+transip = ["transip"]
+plesk = ["xmltodict"]
+localzone = ["localzone"]
+softlayer = ["softlayer"]
+# Extra "full" must contain the list of all other extras
+full = ["pynamecheap", "boto3", "transip", "xmltodict", "localzone", "softlayer"]
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
@@ -63,6 +73,7 @@ vcrpy = "^4.0.2"
 mock = "^3.0"
 flake8 = "^3.8.3"
 isort = "^4.3.21"
+tox = "^3.18.0"
 
 [tool.poetry.scripts]
 lexicon = "lexicon.cli:main"
