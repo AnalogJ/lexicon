@@ -53,7 +53,8 @@ boto3 = { version = "^1.14.28", optional = true }
 transip = { version = "^2.1.2", optional = true }
 xmltodict = { version = "^0.12.0", optional = true }
 localzone = { version = "^0.9.6", optional = true }
-softlayer = { version = "^5.5.0", optional = true }
+softlayer = { version = "<5.6", optional = true }  # 5.6+ has incompatibilies with recent requests and Python < 3.5
+pygments = { version = "<2.6", optional = true }  # 2.6+ requires Python 3.5+ (transitive dep from softlayer)
 
 [tool.poetry.extras]
 namecheap = ["pynamecheap"]
@@ -69,7 +70,7 @@ full = ["pynamecheap", "boto3", "transip", "xmltodict", "localzone", "softlayer"
 pytest = "^4.6"
 pytest-cov = "^2.10.0"
 pytest-xdist = "^1.33.0"
-vcrpy = "^3.0.0"
+vcrpy = "<4"  # 4.x requires Python 3.5+
 mock = "^3.0"
 flake8 = "^3.8.3"
 isort = "^4.3.21"
