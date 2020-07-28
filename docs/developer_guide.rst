@@ -52,30 +52,31 @@ Fork, then clone the repo:
 
     $ git clone git@github.com:your-username/lexicon.git
 
-Create a python virtual environment:
+Install Poetry if you not have it already:
 
 .. code-block:: bash
 
-    $ python3 -m venv venv
-    $ source venv/bin/activate
+    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
-Install ``lexicon`` in development mode with full providers support:
+Configure the virtual environment with full providers support and activate it:
 
 .. code-block:: bash
 
-    $ pip install -e .[full,dev]
+    $ cd lexicon
+    $ poetry install -E full
+    $ source .venv/bin/activate
 
 Make sure the tests pass:
 
 .. code-block:: bash
 
-    $ py.test lexicon/tests
+    $ tox -e standard
 
 You can test a specific provider using:
 
 .. code-block:: bash
 
-    $ py.test lexicon/tests/providers/test_foo.py
+    $ pytest lexicon/tests/providers/test_foo.py
 
 .. note::
 
@@ -149,7 +150,7 @@ Testing your provider
 Test against the live API
 -------------------------
 
-First let's validate that your provider shows up in the CLI
+First let's validate that your provider shows up in the CLI.
 
 .. code-block:: bash
 
@@ -239,7 +240,7 @@ variable ``LEXICON_LIVE_TESTS`` set to ``true`` like below:
 
 .. code-block:: bash
 
-	LEXICON_LIVE_TESTS=true py.test lexicon/tests/providers/test_foo.py
+	LEXICON_LIVE_TESTS=true pytest lexicon/tests/providers/test_foo.py
 
 If any of the integration tests fail on your provider, you'll need to delete the recordings that
 were created, make your changes and then try again.
