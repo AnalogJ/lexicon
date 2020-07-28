@@ -9,10 +9,10 @@ jobs:
           addToPath: true
         displayName: Install Python
       - script: |
-          python -m pip install --upgrade setuptools wheel
+          python -m pip install -U poetry
         displayName: Prepare environment
       - script: |
-          python setup.py sdist bdist_wheel
+          poetry build
         displayName: Build Python dist
       - task: CopyFiles@2
         inputs:
@@ -34,9 +34,6 @@ jobs:
           versionSpec: 3.8
           addToPath: true
         displayName: Install Python
-      - script: |
-          python -m pip install --upgrade pip
-        displayName: Prepare environment
       - script: |
           version="$(cat VERSION)"
           echo "Version is: $version"

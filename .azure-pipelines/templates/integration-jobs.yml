@@ -37,7 +37,7 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           addToPath: true
         displayName: Enable the targeted python version
-      - script: python -m pip install --upgrade pip tox wheel virtualenv setuptools
+      - script: python -m pip install -U tox poetry
         displayName: Install required runtime dependencies
       - script: python -m tox
         displayName: Execute tests through tox
