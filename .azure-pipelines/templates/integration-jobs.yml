@@ -7,8 +7,6 @@ jobs:
       BRANCH_NAME: $(Build.SourceBranch)
     strategy:
       matrix:
-        linux-python-2.7:
-          PYTHON_VERSION: 2.7
         linux-python-3.5:
           PYTHON_VERSION: 3.5
         linux-python-3.8-light:
@@ -20,9 +18,6 @@ jobs:
         linux-lint:
           PYTHON_VERSION: 3.8
           TOXENV: lint
-        windows-python-2.7:
-          IMAGE: vs2017-win2016
-          PYTHON_VERSION: 2.7
         windows-python-3.5:
           IMAGE: vs2017-win2016
           PYTHON_VERSION: 3.5
