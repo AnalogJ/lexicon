@@ -56,7 +56,7 @@ Create a python virtual environment:
 
 .. code-block:: bash
 
-    $ virtualenv -p python2.7 venv
+    $ python3 -m venv venv
     $ source venv/bin/activate
 
 Install ``lexicon`` in development mode with full providers support:
