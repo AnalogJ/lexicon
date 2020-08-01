@@ -4,8 +4,8 @@ from tempfile import mkstemp
 from unittest import TestCase
 
 import pytest
-from lexicon.tests.providers.integration_tests import IntegrationTests
 
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 FAKE_KEY = b"""
 -----BEGIN RSA PRIVATE KEY-----
@@ -54,24 +54,22 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class TransipProviderTests(TestCase, IntegrationTests):
+class TransipProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Transip"""
-    provider_name = 'transip'
-    domain = 'hurrdurr.nl'
+
+    provider_name = "transip"
+    domain = "hurrdurr.nl"
 
     # Disable setUp and tearDown, and set a real username and key in
     # provider_opts to execute real calls
     def _test_parameters_overrides(self):
         (_fake_fd, _fake_key) = mkstemp()
-        _fake_file = os.fdopen(_fake_fd, 'wb', 1024)
+        _fake_file = os.fdopen(_fake_fd, "wb", 1024)
         _fake_file.write(FAKE_KEY)
         _fake_file.close()
-        self._fake_key = _fake_key  # pylint: disable=attribute-defined-outside-init
+        self._fake_key = _fake_key
 
-        options = {
-            'auth_username': 'foo',
-            'auth_api_key': _fake_key
-        }
+        options = {"auth_username": "foo", "auth_api_key": _fake_key}
 
         return options
 
@@ -84,12 +82,20 @@ class TransipProviderTests(TestCase, IntegrationTests):
             pass
 
     def _filter_headers(self):
-        return ['Cookie']
+        return ["Cookie"]
 
     @pytest.mark.skip(reason="manipulating records by id is not supported")
-    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(
+        self,
+    ):
         return
 
-    @pytest.mark.skip(reason=("adding docs.example.com as a CNAME target will result in a RFC 1035 error"))  # pylint: disable=line-too-long
-    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
+    @pytest.mark.skip(
+        reason=(
+            "adding docs.example.com as a CNAME target will result in a RFC 1035 error"
+        )
+    )
+    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
+        self,
+    ):
         return

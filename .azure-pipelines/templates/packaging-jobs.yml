@@ -1,0 +1,49 @@
+jobs:
+  - job: pypi
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+          addToPath: true
+        displayName: Install Python
+      - script: |
+          python -m pip install --upgrade setuptools wheel
+        displayName: Prepare environment
+      - script: |
+          python setup.py sdist bdist_wheel
+        displayName: Build Python dist
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(System.DefaultWorkingDirectory)/dist
+          targetFolder: $(Build.ArtifactStagingDirectory)
+        displayName: Prepare Python dist for artifacts
+      - task: PublishPipelineArtifact@1
+        inputs:
+          path: $(Build.ArtifactStagingDirectory)
+          artifact: python-dist
+        displayName: Publish Python dist to artifacts
+
+  - job: release_changelog
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+          addToPath: true
+        displayName: Install Python
+      - script: |
+          python -m pip install --upgrade pip
+        displayName: Prepare environment
+      - script: |
+          version="$(cat VERSION)"
+          echo "Version is: $version"
+          python utils/extract_changelog.py "${version}" > "$(Build.ArtifactStagingDirectory)/release_${version}.md"
+        displayName: Generate release changelog
+      - task: PublishPipelineArtifact@1
+        inputs:
+          path: $(Build.ArtifactStagingDirectory)
+          artifact: changelog
+        displayName: Publish release changelog to artifacts

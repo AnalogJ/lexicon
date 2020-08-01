@@ -2,91 +2,143 @@ interactions:
 - request:
     body: '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
     uri: https://api.godaddy.com/v1/domains/fullm3tal.online
   response:
-    body: {string: '{"domainId":270044166,"domain":"fullm3tal.online","status":"PENDING_DNS","expires":"2019-06-05T23:59:59Z","expirationProtected":false,"holdRegistrar":false,"locked":true,"privacy":false,"renewAuto":true,"renewable":true,"renewDeadline":"2019-07-20T06:59:13Z","transferProtected":false,"createdAt":"2018-06-05T13:59:17Z","transferAwayEligibleAt":"2018-08-04T13:59:17Z"}'}
+    body:
+      string: '{"contactAdmin":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactBilling":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactRegistrant":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactTech":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"createdAt":"2020-06-13T21:43:05.000Z","domain":"fullm3tal.online","domainId":320256437,"expirationProtected":false,"expires":"2021-06-13T23:59:59.000Z","exposeWhois":false,"holdRegistrar":false,"locked":true,"nameServers":["ns71.domaincontrol.com","ns72.domaincontrol.com"],"privacy":false,"renewAuto":true,"renewDeadline":"2021-07-28T14:43:02.000Z","renewable":true,"status":"ACTIVE","transferAwayEligibleAt":"2020-08-12T21:43:05.000Z","transferProtected":false}
+
+        '
     headers:
-      Cache-Control: ['max-age=0, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Type: [application/json; charset=utf-8]
-      Date: ['Wed, 06 Jun 2018 15:18:54 GMT']
-      ETag: [W/"619-0PkM2a+pZD8P/Bt482SV3MAH6b8"]
-      Expires: ['Wed, 06 Jun 2018 15:18:54 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
-      Vary: [Accept-Encoding, 'Origin,Accept-Encoding']
-      X-DataCenter: [PHX3]
-      X-Powered-By: [Express]
-      X-Request-Id: [e4ETsSyUqoVVGn3Wtsc5mT]
-      content-length: ['1561']
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1612'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 13 Jun 2020 22:25:13 GMT
+      Expires:
+      - Sat, 13 Jun 2020 22:25:13 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-DataCenter:
+      - PHX3
+      X-Request-Id:
+      - f5675537214008612d7ef967f2b2aaac
+    status:
+      code: 203
+      message: Non-Authoritative Information
 - request:
     body: '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
     uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
   response:
-    body: {string: '[{"data":"ns49.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns50.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"@","name":"www","ttl":3600,"type":"CNAME"},{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"}]
+    body:
+      string: '[{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"ns71.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns72.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"}]
 
-        '}
+        '
     headers:
-      Cache-Control: ['max-age=0, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Type: [application/json]
-      Date: ['Wed, 06 Jun 2018 15:18:54 GMT']
-      Expires: ['Wed, 06 Jun 2018 15:18:54 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
-      Vary: [Accept-Encoding]
-      X-DataCenter: [PHX3]
-      X-Request-Id: [giHgr7QhLuZZqNCpbQ3VVH]
-      content-length: ['417']
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 13 Jun 2020 22:25:14 GMT
+      Expires:
+      - Sat, 13 Jun 2020 22:25:14 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      X-DataCenter:
+      - PHX3
+      X-Request-Id:
+      - 47a282177c82eeb41bdfb7f8f2765331
+      content-length:
+      - '365'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: '[{"data": "ns49.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "ns50.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+    body: '[{"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"},
+      {"data": "ns71.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "ns72.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
+      {"data": "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"},
       {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
-      3600, "type": "CNAME"}, {"data": "@", "name": "www", "ttl": 3600, "type": "CNAME"},
-      {"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"}, {"data":
-      "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"}, {"type":
-      "TXT", "name": "_acme-challenge.fqdn", "data": "challengetoken", "ttl": 3600}]'
+      3600, "type": "CNAME"}, {"type": "TXT", "name": "_acme-challenge.fqdn", "data":
+      "challengetoken", "ttl": 3600}]'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['551']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '491'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: PUT
     uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
   response:
-    body: {string: ''}
+    body:
+      string: ''
     headers:
-      Cache-Control: ['max-age=0, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      Content-Type: [text/plain; charset=utf-8]
-      Date: ['Wed, 06 Jun 2018 15:18:56 GMT']
-      Expires: ['Wed, 06 Jun 2018 15:18:56 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
-      X-DataCenter: [PHX3]
-      X-Request-Id: [pjYzskgeTMeYTyyBSGhViU]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Sat, 13 Jun 2020 22:25:15 GMT
+      Expires:
+      - Sat, 13 Jun 2020 22:25:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-DataCenter:
+      - PHX3
+      X-Request-Id:
+      - ce2047e7cd964ec470a924ded637a536
+    status:
+      code: 200
+      message: OK
 version: 1

@@ -2,38 +2,53 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.23.0
     method: POST
     uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=thisisadomainidonotown.com
   response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"ERROR\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors>\r\n    <Error Number=\"2030166\">Domain is invalid</Error>\r\
-        \n  </Errors>\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult\
-        \ ID=\"0\" IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\
-        \n        <NumYears>0</NumYears>\r\n      </DomainDetails>\r\n      <LockDetails\
-        \ />\r\n      <Whoisguard>\r\n        <ID>0</ID>\r\n      </Whoisguard>\r\n\
-        \      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\
-        \n        <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\
-        \n        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n       \
-        \ <IsActive>false</IsActive>\r\n      </PremiumDnsSubscription>\r\n      <DnsDetails\
-        \ IsUsingOurDNS=\"false\" HostCount=\"0\" DynamicDNSStatus=\"false\" IsFailover=\"\
-        false\" />\r\n      <Modificationrights />\r\n    </DomainGetInfoResult>\r\
-        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.359</ExecutionTime>\r\n</ApiResponse>"}
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ApiResponse Status=\"ERROR\"
+        xmlns=\"http://api.namecheap.com/xml.response\">\r\n  <Errors>\r\n    <Error
+        Number=\"2030166\">Domain is invalid</Error>\r\n  </Errors>\r\n  <Warnings
+        />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\n
+        \ <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult
+        ID=\"0\" IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\n
+        \       <NumYears>0</NumYears>\r\n      </DomainDetails>\r\n      <LockDetails
+        />\r\n      <Whoisguard>\r\n        <ID>0</ID>\r\n      </Whoisguard>\r\n
+        \     <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\n
+        \       <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\n
+        \       <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n        <IsActive>false</IsActive>\r\n
+        \     </PremiumDnsSubscription>\r\n      <DnsDetails IsUsingOurDNS=\"false\"
+        HostCount=\"0\" DynamicDNSStatus=\"false\" IsFailover=\"false\" />\r\n      <Modificationrights
+        />\r\n    </DomainGetInfoResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPIEXT02</Server>\r\n
+        \ <GMTTimeDifference>--4:00</GMTTimeDifference>\r\n  <ExecutionTime>0.168</ExecutionTime>\r\n</ApiResponse>"
     headers:
-      cache-control: [private]
-      content-length: ['1189']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:43:42 GMT']
-      server: [Microsoft-IIS/8.5]
-      vary: [Accept-Encoding]
-      x-aspnet-version: [4.0.30319]
-      x-powered-by: [ASP.NET]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Wed, 20 May 2020 19:02:09 GMT
+      Server:
+      - Microsoft-IIS/8.5
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      content-length:
+      - '1192'
+    status:
+      code: 200
+      message: OK
 version: 1

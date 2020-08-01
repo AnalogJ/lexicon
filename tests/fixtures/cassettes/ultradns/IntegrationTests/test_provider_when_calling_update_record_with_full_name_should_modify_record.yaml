@@ -1,0 +1,534 @@
+interactions:
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets
+  response:
+    body:
+      string: !!python/unicode '{"zoneName":"example-abtest.com.","rrSets":[{"ownerName":"_acme-challenge.createrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.deleterecordinset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken2"]},{"ownerName":"_acme-challenge.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.full.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.listrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.noop.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"docs.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":3600,"rdata":["docs.example.com.example-abtest.com."]},{"ownerName":"example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mail10.example.com.","20 mail20.example.com."]},{"ownerName":"example-abtest.com.","rrtype":"NS
+        (2)","ttl":86400,"rdata":["udns1.ultradns.net.","udns2.ultradns.net."]},{"ownerName":"example-abtest.com.","rrtype":"SOA
+        (6)","ttl":86400,"rdata":["udns1.ultradns.net. ultradns.alex.org.uk. 2020042834
+        86400 86400 86400 86400"]},{"ownerName":"foo.example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mailfoo10.example.com.","20 mailfoo20.example.com."]},{"ownerName":"localhost.example-abtest.com.","rrtype":"A
+        (1)","ttl":3600,"rdata":["127.0.0.1"]},{"ownerName":"orig.nameonly.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken","updated"]},{"ownerName":"random.fqdntest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fulltest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"test1.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.1"]},{"ownerName":"test2.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.2"]},{"ownerName":"testbar.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["\"test foo content\""]},{"ownerName":"testcname1.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["cname.example.com."]},{"ownerName":"testcname2.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["test2.example-abtest.com."]},{"ownerName":"testfoo.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["\"test foo content1\"","\"test foo content2\""]},{"ownerName":"ttl.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["ttlshouldbe3600"]},{"ownerName":"txttest1.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Hello1","Hello2"]},{"ownerName":"txttest2.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Goodbye1","Goodbye3","Goodbye4"]},{"ownerName":"updated.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"updated.testfqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]}],"queryInfo":{"sort":"OWNER","reverse":false,"limit":100},"resultInfo":{"totalCount":28,"offset":0,"returnedCount":28}}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '3431'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:00 GMT
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets
+  response:
+    body:
+      string: !!python/unicode '{"zoneName":"example-abtest.com.","rrSets":[{"ownerName":"_acme-challenge.createrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.deleterecordinset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken2"]},{"ownerName":"_acme-challenge.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.full.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.listrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.noop.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"docs.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":3600,"rdata":["docs.example.com.example-abtest.com."]},{"ownerName":"example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mail10.example.com.","20 mail20.example.com."]},{"ownerName":"example-abtest.com.","rrtype":"NS
+        (2)","ttl":86400,"rdata":["udns1.ultradns.net.","udns2.ultradns.net."]},{"ownerName":"example-abtest.com.","rrtype":"SOA
+        (6)","ttl":86400,"rdata":["udns1.ultradns.net. ultradns.alex.org.uk. 2020042834
+        86400 86400 86400 86400"]},{"ownerName":"foo.example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mailfoo10.example.com.","20 mailfoo20.example.com."]},{"ownerName":"localhost.example-abtest.com.","rrtype":"A
+        (1)","ttl":3600,"rdata":["127.0.0.1"]},{"ownerName":"orig.nameonly.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken","updated"]},{"ownerName":"random.fqdntest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fulltest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"test1.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.1"]},{"ownerName":"test2.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.2"]},{"ownerName":"testbar.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["\"test foo content\""]},{"ownerName":"testcname1.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["cname.example.com."]},{"ownerName":"testcname2.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["test2.example-abtest.com."]},{"ownerName":"testfoo.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["\"test foo content1\"","\"test foo content2\""]},{"ownerName":"ttl.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["ttlshouldbe3600"]},{"ownerName":"txttest1.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Hello1","Hello2"]},{"ownerName":"txttest2.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Goodbye1","Goodbye3","Goodbye4"]},{"ownerName":"updated.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"updated.testfqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]}],"queryInfo":{"sort":"OWNER","reverse":false,"limit":100},"resultInfo":{"totalCount":28,"offset":0,"returnedCount":28}}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '3431'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:01 GMT
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"rrtype": "TXT", "rdata": ["challengetoken"], "ownerName":
+      "orig.testfull.example-abtest.com.", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets/TXT/orig.testfull.example-abtest.com.
+  response:
+    body:
+      string: !!python/unicode '{"message":"Successful"}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '24'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:01 GMT
+      location:
+      - http://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets/TXT/orig.testfull.example-abtest.com.
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 201
+      message: Created
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets
+  response:
+    body:
+      string: !!python/unicode '{"zoneName":"example-abtest.com.","rrSets":[{"ownerName":"_acme-challenge.createrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.deleterecordinset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken2"]},{"ownerName":"_acme-challenge.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.full.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.listrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.noop.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"docs.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":3600,"rdata":["docs.example.com.example-abtest.com."]},{"ownerName":"example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mail10.example.com.","20 mail20.example.com."]},{"ownerName":"example-abtest.com.","rrtype":"NS
+        (2)","ttl":86400,"rdata":["udns1.ultradns.net.","udns2.ultradns.net."]},{"ownerName":"example-abtest.com.","rrtype":"SOA
+        (6)","ttl":86400,"rdata":["udns1.ultradns.net. ultradns.alex.org.uk. 2020042835
+        86400 86400 86400 86400"]},{"ownerName":"foo.example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mailfoo10.example.com.","20 mailfoo20.example.com."]},{"ownerName":"localhost.example-abtest.com.","rrtype":"A
+        (1)","ttl":3600,"rdata":["127.0.0.1"]},{"ownerName":"orig.nameonly.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken","updated"]},{"ownerName":"orig.testfull.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fqdntest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fulltest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"test1.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.1"]},{"ownerName":"test2.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.2"]},{"ownerName":"testbar.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["\"test foo content\""]},{"ownerName":"testcname1.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["cname.example.com."]},{"ownerName":"testcname2.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["test2.example-abtest.com."]},{"ownerName":"testfoo.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["\"test foo content1\"","\"test foo content2\""]},{"ownerName":"ttl.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["ttlshouldbe3600"]},{"ownerName":"txttest1.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Hello1","Hello2"]},{"ownerName":"txttest2.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Goodbye1","Goodbye3","Goodbye4"]},{"ownerName":"updated.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"updated.testfqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]}],"queryInfo":{"sort":"OWNER","reverse":false,"limit":100},"resultInfo":{"totalCount":29,"offset":0,"returnedCount":29}}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '3539'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:02 GMT
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets
+  response:
+    body:
+      string: !!python/unicode '{"zoneName":"example-abtest.com.","rrSets":[{"ownerName":"_acme-challenge.createrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.deleterecordinset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken2"]},{"ownerName":"_acme-challenge.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.full.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.listrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.noop.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"docs.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":3600,"rdata":["docs.example.com.example-abtest.com."]},{"ownerName":"example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mail10.example.com.","20 mail20.example.com."]},{"ownerName":"example-abtest.com.","rrtype":"NS
+        (2)","ttl":86400,"rdata":["udns1.ultradns.net.","udns2.ultradns.net."]},{"ownerName":"example-abtest.com.","rrtype":"SOA
+        (6)","ttl":86400,"rdata":["udns1.ultradns.net. ultradns.alex.org.uk. 2020042835
+        86400 86400 86400 86400"]},{"ownerName":"foo.example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mailfoo10.example.com.","20 mailfoo20.example.com."]},{"ownerName":"localhost.example-abtest.com.","rrtype":"A
+        (1)","ttl":3600,"rdata":["127.0.0.1"]},{"ownerName":"orig.nameonly.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken","updated"]},{"ownerName":"orig.testfull.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fqdntest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fulltest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"test1.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.1"]},{"ownerName":"test2.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.2"]},{"ownerName":"testbar.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["\"test foo content\""]},{"ownerName":"testcname1.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["cname.example.com."]},{"ownerName":"testcname2.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["test2.example-abtest.com."]},{"ownerName":"testfoo.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["\"test foo content1\"","\"test foo content2\""]},{"ownerName":"ttl.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["ttlshouldbe3600"]},{"ownerName":"txttest1.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Hello1","Hello2"]},{"ownerName":"txttest2.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Goodbye1","Goodbye3","Goodbye4"]},{"ownerName":"updated.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"updated.testfqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]}],"queryInfo":{"sort":"OWNER","reverse":false,"limit":100},"resultInfo":{"totalCount":29,"offset":0,"returnedCount":29}}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '3539'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:03 GMT
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: DELETE
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets/TXT/orig.testfull.example-abtest.com.
+  response:
+    body:
+      string: !!python/unicode ''
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:04 GMT
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: !!python/unicode '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets
+  response:
+    body:
+      string: !!python/unicode '{"zoneName":"example-abtest.com.","rrSets":[{"ownerName":"_acme-challenge.createrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.deleterecordinset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken2"]},{"ownerName":"_acme-challenge.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.full.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.listrecordset.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken1","challengetoken2"]},{"ownerName":"_acme-challenge.noop.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"_acme-challenge.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"docs.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":3600,"rdata":["docs.example.com.example-abtest.com."]},{"ownerName":"example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mail10.example.com.","20 mail20.example.com."]},{"ownerName":"example-abtest.com.","rrtype":"NS
+        (2)","ttl":86400,"rdata":["udns1.ultradns.net.","udns2.ultradns.net."]},{"ownerName":"example-abtest.com.","rrtype":"SOA
+        (6)","ttl":86400,"rdata":["udns1.ultradns.net. ultradns.alex.org.uk. 2020042836
+        86400 86400 86400 86400"]},{"ownerName":"foo.example-abtest.com.","rrtype":"MX
+        (15)","ttl":300,"rdata":["10 mailfoo10.example.com.","20 mailfoo20.example.com."]},{"ownerName":"localhost.example-abtest.com.","rrtype":"A
+        (1)","ttl":3600,"rdata":["127.0.0.1"]},{"ownerName":"orig.nameonly.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken","updated"]},{"ownerName":"random.fqdntest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.fulltest.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"random.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"test1.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.1"]},{"ownerName":"test2.example-abtest.com.","rrtype":"A
+        (1)","ttl":300,"rdata":["10.0.0.2"]},{"ownerName":"testbar.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["\"test foo content\""]},{"ownerName":"testcname1.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["cname.example.com."]},{"ownerName":"testcname2.example-abtest.com.","rrtype":"CNAME
+        (5)","ttl":300,"rdata":["test2.example-abtest.com."]},{"ownerName":"testfoo.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["\"test foo content1\"","\"test foo content2\""]},{"ownerName":"ttl.fqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["ttlshouldbe3600"]},{"ownerName":"txttest1.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Hello1","Hello2"]},{"ownerName":"txttest2.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":300,"rdata":["Goodbye1","Goodbye3","Goodbye4"]},{"ownerName":"updated.test.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]},{"ownerName":"updated.testfqdn.example-abtest.com.","rrtype":"TXT
+        (16)","ttl":3600,"rdata":["challengetoken"]}],"queryInfo":{"sort":"OWNER","reverse":false,"limit":100},"resultInfo":{"totalCount":28,"offset":0,"returnedCount":28}}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '3431'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:04 GMT
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"rrtype": "TXT", "rdata": ["challengetoken"], "ownerName":
+      "updated.testfull.example-abtest.com.", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '112'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets/TXT/updated.testfull.example-abtest.com.
+  response:
+    body:
+      string: !!python/unicode '{"message":"Successful"}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - Origin, X-Requested-With, Content-Type, Accept, Authorization, UltraClient
+      access-control-allow-methods:
+      - POST, GET, OPTIONS, DELETE, PUT, PATCH
+      access-control-allow-origin:
+      - '*'
+      access-control-max-age:
+      - '3600'
+      connection:
+      - keep-alive
+      content-length:
+      - '24'
+      content-type:
+      - application/json
+      date:
+      - Fri, 22 May 2020 17:01:05 GMT
+      location:
+      - http://restapi.ultradns.com/v2/zones/example-abtest.com./rrsets/TXT/updated.testfull.example-abtest.com.
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Accept-Encoding, User-Agent
+    status:
+      code: 201
+      message: Created
+version: 1
