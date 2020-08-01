@@ -114,19 +114,13 @@ class Provider(BaseProvider):
         if self._get_provider_option('auth_token') is None:
             raise Exception('Must provide API token')
 
-        token = self._get_provider_option('auth_token')
-        headers = {
-            'Authorization': 'Njalla ' + token,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
         data = {
             'method': method,
             'params': params,
         }
-        response = requests.post(self.api_endpoint,
-                                 headers=headers,
-                                 json=data).json()
+        response = self._request('POST',
+                                 "",
+                                 data)
 
         if 'error' in response.keys():
             error = response['error']
@@ -141,5 +135,24 @@ class Provider(BaseProvider):
 
         raise Exception('Unambiguous record could not be found.')
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
-        return {}
+    def _request(self, action="GET", url="/", data=None, query_params=None):
+        if data is None:
+            data = {}
+        if query_params is None:
+            query_params = {}
+        token = self._get_provider_option('auth_token')
+        headers = {
+            'Authorization': 'Njalla ' + token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+        response = requests.request(
+            action,
+            self.api_endpoint + url,
+            headers=headers,
+            params=query_params,
+            json=data,
+        )
+        # if the request fails for any reason, throw an error.
+        response.raise_for_status()
+        return response.json()
