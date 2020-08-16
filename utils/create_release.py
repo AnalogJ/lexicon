@@ -15,8 +15,9 @@ def main():
     if git_clean:
         raise RuntimeError("Error, git workspace is not clean: \n{0}".format(git_clean))
 
-    with open(os.path.join(PROJECT_ROOT, "VERSION")) as file_h:
-        current_version = file_h.read().strip()
+    current_version = subprocess.check_output(
+        "poetry version", shell=True, universal_newlines=True
+    ).replace("dns-lexicon ", "")
 
     print("Current version is: {0}".format(current_version))
     print("Please insert new version:")
@@ -48,17 +49,9 @@ def main():
         with open(os.path.join(PROJECT_ROOT, "CHANGELOG.md"), "w") as file_h:
             file_h.write(changelog)
 
-        with open(os.path.join(PROJECT_ROOT, "VERSION"), "w") as file_h:
-            file_h.write(new_version)
-
-        subprocess.check_call(
-            [sys.executable, "-m", "isort", "lexicon", "utils", "setup.py"],
-            cwd=PROJECT_ROOT,
-        )
-        subprocess.check_call(
-            [sys.executable, "-m", "black", "lexicon", "utils", "setup.py"],
-            cwd=PROJECT_ROOT,
-        )
+        subprocess.check_call("poetry version {0}".format(new_version), shell=True)
+        subprocess.check_call("poetry run isort -rc src test utils", shell=True)
+        subprocess.check_call("poetry run black src test utils", shell=True)
 
         subprocess.check_call(
             'git commit -a -m "Version {0}"'.format(new_version), shell=True
