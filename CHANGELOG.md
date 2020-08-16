@@ -8,6 +8,7 @@
 * Use `poetry` to manage dependencies, build and package Lexicon.
 * The `beautifulsoup4` dependency has been integrated to the core ones for generic purpose.
   As a consequence `henet`, `easyname` and `gratisdns` do not have optional dependencies anymore.
+* Update Docker image to use Python 3.8, and install Lexicon with full extras.
 
 ## 3.3.28 - 26/07/2020
 ### Added
