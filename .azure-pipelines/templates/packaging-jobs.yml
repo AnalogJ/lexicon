@@ -35,7 +35,10 @@ jobs:
           addToPath: true
         displayName: Install Python
       - script: |
-          version="$(cat VERSION)"
+          python -m pip install -U poetry
+        displayName: Prepare environment
+      - script: |
+          version=`poetry version | awk '{print $2}'`
           echo "Version is: $version"
           python utils/extract_changelog.py "${version}" > "$(Build.ArtifactStagingDirectory)/release_${version}.md"
         displayName: Generate release changelog
