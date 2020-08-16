@@ -1,23 +1,28 @@
 # Changelog
 
 ## master - CURRENT
-### Modified
-* Remove support for Python 2.7.
-* Remove support for Python 3.5.
-* Remove the extra `security` from `requests` dependency which
-  does not make sense anymore on recent versions of Python.
+### Added
 * Use `poetry` to manage dependencies, build and package Lexicon.
+* Add integration tests for Mac OS X
+
+### Changed
 * The `beautifulsoup4` dependency has been integrated to the core
   ones for generic purpose. As a consequence `henet`, `easyname` and `gratisdns`
   providers do not have optional dependencies anymore.
 * Update Docker image to use Python 3.8, and install Lexicon with full extras.
+
+### Removed
+* Remove support for Python 2.7.
+* Remove support for Python 3.5.
+* Remove the extra `security` from `requests` dependency which
+  does not make sense anymore on recent versions of Python.
 
 ## 3.3.28 - 26/07/2020
 ### Added
 * Redesign of the release process using Azure Pipelines.
 * Create a dedicated documentation on ReadTheDoc, refactor README.md into README.rst.
 
-### Modified
+### Changed
 * Fix localzone provider to make it work with dnspython 2.x.
 * Update easyname provider against the recent API changes.
 
