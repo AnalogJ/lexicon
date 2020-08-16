@@ -3,11 +3,13 @@
 ## master - CURRENT
 ### Modified
 * Remove support for Python 2.7.
-* Remove the extra `security` from `requests` dependency which does not make sense anymore
-  on recent versions of Python.
+* Remove support for Python 3.5.
+* Remove the extra `security` from `requests` dependency which
+  does not make sense anymore on recent versions of Python.
 * Use `poetry` to manage dependencies, build and package Lexicon.
-* The `beautifulsoup4` dependency has been integrated to the core ones for generic purpose.
-  As a consequence `henet`, `easyname` and `gratisdns` do not have optional dependencies anymore.
+* The `beautifulsoup4` dependency has been integrated to the core
+  ones for generic purpose. As a consequence `henet`, `easyname` and `gratisdns`
+  providers do not have optional dependencies anymore.
 * Update Docker image to use Python 3.8, and install Lexicon with full extras.
 
 ## 3.3.28 - 26/07/2020
