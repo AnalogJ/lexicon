@@ -41,6 +41,7 @@ extras_require = {
     "namecheap": ["PyNamecheap"],
     "route53": ["boto3"],
     "softlayer": ["SoftLayer"],
+    'gransy': ['zeep'],
     "transip": ["transip>=0.3.0"],
     "plesk": ["xmltodict"],
     "localzone": ["localzone"],
@@ -113,8 +114,6 @@ setup(
         "pyyaml",
         # REST APIs
         "requests[security]",
-        # SOAP APIs
-        "zeep",
         # HTML scraping
         "beautifulsoup4",
     ],
