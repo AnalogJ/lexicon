@@ -2,17 +2,21 @@
 
 ## master - CURRENT
 ### Modified
+* Remove support for Python 2.7.
+* Remove the extra `security` from `requests` dependency which does not make sense anymore
+  on recent versions of Python.
+* Use `poetry` to manage dependencies, build and package Lexicon.
 * The `beautifulsoup4` dependency has been integrated to the core ones for generic purpose.
   As a consequence `henet`, `easyname` and `gratisdns` do not have optional dependencies anymore.
 
 ## 3.3.28 - 26/07/2020
 ### Added
-* Redesign of the release process using Azure Pipelines
-* Create a dedicated documentation on ReadTheDoc, refactor README.md into README.rst
+* Redesign of the release process using Azure Pipelines.
+* Create a dedicated documentation on ReadTheDoc, refactor README.md into README.rst.
 
 ### Modified
-* Fix localzone provider to make it work with dnspython 2.x
-* Update easyname provider against the recent API changes
+* Fix localzone provider to make it work with dnspython 2.x.
+* Update easyname provider against the recent API changes.
 
 ## 3.3.27 - 08/07/2020
 ## 3.3.26 - 14/06/2020
