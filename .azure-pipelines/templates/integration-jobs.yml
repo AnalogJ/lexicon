@@ -32,9 +32,9 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           addToPath: true
         displayName: Enable the targeted python version
-      - script: python -m pip install -U poetry
+      - script: python -m pip install -U tox poetry
         displayName: Install required runtime dependencies
-      - script: poetry run tox
+      - script: python -m tox
         displayName: Execute tests through tox
       - script: |
           python -m pip install coveralls
