@@ -41,7 +41,7 @@ extras_require = {
     "namecheap": ["PyNamecheap"],
     "route53": ["boto3"],
     "softlayer": ["SoftLayer"],
-    'gransy': ['zeep'],
+    "gransy": ["zeep"],
     "transip": ["transip>=0.3.0"],
     "plesk": ["xmltodict"],
     "localzone": ["localzone"],
