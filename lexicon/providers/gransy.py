@@ -6,7 +6,10 @@ import collections
 import logging
 from builtins import staticmethod
 
-import zeep
+try:
+    import zeep  # Optional dependency
+except BaseException:
+    pass
 
 from lexicon.providers.base import Provider as BaseProvider
 

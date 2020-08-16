@@ -43,7 +43,6 @@ future = "^0.18.2"
 cryptography = "^3.0"
 pyyaml = "^5.3.1"
 requests = { version = "^2.24.0", extras = ["security"] }
-zeep = "^3.4.0"
 beautifulsoup4 = "^4.9.1"
 # Optional dependencies required by some providers
 pynamecheap = { version = "^0.0.3", optional = true }
@@ -52,6 +51,7 @@ transip = { version = "^2.1.2", optional = true }
 xmltodict = { version = "^0.12.0", optional = true }
 localzone = { version = "^0.9.6", optional = true }
 softlayer = { version = "<5.6", optional = true }  # 5.6+ has incompatibilies with recent requests and Python < 3.5
+zeep = { version = "^3.4.0", optional = true }
 pygments = { version = "<2.6", optional = true }  # 2.6+ requires Python 3.5+ (transitive dep from softlayer)
 
 [tool.poetry.extras]
@@ -61,8 +61,9 @@ transip = ["transip"]
 plesk = ["xmltodict"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
-# Extra "full" must contain the list of all other extras
-full = ["pynamecheap", "boto3", "transip", "xmltodict", "localzone", "softlayer"]
+gransy = ["zeep"]
+# Extra "full" list must contain all other extras
+full = ["pynamecheap", "boto3", "transip", "xmltodict", "localzone", "softlayer", "zeep"]
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.3"
