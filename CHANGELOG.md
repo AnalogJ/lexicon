@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.4.0 - 16/08/2020
 ### Added
 * Use `poetry` to manage dependencies, build and package Lexicon.
 * Add integration tests for Mac OS X
