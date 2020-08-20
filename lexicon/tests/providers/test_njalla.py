@@ -8,6 +8,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 
+
 class NjallaProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Njalla"""
     provider_name = 'njalla'

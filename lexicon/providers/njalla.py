@@ -20,6 +20,7 @@ def provider_parser(subparser):
     subparser.add_argument(
         "--auth-token", help="specify API token for authentication")
 
+
 class Provider(BaseProvider):
     """Provider class for Njalla"""
     def __init__(self, config):
@@ -72,9 +73,9 @@ class Provider(BaseProvider):
             'content': record['content'],
         } for record in records]
         filtered_records = [record for record in processed_records if (
-            (rtype is None or record['type'] == rtype) and
-            (name is None or record['name'] == self._full_name(name)) and
-            (content is None or record['content'] == content))]
+            (rtype is None or record['type'] == rtype)
+            and (name is None or record['name'] == self._full_name(name))
+            and (content is None or record['content'] == content))]
 
         LOGGER.debug('list_records: %s', filtered_records)
         return filtered_records
