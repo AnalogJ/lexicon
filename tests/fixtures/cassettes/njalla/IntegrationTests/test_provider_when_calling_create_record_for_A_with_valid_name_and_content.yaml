@@ -13,38 +13,40 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
       string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
-        "expiry": "2020-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
-        10}, "jsonrpc": "2.0"}
+        "expiry": "2021-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10, "dnssec_type": "dsData"}, "jsonrpc": "2.0"}
 
         '
     headers:
       connection:
       - keep-alive
       content-length:
-      - '154'
+      - '179'
       content-security-policy:
       - script-src 'self' 'unsafe-inline'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:58:37 GMT
+      - Thu, 20 Aug 2020 22:42:47 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=07OihP6HQBsll5llk8zWMh6AajB3cuah7Cl3NwGg9DakSehVRNCyEefiJMf3Y5d5;
-        expires=Sun, 25-Apr-2021 23:58:37 GMT; Max-Age=31449600; Path=/
-      - sessionid=ap9xif4d44vgykfaj94yfzeptvm6geud; expires=Sun, 10-May-2020 23:58:37
+      - csrftoken=YAbqyChr0mLvpkKKLdB9WfcUs7Hbunh77I9x4G3yM63Z52rCOEBHqkiCPGJwitd6;
+        expires=Thu, 19-Aug-2021 22:42:47 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=a8l01bx2osmrbr7wcvo1bxovdigylvs8; expires=Thu, 03-Sep-2020 22:42:47
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:
@@ -74,12 +76,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
-      string: !!python/unicode '{"result": {"id": 133763, "name": "localhost", "type":
+      string: !!python/unicode '{"result": {"id": 188132, "name": "localhost", "type":
         "A", "content": "127.0.0.1", "ttl": 3600}, "jsonrpc": "2.0"}
 
         '
@@ -93,18 +95,20 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:58:38 GMT
+      - Thu, 20 Aug 2020 22:42:48 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=V9QxysNpXpmsyANf4roiahWrEn3WW7bE5rFQE9csSRynVVguxEHYRxA3viLObZdI;
-        expires=Sun, 25-Apr-2021 23:58:38 GMT; Max-Age=31449600; Path=/
-      - sessionid=5l6e3tml1xpndsd1e0tp6hzza07jxf24; expires=Sun, 10-May-2020 23:58:38
+      - csrftoken=8yrPeNu9ezVFZWWajXtQYSvWq2DY0DFDjaJly4XOG5GSSeyXTOSNufnJVkcMRRYg;
+        expires=Thu, 19-Aug-2021 22:42:48 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=2jvbkpxxbq5xd9nc9e14kudu0my6pywp; expires=Thu, 03-Sep-2020 22:42:48
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:

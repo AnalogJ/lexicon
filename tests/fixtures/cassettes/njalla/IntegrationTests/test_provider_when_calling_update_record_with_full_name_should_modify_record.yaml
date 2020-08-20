@@ -13,38 +13,40 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
       string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
-        "expiry": "2020-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
-        10}, "jsonrpc": "2.0"}
+        "expiry": "2021-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10, "dnssec_type": "dsData"}, "jsonrpc": "2.0"}
 
         '
     headers:
       connection:
       - keep-alive
       content-length:
-      - '154'
+      - '179'
       content-security-policy:
       - script-src 'self' 'unsafe-inline'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:59:37 GMT
+      - Thu, 20 Aug 2020 22:43:31 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=bTv7oj1QQsHkmqcSDssUfrGV1r3iSkA9oDpcFzQlPlaOOeM1qNST6cc9RvZE3Jz9;
-        expires=Sun, 25-Apr-2021 23:59:37 GMT; Max-Age=31449600; Path=/
-      - sessionid=ijrr1u70wxge68p2ui4hdd9w3sanhgq7; expires=Sun, 10-May-2020 23:59:37
+      - csrftoken=OqzVswXWvcG908S6AFoiJWqpgCrI9SNfWAKFJS9hhJe0aknN6Hu9woJGmww0oYic;
+        expires=Thu, 19-Aug-2021 22:43:31 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=0zmz1bipb4mz7gpvgxkgggs8dwtlaj4c; expires=Thu, 03-Sep-2020 22:43:31
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:
@@ -74,12 +76,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
-      string: !!python/unicode '{"result": {"id": 133779, "name": "orig.testfull",
+      string: !!python/unicode '{"result": {"id": 188154, "name": "orig.testfull",
         "type": "TXT", "content": "challengetoken", "ttl": 3600}, "jsonrpc": "2.0"}
 
         '
@@ -93,18 +95,20 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:59:38 GMT
+      - Thu, 20 Aug 2020 22:43:31 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=1VV1AwH3Xiu8uJ2lwAvEJZ7fd1cCP24YImWLFeqjxWbetYKn6NSTQADirFbdqFvY;
-        expires=Sun, 25-Apr-2021 23:59:38 GMT; Max-Age=31449600; Path=/
-      - sessionid=9qrl334hx97c3b4q9dn5lldmgigfa3fs; expires=Sun, 10-May-2020 23:59:38
+      - csrftoken=wVhBiOK9yJKgleYGEL0YCyYFymXxGU30YO5RQSyRZtDZampv3ePo9ZiaXnGGsfAy;
+        expires=Thu, 19-Aug-2021 22:43:31 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=h3n5cs9lsmq6cl9cax5vjih3rcz2jhv9; expires=Thu, 03-Sep-2020 22:43:31
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:
@@ -133,27 +137,37 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
-      string: !!python/unicode '{"result": {"records": [{"id": 133763, "name": "localhost",
-        "type": "A", "content": "127.0.0.1", "ttl": 3600}, {"id": 133764, "name":
-        "docs", "type": "CNAME", "content": "docs.example.com", "ttl": 3600}, {"id":
-        133765, "name": "_acme-challenge.fqdn", "type": "TXT", "content": "challengetoken",
-        "ttl": 3600}, {"id": 133766, "name": "_acme-challenge.full", "type": "TXT",
-        "content": "challengetoken", "ttl": 3600}, {"id": 133767, "name": "_acme-challenge.test",
-        "type": "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 133772, "name":
-        "ttl.fqdn", "type": "TXT", "content": "ttlshouldbe3600", "ttl": 3600}, {"id":
-        133773, "name": "random.fqdntest", "type": "TXT", "content": "challengetoken",
-        "ttl": 3600}, {"id": 133774, "name": "random.fulltest", "type": "TXT", "content":
-        "challengetoken", "ttl": 3600}, {"id": 133775, "name": "random.test", "type":
-        "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 133776, "name": "orig.test",
-        "type": "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 133777, "name":
+      string: !!python/unicode '{"result": {"records": [{"id": 188132, "name": "localhost",
+        "type": "A", "content": "127.0.0.1", "ttl": 3600}, {"id": 133783, "name":
+        "@", "type": "Dynamic", "content": "hj96h42che8lw1l2", "ttl": 60, "update_url":
+        "https://njal.la/update/?h=example.com&k=hj96h42che8lw1l2&auto", "current_ips":
+        ["35.139.63.101"]}, {"id": 188133, "name": "docs", "type": "CNAME", "content":
+        "docs.example.com", "ttl": 3600}, {"id": 188134, "name": "_acme-challenge.fqdn",
+        "type": "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 188135, "name":
+        "_acme-challenge.full", "type": "TXT", "content": "challengetoken", "ttl":
+        3600}, {"id": 188136, "name": "_acme-challenge.test", "type": "TXT", "content":
+        "challengetoken", "ttl": 3600}, {"id": 188137, "name": "_acme-challenge.createrecordset",
+        "type": "TXT", "content": "challengetoken1", "ttl": 3600}, {"id": 188138,
+        "name": "_acme-challenge.createrecordset", "type": "TXT", "content": "challengetoken2",
+        "ttl": 3600}, {"id": 188144, "name": "_acme-challenge.deleterecordinset",
+        "type": "TXT", "content": "challengetoken2", "ttl": 3600}, {"id": 188145,
+        "name": "ttl.fqdn", "type": "TXT", "content": "ttlshouldbe3600", "ttl": 3600},
+        {"id": 188146, "name": "_acme-challenge.listrecordset", "type": "TXT", "content":
+        "challengetoken1", "ttl": 3600}, {"id": 188147, "name": "_acme-challenge.listrecordset",
+        "type": "TXT", "content": "challengetoken2", "ttl": 3600}, {"id": 188148,
+        "name": "random.fqdntest", "type": "TXT", "content": "challengetoken", "ttl":
+        3600}, {"id": 188149, "name": "random.fulltest", "type": "TXT", "content":
+        "challengetoken", "ttl": 3600}, {"id": 188150, "name": "random.test", "type":
+        "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 188151, "name": "orig.test",
+        "type": "TXT", "content": "challengetoken", "ttl": 3600}, {"id": 188152, "name":
         "orig.nameonly.test", "type": "TXT", "content": "updated", "ttl": 3600}, {"id":
-        133778, "name": "orig.testfqdn", "type": "TXT", "content": "challengetoken",
-        "ttl": 3600}, {"id": 133779, "name": "orig.testfull", "type": "TXT", "content":
+        188153, "name": "orig.testfqdn", "type": "TXT", "content": "challengetoken",
+        "ttl": 3600}, {"id": 188154, "name": "orig.testfull", "type": "TXT", "content":
         "challengetoken", "ttl": 3600}]}, "jsonrpc": "2.0"}
 
         '
@@ -161,24 +175,26 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '1592'
+      - '2099'
       content-security-policy:
       - script-src 'self' 'unsafe-inline'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:59:38 GMT
+      - Thu, 20 Aug 2020 22:43:32 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=uEMnXBCuw6HcQoRyy949wadBbLDzwkc9RNY5fkeOMYRUz51h7KLBoJENNjUglDpl;
-        expires=Sun, 25-Apr-2021 23:59:38 GMT; Max-Age=31449600; Path=/
-      - sessionid=48r63hvqbc6oy681xsodjeqv4qmbma2w; expires=Sun, 10-May-2020 23:59:38
+      - csrftoken=J0hQ9iTvCEdABIAPUJrk0yAcvz9XarDSGHLry5gOF8oLJSuXLV3oAQRMnv1LUlm7;
+        expires=Thu, 19-Aug-2021 22:43:32 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=iwa4nz3a0uo2sqomxakdq89f0k4ktlx2; expires=Thu, 03-Sep-2020 22:43:32
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:
@@ -195,7 +211,7 @@ interactions:
       message: OK
 - request:
     body: !!python/unicode '{"params": {"content": "challengetoken", "domain": "example.com",
-      "id": 133779}, "method": "edit-record"}'
+      "id": 188154}, "method": "edit-record"}'
     headers:
       Accept:
       - application/json
@@ -208,12 +224,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.24.0
     method: POST
     uri: https://njal.la/api/1/
   response:
     body:
-      string: !!python/unicode '{"result": {"id": 133779, "name": "orig.testfull",
+      string: !!python/unicode '{"result": {"id": 188154, "name": "orig.testfull",
         "type": "TXT", "content": "challengetoken", "ttl": 3600}, "jsonrpc": "2.0"}
 
         '
@@ -227,18 +243,20 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 26 Apr 2020 23:59:39 GMT
+      - Thu, 20 Aug 2020 22:43:33 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
       referrer-policy:
       - same-origin
       server:
-      - nginx/1.14.2
+      - nginx
       set-cookie:
-      - csrftoken=WlzXRjOFAE9SIm6qpKFvZSeJF0Whdp1oqEfHkvD2gukfrfXXxf9txiCvGHMQhKI4;
-        expires=Sun, 25-Apr-2021 23:59:39 GMT; Max-Age=31449600; Path=/
-      - sessionid=m2qokd1u6hetv9oqdef3c96f6gjizu16; expires=Sun, 10-May-2020 23:59:39
+      - csrftoken=VZdhbs3cg5OSli4pgxXHWkDaPxDZJRz2V0vbY7B56e9XU7hsbzNsDE2xOjvWsgib;
+        expires=Thu, 19-Aug-2021 22:43:33 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=0wp7wuy3sysiul9lbq1uiymwg6d5fnnn; expires=Thu, 03-Sep-2020 22:43:33
         GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
       strict-transport-security:
-      - max-age=31536000; includeSubDomains
+      - max-age=63072000; includeSubDomains
       transfer-encoding:
       - chunked
       vary:
