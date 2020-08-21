@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.4.1 - 21/08/2020
 ### Added
 * Add the Njalla provider
 
