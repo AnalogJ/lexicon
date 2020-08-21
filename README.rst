@@ -114,6 +114,7 @@ The current supported providers are:
 - `Linode v4 <https://developers.linode.com/api/docs/v4#tag/Domains>`_
 - `LuaDNS <http://www.luadns.com/api.html>`_
 - `Memset <https://www.memset.com/apidocs/methods_dns.html>`_
+- `Njalla <https://njal.la/api/>`_
 - `Namecheap <https://www.namecheap.com/support/api/methods.aspx>`_
 - `Namesilo <https://www.namesilo.com/api_reference.php>`_
 - `Netcup <https://ccp.netcup.net/run/webservice/servers/endpoint.php>`_
