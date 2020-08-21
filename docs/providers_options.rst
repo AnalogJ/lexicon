@@ -26,13 +26,13 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | namecheap_      | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+
-| nsone_          | onapp_          | online_         | ovh_            |
+| njalla_         | nsone_          | onapp_          | online_         |
 +-----------------+-----------------+-----------------+-----------------+
-| plesk_          | pointhq_        | powerdns_       | rackspace_      |
+| ovh_            | plesk_          | pointhq_        | powerdns_       |
 +-----------------+-----------------+-----------------+-----------------+
-| rage4_          | rcodezero_      | route53_        | safedns_        |
+| rackspace_      | rage4_          | rcodezero_      | route53_        |
 +-----------------+-----------------+-----------------+-----------------+
-| sakuracloud_    | softlayer_      | subreg_         | transip_        |
+| safedns_        | sakuracloud_    | softlayer_      | transip_        |
 +-----------------+-----------------+-----------------+-----------------+
 | ultradns_       | vultr_          | yandex_         | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+
@@ -318,6 +318,11 @@ nfsn
     * ``auth_username`` Specify username used to authenticate
     * ``auth_token`` Specify token used to authenticate
 
+.. _njalla:
+
+njalla
+    * ``auth_token`` Specify api token for authentication
+
 .. _nsone:
 
 nsone
@@ -410,12 +415,6 @@ softlayer
     * ``auth_username`` Specify username for authentication
     * ``auth_api_key`` Specify api private key for authentication
 
-.. _subreg:
-
-subreg
-    * ``auth_username`` Specify username for authentication
-    * ``auth_password`` Specify password for authentication
-
 .. _transip:
 
 transip
@@ -454,3 +453,4 @@ zilore
 zonomi
     * ``auth_token`` Specify token for authentication
     * ``auth_entrypoint`` Use zonomi or rimuhosting api
+
