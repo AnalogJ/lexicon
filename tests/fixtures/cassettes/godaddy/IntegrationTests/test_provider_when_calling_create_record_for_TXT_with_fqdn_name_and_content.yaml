@@ -61,10 +61,10 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
     method: GET
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/_acme-challenge.fqdn
   response:
     body:
-      string: '[{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"ns71.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns72.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"}]
+      string: '[]
 
         '
     headers:
@@ -89,18 +89,12 @@ interactions:
       X-Request-Id:
       - 47a282177c82eeb41bdfb7f8f2765331
       content-length:
-      - '365'
+      - '3'
     status:
       code: 200
       message: OK
 - request:
-    body: '[{"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"},
-      {"data": "ns71.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "ns72.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"},
-      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
-      3600, "type": "CNAME"}, {"type": "TXT", "name": "_acme-challenge.fqdn", "data":
-      "challengetoken", "ttl": 3600}]'
+    body: '[{"type": "TXT", "name": "_acme-challenge.fqdn", "data": "challengetoken", "ttl": 3600}]'
     headers:
       Accept:
       - application/json
@@ -109,13 +103,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '491'
+      - '87'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.23.0
     method: PUT
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/_acme-challenge.fqdn
   response:
     body:
       string: ''
