@@ -1,0 +1,141 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/settings
+  response:
+    body:
+      string: '{"id":1957,"name":"misaka-dns-test.stream","friendly_name":"misaka-dns-test.stream","comment":"","email":"support+dev.lexicon@misaka.io","expiry":604800,"nxdomain_ttl":180,"default_ttl":600,"refresh":3600,"retry":600,"serial":2020090427,"managed_soa":true,"managed_acme":false,"enabled":true,"dirty":false,"created":"2020-09-03T14:23:24.007624Z","modified":"2020-09-03T20:00:37.106810Z","owner":698}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce364dcc89e0ae8-NRT
+      Cf-Railgun:
+      - direct (starting new WAN connection)
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:19 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=dbc78c77577b36046540e39dae36e06651599345018; expires=Mon, 05-Oct-20
+        22:30:18 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.131.233
+      X-Request-Id:
+      - bcc352e5e2e80cac2ac66077bcc62563
+      X-Served-By:
+      - portal-665f9b85dd-s7v7s
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fd5df900000ae89d90a200000001
+      content-length:
+      - '399'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.test/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.test","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce364e3dde91d7f-NRT
+      Cf-Railgun:
+      - 5e57326c6e stream 0.000000 0210 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:19 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d5e2fb0a0e3f4ecf5a174a15ad6ad8d271599345019; expires=Mon, 05-Oct-20
+        22:30:19 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - 4e23611cd371b18cac5b54e5fadc87de
+      X-Served-By:
+      - portal-665f9b85dd-7x4gl
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fd626400001d7f5d2c1200000001
+      content-length:
+      - '153'
+    status:
+      code: 200
+      message: OK
+version: 1

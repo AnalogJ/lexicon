@@ -1,0 +1,489 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/settings
+  response:
+    body:
+      string: '{"id":1957,"name":"misaka-dns-test.stream","friendly_name":"misaka-dns-test.stream","comment":"","email":"support+dev.lexicon@misaka.io","expiry":604800,"nxdomain_ttl":180,"default_ttl":600,"refresh":3600,"retry":600,"serial":2020090524,"managed_soa":true,"managed_acme":false,"enabled":true,"dirty":false,"created":"2020-09-03T14:23:24.007624Z","modified":"2020-09-05T22:30:39.257182Z","owner":698}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce36570e907ef65-NRT
+      Cf-Railgun:
+      - 3057992b74 9.52 0.027306 0030 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:42 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d73bb7d1fa6f8314e62dd429e964dea261599345042; expires=Mon, 05-Oct-20
+        22:30:42 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - 3f0cf02377bf5396856192101e34babb
+      X-Served-By:
+      - portal-665f9b85dd-s7v7s
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdba910000ef65561b4200000001
+      content-length:
+      - '399'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce36574ab23ef8a-NRT
+      Cf-Railgun:
+      - 3fe37e4aba stream 0.000000 0210 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:42 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=ddf9047d47055ee2eddc282f13f1ac7e11599345042; expires=Mon, 05-Oct-20
+        22:30:42 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - a79bebc27d81a6ce3704fb0a28d62110
+      X-Served-By:
+      - portal-665f9b85dd-wvq5t
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdbcea0000ef8a5a03f200000001
+      content-length:
+      - '167'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"ttl": 3600, "records": [{"value": "challengetoken2"}, {"value": "challengetoken1"}],
+      "filters": []}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '101'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: PUT
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"},{"value":"challengetoken1"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce365788c840b97-NRT
+      Cf-Railgun:
+      - d7bbaddeae stream 0.000000 0210 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:43 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d4e6602e9adab33a7bdf2866753de37931599345043; expires=Mon, 05-Oct-20
+        22:30:43 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - 1b3608f8756168818d1c761367f84745
+      X-Served-By:
+      - portal-665f9b85dd-spngm
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdbf5000000b97fc080200000001
+      content-length:
+      - '195'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"},{"value":"challengetoken1"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce3657c5bf50af8-NRT
+      Cf-Railgun:
+      - ae5dd17906 24.61 0.030220 0030 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:44 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=db7d607690886c9f3f5f52426591b98881599345043; expires=Mon, 05-Oct-20
+        22:30:43 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - 0d74f754aab03aac2d8ef9e1e67ca871
+      X-Served-By:
+      - portal-665f9b85dd-7x4gl
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdc1b700000af8023fc200000001
+      content-length:
+      - '195'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"},{"value":"challengetoken1"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce365801a740e7a-NRT
+      Cf-Railgun:
+      - 00d43a3040 2.05 0.028147 0030 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:44 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d270f3d9be79a782881a8645bfb3233041599345044; expires=Mon, 05-Oct-20
+        22:30:44 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - 591968decde3b4de98ff5e169f46aa2b
+      X-Served-By:
+      - portal-665f9b85dd-5qxrx
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdc40f00000e7a38154200000001
+      content-length:
+      - '195'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"ttl": 3600, "records": [{"value": "challengetoken2"}], "filters": []}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '71'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: PUT
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets/_acme-challenge.deleterecordinset/TXT
+  response:
+    body:
+      string: '{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"}],"filters":[]}'
+    headers:
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce36583c8181d5f-NRT
+      Cf-Railgun:
+      - cafb0b0920 11.97 0.055561 0030 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:45 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=db3027d4acc97b2a91f956c533017507f1599345045; expires=Mon, 05-Oct-20
+        22:30:45 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - ae188c50de78aad104d3789b9d796935
+      X-Served-By:
+      - portal-665f9b85dd-fdzmd
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdc65d00001d5ff7878200000001
+      content-length:
+      - '167'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.misaka.io/dns/zones/misaka-dns-test.stream/recordsets?name=_acme-challenge.deleterecordinset
+  response:
+    body:
+      string: '{"count":19,"next":null,"previous":null,"results":[{"name":"@","type":"NS","ttl":86400,"enabled":true,"protected":false,"alias":null,"records":[{"value":"a.m1ns.moe"},{"value":"b.m1ns.uk"},{"value":"c.m1ns.us"},{"value":"d.m1ns.com"},{"value":"e.m1ns.net"},{"value":"f.m1ns.org"}],"filters":[]},{"name":"_acme-challenge.test","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"docs","type":"CNAME","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"docs.example.com"}],"filters":[]},{"name":"random.fqdntest","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"_acme-challenge.createrecordset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken1"},{"value":"challengetoken2"}],"filters":[]},{"name":"random.fulltest","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"_acme-challenge.noop","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"test","type":"A","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"1.1.1.5"}],"filters":[]},{"name":"random.test","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"_acme-challenge.fqdn","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"localhost","type":"A","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"127.0.0.1"}],"filters":[]},{"name":"updated.test","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"_acme-challenge.deleterecordinset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken2"}],"filters":[]},{"name":"ttl.fqdn","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"ttlshouldbe3600"}],"filters":[]},{"name":"_acme-challenge.listrecordset","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken1"},{"value":"challengetoken2"}],"filters":[]},{"name":"updated.testfqdn","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"updated.testfull","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"_acme-challenge.full","type":"TXT","ttl":3600,"enabled":true,"protected":false,"alias":null,"records":[{"value":"challengetoken"}],"filters":[]},{"name":"@","type":"SOA","ttl":86400,"enabled":true,"protected":false,"alias":null,"records":[{"value":"a.m1ns.moe.
+        support+dev.lexicon.misaka.io. 2020090526 3600 600 604800 180"}],"filters":[]}]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5ce36587aa2ef8a7-NRT
+      Cf-Railgun:
+      - 4b643a7dc0 2.41 0.029332 0030 da0c
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 05 Sep 2020 22:30:45 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=da776392c7b3dc22ba770bb82a43bb5c81599345045; expires=Mon, 05-Oct-20
+        22:30:45 GMT; path=/; domain=.misaka.io; HttpOnly; SameSite=Lax; Secure
+      Strict-Transport-Security:
+      - max-age=2592000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Misaka-Debug:
+      - r=us-east-1, i=10.233.132.132
+      X-Request-Id:
+      - d79e88340d10fb02da8c7c43c983630b
+      X-Served-By:
+      - portal-665f9b85dd-xnrfp
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 0501fdc8c40000f8a78d34d200000001
+      content-length:
+      - '3100'
+    status:
+      code: 200
+      message: OK
+version: 1
