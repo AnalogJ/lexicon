@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Relax versions constraints on Lexicon dependencies until there is a real need.
 
 ## 3.4.1 - 21/08/2020
 ### Added
