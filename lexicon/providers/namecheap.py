@@ -262,7 +262,7 @@ class Provider(BaseProvider):
         return True
 
     def _convert_to_namecheap(self, record):
-        """ converts from lexicon format record to namecheap format record,
+        """converts from lexicon format record to namecheap format record,
         suitable to sending through the api to namecheap"""
 
         processed_record = {}
@@ -292,8 +292,7 @@ class Provider(BaseProvider):
         return processed_record
 
     def _convert_to_lexicon(self, record):
-        """ converts from namecheap raw record format to lexicon format record
-        """
+        """converts from namecheap raw record format to lexicon format record"""
 
         name = record["Name"]
 

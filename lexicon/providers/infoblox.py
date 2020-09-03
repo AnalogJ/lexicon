@@ -142,7 +142,10 @@ class Provider(BaseProvider):
         else:
             raise Exception("Name not specified, no FQDN could be build")
         if rtype.upper() in IB_TYPE2CONTENT:
-            uri = "{0}{1}".format(self.api_endpoint, IB_TYPE2CONTENT[rtype.upper()][1],)
+            uri = "{0}{1}".format(
+                self.api_endpoint,
+                IB_TYPE2CONTENT[rtype.upper()][1],
+            )
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
@@ -285,7 +288,10 @@ class Provider(BaseProvider):
 
     def _delete_record_internal(self, identifier=None):
         if identifier:
-            uri = "{0}{1}".format(self.api_endpoint, identifier,)
+            uri = "{0}{1}".format(
+                self.api_endpoint,
+                identifier,
+            )
             try:
                 response = self.session.delete(uri)
             except BaseException:
