@@ -20,14 +20,13 @@ def provider_parser(subparser):
         "--auth-username", help="Specify username used to authenticate"
     )
     subparser.add_argument(
-        "--auth-password",
-        help="Specify password used to authenticate",
+        "--auth-password", help="Specify password used to authenticate",
     )
 
 
 class Provider(BaseProvider):
     """
-    easyname provider
+        easyname provider
     """
 
     URLS = {

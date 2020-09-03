@@ -24,14 +24,13 @@ def provider_parser(subparser):
         "--auth-username", help="specify username for authentication"
     )
     subparser.add_argument(
-        "--auth-password",
-        help="specify password for authentication",
+        "--auth-password", help="specify password for authentication",
     )
 
 
 class Provider(BaseProvider):
     """
-    he.net provider
+        he.net provider
     """
 
     def __init__(self, config):
