@@ -31,7 +31,7 @@ def test_client_basic_init():
 
 
 def test_client_legacy_init(monkeypatch):
-    monkeypatch.setenv('LEXICON_FAKEPROVIDER_AUTH_KEY', 'MY_KEY')
+    monkeypatch.setenv("LEXICON_FAKEPROVIDER_AUTH_KEY", "MY_KEY")
     options = {
         "provider_name": "fakeprovider",
         "action": "list",
@@ -45,7 +45,7 @@ def test_client_legacy_init(monkeypatch):
     assert client.action == options["action"]
     assert client.config.resolve("lexicon:domain") == options["domain"]
     assert client.config.resolve("lexicon:type") == options["type"]
-    assert client.config.resolve("lexicon:fakeprovider:auth_key") == 'MY_KEY'
+    assert client.config.resolve("lexicon:fakeprovider:auth_key") == "MY_KEY"
 
 
 def test_client_init_when_domain_includes_subdomain_should_strip():

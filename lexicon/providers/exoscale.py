@@ -53,7 +53,8 @@ class Provider(BaseProvider):
             record["prio"] = self._get_lexicon_option("priority")
 
         payload = self._post(
-            "/v1/domains/{0}/records".format(self.domain), {"record": record},
+            "/v1/domains/{0}/records".format(self.domain),
+            {"record": record},
         )
 
         status = "id" in payload.get("record", {})
@@ -75,7 +76,8 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
             filter_query["name"] = name
         payload = self._get(
-            "/v1/domains/{0}/records".format(self.domain), query_params=filter_query,
+            "/v1/domains/{0}/records".format(self.domain),
+            query_params=filter_query,
         )
 
         records = []
@@ -127,7 +129,8 @@ class Provider(BaseProvider):
 
         for record_id in identifiers:
             self._put(
-                "/v1/domains/{0}/records/{1}".format(self.domain, identifier), record,
+                "/v1/domains/{0}/records/{1}".format(self.domain, identifier),
+                record,
             )
             LOGGER.debug("update_record: %s", record_id)
 
