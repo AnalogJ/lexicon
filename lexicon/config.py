@@ -302,7 +302,7 @@ class FileConfigSource(DictConfigSource):
 
     def __init__(self, file_path):
         with open(file_path, "r") as stream:
-            yaml_object = yaml.load(stream) or {}
+            yaml_object = yaml.load(stream, Loader=yaml.SafeLoader) or {}
 
         super(FileConfigSource, self).__init__(yaml_object)
 

@@ -1,4 +1,6 @@
 """Unit tests for the Lexicon config mechanism"""
+import pytest
+
 from lexicon.config import ConfigResolver, ConfigSource
 from lexicon.parser import generate_cli_main_parser
 
@@ -103,7 +105,8 @@ def test_legacy_dict_config_resolution():
         "provider_name": "cloudflare",
     }
 
-    config = ConfigResolver().with_legacy_dict(legacy_config)
+    with pytest.deprecated_call():
+        config = ConfigResolver().with_legacy_dict(legacy_config)
 
     assert config.resolve("lexicon:delegated") == "TEST1"
     assert config.resolve("lexicon:cloudflare:auth_token") == "TEST2"
