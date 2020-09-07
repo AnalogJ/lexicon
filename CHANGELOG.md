@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Improve versions constraints by declaring latest major versions known to work with Lexicon
 
 ## 3.4.2 - 03/09/2020
 ### Modified
