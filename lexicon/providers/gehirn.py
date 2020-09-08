@@ -188,7 +188,9 @@ class Provider(BaseProvider):
             if "." not in identifier:
                 # delete entire record
                 path = "/zones/{}/versions/{}/records/{}".format(
-                    self.domain_id, self.version_id, identifier,
+                    self.domain_id,
+                    self.version_id,
+                    identifier,
                 )
                 self._delete(path)
                 LOGGER.debug("delete_record: %s", True)
@@ -212,7 +214,9 @@ class Provider(BaseProvider):
                 if not record["records"]:
                     # delete entire record
                     path = "/zones/{}/versions/{}/records/{}".format(
-                        self.domain_id, self.version_id, record["id"],
+                        self.domain_id,
+                        self.version_id,
+                        record["id"],
                     )
                     self._delete(path)
                 else:
@@ -240,7 +244,9 @@ class Provider(BaseProvider):
                     continue
 
             path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id, self.version_id, a_record["id"],
+                self.domain_id,
+                self.version_id,
+                a_record["id"],
             )
             self._delete(path)
 
@@ -285,12 +291,17 @@ class Provider(BaseProvider):
         if record.get("id"):
             # PUT
             path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id, self.version_id, record["id"],
+                self.domain_id,
+                self.version_id,
+                record["id"],
             )
             return self._put(path, record)
 
         # POST
-        path = "/zones/{}/versions/{}/records".format(self.domain_id, self.version_id,)
+        path = "/zones/{}/versions/{}/records".format(
+            self.domain_id,
+            self.version_id,
+        )
         return self._post(path, record)
 
     def _build_content(self, rtype, record):
