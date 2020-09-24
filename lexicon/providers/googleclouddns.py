@@ -120,8 +120,8 @@ class Provider(BaseProvider):
             if managedZone["dnsName"] == "{0}.".format(self.domain)
         ]
 
-        if "pageToken" in results:
-            return self._get_managed_zone_ids(zone_ids, results["pageToken"])
+        if "nextPageToken" in results:
+            return self._get_managed_zone_ids(zone_ids, results["nextPageToken"])
         return zone_ids
 
     # We have a real authentication here, that uses the OAuth protocol:
