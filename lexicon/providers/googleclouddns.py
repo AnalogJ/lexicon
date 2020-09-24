@@ -112,17 +112,17 @@ class Provider(BaseProvider):
     # the complete list of zones may be paginated. So we recursively call
     # the list managedZones api until no page_token is given, keeping a list
     # of matched zone ids as we go.
-    def _get_managed_zone_ids(self, ids=[], page_token=None):
+    def _get_managed_zone_ids(self, zone_ids, page_token=None):
         results = self._get("/managedZones", {"pageToken": page_token})
-        ids += [
+        zone_ids += [
             managedZone["id"]
             for managedZone in results["managedZones"]
             if managedZone["dnsName"] == "{0}.".format(self.domain)
         ]
 
         if "pageToken" in results:
-            return self._get_managed_zone_ids(ids, results["pageToken"])
-        return ids
+            return self._get_managed_zone_ids(zone_ids, results["pageToken"])
+        return zone_ids
 
     # We have a real authentication here, that uses the OAuth protocol:
     #   - a JWT token is forged with the Google Cloud DNS access claims,
@@ -192,8 +192,7 @@ class Provider(BaseProvider):
 
         self._token = post_result["access_token"]
 
-        targeted_managed_zone_ids = self._get_managed_zone_ids()
-
+        targeted_managed_zone_ids = self._get_managed_zone_ids([])
         if not targeted_managed_zone_ids:
             raise Exception(
                 "Error, domain {0} is not registered for this project".format(
