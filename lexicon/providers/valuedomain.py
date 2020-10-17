@@ -8,15 +8,6 @@ import requests
 from urllib.parse import urlencode
 from lexicon.providers.base import Provider as BaseProvider
 
-import vcr
-
-my_vcr = vcr.VCR(
-    serializer='yaml',
-    cassette_library_dir='vcr',
-    record_mode='once',
-    match_on=['uri', 'method'],
-)
-
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS = ["value-domain.com", "dnsv.jp"]
@@ -191,7 +182,6 @@ class Provider(BaseProvider):
         }
         return self._put("/domains/{0}/dns".format(self.domain), content)
 
-    #@my_vcr.use_cassette()
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
