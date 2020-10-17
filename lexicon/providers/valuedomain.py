@@ -4,11 +4,18 @@ from __future__ import absolute_import
 import json
 import logging
 import re
-from urllib.parse import urlencode
-
 import requests
-
+from urllib.parse import urlencode
 from lexicon.providers.base import Provider as BaseProvider
+
+import vcr
+
+my_vcr = vcr.VCR(
+    serializer='yaml',
+    cassette_library_dir='vcr',
+    record_mode='once',
+    match_on=['uri', 'method'],
+)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +34,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.nameserver="valuedomain1"
+        self.nameserver = "valuedomain1"
         self.ttl = 3600
         self.domain_id = None
         self.api_endpoint = "https://api.value-domain.com/v1"
@@ -184,12 +191,14 @@ class Provider(BaseProvider):
         }
         return self._put("/domains/{0}/dns".format(self.domain), content)
 
+    #@my_vcr.use_cassette()
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         default_headers = {
+            "Accept-Encoding": "identity",
             "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization": "Bearer {0}".format(self._get_provider_option("auth_token")),
