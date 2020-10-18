@@ -1,6 +1,7 @@
 """Module provider for Value Domain"""
 from __future__ import absolute_import
 
+import hashlib
 import json
 import logging
 import re
@@ -46,16 +47,24 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, rtype=rtype, name=name, content=content
+            resource_record_sets, identifier=None, rtype=rtype, name=name, content=content
         )
         if index >= 0:
-            LOGGER.debug("create_record: %s", False)
-            return False
+            LOGGER.debug("record already exists")
+            return True
 
         resource_record_sets.append((rtype.lower(), name, self._bind_format_target(rtype, content)))
         self._update_resource_record_sets(resource_record_sets)
         LOGGER.debug("create_record: %s", True)
         return True
+
+    @staticmethod
+    def _identifier(record):
+        sha256 = hashlib.sha256()
+        sha256.update(('type=' + record[0].lower()).encode('utf-8'))
+        sha256.update(('name=' + record[1]).encode('utf-8'))
+        sha256.update(('data=' + record[2]).encode('utf-8'))
+        return sha256.hexdigest()[0:7]
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -72,7 +81,7 @@ class Provider(BaseProvider):
                 "name": self._full_name(record[1]),
                 "ttl": self.ttl,
                 "content": record[2],
-                # 'id': None,
+                'id': Provider._identifier(record),
             }
             if rtype and processed_record["type"].lower() != rtype.lower():
                 continue
@@ -94,10 +103,10 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, rtype=rtype, name=name
+            resource_record_sets, identifier=identifier, rtype=rtype, name=name
         )
-        record = (rtype.lower(), name, self._bind_format_target(rtype, content))
 
+        record = (rtype.lower(), name, self._bind_format_target(rtype, content))
         if index >= 0:
             resource_record_sets[index] = record
         else:
@@ -121,6 +130,8 @@ class Provider(BaseProvider):
 
         filtered_records = []
         for record in resource_record_sets:
+            if identifier and Provider._identifier(record) != identifier:
+                continue
             if rtype and record[0].lower() != rtype.lower():
                 continue
             if name and record[1] != name:
@@ -157,8 +168,10 @@ class Provider(BaseProvider):
             target += "."
         return target
 
-    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
+    def _find_resource_record_set(self, records, identifier=None, rtype=None, name=None, content=None):
         for index, record in enumerate(records):
+            if identifier and Provider._identifier(record) == identifier:
+                return index
             if rtype and record[0].lower() != rtype.lower():
                 continue
             if name and record[1] != name:
