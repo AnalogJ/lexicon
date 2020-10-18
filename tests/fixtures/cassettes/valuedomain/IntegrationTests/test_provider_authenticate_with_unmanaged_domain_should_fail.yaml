@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/thisisadomainidonotown.com/dns
+  response:
+    body:
+      string: '{"errors":{"domainid":0,"domainname":"thisisadomainidonotown.com","code":400,"message":"domainname
+        is invalid."},"request_id":"202010180924027056280265666V","request":{"path":"\/v1\/domains\/thisisadomainidonotown.com\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5e3e1d36e882f8bb-NRT
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 18 Oct 2020 00:24:02 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d1bd378009056e8d4577743c59720c5341602980642; expires=Tue, 17-Nov-20
+        00:24:02 GMT; path=/; domain=.value-domain.com; HttpOnly; SameSite=Lax
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 05dab096500000f8bb3c227000000001
+    status:
+      code: 400
+      message: Bad Request
+version: 1

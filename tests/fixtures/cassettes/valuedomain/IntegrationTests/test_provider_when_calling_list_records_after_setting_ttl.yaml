@@ -1,0 +1,252 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/6io.org/dns
+  response:
+    body:
+      string: '{"results":{"domainid":6020258,"domainname":"6io.org","ns_type":"valuedomain11","records":"a
+        localhost 127.0.0.1\ncname docs docs.example.com.\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ncname docs docs.example.com.","ttl":"3600"},"request_id":"202010180924195827710265666V","request":{"path":"\/v1\/domains\/6io.org\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5e3e1da17d080e72-NRT
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 18 Oct 2020 00:24:19 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=dc03dc27ce86a8c324ba95dbc205f29aa1602980659; expires=Tue, 17-Nov-20
+        00:24:19 GMT; path=/; domain=.value-domain.com; HttpOnly; SameSite=Lax
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 05dab0d8f000000e72d99ef000000001
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/6io.org/dns
+  response:
+    body:
+      string: '{"results":{"domainid":6020258,"domainname":"6io.org","ns_type":"valuedomain11","records":"a
+        localhost 127.0.0.1\ncname docs docs.example.com.\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ncname docs docs.example.com.","ttl":"3600"},"request_id":"202010180924195203080265666V","request":{"path":"\/v1\/domains\/6io.org\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5e3e1da33adaef45-NRT
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 18 Oct 2020 00:24:19 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d9db570fd597222938350dca8adf62c491602980659; expires=Tue, 17-Nov-20
+        00:24:19 GMT; path=/; domain=.value-domain.com; HttpOnly; SameSite=Lax
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 05dab0d9ff0000ef455e023000000001
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"ns_type": "valuedomain11", "records": "a localhost 127.0.0.1\ncname docs
+      docs.example.com.\ntxt _acme-challenge.fqdn challengetoken\ntxt _acme-challenge.full
+      challengetoken\ntxt _acme-challenge.test challengetoken\ntxt _acme-challenge.createrecordset
+      challengetoken1\ntxt _acme-challenge.createrecordset challengetoken2\ntxt _acme-challenge.noop
+      challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken2\ncname
+      docs docs.example.com.\ntxt ttl.fqdn ttlshouldbe3600", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '492'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: PUT
+    uri: https://api.value-domain.com/v1/domains/6io.org/dns
+  response:
+    body:
+      string: '{"results":{"domainid":6020258,"domainname":"6io.org","ns_type":"valuedomain11","records":"a
+        localhost 127.0.0.1\ncname docs docs.example.com.\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ncname docs docs.example.com.\ntxt ttl.fqdn ttlshouldbe3600","ttl":3600},"request_id":"202010180924207301520265666V","request":{"path":"\/v1\/domains\/6io.org\/dns","method":"PUT","params":{"ns_type":"valuedomain11","records":"a
+        localhost 127.0.0.1\ncname docs docs.example.com.\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ncname docs docs.example.com.\ntxt ttl.fqdn ttlshouldbe3600","ttl":3600}}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5e3e1da49bd50ab4-NRT
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 18 Oct 2020 00:24:20 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d2ce47accbaa316406ccd13f3ff82ac441602980659; expires=Tue, 17-Nov-20
+        00:24:19 GMT; path=/; domain=.value-domain.com; HttpOnly; SameSite=Lax
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 05dab0dae000000ab4edb69000000001
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/6io.org/dns
+  response:
+    body:
+      string: '{"results":{"domainid":6020258,"domainname":"6io.org","ns_type":"valuedomain11","records":"a
+        localhost 127.0.0.1\ncname docs docs.example.com.\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ncname docs docs.example.com.\ntxt ttl.fqdn ttlshouldbe3600","ttl":"3600"},"request_id":"202010180924204657330265666V","request":{"path":"\/v1\/domains\/6io.org\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 5e3e1da749e4f8b7-NRT
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 18 Oct 2020 00:24:20 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cfduid=d3995c364f4112c92dd216db9cea9415a1602980660; expires=Tue, 17-Nov-20
+        00:24:20 GMT; path=/; domain=.value-domain.com; HttpOnly; SameSite=Lax
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cf-request-id:
+      - 05dab0dc8a0000f8b74c31a000000001
+    status:
+      code: 200
+      message: OK
+version: 1
