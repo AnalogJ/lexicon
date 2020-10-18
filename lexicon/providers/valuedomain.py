@@ -71,9 +71,9 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
         records = []
-        fullName = None
+        full_name = None
         if name:
-            fullName = self._full_name(name)
+            full_name = self._full_name(name)
 
         for record in self._get_resource_record_sets():
             processed_record = {
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
             }
             if rtype and processed_record["type"].lower() != rtype.lower():
                 continue
-            if fullName and processed_record["name"] != fullName:
+            if full_name and processed_record["name"] != full_name:
                 continue
             if content and processed_record["content"] != content:
                 continue
