@@ -11,7 +11,7 @@ from unittest import TestCase
 class ValuedomainProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Value Domain provider"""
     provider_name = 'valuedomain'
-    domain = '7io.org'
+    domain = '6io.org'
 
     def _filter_headers(self):
         return ['Authorization']
