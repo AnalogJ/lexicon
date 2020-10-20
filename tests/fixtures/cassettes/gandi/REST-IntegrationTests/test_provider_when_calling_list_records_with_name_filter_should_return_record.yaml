@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -13,59 +13,58 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr
   response:
     body:
-      string: !!python/unicode '{"zone_uuid": "4fd93cb0-5c6c-11e8-b297-00163ee24379",
-        "domain_keys_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/keys",
-        "fqdn": "t18s.fr", "zone_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379",
-        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records",
-        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records",
-        "domain_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr"}'
+      string: '{"domain_keys_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/keys","fqdn":"t18s.fr","automatic_snapshots":true,"domain_records_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records","domain_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr"}'
     headers:
-      accept-ranges:
+      Accept-Ranges:
       - bytes
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
-      - '499'
-      content-type:
-      - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      pragma:
+      Content-Length:
+      - '274'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Oct 2020 21:23:50 GMT
+      ETag:
+      - W/"112-tyQllSkZqMzGHTaisDLSgpwZtfY"
+      Expires:
+      - Thu, 22 Oct 2020 21:23:50 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:50 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=15768000;
-      via:
+      Vary:
+      - Accept-Encoding, Accept-Language
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
-      x-xss-protection:
+      X-XSS-Protection:
       - 1; mode=block
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -78,45 +77,45 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.test/TXT
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT
   response:
     body:
-      string: !!python/unicode '{"code": 404, "message": "Can''t find the DNS record
-        random.test/TXT in the zone", "object": "dns-record", "cause": "Not Found"}'
+      string: '{"code": 404, "message": "Can''t find the DNS record random.test/TXT
+        in the zone", "object": "dns-record", "cause": "Not Found"}'
     headers:
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
+      Content-Length:
       - '127'
-      content-type:
+      Content-Type:
       - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:06 GMT
-      pragma:
+      Date:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Expires:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      via:
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
     status:
       code: 404
       message: Not Found
 - request:
-    body: !!python/unicode '{"rrset_values": ["challengetoken"], "rrset_ttl": 3600}'
+    body: '{"rrset_values": ["challengetoken"], "rrset_ttl": 3600}'
     headers:
       Accept:
       - application/json
@@ -129,54 +128,58 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: POST
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.test/TXT
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT
   response:
     body:
-      string: !!python/unicode '{"message": "DNS Record Created"}'
+      string: '{"message":"DNS Record Created"}'
     headers:
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
-      - '33'
-      content-type:
-      - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      location:
-      - https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records/random.test/TXT
-      pragma:
+      Content-Length:
+      - '32'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      ETag:
+      - W/"20-8GzTjxqNVdrkc6ay0Gf8zJRLVdc"
+      Expires:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=15768000;
-      via:
+      Vary:
+      - Accept-Encoding, Accept-Language
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
-      x-xss-protection:
+      X-XSS-Protection:
       - 1; mode=block
+      location:
+      - https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT
     status:
       code: 201
       message: Created
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -189,50 +192,52 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.test/TXT
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT
   response:
     body:
-      string: !!python/unicode '{"rrset_type": "TXT", "rrset_ttl": 3600, "rrset_name":
-        "random.test", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.test/TXT",
-        "rrset_values": ["\"challengetoken\""]}'
+      string: '{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"random.test","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT","rrset_values":["\"challengetoken\""]}'
     headers:
-      accept-ranges:
+      Accept-Ranges:
       - bytes
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
-      - '199'
-      content-type:
-      - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:07 GMT
-      pragma:
+      Content-Length:
+      - '192'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      ETag:
+      - W/"c0-xLS62tUAb/kgaQWkxSjrsdtjsjA"
+      Expires:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=15768000;
-      via:
+      Vary:
+      - Accept-Encoding, Accept-Language
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
-      x-xss-protection:
+      X-XSS-Protection:
       - 1; mode=block
     status:
       code: 200

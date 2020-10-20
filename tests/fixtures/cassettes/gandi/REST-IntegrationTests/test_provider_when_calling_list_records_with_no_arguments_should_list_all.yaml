@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -13,59 +13,58 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr
   response:
     body:
-      string: !!python/unicode '{"zone_uuid": "4fd93cb0-5c6c-11e8-b297-00163ee24379",
-        "domain_keys_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/keys",
-        "fqdn": "t18s.fr", "zone_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379",
-        "zone_records_href": "https://dns.api.gandi.net/api/v5/zones/4fd93cb0-5c6c-11e8-b297-00163ee24379/records",
-        "domain_records_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records",
-        "domain_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr"}'
+      string: '{"domain_keys_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/keys","fqdn":"t18s.fr","automatic_snapshots":true,"domain_records_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records","domain_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr"}'
     headers:
-      accept-ranges:
+      Accept-Ranges:
       - bytes
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
-      - '499'
-      content-type:
-      - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      pragma:
+      Content-Length:
+      - '274'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      ETag:
+      - W/"112-tyQllSkZqMzGHTaisDLSgpwZtfY"
+      Expires:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:51 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=15768000;
-      via:
+      Vary:
+      - Accept-Encoding, Accept-Language
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
-      x-xss-protection:
+      X-XSS-Protection:
       - 1; mode=block
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -78,163 +77,55 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.22.0
     method: GET
-    uri: https://dns.api.gandi.net/api/v5/domains/t18s.fr/records
+    uri: https://api.gandi.net/v5/livedns/domains/t18s.fr/records
   response:
     body:
-      string: !!python/unicode '[{"rrset_type": "A", "rrset_ttl": 10800, "rrset_name":
-        "*", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%2A/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 1800,
-        "rrset_name": "*", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%2A/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "MX", "rrset_ttl":
-        10800, "rrset_name": "*", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%2A/MX",
-        "rrset_values": ["10 in1-smtp.messagingengine.com.", "20 in2-smtp.messagingengine.com."]},
-        {"rrset_type": "A", "rrset_ttl": 10800, "rrset_name": "@", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%40/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 1800,
-        "rrset_name": "@", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%40/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        300, "rrset_name": "@", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%40/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "MX", "rrset_ttl":
-        10800, "rrset_name": "@", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%40/MX",
-        "rrset_values": ["10 in1-smtp.messagingengine.com.", "20 in2-smtp.messagingengine.com."]},
-        {"rrset_type": "TXT", "rrset_ttl": 10800, "rrset_name": "@", "rrset_href":
-        "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/%40/TXT", "rrset_values":
-        ["\"v=spf1 include:spf.messagingengine.com ?all\""]}, {"rrset_type": "A",
-        "rrset_ttl": 10800, "rrset_name": "angband", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/angband/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "angband", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/angband/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        10800, "rrset_name": "angband", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/angband/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "SSHFP",
-        "rrset_ttl": 300, "rrset_name": "angband", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/angband/SSHFP",
-        "rrset_values": ["4 2 4ff8e0489c7b0f957dbf169dab2936ca82783e19c3a3799075a7a42236a194a7"]},
-        {"rrset_type": "A", "rrset_ttl": 10800, "rrset_name": "bitwarden", "rrset_href":
-        "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/bitwarden/A", "rrset_values":
-        ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800, "rrset_name":
-        "bitwarden", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/bitwarden/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CNAME", "rrset_ttl":
-        3600, "rrset_name": "docs", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/docs/CNAME",
-        "rrset_values": ["docs.example.com"]}, {"rrset_type": "A", "rrset_ttl": 10800,
-        "rrset_name": "finger", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/finger/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "finger", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/finger/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        10800, "rrset_name": "finger", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/finger/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "CNAME",
-        "rrset_ttl": 10800, "rrset_name": "fm1._domainkey", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/fm1._domainkey/CNAME",
-        "rrset_values": ["fm1.t18s.fr.dkim.fmhosted.com."]}, {"rrset_type": "CNAME",
-        "rrset_ttl": 10800, "rrset_name": "fm2._domainkey", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/fm2._domainkey/CNAME",
-        "rrset_values": ["fm2.t18s.fr.dkim.fmhosted.com."]}, {"rrset_type": "CNAME",
-        "rrset_ttl": 10800, "rrset_name": "fm3._domainkey", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/fm3._domainkey/CNAME",
-        "rrset_values": ["fm3.t18s.fr.dkim.fmhosted.com."]}, {"rrset_type": "A", "rrset_ttl":
-        10800, "rrset_name": "git", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/git/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "git", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/git/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        10800, "rrset_name": "git", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/git/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "A", "rrset_ttl":
-        10800, "rrset_name": "gopher", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/gopher/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "gopher", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/gopher/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        300, "rrset_name": "gopher", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/gopher/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "A", "rrset_ttl":
-        3600, "rrset_name": "localhost", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/localhost/A",
-        "rrset_values": ["127.0.0.1"]}, {"rrset_type": "A", "rrset_ttl": 10800, "rrset_name":
-        "mail", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/mail/A",
-        "rrset_values": ["66.111.4.147", "66.111.4.148"]}, {"rrset_type": "MX", "rrset_ttl":
-        10800, "rrset_name": "mail", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/mail/MX",
-        "rrset_values": ["10 in1-smtp.messagingengine.com.", "20 in2-smtp.messagingengine.com."]},
-        {"rrset_type": "CNAME", "rrset_ttl": 10800, "rrset_name": "mesmtp._domainkey",
-        "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/mesmtp._domainkey/CNAME",
-        "rrset_values": ["mesmtp.t18s.fr.dkim.fmhosted.com."]}, {"rrset_type": "A",
-        "rrset_ttl": 10800, "rrset_name": "monitoring", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/monitoring/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "monitoring", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/monitoring/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "random.fqdntest", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.fqdntest/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "random.fulltest", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.fulltest/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "random.test", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/random.test/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "LOC", "rrset_ttl":
-        10800, "rrset_name": "srv3", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/srv3/LOC",
-        "rrset_values": ["44 21 43.528 N 71 5 6.284 W 12.00m"]}, {"rrset_type": "TXT",
-        "rrset_ttl": 3600, "rrset_name": "ttl.fqdn", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/ttl.fqdn/TXT",
-        "rrset_values": ["\"ttlshouldbe3600\""]}, {"rrset_type": "A", "rrset_ttl":
-        10800, "rrset_name": "www", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/www/A",
-        "rrset_values": ["62.210.124.142"]}, {"rrset_type": "AAAA", "rrset_ttl": 10800,
-        "rrset_name": "www", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/www/AAAA",
-        "rrset_values": ["2001:bc8:3dc1:100::142"]}, {"rrset_type": "CAA", "rrset_ttl":
-        300, "rrset_name": "www", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/www/CAA",
-        "rrset_values": ["128 issue \"letsencrypt.org\""]}, {"rrset_type": "TXT",
-        "rrset_ttl": 10800, "rrset_name": "_acme-challenge.createrecordset", "rrset_href":
-        "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.createrecordset/TXT",
-        "rrset_values": ["\"challengetoken1\"", "\"challengetoken2\""]}, {"rrset_type":
-        "TXT", "rrset_ttl": 10800, "rrset_name": "_acme-challenge.deleterecordinset",
-        "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT",
-        "rrset_values": ["\"challengetoken2\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "_acme-challenge.fqdn", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.fqdn/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "_acme-challenge.full", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.full/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        10800, "rrset_name": "_acme-challenge.listrecordset", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.listrecordset/TXT",
-        "rrset_values": ["\"challengetoken1\"", "\"challengetoken2\""]}, {"rrset_type":
-        "TXT", "rrset_ttl": 3600, "rrset_name": "_acme-challenge.noop", "rrset_href":
-        "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.noop/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "TXT", "rrset_ttl":
-        3600, "rrset_name": "_acme-challenge.test", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_acme-challenge.test/TXT",
-        "rrset_values": ["\"challengetoken\""]}, {"rrset_type": "SRV", "rrset_ttl":
-        10800, "rrset_name": "_caldavs._tcp", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_caldavs._tcp/SRV",
-        "rrset_values": ["0 1 443 caldav.fastmail.com."]}, {"rrset_type": "SRV", "rrset_ttl":
-        10800, "rrset_name": "_carddavs._tcp", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_carddavs._tcp/SRV",
-        "rrset_values": ["0 1 443 carddav.fastmail.com."]}, {"rrset_type": "SRV",
-        "rrset_ttl": 10800, "rrset_name": "_imaps._tcp", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_imaps._tcp/SRV",
-        "rrset_values": ["0 1 993 imap.fastmail.com."]}, {"rrset_type": "SRV", "rrset_ttl":
-        10800, "rrset_name": "_pop3s._tcp", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_pop3s._tcp/SRV",
-        "rrset_values": ["10 1 995 pop.fastmail.com."]}, {"rrset_type": "SRV", "rrset_ttl":
-        10800, "rrset_name": "_submission._tcp", "rrset_href": "https://dns.api.gandi.net/api/v5/domains/t18s.fr/records/_submission._tcp/SRV",
-        "rrset_values": ["0 1 587 smtp.fastmail.com."]}]'
+      string: '[{"rrset_type":"A","rrset_ttl":600,"rrset_name":"@","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/%40/A","rrset_values":["82.64.93.53"]},{"rrset_type":"AAAA","rrset_ttl":600,"rrset_name":"@","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/%40/AAAA","rrset_values":["2a01:e0a:1f8:17e0:b62e:99ff:fef8:cdb9"]},{"rrset_type":"CNAME","rrset_ttl":3600,"rrset_name":"docs","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/docs/CNAME","rrset_values":["docs.example.com"]},{"rrset_type":"A","rrset_ttl":3600,"rrset_name":"localhost","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/localhost/A","rrset_values":["127.0.0.1"]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"random.fqdntest","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.fqdntest/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"random.fulltest","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.fulltest/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"random.test","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/random.test/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"ttl.fqdn","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/ttl.fqdn/TXT","rrset_values":["\"ttlshouldbe3600\""]},{"rrset_type":"CNAME","rrset_ttl":86400,"rrset_name":"www","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/www/CNAME","rrset_values":["t18s.fr."]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.createrecordset","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.createrecordset/TXT","rrset_values":["\"challengetoken1\"","\"challengetoken2\""]},{"rrset_type":"TXT","rrset_ttl":10800,"rrset_name":"_acme-challenge.deleterecordinset","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.deleterecordinset/TXT","rrset_values":["\"challengetoken2\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.fqdn","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.fqdn/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.full","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.full/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.listrecordset","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.listrecordset/TXT","rrset_values":["\"challengetoken1\"","\"challengetoken2\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.noop","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.noop/TXT","rrset_values":["\"challengetoken\""]},{"rrset_type":"TXT","rrset_ttl":3600,"rrset_name":"_acme-challenge.test","rrset_href":"https://api.gandi.net/v5/livedns/domains/t18s.fr/records/_acme-challenge.test/TXT","rrset_values":["\"challengetoken\""]}]'
     headers:
-      accept-ranges:
+      Accept-Ranges:
       - bytes
-      age:
+      Age:
       - '0'
-      cache-control:
+      Cache-Control:
       - max-age=0, must-revalidate, no-cache, no-store
-      connection:
+      Connection:
       - keep-alive
-      content-length:
-      - '10982'
-      content-type:
-      - application/json; charset=UTF-8
-      date:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      expires:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      last-modified:
-      - Fri, 29 Mar 2019 20:35:08 GMT
-      pragma:
+      Content-Length:
+      - '3264'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Oct 2020 21:23:52 GMT
+      ETag:
+      - W/"cc0-8mSr6qo/O6iTi7RjgMHOxERwLAc"
+      Expires:
+      - Thu, 22 Oct 2020 21:23:52 GMT
+      Last-Modified:
+      - Thu, 22 Oct 2020 21:23:52 GMT
+      Pragma:
       - no-cache
-      server:
+      Server:
       - nginx
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=15768000;
-      via:
+      Vary:
+      - Accept-Encoding, Accept-Language
+      Via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      x-cache:
+      X-Cache:
       - MISS
-      x-cache-hits:
+      X-Cache-Hits:
       - '0'
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-frame-options:
+      X-Frame-Options:
       - DENY
-      x-total-count:
-      - '53'
-      x-xss-protection:
+      X-XSS-Protection:
       - 1; mode=block
+      total-count:
+      - '16'
     status:
       code: 200
       message: OK
