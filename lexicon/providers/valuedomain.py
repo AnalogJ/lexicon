@@ -15,14 +15,14 @@ NAMESERVER_DOMAINS = ["value-domain.com", "dnsv.jp"]
 
 
 def provider_parser(subparser):
-    """Generate a provider parser for Sakura Cloud"""
+    """Generate a provider parser for Value Domain"""
     subparser.add_argument(
         "--auth-token", help="specify access token for authentication"
     )
 
 
 class Provider(BaseProvider):
-    """Provider class for Sakura Cloud"""
+    """Provider class for Value Domain"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
