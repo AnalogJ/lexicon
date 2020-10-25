@@ -2,6 +2,8 @@
 
 ## master - CURRENT
 
+## 3.4.4 - 25/10/2020
+
 ## 3.4.3 - 07/09/2020
 ### Modified
 * Improve versions constraints by declaring latest major versions known to work with Lexicon

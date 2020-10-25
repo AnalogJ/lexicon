@@ -110,13 +110,21 @@ class Provider(BaseProvider):
             if current_values:
                 record = {"rrset_values": current_values + [content]}
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl") if self._get_lexicon_option("ttl") >= 300 else 300
+                    record["rrset_ttl"] = (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl") >= 300
+                        else 300
+                    )
                 self._put(url, record)
             else:
                 record = {"rrset_values": [content]}
                 # add the ttl, if this is a new record
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl") if self._get_lexicon_option("ttl") >= 300 else 300
+                    record["rrset_ttl"] = (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl") >= 300
+                        else 300
+                    )
                 self._post(url, record)
         LOGGER.debug("create_record: %s", True)
         return True
