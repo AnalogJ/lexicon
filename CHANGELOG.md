@@ -4,7 +4,7 @@
 
 ## 3.4.4 - 25/10/2020
 ### Modified
-* Fix Gandy provider to use the new LiveDNS API URL
+* Fix Gandi provider to use the new LiveDNS API URL
 
 ## 3.4.3 - 07/09/2020
 ### Modified
