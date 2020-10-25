@@ -80,7 +80,7 @@ class Provider(BaseProvider):
                 self._full_name,
             )
         else:
-            self.api_endpoint = "https://dns.api.gandi.net/api/v5"
+            self.api_endpoint = "https://api.gandi.net/v5/livedns"
 
     def _authenticate(self):
         if self.protocol == "rpc":
@@ -110,13 +110,13 @@ class Provider(BaseProvider):
             if current_values:
                 record = {"rrset_values": current_values + [content]}
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl")
+                    record["rrset_ttl"] = self._get_lexicon_option("ttl") if self._get_lexicon_option("ttl") >= 300 else 300
                 self._put(url, record)
             else:
                 record = {"rrset_values": [content]}
                 # add the ttl, if this is a new record
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl")
+                    record["rrset_ttl"] = self._get_lexicon_option("ttl") if self._get_lexicon_option("ttl") >= 300 else 300
                 self._post(url, record)
         LOGGER.debug("create_record: %s", True)
         return True
@@ -267,7 +267,7 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "X-Api-Key": self._get_provider_option("auth_token"),
+            "Authorization": "Apikey " + self._get_provider_option("auth_token"),
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
