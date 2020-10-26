@@ -67,7 +67,8 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
-        data = {"type": rtype, "name": self._full_name(name), "content": content}
+        content, cf_data = self._format_content(rtype, content)
+        data = {"type": rtype, "name": self._full_name(name), "content": content, "data": cf_data}
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
@@ -203,3 +204,27 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
+
+    def _format_content(self, rtype, content):
+        """
+        Special case handling from some record types that Cloudflare needs
+        formatted differently
+
+        Returns new values for the content and data properties to be sent
+        on the request
+        """
+        data = None
+        if rtype == "SSHFP":
+            # For some reason the CloudFlare API does not let you set content
+            # directly when creating an SSHFP record. You need to pass the
+            # fields that make up the record seperately, then the API joins
+            # them back together
+            _fp = content.split(" ")
+            data = {
+                "algorithm": _fp[0],
+                "type": _fp[1],
+                "fingerprint": _fp[2]
+            }
+            content = None
+
+        return content, data
