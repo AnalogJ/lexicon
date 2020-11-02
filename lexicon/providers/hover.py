@@ -42,7 +42,7 @@ class Provider(BaseProvider):
             "password": self._get_provider_option("auth_password"),
         }
         response = requests.post(
-            "https://www.hover.com/signin/auth.json", json=payload, cookies=self.cookies
+            "https://www.hover.com/api/login/", json=payload, cookies=self.cookies
         )
         response.raise_for_status()
 
