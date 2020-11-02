@@ -80,7 +80,9 @@ class Provider(BaseProvider):
         )
         self.version = "2.6.1"  # WAPI version supported by NIOS 8.3 and above
         self.session.headers.update({"Content-Type": "application/json"})
-        self.api_endpoint = f"https://{self._get_provider_option('ib_host')}/wapi/v{self.version}/"
+        self.api_endpoint = (
+            f"https://{self._get_provider_option('ib_host')}/wapi/v{self.version}/"
+        )
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider,
