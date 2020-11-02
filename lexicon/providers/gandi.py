@@ -87,7 +87,7 @@ class Provider(BaseProvider):
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
-            self._get("/domains/{0}".format(self.domain))
+            self._get(f"/domains/{self.domain}")
             self.domain_id = self.domain.lower()
 
     def _create_record(self, rtype, name, content):
@@ -149,12 +149,10 @@ class Provider(BaseProvider):
                     ]
                 else:
                     query_results = self._get(
-                        "/domains/{0}/records/{1}".format(
-                            self.domain_id, self._relative_name(name)
-                        )
+                        f"/domains/{self.domain_id}/records/{self._relative_name(name)}"
                     )
             else:
-                query_results = self._get("/domains/{0}/records".format(self.domain_id))
+                query_results = self._get(f"/domains/{self.domain_id}/records")
                 if rtype is not None:
                     query_results = [
                         item for item in query_results if item["rrset_type"] == rtype
@@ -260,7 +258,7 @@ class Provider(BaseProvider):
             if remove_count == 0:
                 raise Exception("Record identifier could not be found.")
         else:
-            self._delete("/domains/{0}/records/{1}".format(self.domain_id, identifier))
+            self._delete(f"/domains/{self.domain_id}/records/{identifier}")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)
@@ -323,7 +321,7 @@ class GandiRPCSubProvider(object):
             self._zone_id = payload["zone_id"]
             return payload["id"]
         except xmlrpclib.Fault as err:
-            raise Exception("Failed to authenticate: '{0}'".format(err))
+            raise Exception(f"Failed to authenticate: '{err}'")
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, rtype, name, content, ttl):

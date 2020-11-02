@@ -20,7 +20,7 @@ def provider_parser(subparser):
 
 def _to_data(rtype, content):
     if rtype == "TXT":
-        return '"{0}"'.format(content)
+        return f'"{content}"'
     return content
 
 
@@ -39,7 +39,7 @@ class Provider(BaseProvider):
         self._init_zones()
 
     def _list_zones(self):
-        return self._get("/domain/{0}/version".format(self.domain_id))
+        return self._get(f"/domain/{self.domain_id}/version")
 
     def _init_zones(self):
         # sets current zone version
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
 
         if passive_row is None:
             passive_row = self._post(
-                "/domain/{0}/version".format(self.domain_id),
+                f"/domain/{self.domain_id}/version",
                 {
                     "name": zone_name_b
                     if active_row["name"] == zone_name_a
@@ -69,9 +69,7 @@ class Provider(BaseProvider):
 
     def _update_passive_zone(self):
         self._put(
-            "/domain/{0}/version/{1}/zone_from_bind".format(
-                self.domain_id, self.passive_zone
-            ),
+            f"/domain/{self.domain_id}/version/{self.passive_zone}/zone_from_bind",
             self._get_bind_zone(),
         )
 
@@ -93,7 +91,7 @@ class Provider(BaseProvider):
         zone = self.passive_zone
         if zone is None:
             raise Exception("Could not enable uninitialized passive_zone")
-        self._patch("/domain/{0}/version/{1}/enable".format(self.domain_id, zone))
+        self._patch(f"/domain/{self.domain_id}/version/{zone}/enable")
         self.passive_zone = self.active_zone
         self.active_zone = zone
         self._update_passive_zone()
@@ -114,10 +112,7 @@ class Provider(BaseProvider):
             }
 
             self._post(
-                "/domain/{0}/version/{1}/zone".format(
-                    self.domain_id, self.passive_zone
-                ),
-                record,
+                f"/domain/{self.domain_id}/version/{self.passive_zone}/zone", record
             )
         except BaseException as error:
             LOGGER.debug(error)
@@ -152,7 +147,7 @@ class Provider(BaseProvider):
         return records
 
     def _list_zone_records(self, zone_id):
-        return self._get("/domain/{0}/version/{1}/zone".format(self.domain_id, zone_id))
+        return self._get(f"/domain/{self.domain_id}/version/{zone_id}/zone")
 
     def _list_records(self, rtype=None, name=None, content=None):
         return self._find_zone_records(self.passive_zone, rtype, name, content)
@@ -239,9 +234,7 @@ class Provider(BaseProvider):
 
         headers = {
             "Accept": "application/json",
-            "Authorization": "Bearer {0}".format(
-                self._get_provider_option("auth_token")
-            ),
+            "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
         }
         if data is not None:
             if isinstance(data, str):

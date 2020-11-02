@@ -72,7 +72,7 @@ class Provider(BaseProvider):
             if any((domain["name"] == self.domain for domain in domains)):
                 self.domain_id = self.domain
             else:
-                raise Exception("Unknown domain {}".format(self.domain))
+                raise Exception(f"Unknown domain {self.domain}")
         else:
             raise Exception("No SSID provided by server")
 
@@ -349,6 +349,4 @@ class GransyError(Exception):
         super(GransyError, self).__init__()
 
     def __str__(self):
-        return "Major: {} Minor: {} Message: {}".format(
-            self.major, self.minor, self.message
-        )
+        return f"Major: {self.major} Minor: {self.minor} Message: {self.message}"

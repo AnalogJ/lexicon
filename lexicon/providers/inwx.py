@@ -64,9 +64,7 @@ class Provider(BaseProvider):
             if exclude_code is not None and response["code"] == exclude_code:
                 return
 
-            raise Exception(
-                "{0}: {1} ({2})".format(message, response["msg"], response["code"])
-            )
+            raise Exception(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
     def _authenticate(self):

@@ -43,14 +43,12 @@ class Provider(BaseProvider):
         ]
 
         if not target_domain:
-            raise Exception(
-                "Domain {0} is not available on this account".format(self.domain)
-            )
+            raise Exception(f"Domain {self.domain} is not available on this account")
 
         self.domain_id = target_domain[0]["domain_id"]
 
     def _list_records(self, rtype=None, name=None, content=None):
-        result = self._get("/domains/{0}/records".format(self.domain), {})
+        result = self._get(f"/domains/{self.domain}/records", {})
 
         records = [
             self._clean_TXT_record(
@@ -93,15 +91,13 @@ class Provider(BaseProvider):
         record = {
             "record_type": rtype,
             "record_name": self._full_name(name),
-            "record_value": content if rtype != "TXT" else '"{0}"'.format(content),
+            "record_value": content if rtype != "TXT" else f'"{content}"',
         }
 
         if self._get_lexicon_option("ttl"):
             record["record_ttl"] = self._get_lexicon_option("ttl")
 
-        result = self._post(
-            "/domains/{0}/records".format(self.domain), query_params=record
-        )
+        result = self._post(f"/domains/{self.domain}/records", query_params=record)
 
         LOGGER.debug("create_record: %s", result["response"]["record_id"])
 
@@ -139,13 +135,10 @@ class Provider(BaseProvider):
         }
 
         if content:
-            update["record_value"] = (
-                content if rtype != "TXT" else '"{0}"'.format(content)
-            )
+            update["record_value"] = content if rtype != "TXT" else f'"{content}"'
 
         result = self._put(
-            "/domains/{0}/records/{1}".format(self.domain, record["id"]),
-            query_params=update,
+            f"/domains/{self.domain}/records/{record['id']}", query_params=update
         )
 
         LOGGER.debug("update_record: %s", result["response"]["record_id"])
@@ -168,7 +161,7 @@ class Provider(BaseProvider):
 
         for record in records_to_delete:
             self._delete(
-                "/domains/{0}/records".format(self.domain),
+                f"/domains/{self.domain}/records",
                 query_params={"record_id": record["id"]},
             )
 
@@ -179,7 +172,7 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         response = requests.request(
             action,
-            "https://api.zilore.com/dns/v1{0}".format(url),
+            f"https://api.zilore.com/dns/v1{url}",
             params=query_params,
             json=data,
             headers={"X-Auth-Key": self._get_provider_option("auth_key")},

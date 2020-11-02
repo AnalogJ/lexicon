@@ -110,9 +110,7 @@ class Provider(BaseProvider):
             <Nameserver>dns2.registrar-servers.com</Nameserver>
           </DnsDetails>
         """
-        extra_payload = {
-            "DomainName": self.domain,
-        }
+        extra_payload = {"DomainName": self.domain}
 
         try:
             xml = self.client._call("namecheap.domains.getInfo", extra_payload)
@@ -121,7 +119,7 @@ class Provider(BaseProvider):
             # OR if the user is not permissioned to manage this domain
             # OR the API request came from a not whitelisted IP
             # we should print the error, so people know how to correct it.
-            raise Exception("Authentication failed: `%s`" % str(err))
+            raise Exception(f"Authentication failed: `{str(err)}`")
 
         xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
             "ns": namecheap.NAMESPACE
@@ -160,8 +158,7 @@ class Provider(BaseProvider):
         permissioned = _check_hosts_permission()
         if not permissioned:
             raise Exception(
-                "The domain {} is not controlled by this Namecheap "
-                "account".format(self.domain)
+                f"The domain {self.domain} is not controlled by this Namecheap account"
             )
 
         # FIXME What is this for?
@@ -297,10 +294,10 @@ class Provider(BaseProvider):
         name = record["Name"]
 
         if not name.endswith(self.domain):
-            name += ".{}".format(self.domain)
+            name += f".{self.domain}"
 
         content = (
-            "{} {}".format(record["MXPref"], record["Address"])
+            f"{record['MXPref']} {record['Address']}"
             if record["Type"] == "MX"
             else record["Address"]
         )

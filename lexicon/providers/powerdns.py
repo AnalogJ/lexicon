@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     def _make_identifier(self, rtype, name, content):
-        return "{}/{}={}".format(rtype, name, content)
+        return f"{rtype}/{name}={content}"
 
     def _parse_identifier(self, identifier):
         parts = identifier.split("/")

@@ -31,7 +31,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         """An innocent call to check that the credentials are okay."""
-        response = self._get("/v1/domains/{0}".format(self.domain))
+        response = self._get(f"/v1/domains/{self.domain}")
 
         self.domain_id = response["domain"]["id"]
 
@@ -52,10 +52,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("priority"):
             record["prio"] = self._get_lexicon_option("priority")
 
-        payload = self._post(
-            "/v1/domains/{0}/records".format(self.domain),
-            {"record": record},
-        )
+        payload = self._post(f"/v1/domains/{self.domain}/records", {"record": record})
 
         status = "id" in payload.get("record", {})
         LOGGER.debug("create_record: %s", status)
@@ -76,8 +73,7 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
             filter_query["name"] = name
         payload = self._get(
-            "/v1/domains/{0}/records".format(self.domain),
-            query_params=filter_query,
+            f"/v1/domains/{self.domain}/records", query_params=filter_query
         )
 
         records = []
@@ -128,10 +124,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_records: %s", identifiers)
 
         for record_id in identifiers:
-            self._put(
-                "/v1/domains/{0}/records/{1}".format(self.domain, identifier),
-                record,
-            )
+            self._put(f"/v1/domains/{self.domain}/records/{identifier}", record)
             LOGGER.debug("update_record: %s", record_id)
 
         LOGGER.debug("update_record: %s", True)
@@ -151,7 +144,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", identifiers)
 
         for record_id in identifiers:
-            self._delete("/v1/domains/{0}/records/{1}".format(self.domain, record_id))
+            self._delete(f"/v1/domains/{self.domain}/records/{record_id}")
             LOGGER.debug("delete_record: %s", record_id)
 
         LOGGER.debug("delete_record: %s", True)

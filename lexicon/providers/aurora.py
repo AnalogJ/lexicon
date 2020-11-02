@@ -51,7 +51,7 @@ class Provider(BaseProvider):
         data = {"type": rtype, "name": self._relative_name(name), "content": content}
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
-        payload = self._post("/zones/{0}/records".format(self.domain_id), data)
+        payload = self._post(f"/zones/{self.domain_id}/records", data)
 
         LOGGER.debug("create_record: %s", payload)
         return payload
@@ -60,7 +60,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/zones/{0}/records".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}/records")
 
         # Apply filtering first.
         processed_records = payload
@@ -112,9 +112,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
-        payload = self._put(
-            "/zones/{0}/records/{1}".format(self.domain_id, identifier), data
-        )
+        payload = self._put(f"/zones/{self.domain_id}/records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", payload)
         return payload
@@ -133,7 +131,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/{0}/records/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/{self.domain_id}/records/{record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -190,7 +188,7 @@ class Provider(BaseProvider):
 
         auth = api_key + ":" + signature.decode("utf-8")
         auth_b64 = base64.b64encode(auth.encode("utf-8"))
-        return "AuroraDNSv1 %s" % (auth_b64.decode("utf-8"))
+        return f"AuroraDNSv1 {auth_b64.decode('utf-8')}"
 
     def _find_record_identifier(self, rtype, name, content):
         records = self._list_records(rtype, name, content)

@@ -24,8 +24,7 @@ def provider_parser(subparser):
         "--auth-username", help="specify username for authentication"
     )
     subparser.add_argument(
-        "--auth-password",
-        help="specify password for authentication",
+        "--auth-password", help="specify password for authentication"
     )
 
 
@@ -69,7 +68,7 @@ class Provider(BaseProvider):
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
             LOGGER.warning("Domain %s not found in account", self.domain)
-            raise AssertionError("Domain {0} not found in account".format(self.domain))
+            raise AssertionError(f"Domain {self.domain} not found in account")
 
         self.domain_id = zone_img["value"]
         LOGGER.debug("HENET domain ID: %s", self.domain_id)

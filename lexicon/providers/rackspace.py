@@ -108,9 +108,7 @@ class Provider(BaseProvider):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
         try:
-            payload = self._post_and_wait(
-                "/domains/{0}/records".format(self.domain_id), data
-            )
+            payload = self._post_and_wait(f"/domains/{self.domain_id}/records", data)
         except Exception as error:
             if str(error).startswith("Record is a duplicate of another record"):
                 return self._update_record(None, rtype, name, content)
@@ -133,7 +131,7 @@ class Provider(BaseProvider):
         # if content:
         #     params['data'] = content
 
-        payload = self._get("/domains/{0}/records".format(self.domain_id), params)
+        payload = self._get(f"/domains/{self.domain_id}/records", params)
 
         records = list(payload["records"])
         if content:
@@ -170,9 +168,7 @@ class Provider(BaseProvider):
                 raise Exception("Unable to find record to modify: " + name)
             identifier = records[0]["id"]
 
-        self._put_and_wait(
-            "/domains/{0}/records/{1}".format(self.domain_id, identifier), data
-        )
+        self._put_and_wait(f"/domains/{self.domain_id}/records/{identifier}", data)
 
         # If it didn't raise from the http status code, then we're good
         LOGGER.debug("update_record: %s", identifier)
@@ -191,9 +187,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete_and_wait(
-                "/domains/{0}/records/{1}".format(self.domain_id, record_id)
-            )
+            self._delete_and_wait(f"/domains/{self.domain_id}/records/{record_id}")
 
         # If it didn't raise from the http status code, then we're good
         success = True

@@ -61,7 +61,7 @@ def generate_cli_main_parser():
         "--version",
         help="show the current version of lexicon",
         action="version",
-        version="%(prog)s {0}".format(discovery.lexicon_version()),
+        version=f"%(prog)s {discovery.lexicon_version()}",
     )
     parser.add_argument("--delegated", help="specify the delegated domain")
     parser.add_argument(
@@ -82,7 +82,7 @@ def generate_cli_main_parser():
 
         subparser = subparsers.add_parser(
             provider,
-            help="{0} provider".format(provider),
+            help=f"{provider} provider",
             parents=[generate_base_provider_parser()],
         )
         provider_parser(subparser)

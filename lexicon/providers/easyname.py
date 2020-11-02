@@ -20,8 +20,7 @@ def provider_parser(subparser):
         "--auth-username", help="Specify username used to authenticate"
     )
     subparser.add_argument(
-        "--auth-password",
-        help="Specify password used to authenticate",
+        "--auth-password", help="Specify password used to authenticate"
     )
 
 
@@ -139,7 +138,7 @@ class Provider(BaseProvider):
                 self.URLS["dns_delete_entry_confirm"].format(self.domain_id, rec_id)
             )
             self._invalidate_records_cache()
-            self._log("Delete DNS entry {}".format(rec_id), delete_response)
+            self._log(f"Delete DNS entry {rec_id}", delete_response)
             # success = success and delete_response_confirm.url == success_url
             success = "feedback-message--success" in delete_response_confirm.text
 
@@ -233,7 +232,7 @@ class Provider(BaseProvider):
                     if rec["ttl"]:
                         rec["ttl"] = int(rec["ttl"])
                 except Exception as error:
-                    errmsg = "Cannot parse DNS entry ({}).".format(error)
+                    errmsg = f"Cannot parse DNS entry ({error})."
                     LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
                 records.append(rec)

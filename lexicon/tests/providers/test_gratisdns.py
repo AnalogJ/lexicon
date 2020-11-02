@@ -24,7 +24,7 @@ class GratisDNSProviderTests(TestCase, IntegrationTestsV2):
         return ["Cookie"]
 
     def _replace_auth(self, cookie):
-        cookie = re.sub("ORGID=.*;", "ORGID={};".format(self.gratisdns_session), cookie)
+        cookie = re.sub("ORGID=.*;", f"ORGID={self.gratisdns_session};", cookie)
         return cookie
 
     # Inspired by thehover provider

@@ -188,9 +188,7 @@ class Provider(BaseProvider):
             if "." not in identifier:
                 # delete entire record
                 path = "/zones/{}/versions/{}/records/{}".format(
-                    self.domain_id,
-                    self.version_id,
-                    identifier,
+                    self.domain_id, self.version_id, identifier
                 )
                 self._delete(path)
                 LOGGER.debug("delete_record: %s", True)
@@ -214,9 +212,7 @@ class Provider(BaseProvider):
                 if not record["records"]:
                     # delete entire record
                     path = "/zones/{}/versions/{}/records/{}".format(
-                        self.domain_id,
-                        self.version_id,
-                        record["id"],
+                        self.domain_id, self.version_id, record["id"]
                     )
                     self._delete(path)
                 else:
@@ -244,9 +240,7 @@ class Provider(BaseProvider):
                     continue
 
             path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id,
-                self.version_id,
-                a_record["id"],
+                self.domain_id, self.version_id, a_record["id"]
             )
             self._delete(path)
 
@@ -282,7 +276,7 @@ class Provider(BaseProvider):
         return filtered_records
 
     def _get_records(self, identifier=None, rtype=None, name=None):
-        path = "/zones/{}/versions/{}/records".format(self.domain_id, self.version_id)
+        path = f"/zones/{self.domain_id}/versions/{self.version_id}/records"
         return self._filter_records(
             self._get(path), identifier=identifier, rtype=rtype, name=name
         )
@@ -291,17 +285,12 @@ class Provider(BaseProvider):
         if record.get("id"):
             # PUT
             path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id,
-                self.version_id,
-                record["id"],
+                self.domain_id, self.version_id, record["id"]
             )
             return self._put(path, record)
 
         # POST
-        path = "/zones/{}/versions/{}/records".format(
-            self.domain_id,
-            self.version_id,
-        )
+        path = f"/zones/{self.domain_id}/versions/{self.version_id}/records"
         return self._post(path, record)
 
     def _build_content(self, rtype, record):

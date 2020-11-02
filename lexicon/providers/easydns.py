@@ -33,7 +33,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
 
-        payload = self._get("/domain/{0}".format(self.domain))
+        payload = self._get(f"/domain/{self.domain}")
 
         if payload["data"]["exists"] == "N":
             raise Exception("No domain found")
@@ -52,9 +52,7 @@ class Provider(BaseProvider):
             "rdata": content,
         }
         try:
-            self._put(
-                "/zones/records/add/{0}/{1}".format(self.domain_id, rtype), record
-            )
+            self._put(f"/zones/records/add/{self.domain_id}/{rtype}", record)
         except requests.exceptions.HTTPError as error:
             # FIXME: adferrand 06/01/2019: Broken provider needs fixes.
             # In fact, this except block will silently hide every HTTP error, as an except
@@ -71,12 +69,12 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/zones/records/all/{0}".format(self.domain_id))
+        payload = self._get(f"/zones/records/all/{self.domain_id}")
         records = []
         for record in payload["data"]:
             processed_record = {
                 "type": record["type"],
-                "name": "{0}.{1}".format(record["host"], record["domain"]),
+                "name": f"{record['host']}.{record['domain']}",
                 "ttl": record["ttl"],
                 "content": record["rdata"],
                 "id": record["id"],
@@ -106,7 +104,7 @@ class Provider(BaseProvider):
         if content:
             data["rdata"] = content
 
-        self._post("/zones/records/{0}".format(identifier), data)
+        self._post(f"/zones/records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -124,7 +122,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/records/{0}/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/records/{self.domain_id}/{record_id}")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)

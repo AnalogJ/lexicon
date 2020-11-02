@@ -50,7 +50,7 @@ class Provider(BaseProvider):
         if not payload["status"]:
             raise Exception("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception("Api error: {0}".format(payload["message"]))
+            raise Exception(f"Api error: {payload['message']}")
         if self.domain not in payload["domain"]:
             raise Exception("Domain not found")
         self.domain_id = self.domain
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
         if not payload["status"]:
             raise Exception("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception("Api error: {0}".format(payload["message"]))
+            raise Exception(f"Api error: {payload['message']}")
         return True
 
     # List all records. Return an empty list if no records found
@@ -91,7 +91,7 @@ class Provider(BaseProvider):
 
         payload = self._get("/Domain/DnsRecord/List", query)
         if payload["status"] != "SUCCESS":
-            raise Exception("Api status: {0}".format(payload["status"]))
+            raise Exception(f"Api status: {payload['status']}")
         if payload["total_records"] == 0:
             return []
 
@@ -150,7 +150,7 @@ class Provider(BaseProvider):
         if not payload["status"]:
             raise Exception("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception("Api error: {0}".format(payload["message"]))
+            raise Exception(f"Api error: {payload['message']}")
         return True
 
     # Delete an existing record.
@@ -183,7 +183,7 @@ class Provider(BaseProvider):
         if not payload["status"]:
             raise Exception("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception("Api error: {0}".format(payload["message"]))
+            raise Exception(f"Api error: {payload['message']}")
         return True
 
     # Helpers

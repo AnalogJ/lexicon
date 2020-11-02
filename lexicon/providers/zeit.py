@@ -40,15 +40,15 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.zeit.co/v2/domains"
 
     def _authenticate(self):
-        result = self._get("/{0}".format(self.domain))
+        result = self._get(f"/{self.domain}")
 
         if not result["uid"]:
-            raise Exception("Error, domain {0} not found".format(self.domain))
+            raise Exception(f"Error, domain {self.domain} not found")
 
         self.domain_id = result["uid"]
 
     def _list_records(self, rtype=None, name=None, content=None):
-        result = self._get("/{0}/records".format(self.domain))
+        result = self._get(f"/{self.domain}/records")
 
         raw_records = result["records"]
         if rtype:
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
 
         data = {"type": rtype, "name": self._relative_name(name), "value": content}
 
-        result = self._post("/{0}/records".format(self.domain), data)
+        result = self._post(f"/{self.domain}/records", data)
 
         if not result["uid"]:
             raise Exception("Error occured when inserting the new record.")
@@ -114,7 +114,7 @@ class Provider(BaseProvider):
             records = self._list_records(rtype, name)
 
         if not records:
-            raise Exception("No record found for identifer: {0}".format(identifier))
+            raise Exception(f"No record found for identifer: {identifier}")
 
         if len(records) > 1:
             LOGGER.warning(
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
         if not content:
             data["value"] = records[0]["content"]
 
-        result = self._post("/{0}/records".format(self.domain), data)
+        result = self._post(f"/{self.domain}/records", data)
         self._delete("/{0}/records/{1}".format(self.domain, records[0]["id"]))
 
         LOGGER.debug("update_record: %s => %s", records[0]["id"], result["uid"])
@@ -150,7 +150,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete("/{0}/records/{1}".format(self.domain, delete_record_id))
+            self._delete(f"/{self.domain}/records/{delete_record_id}")
 
         LOGGER.debug("delete_record: %s", True)
 
@@ -168,9 +168,7 @@ class Provider(BaseProvider):
             params=query_params,
             data=json.dumps(data),
             headers={
-                "Authorization": "Bearer {0}".format(
-                    self._get_provider_option("auth_token")
-                )
+                "Authorization": f"Bearer {self._get_provider_option('auth_token')}"
             },
         )
 

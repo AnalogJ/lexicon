@@ -42,7 +42,7 @@ class Provider(BaseProvider):
                 name = self._relative_name(name).lower()
 
             self._post(
-                "domains/{0}/records".format(self.domain_id),
+                f"domains/{self.domain_id}/records",
                 data={"name": name, "type": rtype, "target": content, "ttl_sec": 0},
             )
 
@@ -52,7 +52,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        resources_url = "domains/{0}/records".format(self.domain_id)
+        resources_url = f"domains/{self.domain_id}/records"
 
         if name:
             name = self._relative_name(name).lower()
@@ -107,7 +107,7 @@ class Provider(BaseProvider):
         if name:
             name = self._relative_name(name).lower()
 
-        url = "domains/{0}/records/{1}".format(self.domain_id, identifier)
+        url = f"domains/{self.domain_id}/records/{identifier}"
         self._put(
             url,
             data={
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_resource_id)
 
         for resource_id in delete_resource_id:
-            self._delete("domains/{0}/records/{1}".format(self.domain_id, resource_id))
+            self._delete(f"domains/{self.domain_id}/records/{resource_id}")
 
         return True
 
@@ -145,9 +145,7 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "Bearer {0}".format(
-                self._get_provider_option("auth_token")
-            ),
+            "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
         }
 
         request_filter = query_params["filter"] if "filter" in query_params else None
@@ -155,7 +153,7 @@ class Provider(BaseProvider):
             default_headers["X-Filter"] = json.dumps(request_filter)
             del query_params["filter"]
 
-        request_url = "{0}{1}".format(self.api_endpoint, url)
+        request_url = f"{self.api_endpoint}{url}"
 
         response = requests.request(
             action,

@@ -58,7 +58,7 @@ class Provider(BaseProvider):
                 self.domain_id = domain
 
         if self.domain_id is None:
-            raise Exception("Domain {} not found".format(self.domain))
+            raise Exception(f"Domain {self.domain} not found")
 
     def _list_domains(self):
         query_params = {"action": "dns_primarydns"}
