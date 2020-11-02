@@ -204,9 +204,7 @@ class Provider(BaseProvider):
         LOGGER.debug(
             "request tenant ID: %s", self._get_rackspace_option("auth_account")
         )
-        full_url = (self.api_endpoint + "/{0}" + url).format(
-            self._get_rackspace_option("auth_account")
-        )
+        full_url = f"{self.api_endpoint}/{self._get_rackspace_option('auth_account')}{url}"
         response = requests.request(
             action,
             full_url,

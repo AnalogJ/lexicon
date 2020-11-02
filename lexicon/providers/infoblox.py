@@ -80,9 +80,7 @@ class Provider(BaseProvider):
         )
         self.version = "2.6.1"  # WAPI version supported by NIOS 8.3 and above
         self.session.headers.update({"Content-Type": "application/json"})
-        self.api_endpoint = "https://{0}/wapi/v{1}/".format(
-            self._get_provider_option("ib_host"), self.version
-        )
+        self.api_endpoint = f"https://{self._get_provider_option('ib_host')}/wapi/v{self.version}/"
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider,
@@ -140,7 +138,7 @@ class Provider(BaseProvider):
         else:
             raise Exception("Name not specified, no FQDN could be build")
         if rtype.upper() in IB_TYPE2CONTENT:
-            uri = "{0}{1}".format(self.api_endpoint, IB_TYPE2CONTENT[rtype.upper()][1])
+            uri = self.api_endpoint + IB_TYPE2CONTENT[rtype.upper()][1]
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
@@ -252,7 +250,7 @@ class Provider(BaseProvider):
         return True
 
     def _update_record_internal(self, identifier, rtype=None, name=None, content=None):
-        uri = f"{self.api_endpoint}{identifier}"
+        uri = self.api_endpoint + identifier
         payload = self._generate_payload(rtype, name, content)
         # remove view and name from the payload, as they can not be updated
         del payload["view"]

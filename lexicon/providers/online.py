@@ -82,7 +82,7 @@ class Provider(BaseProvider):
                 record["name"] or "@",
                 record["ttl"],
                 record["type"],
-                "{0} ".format(record["aux"]) if "aux" in record else "",
+                f"{record['aux']} " if "aux" in record else "",
                 record["data"] or "",
             )
         return bind_str
@@ -185,9 +185,7 @@ class Provider(BaseProvider):
 
         try:
             self._patch(
-                "/domain/{0}/version/{1}/zone/{2}".format(
-                    self.domain_id, self.passive_zone, identifier
-                ),
+                f"/domain/{self.domain_id}/version/{self.passive_zone}/zone/{identifier}",
                 record,
             )
 
@@ -211,9 +209,7 @@ class Provider(BaseProvider):
         try:
             for record in records:
                 self._delete(
-                    "/domain/{0}/version/{1}/zone/{2}".format(
-                        self.domain_id, self.passive_zone, record["id"]
-                    )
+                    f"/domain/{self.domain_id}/version/{self.passive_zone}/zone/{record['id']}"
                 )
         except BaseException as error:
             LOGGER.debug(error)

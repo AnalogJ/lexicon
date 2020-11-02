@@ -44,9 +44,7 @@ class Provider(BaseProvider):
             # make sure a the data is always a FQDN for CNAMe.
             content = content.rstrip(".") + "."
 
-        querystring = "domain={0}&type={1}&subdomain={2}&content={3}".format(
-            self.domain_id, rtype, self._relative_name(name), content
-        )
+        querystring = f"domain={self.domain_id}&type={rtype}&subdomain={self._relative_name(name)}&content={content}"
         if self._get_lexicon_option("ttl"):
             querystring += f"&ttl={self._get_lexicon_option('ttl')}"
 
