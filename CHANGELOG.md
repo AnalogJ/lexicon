@@ -1,6 +1,14 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add pagination support to Google Cloud DNS provider (#577)
+* Add official support to Python 3.9
+* Add SSHFP record support to CloudFlare provider (library only) (#612)
+
+### Modified
+* Fix create/update operations when CAA records are presents in GoDaddy provider (#545)
+* Fix Hover provider with new authentication URL (#618)
 
 ## 3.4.4 - 25/10/2020
 ### Modified
