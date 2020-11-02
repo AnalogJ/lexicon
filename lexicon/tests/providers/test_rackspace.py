@@ -29,9 +29,7 @@ class RackspaceProviderTests(TestCase, IntegrationTestsV2):
         # when we are replaying. Rackspace API calls are async, so you place
         # the initial request and then make update calls to see if the action
         # is complete and has a response.
-        return {
-            "sleep_time": "0",
-        }
+        return {"sleep_time": "0"}
 
     def _test_fallback_fn(self):
         return lambda x: "placeholder_" + x if x != "auth_token" else None

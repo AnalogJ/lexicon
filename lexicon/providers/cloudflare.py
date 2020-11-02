@@ -58,10 +58,10 @@ class Provider(BaseProvider):
 
             self.domain_id = payload["result"][0]["id"]
         else:
-            payload = self._get("/zones/{0}".format(zone_id))
+            payload = self._get(f"/zones/{zone_id}")
 
             if not payload["result"]:
-                raise Exception("No domain found for Zone ID {0}".format(zone_id))
+                raise Exception(f"No domain found for Zone ID {zone_id}")
 
             self.domain_id = zone_id
 
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
 
         payload = {"success": True}
         try:
-            payload = self._post("/zones/{0}/dns_records".format(self.domain_id), data)
+            payload = self._post(f"/zones/{self.domain_id}/dns_records", data)
         except requests.exceptions.HTTPError as err:
             already_exists = next(
                 (
@@ -109,9 +109,7 @@ class Provider(BaseProvider):
 
         records = []
         while True:
-            payload = self._get(
-                "/zones/{0}/dns_records".format(self.domain_id), filter_obj
-            )
+            payload = self._get(f"/zones/{self.domain_id}/dns_records", filter_obj)
 
             LOGGER.debug("payload: %s", payload)
 
@@ -160,9 +158,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
-        payload = self._put(
-            "/zones/{0}/dns_records/{1}".format(self.domain_id, identifier), data
-        )
+        payload = self._put(f"/zones/{self.domain_id}/dns_records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", payload["success"])
         return payload["success"]
@@ -180,7 +176,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/{0}/dns_records/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/{self.domain_id}/dns_records/{record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -196,9 +192,9 @@ class Provider(BaseProvider):
             headers["X-Auth-Email"] = self._get_provider_option("auth_username")
             headers["X-Auth-Key"] = self._get_provider_option("auth_token")
         else:
-            headers["Authorization"] = "Bearer {}".format(
-                self._get_provider_option("auth_token")
-            )
+            headers[
+                "Authorization"
+            ] = f"Bearer {self._get_provider_option('auth_token')}"
         response = requests.request(
             action,
             self.api_endpoint + url,

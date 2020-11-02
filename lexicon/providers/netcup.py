@@ -167,7 +167,7 @@ class Provider(BaseProvider):
             "POST", url="", data={"action": method, "param": dict(params, **auth)}
         )
         if data["status"] != "success":
-            raise Exception("{} ({})".format(data["longmessage"], data["statuscode"]))
+            raise Exception(f"{data['longmessage']} ({data['statuscode']})")
         return data.get("responsedata", {})
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

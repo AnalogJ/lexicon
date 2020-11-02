@@ -79,9 +79,7 @@ class Provider(BaseProvider):
         payload = {}
 
         try:
-            payload = self._post(
-                "/domains/{0}/records/{1}/".format(self.domain_id, rtype), record
-            )
+            payload = self._post(f"/domains/{self.domain_id}/records/{rtype}/", record)
         except requests.exceptions.HTTPError as error:
             # If there is already a record with that name, we need to do an update.
             if error.response.status_code == 400:
@@ -117,11 +115,9 @@ class Provider(BaseProvider):
         # records, so we need to retrieve all records for LOC and filter based on rtype
         # on our end.
         if not rtype or rtype == "LOC":
-            payload = self._get("/domains/{0}/records/".format(self.domain_id))
+            payload = self._get(f"/domains/{self.domain_id}/records/")
         else:
-            payload = self._get(
-                "/domains/{0}/records/{1}/".format(self.domain_id, rtype)
-            )
+            payload = self._get(f"/domains/{self.domain_id}/records/{rtype}/")
 
         records = []
 
@@ -129,7 +125,7 @@ class Provider(BaseProvider):
             for a_record in record["roundRobin"]:
                 processed_record = {
                     "type": record["type"],
-                    "name": "{0}.{1}".format(record["name"], self.domain),
+                    "name": f"{record['name']}.{self.domain}",
                     "ttl": record["ttl"],
                     "content": a_record["value"],
                     "id": record["id"],
@@ -174,10 +170,7 @@ class Provider(BaseProvider):
         for a_content in content:
             data["roundRobin"].append({"disableFlag": False, "value": a_content})
 
-        self._put(
-            "/domains/{0}/records/{1}/{2}/".format(self.domain_id, rtype, identifier),
-            data,
-        )
+        self._put(f"/domains/{self.domain_id}/records/{rtype}/{identifier}/", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -213,9 +206,7 @@ class Provider(BaseProvider):
             rtype = records[0]["type"]
 
         for record_id in delete_record_id:
-            self._delete(
-                "/domains/{0}/records/{1}/{2}/".format(self.domain_id, rtype, record_id)
-            )
+            self._delete(f"/domains/{self.domain_id}/records/{rtype}/{record_id}/")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)
@@ -229,9 +220,7 @@ class Provider(BaseProvider):
 
         if rtype == "SOA":
             raise Exception(
-                "{0} record type is not supported in the Constellix Provider".format(
-                    rtype
-                )
+                f"{rtype} record type is not supported in the Constellix Provider"
             )
 
         return True

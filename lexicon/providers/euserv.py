@@ -243,9 +243,7 @@ class Provider(BaseProvider):
 
         if int(response_json["code"]) != RC_SUCCESS:
             raise Exception(
-                "Error {0} in request: {1}".format(
-                    response_json["code"], response_json["message"]
-                )
+                f"Error {response_json['code']} in request: {response_json['message']}"
             )
 
         return response_json

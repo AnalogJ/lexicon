@@ -191,7 +191,7 @@ class Provider(BaseProvider):
         return -1
 
     def _get_resource_record_sets(self):
-        payload = self._get("/commonserviceitem/{0}".format(self.domain_id))
+        payload = self._get(f"/commonserviceitem/{self.domain_id}")
         return payload["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"]
 
     def _update_resource_record_sets(self, resource_record_sets):
@@ -200,7 +200,7 @@ class Provider(BaseProvider):
                 "Settings": {"DNS": {"ResourceRecordSets": resource_record_sets}}
             }
         }
-        return self._put("/commonserviceitem/{0}".format(self.domain_id), content)
+        return self._put(f"/commonserviceitem/{self.domain_id}", content)
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

@@ -43,7 +43,7 @@ def _get_ns_records_domains_for_domain(domain):
         tldextract.extract(ns_entry) for ns_entry in _get_ns_records_for_domain(domain)
     ]
 
-    return {"{0}.{1}".format(tld.domain, tld.suffix) for tld in tlds}
+    return {f"{tld.domain}.{tld.suffix}" for tld in tlds}
 
 
 def _get_ns_records_for_domain(domain):
@@ -56,7 +56,7 @@ def _get_ns_records_for_domain(domain):
         )
     except subprocess.CalledProcessError as error:
         if "NXDOMAIN" in error.output:
-            raise ValueError("Error, domain {0} could not be resolved.".format(domain))
+            raise ValueError(f"Error, domain {domain} could not be resolved.")
         output = error.output
 
     pattern = re.compile(r"nameserver = (.*?)\.*\n")
@@ -64,8 +64,8 @@ def _get_ns_records_for_domain(domain):
 
     if not match:
         raise ValueError(
-            "Error, could not find ns entries for domain {0}. "
-            "Does this domain is correctly configured ?".format(domain)
+            f"Error, could not find ns entries for domain {domain}. "
+            "Does this domain is correctly configured ?"
         )
 
     return match
@@ -99,8 +99,8 @@ def _relevant_provider_for_domain(domain):
 
     if not relevant_providers:
         raise ValueError(
-            "Error, could not find the DNS provider for given domain {0}. "
-            "Found nameservers domains are {1}".format(domain, nameserver_domains)
+            f"Error, could not find the DNS provider for given domain {domain}. "
+            f"Found nameservers domains are {nameserver_domains}"
         )
 
     if len(relevant_providers) > 1:
@@ -143,7 +143,7 @@ def provider_parser(subparser):
                 re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
                 for option in action.option_strings
             ]
-            action.dest = "auto_{0}_{1}".format(provider_name, action.dest)
+            action.dest = f"auto_{provider_name}_{action.dest}"
             subparser._add_action(action)
 
 
@@ -215,7 +215,7 @@ class Provider(object):
         new_config = helper_config.ConfigResolver()
         new_config.with_dict({"provider_name": provider_name})
 
-        target_prefix = "auto_{0}_".format(provider_name)
+        target_prefix = f"auto_{provider_name}_"
         for config_source in self.config._config_sources:
             if not isinstance(config_source, helper_config.ArgsConfigSource):
                 new_config.with_config_source(config_source)
@@ -223,12 +223,9 @@ class Provider(object):
                 # ArgsConfigSource needs to be reprocessed to rescope the provided
                 # args to the delegate provider
                 new_dict = {}
-                for (
-                    key,
-                    value,
-                ) in config_source._parameters.items():
+                for (key, value) in config_source._parameters.items():
                     if key.startswith(target_prefix):
-                        new_param_name = re.sub("^{0}".format(target_prefix), "", key)
+                        new_param_name = re.sub(f"^{target_prefix}", "", key)
                         if provider_name not in new_dict:
                             new_dict[provider_name] = {}
                         new_dict[provider_name][new_param_name] = value

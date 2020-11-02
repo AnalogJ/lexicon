@@ -164,16 +164,12 @@ class Provider(BaseProvider):
 
         if found:
             self._put(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=updated_data,
             )
         else:
             self._post(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=updated_data,
             )
 
@@ -236,16 +232,12 @@ class Provider(BaseProvider):
 
         if update_data["rdata"]:
             self._put(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=update_data,
             )
         else:
             self._delete(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                )
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}"
             )
 
         return True

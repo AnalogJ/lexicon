@@ -46,9 +46,7 @@ class Client(object):
             cache_file=TLDEXTRACT_CACHE_FILE, include_psl_private_domains=True
         )
         domain_parts = domain_extractor(self.config.resolve("lexicon:domain"))
-        runtime_config["domain"] = "{0}.{1}".format(
-            domain_parts.domain, domain_parts.suffix
-        )
+        runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
 
         if self.config.resolve("lexicon:delegated"):
             # handle delegated domain
@@ -59,9 +57,7 @@ class Client(object):
                     delegated = delegated[: -len(runtime_config.get("domain"))]
                     delegated = delegated.rstrip(".")
                 # update domain
-                runtime_config["domain"] = "{0}.{1}".format(
-                    delegated, runtime_config.get("domain")
-                )
+                runtime_config["domain"] = f"{delegated}.{runtime_config.get('domain')}"
 
         self.action = self.config.resolve("lexicon:action")
         self.provider_name = self.config.resolve(
@@ -96,7 +92,7 @@ class Client(object):
         if self.action == "delete":
             return self.provider.delete_record(identifier, record_type, name, content)
 
-        raise ValueError("Invalid action statement: {0}".format(self.action))
+        raise ValueError(f"Invalid action statement: {self.action}")
 
     def _validate_config(self):
         provider_name = self.config.resolve("lexicon:provider_name")
@@ -109,13 +105,13 @@ class Client(object):
             ]
         except KeyError:
             raise ProviderNotAvailableError(
-                "This provider ({0}) is not supported by Lexicon.".format(provider_name)
+                f"This provider ({provider_name}) is not supported by Lexicon."
             )
         else:
             if not available:
                 raise ProviderNotAvailableError(
-                    "This provider ({0}) has required dependencies that are missing. "
-                    "Please install lexicon[{0}] first.".format(provider_name)
+                    f"This provider ({provider_name}) has required dependencies that are missing. "
+                    f"Please install lexicon[{provider_name}] first."
                 )
 
         if not self.config.resolve("lexicon:action"):

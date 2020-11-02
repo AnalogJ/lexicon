@@ -36,7 +36,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug("authenticate debug: %s", response)
         if response == []:
-            raise Exception("Domain {} not found".format(self.domain))
+            raise Exception(f"Domain {self.domain} not found")
 
         self.domain_id = response.get("id", None)
 
@@ -226,15 +226,13 @@ class Provider(BaseProvider):
                 and response_json.get("errors")[0].get("value", "") == "blocked"
             ):
                 if retries < 1:
-                    raise Exception(
-                        "Api error: {0}".format(response_json.get("errors"))
-                    )
+                    raise Exception(f"Api error: {response_json.get('errors')}")
                 retries = retries - 1
                 time.sleep(1)
                 continue
 
             if status not in ("success", "pending"):
-                raise Exception("Api error: {0}".format(response_json.get("errors")))
+                raise Exception(f"Api error: {response_json.get('errors')}")
             # check if there a data object
             read_data = response_json.get("response", {}).get("data", None)
 

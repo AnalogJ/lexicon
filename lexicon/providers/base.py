@@ -175,15 +175,15 @@ class Provider(object):
         record_name = record_name.rstrip(".")
         # check if the record_name is fully specified
         if not record_name.endswith(self.domain):
-            record_name = "{0}.{1}".format(record_name, self.domain)
-        return "{0}.".format(record_name)  # return the fqdn name
+            record_name = f"{record_name}.{self.domain}"
+        return f"{record_name}."  # return the fqdn name
 
     def _full_name(self, record_name):
         # strip trailing period from fqdn if present
         record_name = record_name.rstrip(".")
         # check if the record_name is fully specified
         if not record_name.endswith(self.domain):
-            record_name = "{0}.{1}".format(record_name, self.domain)
+            record_name = f"{record_name}.{self.domain}"
         return record_name
 
     def _relative_name(self, record_name):
@@ -203,7 +203,7 @@ class Provider(object):
         return record
 
     def _get_lexicon_option(self, option):
-        return self.config.resolve("lexicon:{0}".format(option))
+        return self.config.resolve(f"lexicon:{option}")
 
     def _get_provider_option(self, option):
-        return self.config.resolve("lexicon:{0}:{1}".format(self.provider_name, option))
+        return self.config.resolve(f"lexicon:{self.provider_name}:{option}")

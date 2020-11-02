@@ -70,12 +70,12 @@ class Provider(BaseProvider):
         )
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception("Error with api {0}".format(payload.find("is_ok").text))
+            raise Exception(f"Error with api {payload.find('is_ok').text}")
 
         self.domain_id = self.domain
 
     def _make_identifier(self, rtype, name, content):
-        return "{}/{}={}".format(rtype, self._full_name(name), content)
+        return f"{rtype}/{self._full_name(name)}={content}"
 
     def _parse_identifier(self, identifier):
         parts = identifier.split("/")
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception("An error occurred: {0}".format(payload.find("is_ok").text))
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("create_record: %s", True)
         return True
@@ -153,7 +153,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception("An error occurred: {0}".format(payload.find("is_ok").text))
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -182,7 +182,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception("An error occurred: {0}".format(payload.find("is_ok").text))
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -201,6 +201,6 @@ class Provider(BaseProvider):
         tree = ElementTree.ElementTree(ElementTree.fromstring(response.content))
         root = tree.getroot()
         if root.tag == "error":
-            raise Exception("An error occurred: {0}".format(root.text))
+            raise Exception(f"An error occurred: {root.text}")
         response.raise_for_status()
         return root

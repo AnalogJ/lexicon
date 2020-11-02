@@ -176,15 +176,9 @@ class Provider(BaseProvider):
             "API-KEY": self._get_provider_option("auth_username"),
             "API-REQUEST-DATE": date,
             "API-HMAC": hashlib.md5(
-                "{0}{1}{2}{3}{4}{5}{6}".format(
-                    self._get_provider_option("auth_username"),
-                    self.api_endpoint,
-                    url,
-                    query_string,
-                    data,
-                    date,
-                    self._get_provider_option("auth_token"),
-                ).encode("utf-8")
+                f"{self._get_provider_option('auth_username')}{self.api_endpoint}{url}{query_string}{data}{date}{self._get_provider_option('auth_token')}".encode(
+                    "utf-8"
+                )
             ).hexdigest(),
             "API-FORMAT": "json",
         }

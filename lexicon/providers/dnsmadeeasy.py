@@ -39,7 +39,7 @@ class _RetryRateLimit(Retry):
                     method, url, response, error, _pool, _stacktrace
                 )
 
-        raise RuntimeError("URL {0} returned a HTTP 400 status code.".format(url))
+        raise RuntimeError(f"URL {url} returned a HTTP 400 status code.")
 
 
 def provider_parser(subparser):
@@ -87,9 +87,7 @@ class Provider(BaseProvider):
         }
         payload = {}
         try:
-            payload = self._post(
-                "/dns/managed/{0}/records/".format(self.domain_id), record
-            )
+            payload = self._post(f"/dns/managed/{self.domain_id}/records/", record)
         except requests.exceptions.HTTPError as error:
             if error.response.status_code != 400:
                 raise
@@ -107,15 +105,13 @@ class Provider(BaseProvider):
             filter_query["type"] = rtype
         if name:
             filter_query["recordName"] = self._relative_name(name)
-        payload = self._get(
-            "/dns/managed/{0}/records".format(self.domain_id), filter_query
-        )
+        payload = self._get(f"/dns/managed/{self.domain_id}/records", filter_query)
 
         records = []
         for record in payload["data"]:
             processed_record = {
                 "type": record["type"],
-                "name": "{0}.{1}".format(record["name"], self.domain),
+                "name": f"{record['name']}.{self.domain}",
                 "ttl": record["ttl"],
                 "content": record["value"],
                 "id": record["id"],
@@ -146,9 +142,7 @@ class Provider(BaseProvider):
         if rtype:
             data["type"] = rtype
 
-        self._put(
-            "/dns/managed/{0}/records/{1}".format(self.domain_id, identifier), data
-        )
+        self._put(f"/dns/managed/{self.domain_id}/records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -166,9 +160,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete(
-                "/dns/managed/{0}/records/{1}".format(self.domain_id, record_id)
-            )
+            self._delete(f"/dns/managed/{self.domain_id}/records/{record_id}")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)

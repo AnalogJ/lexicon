@@ -75,12 +75,12 @@ class Provider(BaseProvider):
             for record in result:
                 if record["status"] == "error":
                     raise Exception(
-                        "API returned at least one error: %s" % record["errtext"]
+                        f"API returned at least one error: {record['errtext']}"
                     )
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception("API returned error: %s (%s)" % (errcode, errtext))
+            raise Exception(f"API returned error: {errcode} ({errtext})")
 
         return response
 
