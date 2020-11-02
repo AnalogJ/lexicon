@@ -110,10 +110,7 @@ class Provider(BaseProvider):
                     "name": record["name"].rstrip("."),
                     "ttl": record["ttl"],
                     "content": content,
-                    "id": "{}.{}".format(
-                        record["id"],
-                        base64.b64encode(content.encode("utf-8")).decode("ascii"),
-                    ),
+                    "id": f"{record['id']}.{base64.b64encode(content.encode('utf-8')).decode('ascii')}",
                 }
                 self._parse_content(record["type"], processed_record["content"])
                 records.append(processed_record)
@@ -187,9 +184,7 @@ class Provider(BaseProvider):
         if identifier:
             if "." not in identifier:
                 # delete entire record
-                path = "/zones/{}/versions/{}/records/{}".format(
-                    self.domain_id, self.version_id, identifier
-                )
+                path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{identifier}"
                 self._delete(path)
                 LOGGER.debug("delete_record: %s", True)
                 return True
@@ -211,9 +206,7 @@ class Provider(BaseProvider):
                     del record["records"][index]
                 if not record["records"]:
                     # delete entire record
-                    path = "/zones/{}/versions/{}/records/{}".format(
-                        self.domain_id, self.version_id, record["id"]
-                    )
+                    path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{record['id']}"
                     self._delete(path)
                 else:
                     self._update_internal_record(record)
@@ -239,9 +232,7 @@ class Provider(BaseProvider):
                     self._update_internal_record(a_record)
                     continue
 
-            path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id, self.version_id, a_record["id"]
-            )
+            path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{a_record['id']}"
             self._delete(path)
 
         LOGGER.debug("delete_record: %s", True)
@@ -284,9 +275,7 @@ class Provider(BaseProvider):
     def _update_internal_record(self, record):
         if record.get("id"):
             # PUT
-            path = "/zones/{}/versions/{}/records/{}".format(
-                self.domain_id, self.version_id, record["id"]
-            )
+            path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{record['id']}"
             return self._put(path, record)
 
         # POST

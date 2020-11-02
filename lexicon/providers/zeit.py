@@ -133,7 +133,7 @@ class Provider(BaseProvider):
             data["value"] = records[0]["content"]
 
         result = self._post(f"/{self.domain}/records", data)
-        self._delete("/{0}/records/{1}".format(self.domain, records[0]["id"]))
+        self._delete(f"/{self.domain}/records/{records[0]['id']}")
 
         LOGGER.debug("update_record: %s => %s", records[0]["id"], result["uid"])
 

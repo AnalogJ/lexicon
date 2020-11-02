@@ -185,9 +185,7 @@ class Provider(BaseProvider):
         if not post_result["access_token"]:
             raise Exception(
                 "Error, could not grant RW access on the "
-                "Google Cloud DNS API for user: {0}".format(
-                    self._get_provider_option("auth_email")
-                )
+                f"Google Cloud DNS API for user: {self._get_provider_option('auth_email')}"
             )
 
         self._token = post_result["access_token"]
@@ -504,9 +502,7 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         request = requests.request(
             action,
-            "https://content.googleapis.com/dns/v1/projects/{0}{1}".format(
-                self._service_account_info["project_id"], url
-            ),
+            f"https://content.googleapis.com/dns/v1/projects/{self._service_account_info['project_id']}{url}",
             params=None if not query_params else query_params,
             json=None if not data else data,
             headers={"Authorization": f"Bearer {self._token}"},

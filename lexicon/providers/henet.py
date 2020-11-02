@@ -129,9 +129,7 @@ class Provider(BaseProvider):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
-            "https://dns.he.net/?hosted_dns_zoneid={0}&menu=edit_zone&hosted_dns_editzone".format(
-                self.domain_id
-            )
+            f"https://dns.he.net/?hosted_dns_zoneid={self.domain_id}&menu=edit_zone&hosted_dns_editzone",
         )
 
         # Parse the HTML response, and list the table rows for DNS records

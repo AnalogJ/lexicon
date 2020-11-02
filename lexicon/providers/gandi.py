@@ -104,8 +104,8 @@ class Provider(BaseProvider):
         ]
         if current_values != [content]:
             # a change is necessary
-            url = "/domains/{0}/records/{1}/{2}".format(
-                self.domain_id, self._relative_name(name), rtype
+            url = (
+                f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{rtype}"
             )
             if current_values:
                 record = {"rrset_values": current_values + [content]}
@@ -142,9 +142,7 @@ class Provider(BaseProvider):
                 if rtype is not None:
                     query_results = [
                         self._get(
-                            "/domains/{0}/records/{1}/{2}".format(
-                                self.domain_id, self._relative_name(name), rtype
-                            )
+                            f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{rtype}"
                         )
                     ]
                 else:
@@ -204,15 +202,13 @@ class Provider(BaseProvider):
                 data["rrset_values"] = [content]
         if rtype is not None:
             # replace the records of a specific rtype
-            url = "/domains/{0}/records/{1}/{2}".format(
-                self.domain_id, identifier or self._relative_name(name), rtype
-            )
+            effect_id = identifier or self._relative_name(name)
+            url = f"/domains/{self.domain_id}/records/{effect_id}/{rtype}"
             self._put(url, data)
         else:
             # replace all records with a matching name
-            url = "/domains/{0}/records/{1}".format(
-                self.domain_id, identifier or self._relative_name(name)
-            )
+            effect_id = identifier or self._relative_name(name)
+            url = f"/domains/{self.domain_id}/records/{effect_id}"
             self._put(url, {"items": [data]})
         LOGGER.debug("update_record: %s", True)
         return True
@@ -240,9 +236,7 @@ class Provider(BaseProvider):
                         for record in matching_records
                         if record["content"] != content
                     ]
-                url = "/domains/{0}/records/{1}/{2}".format(
-                    self.domain_id, self._relative_name(name), current_type
-                )
+                url = f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{current_type}"
                 if len(matching_records) == len(remaining_values):
                     # no matching item should be removed for this rtype
                     pass

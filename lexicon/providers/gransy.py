@@ -274,11 +274,11 @@ class Provider(BaseProvider):
         if len(records) > 1:
             raise Exception(
                 "Identifier was not provided and several existing "
-                "records match the request for {0}/{1}".format(rtype, name)
+                f"records match the request for {rtype}/{name}"
             )
         raise Exception(
             "Identifier was not provided and no existing records match "
-            "the request for {0}/{1}".format(rtype, name)
+            f"the request for {rtype}/{name}"
         )
 
     def _request_login(self, login, password):

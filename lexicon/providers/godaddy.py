@@ -314,10 +314,7 @@ class Provider(BaseProvider):
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 # GoDaddy use a key/secret pair to authenticate
-                "Authorization": "sso-key {0}:{1}".format(
-                    self._get_provider_option("auth_key"),
-                    self._get_provider_option("auth_secret"),
-                ),
+                "Authorization": f"sso-key {self._get_provider_option('auth_key')}:{self._get_provider_option('auth_secret')}",
             },
         )
 

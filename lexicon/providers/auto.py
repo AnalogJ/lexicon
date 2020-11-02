@@ -64,8 +64,8 @@ def _get_ns_records_for_domain(domain):
 
     if not match:
         raise ValueError(
-            "Error, could not find ns entries for domain {0}. "
-            "Does this domain is correctly configured ?".format(domain)
+            f"Error, could not find ns entries for domain {domain}. "
+            "Does this domain is correctly configured ?"
         )
 
     return match
@@ -99,8 +99,8 @@ def _relevant_provider_for_domain(domain):
 
     if not relevant_providers:
         raise ValueError(
-            "Error, could not find the DNS provider for given domain {0}. "
-            "Found nameservers domains are {1}".format(domain, nameserver_domains)
+            f"Error, could not find the DNS provider for given domain {domain}. "
+            f"Found nameservers domains are {nameserver_domains}"
         )
 
     if len(relevant_providers) > 1:

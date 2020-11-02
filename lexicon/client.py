@@ -110,8 +110,8 @@ class Client(object):
         else:
             if not available:
                 raise ProviderNotAvailableError(
-                    "This provider ({0}) has required dependencies that are missing. "
-                    "Please install lexicon[{0}] first.".format(provider_name)
+                    f"This provider ({provider_name}) has required dependencies that are missing. "
+                    f"Please install lexicon[{provider_name}] first."
                 )
 
         if not self.config.resolve("lexicon:action"):

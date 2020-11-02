@@ -185,9 +185,9 @@ class Provider(BaseProvider):
         default_auth = None
 
         if self._get_provider_option("auth_token"):
-            default_headers["Authorization"] = "Bearer {0}".format(
-                self._get_provider_option("auth_token")
-            )
+            default_headers[
+                "Authorization"
+            ] = f"Bearer {self._get_provider_option('auth_token')}"
         elif self._get_provider_option("auth_username") and self._get_provider_option(
             "auth_password"
         ):

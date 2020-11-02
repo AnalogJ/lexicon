@@ -90,9 +90,7 @@ def generate_cli_main_parser():
         if not available:
             subparser.epilog = (
                 "WARNING: some required dependencies for this provider are not "
-                "installed. Please install lexicon[{0}] first before using it.".format(
-                    provider
-                )
+                f"installed. Please install lexicon[{provider}] first before using it."
             )
 
     return parser
