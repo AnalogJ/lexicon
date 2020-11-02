@@ -94,7 +94,9 @@ class Provider(BaseProvider):
         ttl = self._get_lexicon_option("ttl")
 
         # Retrieve existing data in DNS zone.
-        records = self._get("/domains/{0}/records/{1}/{2}".format(domain, rtype, relative_name))
+        records = self._get(
+            "/domains/{0}/records/{1}/{2}".format(domain, rtype, relative_name)
+        )
 
         # Check if a record already matches given parameters
         for record in records:
@@ -112,7 +114,9 @@ class Provider(BaseProvider):
         records.append(data)
 
         # Insert the record
-        self._put("/domains/{0}/records/{1}/{2}".format(domain, rtype, relative_name), records)
+        self._put(
+            "/domains/{0}/records/{1}/{2}".format(domain, rtype, relative_name), records
+        )
 
         LOGGER.debug("create_record: %s %s %s", rtype, name, content)
 
@@ -159,11 +163,16 @@ class Provider(BaseProvider):
 
         # Synchronize data with updated records into DNS zone.
         if updated_record is not None:
-            if identifier and self._relative_name(updated_record['name']) != relative_name:
-                self._put('/domains/{0}/records/{1}'.format(domain, rtype), records)
+            if (
+                identifier
+                and self._relative_name(updated_record["name"]) != relative_name
+            ):
+                self._put("/domains/{0}/records/{1}".format(domain, rtype), records)
             else:
-                self._put('/domains/{0}/records/{1}/{2}'.format(domain, rtype, relative_name),
-                          updated_record)
+                self._put(
+                    "/domains/{0}/records/{1}/{2}".format(domain, rtype, relative_name),
+                    updated_record,
+                )
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 

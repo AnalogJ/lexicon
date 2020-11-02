@@ -68,7 +68,12 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
         content, cf_data = self._format_content(rtype, content)
-        data = {"type": rtype, "name": self._full_name(name), "content": content, "data": cf_data}
+        data = {
+            "type": rtype,
+            "name": self._full_name(name),
+            "content": content,
+            "data": cf_data,
+        }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
@@ -220,11 +225,7 @@ class Provider(BaseProvider):
             # fields that make up the record seperately, then the API joins
             # them back together
             _fp = content.split(" ")
-            data = {
-                "algorithm": _fp[0],
-                "type": _fp[1],
-                "fingerprint": _fp[2]
-            }
+            data = {"algorithm": _fp[0], "type": _fp[1], "fingerprint": _fp[2]}
             content = None
 
         return content, data

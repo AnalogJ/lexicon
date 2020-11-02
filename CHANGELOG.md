@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.4.5 - 02/11/2020
 ### Added
 * Add pagination support to Google Cloud DNS provider (#577)
 * Add official support to Python 3.9
