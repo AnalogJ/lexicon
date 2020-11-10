@@ -21,7 +21,8 @@ def provider_parser(subparser):
         "--auth-username", help="Specify username used to authenticate"
     )
     subparser.add_argument(
-        "--auth-password", help="Specify password used to authenticate",
+        "--auth-password",
+        help="Specify password used to authenticate",
     )
 
 
@@ -52,42 +53,39 @@ class Provider(BaseProvider):
     def _get_csrf_token(self):
         """Return the CSRF Token of easyname login form."""
         home_response = self.session.get(self.URLS["login"])
-        self._log(f"Home", home_response)
+        self._log("Home", home_response)
         assert home_response.status_code == 200, "Could not load Easyname login page."
 
-        csrf_token_field = home_response.cookies['CSRF-TOKEN']
+        csrf_token_field = home_response.cookies["CSRF-TOKEN"]
 
         assert csrf_token_field is not None, "Could not find login token."
         return csrf_token_field
 
-
     def _login(self, csrf_token):
         """Attempt to login session on easyname."""
         payload = {
-                "emailAddress": self._get_provider_option("auth_username"),
-                "password": self._get_provider_option("auth_password")
+            "emailAddress": self._get_provider_option("auth_username"),
+            "password": self._get_provider_option("auth_password"),
         }
         headers = self.session.headers
-        headers['X-CSRF-TOKEN'] = csrf_token
+        headers["X-CSRF-TOKEN"] = csrf_token
 
         login_response = self.session.post(
             self.URLS["login_endpoint"],
             data=json.dumps(payload),
-            headers = headers,
-            allow_redirects=True
+            headers=headers,
+            allow_redirects=True,
         )
-        self._log(f"Login", login_response)
+        self._log("Login", login_response)
         json_response = json.loads(login_response.content)
         assert (
             login_response.status_code == 200
         ), "Could not login due to a network error."
 
-        assert json_response['redirectUrl'] == self.URLS["dashboard"], (
-
+        assert json_response["redirectUrl"] == self.URLS["dashboard"], (
             "Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s"
             % login_response.url
-            )
-
+        )
 
     def _authenticate(self):
 
@@ -130,13 +128,14 @@ class Provider(BaseProvider):
             create_response = self.session.post(
                 self.URLS["dns_create_entry"].format(self.domain_id), data=data
             )
-            self._log(f"Create DNS entry", create_response)
+            self._log("Create DNS entry", create_response)
         else:
             LOGGER.debug("Update DNS data: %s", data)
             update_response = self.session.post(
-                self.URLS["dns_update_entry"].format(self.domain_id, identifier), data=data
+                self.URLS["dns_update_entry"].format(self.domain_id, identifier),
+                data=data,
             )
-            self._log(f"Update DNS entry", update_response)
+            self._log("Update DNS entry", update_response)
 
         self._invalidate_records_cache()
 
@@ -179,7 +178,7 @@ class Provider(BaseProvider):
                 self.URLS["dns_delete_entry_confirm"].format(self.domain_id, rec_id)
             )
             self._invalidate_records_cache()
-            self._log(f"Delete DNS entry {rec_id}", delete_response)
+            self._log("Delete DNS entry {rec_id}", delete_response)
             # success = success and delete_response_confirm.url == success_url
             success = "feedback-message--success" in delete_response_confirm.text
 
@@ -256,7 +255,7 @@ class Provider(BaseProvider):
             rows = self._get_dns_entry_trs()[1:]
 
             for row in rows:
-                self._log(f"DNS list entry", row)
+                self._log("DNS list entry", row)
                 try:
                     rec = {}
                     columns = row.find_all("td")
@@ -266,8 +265,10 @@ class Provider(BaseProvider):
                     rec["priority"] = (columns[3].contents[1].string or "").strip()
                     rec["ttl"] = (columns[4].contents[1].string or "").strip()
                     rec["id"] = ""
-                    for a in columns[5].findAll('a', class_="button--naked vers--compact theme--tolerance"):
-                        rec["id"] = int(a['href'].rsplit("/", 1)[-1])
+                    for a in columns[5].findAll(
+                        "a", class_="button--naked vers--compact theme--tolerance"
+                    ):
+                        rec["id"] = int(a["href"].rsplit("/", 1)[-1])
                     if rec["priority"]:
                         rec["priority"] = int(rec["priority"])
                     if rec["ttl"]:
@@ -347,11 +348,11 @@ class Provider(BaseProvider):
         Return the TR elements holding the DNS entries.
         """
         dns_list_response = self.session.get(self.URLS["dns"].format(self.domain_id))
-        self._log(f"DNS list", dns_list_response)
+        self._log("DNS list", dns_list_response)
         assert dns_list_response.status_code == 200, "Could not load DNS entries."
 
         html = BeautifulSoup(dns_list_response.content, "html.parser")
-        self._log(f"DNS list", html)
+        self._log("DNS list", html)
         dns_table = html.find("table")
         assert dns_table is not None, "Could not find DNS entry table"
 
@@ -392,18 +393,17 @@ class Provider(BaseProvider):
             ]
         return records
 
-
     def _get_domain_text_of_authoritative_zone(self):
         """Get the authoritative name zone."""
         # We are logged in, so get the domain list
         zones_response = self.session.get(self.URLS["domain_list"])
-        self._log(f"Zone", zones_response)
+        self._log("Zone", zones_response)
         assert (
             zones_response.status_code == 200
         ), "Could not retrieve domain list due to a network error."
 
         html = BeautifulSoup(zones_response.content, "html.parser")
-        self._log(f"Zone", html)
+        self._log("Zone", html)
         domain_table = html.find("table")
         assert domain_table is not None, "Could not find domain table"
 
