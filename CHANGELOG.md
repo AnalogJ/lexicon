@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.5.0 - 10/11/2020
 ## Modified
 * Avoid installation problems with setuptools==50
 * Migrating codebase to Python 3.6+ specific features (Lexicon will explicitly break on older versions now)
