@@ -294,12 +294,12 @@ class Provider(BaseProvider):
         # (until modifications are propagated).
         # In this case, call to API will return 409 HTTP error.
         # We use the Retry extension to retry the requests until
-        # we get a processable reponse (402 HTTP status, or an HTTP error != 409)
+        # we get a processable response (402 HTTP status, or an HTTP error != 409)
         retries = Retry(
             total=10,
             backoff_factor=0.5,
             status_forcelist=[409],
-            method_whitelist=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
+            allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
         )
 
         session = requests.Session()

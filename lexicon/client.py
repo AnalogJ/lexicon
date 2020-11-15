@@ -2,24 +2,15 @@
 from __future__ import absolute_import
 
 import importlib
+import logging
 import os
+import warnings
 
 import tldextract
 
 from lexicon import config as helper_config
 from lexicon import discovery
-
-TLDEXTRACT_CACHE_FILE_DEFAULT = os.path.join("~", ".lexicon_tld_set")
-TLDEXTRACT_CACHE_FILE = os.path.expanduser(
-    os.environ.get("LEXICON_TLDEXTRACT_CACHE", TLDEXTRACT_CACHE_FILE_DEFAULT)
-)
-
-
-class ProviderNotAvailableError(Exception):
-    """
-    Custom exception to raise when a provider is not available,
-    typically because some optional dependencies are missing
-    """
+from lexicon.exceptions import ProviderNotAvailableError
 
 
 class Client(object):
@@ -43,7 +34,7 @@ class Client(object):
 
         # Process domain, strip subdomain
         domain_extractor = tldextract.TLDExtract(
-            cache_file=TLDEXTRACT_CACHE_FILE, include_psl_private_domains=True
+            cache_dir=_get_tldextract_cache_path(), include_psl_private_domains=True
         )
         domain_parts = domain_extractor(self.config.resolve("lexicon:domain"))
         runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
@@ -120,3 +111,15 @@ class Client(object):
             raise AttributeError("domain")
         if not self.config.resolve("lexicon:type"):
             raise AttributeError("type")
+
+
+def _get_tldextract_cache_path():
+    if os.environ.get("TLDEXTRACT_CACHE_FILE"):
+        logging.warning(
+            "TLD_EXTRACT_CACHE_FILE environment variable is deprecated, please use TLDEXTRACT_CACHE_PATH instead."
+        )
+        os.environ["TLDEXTRACT_CACHE_PATH"] = os.environ["TLDEXTRACT_CACHE_FILE"]
+
+    return os.path.expanduser(
+        os.environ.get("TLDEXTRACT_CACHE_PATH", os.path.join("~", ".lexicon_tld_set"))
+    )
