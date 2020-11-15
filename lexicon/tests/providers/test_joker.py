@@ -1,6 +1,6 @@
 """Integration tests for Joker.com provider"""
-from unittest import TestCase
 import re
+from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
@@ -18,8 +18,8 @@ class JokerProviderTests(TestCase, IntegrationTestsV2):
         ]
 
     def _filter_response(self, response):
-        body = response['body']['string'].decode("utf-8")
-        body = re.sub(r'Auth-Sid: \w+\n', 'Auth-Sid: DUMMY_AUTH_SID\n', body)
-        response['body']['string'] = body.encode("utf-8")
+        body = response["body"]["string"].decode("utf-8")
+        body = re.sub(r"Auth-Sid: \w+\n", "Auth-Sid: DUMMY_AUTH_SID\n", body)
+        response["body"]["string"] = body.encode("utf-8")
 
         return response
