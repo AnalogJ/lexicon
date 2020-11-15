@@ -20,23 +20,23 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | henet_          | hetzner_        | hostingde_      | hover_          |
 +-----------------+-----------------+-----------------+-----------------+
-| infoblox_       | internetbs_     | inwx_           | linode_         |
+| infoblox_       | internetbs_     | inwx_           | joker_          |
 +-----------------+-----------------+-----------------+-----------------+
-| linode4_        | localzone_      | luadns_         | memset_         |
+| linode_         | linode4_        | localzone_      | luadns_         |
 +-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namesilo_       | netcup_         | nfsn_           |
+| memset_         | namecheap_      | namesilo_       | netcup_         |
 +-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | onapp_          | online_         |
+| nfsn_           | njalla_         | nsone_          | onapp_          |
 +-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | powerdns_       |
+| online_         | ovh_            | plesk_          | pointhq_        |
 +-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        |
+| powerdns_       | rackspace_      | rage4_          | rcodezero_      |
 +-----------------+-----------------+-----------------+-----------------+
-| safedns_        | sakuracloud_    | softlayer_      | transip_        |
+| route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+
-| ultradns_       | vultr_          | yandex_         | zeit_           |
+| transip_        | ultradns_       | vultr_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+
-| zilore_         | zonomi_         |                 |                 |
+| zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -265,6 +265,11 @@ internetbs
 inwx
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. _joker:
+
+joker
+    * ``auth_token`` Specify the api key to connect to the joker.com api
 
 .. _linode:
 
