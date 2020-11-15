@@ -110,6 +110,7 @@ The current supported providers are:
 - `Infoblox <https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal>`_
 - `Internet.bs <https://internetbs.net/ResellerRegistrarDomainNameAPI>`_
 - `INWX <https://www.inwx.de/en/offer/api>`_
+- `Joker.com <https://joker.com/faq/index.php?action=show&cat=39>`_
 - `Linode <https://www.linode.com/api/dns>`_
 - `Linode v4 <https://developers.linode.com/api/docs/v4#tag/Domains>`_
 - `LuaDNS <http://www.luadns.com/api.html>`_
