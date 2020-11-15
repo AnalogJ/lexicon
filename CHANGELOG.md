@@ -3,6 +3,10 @@
 ## master - CURRENT
 ## Added
 * Add the Joker.com provider
+* Add environment variable `TLDEXTRACT_CACHE_PATH` to configure a tldextract cache custom location for Lexicon
+
+## Modified
+* Old environment variable `TLDEXTRACT_CACHE_FILE` is deprecated and will be removed in a future release
 
 ## 3.5.0 - 10/11/2020
 ## Modified
