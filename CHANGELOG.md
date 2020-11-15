@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+## Added
+* Add the Joker.com provider
 
 ## 3.5.0 - 10/11/2020
 ## Modified
