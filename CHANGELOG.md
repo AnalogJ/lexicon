@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.5.1 - 16/11/2020
 ## Added
 * Add the Joker.com provider
 * Add environment variable `TLDEXTRACT_CACHE_PATH` to configure a tldextract cache custom location for Lexicon
