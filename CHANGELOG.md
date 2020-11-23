@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.5.2 - 23/11/2020
 ## Modified
 * Fix domains in "lock" state with `joker` provider
 
