@@ -80,7 +80,7 @@ class Provider(BaseProvider):
         data = response.data[0]
         items = data.split(" ")
 
-        if not items[2] == "production":
+        if not items[2] not in ["production", "lock"]:
             raise ValueError(f"Current status for domain {self.domain} is: {items[2]}")
 
         self.domain_id = self.domain
