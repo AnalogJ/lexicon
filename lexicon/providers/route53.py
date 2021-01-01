@@ -130,9 +130,28 @@ class Provider(BaseProvider):
     def _authenticate(self):
         """Determine the hosted zone id for the domain."""
         try:
-            hosted_zones = self.r53_client.list_hosted_zones_by_name()["HostedZones"]
+            is_truncated = True
+            next_dns_name = None
+            next_hz_id = None
+            hosted_zones = []
+
+            while is_truncated:
+                if not next_dns_name:
+                    new_zones = self.r53_client.list_hosted_zones_by_name()
+                else:
+                    new_zones = self.r53_client.list_hosted_zones_by_name(
+                        DNSName=next_dns_name, HostedZoneId=next_hz_id
+                    )
+
+                hosted_zones.extend(new_zones.get("HostedZones"))
+                is_truncated = new_zones.get("IsTruncated")
+
+                if is_truncated:
+                    next_dns_name = new_zones.get("NextDNSName")
+                    next_hz_id = new_zones.get("NextHostedZoneId")
+
             hosted_zone = next(hz for hz in hosted_zones if self.filter_zone(hz))
-            self.domain_id = hosted_zone["Id"]
+            self.domain_id = hosted_zone.get("Id")
         except StopIteration:
             raise Exception("No domain found")
 
