@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+## Modified
+* Handle large number of hosted zones in `route53` provider
 
 ## 3.5.2 - 23/11/2020
 ## Modified
