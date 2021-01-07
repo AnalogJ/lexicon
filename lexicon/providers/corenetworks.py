@@ -1,30 +1,34 @@
-"""Module provider for DNS Simple"""
+"""Module provider for Core Networks"""
 from __future__ import absolute_import
 import json
 import hashlib
 import logging
 import time
 import os
+import tempfile
 
 import requests
 from lexicon.providers.base import Provider as BaseProvider
 
-LOGGER = logging.getLogger(__name__)
+CorenetworksLog = logging.getLogger(__name__)
+#CorenetworksLog.setLevel(logging.DEBUG)
+CorenetworksLog.info("Starting %s" % __name__)
 
 NAMESERVER_DOMAINS = ['core-networks.de', 'core-networks.eu', 'core-networks.com']
 
 def provider_parser(subparser):
     """Configure provider parser for Core Networks"""
     subparser.add_argument(
-        "--auth-username", help="specify login for authentication")
+        "--auth-username", help="Specify login for authentication")
     subparser.add_argument(
-        "--auth-password", help="specify password for authentication")
+        "--auth-password", help="Specify password for authentication")
     subparser.add_argument(
-        "--auth-file", help="specify location for authentication file")
+        "--auth-file", help="Specify location for authentication file. If this contains a valid token it will be used. Otherwise --auth-username and --auth-password are necessary.")
 
 class Provider(BaseProvider):
     """Provider class for Core Networks"""
     def __init__(self, config):
+        CorenetworksLog.info("Initialising class Provider")
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.account_id = None
@@ -32,10 +36,15 @@ class Provider(BaseProvider):
         self.expiry = None
         self.modified = False
         self.auth_file = { 'token': None, 'expiry': None }
+        CorenetworksLog.info("Auth file parameter: %s" % self._get_provider_option('auth_file'))
         # Core Networks enforces a limit on the amount of logins per minute.
         # As the token is valid for 1 hour it's sensible to store it for
         # later usage.
-        self.auth_file_path = self._get_provider_option('auth_file') or '/tmp/corenetworks_auth.json'
+        if os.path.exists(os.path.expanduser("~"))  and os.path.expanduser("~") != '':
+            path = os.path.expanduser("~")
+        else:
+            path = tempfile.gettempdir()
+        self.auth_file_path = self._get_provider_option('auth_file') or (path+'/corenetworks_auth.json')
         self.api_endpoint = 'https://beta.api.core-networks.de'
 
     def __del__(self):
@@ -46,9 +55,13 @@ class Provider(BaseProvider):
             self.modified == False
         return True
 
-    # Ref: https://beta.api.core-networks.de/doc/#functon_auth_token
     def _authenticate(self):
-        self._log("Domain %s" % self.domain)
+        """Authenticate by either providing stored access token or
+        acquiring and storing token. This method will query the
+        list of zones and store them for later use. If the requested
+        domain is not in the list of zones it will raise an exception.
+        Ref: https://beta.api.core-networks.de/doc/#functon_auth_token"""
+        CorenetworksLog.debug("Entering _authenticate, requesting domain %s" % self.domain)
         self._refresh_auth_file()
         if 'token' in self.auth_file:
             self.token = self.auth_file['token']
@@ -79,6 +92,7 @@ class Provider(BaseProvider):
         type, name and content are used to filter records.
         If possible filter during the query, otherwise filter after response is received.
         Ref: https://beta.api.core-networks.de/doc/#functon_dnszones_records"""
+        CorenetworksLog.debug("Entering _list_records")
         zone = next((zone for zone in self.zones if zone["name"] == self.domain), None)
         if not zone:
             raise Exception('Domain not found')
@@ -100,6 +114,7 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         """Creates a record. If record already exists with the same content, do nothing."""
+        CorenetworksLog.debug("Entering _create_record")
 
         # Check for existence of record.
         existing_records = self._list_records(rtype, name, content)
@@ -116,6 +131,9 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option('ttl'):
             data['ttl'] = self._get_lexicon_option('ttl')
+            # Bug reported by chkpnt. If ttl is less than 60s the API throws a "415 Client Error: Unsupported Media Type"
+            if data['ttl'] < 60:
+                data['ttl'] = 60
         if self._get_lexicon_option('priority'):
             data['priority'] = self._get_lexicon_option('priority')
 
@@ -130,6 +148,7 @@ class Provider(BaseProvider):
         """Updates a record. Core Networks neither supports updating a record nor is able to reliably identify a record
         after a change. The best we can do is to identify the record by ourselves, fetch its data, delete it and
         re-create it."""
+        CorenetworksLog.debug("Entering _update_record")
         if identifier is not None:
             # Check for existence of record
             existing_records = self._list_records(rtype)
@@ -148,8 +167,10 @@ class Provider(BaseProvider):
         else:
             records = self._list_records( rtype=rtype, name=self._relative_name(name) )
             if len(records) > 0:
-                for record in records:
-                    return self._update_record( record['id'], rtype, name, content )
+                if len(records) > 1:
+                    CorenetworksLog.warning("Found %s records, will only update the first record in search result list." % len(records))
+                record = records[0]
+                return self._update_record( record['id'], rtype, name, content )
             else:
                 return True
         return False
@@ -158,6 +179,7 @@ class Provider(BaseProvider):
         """Delete an existing record.
         If record does not exist, do nothing.
         Ref: https://beta.api.core-networks.de/doc/#functon_dnszones_records_delete"""
+        CorenetworksLog.debug("Entering _delete_record")
         if identifier is not None:
             # Check for existence of record
             existing_records = self._list_records( rtype, name, content )
@@ -188,12 +210,13 @@ class Provider(BaseProvider):
     # Helpers
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
+        CorenetworksLog.debug("Entering _request")
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
 
-        self._log( "url: %s with data %s and query_params %s" % ( url, str(data), str(query_params) ) )
+        CorenetworksLog.debug( "url: %s with data %s and query_params %s" % ( url, str(data), str(query_params) ) )
         default_headers = {}
 
         if self.token:
@@ -212,8 +235,10 @@ class Provider(BaseProvider):
 
         return response.json() if response.text else None
 
-    # Ref: https://beta.api.core-networks.de/doc/#functon_dnszones
     def _list_zones(self):
+        """List existing zones.
+        Ref: https://beta.api.core-networks.de/doc/#functon_dnszones"""
+        CorenetworksLog.debug("Entering _list_zones")
         return self._get('/dnszones/')
 
     def _make_identifier(self, rtype, name, content):
@@ -231,7 +256,7 @@ class Provider(BaseProvider):
                 auth.close()
                 return False
         except IOError as e:
-            LOGGER.debug("No stored authentication found: %s. Acquiring token via API call." % os.strerror(e.errno))
+            CorenetworksLog.debug("No stored authentication found: %s. Acquiring token via API call." % os.strerror(e.errno))
             self._get_token()
             return True
 
@@ -247,20 +272,20 @@ class Provider(BaseProvider):
             else:
                 return False
         except IOError as e:
-            LOGGER.debug("Could not write authentication file: %s" % os.strerror(e.errno))
+            CorenetworksLog.debug("Could not write authentication file: %s" % os.strerror(e.errno))
         finally:
             auth.close()
 
     def _get_token(self):
         """Request new token via API call"""
-        LOGGER.debug("Entering _get_token.")
+        CorenetworksLog.debug("Entering _get_token.")
         data = {
             'login'   : self._get_provider_option('auth_username'),
             'password': self._get_provider_option('auth_password')
         }
-        self._log(str(data))
+        CorenetworksLog.debug(str(data))
         payload = self._post('/auth/token', data = data)
-        LOGGER.debug("%s", str(payload))
+        CorenetworksLog.debug("%s", str(payload))
         self.token  = payload['token']
         self.expiry = payload['expires'] + time.time()
 
@@ -269,12 +294,3 @@ class Provider(BaseProvider):
         self.auth_file['expiry'] = self.expiry
         self._commit_auth_file()
 
-    def _log(self, message):
-        l = open('/tmp/corenetworks.log', 'a+')
-        l.write(message+"\n")
-        l.close()
-
-#    def _get_provider_option(self, option):
-#        opt = self.config.resolve('lexicon:{0}:{1}'.format(self.provider_name, option))
-#        self._log("corenetworks: lexicon:%s:%s = %s" % (self.provider_name, option, opt) )
-#        return opt

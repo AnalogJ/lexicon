@@ -36,4 +36,5 @@ class CorenetworksProviderTests(TestCase, IntegrationTests):
             'api_endpoint': 'https://beta.api.core-networks.de',
 #            'auth_username': 'apiaccount',
 #            'auth_password': 'apipassword'
+            'auth_file': ''
             }
