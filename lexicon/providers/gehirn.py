@@ -1,5 +1,6 @@
 """Module provider for Gehirn"""
 from __future__ import absolute_import
+
 import base64
 import json
 import logging
@@ -10,18 +11,19 @@ from requests.auth import HTTPBasicAuth
 
 from lexicon.providers.base import Provider as BaseProvider
 
-
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['gehirn.jp']
+NAMESERVER_DOMAINS = ["gehirn.jp"]
 
 
 def provider_parser(subparser):
     """Construct subparser for Gehirn"""
     subparser.add_argument(
-        "--auth-token", help="specify access token for authentication")
+        "--auth-token", help="specify access token for authentication"
+    )
     subparser.add_argument(
-        "--auth-secret", help="specify access secret for authentication")
+        "--auth-secret", help="specify access secret for authentication"
+    )
 
 
 BUILD_FORMATS = {
@@ -41,25 +43,27 @@ FORMAT_RE = {
     "TXT": re.compile(r"(?P<data>.+)"),
     "NS": re.compile(r"(?P<nsdname>.+)"),
     "MX": re.compile(r"(?P<prio>\d+)\s+(?P<exchange>.+)"),
-    "SRV": re.compile(r"(?P<prio>\d+)\s+(?P<weight>\d+)\s+(?P<port>\d+)\s+(?P<target>.+)"),
+    "SRV": re.compile(
+        r"(?P<prio>\d+)\s+(?P<weight>\d+)\s+(?P<port>\d+)\s+(?P<target>.+)"
+    ),
 }
 
 
 class Provider(BaseProvider):
     """Provider class for Gehirn"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.version_id = None
-        self.api_endpoint = 'https://api.gis.gehirn.jp/dns/v1'
+        self.api_endpoint = "https://api.gis.gehirn.jp/dns/v1"
 
     def _authenticate(self):
-        payload = self._get('/zones')
+        payload = self._get("/zones")
 
-        domains = [item for item in payload if item['name']
-                   == self.domain]
+        domains = [item for item in payload if item["name"] == self.domain]
         if not domains:
-            raise Exception('No domain found')
+            raise Exception("No domain found")
 
         self.domain_id = domains[0]["id"]
         self.version_id = domains[0]["current_version_id"]
@@ -73,22 +77,22 @@ class Provider(BaseProvider):
         records = self._get_records(rtype=rtype, name=name)
         if not records:
             record = {
-                'type': rtype,
-                'name': name,
-                'enable_alias': False,
-                'ttl': self._get_lexicon_option('ttl'),
-                'records': [],
+                "type": rtype,
+                "name": name,
+                "enable_alias": False,
+                "ttl": self._get_lexicon_option("ttl"),
+                "records": [],
             }
         else:
             record = records[0]
 
         if a_record in record["records"]:
-            LOGGER.debug('create_record: %s', True)
+            LOGGER.debug("create_record: %s", True)
             return True
 
         record["records"].append(a_record)
         self._update_internal_record(record)
-        LOGGER.debug('create_record: %s', True)
+        LOGGER.debug("create_record: %s", True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -100,26 +104,21 @@ class Provider(BaseProvider):
             name = self._full_name(name)
         for record in self._get_records(rtype=rtype, name=name):
             for a_record in record["records"]:
-                content = self._build_content(record['type'], a_record)
+                content = self._build_content(record["type"], a_record)
                 processed_record = {
-                    'type': record['type'],
-                    'name': record['name'].rstrip("."),
-                    'ttl': record['ttl'],
-                    'content': content,
-                    'id': "{}.{}".format(
-                        record["id"],
-                        base64.b64encode(
-                            content.encode("utf-8")).decode("ascii")),
+                    "type": record["type"],
+                    "name": record["name"].rstrip("."),
+                    "ttl": record["ttl"],
+                    "content": content,
+                    "id": f"{record['id']}.{base64.b64encode(content.encode('utf-8')).decode('ascii')}",
                 }
-                self._parse_content(
-                    record['type'], processed_record["content"])
+                self._parse_content(record["type"], processed_record["content"])
                 records.append(processed_record)
 
         if content:
-            records = [
-                record for record in records if record['content'] == content]
+            records = [record for record in records if record["content"] == content]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Create or update a record.
@@ -136,23 +135,23 @@ class Provider(BaseProvider):
 
             if not records:
                 self._create_record(rtype=rtype, name=name, content=content)
-                LOGGER.debug('update_record: %s', True)
+                LOGGER.debug("update_record: %s", True)
                 return True
 
             record = {
-                'id': records[0]["id"],
-                'type': rtype,
-                'name': name,
-                'enable_alias': False,
-                'ttl': self._get_lexicon_option('ttl'),
-                'records': [self._parse_content(rtype, content)],
+                "id": records[0]["id"],
+                "type": rtype,
+                "name": name,
+                "enable_alias": False,
+                "ttl": self._get_lexicon_option("ttl"),
+                "records": [self._parse_content(rtype, content)],
             }
 
         else:
             # with identifier
             records = self._get_records(identifier=identifier)
             if not records:
-                raise Exception('Record identifier could not be found.')
+                raise Exception("Record identifier could not be found.")
 
             record = records[0]
 
@@ -162,22 +161,21 @@ class Provider(BaseProvider):
                 self._create_record(
                     rtype=rtype or record["type"],
                     name=name or record["name"],
-                    content=content
+                    content=content,
                 )
-                LOGGER.debug('update_record: %s', True)
+                LOGGER.debug("update_record: %s", True)
                 return True
             # update entire record
             if rtype:
                 record["type"] = rtype
             if name:
                 record["name"] = name
-            record["ttl"] = self._get_lexicon_option('ttl')
+            record["ttl"] = self._get_lexicon_option("ttl")
             if content:
-                record["records"] = [
-                    self._parse_content(record["type"], content)]
+                record["records"] = [self._parse_content(record["type"], content)]
 
         self._update_internal_record(record)
-        LOGGER.debug('update_record: %s', True)
+        LOGGER.debug("update_record: %s", True)
         return True
 
     # Delete an existing record.
@@ -186,40 +184,37 @@ class Provider(BaseProvider):
         if identifier:
             if "." not in identifier:
                 # delete entire record
-                path = '/zones/{}/versions/{}/records/{}'.format(
-                    self.domain_id, self.version_id, identifier,
-                )
+                path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{identifier}"
                 self._delete(path)
-                LOGGER.debug('delete_record: %s', True)
+                LOGGER.debug("delete_record: %s", True)
                 return True
 
             record_identifier = identifier.split(".")[1]
 
             records = self._get_records(identifier=identifier)
             if not records:
-                raise Exception('Record identifier could not be found.')
+                raise Exception("Record identifier could not be found.")
 
             record = records[0]
             for index, a_record in enumerate(record["records"]):
-                target_content = self._build_content(record['type'], a_record)
+                target_content = self._build_content(record["type"], a_record)
                 target_identifier = base64.b64encode(
-                    target_content.encode("utf-8")).decode("ascii")
+                    target_content.encode("utf-8")
+                ).decode("ascii")
 
                 if target_identifier == record_identifier:
                     del record["records"][index]
                 if not record["records"]:
                     # delete entire record
-                    path = '/zones/{}/versions/{}/records/{}'.format(
-                        self.domain_id, self.version_id, record['id'],
-                    )
+                    path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{record['id']}"
                     self._delete(path)
                 else:
                     self._update_internal_record(record)
 
-                LOGGER.debug('delete_record: %s', True)
+                LOGGER.debug("delete_record: %s", True)
                 return True
 
-            raise Exception('Record identifier could not be found.')
+            raise Exception("Record identifier could not be found.")
 
         record = None
         if name is not None:
@@ -237,12 +232,10 @@ class Provider(BaseProvider):
                     self._update_internal_record(a_record)
                     continue
 
-            path = '/zones/{}/versions/{}/records/{}'.format(
-                self.domain_id, self.version_id, a_record["id"],
-            )
+            path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{a_record['id']}"
             self._delete(path)
 
-        LOGGER.debug('delete_record: %s', True)
+        LOGGER.debug("delete_record: %s", True)
         return True
 
     # Helpers
@@ -252,72 +245,75 @@ class Provider(BaseProvider):
             record_name += "."
         return record_name
 
-    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
+    def _bind_format_target(self, rtype, target):
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _filter_records(self, records, identifier=None, rtype=None, name=None):  # pylint: disable=no-self-use
+    def _filter_records(self, records, identifier=None, rtype=None, name=None):
         filtered_records = []
 
         if identifier:
             identifier = identifier.split(".")[0]
 
         for record in records:
-            if rtype and record['type'] != rtype:
+            if rtype and record["type"] != rtype:
                 continue
-            if name and record['name'] != name:
+            if name and record["name"] != name:
                 continue
-            if identifier and record['id'] != identifier:
+            if identifier and record["id"] != identifier:
                 continue
             filtered_records.append(record)
         return filtered_records
 
     def _get_records(self, identifier=None, rtype=None, name=None):
-        path = '/zones/{}/versions/{}/records'.format(
-            self.domain_id, self.version_id)
-        return self._filter_records(self._get(path), identifier=identifier, rtype=rtype, name=name)
+        path = f"/zones/{self.domain_id}/versions/{self.version_id}/records"
+        return self._filter_records(
+            self._get(path), identifier=identifier, rtype=rtype, name=name
+        )
 
     def _update_internal_record(self, record):
         if record.get("id"):
             # PUT
-            path = '/zones/{}/versions/{}/records/{}'.format(
-                self.domain_id, self.version_id, record["id"],
-            )
+            path = f"/zones/{self.domain_id}/versions/{self.version_id}/records/{record['id']}"
             return self._put(path, record)
 
         # POST
-        path = '/zones/{}/versions/{}/records'.format(
-            self.domain_id, self.version_id,
-        )
+        path = f"/zones/{self.domain_id}/versions/{self.version_id}/records"
         return self._post(path, record)
 
-    def _build_content(self, rtype, record):  # pylint: disable=no-self-use
+    def _build_content(self, rtype, record):
         return BUILD_FORMATS[rtype].format(**record)
 
-    def _parse_content(self, rtype, content):  # pylint: disable=no-self-use
+    def _parse_content(self, rtype, content):
         return FORMAT_RE[rtype].match(content).groupdict()
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         default_headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
         default_auth = HTTPBasicAuth(
-            self._get_provider_option('auth_token'), self._get_provider_option('auth_secret'))
+            self._get_provider_option("auth_token"),
+            self._get_provider_option("auth_secret"),
+        )
 
         query_string = ""
         if query_params:
             query_string = json.dumps(query_params)
 
-        response = requests.request(action, self.api_endpoint + url, params=query_string,
-                                    data=json.dumps(data) if data else None,
-                                    headers=default_headers,
-                                    auth=default_auth)
+        response = requests.request(
+            action,
+            self.api_endpoint + url,
+            params=query_string,
+            data=json.dumps(data) if data else None,
+            headers=default_headers,
+            auth=default_auth,
+        )
         try:
             # if the request fails for any reason, throw an error.
             response.raise_for_status()

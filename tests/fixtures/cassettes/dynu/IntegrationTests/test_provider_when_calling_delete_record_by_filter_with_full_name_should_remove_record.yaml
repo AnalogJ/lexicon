@@ -1,0 +1,191 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.dynu.com/v2/dns
+  response:
+    body:
+      string: '{"statusCode":200,"domains":[{"id":1024,"name":"example.com","unicodeName":"example.com","token":"LQFTMTBQVOYUGQRFIQMU","state":"Complete","location":"lexicon","group":"lexicon","ipv4Address":"127.0.0.1","ipv6Address":"::1","ttl":120,"ipv4":true,"ipv6":true,"ipv4WildcardAlias":true,"ipv6WildcardAlias":true,"createdOn":"2019-06-16T18:26:58","updatedOn":"2020-03-12T22:21:52.707"}]}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '439'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:22:0 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"recordType": "TXT", "state": true, "nodeName": "delete.testfull", "textData":
+      "challengetoken", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '110'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://api.dynu.com/v2/dns/1024/record
+  response:
+    body:
+      string: '{"statusCode":200,"id":6053002,"domainId":1024,"domainName":"example.com","nodeName":"delete.testfull","hostname":"delete.testfull.example.com","recordType":"TXT","ttl":3600,"state":true,"content":"delete.testfull.example.com.
+        3600 IN TXT \"challengetoken\"","updatedOn":"2020-03-12T22:21:59.127","textData":"challengetoken"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '361'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:22:3 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.dynu.com/v2/dns/1024/record
+  response:
+    body:
+      string: '{"statusCode":200,"dnsRecords":[{"id":3660288,"domainId":1024,"domainName":"example.com","nodeName":"","hostname":"example.com","recordType":"SOA","ttl":120,"state":true,"content":"example.com.
+        120 IN SOA ns1.dynu.com. administrator.dynu.com. 0 1800 300 86400 300","updatedOn":"2019-06-16T18:26:59","masterName":"ns1.dynu.com","responsibleName":"administrator.dynu.com","refresh":1800,"retry":300,"expire":86400,"negativeTTL":300},{"id":6053002,"domainId":1024,"domainName":"example.com","nodeName":"delete.testfull","hostname":"delete.testfull.example.com","recordType":"TXT","ttl":3600,"state":true,"content":"delete.testfull.example.com.
+        3600 IN TXT \"challengetoken\"","updatedOn":"2020-03-12T22:21:59.127","textData":"challengetoken"}]}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '1217'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:22:16 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: DELETE
+    uri: https://api.dynu.com/v2/dns/1024/record/6053002
+  response:
+    body:
+      string: '{"statusCode":200}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:22:17 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.dynu.com/v2/dns/1024/record
+  response:
+    body:
+      string: '{"statusCode":200,"dnsRecords":[{"id":3660288,"domainId":1024,"domainName":"example.com","nodeName":"","hostname":"example.com","recordType":"SOA","ttl":120,"state":true,"content":"example.com.
+        120 IN SOA ns1.dynu.com. administrator.dynu.com. 0 1800 300 86400 300","updatedOn":"2019-06-16T18:26:59","masterName":"ns1.dynu.com","responsibleName":"administrator.dynu.com","refresh":1800,"retry":300,"expire":86400,"negativeTTL":300}]}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '872'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:22:14 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+version: 1

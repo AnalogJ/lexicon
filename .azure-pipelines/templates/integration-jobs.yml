@@ -1,0 +1,70 @@
+jobs:
+  - job: test
+    variables:
+      IMAGE: ubuntu-18.04
+      TOXENV: standard
+      PYTEST_ADDOPTS: --numprocesses 4
+      BRANCH_NAME: $(Build.SourceBranch)
+    strategy:
+      matrix:
+        linux-python-3.6:
+          PYTHON_VERSION: 3.6
+        linux-python-3.9-light:
+          PYTHON_VERSION: 3.9
+          TOXENV: light
+        linux-python-3.9-cover:
+          PYTHON_VERSION: 3.9
+          TOXENV: cover
+        linux-lint:
+          PYTHON_VERSION: 3.9
+          TOXENV: lint
+        macos-python-3.6:
+          IMAGE: macOS-10.15
+          PYTHON_VERSION: 3.6
+        macos-python-3.8:
+          IMAGE: macOS-10.15
+          PYTHON_VERSION: 3.9
+        windows-python-3.6:
+          IMAGE: vs2017-win2016
+          PYTHON_VERSION: 3.6
+        windows-python-3.9:
+          IMAGE: vs2017-win2016
+          PYTHON_VERSION: 3.9
+    pool:
+      vmImage: $(IMAGE)
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: python -m pip install -U tox poetry
+        displayName: Install required runtime dependencies
+      - script: python -m tox
+        displayName: Execute tests through tox
+      - script: |
+          python -m pip install coveralls
+          coveralls
+        condition: and(eq(variables['TOXENV'], 'cover'), eq(variables['Build.DefinitionName'], 'main'))
+        env:
+          COVERALLS_SERVICE_NAME: azure-pipelines
+          COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
+        displayName: Publish coverage reports (Coveralls)
+      - task: PublishCodeCoverageResults@1
+        condition: eq(variables['TOXENV'], 'cover')
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+        displayName: Publish coverage reports (Azure Pipelines)
+      - task: PublishTestResults@2
+        condition: ne(variables['TOXENV'], 'lint')
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
+        displayName: Publish tests reports
+  - job: trigger_readthedoc
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - bash: curl -X POST -d "branches=$(Build.SourceBranchName)" -d "token=$(RTD_TOKEN)" $(RTD_URL)
+    condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'main'))

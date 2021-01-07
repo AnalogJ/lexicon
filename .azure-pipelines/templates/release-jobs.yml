@@ -1,0 +1,44 @@
+jobs:
+  - job: pypi
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          artifact: python-dist
+          path: $(Build.SourcesDirectory)/dist
+        displayName: Retrieve Python dist
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+          addToPath: true
+        displayName: Install Python
+      - script: |
+          python -m pip install -U twine
+        displayName: Prepare environment
+      - script: |
+          twine upload dist/* -u "$(twine.username)" -p "$(twine.password)"
+        displayName: Upload Python dist to PyPI
+
+  - job: github_release
+    pool:
+      vmImage: ubuntu-18.04
+    dependsOn:
+      - pypi
+    steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          artifact: changelog
+          path: $(Build.SourcesDirectory)/changelog
+        displayName: Retrieve release changelog
+      - script: |
+          version=`ls changelog/*.md | sed -E 's/.*release_(.*)\.md/\1/g'`
+          echo "Version is: $version"
+          echo "##vso[task.setvariable variable=ReleaseVersion;]${version}"
+      - task: GithubRelease@0
+        inputs:
+          gitHubConnection: github.com_lexicon
+          title: Lexicon v$(ReleaseVersion)
+          releaseNotesFile: $(Build.SourcesDirectory)/changelog/release_$(ReleaseVersion).md
+          addChangeLog: false
+        displayName: Create GitHub Release

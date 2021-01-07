@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    exclude:
+      - "*"
+  tags:
+    include:
+      - "v3.*"
+
+pr: none
+
+stages:
+  - stage: Test
+    jobs:
+      - template: templates/integration-jobs.yml
+  - stage: Package
+    jobs:
+      - template: templates/packaging-jobs.yml
+  - stage: Release
+    jobs:
+      - template: templates/release-jobs.yml

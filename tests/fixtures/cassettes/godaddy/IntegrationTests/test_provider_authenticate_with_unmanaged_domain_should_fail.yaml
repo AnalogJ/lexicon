@@ -2,31 +2,48 @@ interactions:
 - request:
     body: '{}'
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['2']
-      Content-Type: [application/json]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
     method: GET
     uri: https://api.godaddy.com/v1/domains/thisisadomainidonotown.com
   response:
-    body: {string: '{"code":"NOT_FOUND","message":"Domain thisisadomainidonotown.com
-        not found for shopper","name":"ApiError"}'}
+    body:
+      string: '{"code":"NOT_FOUND","message":"Domain thisisadomainidonotown.com not
+        found for shopper"}
+
+        '
     headers:
-      Cache-Control: ['max-age=0, no-cache, no-store']
-      Connection: [keep-alive]
-      Content-Length: ['106']
-      Content-Type: [application/json; charset=utf-8]
-      Date: ['Wed, 06 Jun 2018 15:18:47 GMT']
-      ETag: [W/"6a-hmteov0EBQpvLV5wjJuGbVJ3arg"]
-      Expires: ['Wed, 06 Jun 2018 15:18:47 GMT']
-      Pragma: [no-cache]
-      Server: [nginx]
-      Strict-Transport-Security: [max-age=15724800; includeSubDomains;]
-      Vary: [Accept-Encoding, 'Origin,Accept-Encoding']
-      X-DataCenter: [PHX3]
-      X-Powered-By: [Express]
-      X-Request-Id: [fi6CNVYXyGjKMTt4tUeSi5]
-    status: {code: 404, message: Not Found}
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 13 Jun 2020 22:25:07 GMT
+      Expires:
+      - Sat, 13 Jun 2020 22:25:07 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-DataCenter:
+      - PHX3
+      X-Request-Id:
+      - cd86cea0ff34865aec1003e258591b0b
+    status:
+      code: 404
+      message: Not Found
 version: 1

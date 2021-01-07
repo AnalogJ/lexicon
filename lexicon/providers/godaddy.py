@@ -1,5 +1,6 @@
 """Module provider for Godaddy"""
 from __future__ import absolute_import
+
 import hashlib
 import json
 import logging
@@ -10,18 +11,15 @@ from urllib3.util.retry import Retry
 
 from lexicon.providers.base import Provider as BaseProvider
 
-
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['godaddy.com', 'domaincontrol.com']
+NAMESERVER_DOMAINS = ["godaddy.com", "domaincontrol.com"]
 
 
 def provider_parser(subparser):
     """Generate a subparser for Godaddy"""
-    subparser.add_argument(
-        '--auth-key', help='specify the key to access the API')
-    subparser.add_argument(
-        '--auth-secret', help='specify the secret to access the API')
+    subparser.add_argument("--auth-key", help="specify the key to access the API")
+    subparser.add_argument("--auth-secret", help="specify the secret to access the API")
 
 
 class Provider(BaseProvider):
@@ -52,70 +50,71 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://api.godaddy.com/v1'
+        self.api_endpoint = "https://api.godaddy.com/v1"
 
     def _authenticate(self):
         domain = self.domain
 
-        result = self._get('/domains/{0}'.format(domain))
-        self.domain_id = result['domainId']
+        result = self._get(f"/domains/{domain}")
+        self.domain_id = result["domainId"]
 
     def _list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
 
-        url = '/domains/{0}/records'.format(domain)
+        url = f"/domains/{domain}/records"
         if rtype:
-            url += '/{0}'.format(rtype)
+            url += f"/{rtype}"
         if name:
-            url += '/{0}'.format(self._relative_name(name))
+            url += f"/{self._relative_name(name)}"
 
         raws = self._get(url)
 
         records = []
         for raw in raws:
-            records.append({
-                'id': Provider._identifier(raw),
-                'type': raw['type'],
-                'name': self._full_name(raw['name']),
-                'ttl': raw['ttl'],
-                'content': raw['data']
-            })
+            records.append(
+                {
+                    "id": Provider._identifier(raw),
+                    "type": raw["type"],
+                    "name": self._full_name(raw["name"]),
+                    "ttl": raw["ttl"],
+                    "content": raw["data"],
+                }
+            )
 
         if content:
-            records = [
-                record for record in records if record['data'] == content]
+            records = [record for record in records if record["data"] == content]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
 
         return records
 
     def _create_record(self, rtype, name, content):
         domain = self.domain
         relative_name = self._relative_name(name)
-        ttl = self._get_lexicon_option('ttl')
+        ttl = self._get_lexicon_option("ttl")
 
         # Retrieve existing data in DNS zone.
-        records = self._get('/domains/{0}/records'.format(domain))
+        records = self._get(f"/domains/{domain}/records/{rtype}/{relative_name}")
 
         # Check if a record already matches given parameters
         for record in records:
-            if (record['type'] == rtype and self._relative_name(record['name']) == relative_name
-                    and record['data'] == content):
+            if record["data"] == content:
                 LOGGER.debug(
-                    'create_record (ignored, duplicate): %s %s %s', rtype, name, content)
+                    "create_record (ignored, duplicate): %s %s %s", rtype, name, content
+                )
                 return True
 
         # Append a new entry corresponding to given parameters.
-        data = {'type': rtype, 'name': relative_name, 'data': content}
+        data = {"type": rtype, "name": relative_name, "data": content}
         if ttl:
-            data['ttl'] = ttl
+            data["ttl"] = ttl
 
         records.append(data)
 
-        # Synchronize data with inserted record into DNS zone.
-        self._put('/domains/{0}/records'.format(domain), records)
+        # Insert the record
+        self._put(f"/domains/{domain}/records/{rtype}/{relative_name}", records)
 
-        LOGGER.debug('create_record: %s %s %s', rtype, name, content)
+        LOGGER.debug("create_record: %s %s %s", rtype, name, content)
 
         return True
 
@@ -130,34 +129,47 @@ class Provider(BaseProvider):
         # So for rtype/name approach, we search first matching record for rtype/name on which
         # content is different, and we update it before synchronizing the DNS zone.
         if not identifier and not rtype:
-            raise Exception('ERROR: rtype is required')
+            raise Exception("ERROR: rtype is required")
         if not identifier and not name:
-            raise Exception('ERROR: name is required')
+            raise Exception("ERROR: name is required")
 
         domain = self.domain
         relative_name = None
         if name:
             relative_name = self._relative_name(name)
 
+        updated_record = None
         # Retrieve existing data in DNS zone.
-        records = self._get('/domains/{0}/records'.format(domain))
+        records = self._get(f"/domains/{domain}/records")
 
         # Get the record to update:
         #   - either explicitly by its identifier,
         #   - or the first matching by its rtype+name where content does not match
         #     (first match, see first method comment for explanation).
         for record in records:
-            if ((identifier and Provider._identifier(record) == identifier) or  # pylint: disable=too-many-boolean-expressions
-                    (not identifier and record['type'] == rtype
-                     and self._relative_name(record['name']) == relative_name
-                     and record['data'] != content)):
-                record['data'] = content
+            if (identifier and Provider._identifier(record) == identifier) or (
+                not identifier
+                and record["type"] == rtype
+                and self._relative_name(record["name"]) == relative_name
+                and record["data"] != content
+            ):
+                record["data"] = content
+                updated_record = record
                 break
 
         # Synchronize data with updated records into DNS zone.
-        self._put('/domains/{0}/records'.format(domain), records)
+        if updated_record is not None:
+            if (
+                identifier
+                and self._relative_name(updated_record["name"]) != relative_name
+            ):
+                self._put(f"/domains/{domain}/records/{rtype}", records)
+            else:
+                self._put(
+                    f"/domains/{domain}/records/{rtype}/{relative_name}", updated_record
+                )
 
-        LOGGER.debug('update_record: %s %s %s', rtype, name, content)
+        LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
         return True
 
@@ -173,7 +185,7 @@ class Provider(BaseProvider):
         domain = self.domain
 
         # Retrieve all records in the DNS zone
-        records = self._get('/domains/{0}/records'.format(domain))
+        records = self._get(f"/domains/{domain}/records")
 
         relative_name = None
         if name:
@@ -184,33 +196,73 @@ class Provider(BaseProvider):
         filtered_records = []
         if identifier:
             filtered_records = [
-                record for record in records if Provider._identifier(record) != identifier]
+                record
+                for record in records
+                if Provider._identifier(record) != identifier
+            ]
         else:
             for record in records:
-                if ((not rtype and not relative_name and not content)  # pylint: disable=too-many-boolean-expressions
-                        or (rtype and not relative_name and not content and record['type'] != rtype)
-                        or (not rtype and relative_name and not content
-                            and self._relative_name(record['name']) != relative_name)
-                        or (not rtype and not relative_name and content
-                            and record['data'] != content)
-                        or (rtype and relative_name and not content
-                            and (record['type'] != rtype
-                                 or self._relative_name(record['name']) != relative_name))
-                        or (rtype and not relative_name and content
-                            and (record['type'] != rtype or record['data'] != content))
-                        or (not rtype and relative_name and content
-                            and (self._relative_name(record['name']) != relative_name
-                                 or record['data'] != content))
-                        or (rtype and relative_name and content
-                            and (record['type'] != rtype
-                                 or self._relative_name(record['name']) != relative_name
-                                 or record['data'] != content))):
+                if (
+                    (not rtype and not relative_name and not content)
+                    or (
+                        rtype
+                        and not relative_name
+                        and not content
+                        and record["type"] != rtype
+                    )
+                    or (
+                        not rtype
+                        and relative_name
+                        and not content
+                        and self._relative_name(record["name"]) != relative_name
+                    )
+                    or (
+                        not rtype
+                        and not relative_name
+                        and content
+                        and record["data"] != content
+                    )
+                    or (
+                        rtype
+                        and relative_name
+                        and not content
+                        and (
+                            record["type"] != rtype
+                            or self._relative_name(record["name"]) != relative_name
+                        )
+                    )
+                    or (
+                        rtype
+                        and not relative_name
+                        and content
+                        and (record["type"] != rtype or record["data"] != content)
+                    )
+                    or (
+                        not rtype
+                        and relative_name
+                        and content
+                        and (
+                            self._relative_name(record["name"]) != relative_name
+                            or record["data"] != content
+                        )
+                    )
+                    or (
+                        rtype
+                        and relative_name
+                        and content
+                        and (
+                            record["type"] != rtype
+                            or self._relative_name(record["name"]) != relative_name
+                            or record["data"] != content
+                        )
+                    )
+                ):
                     filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone.
-        self._put('/domains/{0}/records'.format(domain), filtered_records)
+        self._put(f"/domains/{domain}/records", filtered_records)
 
-        LOGGER.debug('delete_records: %s %s %s', rtype, name, content)
+        LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
 
         return True
 
@@ -227,12 +279,12 @@ class Provider(BaseProvider):
     @staticmethod
     def _identifier(record):
         sha256 = hashlib.sha256()
-        sha256.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
-        sha256.update(('name=' + record.get('name', '') + ',').encode('utf-8'))
-        sha256.update(('data=' + record.get('data', '') + ',').encode('utf-8'))
+        sha256.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+        sha256.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+        sha256.update(("data=" + record.get("data", "") + ",").encode("utf-8"))
         return sha256.hexdigest()[0:7]
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if not data:
             data = {}
         if not query_params:
@@ -242,30 +294,29 @@ class Provider(BaseProvider):
         # (until modifications are propagated).
         # In this case, call to API will return 409 HTTP error.
         # We use the Retry extension to retry the requests until
-        # we get a processable reponse (402 HTTP status, or an HTTP error != 409)
+        # we get a processable response (402 HTTP status, or an HTTP error != 409)
         retries = Retry(
             total=10,
             backoff_factor=0.5,
             status_forcelist=[409],
-            method_whitelist=frozenset(
-                ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'])
+            allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
         )
 
         session = requests.Session()
-        session.mount('https://', HTTPAdapter(max_retries=retries))
+        session.mount("https://", HTTPAdapter(max_retries=retries))
 
-        result = session.request(action, self.api_endpoint + url,
-                                 params=query_params,
-                                 data=json.dumps(data),
-                                 headers={
-                                     'Content-Type': 'application/json',
-                                     'Accept': 'application/json',
-                                     # GoDaddy use a key/secret pair to authenticate
-                                     'Authorization': 'sso-key {0}:{1}'.format(
-                                         self._get_provider_option(
-                                             'auth_key'),
-                                         self._get_provider_option('auth_secret'))
-                                 })
+        result = session.request(
+            action,
+            self.api_endpoint + url,
+            params=query_params,
+            data=json.dumps(data),
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                # GoDaddy use a key/secret pair to authenticate
+                "Authorization": f"sso-key {self._get_provider_option('auth_key')}:{self._get_provider_option('auth_secret')}",
+            },
+        )
 
         result.raise_for_status()
 

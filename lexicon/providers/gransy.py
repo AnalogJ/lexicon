@@ -1,37 +1,46 @@
 """Provide support to Lexicon for DNS changes for Gransy sites subreg.cz, regtons.com and \
 regnames.eu."""
 from __future__ import absolute_import
-from builtins import staticmethod
+
 import collections
 import logging
-
-from lexicon.providers.base import Provider as BaseProvider
+from builtins import staticmethod
 
 try:
     import zeep  # Optional dependency
 except BaseException:
     pass
 
+from lexicon.providers.base import Provider as BaseProvider
+
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['gransy.com']
+NAMESERVER_DOMAINS = ["gransy.com"]
+
 
 def gransy_provider_parser(subparser):
     """Gransy provider parser"""
     subparser.add_argument(
-        "--auth-username", help="specify username for authentication")
+        "--auth-username", help="specify username for authentication"
+    )
     subparser.add_argument(
-        "--auth-password", help="specify password for authentication")
+        "--auth-password", help="specify password for authentication"
+    )
+
 
 def provider_parser(subparser):
     """Configure provider parser"""
     gransy_provider_parser(subparser)
 
-    subparser.description = "DNS manipulation provider for Gransy sites " + \
-        "subreg.cz, regtons.com and regnames.eu."
+    subparser.description = (
+        "DNS manipulation provider for Gransy sites "
+        + "subreg.cz, regtons.com and regnames.eu."
+    )
+
 
 class Provider(BaseProvider):
     """Provider class for Gransy"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
@@ -48,18 +57,22 @@ class Provider(BaseProvider):
     def _authenticate(self):
         """Logs-in the user and checks the domain name"""
         if not self._get_provider_option(
-                'auth_username') or not self._get_provider_option('auth_password'):
+            "auth_username"
+        ) or not self._get_provider_option("auth_password"):
             raise Exception(
-                'No valid authentication data passed, expected: auth-username and auth-password')
-        response = self._request_login(self._get_provider_option('auth_username'),
-                                       self._get_provider_option('auth_password'))
-        if 'ssid' in response:
-            self.ssid = response['ssid']
+                "No valid authentication data passed, expected: auth-username and auth-password"
+            )
+        response = self._request_login(
+            self._get_provider_option("auth_username"),
+            self._get_provider_option("auth_password"),
+        )
+        if "ssid" in response:
+            self.ssid = response["ssid"]
             domains = self.domains_list()
-            if any((domain['name'] == self.domain for domain in domains)):
+            if any((domain["name"] == self.domain for domain in domains)):
                 self.domain_id = self.domain
             else:
-                raise Exception("Unknown domain {}".format(self.domain))
+                raise Exception(f"Unknown domain {self.domain}")
         else:
             raise Exception("No SSID provided by server")
 
@@ -70,9 +83,14 @@ class Provider(BaseProvider):
         if found:
             return True
 
-        record = self._create_request_record(None, rtype, name, content,
-                                             self._get_lexicon_option('ttl'),
-                                             self._get_lexicon_option('priority'))
+        record = self._create_request_record(
+            None,
+            rtype,
+            name,
+            content,
+            self._get_lexicon_option("ttl"),
+            self._get_lexicon_option("priority"),
+        )
 
         self._request_add_dns_record(record)
         return True
@@ -83,55 +101,56 @@ class Provider(BaseProvider):
         if identifier is not None:
             if name is not None:
                 records = self._list_records_internal(identifier=identifier)
-                if len(records) == 1 and records[0]['name'] != self._full_name(name):
+                if len(records) == 1 and records[0]["name"] != self._full_name(name):
                     # API does not allow us to update name directly
-                    self._update_record_with_name(
-                        records[0], rtype, name, content)
+                    self._update_record_with_name(records[0], rtype, name, content)
                 else:
                     self._update_record_with_id(identifier, rtype, content)
             else:
                 self._update_record_with_id(identifier, rtype, content)
         else:
             guessed_record = self._guess_record(rtype, name)
-            self._update_record_with_id(guessed_record['id'], rtype, content)
+            self._update_record_with_id(guessed_record["id"], rtype, content)
         return True
 
     def _update_record_with_id(self, identifier, rtype, content):
         """Updates existing record with no sub-domain name changes"""
-        record = self._create_request_record(identifier, rtype, None, content,
-                                             self._get_lexicon_option('ttl'),
-                                             self._get_lexicon_option('priority'))
+        record = self._create_request_record(
+            identifier,
+            rtype,
+            None,
+            content,
+            self._get_lexicon_option("ttl"),
+            self._get_lexicon_option("priority"),
+        )
 
         self._request_modify_dns_record(record)
 
     def _update_record_with_name(self, old_record, rtype, new_name, content):
         """Updates existing record and changes it's sub-domain name"""
-        new_type = rtype if rtype else old_record['type']
+        new_type = rtype if rtype else old_record["type"]
 
-        new_ttl = self._get_lexicon_option('ttl')
-        if new_ttl is None and 'ttl' in old_record:
-            new_ttl = old_record['ttl']
+        new_ttl = self._get_lexicon_option("ttl")
+        if new_ttl is None and "ttl" in old_record:
+            new_ttl = old_record["ttl"]
 
-        new_priority = self._get_lexicon_option('priority')
-        if new_priority is None and 'priority' in old_record:
-            new_priority = old_record['priority']
+        new_priority = self._get_lexicon_option("priority")
+        if new_priority is None and "priority" in old_record:
+            new_priority = old_record["priority"]
 
         new_content = content
-        if new_content is None and 'content' in old_record:
-            new_content = old_record['content']
+        if new_content is None and "content" in old_record:
+            new_content = old_record["content"]
 
-        record = self._create_request_record(None,
-                                             new_type,
-                                             new_name,
-                                             new_content,
-                                             new_ttl,
-                                             new_priority)
+        record = self._create_request_record(
+            None, new_type, new_name, new_content, new_ttl, new_priority
+        )
 
         # This will be a different domain name, so no name collision should
         # happen. First create a new entry and when it succeeds, delete the old
         # one.
         self._request_add_dns_record(record)
-        self._request_delete_dns_record_by_id(old_record['id'])
+        self._request_delete_dns_record_by_id(old_record["id"])
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -152,9 +171,9 @@ class Provider(BaseProvider):
     def domains_list(self):
         """Get list of registered domains"""
         response = self._request_domains_list()
-        return response['domains'] if 'domains' in response else list()
+        return response["domains"] if "domains" in response else list()
 
-    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):  # pylint: disable=too-many-arguments
+    def _create_request_record(self, identifier, rtype, name, content, ttl, priority):
         """Creates record for Subreg API calls"""
         record = collections.OrderedDict()
 
@@ -162,35 +181,35 @@ class Provider(BaseProvider):
 
         # Just for update - not for creation
         if identifier is not None:
-            record['id'] = identifier
+            record["id"] = identifier
 
-        record['type'] = rtype
+        record["type"] = rtype
 
         # Just for creation - not for update
         if name is not None:
-            record['name'] = self._relative_name(name)
+            record["name"] = self._relative_name(name)
 
         # Optional content
         if content is not None:
-            record['content'] = content
+            record["content"] = content
         if ttl is not None:
-            record['ttl'] = ttl
+            record["ttl"] = ttl
         if priority is not None:
-            record['prio'] = priority
+            record["prio"] = priority
         return record
 
     def _create_response_record(self, response):
         """Creates record for lexicon API calls"""
         record = dict()
-        record['id'] = response['id']
-        record['type'] = response['type']
-        record['name'] = self._full_name(response['name'])
-        if 'content' in response:
-            record['content'] = response['content'] or ""
-        if 'ttl' in response:
-            record['ttl'] = response['ttl']
-        if 'prio' in response:
-            record['priority'] = response['prio']
+        record["id"] = response["id"]
+        record["type"] = response["type"]
+        record["name"] = self._full_name(response["name"])
+        if "content" in response:
+            record["content"] = response["content"] or ""
+        if "ttl" in response:
+            record["ttl"] = response["ttl"]
+        if "prio" in response:
+            record["priority"] = response["prio"]
         return record
 
     def _full_name(self, record_name):
@@ -213,29 +232,34 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
-    def _list_records_internal(self, identifier=None, rtype=None, name=None, content=None):
+    def _list_records_internal(
+        self, identifier=None, rtype=None, name=None, content=None
+    ):
         """Lists all records by the specified criteria"""
         response = self._request_get_dns_zone()
-        if 'records' in response:
+        if "records" in response:
             # Interpret empty string as None because zeep does so too
             content_check = content if content != "" else None
             name_check = self._relative_name(name)
 
             # Stringize the identifier to prevent any rtype differences
-            identifier_check = str(
-                identifier) if identifier is not None else None
+            identifier_check = str(identifier) if identifier is not None else None
 
             filtered_records = [
-                record for record in response['records'] if (
-                    identifier is None or str(
-                        record['id']) == identifier_check) and (
-                            rtype is None or record['type'] == rtype) and (
-                                name is None or record['name'] == name_check) and (
-                                    content is None or (
-                                        'content' in record
-                                        and record['content'] == content_check))]
-            records = [self._create_response_record(
-                filtered_record) for filtered_record in filtered_records]
+                record
+                for record in response["records"]
+                if (identifier is None or str(record["id"]) == identifier_check)
+                and (rtype is None or record["type"] == rtype)
+                and (name is None or record["name"] == name_check)
+                and (
+                    content is None
+                    or ("content" in record and record["content"] == content_check)
+                )
+            ]
+            records = [
+                self._create_response_record(filtered_record)
+                for filtered_record in filtered_records
+            ]
         else:
             records = []
         return records
@@ -243,22 +267,23 @@ class Provider(BaseProvider):
     def _guess_record(self, rtype, name=None, content=None):
         """Tries to find existing unique record by type, name and content"""
         records = self._list_records_internal(
-            identifier=None, rtype=rtype, name=name, content=content)
+            identifier=None, rtype=rtype, name=name, content=content
+        )
         if len(records) == 1:
             return records[0]
         if len(records) > 1:
             raise Exception(
-                'Identifier was not provided and several existing '
-                'records match the request for {0}/{1}'.format(rtype, name))
+                "Identifier was not provided and several existing "
+                f"records match the request for {rtype}/{name}"
+            )
         raise Exception(
-            'Identifier was not provided and no existing records match '
-            'the request for {0}/{1}'.format(rtype, name))
+            "Identifier was not provided and no existing records match "
+            f"the request for {rtype}/{name}"
+        )
 
     def _request_login(self, login, password):
         """Sends Login request"""
-        return self._request_internal("Login",
-                                      login=login,
-                                      password=password)
+        return self._request_internal("Login", login=login, password=password)
 
     def _request_domains_list(self):
         """Sends Domains_List request"""
@@ -266,47 +291,46 @@ class Provider(BaseProvider):
 
     def _request_get_dns_zone(self):
         """Sends Get_DNS_Zone request"""
-        return self._request_internal("Get_DNS_Zone",
-                                      domain=self.domain)
+        return self._request_internal("Get_DNS_Zone", domain=self.domain)
 
     def _request_add_dns_record(self, record):
         """Sends Add_DNS_Record request"""
-        return self._request_internal("Add_DNS_Record",
-                                      domain=self.domain,
-                                      record=record)
+        return self._request_internal(
+            "Add_DNS_Record", domain=self.domain, record=record
+        )
 
     def _request_modify_dns_record(self, record):
         """Sends Modify_DNS_Record request"""
-        return self._request_internal("Modify_DNS_Record",
-                                      domain=self.domain,
-                                      record=record)
+        return self._request_internal(
+            "Modify_DNS_Record", domain=self.domain, record=record
+        )
 
     def _request_delete_dns_record_by_id(self, identifier):
         """Sends Delete_DNS_Record request"""
-        return self._request_internal("Delete_DNS_Record",
-                                      domain=self.domain,
-                                      record={'id': identifier})
+        return self._request_internal(
+            "Delete_DNS_Record", domain=self.domain, record={"id": identifier}
+        )
 
     def _request_internal(self, command, **kwargs):
         """Make request parse response"""
         args = dict(kwargs)
         if self.ssid:
-            args['ssid'] = self.ssid
+            args["ssid"] = self.ssid
         method = getattr(self.api, command)
         response = method(**args)
-        if response and 'status' in response:
-            if response['status'] == 'error':
+        if response and "status" in response:
+            if response["status"] == "error":
                 self._raise_error(
-                    message=response['error']['errormsg'],
-                    major=response['error']['errorcode']['major'],
-                    minor=response['error']['errorcode']['minor']
+                    message=response["error"]["errormsg"],
+                    major=response["error"]["errorcode"]["major"],
+                    minor=response["error"]["errorcode"]["minor"],
                 )
-            if response['status'] == 'ok':
-                return response['data'] if 'data' in response else dict()
+            if response["status"] == "ok":
+                return response["data"] if "data" in response else dict()
             raise Exception("Invalid status found in SOAP response")
-        raise Exception('Invalid response')
+        raise Exception("Invalid response")
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Default helper _request is not used in Subreg provider
         pass
 
@@ -314,8 +338,10 @@ class Provider(BaseProvider):
     def _raise_error(major, minor, message):
         raise GransyError(major, minor, message)
 
+
 class GransyError(Exception):
     """Specific error for Gransy provider"""
+
     def __init__(self, major, minor, message):
         self.major = int(major)
         self.minor = int(minor)
@@ -323,4 +349,4 @@ class GransyError(Exception):
         super(GransyError, self).__init__()
 
     def __str__(self):
-        return 'Major: {} Minor: {} Message: {}'.format(self.major, self.minor, self.message)
+        return f"Major: {self.major} Minor: {self.minor} Message: {self.message}"

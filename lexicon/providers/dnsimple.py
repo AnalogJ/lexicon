@@ -1,62 +1,70 @@
 """Module provider for DNS Simple"""
 from __future__ import absolute_import
+
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['dnsimple.com']
+NAMESERVER_DOMAINS = ["dnsimple.com"]
 
 
 def provider_parser(subparser):
     """Configure provider parser for DNS Simple"""
+    subparser.add_argument("--auth-token", help="specify api token for authentication")
     subparser.add_argument(
-        "--auth-token", help="specify api token for authentication")
+        "--auth-username", help="specify email address for authentication"
+    )
     subparser.add_argument(
-        "--auth-username", help="specify email address for authentication")
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication")
+        "--auth-password", help="specify password for authentication"
+    )
     subparser.add_argument(
         "--auth-2fa",
-        help="specify two-factor auth token (OTP) to use with email/password authentication")
+        help="specify two-factor auth token (OTP) to use with email/password authentication",
+    )
 
 
 class Provider(BaseProvider):
     """Provider class for DNS Simple"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.account_id = None
-        self.api_endpoint = self._get_provider_option(
-            'api_endpoint') or 'https://api.dnsimple.com/v2'
+        self.api_endpoint = (
+            self._get_provider_option("api_endpoint") or "https://api.dnsimple.com/v2"
+        )
 
     def _authenticate(self):
 
-        payload = self._get('/accounts')
+        payload = self._get("/accounts")
 
-        if not payload[0]['id']:
-            raise Exception('No account id found')
+        if not payload[0]["id"]:
+            raise Exception("No account id found")
 
         for account in payload:
-            if account['plan_identifier'] is None:
+            if account["plan_identifier"] is None:
                 logging.warning(
-                    'Skipping unconfigured account %s (%d). ' \
-                    'To use this account, you must select a plan.',
-                    account['email'], account['id'])
+                    "Skipping unconfigured account %s (%d). "
+                    "To use this account, you must select a plan.",
+                    account["email"],
+                    account["id"],
+                )
                 continue
 
             dompayload = self._get(
-                '/{0}/domains'.format(account['id']), query_params={'name_like': self.domain})
-            if dompayload and dompayload[0]['id']:
-                self.account_id = account['id']
-                self.domain_id = dompayload[0]['id']
+                f"/{account['id']}/domains", query_params={"name_like": self.domain}
+            )
+            if dompayload and dompayload[0]["id"]:
+                self.account_id = account["id"]
+                self.domain_id = dompayload[0]["id"]
 
         if not self.account_id:
-            raise Exception('No domain found like {}'.format(self.domain))
+            raise Exception(f"No domain found like {self.domain}")
 
     # Create record. If record already exists with the same content, do nothing
 
@@ -66,23 +74,18 @@ class Provider(BaseProvider):
         if len(existing_records) == 1:
             return True
 
-        record = {
-            'type': rtype,
-            'name': self._relative_name(name),
-            'content': content
-        }
-        if self._get_lexicon_option('ttl'):
-            record['ttl'] = self._get_lexicon_option('ttl')
-        if self._get_lexicon_option('priority'):
-            record['priority'] = self._get_lexicon_option('priority')
-        if self._get_provider_option('regions'):
-            record['regions'] = self._get_provider_option('regions')
+        record = {"type": rtype, "name": self._relative_name(name), "content": content}
+        if self._get_lexicon_option("ttl"):
+            record["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            record["priority"] = self._get_lexicon_option("priority")
+        if self._get_provider_option("regions"):
+            record["regions"] = self._get_provider_option("regions")
 
-        payload = self._post(
-            '/{0}/zones/{1}/records'.format(self.account_id, self.domain), record)
+        payload = self._post(f"/{self.account_id}/zones/{self.domain}/records", record)
 
-        LOGGER.debug('create_record: %s', 'id' in payload)
-        return 'id' in payload
+        LOGGER.debug("create_record: %s", "id" in payload)
+        return "id" in payload
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -90,33 +93,32 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         filter_query = {}
         if rtype:
-            filter_query['type'] = rtype
+            filter_query["type"] = rtype
         if name:
-            filter_query['name'] = self._relative_name(name)
+            filter_query["name"] = self._relative_name(name)
         payload = self._get(
-            '/{0}/zones/{1}/records'.format(self.account_id, self.domain),
-            query_params=filter_query)
+            f"/{self.account_id}/zones/{self.domain}/records", query_params=filter_query
+        )
 
         records = []
         for record in payload:
             processed_record = {
-                'type': record['type'],
-                'name': '{}'.format(
-                    self.domain) if record['name'] == "" else '{0}.{1}'.format(
-                        record['name'],
-                        self.domain),
-                'ttl': record['ttl'],
-                'content': record['content'],
-                'id': record['id']}
-            if record['priority']:
-                processed_record['priority'] = record['priority']
+                "type": record["type"],
+                "name": f"{self.domain}"
+                if record["name"] == ""
+                else f"{record['name']}.{self.domain}",
+                "ttl": record["ttl"],
+                "content": record["content"],
+                "id": record["id"],
+            }
+            if record["priority"]:
+                processed_record["priority"] = record["priority"]
             records.append(processed_record)
 
         if content:
-            records = [
-                record for record in records if record['content'] == content]
+            records = [record for record in records if record["content"] == content]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Create or update a record.
@@ -131,22 +133,23 @@ class Provider(BaseProvider):
             identifiers = [identifier]
 
         if name:
-            data['name'] = self._relative_name(name)
+            data["name"] = self._relative_name(name)
         if content:
-            data['content'] = content
-        if self._get_lexicon_option('ttl'):
-            data['ttl'] = self._get_lexicon_option('ttl')
-        if self._get_lexicon_option('priority'):
-            data['priority'] = self._get_lexicon_option('priority')
-        if self._get_provider_option('regions'):
-            data['regions'] = self._get_provider_option('regions')
+            data["content"] = content
+        if self._get_lexicon_option("ttl"):
+            data["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            data["priority"] = self._get_lexicon_option("priority")
+        if self._get_provider_option("regions"):
+            data["regions"] = self._get_provider_option("regions")
 
         for one_identifier in identifiers:
-            self._patch('/{0}/zones/{1}/records/{2}'
-                        .format(self.account_id, self.domain, one_identifier), data)
-            LOGGER.debug('update_record: %s', one_identifier)
+            self._patch(
+                f"/{self.account_id}/zones/{self.domain}/records/{one_identifier}", data
+            )
+            LOGGER.debug("update_record: %s", one_identifier)
 
-        LOGGER.debug('update_record: %s', True)
+        LOGGER.debug("update_record: %s", True)
         return True
 
     # Delete an existing record.
@@ -155,56 +158,64 @@ class Provider(BaseProvider):
         delete_record_id = []
         if not identifier:
             records = self._list_records(rtype, name, content)
-            delete_record_id = [record['id'] for record in records]
+            delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)
 
-        LOGGER.debug('delete_records: %s', delete_record_id)
+        LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete(
-                '/{0}/zones/{1}/records/{2}'.format(self.account_id, self.domain, record_id))
+            self._delete(f"/{self.account_id}/zones/{self.domain}/records/{record_id}")
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
-        LOGGER.debug('delete_record: True')
+        LOGGER.debug("delete_record: True")
         return True
 
     # Helpers
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         default_headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
         default_auth = None
 
-        if self._get_provider_option('auth_token'):
-            default_headers['Authorization'] = "Bearer {0}".format(
-                self._get_provider_option('auth_token'))
-        elif (self._get_provider_option('auth_username')
-              and self._get_provider_option('auth_password')):
-            default_auth = (self._get_provider_option(
-                'auth_username'), self._get_provider_option('auth_password'))
-            if self._get_provider_option('auth_2fa'):
-                default_headers['X-Dnsimple-OTP'] = self._get_provider_option(
-                    'auth_2fa')
+        if self._get_provider_option("auth_token"):
+            default_headers[
+                "Authorization"
+            ] = f"Bearer {self._get_provider_option('auth_token')}"
+        elif self._get_provider_option("auth_username") and self._get_provider_option(
+            "auth_password"
+        ):
+            default_auth = (
+                self._get_provider_option("auth_username"),
+                self._get_provider_option("auth_password"),
+            )
+            if self._get_provider_option("auth_2fa"):
+                default_headers["X-Dnsimple-OTP"] = self._get_provider_option(
+                    "auth_2fa"
+                )
         else:
-            raise Exception('No valid authentication mechanism found')
+            raise Exception("No valid authentication mechanism found")
 
-        response = requests.request(action, self.api_endpoint + url, params=query_params,
-                                    data=json.dumps(data),
-                                    headers=default_headers,
-                                    auth=default_auth)
+        response = requests.request(
+            action,
+            self.api_endpoint + url,
+            params=query_params,
+            data=json.dumps(data),
+            headers=default_headers,
+            auth=default_auth,
+        )
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
-        if response.text and response.json()['data'] is None:
-            raise Exception('No data returned')
+        if response.text and response.json()["data"] is None:
+            raise Exception("No data returned")
 
-        return response.json()['data'] if response.text else None
+        return response.json()["data"] if response.text else None
 
-    def _patch(self, url='/', data=None, query_params=None):
-        return self._request('PATCH', url, data=data, query_params=query_params)
+    def _patch(self, url="/", data=None, query_params=None):
+        return self._request("PATCH", url, data=data, query_params=query_params)

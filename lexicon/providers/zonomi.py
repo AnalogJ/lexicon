@@ -18,194 +18,189 @@ Implementation notes:
   type and content.
 """
 from __future__ import absolute_import
+
 import logging
 from xml.etree import ElementTree
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
 APIENTRYPOINT = {
-    'zonomi': 'https://zonomi.com/app',
-    'rimuhosting': 'https://rimuhosting.com'
+    "zonomi": "https://zonomi.com/app",
+    "rimuhosting": "https://rimuhosting.com",
 }
 
-NAMESERVER_DOMAINS = ['zonomi.com']
+NAMESERVER_DOMAINS = ["zonomi.com"]
 
 
 def provider_parser(subparser):
     """Configure provider parser for Zonomi"""
+    subparser.add_argument("--auth-token", help="specify token for authentication")
     subparser.add_argument(
-        "--auth-token", help="specify token for authentication")
-    subparser.add_argument("--auth-entrypoint", help="use Zonomi or Rimuhosting API", choices=[
-        'zonomi', 'rimuhosting'])
+        "--auth-entrypoint",
+        help="use Zonomi or Rimuhosting API",
+        choices=["zonomi", "rimuhosting"],
+    )
 
 
 class Provider(BaseProvider):
     """Provider class for Zonomi"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        if not self._get_provider_option('auth_token'):
-            raise Exception('Error, application key is not defined')
+        if not self._get_provider_option("auth_token"):
+            raise Exception("Error, application key is not defined")
 
-        self.api_endpoint = APIENTRYPOINT.get('zonomi')
+        self.api_endpoint = APIENTRYPOINT.get("zonomi")
 
-        if self._get_provider_option('auth_entrypoint'):
+        if self._get_provider_option("auth_entrypoint"):
             self.api_endpoint = APIENTRYPOINT.get(
-                self._get_provider_option('auth_entrypoint'))
+                self._get_provider_option("auth_entrypoint")
+            )
 
     def _authenticate(self):
 
-        payload = self._get('/dns/dyndns.jsp', {
-            'action': 'QUERY',
-            'name': "**." + self.domain,
-            'type': 'SOA'
-        })
+        payload = self._get(
+            "/dns/dyndns.jsp",
+            {"action": "QUERY", "name": "**." + self.domain, "type": "SOA"},
+        )
 
-        if payload.find('is_ok').text != 'OK:':
-            raise Exception('Error with api {0}'.format(
-                payload.find('is_ok').text))
+        if payload.find("is_ok").text != "OK:":
+            raise Exception(f"Error with api {payload.find('is_ok').text}")
 
         self.domain_id = self.domain
 
     def _make_identifier(self, rtype, name, content):
-        return "{}/{}={}".format(rtype, self._full_name(name), content)
+        return f"{rtype}/{self._full_name(name)}={content}"
 
-    def _parse_identifier(self, identifier):  # pylint: disable=no-self-use
-        parts = identifier.split('/')
+    def _parse_identifier(self, identifier):
+        parts = identifier.split("/")
         rtype = parts[0]
-        parts = parts[1].split('=')
+        parts = parts[1].split("=")
         name = parts[0]
         content = "=".join(parts[1:])
         return rtype, name, content
 
     def _create_record(self, rtype, name, content):
         request = {
-            'action': 'SET',
-            'type': rtype,
-            'name': self.domain,
-            'value': content
+            "action": "SET",
+            "type": rtype,
+            "name": self.domain,
+            "value": content,
         }
 
         if name is not None:
-            request['name'] = self._full_name(name)
+            request["name"] = self._full_name(name)
 
-        if self._get_lexicon_option('ttl'):
-            request['ttl'] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option("ttl"):
+            request["ttl"] = self._get_lexicon_option("ttl")
 
-        if self._get_lexicon_option('priority'):
-            request['prio'] = self._get_lexicon_option('priority')
+        if self._get_lexicon_option("priority"):
+            request["prio"] = self._get_lexicon_option("priority")
 
-        payload = self._get('/dns/dyndns.jsp', request)
+        payload = self._get("/dns/dyndns.jsp", request)
 
-        if payload.find('is_ok').text != 'OK:':
-            raise Exception('An error occurred: {0}'.format(
-                payload.find('is_ok').text))
+        if payload.find("is_ok").text != "OK:":
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
-        LOGGER.debug('create_record: %s', True)
+        LOGGER.debug("create_record: %s", True)
         return True
 
     def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
-        request = {
-            'action': 'QUERY',
-            'name': "**." + self.domain
-        }
+        request = {"action": "QUERY", "name": "**." + self.domain}
 
         if rtype is not None:
-            request['type'] = rtype
+            request["type"] = rtype
         if name is not None:
-            request['name'] = self._full_name(name)
+            request["name"] = self._full_name(name)
         if content is not None:
-            request['value'] = content
+            request["value"] = content
 
-        payload = self._get('/dns/dyndns.jsp', request)
-        for rxml in payload.iter('record'):
+        payload = self._get("/dns/dyndns.jsp", request)
+        for rxml in payload.iter("record"):
             processed_record = {
-                'type': rxml.attrib['type'],
-                'name': rxml.attrib['name'],
-                'content': rxml.attrib['content'],
-                'id': self._make_identifier(
-                    rxml.attrib['type'],
-                    rxml.attrib['name'],
-                    rxml.attrib['content']),
-                'ttl': rxml.attrib['ttl'].split()[0]}
+                "type": rxml.attrib["type"],
+                "name": rxml.attrib["name"],
+                "content": rxml.attrib["content"],
+                "id": self._make_identifier(
+                    rxml.attrib["type"], rxml.attrib["name"], rxml.attrib["content"]
+                ),
+                "ttl": rxml.attrib["ttl"].split()[0],
+            }
             records.append(processed_record)
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is not None:
             rtype, name, content = self._parse_identifier(identifier)
 
-        request = {
-            'action': 'DELETE',
-            'name': self.domain
-        }
+        request = {"action": "DELETE", "name": self.domain}
 
         if rtype is not None:
-            request['type'] = rtype
+            request["type"] = rtype
         if name is not None:
-            request['name'] = self._full_name(name)
+            request["name"] = self._full_name(name)
         if content is not None:
-            request['value'] = content
+            request["value"] = content
 
-        payload = self._get('/dns/dyndns.jsp', request)
+        payload = self._get("/dns/dyndns.jsp", request)
 
-        if payload.find('is_ok').text != 'OK:':
-            raise Exception('An error occurred: {0}'.format(
-                payload.find('is_ok').text))
+        if payload.find("is_ok").text != "OK:":
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
-        LOGGER.debug('delete_record: %s', True)
+        LOGGER.debug("delete_record: %s", True)
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         self._delete_record(identifier)
         ttype, tname, tcontent = self._parse_identifier(identifier)
         request = {
-            'action': 'SET',
-            'type': ttype,
-            'name': self._full_name(tname),
-            'value': tcontent
+            "action": "SET",
+            "type": ttype,
+            "name": self._full_name(tname),
+            "value": tcontent,
         }
 
         if rtype is not None:
-            request['type'] = rtype
+            request["type"] = rtype
         if name is not None:
-            request['name'] = self._full_name(name)
+            request["name"] = self._full_name(name)
         if content is not None:
-            request['value'] = content
-        if self._get_lexicon_option('ttl'):
-            request['ttl'] = self._get_lexicon_option('ttl')
-        if self._get_lexicon_option('priority'):
-            request['prio'] = self._get_lexicon_option('priority')
+            request["value"] = content
+        if self._get_lexicon_option("ttl"):
+            request["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            request["prio"] = self._get_lexicon_option("priority")
 
-        payload = self._get('/dns/dyndns.jsp', request)
+        payload = self._get("/dns/dyndns.jsp", request)
 
-        if payload.find('is_ok').text != 'OK:':
-            raise Exception('An error occurred: {0}'.format(
-                payload.find('is_ok').text))
+        if payload.find("is_ok").text != "OK:":
+            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
 
-        LOGGER.debug('update_record: %s', True)
+        LOGGER.debug("update_record: %s", True)
         return True
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         else:
-            query_params['api_key'] = self._get_provider_option('auth_token')
+            query_params["api_key"] = self._get_provider_option("auth_token")
 
         response = requests.request(
-            action, self.api_endpoint + url, params=query_params)
+            action, self.api_endpoint + url, params=query_params
+        )
         tree = ElementTree.ElementTree(ElementTree.fromstring(response.content))
         root = tree.getroot()
-        if root.tag == 'error':
-            raise Exception('An error occurred: {0}'.format(root.text))
+        if root.tag == "error":
+            raise Exception(f"An error occurred: {root.text}")
         response.raise_for_status()
         return root
