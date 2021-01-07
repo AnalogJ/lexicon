@@ -108,6 +108,7 @@ The current supported providers are:
 - `Hurricane Electric DNS <https://dns.he.net/>`_
 - `Hetzner <https://dns.hetzner.com/api-docs/>`_
 - `Infoblox <https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal>`_
+- `Infomaniak <https://www.infomaniak.com>`_
 - `Internet.bs <https://internetbs.net/ResellerRegistrarDomainNameAPI>`_
 - `INWX <https://www.inwx.de/en/offer/api>`_
 - `Joker.com <https://joker.com/faq/index.php?action=show&cat=39>`_
