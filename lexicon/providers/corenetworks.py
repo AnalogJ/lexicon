@@ -22,7 +22,7 @@ def provider_parser(subparser):
     subparser.add_argument(
         "--auth-password", help="Specify password for authentication")
     subparser.add_argument(
-        "--auth-file", help="Specify location for authentication file. If this contains a valid token it will be used. Otherwise --auth-username and --auth-password are necessary.")
+        "--auth-file", help="Specify location for authentication file. If this contains a valid token it will be used. Otherwise --auth-username and --auth-password are necessary. Defaults to ~/corenetworks_auth.json if ~ is writable by lexicon, otherwise $TMP/corenetworks_auth.json. In most cases you don't need to specify it as it will be used by default before acquiring a new token from the provider. The token has a lifetime of 1 hour after which it must be re-issued using the credentials. The most common use-case would be to consistently set this to some secure location where only lexicon has access. Might be deprecated in the future.")
 
 class Provider(BaseProvider):
     """Provider class for Core Networks"""
