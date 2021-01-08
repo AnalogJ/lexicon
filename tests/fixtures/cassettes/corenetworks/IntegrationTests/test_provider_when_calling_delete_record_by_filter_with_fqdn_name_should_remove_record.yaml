@@ -25,7 +25,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:08 GMT
+      - Fri, 08 Jan 2021 12:40:28 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -69,7 +69,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:28 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -112,7 +112,45 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:29 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Fri, 08 Jan 2021 12:40:29 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -152,7 +190,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:33 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -192,13 +230,15 @@ interactions:
       Cache-Control:
       - no-cache, no-store, must-revalidate
       Connection:
-      - Upgrade, close
+      - Upgrade, Keep-Alive
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:33 GMT
       Expires:
       - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
       Pragma:
       - no-cache
       Server:
@@ -234,13 +274,11 @@ interactions:
       Cache-Control:
       - no-cache, no-store, must-revalidate
       Connection:
-      - Upgrade, Keep-Alive
+      - Upgrade, close
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:33 GMT
       Expires:
       - '0'
-      Keep-Alive:
-      - timeout=60, max=1000
       Pragma:
       - no-cache
       Server:
@@ -250,50 +288,6 @@ interactions:
     status:
       code: 204
       message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      User-Agent:
-      - python-requests/2.25.1
-    method: GET
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?name=delete.testfqdn&type=TXT
-  response:
-    body:
-      string: '[]'
-    headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - Upgrade, Keep-Alive
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
-      Expires:
-      - '0'
-      Keep-Alive:
-      - timeout=60, max=1000
-      Pragma:
-      - no-cache
-      Server:
-      - Apache
-      Upgrade:
-      - h2,h2c
-      Vary:
-      - Accept-Encoding
-      content-length:
-      - '2'
-    status:
-      code: 200
-      message: OK
 - request:
     body: '{}'
     headers:
@@ -318,7 +312,7 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:09 GMT
+      - Fri, 08 Jan 2021 12:40:34 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -332,4 +326,47 @@ interactions:
     status:
       code: 204
       message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+  response:
+    body:
+      string: "Die Zone konnte nicht auf den Server \xFCbertragen werden da aktuell
+        bereits ein Update der Zone l\xE4uft."
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Fri, 08 Jan 2021 12:40:38 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 429
+      message: Too Many Requests
 version: 1

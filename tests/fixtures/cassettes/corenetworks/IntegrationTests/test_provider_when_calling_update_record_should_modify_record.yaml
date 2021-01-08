@@ -25,7 +25,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:58 GMT
+      - Fri, 08 Jan 2021 12:42:15 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -69,7 +69,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:15 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -111,7 +111,45 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:15 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Fri, 08 Jan 2021 12:42:15 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -151,7 +189,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:19 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -186,7 +224,7 @@ interactions:
     uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?type=TXT
   response:
     body:
-      string: '[{"name":"_acme-challenge","ttl":"1800","type":"TXT","data":"fRBvC_7Mr3bIYFTcQsMFe9E56jo_f6pb9HZXCsjArPI"},{"name":"_acme-challenge","ttl":"1800","type":"TXT","data":"dLhFTGu03GmW18icjrfQpDFPD0JlwWua6GWYCTJZA0I"},{"name":"_acme-challenge.fqdn","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.full","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.noop","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"ttl.fqdn","ttl":"3600","type":"TXT","data":"ttlshouldbe3600"},{"name":"_acme-challenge.deleterecordinset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"random.fqdntest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.fulltest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"orig.test","ttl":"3600","type":"TXT","data":"challengetoken"}]'
+      string: '[{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST2"},{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST3"},{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST4"},{"name":"test","ttl":"3600","type":"TXT","data":"FinalTest"},{"name":"_acme-challenge.fqdn","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.full","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.noop","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"ttl.fqdn","ttl":"3600","type":"TXT","data":"ttlshouldbe3600"},{"name":"_acme-challenge.deleterecordinset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"random.fqdntest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.fulltest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"orig.test","ttl":"3600","type":"TXT","data":"challengetoken"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -195,7 +233,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:19 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -209,7 +247,7 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '1378'
+      - '1410'
     status:
       code: 200
       message: OK
@@ -231,8 +269,8 @@ interactions:
   response:
     body:
       string: '[{"name":"@","ttl":"1800","type":"SOA","data":"ns1.core-networks.de.
-        hostmaster.core-networks.de. 2021010817 28800 7200 604800 1800"},{"name":"coturn","ttl":"3600","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"localhost","ttl":"3600","type":"A","data":"127.0.0.1"},{"name":"@","ttl":"86400","type":"NS","data":"ns1.core-networks.de."},{"name":"@","ttl":"86400","type":"NS","data":"ns2.core-networks.eu."},{"name":"@","ttl":"86400","type":"NS","data":"ns3.core-networks.com."},{"name":"*","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"@","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"jabber","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"mail","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"www","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"*","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"@","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"mail","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"jitsi","ttl":"1800","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"masins","ttl":"1800","type":"CNAME","data":"neptun.larp-bb.de."},{"name":"rpg","ttl":"1800","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"@","ttl":"1800","type":"MX","data":"10
-        mail.***REMOVED***"},{"name":"test","ttl":"3600","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"docs","ttl":"3600","type":"CNAME","data":"docs.example.com"},{"name":"bbb","ttl":"1800","type":"A","data":"148.251.246.242"},{"name":"_acme-challenge","ttl":"1800","type":"TXT","data":"fRBvC_7Mr3bIYFTcQsMFe9E56jo_f6pb9HZXCsjArPI"},{"name":"_acme-challenge","ttl":"1800","type":"TXT","data":"dLhFTGu03GmW18icjrfQpDFPD0JlwWua6GWYCTJZA0I"},{"name":"_acme-challenge.fqdn","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.full","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.noop","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"ttl.fqdn","ttl":"3600","type":"TXT","data":"ttlshouldbe3600"},{"name":"_acme-challenge.deleterecordinset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"random.fqdntest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.fulltest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"orig.test","ttl":"3600","type":"TXT","data":"challengetoken"}]'
+        hostmaster.core-networks.de. 2021010866 28800 7200 604800 1800"},{"name":"coturn","ttl":"3600","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST2"},{"name":"@","ttl":"86400","type":"NS","data":"ns1.core-networks.de."},{"name":"@","ttl":"86400","type":"NS","data":"ns2.core-networks.eu."},{"name":"@","ttl":"86400","type":"NS","data":"ns3.core-networks.com."},{"name":"*","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"@","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"jabber","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"mail","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"www","ttl":"1800","type":"A","data":"5.189.134.50"},{"name":"*","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"@","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"mail","ttl":"1800","type":"AAAA","data":"2a02:c207:3000:9662::1:1"},{"name":"jitsi","ttl":"1800","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"masins","ttl":"1800","type":"CNAME","data":"neptun.larp-bb.de."},{"name":"rpg","ttl":"1800","type":"CNAME","data":"neptun2.larp-bb.de."},{"name":"@","ttl":"1800","type":"MX","data":"10
+        mail.***REMOVED***"},{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST3"},{"name":"test","ttl":"3600","type":"TXT","data":"TESTTEST4"},{"name":"test","ttl":"3600","type":"TXT","data":"FinalTest"},{"name":"bbb","ttl":"1800","type":"A","data":"148.251.246.242"},{"name":"localhost","ttl":"3600","type":"A","data":"127.0.0.1"},{"name":"docs","ttl":"3600","type":"CNAME","data":"docs.example.com"},{"name":"_acme-challenge.fqdn","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.full","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.createrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.noop","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"ttl.fqdn","ttl":"3600","type":"TXT","data":"ttlshouldbe3600"},{"name":"_acme-challenge.deleterecordinset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.listrecordset","ttl":"3600","type":"TXT","data":"challengetoken2"},{"name":"random.fqdntest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.fulltest","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"random.test","ttl":"3600","type":"TXT","data":"challengetoken"},{"name":"orig.test","ttl":"3600","type":"TXT","data":"challengetoken"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -241,7 +279,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:19 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -255,7 +293,7 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '2889'
+      - '2848'
     status:
       code: 200
       message: OK
@@ -283,7 +321,45 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:19 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Fri, 08 Jan 2021 12:42:19 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -323,7 +399,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:25 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -366,7 +442,7 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:25 GMT
       Expires:
       - '0'
       Keep-Alive:
@@ -404,7 +480,7 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 09:08:59 GMT
+      - Fri, 08 Jan 2021 12:42:25 GMT
       Expires:
       - '0'
       Keep-Alive:
