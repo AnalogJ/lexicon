@@ -1,18 +1,18 @@
 # Test for one implementation of the interface
-from lexicon.tests.providers.integration_tests import IntegrationTests
 from unittest import TestCase
+
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
-# pass, by inheritance from integration_tests.IntegrationTests
-
-# shell environment requires
-# * LEXICON_CORENETWORKS_AUTH_USERNAME
-# * LEXICON_CORENETWORKS_AUTH_PASSWORD
-# * LEXICON_CORENETWORKS_API_ENDPOINT
-
-class CorenetworksProviderTests(TestCase, IntegrationTests):
-    """Integration tests for Core Networks provider"""
+# pass, by inheritance from define_tests.TheTests
+class CorenetworksProviderTests(TestCase, IntegrationTestsV2):
+    """Integration tests for Core Networks provider
+    shell environment requires
+    * LEXICON_CORENETWORKS_AUTH_USERNAME
+    * LEXICON_CORENETWORKS_AUTH_PASSWORD
+    * LEXICON_CORENETWORKS_API_ENDPOINT"""
     provider_name = 'corenetworks'
     domain = '***REMOVED***'
     endpoint = 'https://beta.api.core-networks.de'

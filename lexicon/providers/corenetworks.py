@@ -12,7 +12,6 @@ from lexicon.providers.base import Provider as BaseProvider
 
 CorenetworksLog = logging.getLogger(__name__)
 #CorenetworksLog.setLevel(logging.DEBUG)
-CorenetworksLog.info("Starting %s" % __name__)
 
 NAMESERVER_DOMAINS = ['core-networks.de', 'core-networks.eu', 'core-networks.com']
 
@@ -30,13 +29,12 @@ class Provider(BaseProvider):
     def __init__(self, config):
         CorenetworksLog.info("Initialising class Provider")
         super(Provider, self).__init__(config)
-        self.domain_id = None
-        self.account_id = None
-        self.token = None
-        self.expiry = None
-        self.modified = False
+        self.domain_id = None       # zone name
+        self.account_id = None      # unused?
+        self.token = None           # provided by service after auth
+        self.expiry = None          # token expiry time, calculated after auth
+        self.modified = False       # some API calls need to be committed; this will be done on object destruction in __del__
         self.auth_file = { 'token': None, 'expiry': None }
-        CorenetworksLog.info("Auth file parameter: %s" % self._get_provider_option('auth_file'))
         # Core Networks enforces a limit on the amount of logins per minute.
         # As the token is valid for 1 hour it's sensible to store it for
         # later usage.
@@ -48,8 +46,9 @@ class Provider(BaseProvider):
         self.api_endpoint = 'https://beta.api.core-networks.de'
 
     def __del__(self):
-        # Changes to the zone need to be committed.
-        # https://beta.api.core-networks.de/doc/#functon_dnszones_commit
+        """Destructor of the class.
+        Changes to the zone need to be committed.
+        # https://beta.api.core-networks.de/doc/#functon_dnszones_commit"""
         if self.modified == True:
             payload = self._post("/dnszones/{0}/records/commit".format(self.domain))
             self.modified == False
@@ -62,7 +61,8 @@ class Provider(BaseProvider):
         domain is not in the list of zones it will raise an exception.
         Ref: https://beta.api.core-networks.de/doc/#functon_auth_token"""
         CorenetworksLog.debug("Entering _authenticate, requesting domain %s" % self.domain)
-        self._refresh_auth_file()
+        self._retrieve_auth_file()
+        CorenetworksLog.info("Value of self.auth_file: %s" % self.auth_file)
         if 'token' in self.auth_file:
             self.token = self.auth_file['token']
             self.expiry = self.auth_file['expiry']
@@ -75,6 +75,7 @@ class Provider(BaseProvider):
         else:
             self._get_token()
 
+        CorenetworksLog.info("self.expiry is %s" % self.expiry)
         # Store zones for saving one API call
         self.zones = self._list_zones()
 
@@ -216,7 +217,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        CorenetworksLog.debug( "url: %s with data %s and query_params %s" % ( url, str(data), str(query_params) ) )
+        CorenetworksLog.info( "url: %s with data %s and query_params %s" % ( url, str(data), str(query_params) ) )
         default_headers = {}
 
         if self.token:
@@ -244,19 +245,27 @@ class Provider(BaseProvider):
     def _make_identifier(self, rtype, name, content):
         return hashlib.sha1('/'.join([ rtype, name, content ]).encode('utf-8')).hexdigest()
 
-    def _refresh_auth_file(self):
+    def _retrieve_auth_file(self):
         """Retrieve token and zones from json file"""
-        try:
-            auth = open(self.auth_file_path, "r")
-            if auth.mode == "r":
-                self.auth_file = json.loads(auth.read())
-                auth.close()
+        # I guess the correct way would be multiple nested checks for
+        # existence of path, checking if path is a file, checking if
+        # file is readable and so on, and each one with corresponding
+        # exceptions.
+        if(os.path.exists(self.auth_file_path) and os.path.isfile(self.auth_file_path)):
+            try:
+                auth = open(self.auth_file_path, "r")
+                if auth.mode == "r":
+                    self.auth_file = json.loads(auth.read())
+                    auth.close()
+                    return True
+                else:
+                    auth.close()
+                    return False
+            except FileNotFoundError as e:
+                CorenetworksLog.info("No stored authentication found: %s. Acquiring token via API call." % os.strerror(e.errno))
+                self._get_token()
                 return True
-            else:
-                auth.close()
-                return False
-        except IOError as e:
-            CorenetworksLog.debug("No stored authentication found: %s. Acquiring token via API call." % os.strerror(e.errno))
+        else:
             self._get_token()
             return True
 
@@ -272,25 +281,26 @@ class Provider(BaseProvider):
             else:
                 return False
         except IOError as e:
-            CorenetworksLog.debug("Could not write authentication file: %s" % os.strerror(e.errno))
+            CorenetworksLog.warning("Could not write authentication file: %s" % os.strerror(e.errno))
         finally:
             auth.close()
 
     def _get_token(self):
         """Request new token via API call"""
         CorenetworksLog.debug("Entering _get_token.")
-        data = {
-            'login'   : self._get_provider_option('auth_username'),
-            'password': self._get_provider_option('auth_password')
-        }
-        CorenetworksLog.debug(str(data))
-        payload = self._post('/auth/token', data = data)
-        CorenetworksLog.debug("%s", str(payload))
-        self.token  = payload['token']
-        self.expiry = payload['expires'] + time.time()
+        if self._get_provider_option('auth_username') == None or self._get_provider_option('auth_password') == None:
+            raise Exception("No valid authentication mechanism found")
+        else:
+            data = {
+                'login'   : self._get_provider_option('auth_username'),
+                'password': self._get_provider_option('auth_password')
+            }
+            payload = self._post('/auth/token', data = data)
+            self.token  = payload['token']
+            self.expiry = payload['expires'] + time.time()
 
-        # Prepare auth file and commit changes
-        self.auth_file['token']  = self.token
-        self.auth_file['expiry'] = self.expiry
-        self._commit_auth_file()
+            # Prepare auth file and commit changes
+            self.auth_file['token']  = self.token
+            self.auth_file['expiry'] = self.expiry
+            self._commit_auth_file()
 

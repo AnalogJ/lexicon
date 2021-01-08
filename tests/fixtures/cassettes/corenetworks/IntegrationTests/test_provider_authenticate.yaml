@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: '{"login": "***REMOVED***", "password": "***REMOVED***"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '62'
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://beta.api.core-networks.de/auth/token
+  response:
+    body:
+      string: '{"token":"8ODUGIyIhfNPvD6ToeF1T3fb1dD61L4TQ9jFenmd6YC5kzrwNx2TIz3RLZyJVuA1","expires":3600}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 08 Jan 2021 09:07:37 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '91'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/
+  response:
+    body:
+      string: '[{"name":"***REMOVED***","type":"master"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 08 Jan 2021 09:07:37 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=60, max=1000
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '44'
+    status:
+      code: 200
+      message: OK
+version: 1
