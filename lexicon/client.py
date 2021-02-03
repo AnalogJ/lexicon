@@ -32,9 +32,14 @@ class Client(object):
         runtime_config = {}
 
         # Process domain, strip subdomain
-        domain_extractor = tldextract.TLDExtract(
-            cache_dir=_get_tldextract_cache_path(), include_psl_private_domains=True
-        )
+        try:
+            domain_extractor = tldextract.TLDExtract(
+                cache_dir=_get_tldextract_cache_path(), include_psl_private_domains=True
+            )
+        except TypeError:
+            domain_extractor = tldextract.TLDExtract(
+                cache_file=_get_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
+            )
         domain_parts = domain_extractor(self.config.resolve("lexicon:domain"))
         runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
 
