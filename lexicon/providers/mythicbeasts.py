@@ -5,7 +5,7 @@ import json
 import logging
 
 import requests
-
+import hashlib
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -34,11 +34,7 @@ def provider_parser(subparser):
         "--auth-token",
         help="specify API token for authentication",
     )
-    subparser.add_argument(
-        "--zone-id",
-        help="specify the zone id (if set, API token can be scoped to the target zone)",
-    )
-    
+   
 
 
 class Provider(BaseProvider):
@@ -51,22 +47,25 @@ class Provider(BaseProvider):
         self.auth_token = None
 
     def _authenticate(self):
-        zone_id = self._get_provider_option("zone_id")
-        if not zone_id:
-            payload = self._get("/zones")
+        
+        #import pdb;pdb.set_trace()
+        
+        payload = self._get("/zones")
 
+        if self.domain is None:
             if not payload["zones"]:
                 raise Exception("No domain found")
-            if len(payload["zones"]) > 1:
-                raise Exception("Too many domains found. This should not happen")
-
-            self.domain_id = payload["zones"][0]
+            if len(payload["zones"])>1:
+                raise Exception("Too many domains found. This should not happen")    
+            else:
+                self.domain = payload["zones"][0]
         else:
-            payload = self._get("/zones")
-            if (zone_id not in payload["zones"]):
-                raise Exception("Zone id not found")
+            if not payload["zones"]:
+                raise Exception("No domain found")
+            if self.domain not in payload["zones"]:
+                raise Exception("Requested domain not found")
 
-            self.domain_id = zone_id
+        self.domain_id = hashlib.md5(self.domain.encode('utf-8')).hexdigest()
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -74,7 +73,7 @@ class Provider(BaseProvider):
         LOGGER.debug("type %s",rtype)
         LOGGER.debug("name %s",name)
         LOGGER.debug("content %s",content)
-        LOGGER.debug("cf_data %s",cf_data)
+        
         data = {
             "records": [{
                 "host": self._full_name(name),
@@ -87,13 +86,22 @@ class Provider(BaseProvider):
 
         payload = {"success": True}
         try:
-            payload = self._post(f"/zones/{self.domain_id}/records", data)
+            payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
             if err.response.status_code != 400:
                 raise
 
-        LOGGER.debug("create_record: %s", payload["message"])
-        return payload["message"]
+        if "message" in payload:
+            return payload["message"]
+        elif "success" in payload:
+            return payload["success"]
+
+        #LOGGER.debug("create_record: %s", payload["message"])
+        # try:
+        #     return payload["message"]
+        # except:
+        #     i
+        #     import pdb;pdb.set_trace()
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -109,7 +117,7 @@ class Provider(BaseProvider):
         
         records = []
         
-        payload = self._get(f"/zones/{self.domain_id}/records", filter_obj)
+        payload = self._get(f"/zones/{self.domain}/records", filter_obj)
 
         LOGGER.debug("payload: %s", payload)
 
@@ -119,6 +127,7 @@ class Provider(BaseProvider):
                 "name": record["host"],
                 "ttl": record["ttl"],
                 "content": record["data"],
+                "id":  hashlib.md5((record["host"] + record["type"]).encode('utf-8')).hexdigest()
             }
             if(record["type"]=='MX' and record["mx_priority"]):
                 processed_record["options"]= {"mx": {"priority": record["mx_priority"]}}
@@ -157,7 +166,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug(data)
 
-        payload = self._put(f"/zones/{self.domain_id}/records/{name}/{rtype}", data)
+        payload = self._put(f"/zones/{self.domain}/records/{name}/{rtype}", data)
 
         LOGGER.debug("update_record: %s", payload["message"])
         return payload["message"]
@@ -166,12 +175,15 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         records = self._list_records(rtype, name, content)
-
+        
         for record in records:
             LOGGER.debug("delete_records: %s", record)
             name = record["name"]
             rtype = record["type"]
-            self._delete(f"/zones/{self.domain_id}/records/{name}/{rtype}")
+            if identifier is not None and identifier!=record["id"]:
+                continue
+            
+            self._delete(f"/zones/{self.domain}/records/{name}/{rtype}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -182,6 +194,8 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
+
+        
 
         # may need to get auth token
         if self.auth_token is None and self._get_provider_option('auth_token') is None:
@@ -200,7 +214,7 @@ class Provider(BaseProvider):
             if not post_result["access_token"]:
                 raise Exception(
                     "Error, could not get access token "
-                    f"for Mythic Beasts API for user: {self._get_provider_option('auth_email')}"
+                    f"for Mythic Beasts API for user: {self._get_provider_option('auth_username')}"
                 )
 
             self.auth_token = post_result["access_token"]
