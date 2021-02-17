@@ -74,6 +74,8 @@ class Provider(BaseProvider):
         LOGGER.debug("name %s",name)
         LOGGER.debug("content %s",content)
         
+        # duplicate = None
+
         data = {
             "records": [{
                 "host": self._full_name(name),
@@ -90,6 +92,12 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             if err.response.status_code != 400:
                 raise
+            # else:
+            #     duplicate = 1
+
+        # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
+        #     import pdb;pdb.set_trace()
+
 
         if "message" in payload:
             return payload["message"]
@@ -127,7 +135,7 @@ class Provider(BaseProvider):
                 "name": record["host"],
                 "ttl": record["ttl"],
                 "content": record["data"],
-                "id":  hashlib.md5((record["host"] + record["type"]).encode('utf-8')).hexdigest()
+                "id":  hashlib.md5((record["host"] + record["type"] + record["data"]).encode('utf-8')).hexdigest()
             }
             if(record["type"]=='MX' and record["mx_priority"]):
                 processed_record["options"]= {"mx": {"priority": record["mx_priority"]}}
@@ -140,11 +148,17 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+
+        
         if identifier is None:
-            records = self._list_records(rtype, name)
+            import pdb;pdb.set_trace()
+            records = self._list_records(rtype,name,content)
             if len(records) == 1:
-                name = records[0]["name"]
-                rtype = records[0]["type"]
+                matching_record = records[0]
+                filter_obj = {}
+                filter_obj["type"] = matching_record["type"]
+                filter_obj["host"] = matching_record["name"]
+
             elif len(records) < 1:
                 raise Exception(
                     "No records found matching type and name - won't update"
@@ -153,20 +167,33 @@ class Provider(BaseProvider):
                 raise Exception(
                     "Multiple records found matching type and name - won't update"
                 )
+        else:
+            records = self._list_records()
+            for record in records:
+                if record['id'] == identifier:
+                    matching_record = record
+                    break
+            else:
+                raise Exception("Can't find record with that id!")
+
+            filter_obj = {}
+            filter_obj["type"] = matching_record["type"]
+            filter_obj["host"] = matching_record["name"]
+            filter_obj["data"] = matching_record["content"]   
 
         data = {"records":[{}]}
-        # if rtype:
-        #     data["type"] = rtype
-        # if name:
-        #     data["host"] = self._full_name(name)
+        if rtype:
+            data["type"] = rtype
+        if name:
+            data["host"] = self._full_name(name)
         if content:
             data["records"][0]["data"] = content
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
         LOGGER.debug(data)
-
-        payload = self._put(f"/zones/{self.domain}/records/{name}/{rtype}", data)
+        
+        payload = self._put(f"/zones/{self.domain}/records/{matching_record['name']}/{matching_record['type']}", data, filter_obj)
 
         LOGGER.debug("update_record: %s", payload["message"])
         return payload["message"]
@@ -174,8 +201,21 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        records = self._list_records(rtype, name, content)
+        filter_obj = {}
+        if rtype:
+            filter_obj["type"] = rtype
+        if name:
+            filter_obj["host"] = self._full_name(name)
+        if content:
+            filter_obj["data"] = content
         
+        records = self._list_records(rtype, name, content)
+
+
+
+        # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
+        #     import pdb;pdb.set_trace()
+
         for record in records:
             LOGGER.debug("delete_records: %s", record)
             name = record["name"]
@@ -183,7 +223,8 @@ class Provider(BaseProvider):
             if identifier is not None and identifier!=record["id"]:
                 continue
             
-            self._delete(f"/zones/{self.domain}/records/{name}/{rtype}")
+            
+            self._delete(f"/zones/{self.domain}/records/{name}/{rtype}",filter_obj)
 
         LOGGER.debug("delete_record: %s", True)
         return True
