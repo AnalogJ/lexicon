@@ -151,7 +151,7 @@ class Provider(BaseProvider):
 
         
         if identifier is None:
-            import pdb;pdb.set_trace()
+            #import pdb;pdb.set_trace()
             records = self._list_records(rtype,name,content)
             if len(records) == 1:
                 matching_record = records[0]

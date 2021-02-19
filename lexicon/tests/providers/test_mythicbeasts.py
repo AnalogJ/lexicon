@@ -9,19 +9,19 @@ class MythicBeastsProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Mythic Beasts provider"""
     provider_name = 'mythicbeasts'
     domain = 'lexitus.co.uk'
-    # def _filter_post_data_parameters(self):
-    #     return ['login_token']
+    def _filter_post_data_parameters(self):
+        return ['access_token']
 
-    # def _filter_headers(self):
-    #     return ['Authorization']
+    def _filter_headers(self):
+        return ['Authorization']
 
     # def _filter_query_parameters(self):
     #     return ['secret_key']
 
-    # def _filter_response(self, response):
+     def _filter_response(self, response):
     #     """See `IntegrationTests._filter_response` for more information on how
     #     to filter the provider response."""
-    #     return response
+         return response
 
 
     def _test_fallback_fn(self):
