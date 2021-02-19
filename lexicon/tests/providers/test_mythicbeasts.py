@@ -18,10 +18,10 @@ class MythicBeastsProviderTests(TestCase, IntegrationTestsV2):
     # def _filter_query_parameters(self):
     #     return ['secret_key']
 
-     def _filter_response(self, response):
+    # def _filter_response(self, response):
     #     """See `IntegrationTests._filter_response` for more information on how
     #     to filter the provider response."""
-         return response
+    #     return response
 
 
     def _test_fallback_fn(self):
