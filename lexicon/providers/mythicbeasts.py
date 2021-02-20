@@ -1,11 +1,13 @@
 """Module provider for Mythic Beasts"""
 from __future__ import absolute_import
 
+import hashlib
 import json
 import logging
+import re
 
 import requests
-import hashlib
+
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -34,7 +36,6 @@ def provider_parser(subparser):
         "--auth-token",
         help="specify API token for authentication",
     )
-   
 
 
 class Provider(BaseProvider):
@@ -47,16 +48,15 @@ class Provider(BaseProvider):
         self.auth_token = None
 
     def _authenticate(self):
-        
-        #import pdb;pdb.set_trace()
-        
+
+
         payload = self._get("/zones")
 
         if self.domain is None:
             if not payload["zones"]:
                 raise Exception("No domain found")
-            if len(payload["zones"])>1:
-                raise Exception("Too many domains found. This should not happen")    
+            if len(payload["zones"]) > 1:
+                raise Exception("Too many domains found. This should not happen")
             else:
                 self.domain = payload["zones"][0]
         else:
@@ -65,28 +65,32 @@ class Provider(BaseProvider):
             if self.domain not in payload["zones"]:
                 raise Exception("Requested domain not found")
 
-        self.domain_id = hashlib.md5(self.domain.encode('utf-8')).hexdigest()
+        self.domain_id = hashlib.md5(self.domain.encode("utf-8")).hexdigest()
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
         # content, cf_data = self._format_content(rtype, content)
-        LOGGER.debug("type %s",rtype)
-        LOGGER.debug("name %s",name)
-        LOGGER.debug("content %s",content)
-        
+        LOGGER.debug("type %s", rtype)
+        LOGGER.debug("name %s", name)
+        LOGGER.debug("content %s", content)
+
         # duplicate = None
 
         data = {
-            "records": [{
-                "host": self._full_name(name),
-                "type": rtype,
-                "data": content,
-            }]
+            "records": [
+                {
+                    "host": self._relative_name(name),
+                    "type": rtype,
+                    "data": content,
+                }
+            ]
         }
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
-        payload = {"success": True}
+        # import pdb; pdb.set_trace()
+
+
         try:
             payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
@@ -98,13 +102,12 @@ class Provider(BaseProvider):
         # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
         #     import pdb;pdb.set_trace()
 
-
         if "message" in payload:
             return payload["message"]
         elif "success" in payload:
             return payload["success"]
 
-        #LOGGER.debug("create_record: %s", payload["message"])
+        # LOGGER.debug("create_record: %s", payload["message"])
         # try:
         #     return payload["message"]
         # except:
@@ -119,12 +122,11 @@ class Provider(BaseProvider):
         if rtype:
             filter_obj["type"] = rtype
         if name:
-            filter_obj["host"] = self._full_name(name)
+            filter_obj["host"] = self._relative_name(name)
         if content:
             filter_obj["data"] = content
-        
+
         records = []
-        
         payload = self._get(f"/zones/{self.domain}/records", filter_obj)
 
         LOGGER.debug("payload: %s", payload)
@@ -135,10 +137,14 @@ class Provider(BaseProvider):
                 "name": record["host"],
                 "ttl": record["ttl"],
                 "content": record["data"],
-                "id":  hashlib.md5((record["host"] + record["type"] + record["data"]).encode('utf-8')).hexdigest()
+                "id": hashlib.md5(
+                    (record["host"] + record["type"] + record["data"]).encode("utf-8")
+                ).hexdigest(),
             }
-            if(record["type"]=='MX' and record["mx_priority"]):
-                processed_record["options"]= {"mx": {"priority": record["mx_priority"]}}
+            if record["type"] == "MX" and record["mx_priority"]:
+                processed_record["options"] = {
+                    "mx": {"priority": record["mx_priority"]}
+                }
 
             records.append(processed_record)
 
@@ -149,10 +155,9 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
 
-        
         if identifier is None:
-            #import pdb;pdb.set_trace()
-            records = self._list_records(rtype,name,content)
+            # import pdb;pdb.set_trace()
+            records = self._list_records(rtype, name, content)
             if len(records) == 1:
                 matching_record = records[0]
                 filter_obj = {}
@@ -170,7 +175,7 @@ class Provider(BaseProvider):
         else:
             records = self._list_records()
             for record in records:
-                if record['id'] == identifier:
+                if record["id"] == identifier:
                     matching_record = record
                     break
             else:
@@ -179,21 +184,25 @@ class Provider(BaseProvider):
             filter_obj = {}
             filter_obj["type"] = matching_record["type"]
             filter_obj["host"] = matching_record["name"]
-            filter_obj["data"] = matching_record["content"]   
+            filter_obj["data"] = matching_record["content"]
 
-        data = {"records":[{}]}
+        data = {"records": [{}]}
         if rtype:
             data["type"] = rtype
         if name:
-            data["host"] = self._full_name(name)
+            data["host"] = self._relative_name(name)
         if content:
             data["records"][0]["data"] = content
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
         LOGGER.debug(data)
-        
-        payload = self._put(f"/zones/{self.domain}/records/{matching_record['name']}/{matching_record['type']}", data, filter_obj)
+
+        payload = self._put(
+            f"/zones/{self.domain}/records/{matching_record['name']}/{matching_record['type']}",
+            data,
+            filter_obj,
+        )
 
         LOGGER.debug("update_record: %s", payload["message"])
         return payload["message"]
@@ -205,13 +214,11 @@ class Provider(BaseProvider):
         if rtype:
             filter_obj["type"] = rtype
         if name:
-            filter_obj["host"] = self._full_name(name)
+            filter_obj["host"] = self._relative_name(name)
         if content:
             filter_obj["data"] = content
-        
+
         records = self._list_records(rtype, name, content)
-
-
 
         # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
         #     import pdb;pdb.set_trace()
@@ -220,11 +227,10 @@ class Provider(BaseProvider):
             LOGGER.debug("delete_records: %s", record)
             name = record["name"]
             rtype = record["type"]
-            if identifier is not None and identifier!=record["id"]:
+            if identifier is not None and identifier != record["id"]:
                 continue
-            
-            
-            self._delete(f"/zones/{self.domain}/records/{name}/{rtype}",filter_obj)
+
+            self._delete(f"/zones/{self.domain}/records/{name}/{rtype}", filter_obj)
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -236,17 +242,16 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        
-
         # may need to get auth token
-        if self.auth_token is None and self._get_provider_option('auth_token') is None:
+        if self.auth_token is None and self._get_provider_option("auth_token") is None:
             auth_request = requests.request(
-             "POST",
-             "https://auth.mythic-beasts.com/login",
-             data={
-                 "grant_type": "client_credentials"
-             },
-             auth=(self._get_provider_option("auth_username"),self._get_provider_option("auth_password"))
+                "POST",
+                "https://auth.mythic-beasts.com/login",
+                data={"grant_type": "client_credentials"},
+                auth=(
+                    self._get_provider_option("auth_username"),
+                    self._get_provider_option("auth_password"),
+                ),
             )
 
             auth_request.raise_for_status()
@@ -260,7 +265,7 @@ class Provider(BaseProvider):
 
             self.auth_token = post_result["access_token"]
         elif self.auth_token is None:
-            self.auth_token = self._get_provider_option('auth_token')
+            self.auth_token = self._get_provider_option("auth_token")
 
         headers = {"Content-Type": "application/json"}
         headers["Authorization"] = f"Bearer {self.auth_token}"
