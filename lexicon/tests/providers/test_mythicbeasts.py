@@ -1,13 +1,13 @@
 # Test for one implementation of the interface
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+from lexicon.tests.providers import integration_tests
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class MythicBeastsProviderTests(TestCase, IntegrationTestsV2):
+class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     """Integration tests for Mythic Beasts provider"""
 
     provider_name = "mythicbeasts"
@@ -29,3 +29,11 @@ class MythicBeastsProviderTests(TestCase, IntegrationTestsV2):
 
     def _test_fallback_fn(self):
         return lambda x: "placeholder_" + x if x not in ("auth_token") else ""
+
+    # We override this test because Mythic Beasts refuse to create a A record with 'localhost' value.
+    @integration_tests._vcr_integration_test
+    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("A", "localhost2", "127.0.0.1")

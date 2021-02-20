@@ -82,11 +82,14 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
-        try:
-            payload = self._post(f"/zones/{self.domain}/records", data)
-        except requests.exceptions.HTTPError as err:
-            if err.response.status_code != 400:
-                raise
+        # if name == "localhost":
+        #     import pdb; pdb.set_trace()
+
+        #try:
+        payload = self._post(f"/zones/{self.domain}/records", data)
+        #except requests.exceptions.HTTPError as err:
+            #if err.response.status_code != 400: #FIXME need to check this is because of duplicate before suppressing
+            #    raise
 
         if "message" in payload:
             return payload["message"]
