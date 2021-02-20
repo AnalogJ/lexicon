@@ -4,7 +4,6 @@ from __future__ import absolute_import
 import hashlib
 import json
 import logging
-import re
 
 import requests
 
@@ -39,7 +38,7 @@ def provider_parser(subparser):
 
 
 class Provider(BaseProvider):
-    """Provider class for Cloudflare"""
+    """Provider class for Mythic Beasts"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -48,8 +47,6 @@ class Provider(BaseProvider):
         self.auth_token = None
 
     def _authenticate(self):
-
-
         payload = self._get("/zones")
 
         if self.domain is None:
@@ -69,12 +66,9 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
-        # content, cf_data = self._format_content(rtype, content)
         LOGGER.debug("type %s", rtype)
         LOGGER.debug("name %s", name)
         LOGGER.debug("content %s", content)
-
-        # duplicate = None
 
         data = {
             "records": [
@@ -88,31 +82,19 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
-        # import pdb; pdb.set_trace()
-
-
         try:
             payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
             if err.response.status_code != 400:
                 raise
-            # else:
-            #     duplicate = 1
-
-        # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
-        #     import pdb;pdb.set_trace()
 
         if "message" in payload:
             return payload["message"]
         elif "success" in payload:
             return payload["success"]
 
-        # LOGGER.debug("create_record: %s", payload["message"])
-        # try:
-        #     return payload["message"]
-        # except:
-        #     i
-        #     import pdb;pdb.set_trace()
+        #FIXME - need to wait and poll here until verified that DNS change is live
+
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -156,7 +138,6 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         if identifier is None:
-            # import pdb;pdb.set_trace()
             records = self._list_records(rtype, name, content)
             if len(records) == 1:
                 matching_record = records[0]
@@ -220,9 +201,6 @@ class Provider(BaseProvider):
 
         records = self._list_records(rtype, name, content)
 
-        # if name == "_acme-challenge.deleterecordinset.lexitus.co.uk.":
-        #     import pdb;pdb.set_trace()
-
         for record in records:
             LOGGER.debug("delete_records: %s", record)
             name = record["name"]
@@ -279,23 +257,3 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
-
-    def _format_content(self, rtype, content):
-        """
-        Special case handling from some record types that Cloudflare needs
-        formatted differently
-
-        Returns new values for the content and data properties to be sent
-        on the request
-        """
-        data = None
-        if rtype == "SSHFP":
-            # For some reason the CloudFlare API does not let you set content
-            # directly when creating an SSHFP record. You need to pass the
-            # fields that make up the record seperately, then the API joins
-            # them back together
-            _fp = content.split(" ")
-            data = {"algorithm": _fp[0], "type": _fp[1], "fingerprint": _fp[2]}
-            content = None
-
-        return content, data
