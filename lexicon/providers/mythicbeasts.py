@@ -141,9 +141,8 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         if identifier is None:
-            records = self._list_records(rtype,self._full_name(name), content)
+            records = self._list_records(rtype,self._full_name(name))
             if len(records) == 1:
                 matching_record = records[0]
                 filter_obj = {}
