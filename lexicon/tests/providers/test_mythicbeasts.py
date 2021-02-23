@@ -31,9 +31,10 @@ class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return lambda x: "placeholder_" + x if x not in ("auth_token") else ""
 
     # We override this test because Mythic Beasts refuse to create a A record with 'localhost' value.
-    @integration_tests._vcr_integration_test
-    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
-        self,
-    ):
-        provider = self._construct_authenticated_provider()
-        assert provider.create_record("A", "localhost2", "127.0.0.1")
+    #  - no - this is ok - problem with pre-existing records
+    # @integration_tests._vcr_integration_test
+    # def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
+    #     self,
+    # ):
+    #     provider = self._construct_authenticated_provider()
+    #     assert provider.create_record("A", "localhost2", "127.0.0.1")

@@ -82,14 +82,12 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
-        # if name == "localhost":
-        #     import pdb; pdb.set_trace()
-
-        #try:
-        payload = self._post(f"/zones/{self.domain}/records", data)
-        #except requests.exceptions.HTTPError as err:
-            #if err.response.status_code != 400: #FIXME need to check this is because of duplicate before suppressing
-            #    raise
+        payload = {"success": True}
+        try:
+            payload = self._post(f"/zones/{self.domain}/records", data)
+        except requests.exceptions.HTTPError as err:
+            if err.response.status_code != 400 and err.response.json()["errors"][0][0:16] != 'Duplicate record': 
+                raise
 
         if "message" in payload:
             return payload["message"]
@@ -111,6 +109,10 @@ class Provider(BaseProvider):
         if content:
             filter_obj["data"] = content
 
+        #if name == "random.fqdntest.lexitus.co.uk.":
+        #    import pdb; pdb.set_trace()
+
+
         records = []
         payload = self._get(f"/zones/{self.domain}/records", filter_obj)
 
@@ -119,7 +121,7 @@ class Provider(BaseProvider):
         for record in payload["records"]:
             processed_record = {
                 "type": record["type"],
-                "name": record["host"],
+                "name": self._full_name(record["host"]),
                 "ttl": record["ttl"],
                 "content": record["data"],
                 "id": hashlib.md5(
@@ -141,12 +143,12 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, rtype=None, name=None, content=None):
 
         if identifier is None:
-            records = self._list_records(rtype, name, content)
+            records = self._list_records(rtype,self._full_name(name), content)
             if len(records) == 1:
                 matching_record = records[0]
                 filter_obj = {}
                 filter_obj["type"] = matching_record["type"]
-                filter_obj["host"] = matching_record["name"]
+                filter_obj["host"] = self._relative_name(matching_record["name"])
 
             elif len(records) < 1:
                 raise Exception(
@@ -167,7 +169,7 @@ class Provider(BaseProvider):
 
             filter_obj = {}
             filter_obj["type"] = matching_record["type"]
-            filter_obj["host"] = matching_record["name"]
+            filter_obj["host"] = self._relative_name(matching_record["name"])
             filter_obj["data"] = matching_record["content"]
 
         data = {"records": [{}]}
@@ -183,7 +185,7 @@ class Provider(BaseProvider):
         LOGGER.debug(data)
 
         payload = self._put(
-            f"/zones/{self.domain}/records/{matching_record['name']}/{matching_record['type']}",
+            f"/zones/{self.domain}/records/{self._relative_name(matching_record['name'])}/{matching_record['type']}",
             data,
             filter_obj,
         )
@@ -202,11 +204,15 @@ class Provider(BaseProvider):
         if content:
             filter_obj["data"] = content
 
+        #if name == "delete.testfilt":
+        #    import pdb; pdb.set_trace()
+
+
         records = self._list_records(rtype, name, content)
 
         for record in records:
             LOGGER.debug("delete_records: %s", record)
-            name = record["name"]
+            name = self._relative_name(record["name"])
             rtype = record["type"]
             if identifier is not None and identifier != record["id"]:
                 continue
