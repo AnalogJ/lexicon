@@ -1,0 +1,600 @@
+interactions:
+- request:
+    body: grant_type=client_credentials
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '29'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://auth.mythic-beasts.com/login
+  response:
+    body:
+      string:
+        access_token: null
+        expires_in: 300
+        token_type: bearer
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '75'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:14 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones
+  response:
+    body:
+      string:
+        access_token: null
+        zones:
+        - lexitus.co.uk
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '28'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:15 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"records": [{"host": "delete.testfqdn", "type": "TXT", "data": "challengetoken",
+      "ttl": 3600}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '96'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records
+  response:
+    body:
+      string:
+        access_token: null
+        message: 1 records added
+        records_added: 1
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '48'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:15 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:15 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:26 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:36 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:47 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:17:57 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:08 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:18 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        errors:
+        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
+        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:29 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?verify
+  response:
+    body:
+      string:
+        access_token: null
+        records:
+        - data: challengetoken
+          host: delete.testfqdn
+          ttl: 3600
+          type: TXT
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:39 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records?type=TXT&host=delete.testfqdn&data=challengetoken
+  response:
+    body:
+      string:
+        access_token: null
+        records:
+        - data: challengetoken
+          host: delete.testfqdn
+          ttl: 3600
+          type: TXT
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:40 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: DELETE
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testfqdn/TXT?type=TXT&host=delete.testfqdn&data=challengetoken
+  response:
+    body:
+      string:
+        access_token: null
+        records_removed: 1
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '22'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:40 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records?type=TXT&host=delete.testfqdn
+  response:
+    body:
+      string:
+        access_token: null
+        records: []
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '15'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Feb 2021 17:18:40 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 200
+      message: OK
+version: 1
