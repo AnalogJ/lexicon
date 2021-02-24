@@ -132,10 +132,6 @@ class Provider(BaseProvider):
         if content:
             filter_obj["data"] = content
 
-        #if name == "random.fqdntest.lexitus.co.uk.":
-        #    import pdb; pdb.set_trace()
-
-
         records = []
         payload = self._get(f"/zones/{self.domain}/records", filter_obj)
 
@@ -147,6 +143,7 @@ class Provider(BaseProvider):
                 "name": self._full_name(record["host"]),
                 "ttl": record["ttl"],
                 "content": record["data"],
+                #no id is available, so we need to make our own
                 "id": hashlib.md5(
                     (record["host"] + record["type"] + record["data"]).encode("utf-8")
                 ).hexdigest(),
@@ -225,10 +222,6 @@ class Provider(BaseProvider):
             filter_obj["host"] = self._relative_name(name)
         if content:
             filter_obj["data"] = content
-
-        #if name == "delete.testfilt":
-        #    import pdb; pdb.set_trace()
-
 
         records = self._list_records(rtype, name, content)
 
