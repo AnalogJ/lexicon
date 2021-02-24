@@ -108,8 +108,6 @@ class Provider(BaseProvider):
                     if err.response.status_code != 409:
                         raise
                     else:
-                        # if not err.response.json()["errors"][0][0:40] == 'Received 0 record(s), expected 1 from ns':
-                        #     import pdb; pdb.set_trace()
                         time.sleep(10)
 
             if(not changes_are_live):
