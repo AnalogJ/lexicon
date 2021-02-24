@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import hashlib
 import json
 import logging
+import time as time
 
 import requests
 
@@ -70,6 +71,9 @@ class Provider(BaseProvider):
         LOGGER.debug("name %s", name)
         LOGGER.debug("content %s", content)
 
+        if rtype == 'CNAME':
+             content = self._fqdn_name(content)
+
         data = {
             "records": [
                 {
@@ -89,12 +93,33 @@ class Provider(BaseProvider):
             if err.response.status_code != 400 and err.response.json()["errors"][0][0:16] != 'Duplicate record': 
                 raise
 
+        if rtype=='A' or rtype=="TXT":
+            #need to wait and poll here until verified that DNS change is live
+            changes_are_live = False
+            timeout = 300
+            start = time.time()
+
+            while(not changes_are_live and time.time()-start < timeout):
+                try:
+                    verify = self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
+                    changes_are_live = True
+                except requests.exceptions.HTTPError as err:
+                    
+                    if err.response.status_code != 409:
+                        raise
+                    else:
+                        # if not err.response.json()["errors"][0][0:40] == 'Received 0 record(s), expected 1 from ns':
+                        #     import pdb; pdb.set_trace()
+                        time.sleep(10)
+
+            if(not changes_are_live):
+                raise Exception("Timed out trying to verify changes were live")
+
+
         if "message" in payload:
             return payload["message"]
         elif "success" in payload:
             return payload["success"]
-
-        #FIXME - need to wait and poll here until verified that DNS change is live
 
 
     # List all records. Return an empty list if no records found
