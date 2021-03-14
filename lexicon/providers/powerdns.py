@@ -47,7 +47,7 @@ def provider_parser(subparser):
 class PowerDNSProviderError(Exception):
     """Generic PowerDNS exception"""
 
-    
+
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
