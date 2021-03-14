@@ -44,6 +44,10 @@ def provider_parser(subparser):
     )
 
 
+class PowerDNSProviderError(Exception):
+    """Generic PowerDNS exception"""
+
+    
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
@@ -51,6 +55,9 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
 
         self.api_endpoint = self._get_provider_option("pdns_server")
+        if not self.api_endpoint:
+            raise PowerDNSProviderError('PowerDNS API endpoint not defined (pdns_server)')
+
         self.disable_slave_notify = self._get_provider_option("pdns-disable-notify")
 
         if self.api_endpoint.endswith("/"):
@@ -66,7 +73,9 @@ class Provider(BaseProvider):
         self.api_endpoint += "/servers/" + self.server_id
 
         self.api_key = self._get_provider_option("auth_token")
-        assert self.api_key is not None
+        if not self.api_key:
+            raise PowerDNSProviderError('PowerDNS API key not defined (auth_token)')
+
         self._zone_data = None
 
     def notify_slaves(self):
