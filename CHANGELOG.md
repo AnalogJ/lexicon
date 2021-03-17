@@ -7,6 +7,9 @@
 * Support both `tldextract` 2.x and 3.x
 * Upgrade third-party dependencies
 * Validate PowerDNS provider parameters (#755)
+* Support dnspython>=2.1 for `localzone` provider (#760)
+* Update Mythic Beasts documentation (#693)
+* Fix documentation build and publication
 
 ### Deleted
 * Remove `mock` and `nose` dependencies (#706)
