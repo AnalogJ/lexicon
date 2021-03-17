@@ -1,5 +1,6 @@
 """Module provider for Namecheap"""
 from __future__ import absolute_import
+
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
@@ -12,21 +13,17 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['namecheap.com']
+NAMESERVER_DOMAINS = ["namecheap.com"]
 
 
 def provider_parser(subparser):
     """Configure provider parser for Namecheap"""
-    subparser.add_argument(
-        '--auth-token',
-        help='specify api token for authentication'
-    )
+    subparser.add_argument("--auth-token", help="specify api token for authentication")
 
     # earlier versions of the API expected the email address here
     # now they appear to want the username.
     subparser.add_argument(
-        '--auth-username',
-        help='specify username for authentication'
+        "--auth-username", help="specify username for authentication"
     )
 
     # FIXME What is the client IP used for?
@@ -34,14 +31,12 @@ def provider_parser(subparser):
     # namecheap requires API requests to come from whitelisted domains, and this
     # is probably updated with the actual IP on their end.
     subparser.add_argument(
-        '--auth-client-ip',
-        help='Client IP address to send to Namecheap API calls',
-        default='127.0.0.1'
+        "--auth-client-ip",
+        help="Client IP address to send to Namecheap API calls",
+        default="127.0.0.1",
     )
     subparser.add_argument(
-        '--auth-sandbox',
-        help='Whether to use the sandbox server',
-        action='store_true'
+        "--auth-sandbox", help="Whether to use the sandbox server", action="store_true"
     )
 
 
@@ -64,11 +59,11 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.client = namecheap.Api(
-            ApiUser=self._get_provider_option('auth_username') or '',
-            ApiKey=self._get_provider_option('auth_token') or '',
-            UserName=self._get_provider_option('auth_username') or '',
-            ClientIP=self._get_provider_option('auth_client_ip') or '',
-            sandbox=self._get_provider_option('auth_sandbox') or False,
+            ApiUser=self._get_provider_option("auth_username") or "",
+            ApiKey=self._get_provider_option("auth_token") or "",
+            UserName=self._get_provider_option("auth_username") or "",
+            ClientIP=self._get_provider_option("auth_client_ip") or "",
+            sandbox=self._get_provider_option("auth_sandbox") or False,
             debug=False,
         )
         self.domain = self.domain
@@ -115,19 +110,20 @@ class Provider(BaseProvider):
             <Nameserver>dns2.registrar-servers.com</Nameserver>
           </DnsDetails>
         """
-        extra_payload = {'DomainName': self.domain, }
+        extra_payload = {"DomainName": self.domain}
 
         try:
-            xml = self.client._call('namecheap.domains.getInfo', extra_payload)  # pylint: disable=protected-access
+            xml = self.client._call("namecheap.domains.getInfo", extra_payload)
         except namecheap.ApiError as err:
             # this will happen if there is an API connection error
             # OR if the user is not permissioned to manage this domain
             # OR the API request came from a not whitelisted IP
             # we should print the error, so people know how to correct it.
-            raise Exception('Authentication failed: `%s`' % str(err))
+            raise Exception(f"Authentication failed: `{str(err)}`")
 
-        xpath = './/{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult' % {
-            'ns': namecheap.NAMESPACE}
+        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
+            "ns": namecheap.NAMESPACE
+        }
         domain_info = xml.find(xpath)
 
         def _check_hosts_permission():
@@ -136,31 +132,34 @@ class Provider(BaseProvider):
                 return False
 
             # do they own the domain?
-            if domain_info.attrib['IsOwner'].lower() == 'true':
+            if domain_info.attrib["IsOwner"].lower() == "true":
                 return True
 
             # look for rights
-            xpath_alt = ('.//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult'
-                         '/{%(ns)s}Modificationrights' % {'ns': namecheap.NAMESPACE})
+            xpath_alt = (
+                ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult"
+                "/{%(ns)s}Modificationrights" % {"ns": namecheap.NAMESPACE}
+            )
             rights_info = xml.find(xpath_alt)
             if rights_info is None:
                 return False
 
             # all rights
-            if rights_info.attrib['All'].lower() == 'true':
+            if rights_info.attrib["All"].lower() == "true":
                 return True
 
-            for right in rights_info.getchildren():
-                if right.attrib['Type'].lower() == 'hosts':
+            for right in rights_info:
+                if right.attrib["Type"].lower() == "hosts":
                     # we're only looking at hosts, so we can exit now
-                    return right.text.lower() == 'ok'
+                    return right.text.lower() == "ok"
 
             return None
 
         permissioned = _check_hosts_permission()
         if not permissioned:
-            raise Exception('The domain {} is not controlled by this Namecheap '
-                            'account'.format(self.domain))
+            raise Exception(
+                f"The domain {self.domain} is not controlled by this Namecheap account"
+            )
 
         # FIXME What is this for?
         self.domain_id = self.domain
@@ -182,30 +181,27 @@ class Provider(BaseProvider):
             short TTL of 60 seconds, it may take 120 seconds for their DNS to
             propagate.
         """
-        return self._get_lexicon_option('ttl')
+        return self._get_lexicon_option("ttl")
 
     # Create record. If record already exists with the same content, do nothing
     def _create_record(self, rtype, name, content):
         record = {
             # required
-            'Type': rtype,
-            'Name': self._relative_name(name),
+            "Type": rtype,
+            "Name": self._relative_name(name),
         }
 
         # MX records needd special treatment
-        if rtype == 'MX':
+        if rtype == "MX":
             mxpref, address = content.split()
-            record.update({
-                'MxPref': int(mxpref),
-                'Address': address
-            })
+            record.update({"MxPref": int(mxpref), "Address": address})
         else:
-            record.update({'Address': content})
+            record.update({"Address": content})
 
         # inject the ttl if specified
         option_ttl = self.option_ttl()
         if option_ttl:
-            record['TTL'] = option_ttl
+            record["TTL"] = option_ttl
         # LOGGER.debug('create_record: %s', 'id' in payload)
         # return 'id' in payload
         self.client.domains_dns_addHost(self.domain, record)
@@ -218,25 +214,30 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
-    def _list_records_internal(self, rtype=None, name=None, content=None, identifier=None):
+    def _list_records_internal(
+        self, rtype=None, name=None, content=None, identifier=None
+    ):
         records = []
         raw_records = self.client.domains_dns_getHosts(self.domain)
         for record in raw_records:
             records.append(self._convert_to_lexicon(record))
 
         if identifier:
-            records = [record for record in records if record['id'] == identifier]
+            records = [record for record in records if record["id"] == identifier]
         if rtype:
-            records = [record for record in records if record['type'] == rtype]
+            records = [record for record in records if record["type"] == rtype]
         if name:
-            if name.endswith('.'):
+            if name.endswith("."):
                 name = name[:-1]
-            records = [record for record in records if name in record['name']]
+            records = [record for record in records if name in record["name"]]
         if content:
             records = [
-                record for record in records if record['content'].lower() == content.lower()]
+                record
+                for record in records
+                if record["content"].lower() == content.lower()
+            ]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Create or update a record.
@@ -249,66 +250,68 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         records = self._list_records_internal(
-            rtype=rtype, name=name, content=content, identifier=identifier)
+            rtype=rtype, name=name, content=content, identifier=identifier
+        )
         for record in records:
             self.client.domains_dns_delHost(
-                self.domain, self._convert_to_namecheap(record))
+                self.domain, self._convert_to_namecheap(record)
+            )
         return True
 
     def _convert_to_namecheap(self, record):
-        """ converts from lexicon format record to namecheap format record,
+        """converts from lexicon format record to namecheap format record,
         suitable to sending through the api to namecheap"""
 
         processed_record = {}
 
-        name = record['name']
-        if name.endswith('.'):
+        name = record["name"]
+        if name.endswith("."):
             name = name[:-1]
 
-        short_name = name[:name.find(self.domain) - 1]
+        short_name = name[: name.find(self.domain) - 1]
 
-        if record['type'] == 'MX':
+        if record["type"] == "MX":
             # MX records needs to have separate treatment.
-            mxpref, address = record['content'].split()
-            processed_record.update({
-                'MxPref': mxpref,
-                'Address': address
-            })
+            mxpref, address = record["content"].split()
+            processed_record.update({"MxPref": mxpref, "Address": address})
         else:
-            processed_record.update({
-                'Address': record['content']})
+            processed_record.update({"Address": record["content"]})
 
-        processed_record.update({
-            'Type': record['type'],
-            'Name': short_name,
-            'TTL': record['ttl'],
-            'HostId': record['id']
-        })
+        processed_record.update(
+            {
+                "Type": record["type"],
+                "Name": short_name,
+                "TTL": record["ttl"],
+                "HostId": record["id"],
+            }
+        )
 
         return processed_record
 
     def _convert_to_lexicon(self, record):
-        """ converts from namecheap raw record format to lexicon format record
-        """
+        """converts from namecheap raw record format to lexicon format record"""
 
-        name = record['Name']
+        name = record["Name"]
 
         if not name.endswith(self.domain):
-            name += ".{}".format(self.domain)
+            name += f".{self.domain}"
 
-        content = '{} {}'.format(record['MXPref'], record['Address']) \
-            if record['Type'] == 'MX' else record['Address']
+        content = (
+            f"{record['MXPref']} {record['Address']}"
+            if record["Type"] == "MX"
+            else record["Address"]
+        )
 
         processed_record = {
-            'type': record['Type'],
-            'name': name,
-            'ttl': record['TTL'],
-            'content': content,
-            'id': record['HostId']
+            "type": record["Type"],
+            "name": name,
+            "ttl": record["TTL"],
+            "content": content,
+            "id": record["HostId"],
         }
 
         return processed_record
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used by Namecheap provider
         pass

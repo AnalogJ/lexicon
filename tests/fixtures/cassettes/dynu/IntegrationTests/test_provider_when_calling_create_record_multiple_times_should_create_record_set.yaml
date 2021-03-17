@@ -1,0 +1,194 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
+    uri: https://api.dynu.com/v2/dns
+  response:
+    body:
+      string: '{"statusCode":200,"domains":[{"id":1024,"name":"example.com","unicodeName":"example.com","token":"LQFTMTBQVOYUGQRFIQMU","state":"Complete","location":"lexicon","group":"lexicon","ipv4Address":"127.0.0.1","ipv6Address":"::1","ttl":120,"ipv4":true,"ipv6":true,"ipv4WildcardAlias":true,"ipv6WildcardAlias":true,"createdOn":"2019-06-16T18:26:58","updatedOn":"2020-03-12T22:19:43"}]}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '378'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:44 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"recordType": "TXT", "state": true, "nodeName": "_acme-challenge.createrecordset",
+      "textData": "challengetoken1", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://api.dynu.com/v2/dns/1024/record
+  response:
+    body:
+      string: '{"statusCode":200,"id":6052996,"domainId":1024,"domainName":"example.com","nodeName":"_acme-challenge.createrecordset","hostname":"_acme-challenge.createrecordset.example.com","recordType":"TXT","ttl":3600,"state":true,"content":"_acme-challenge.createrecordset.example.com.
+        3600 IN TXT \"challengetoken1\"","updatedOn":"2020-03-12T22:19:49.563","textData":"challengetoken1"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '375'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:49 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"recordType": "TXT", "state": true, "nodeName": "_acme-challenge.createrecordset",
+      "textData": "challengetoken2", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: POST
+    uri: https://api.dynu.com/v2/dns/1024/record
+  response:
+    body:
+      string: '{"statusCode":200,"id":6052997,"domainId":1024,"domainName":"example.com","nodeName":"_acme-challenge.createrecordset","hostname":"_acme-challenge.createrecordset.example.com","recordType":"TXT","ttl":3600,"state":true,"content":"_acme-challenge.createrecordset.example.com.
+        3600 IN TXT \"challengetoken2\"","updatedOn":"2020-03-12T22:19:51.357","textData":"challengetoken2"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '375'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:51 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: DELETE
+    uri: https://api.dynu.com/v2/dns/1024/record/6052996
+  response:
+    body:
+      string: '{"statusCode":200}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:52 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: DELETE
+    uri: https://api.dynu.com/v2/dns/1024/record/6052997
+  response:
+    body:
+      string: '{"statusCode":200}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:54 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,20 +1,17 @@
 """Module provider for Henet"""
 from __future__ import absolute_import
+
 import logging
 import re
 
+from bs4 import BeautifulSoup
 from requests import Session
-# Due to optional requirement
-try:
-    from bs4 import BeautifulSoup
-except ImportError:
-    pass
 
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['he.net']
+NAMESERVER_DOMAINS = ["he.net"]
 
 
 def provider_parser(subparser):
@@ -24,19 +21,18 @@ def provider_parser(subparser):
               YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
         """
     subparser.add_argument(
-        '--auth-username',
-        help='specify username for authentication'
+        "--auth-username", help="specify username for authentication"
     )
     subparser.add_argument(
-        '--auth-password',
-        help='specify password for authentication',
+        "--auth-password", help="specify password for authentication"
     )
 
 
 class Provider(BaseProvider):
     """
-        he.net provider
+    he.net provider
     """
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain = self.domain
@@ -46,17 +42,15 @@ class Provider(BaseProvider):
     def _authenticate(self):
         # Create the session GET the login page to retrieve a session cookie
         self.session = Session()
-        self.session.get(
-            "https://dns.he.net/"
-        )
+        self.session.get("https://dns.he.net/")
 
         # Hit the login page with authentication info to login the session
         login_response = self.session.post(
             "https://dns.he.net",
             data={
-                "email": self._get_provider_option('auth_username') or '',
-                "pass": self._get_provider_option('auth_password') or ''
-            }
+                "email": self._get_provider_option("auth_username") or "",
+                "pass": self._get_provider_option("auth_password") or "",
+            },
         )
 
         # Parse in the HTML, if the div containing the error message is found, error
@@ -74,7 +68,7 @@ class Provider(BaseProvider):
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
             LOGGER.warning("Domain %s not found in account", self.domain)
-            raise AssertionError("Domain {0} not found in account".format(self.domain))
+            raise AssertionError(f"Domain {self.domain} not found in account")
 
         self.domain_id = zone_img["value"]
         LOGGER.debug("HENET domain ID: %s", self.domain_id)
@@ -99,20 +93,20 @@ class Provider(BaseProvider):
             "Name": name,
             "Content": content,
             "TTL": "3600",
-            "hosted_dns_editrecord": "Submit"
+            "hosted_dns_editrecord": "Submit",
         }
-        ttl = self._get_lexicon_option('ttl')
+        ttl = self._get_lexicon_option("ttl")
         if ttl:
             if ttl <= 0:
-                data['TTL'] = "3600"
+                data["TTL"] = "3600"
             else:
-                data['TTL'] = str(ttl)
-        prio = self._get_lexicon_option('priority')
+                data["TTL"] = str(ttl)
+        prio = self._get_lexicon_option("priority")
         if prio:
             if prio <= 0:
-                data['Priority'] = "10"
+                data["Priority"] = "10"
             else:
-                data['Priority'] = str(prio)
+                data["Priority"] = str(prio)
         self.session.post("https://dns.he.net/index.cgi", data=data)
         # Pull a list of records and check for ours
         records = self._list_records(name=name)
@@ -129,13 +123,13 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
-
-    def _list_records_internal(self, rtype=None, name=None, content=None, identifier=None):
+    def _list_records_internal(
+        self, rtype=None, name=None, content=None, identifier=None
+    ):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
-            "https://dns.he.net/?hosted_dns_zoneid={0}&menu=edit_zone&hosted_dns_editzone".format(
-                self.domain_id)
+            f"https://dns.he.net/?hosted_dns_zoneid={self.domain_id}&menu=edit_zone&hosted_dns_editzone",
         )
 
         # Parse the HTML response, and list the table rows for DNS records
@@ -143,6 +137,7 @@ class Provider(BaseProvider):
 
         def is_dns_tr_type(klass):
             return klass and re.compile("dns_tr").search(klass)
+
         records = html.findAll("tr", class_=is_dns_tr_type)
 
         # If the tag couldn't be found, error, otherwise, return the value of the tag
@@ -155,38 +150,40 @@ class Provider(BaseProvider):
             tds = dns_tr.findAll("td")
             # Process HTML in the TR children to derive each object
             rec = {}
-            rec['zone_id'] = tds[0].string
-            rec['id'] = tds[1].string
-            rec['name'] = tds[2].string
+            rec["zone_id"] = tds[0].string
+            rec["id"] = tds[1].string
+            rec["name"] = tds[2].string
             # the 4th entry is a comment
-            type_elem = tds[3].find("span", class_='rrlabel')
-            rec['type'] = type_elem.string if type_elem else None
-            rec['ttl'] = tds[4].string
-            if tds[5].string != '-':
-                rec['priority'] = tds[5]
-            rec['content'] = tds[6].string
-            rec['is_dynamic'] = tds[7].string == '1'
+            type_elem = tds[3].find("span", class_="rrlabel")
+            rec["type"] = type_elem.string if type_elem else None
+            rec["ttl"] = tds[4].string
+            if tds[5].string != "-":
+                rec["priority"] = tds[5]
+            rec["content"] = tds[6].string
+            rec["is_dynamic"] = tds[7].string == "1"
             rec = self._clean_TXT_record(rec)
             new_records.append(rec)
         records = new_records
         if identifier:
-            LOGGER.debug(
-                "Filtering %d records by id: %s", len(records), identifier)
-            records = [record for record in records if record['id'] == identifier]
+            LOGGER.debug("Filtering %d records by id: %s", len(records), identifier)
+            records = [record for record in records if record["id"] == identifier]
         if rtype:
             LOGGER.debug("Filtering %d records by rtype: %s", len(records), rtype)
-            records = [
-                record for record in records if record['type'] == rtype]
+            records = [record for record in records if record["type"] == rtype]
         if name:
             LOGGER.debug("Filtering %d records by name: %s", len(records), name)
-            if name.endswith('.'):
+            if name.endswith("."):
                 name = name[:-1]
-            records = [
-                record for record in records if name in record['name']]
+            records = [record for record in records if name in record["name"]]
         if content:
-            LOGGER.debug("Filtering %d records by content: %s", len(records), content.lower())
+            LOGGER.debug(
+                "Filtering %d records by content: %s", len(records), content.lower()
+            )
             records = [
-                record for record in records if record['content'].lower() == content.lower()]
+                record
+                for record in records
+                if record["content"].lower() == content.lower()
+            ]
         LOGGER.debug("Final records (%d): %s", len(records), records)
 
         return records
@@ -203,7 +200,7 @@ class Provider(BaseProvider):
         delete_record_ids = []
         if not identifier:
             records = self._list_records(rtype, name, content)
-            delete_record_ids = [record['id'] for record in records]
+            delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)
         LOGGER.debug("Record IDs to delete: %s", delete_record_ids)
@@ -217,8 +214,8 @@ class Provider(BaseProvider):
                     "hosted_dns_recordid": rec_id,
                     "hosted_dns_editzone": "1",
                     "hosted_dns_delrecord": "1",
-                    "hosted_dns_delconfirm": "delete"
-                }
+                    "hosted_dns_delconfirm": "delete",
+                },
             )
 
             # Parse the HTML response, if the <div> tag indicating success isn't found, error
@@ -228,6 +225,6 @@ class Provider(BaseProvider):
                 return False
         return True
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used in this provider
         pass

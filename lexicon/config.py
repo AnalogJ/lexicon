@@ -9,11 +9,10 @@ import warnings
 
 import yaml
 
-
 LOGGER = logging.getLogger(__name__)
 
 
-class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
+class ConfigResolver(object):
     """
     Highly customizable configuration resolver object, that gets configuration parameters
     from various sources with a precedence order. Sources and their priority are configured
@@ -148,7 +147,9 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
         NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
         by default, with [provider] equals to the given provider_name parameter.
         """
-        return self.with_config_source(ProviderFileConfigSource(provider_name, file_path))
+        return self.with_config_source(
+            ProviderFileConfigSource(provider_name, file_path)
+        )
 
     def with_config_dir(self, dir_path):
         """
@@ -171,7 +172,7 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
             path = os.path.join(dir_path, path)
             if os.path.isfile(path):
                 basename = os.path.basename(path)
-                search = re.search(r'^lexicon(?:_(\w+)|)\.yml$', basename)
+                search = re.search(r"^lexicon(?:_(\w+)|)\.yml$", basename)
                 if search:
                     provider = search.group(1)
                     if provider:
@@ -180,8 +181,9 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
                         lexicon_config_files.append(path)
 
         for lexicon_provider_config_file in lexicon_provider_config_files:
-            self.with_provider_config_file(lexicon_provider_config_file[0],
-                                           lexicon_provider_config_file[1])
+            self.with_provider_config_file(
+                lexicon_provider_config_file[0], lexicon_provider_config_file[1]
+            )
 
         for lexicon_config_file in lexicon_config_files:
             self.with_config_file(lexicon_config_file)
@@ -190,12 +192,16 @@ class ConfigResolver(object):  # pylint: disable=useless-object-inheritance
 
     def with_legacy_dict(self, legacy_dict_object):
         """Configure a source that consumes the dict that where used on Lexicon 2.x"""
-        warnings.warn(DeprecationWarning('Legacy configuration object has been used '
-                                         'to load the ConfigResolver.'))
+        warnings.warn(
+            DeprecationWarning(
+                "Legacy configuration object has been used "
+                "to load the ConfigResolver."
+            )
+        )
         return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
 
-class ConfigSource(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
+class ConfigSource(object):
     """
     Base class to implement a configuration source for a ConfigResolver.
     The relevant method to override is resolve(self, config_parameter).
@@ -210,18 +216,20 @@ class ConfigSource(object):  # pylint: disable=useless-object-inheritance,too-fe
 
         Must be implemented by each ConfigSource concrete child class.
         """
-        raise NotImplementedError('The method resolve(config_key) '
-                                  'must be implemented in the concret sub-classes.')
+        raise NotImplementedError(
+            "The method resolve(config_key) "
+            "must be implemented in the concret sub-classes."
+        )
 
 
-class EnvironmentConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class EnvironmentConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against existing environment variables."""
 
     def __init__(self):
         super(EnvironmentConfigSource, self).__init__()
         self._parameters = {}
         for (key, value) in os.environ.items():
-            if key.startswith('LEXICON_'):
+            if key.startswith("LEXICON_"):
                 self._parameters[key] = value
 
     def resolve(self, config_key):
@@ -229,7 +237,7 @@ class EnvironmentConfigSource(ConfigSource):  # pylint: disable=too-few-public-m
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_AUTH_MY_CONFIG
         #   * lexicon:provider:my_other_config => LEXICON_PROVIDER_AUTH_MY_OTHER_CONFIG
         #   * lexicon:my_global_config => LEXICON_MY_GLOBAL_CONFIG
-        environment_variable = re.sub(':', '_', config_key).upper()
+        environment_variable = re.sub(":", "_", config_key).upper()
         value = self._parameters.get(environment_variable, None)
         if value:
             return value
@@ -237,20 +245,25 @@ class EnvironmentConfigSource(ConfigSource):  # pylint: disable=too-few-public-m
         # Second try, with the legacy naming convention for specific provider config:
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_MY_CONFIG
         # Users get a warning about this deprecated usage.
-        environment_variable_legacy = re.sub(r'(.*)_AUTH_(.*)', r'\1_\2',
-                                             environment_variable).upper()
+        environment_variable_legacy = re.sub(
+            r"(.*)_AUTH_(.*)", r"\1_\2", environment_variable
+        ).upper()
         value = self._parameters.get(environment_variable_legacy, None)
         if value:
-            LOGGER.warning(('Warning: Use of environment variable %s is deprecated. '
-                            'Try %s instead.'),
-                           environment_variable_legacy,
-                           environment_variable)
+            LOGGER.warning(
+                (
+                    "Warning: Use of environment variable %s is deprecated. "
+                    "Try %s instead."
+                ),
+                environment_variable_legacy,
+                environment_variable,
+            )
             return value
 
         return None
 
 
-class ArgsConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class ArgsConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against an argparse namespace."""
 
     def __init__(self, namespace):
@@ -261,12 +274,12 @@ class ArgsConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         # We assume here that the namespace provided has already done its job,
         # by validating that all given parameters are relevant for Lexicon or the current provider.
         # So we ignore the namespaces 'lexicon:' and 'lexicon:provider' in given config key.
-        splitted_config_key = config_key.split(':')
+        splitted_config_key = config_key.split(":")
 
         return self._parameters.get(splitted_config_key[-1], None)
 
 
-class DictConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
+class DictConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against a dict object."""
 
     def __init__(self, dict_object):
@@ -274,7 +287,7 @@ class DictConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         self._parameters = dict_object
 
     def resolve(self, config_key):
-        splitted_config_key = config_key.split(':')
+        splitted_config_key = config_key.split(":")
         # Note that we ignore 'lexicon:' in the iteration,
         # as the dict object is already scoped to lexicon.
         cursor = self._parameters
@@ -284,17 +297,17 @@ class DictConfigSource(ConfigSource):  # pylint: disable=too-few-public-methods
         return cursor.get(splitted_config_key[-1], None)
 
 
-class FileConfigSource(DictConfigSource):  # pylint: disable=too-few-public-methods
+class FileConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a lexicon config file."""
 
     def __init__(self, file_path):
-        with open(file_path, 'r') as stream:
-            yaml_object = yaml.load(stream) or {}
+        with open(file_path, "r") as stream:
+            yaml_object = yaml.load(stream, Loader=yaml.SafeLoader) or {}
 
         super(FileConfigSource, self).__init__(yaml_object)
 
 
-class ProviderFileConfigSource(FileConfigSource):  # pylint: disable=too-few-public-methods
+class ProviderFileConfigSource(FileConfigSource):
     """ConfigSource that resolve configuration against an provider config file."""
 
     def __init__(self, provider_name, file_path):
@@ -303,19 +316,32 @@ class ProviderFileConfigSource(FileConfigSource):  # pylint: disable=too-few-pub
         self._parameters = {provider_name: self._parameters}
 
 
-class LegacyDictConfigSource(DictConfigSource):  # pylint: disable=too-few-public-methods
+class LegacyDictConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
 
     def __init__(self, dict_object):
-        provider_name = dict_object.get('provider_name') or dict_object.get('provider')
+        provider_name = dict_object.get("provider_name") or dict_object.get("provider")
         if not provider_name:
-            raise AttributeError('Error, key provider_name is not defined.'
-                                 'LegacyDictConfigSource cannot scope correctly '
-                                 'the provider specific options.')
+            raise AttributeError(
+                "Error, key provider_name is not defined."
+                "LegacyDictConfigSource cannot scope correctly "
+                "the provider specific options."
+            )
 
         generic_parameters = [
-            'domain', 'action', 'provider_name', 'delegated', 'identifier', 'type', 'name',
-            'content', 'ttl', 'priority', 'log_level', 'output']
+            "domain",
+            "action",
+            "provider_name",
+            "delegated",
+            "identifier",
+            "type",
+            "name",
+            "content",
+            "ttl",
+            "priority",
+            "log_level",
+            "output",
+        ]
 
         provider_options = {}
         refactor_dict_object = {}
@@ -346,4 +372,9 @@ def legacy_config_resolver(legacy_dict):
     This function create a resolve that respect the expected behavior, by using the relevant
     ConfigSources, and we add the config files from working directory.
     """
-    return ConfigResolver().with_legacy_dict(legacy_dict).with_env().with_config_dir(os.getcwd())
+    return (
+        ConfigResolver()
+        .with_legacy_dict(legacy_dict)
+        .with_env()
+        .with_config_dir(os.getcwd())
+    )

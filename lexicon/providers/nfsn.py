@@ -1,30 +1,32 @@
 """Module provider for nfsn"""
 from __future__ import absolute_import, print_function
+
 import hashlib
 import logging
 import random
 import string
 import time
+
 try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['nearlyfreespeech.net']
+NAMESERVER_DOMAINS = ["nearlyfreespeech.net"]
 
 
 def provider_parser(subparser):
     """Generate subparser for nfsn"""
     subparser.add_argument(
-        "--auth-username", help="specify username used to authenticate")
-    subparser.add_argument(
-        "--auth-token", help="specify token used to authenticate")
+        "--auth-username", help="specify username used to authenticate"
+    )
+    subparser.add_argument("--auth-token", help="specify token used to authenticate")
 
 
 SALT_SHAKER = string.ascii_letters + string.digits
@@ -32,14 +34,15 @@ SALT_SHAKER = string.ascii_letters + string.digits
 
 class Provider(BaseProvider):
     """Provider class for nfsn"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://api.nearlyfreespeech.net'
+        self.api_endpoint = "https://api.nearlyfreespeech.net"
         self.shortname = None
 
     def _authenticate(self):
-        self._post('/dns/{0}/listRRs'.format(self.domain))
+        self._post(f"/dns/{self.domain}/listRRs")
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
@@ -52,7 +55,7 @@ class Provider(BaseProvider):
             return True
 
         self._do_create(rtype, name, content)
-        LOGGER.debug('create_record: %s', True)
+        LOGGER.debug("create_record: %s", True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -61,24 +64,28 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         params = {}
         if rtype is not None:
-            params['type'] = rtype
+            params["type"] = rtype
         if name is not None:
-            params['name'] = self._relative_name(name)
+            params["name"] = self._relative_name(name)
         if content is not None:
-            params['data'] = content
+            params["data"] = content
 
-        url = '/dns/{0}/listRRs'.format(self.domain_id)
+        url = f"/dns/{self.domain_id}/listRRs"
         records = self._post(url, params)
-        records = [{
-            'type': r['type'],
-            'name': self._full_name(r['name']),
-            'ttl': r['ttl'],
-            'content': r['data'],
-            'id': hashlib.sha1(''.join(
-                [r['type'], r['name'], r['data']]).encode('utf-8')).hexdigest()
-        } for r in records]
+        records = [
+            {
+                "type": r["type"],
+                "name": self._full_name(r["name"]),
+                "ttl": r["ttl"],
+                "content": r["data"],
+                "id": hashlib.sha1(
+                    "".join([r["type"], r["name"], r["data"]]).encode("utf-8")
+                ).hexdigest(),
+            }
+            for r in records
+        ]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Create or update a record.
@@ -86,23 +93,22 @@ class Provider(BaseProvider):
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is not None:
             records = self._list_records()
-            to_delete = next(
-                (r for r in records if r['id'] == identifier), None)
+            to_delete = next((r for r in records if r["id"] == identifier), None)
             if to_delete is None:
-                raise ValueError('No record with that identifier.')
+                raise ValueError("No record with that identifier.")
         else:
             # Check name and rtype
             matching_records = self._list_records(rtype=rtype, name=name)
             if len(matching_records) > 1:
                 raise ValueError(
-                    'More than one record exists with that type and name. '
-                    'Try specifying an identifier.')
+                    "More than one record exists with that type and name. "
+                    "Try specifying an identifier."
+                )
             to_delete = matching_records[0]
 
-        self._do_delete(to_delete['type'],
-                        to_delete['name'], to_delete['content'])
+        self._do_delete(to_delete["type"], to_delete["name"], to_delete["content"])
         self._do_create(rtype, name, content)
-        LOGGER.debug('update_record: %s', True)
+        LOGGER.debug("update_record: %s", True)
         return True
 
     # Delete an existing record
@@ -111,71 +117,63 @@ class Provider(BaseProvider):
         matching_records = self._list_records(rtype, name, content)
         if identifier is not None:
             to_delete = next(
-                (r for r in matching_records if r['id'] == identifier), None)
+                (r for r in matching_records if r["id"] == identifier), None
+            )
             if to_delete is None:
-                raise ValueError('No record with that identifier.')
+                raise ValueError("No record with that identifier.")
             to_delete = [to_delete]
         else:
             to_delete = matching_records
 
         for record in to_delete:
-            self._do_delete(record['type'], record['name'], record['content'])
+            self._do_delete(record["type"], record["name"], record["content"])
 
-        LOGGER.debug('delete_record: %s', True)
+        LOGGER.debug("delete_record: %s", True)
         return True
 
     def _do_create(self, rtype, name, content):
-        record = {
-            'name': self._relative_name(name),
-            'type': rtype,
-            'data': content
-        }
+        record = {"name": self._relative_name(name), "type": rtype, "data": content}
 
-        ttl = self._get_lexicon_option('ttl')
+        ttl = self._get_lexicon_option("ttl")
         if ttl:
-            record['ttl'] = ttl
+            record["ttl"] = ttl
 
-        self._post('/dns/{0}/addRR'.format(self.domain_id), record)
+        self._post(f"/dns/{self.domain_id}/addRR", record)
         return True
 
     def _do_delete(self, rtype=None, name=None, content=None):
-        url = '/dns/{0}/removeRR'.format(self.domain_id)
-        record = {
-            'name': self._relative_name(name),
-            'type': rtype,
-            'data': content
-        }
+        url = f"/dns/{self.domain_id}/removeRR"
+        record = {"name": self._relative_name(name), "type": rtype, "data": content}
         self._post(url, record)
         return True
 
     # Helpers
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is not None:
             body = urlencode(data)
-            hashed_body = hashlib.sha1(body.encode('utf-8')).hexdigest()
+            hashed_body = hashlib.sha1(body.encode("utf-8")).hexdigest()
         else:
             hashed_body = hashlib.sha1().hexdigest()
 
         timestamp = str(int(time.time()))
-        salt = ''.join(random.choice(SALT_SHAKER) for _ in range(16))
+        salt = "".join(random.choice(SALT_SHAKER) for _ in range(16))
         hash_items = [
-            self._get_provider_option('auth_username'),
+            self._get_provider_option("auth_username"),
             timestamp,
             salt,
-            self._get_provider_option('auth_token'),
+            self._get_provider_option("auth_token"),
             url,
-            hashed_body]
-        auth_hash = hashlib.sha1(
-            ';'.join(hash_items).encode('utf-8')).hexdigest()
-        auth_value = ';'.join([self._get_provider_option(
-            'auth_username'), timestamp, salt, auth_hash])
-        auth_header = {
-            'X-NFSN-Authentication': auth_value
-        }
+            hashed_body,
+        ]
+        auth_hash = hashlib.sha1(";".join(hash_items).encode("utf-8")).hexdigest()
+        auth_value = ";".join(
+            [self._get_provider_option("auth_username"), timestamp, salt, auth_hash]
+        )
+        auth_header = {"X-NFSN-Authentication": auth_value}
 
-        response = requests.request(action, ''.join([self.api_endpoint, url]),
-                                    data=data,
-                                    headers=auth_header)
+        response = requests.request(
+            action, "".join([self.api_endpoint, url]), data=data, headers=auth_header
+        )
         response.raise_for_status()
         if response.content:
             return response.json()

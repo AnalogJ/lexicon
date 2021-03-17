@@ -20,6 +20,7 @@ Lexicon monovalued entries representation to/from the Google multivalued and sta
 through create/update/list/delete processes.
 """
 from __future__ import absolute_import
+
 import binascii
 import json
 import logging
@@ -30,26 +31,29 @@ import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['googledomains.com']
+NAMESERVER_DOMAINS = ["googledomains.com"]
 
 
 def provider_parser(subparser):
     """Generate a subparser for Google Cloud DNS"""
-    subparser.description = '''
+    subparser.description = """
         The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
         This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
         You can create a new service account, associate a private key, and download its info through this url:
-        https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2'''
-    subparser.add_argument('--auth-service-account-info', help='''
+        https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2"""
+    subparser.add_argument(
+        "--auth-service-account-info",
+        help="""
         specify the service account info in the Google JSON format:
         can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
         or the base64 encoded content of this file prefixed by 'base64::'
-        (eg. base64::eyJhbGciOyJ...)''')
+        (eg. base64::eyJhbGciOyJ...)""",
+    )
 
 
 class Provider(BaseProvider):
@@ -63,30 +67,62 @@ class Provider(BaseProvider):
     in base64, which is a suitable portable way in particular for Docker containers.
     In both cases the content is loaded as bytes, on loaded in a private instance variable.
     """
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self._token = None
 
-        if self._get_provider_option('auth_service_account_info').startswith('file::'):
-            with open(self._get_provider_option('auth_service_account_info')
-                      .replace('file::', ''), 'rb') as file:
+        if self._get_provider_option("auth_service_account_info").startswith("file::"):
+            with open(
+                self._get_provider_option("auth_service_account_info").replace(
+                    "file::", ""
+                ),
+                "rb",
+            ) as file:
                 service_account_info_bytes = file.read()
-        elif self._get_provider_option('auth_service_account_info').startswith('base64::'):
-            service_account_info_bytes = b64decode(self._get_provider_option(
-                'auth_service_account_info').replace('base64::', ''))
+        elif self._get_provider_option("auth_service_account_info").startswith(
+            "base64::"
+        ):
+            service_account_info_bytes = b64decode(
+                self._get_provider_option("auth_service_account_info").replace(
+                    "base64::", ""
+                )
+            )
         else:
-            raise Exception('Invalid value for --auth-service-account-info, should be a path '
-                            'prefixed with \'file::\' or a base64 value prefixed by \'base64::\'.')
+            raise Exception(
+                "Invalid value for --auth-service-account-info, should be a path "
+                "prefixed with 'file::' or a base64 value prefixed by 'base64::'."
+            )
 
         self._service_account_info = json.loads(
-            service_account_info_bytes.decode('utf-8'))
+            service_account_info_bytes.decode("utf-8")
+        )
 
-        if (not self._service_account_info['client_email']
-                or not self._service_account_info['private_key']
-                or not self._service_account_info['project_id']):
-            raise Exception('Invalid service account info (missing either client_email/private_'
-                            'key/project_id key).')
+        if (
+            not self._service_account_info["client_email"]
+            or not self._service_account_info["private_key"]
+            or not self._service_account_info["project_id"]
+        ):
+            raise Exception(
+                "Invalid service account info (missing either client_email/private_"
+                "key/project_id key)."
+            )
+
+    # the complete list of zones may be paginated. So we recursively call
+    # the list managedZones api until no page_token is given, keeping a list
+    # of matched zone ids as we go.
+    def _get_managed_zone_ids(self, zone_ids, page_token=None):
+        results = self._get("/managedZones", {"pageToken": page_token})
+        zone_ids += [
+            managedZone["id"]
+            for managedZone in results["managedZones"]
+            if managedZone["dnsName"] == f"{self.domain}."
+        ]
+
+        if "nextPageToken" in results:
+            return self._get_managed_zone_ids(zone_ids, results["nextPageToken"])
+        return zone_ids
 
     # We have a real authentication here, that uses the OAuth protocol:
     #   - a JWT token is forged with the Google Cloud DNS access claims,
@@ -101,62 +137,64 @@ class Provider(BaseProvider):
     # This access token has a default lifetime of 10 minutes,
     # but is used only for the current Lexicon operation, so it should be sufficient.
     def _authenticate(self):
-        jwt_header_bytes = urlsafe_b64encode(json.dumps({
-            'alg': 'RS256',
-            'typ': 'JWT'
-        }).encode('utf-8'))
+        jwt_header_bytes = urlsafe_b64encode(
+            json.dumps({"alg": "RS256", "typ": "JWT"}).encode("utf-8")
+        )
 
         epoch_time = int(time.time())
-        jwt_claims_bytes = urlsafe_b64encode(json.dumps({
-            'iss': self._service_account_info['client_email'],
-            'scope': 'https://www.googleapis.com/auth/ndev.clouddns.readwrite',
-            'aud': 'https://www.googleapis.com/oauth2/v4/token',
-            'exp': epoch_time + 60 * 10,
-            'iat': epoch_time
-        }).encode('utf-8'))
+        jwt_claims_bytes = urlsafe_b64encode(
+            json.dumps(
+                {
+                    "iss": self._service_account_info["client_email"],
+                    "scope": "https://www.googleapis.com/auth/ndev.clouddns.readwrite",
+                    "aud": "https://www.googleapis.com/oauth2/v4/token",
+                    "exp": epoch_time + 60 * 10,
+                    "iat": epoch_time,
+                }
+            ).encode("utf-8")
+        )
 
         private_key = serialization.load_pem_private_key(
-            self._service_account_info['private_key'].encode('utf-8'),
+            self._service_account_info["private_key"].encode("utf-8"),
             password=None,
-            backend=default_backend()
+            backend=default_backend(),
         )
-        jwt_sign_bytes = urlsafe_b64encode(private_key.sign(
-            b'.'.join([jwt_header_bytes, jwt_claims_bytes]),
-            padding.PKCS1v15(),
-            hashes.SHA256()
-        ))
+        jwt_sign_bytes = urlsafe_b64encode(
+            private_key.sign(
+                b".".join([jwt_header_bytes, jwt_claims_bytes]),
+                padding.PKCS1v15(),
+                hashes.SHA256(),
+            )
+        )
 
-        jwt_bytes = b'.'.join(
-            [jwt_header_bytes, jwt_claims_bytes, jwt_sign_bytes])
+        jwt_bytes = b".".join([jwt_header_bytes, jwt_claims_bytes, jwt_sign_bytes])
 
         auth_request = requests.request(
-            'POST', 'https://www.googleapis.com/oauth2/v4/token',
+            "POST",
+            "https://www.googleapis.com/oauth2/v4/token",
             data={
-                'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                'assertion': jwt_bytes
+                "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                "assertion": jwt_bytes,
             },
-            headers={
-                'Content-Type': 'application/x-www-form-urlencoded'
-            })
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
 
         auth_request.raise_for_status()
         post_result = auth_request.json()
 
-        if not post_result['access_token']:
-            raise Exception('Error, could not grant RW access on the '
-                            'Google Cloud DNS API for user: {0}'.format(
-                                self._get_provider_option('auth_email')))
+        if not post_result["access_token"]:
+            raise Exception(
+                "Error, could not grant RW access on the "
+                f"Google Cloud DNS API for user: {self._get_provider_option('auth_email')}"
+            )
 
-        self._token = post_result['access_token']
+        self._token = post_result["access_token"]
 
-        results = self._get('/managedZones')
-
-        targeted_managed_zone_ids = [managedZone['id'] for managedZone in results['managedZones']
-                                     if managedZone['dnsName'] == '{0}.'.format(self.domain)]
-
+        targeted_managed_zone_ids = self._get_managed_zone_ids([])
         if not targeted_managed_zone_ids:
             raise Exception(
-                'Error, domain {0} is not registered for this project'.format(self.domain))
+                f"Error, domain {self.domain} is not registered for this project"
+            )
 
         self.domain_id = targeted_managed_zone_ids[0]
 
@@ -169,32 +207,32 @@ class Provider(BaseProvider):
     # the most general case, its preferable to always get all records and be free to filter
     # the way we want afterwards.
     def _list_records(self, rtype=None, name=None, content=None):
-        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
+        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         records = []
 
-        for rrset in results['rrsets']:
-            for rrdata in rrset['rrdatas']:
+        for rrset in results["rrsets"]:
+            for rrdata in rrset["rrdatas"]:
                 record = {
-                    'type': rrset['type'],
-                    'name': self._full_name(rrset['name']),
-                    'ttl': rrset['ttl'],
-                    'content': rrdata
+                    "type": rrset["type"],
+                    "name": self._full_name(rrset["name"]),
+                    "ttl": rrset["ttl"],
+                    "content": rrdata,
                 }
                 self._clean_TXT_record(record)
-                record['id'] = Provider._identifier(record)
+                record["id"] = Provider._identifier(record)
                 records.append(record)
 
         if rtype:
-            records = [record for record in records if record['type'] == rtype]
+            records = [record for record in records if record["type"] == rtype]
         if name:
-            records = [record for record in records if record['name']
-                       == self._full_name(name)]
-        if content:
             records = [
-                record for record in records if record['content'] == content]
+                record for record in records if record["name"] == self._full_name(name)
+            ]
+        if content:
+            records = [record for record in records if record["content"] == content]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
 
         return records
 
@@ -206,51 +244,53 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         if not rtype or not name or not content:
             raise Exception(
-                'Error, rtype, name and content are mandatory to create a record.')
+                "Error, rtype, name and content are mandatory to create a record."
+            )
 
         identifier = Provider._identifier(
-            {'type': rtype, 'name': self._full_name(name), 'content': content})
+            {"type": rtype, "name": self._full_name(name), "content": content}
+        )
 
-        query_params = {
-            'type': rtype,
-            'name': self._fqdn_name(name)
-        }
+        query_params = {"type": rtype, "name": self._fqdn_name(name)}
 
         results = self._get(
-            '/managedZones/{0}/rrsets'.format(self.domain_id), query_params=query_params)
+            f"/managedZones/{self.domain_id}/rrsets", query_params=query_params
+        )
 
         rrdatas = []
         changes = {}
-        if results['rrsets']:
-            rrset = results['rrsets'][0]
-            for rrdata in rrset['rrdatas']:
-                if rrdata == Provider._normalize_content(rrset['type'], content):
-                    LOGGER.debug(
-                        'create_record (ignored, duplicate): %s', identifier)
+        if results["rrsets"]:
+            rrset = results["rrsets"][0]
+            for rrdata in rrset["rrdatas"]:
+                if rrdata == Provider._normalize_content(rrset["type"], content):
+                    LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
                     return True
 
-            changes['deletions'] = [{
-                'name': rrset['name'],
-                'type': rrset['type'],
-                'ttl': rrset['ttl'],
-                'rrdatas': rrset['rrdatas'][:]
-            }]
+            changes["deletions"] = [
+                {
+                    "name": rrset["name"],
+                    "type": rrset["type"],
+                    "ttl": rrset["ttl"],
+                    "rrdatas": rrset["rrdatas"][:],
+                }
+            ]
 
-            rrdatas = rrset['rrdatas'][:]
+            rrdatas = rrset["rrdatas"][:]
 
         rrdatas.append(Provider._normalize_content(rtype, content))
 
-        changes['additions'] = [{
-            'name': self._fqdn_name(name),
-            'type': rtype,
-            'ttl': self._get_lexicon_option('ttl'),
-            'rrdatas': rrdatas
-        }]
+        changes["additions"] = [
+            {
+                "name": self._fqdn_name(name),
+                "type": rtype,
+                "ttl": self._get_lexicon_option("ttl"),
+                "rrdatas": rrdatas,
+            }
+        ]
 
-        self._post(
-            '/managedZones/{0}/changes'.format(self.domain_id), data=changes)
+        self._post(f"/managedZones/{self.domain_id}/changes", data=changes)
 
-        LOGGER.debug('create_record: %s', identifier)
+        LOGGER.debug("create_record: %s", identifier)
 
         return True
 
@@ -265,43 +305,50 @@ class Provider(BaseProvider):
     # he three quoted methods).
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
-            raise Exception(
-                'Error, identifier or rtype+name parameters are required.')
+            raise Exception("Error, identifier or rtype+name parameters are required.")
 
         if identifier:
             records = self._list_records()
             records_to_update = [
-                record for record in records if record['id'] == identifier]
+                record for record in records if record["id"] == identifier
+            ]
         else:
             records_to_update = self._list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception(
-                'Error, could not find a record for given identifier: {0}'.format(identifier))
+                f"Error, could not find a record for given identifier: {identifier}"
+            )
 
         if len(records_to_update) > 1:
             LOGGER.warning(
-                'Warning, multiple records found for given parameters, '
-                'only first one will be updated: %s', records_to_update)
+                "Warning, multiple records found for given parameters, "
+                "only first one will be updated: %s",
+                records_to_update,
+            )
 
-        record_identifier = records_to_update[0]['id']
+        record_identifier = records_to_update[0]["id"]
 
         original_level = LOGGER.getEffectiveLevel()
         LOGGER.setLevel(logging.WARNING)
         self._delete_record(record_identifier)
 
         new_record = {
-            'type': rtype if rtype else records_to_update[0]['type'],
-            'name': name if name else records_to_update[0]['name'],
-            'content': content if content else records_to_update[0]['content']
+            "type": rtype if rtype else records_to_update[0]["type"],
+            "name": name if name else records_to_update[0]["name"],
+            "content": content if content else records_to_update[0]["content"],
         }
 
         self._create_record(
-            new_record['type'], new_record['name'], new_record['content'])
+            new_record["type"], new_record["name"], new_record["content"]
+        )
         LOGGER.setLevel(original_level)
 
-        LOGGER.debug('update_record: %s => %s', record_identifier,
-                     Provider._identifier(new_record))
+        LOGGER.debug(
+            "update_record: %s => %s",
+            record_identifier,
+            Provider._identifier(new_record),
+        )
 
         return True
 
@@ -320,24 +367,23 @@ class Provider(BaseProvider):
     #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #     for this type/name pair, all RecordSet needs to go away.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        results = self._get('/managedZones/{0}/rrsets'.format(self.domain_id))
+        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         if identifier:
-            changes = self._process_records_to_delete_by_identifier(
-                results, identifier)
+            changes = self._process_records_to_delete_by_identifier(results, identifier)
         else:
             changes = self._process_records_to_delete_by_parameters(
-                results, rtype, name, content)
+                results, rtype, name, content
+            )
 
         if not changes:
             raise Exception(
-                'Could not find existing record matching the given parameters.')
+                "Could not find existing record matching the given parameters."
+            )
 
-        self._post(
-            '/managedZones/{0}/changes'.format(self.domain_id), data=changes)
+        self._post(f"/managedZones/{self.domain_id}/changes", data=changes)
 
-        LOGGER.debug('delete_records: %s %s %s %s',
-                     identifier, rtype, name, content)
+        LOGGER.debug("delete_records: %s %s %s %s", identifier, rtype, name, content)
 
         return True
 
@@ -345,12 +391,12 @@ class Provider(BaseProvider):
     # This implementation find the corresponding record, and use its type + name + value to
     # delegate the processing to _process_records_to_delete_by_parameters.
     def _process_records_to_delete_by_identifier(self, results, identifier):
-        for rrset in results['rrsets']:
-            for rrdata in rrset['rrdatas']:
+        for rrset in results["rrsets"]:
+            for rrdata in rrset["rrdatas"]:
                 record = {
-                    'type': rrset['type'],
-                    'name': self._full_name(rrset['name']),
-                    'content': rrdata
+                    "type": rrset["type"],
+                    "name": self._full_name(rrset["name"]),
+                    "content": rrdata,
                 }
 
                 self._clean_TXT_record(record)
@@ -358,7 +404,8 @@ class Provider(BaseProvider):
 
                 if identifier == record_identifier:
                     return self._process_records_to_delete_by_parameters(
-                        results, record['type'], record['name'], record['content'])
+                        results, record["type"], record["name"], record["content"]
+                    )
 
         return None
 
@@ -367,45 +414,56 @@ class Provider(BaseProvider):
     # rrdatas after its subset are not marked in additions to be completely removed
     # from the DNS zone.
     def _process_records_to_delete_by_parameters(
-            self, results, rtype=None, name=None, content=None):
-        rrsets_to_modify = results['rrsets']
+        self, results, rtype=None, name=None, content=None
+    ):
+        rrsets_to_modify = results["rrsets"]
 
         if rtype:
             rrsets_to_modify = [
-                rrset for rrset in rrsets_to_modify if rrset['type'] == rtype]
+                rrset for rrset in rrsets_to_modify if rrset["type"] == rtype
+            ]
         if name:
             rrsets_to_modify = [
-                rrset for rrset in rrsets_to_modify if rrset['name'] == self._fqdn_name(name)]
+                rrset
+                for rrset in rrsets_to_modify
+                if rrset["name"] == self._fqdn_name(name)
+            ]
         if content:
-            rrsets_to_modify = [rrset for rrset in rrsets_to_modify if ('"{0}"'.format(
-                content) if rrset['type'] == 'TXT' else content) in rrset['rrdatas']]
+            rrsets_to_modify = [
+                rrset
+                for rrset in rrsets_to_modify
+                if (f'"{content}"' if rrset["type"] == "TXT" else content)
+                in rrset["rrdatas"]
+            ]
 
-        changes = {
-            'additions': [],
-            'deletions': []
-        }
+        changes = {"additions": [], "deletions": []}
 
         for rrset_to_modify in rrsets_to_modify:
-            changes['deletions'].append({
-                'name': rrset_to_modify['name'],
-                'type': rrset_to_modify['type'],
-                'ttl': rrset_to_modify['ttl'],
-                'rrdatas': rrset_to_modify['rrdatas'][:]
-            })
+            changes["deletions"].append(
+                {
+                    "name": rrset_to_modify["name"],
+                    "type": rrset_to_modify["type"],
+                    "ttl": rrset_to_modify["ttl"],
+                    "rrdatas": rrset_to_modify["rrdatas"][:],
+                }
+            )
 
             if content:
-                new_rrdatas = rrset_to_modify['rrdatas'][:]
-                new_rrdatas.remove('"{0}"'.format(
-                    content) if rrset_to_modify['type'] == 'TXT' else content)
+                new_rrdatas = rrset_to_modify["rrdatas"][:]
+                new_rrdatas.remove(
+                    f'"{content}"' if rrset_to_modify["type"] == "TXT" else content
+                )
                 if new_rrdatas:
-                    changes['additions'].append({
-                        'name': rrset_to_modify['name'],
-                        'type': rrset_to_modify['type'],
-                        'ttl': rrset_to_modify['ttl'],
-                        'rrdatas': new_rrdatas
-                    })
+                    changes["additions"].append(
+                        {
+                            "name": rrset_to_modify["name"],
+                            "type": rrset_to_modify["type"],
+                            "ttl": rrset_to_modify["ttl"],
+                            "rrdatas": new_rrdatas,
+                        }
+                    )
 
-        if not changes['additions'] and not changes['deletions']:
+        if not changes["additions"] and not changes["deletions"]:
             return None
 
         return changes
@@ -414,10 +472,10 @@ class Provider(BaseProvider):
     #   and content of TXT entries must be quoted. This static method ensures that.
     @staticmethod
     def _normalize_content(rtype, content):
-        if rtype == 'TXT':
-            return '"{0}"'.format(content)
-        if rtype == 'CNAME':
-            return '{0}.'.format(content) if not content.endswith('.') else content
+        if rtype == "TXT":
+            return f'"{content}"'
+        if rtype == "CNAME":
+            return f"{content}." if not content.endswith(".") else content
 
         return content
 
@@ -430,25 +488,25 @@ class Provider(BaseProvider):
     @staticmethod
     def _identifier(record):
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-        digest.update(('type=' + record.get('type', '') + ',').encode('utf-8'))
-        digest.update(('name=' + record.get('name', '') + ',').encode('utf-8'))
-        digest.update(
-            ('content=' + record.get('content', '') + ',').encode('utf-8'))
+        digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+        digest.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+        digest.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
-        return binascii.hexlify(digest.finalize()).decode('utf-8')[0:7]
+        return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
 
     # The request, when authenticated, is really standard:
     #   - the request body is encoded as application/json for POST
     #     (so the use of 'json' config instead of 'data' in request),
     #   - the body response is also encoded as application/json for GET and POST,
     #   - and the request headers must contain the access token in the 'Authorization' field.
-    def _request(self, action='GET', url='/', data=None, query_params=None):
-        request = requests.request(action,
-                                   'https://content.googleapis.com/dns/v1/projects/{0}{1}'.format(
-                                       self._service_account_info['project_id'], url),
-                                   params=None if not query_params else query_params,
-                                   json=None if not data else data,
-                                   headers={'Authorization': 'Bearer {0}'.format(self._token)})
+    def _request(self, action="GET", url="/", data=None, query_params=None):
+        request = requests.request(
+            action,
+            f"https://content.googleapis.com/dns/v1/projects/{self._service_account_info['project_id']}{url}",
+            params=None if not query_params else query_params,
+            json=None if not data else data,
+            headers={"Authorization": f"Bearer {self._token}"},
+        )
 
         request.raise_for_status()
         return request.json()

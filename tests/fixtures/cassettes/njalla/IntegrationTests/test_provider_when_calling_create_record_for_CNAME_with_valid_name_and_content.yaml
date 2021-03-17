@@ -1,0 +1,126 @@
+interactions:
+- request:
+    body: !!python/unicode '{"params": {"domain": "example.com"}, "method": "get-domain"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '59'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
+        "expiry": "2021-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10, "dnssec_type": "dsData"}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '179'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Aug 2020 22:42:48 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx
+      set-cookie:
+      - csrftoken=N9n43Fqaco3Tk22Q38doMeUuAmbyT9nXr0H15YSqGae71608OiBjs9JJ3aecnVW9;
+        expires=Thu, 19-Aug-2021 22:42:48 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=aed21fw4se1b1xc8dl9l4tpbqi6bcxv7; expires=Thu, 03-Sep-2020 22:42:48
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"params": {"content": "docs.example.com", "domain": "example.com",
+      "type": "CNAME", "name": "docs", "ttl": 3600}, "method": "add-record"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '136'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"id": 188133, "name": "docs", "type":
+        "CNAME", "content": "docs.example.com", "ttl": 3600}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '122'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Aug 2020 22:42:49 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx
+      set-cookie:
+      - csrftoken=PBb1zdJNj5if9dDhmcaq1WHAwL1IZzldgaaSFLy9jAXaxnDvPtzMejStrq5jvreG;
+        expires=Thu, 19-Aug-2021 22:42:49 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=e0za396lulbzbpry49mufg3dmq6ps9lm; expires=Thu, 03-Sep-2020 22:42:49
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

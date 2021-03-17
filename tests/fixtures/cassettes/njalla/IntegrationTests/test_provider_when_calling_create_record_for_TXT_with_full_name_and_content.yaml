@@ -1,0 +1,127 @@
+interactions:
+- request:
+    body: !!python/unicode '{"params": {"domain": "example.com"}, "method": "get-domain"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '59'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"name": "example.com", "status": "active",
+        "expiry": "2021-06-29T23:53:03Z", "mailforwarding": false, "max_nameservers":
+        10, "dnssec_type": "dsData"}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '179'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Aug 2020 22:42:51 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx
+      set-cookie:
+      - csrftoken=eZRYNGo7Ey4RjIX58HnGj0zKkxQPZRXvfOd5kPq9rWrIK89LqsK0paipDFe4dewb;
+        expires=Thu, 19-Aug-2021 22:42:51 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=yps5uzc4es01ve1ijxy7p1ekqshuqgym; expires=Thu, 03-Sep-2020 22:42:51
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!python/unicode '{"params": {"content": "challengetoken", "domain": "example.com",
+      "type": "TXT", "name": "_acme-challenge.full.example.com", "ttl": 3600}, "method":
+      "add-record"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '158'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.24.0
+    method: POST
+    uri: https://njal.la/api/1/
+  response:
+    body:
+      string: !!python/unicode '{"result": {"id": 188135, "name": "_acme-challenge.full",
+        "type": "TXT", "content": "challengetoken", "ttl": 3600}, "jsonrpc": "2.0"}
+
+        '
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '134'
+      content-security-policy:
+      - script-src 'self' 'unsafe-inline'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Aug 2020 22:42:51 GMT
+      onion-location:
+      - http://njalladnspotetti.onion/api/1/
+      referrer-policy:
+      - same-origin
+      server:
+      - nginx
+      set-cookie:
+      - csrftoken=JJfJv4zCs6JtR3e8OanXo0t1nysF7wfk5tUpKGGKNzk7M6xA5FF4LNGMKQPgtJHB;
+        expires=Thu, 19-Aug-2021 22:42:51 GMT; Max-Age=31449600; Path=/; Secure
+      - sessionid=o9e9fv2fe5ohr7xrnlbxg6sv0s2k6uhw; expires=Thu, 03-Sep-2020 22:42:51
+        GMT; HttpOnly; Max-Age=1209600; Path=/; Secure
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
