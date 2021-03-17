@@ -1,22 +1,23 @@
 """Module provider for exoscale"""
 from __future__ import absolute_import
-
 import logging
 
 import requests
-
 from lexicon.providers.base import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 
 HOUR = 3600
 
-NAMESERVER_DOMAINS = ["exoscale.ch"]
+NAMESERVER_DOMAINS = ['exoscale.ch']
 
 
 def provider_parser(subparser):
     """Generate subparser for exoscale"""
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
+    subparser.add_argument(
+        "--auth-key", help="specify API key for authentication"
+    )
     subparser.add_argument(
         "--auth-secret", help="specify API secret for authentication"
     )
@@ -24,14 +25,13 @@ def provider_parser(subparser):
 
 class Provider(BaseProvider):
     """Provider class for exoscale"""
-
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.api_endpoint = "https://api.exoscale.com/dns"
+        self.api_endpoint = 'https://api.exoscale.com/dns'
 
     def _authenticate(self):
         """An innocent call to check that the credentials are okay."""
-        response = self._get(f"/v1/domains/{self.domain}")
+        response = self._get("/v1/domains/{0}".format(self.domain))
 
         self.domain_id = response["domain"]["id"]
 
@@ -52,7 +52,10 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("priority"):
             record["prio"] = self._get_lexicon_option("priority")
 
-        payload = self._post(f"/v1/domains/{self.domain}/records", {"record": record})
+        payload = self._post(
+            "/v1/domains/{0}/records".format(self.domain),
+            {"record": record},
+        )
 
         status = "id" in payload.get("record", {})
         LOGGER.debug("create_record: %s", status)
@@ -73,7 +76,8 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
             filter_query["name"] = name
         payload = self._get(
-            f"/v1/domains/{self.domain}/records", query_params=filter_query
+            "/v1/domains/{0}/records".format(self.domain),
+            query_params=filter_query,
         )
 
         records = []
@@ -96,7 +100,9 @@ class Provider(BaseProvider):
                 "id": record["id"],
             }
             if record["prio"]:
-                processed_record["options"] = {"mx": {"priority": record["prio"]}}
+                processed_record["options"] = {
+                    "mx": {"priority": record["prio"]}
+                }
             records.append(processed_record)
 
         LOGGER.debug("list_records: %s", records)
@@ -116,15 +122,20 @@ class Provider(BaseProvider):
             record["name"] = self._relative_name(name)
         if content:
             record["content"] = content
-        if self._get_lexicon_option("ttl"):
-            record["ttl"] = self._get_lexicon_option("ttl")
-        if self._get_lexicon_option("priority"):
-            record["prio"] = self._get_lexicon_option("priority")
+        if self._get_lexicon_option('ttl'):
+            record["ttl"] = self._get_lexicon_option('ttl')
+        if self._get_lexicon_option('priority'):
+            record["prio"] = self._get_lexicon_option('priority')
 
         LOGGER.debug("update_records: %s", identifiers)
 
         for record_id in identifiers:
-            self._put(f"/v1/domains/{self.domain}/records/{identifier}", record)
+            self._put(
+                "/v1/domains/{0}/records/{1}".format(
+                    self.domain, identifier
+                ),
+                record,
+            )
             LOGGER.debug("update_record: %s", record_id)
 
         LOGGER.debug("update_record: %s", True)
@@ -144,7 +155,11 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", identifiers)
 
         for record_id in identifiers:
-            self._delete(f"/v1/domains/{self.domain}/records/{record_id}")
+            self._delete(
+                "/v1/domains/{0}/records/{1}".format(
+                    self.domain, record_id
+                )
+            )
             LOGGER.debug("delete_record: %s", record_id)
 
         LOGGER.debug("delete_record: %s", True)
@@ -159,10 +174,8 @@ class Provider(BaseProvider):
         default_headers = {"Accept": "application/json"}
 
         default_headers["X-DNS-Token"] = ":".join(
-            (
-                self._get_provider_option("auth_key"),
-                self._get_provider_option("auth_secret"),
-            )
+            (self._get_provider_option("auth_key"),
+             self._get_provider_option("auth_secret"))
         )
 
         response = requests.request(

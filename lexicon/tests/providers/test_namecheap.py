@@ -45,16 +45,15 @@ from unittest import TestCase
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+from lexicon.tests.providers.integration_tests import IntegrationTests
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class NamecheapProviderTests(TestCase, IntegrationTestsV2):
+class NamecheapProviderTests(TestCase, IntegrationTests):
     """TestCase for Namecheap"""
-
-    provider_name = "namecheap"
+    provider_name = 'namecheap'
 
     @property
     def domain(self):
@@ -62,14 +61,17 @@ class NamecheapProviderTests(TestCase, IntegrationTestsV2):
         this can be used to override the tests
             LEXICON_NAMECHEAP_DOMAIN
         """
-        env_domain = os.environ.get("LEXICON_NAMECHEAP_DOMAIN", None)
-        return env_domain or "unittest2.dev"
+        env_domain = os.environ.get('LEXICON_NAMECHEAP_DOMAIN', None)
+        return env_domain or 'unittest2.dev'
 
     def _filter_query_parameters(self):
-        return ["ApiKey", "UserName", "ApiUser"]
+        return ['ApiKey', 'UserName', 'ApiUser']
 
     def _test_parameters_overrides(self):
-        return {"auth_sandbox": True, "auth_client_ip": "127.0.0.1"}
+        return {
+            'auth_sandbox': True,
+            'auth_client_ip': '127.0.0.1'
+        }
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_provider_when_calling_list_records_after_setting_ttl(self):
@@ -87,8 +89,7 @@ class NamecheapManagedProviderTests(NamecheapProviderTests):
 
     Note we define a `provider_variant`, which will change the cassette path.
     """
-
-    provider_variant = "managed"
+    provider_variant = 'managed'
 
     @property
     def domain(self):
@@ -96,5 +97,5 @@ class NamecheapManagedProviderTests(NamecheapProviderTests):
         this can be used to override the tests
             LEXICON_NAMECHEAP_DOMAINMANAGED
         """
-        env_domain = os.environ.get("LEXICON_NAMECHEAP_DOMAINMANAGED", None)
-        return env_domain or "unittest-seconddomain.dev"
+        env_domain = os.environ.get('LEXICON_NAMECHEAP_DOMAINMANAGED', None)
+        return env_domain or 'unittest-seconddomain.dev'

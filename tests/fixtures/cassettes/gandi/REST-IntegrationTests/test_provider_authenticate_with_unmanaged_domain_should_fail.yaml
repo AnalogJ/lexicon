@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept:
       - application/json
@@ -13,39 +13,39 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.21.0
     method: GET
-    uri: https://api.gandi.net/v5/livedns/domains/thisisadomainidonotown.com
+    uri: https://dns.api.gandi.net/api/v5/domains/thisisadomainidonotown.com
   response:
     body:
-      string: '{"code": 404, "message": "The resource could not be found.", "object":
-        "HTTPNotFound", "cause": "Not Found"}'
+      string: !!python/unicode '{"code": 404, "message": "The resource could not be
+        found.", "object": "HTTPNotFound", "cause": "Not Found"}'
     headers:
-      Age:
+      age:
       - '0'
-      Cache-Control:
+      cache-control:
       - max-age=0, must-revalidate, no-cache, no-store
-      Connection:
+      connection:
       - keep-alive
-      Content-Length:
+      content-length:
       - '108'
-      Content-Type:
+      content-type:
       - application/json; charset=UTF-8
-      Date:
-      - Thu, 22 Oct 2020 21:23:11 GMT
-      Expires:
-      - Thu, 22 Oct 2020 21:23:11 GMT
-      Last-Modified:
-      - Thu, 22 Oct 2020 21:23:11 GMT
-      Pragma:
+      date:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      expires:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      last-modified:
+      - Fri, 29 Mar 2019 20:34:18 GMT
+      pragma:
       - no-cache
-      Server:
+      server:
       - nginx
-      Via:
+      via:
       - 1.1 varnish-v4, 1.1 varnish-v4
-      X-Cache:
+      x-cache:
       - MISS
-      X-Cache-Hits:
+      x-cache-hits:
       - '0'
     status:
       code: 404
