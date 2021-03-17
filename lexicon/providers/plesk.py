@@ -1,4 +1,3 @@
-
 """
 Lexicon Plesk Provider
 
@@ -7,12 +6,13 @@ Author: Jens Reimann, 2018
 API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 """
 from __future__ import absolute_import
+
 import logging
 from collections import OrderedDict
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import xmltodict  # optional dependency
@@ -30,21 +30,25 @@ NAMESERVER_DOMAINS = []
 def provider_parser(subparser):
     """Configure provider parser for Plesk"""
     subparser.add_argument(
-        "--auth-username", help="specify username for authentication")
+        "--auth-username", help="specify username for authentication"
+    )
     subparser.add_argument(
-        "--auth-password", help="specify password for authentication")
+        "--auth-password", help="specify password for authentication"
+    )
     subparser.add_argument(
-        '--plesk-server', help="specify URL to the Plesk Web UI, including the port")
+        "--plesk-server", help="specify URL to the Plesk Web UI, including the port"
+    )
 
 
 class Provider(BaseProvider):
     """Provider class for Plesk"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
 
-        self.api_endpoint = self._get_provider_option('plesk_server')
+        self.api_endpoint = self._get_provider_option("plesk_server")
 
-        if self.api_endpoint.endswith('/'):
+        if self.api_endpoint.endswith("/"):
             self.api_endpoint = self.api_endpoint[:-1]
 
         if not self.api_endpoint.endswith(PLEX_URL_SUFFIX):
@@ -55,19 +59,15 @@ class Provider(BaseProvider):
 
         self.domain_id = None
 
-        self.username = self._get_provider_option('auth_username')
+        self.username = self._get_provider_option("auth_username")
         assert self.username is not None
 
-        self.password = self._get_provider_option('auth_password')
+        self.password = self._get_provider_option("auth_password")
         assert self.password is not None
 
     def __simple_request(self, rtype, operation, req):
 
-        response = self.__plesk_request({
-            rtype: {
-                operation: req
-            }
-        })[rtype][operation]
+        response = self.__plesk_request({rtype: {operation: req}})[rtype][operation]
 
         result = response["result"]
 
@@ -75,11 +75,12 @@ class Provider(BaseProvider):
             for record in result:
                 if record["status"] == "error":
                     raise Exception(
-                        "API returned at least one error: %s" % record["errtext"])
+                        f"API returned at least one error: {record['errtext']}"
+                    )
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception("API returned error: %s (%s)" % (errcode, errtext))
+            raise Exception(f"API returned error: {errcode} ({errtext})")
 
         return response
 
@@ -91,14 +92,16 @@ class Provider(BaseProvider):
         headers["HTTP_AUTH_LOGIN"] = self.username
         headers["HTTP_AUTH_PASSWD"] = self.password
 
-        xml = xmltodict.unparse({
-            "packet": request
-        }, pretty=True)
+        xml = xmltodict.unparse({"packet": request}, pretty=True)
 
         LOGGER.debug("Request: %s", xml)
 
-        response = requests.post(self.api_endpoint, headers=headers,
-                                 data=xml, auth=(self.username, self.password))
+        response = requests.post(
+            self.api_endpoint,
+            headers=headers,
+            data=xml,
+            auth=(self.username, self.password),
+        )
 
         data = response.text
 
@@ -107,16 +110,17 @@ class Provider(BaseProvider):
         return result["packet"]
 
     def __find_site(self):
-        return self.__simple_request('site', 'get', OrderedDict([
-            ('filter', {'name': self.site_name}),
-            ('dataset', {})
-        ]))["result"]["id"]
+        return self.__simple_request(
+            "site",
+            "get",
+            OrderedDict([("filter", {"name": self.site_name}), ("dataset", {})]),
+        )["result"]["id"]
 
     def _authenticate(self):
         self.domain_id = self.__find_site()
 
         if self.domain_id is None:
-            raise Exception('Domain not found')
+            raise Exception("Domain not found")
 
     def _create_record(self, rtype, name, content):
         return self.__create_entry(rtype, name, content, None)
@@ -159,7 +163,9 @@ class Provider(BaseProvider):
         if content:
             entry["value"] = content
 
-        return self.__create_entry(entry["type"], entry["host"], entry["value"], entry["opt"])
+        return self.__create_entry(
+            entry["type"], entry["host"], entry["value"], entry["opt"]
+        )
 
     def __create_entry(self, rtype, host, value, opt):
         entries = self.__find_dns_entries(rtype, self._fqdn_name(host), value)
@@ -167,13 +173,19 @@ class Provider(BaseProvider):
         if entries:
             return True  # already exists
 
-        self.__simple_request('dns', 'add_rec', OrderedDict([
-            ('site-id', self.domain_id),
-            ('type', rtype),
-            ('host', self._relative_name(host)),
-            ('value', value),
-            ('opt', opt)
-        ]))
+        self.__simple_request(
+            "dns",
+            "add_rec",
+            OrderedDict(
+                [
+                    ("site-id", self.domain_id),
+                    ("type", rtype),
+                    ("host", self._relative_name(host)),
+                    ("value", value),
+                    ("opt", opt),
+                ]
+            ),
+        )
 
         return True
 
@@ -181,8 +193,7 @@ class Provider(BaseProvider):
         if identifier:
             self.__delete_dns_records_by_id([identifier])
             return True
-        entries = self.__find_dns_entries(
-            rtype, self._fqdn_name(name), content)
+        entries = self.__find_dns_entries(rtype, self._fqdn_name(name), content)
         ids = []
 
         for entry in entries:
@@ -192,27 +203,23 @@ class Provider(BaseProvider):
         return bool(ids)
 
     def __get_dns_entry(self, identifier):
-        return self.__simple_request('dns', 'get_rec', {
-            'filter': {
-                'id': identifier
-            }
-        })["result"]["data"]
+        return self.__simple_request("dns", "get_rec", {"filter": {"id": identifier}})[
+            "result"
+        ]["data"]
 
     def __find_dns_entries(self, rtype=None, host=None, value=None):
         LOGGER.debug("Searching for: %s, %s, %s", rtype, host, value)
 
         if value and rtype and rtype in ["CNAME"]:
             LOGGER.debug("CNAME transformation")
-            value = value.rstrip('.') + "."
+            value = value.rstrip(".") + "."
 
         if host:
             host = self._fqdn_name(host)
 
-        result = self.__simple_request('dns', 'get_rec', {
-            'filter': {
-                'site-id': self.domain_id
-            }
-        })
+        result = self.__simple_request(
+            "dns", "get_rec", {"filter": {"site-id": self.domain_id}}
+        )
 
         entries = []
 
@@ -223,39 +230,42 @@ class Provider(BaseProvider):
             if (rtype is not None) and (record["data"]["type"] != rtype):
                 LOGGER.debug(
                     "\tType doesn't match - expected: '%s', found: '%s'",
-                    rtype, record["data"]["type"])
+                    rtype,
+                    record["data"]["type"],
+                )
                 continue
 
             if (host is not None) and (record["data"]["host"] != host):
                 LOGGER.debug(
                     "\tHost doesn't match - expected: '%s', found: '%s'",
-                    host, record["data"]["host"])
+                    host,
+                    record["data"]["host"],
+                )
                 continue
 
             if (value is not None) and (record["data"]["value"] != value):
                 LOGGER.debug(
                     "\tValue doesn't match - expected: '%s', found: '%s'",
                     value,
-                    record["data"]["value"])
+                    record["data"]["value"],
+                )
                 continue
 
             entry = {
-                'id': record["id"],
-                'type': record["data"]["type"],
-                'name': self._full_name(record["data"]["host"]),
-                'ttl': None,
-                'options': {}
+                "id": record["id"],
+                "type": record["data"]["type"],
+                "name": self._full_name(record["data"]["host"]),
+                "ttl": None,
+                "options": {},
             }
 
             if record["data"]["type"] in ["CNAME"]:
-                entry['content'] = record["data"]["value"].rstrip('.')
+                entry["content"] = record["data"]["value"].rstrip(".")
             else:
-                entry['content'] = record["data"]["value"]
+                entry["content"] = record["data"]["value"]
 
             if record["data"]["type"] == "MX":
-                entry['options']['mx'] = {
-                    'priority': int(record["data"]["opt"])
-                }
+                entry["options"]["mx"] = {"priority": int(record["data"]["opt"])}
 
             entries.append(entry)
 
@@ -267,18 +277,10 @@ class Provider(BaseProvider):
 
         req = []
         for i in ids:
-            req.append({
-                'del_rec': {
-                    'filter': {
-                        'id': i
-                    }
-                }
-            })
+            req.append({"del_rec": {"filter": {"id": i}}})
 
-        self.__plesk_request({
-            'dns': req
-        })
+        self.__plesk_request({"dns": req})
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used for Plesk provider
         pass

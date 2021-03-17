@@ -1,9 +1,9 @@
 """Module provider for INWX"""
 from __future__ import absolute_import
+
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
-
 
 try:
     import xmlrpclib
@@ -12,15 +12,17 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['inwx.com']
+NAMESERVER_DOMAINS = ["inwx.com"]
 
 
 def provider_parser(subparser):
     """Configure provider parser for INWX"""
-    subparser.add_argument("--auth-username",
-                           help="specify username for authentication")
-    subparser.add_argument("--auth-password",
-                           help="specify password for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication"
+    )
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication"
+    )
 
 
 class Provider(BaseProvider):
@@ -28,23 +30,27 @@ class Provider(BaseProvider):
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
+
     def __init__(self, config):
         """
         :param config: command line options
         """
         super(Provider, self).__init__(config)
 
-        self._auth = {'user': self._get_provider_option('auth_username'),
-                      'pass': self._get_provider_option('auth_password')}
+        self._auth = {
+            "user": self._get_provider_option("auth_username"),
+            "pass": self._get_provider_option("auth_password"),
+        }
         self._domain = self.domain.lower()
         self.domain_id = None
 
-        endpoint = self._get_provider_option(
-            'endpoint') or 'https://api.domrobot.com/xmlrpc/'
+        endpoint = (
+            self._get_provider_option("endpoint") or "https://api.domrobot.com/xmlrpc/"
+        )
 
         self._api = xmlrpclib.ServerProxy(endpoint, allow_none=True)
 
-    def _validate_response(self, response, message, exclude_code=None):  # pylint: disable=no-self-use
+    def _validate_response(self, response, message, exclude_code=None):
         """
         validate an api server response
 
@@ -54,12 +60,11 @@ class Provider(BaseProvider):
         :return:
         ":raises Exception: on error
         """
-        if 'code' in response and response['code'] >= 2000:
-            if exclude_code is not None and response['code'] == exclude_code:
+        if "code" in response and response["code"] >= 2000:
+            if exclude_code is not None and response["code"] == exclude_code:
                 return
 
-            raise Exception("{0}: {1} ({2})".format(
-                message, response['msg'], response['code']))
+            raise Exception(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
     def _authenticate(self):
@@ -70,11 +75,10 @@ class Provider(BaseProvider):
         :return bool: success status
         :raises Exception: on error
         """
-        opts = {'domain': self._domain}
+        opts = {"domain": self._domain}
         opts.update(self._auth)
         response = self._api.domain.info(opts)
-        self._validate_response(
-            response=response, message='Failed to authenticate')
+        self._validate_response(response=response, message="Failed to authenticate")
 
         # set to fake id to pass tests, inwx doesn't work on domain id but
         # uses domain names for identification
@@ -93,16 +97,20 @@ class Provider(BaseProvider):
         :return bool: success status
         :raises Exception: on error
         """
-        opts = {'domain': self._domain, 'type': rtype.upper(),
-                'name': self._full_name(name), 'content': content}
-        if self._get_lexicon_option('ttl'):
-            opts['ttl'] = self._get_lexicon_option('ttl')
+        opts = {
+            "domain": self._domain,
+            "type": rtype.upper(),
+            "name": self._full_name(name),
+            "content": content,
+        }
+        if self._get_lexicon_option("ttl"):
+            opts["ttl"] = self._get_lexicon_option("ttl")
         opts.update(self._auth)
 
         response = self._api.nameserver.createRecord(opts)
         self._validate_response(
-            response=response, message='Failed to create record',
-            exclude_code=2302)
+            response=response, message="Failed to create record", exclude_code=2302
+        )
 
         return True
 
@@ -116,28 +124,27 @@ class Provider(BaseProvider):
         :return list: list of found records
         :raises Exception: on error
         """
-        opts = {'domain': self._domain}
+        opts = {"domain": self._domain}
         if rtype is not None:
-            opts['type'] = rtype.upper()
+            opts["type"] = rtype.upper()
         if name is not None:
-            opts['name'] = self._full_name(name)
+            opts["name"] = self._full_name(name)
         if content is not None:
-            opts['content'] = content
+            opts["content"] = content
         opts.update(self._auth)
 
         response = self._api.nameserver.info(opts)
-        self._validate_response(
-            response=response, message='Failed to get records')
+        self._validate_response(response=response, message="Failed to get records")
 
         records = []
-        if 'record' in response['resData']:
-            for record in response['resData']['record']:
+        if "record" in response["resData"]:
+            for record in response["resData"]["record"]:
                 processed_record = {
-                    'type': record['type'],
-                    'name': record['name'],
-                    'ttl': record['ttl'],
-                    'content': record['content'],
-                    'id': record['id']
+                    "type": record["type"],
+                    "name": record["name"],
+                    "ttl": record["ttl"],
+                    "content": record["content"],
+                    "id": record["id"],
                 }
                 records.append(processed_record)
 
@@ -157,29 +164,28 @@ class Provider(BaseProvider):
         record_ids = []
         if not identifier:
             records = self._list_records(rtype, name)
-            record_ids = [record['id'] for record in records]
+            record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)
 
         for an_identifier in record_ids:
-            opts = {'id': an_identifier}
+            opts = {"id": an_identifier}
             if rtype is not None:
-                opts['type'] = rtype.upper()
+                opts["type"] = rtype.upper()
             if name is not None:
-                opts['name'] = self._full_name(name)
+                opts["name"] = self._full_name(name)
             if content is not None:
-                opts['content'] = content
+                opts["content"] = content
             opts.update(self._auth)
 
             response = self._api.nameserver.updateRecord(opts)
             self._validate_response(
-                response=response, message='Failed to update record',
-                exclude_code=2302)
+                response=response, message="Failed to update record", exclude_code=2302
+            )
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None,
-                       content=None):
+    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         delete a record
         filter selection to delete by identifier or rtype/name/content
@@ -194,19 +200,20 @@ class Provider(BaseProvider):
         record_ids = []
         if not identifier:
             records = self._list_records(rtype, name, content)
-            record_ids = [record['id'] for record in records]
+            record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)
 
         for record_id in record_ids:
-            opts = {'id': record_id}
+            opts = {"id": record_id}
             opts.update(self._auth)
             response = self._api.nameserver.deleteRecord(opts)
             self._validate_response(
-                response=response, message='Failed to update record')
+                response=response, message="Failed to update record"
+            )
 
         return True
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used for INWX provider.
         pass

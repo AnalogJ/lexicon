@@ -1,19 +1,20 @@
 """Integration tests for EasyName"""
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTests
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
-class EasynameProviderTests(TestCase, IntegrationTests):
+class EasynameProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for EasyName"""
-    provider_name = 'easyname'
-    domain = 'lexicontest.astzweig.de'
+
+    provider_name = "easyname"
+    domain = "fivekindfilms.com"
 
     def _filter_post_data_parameters(self):
-        return ['username', 'password']
+        return ["emailAddress", "password"]
 
     def _filter_headers(self):
-        return ['Cookie']
+        return ["Cookie"]
 
     def _test_fallback_fn(self):
-        return lambda x: 'placeholder_' + x if x != 'priority' else ''
+        return lambda x: "placeholder_" + x if x != "priority" else ""

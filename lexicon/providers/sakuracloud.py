@@ -1,5 +1,6 @@
 """Module provider for Sakura Cloud"""
 from __future__ import absolute_import
+
 import json
 import logging
 
@@ -10,49 +11,48 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['sakura.ne.jp']
+NAMESERVER_DOMAINS = ["sakura.ne.jp"]
 
 
 def provider_parser(subparser):
     """Generate a provider parser for Sakura Cloud"""
     subparser.add_argument(
-        "--auth-token", help="specify access token for authentication")
+        "--auth-token", help="specify access token for authentication"
+    )
     subparser.add_argument(
-        "--auth-secret", help="specify access secret for authentication")
+        "--auth-secret", help="specify access secret for authentication"
+    )
 
 
 class Provider(BaseProvider):
     """Provider class for Sakura Cloud"""
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1'
+        self.api_endpoint = "https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1"
 
     def _authenticate(self):
 
-        query_params = {
-            "Filter": {
-                "Provider.Class": "dns",
-                "Name": self.domain
-            }
-        }
-        payload = self._get('/commonserviceitem', query_params=query_params)
+        query_params = {"Filter": {"Provider.Class": "dns", "Name": self.domain}}
+        payload = self._get("/commonserviceitem", query_params=query_params)
 
         for item in payload["CommonServiceItems"]:
             if item["Status"]["Zone"] == self.domain:
                 self.domain_id = item["ID"]
                 return
 
-        raise Exception('No domain found')
+        raise Exception("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, rtype=rtype, name=name, content=content)
+            resource_record_sets, rtype=rtype, name=name, content=content
+        )
         if index >= 0:
-            LOGGER.debug('create_record: %s', False)
+            LOGGER.debug("create_record: %s", False)
             return False
 
         resource_record_sets.append(
@@ -60,12 +60,12 @@ class Provider(BaseProvider):
                 "Name": name,
                 "Type": rtype,
                 "RData": self._bind_format_target(rtype, content),
-                "TTL": self._get_lexicon_option('ttl'),
+                "TTL": self._get_lexicon_option("ttl"),
             }
         )
 
         self._update_resource_record_sets(resource_record_sets)
-        LOGGER.debug('create_record: %s', True)
+        LOGGER.debug("create_record: %s", True)
         return True
 
     # List all records. Return an empty list if no records found
@@ -76,25 +76,24 @@ class Provider(BaseProvider):
 
         for record in self._get_resource_record_sets():
             processed_record = {
-                'type': record['Type'],
-                'name': self._full_name(record['Name']),
-                'ttl': record['TTL'],
-                'content': record['RData'],
+                "type": record["Type"],
+                "name": self._full_name(record["Name"]),
+                "ttl": record["TTL"],
+                "content": record["RData"],
                 # 'id': None,
             }
             records.append(processed_record)
 
         if rtype:
-            records = [record for record in records if record['type'] == rtype]
+            records = [record for record in records if record["type"] == rtype]
         if name:
             records = [
-                record for record in records if record['name'] == self._full_name(name)
+                record for record in records if record["name"] == self._full_name(name)
             ]
         if content:
-            records = [
-                record for record in records if record['content'] == content]
+            records = [record for record in records if record["content"] == content]
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
         return records
 
     # Create or update a record.
@@ -106,29 +105,30 @@ class Provider(BaseProvider):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
-            resource_record_sets, rtype=rtype, name=name)
+            resource_record_sets, rtype=rtype, name=name
+        )
 
         if index >= 0:
             resource_record_sets[index]["Type"] = rtype
             resource_record_sets[index]["Name"] = name
             resource_record_sets[index]["RData"] = self._bind_format_target(
-                rtype, content)
-            resource_record_sets[index]["TTL"] = self._get_lexicon_option(
-                'ttl')
+                rtype, content
+            )
+            resource_record_sets[index]["TTL"] = self._get_lexicon_option("ttl")
         else:
             resource_record_sets.append(
                 {
                     "Name": name,
                     "Type": rtype,
                     "RData": self._bind_format_target(rtype, content),
-                    "TTL": self._get_lexicon_option('ttl'),
+                    "TTL": self._get_lexicon_option("ttl"),
                 }
             )
 
         self._update_resource_record_sets(resource_record_sets)
-        LOGGER.debug('create_record')
+        LOGGER.debug("create_record")
 
-        LOGGER.debug('update_record: %s', True)
+        LOGGER.debug("update_record: %s", True)
         return True
 
     # Delete an existing record.
@@ -143,23 +143,23 @@ class Provider(BaseProvider):
 
         filtered_records = []
         for record in resource_record_sets:
-            if rtype and record['Type'] != rtype:
+            if rtype and record["Type"] != rtype:
                 continue
-            if name and record['Name'] != name:
+            if name and record["Name"] != name:
                 continue
-            if content and record['RData'] != content:
+            if content and record["RData"] != content:
                 continue
             filtered_records.append(record)
 
         if not filtered_records:
-            LOGGER.debug('delete_record: %s', False)
+            LOGGER.debug("delete_record: %s", False)
             return False
 
         for record in filtered_records:
             resource_record_sets.remove(record)
 
         self._update_resource_record_sets(resource_record_sets)
-        LOGGER.debug('delete_record: %s', True)
+        LOGGER.debug("delete_record: %s", True)
         return True
 
     # Helpers
@@ -174,58 +174,60 @@ class Provider(BaseProvider):
             name = "@"
         return name
 
-    def _bind_format_target(self, rtype, target):  # pylint: disable=no-self-use
+    def _bind_format_target(self, rtype, target):
         if rtype == "CNAME" and not target.endswith("."):
             target += "."
         return target
 
-    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):  # pylint: disable=no-self-use
+    def _find_resource_record_set(self, records, rtype=None, name=None, content=None):
         for index, record in enumerate(records):
-            if rtype and record['Type'] != rtype:
+            if rtype and record["Type"] != rtype:
                 continue
-            if name and record['Name'] != name:
+            if name and record["Name"] != name:
                 continue
-            if content and record['RData'] != content:
+            if content and record["RData"] != content:
                 continue
             return index
         return -1
 
     def _get_resource_record_sets(self):
-        payload = self._get('/commonserviceitem/{0}'.format(self.domain_id))
-        return payload['CommonServiceItem']['Settings']['DNS']['ResourceRecordSets']
+        payload = self._get(f"/commonserviceitem/{self.domain_id}")
+        return payload["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"]
 
     def _update_resource_record_sets(self, resource_record_sets):
         content = {
             "CommonServiceItem": {
-                "Settings": {
-                    "DNS": {
-                        "ResourceRecordSets": resource_record_sets
-                    }
-                }
+                "Settings": {"DNS": {"ResourceRecordSets": resource_record_sets}}
             }
         }
-        return self._put('/commonserviceitem/{0}'.format(self.domain_id), content)
+        return self._put(f"/commonserviceitem/{self.domain_id}", content)
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
         default_headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
         default_auth = HTTPBasicAuth(
-            self._get_provider_option('auth_token'), self._get_provider_option('auth_secret'))
+            self._get_provider_option("auth_token"),
+            self._get_provider_option("auth_secret"),
+        )
 
         query_string = ""
         if query_params:
             query_string = json.dumps(query_params)
 
-        response = requests.request(action, self.api_endpoint + url, params=query_string,
-                                    data=json.dumps(data),
-                                    headers=default_headers,
-                                    auth=default_auth)
+        response = requests.request(
+            action,
+            self.api_endpoint + url,
+            params=query_string,
+            data=json.dumps(data),
+            headers=default_headers,
+            auth=default_auth,
+        )
         try:
             # if the request fails for any reason, throw an error.
             response.raise_for_status()

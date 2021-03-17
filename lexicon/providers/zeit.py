@@ -1,24 +1,25 @@
 """Module provider for Zeit"""
 from __future__ import absolute_import
+
 import json
 import logging
 
 import requests
-from lexicon.providers.base import Provider as BaseProvider
 
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ['zeit.world']
+NAMESERVER_DOMAINS = ["zeit.world"]
 
 
 def provider_parser(subparser):
     """Configure provider parser for Zeit"""
-    subparser.description = '''
+    subparser.description = """
         Zeit Provider requires a token to access its API.
         You can generate one for your account on the following URL:
-        https://zeit.co/account/tokens'''
-    subparser.add_argument('--auth-token', help='specify your API token')
+        https://zeit.co/account/tokens"""
+    subparser.add_argument("--auth-token", help="specify your API token")
 
 
 class Provider(BaseProvider):
@@ -36,43 +37,49 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = 'https://api.zeit.co/v2/domains'
+        self.api_endpoint = "https://api.zeit.co/v2/domains"
 
     def _authenticate(self):
-        result = self._get('/{0}'.format(self.domain))
+        result = self._get(f"/{self.domain}")
 
-        if not result['uid']:
-            raise Exception('Error, domain {0} not found'.format(self.domain))
+        if not result["uid"]:
+            raise Exception(f"Error, domain {self.domain} not found")
 
-        self.domain_id = result['uid']
+        self.domain_id = result["uid"]
 
     def _list_records(self, rtype=None, name=None, content=None):
-        result = self._get('/{0}/records'.format(self.domain))
+        result = self._get(f"/{self.domain}/records")
 
-        raw_records = result['records']
+        raw_records = result["records"]
         if rtype:
             raw_records = [
-                raw_record for raw_record in raw_records
-                if raw_record['type'] == rtype]
+                raw_record for raw_record in raw_records if raw_record["type"] == rtype
+            ]
         if name:
             raw_records = [
-                raw_record for raw_record in raw_records
-                if raw_record['name'] == self._relative_name(name)]
+                raw_record
+                for raw_record in raw_records
+                if raw_record["name"] == self._relative_name(name)
+            ]
         if content:
             raw_records = [
-                raw_record for raw_record in raw_records
-                if raw_record['value'] == content]
+                raw_record
+                for raw_record in raw_records
+                if raw_record["value"] == content
+            ]
 
         records = []
         for raw_record in raw_records:
-            records.append({
-                'id': raw_record['id'],
-                'type': raw_record['type'],
-                'name': self._full_name(raw_record['name']),
-                'content': raw_record['value']
-            })
+            records.append(
+                {
+                    "id": raw_record["id"],
+                    "type": raw_record["type"],
+                    "name": self._full_name(raw_record["name"]),
+                    "content": raw_record["value"],
+                }
+            )
 
-        LOGGER.debug('list_records: %s', records)
+        LOGGER.debug("list_records: %s", records)
 
         return records
 
@@ -80,22 +87,17 @@ class Provider(BaseProvider):
         # We ignore creation if a record already exists for given rtype/name/content
         records = self._list_records(rtype, name, content)
         if records:
-            LOGGER.debug('create_record (ignored, duplicate): %s',
-                         records[0]['id'])
+            LOGGER.debug("create_record (ignored, duplicate): %s", records[0]["id"])
             return True
 
-        data = {
-            'type': rtype,
-            'name': self._relative_name(name),
-            'value': content
-        }
+        data = {"type": rtype, "name": self._relative_name(name), "value": content}
 
-        result = self._post('/{0}/records'.format(self.domain), data)
+        result = self._post(f"/{self.domain}/records", data)
 
-        if not result['uid']:
-            raise Exception('Error occured when inserting the new record.')
+        if not result["uid"]:
+            raise Exception("Error occured when inserting the new record.")
 
-        LOGGER.debug('create_record: %s', result['uid'])
+        LOGGER.debug("create_record: %s", result["uid"])
 
         return True
 
@@ -107,38 +109,33 @@ class Provider(BaseProvider):
         records = []
         if identifier:
             records = self._list_records()
-            records = [
-                record for record in records if record['id'] == identifier]
+            records = [record for record in records if record["id"] == identifier]
         else:
             records = self._list_records(rtype, name)
 
         if not records:
-            raise Exception(
-                'No record found for identifer: {0}'.format(identifier))
+            raise Exception(f"No record found for identifer: {identifier}")
 
         if len(records) > 1:
             LOGGER.warning(
-                'Multiple records have been found for given parameters. '
-                'Only first one will be updated (id: %s)', records[0]['id'])
+                "Multiple records have been found for given parameters. "
+                "Only first one will be updated (id: %s)",
+                records[0]["id"],
+            )
 
-        data = {
-            'type': rtype,
-            'name': self._relative_name(name),
-            'value': content
-        }
+        data = {"type": rtype, "name": self._relative_name(name), "value": content}
 
         if not rtype:
-            data['type'] = records[0]['type']
+            data["type"] = records[0]["type"]
         if not name:
-            data['name'] = self._relative_name(records[0]['name'])
+            data["name"] = self._relative_name(records[0]["name"])
         if not content:
-            data['value'] = records[0]['content']
+            data["value"] = records[0]["content"]
 
-        result = self._post('/{0}/records'.format(self.domain), data)
-        self._delete('/{0}/records/{1}'.format(self.domain, records[0]['id']))
+        result = self._post(f"/{self.domain}/records", data)
+        self._delete(f"/{self.domain}/records/{records[0]['id']}")
 
-        LOGGER.debug('update_record: %s => %s',
-                     records[0]['id'], result['uid'])
+        LOGGER.debug("update_record: %s => %s", records[0]["id"], result["uid"])
 
         return True
 
@@ -146,21 +143,20 @@ class Provider(BaseProvider):
         delete_record_ids = []
         if not identifier:
             records = self._list_records(rtype, name, content)
-            delete_record_ids = [record['id'] for record in records]
+            delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)
 
-        LOGGER.debug('delete_records: %s', delete_record_ids)
+        LOGGER.debug("delete_records: %s", delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete(
-                '/{0}/records/{1}'.format(self.domain, delete_record_id))
+            self._delete(f"/{self.domain}/records/{delete_record_id}")
 
-        LOGGER.debug('delete_record: %s', True)
+        LOGGER.debug("delete_record: %s", True)
 
         return True
 
-    def _request(self, action='GET', url='/', data=None, query_params=None):
+    def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
@@ -172,8 +168,9 @@ class Provider(BaseProvider):
             params=query_params,
             data=json.dumps(data),
             headers={
-                'Authorization': 'Bearer {0}'.format(
-                    self._get_provider_option('auth_token'))})
+                "Authorization": f"Bearer {self._get_provider_option('auth_token')}"
+            },
+        )
 
         request.raise_for_status()
         return request.json()

@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{}'
+    body: !!python/unicode '{}'
     headers:
       Accept:
       - '*/*'
@@ -11,39 +11,39 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - application/json
+      - !!python/unicode application/json
       User-Agent:
       - python-requests/2.23.0
     method: GET
     uri: https://dns.hetzner.com/api/v1/zones
   response:
     body:
-      string: '{"zones":[{"id":"xyncsydKx5x44qDZQCzpNM","name":"alt.coop","ttl":300,"registrar":"","legacy_dns_host":"","legacy_ns":["helium.ns.hetzner.com.","oxygen.ns.hetzner.com.","hydrogen.ns.hetzner.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
-        01:23:59 +0000 UTC","verified":"2020-04-07 01:53:05.934062806 +0000 UTC m=+578.060435172","modified":"2020-04-08
-        10:38:16.278 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":75},{"id":"JkBqVJDW3PpqefBb274BCZ","name":"softwarekollektiv.de","ttl":86400,"registrar":"","legacy_dns_host":"","legacy_ns":[],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-08
-        18:53:25.589 +0000 UTC","verified":"2020-04-08T18:53:27Z","modified":"2020-04-13
-        15:17:43.767 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":1}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":2}}}
+      string: !!python/unicode '{"zones":[{"id":"hetznerapizoneid","name":"hetzner-api-test.de","ttl":3600,"registrar":"","legacy_dns_host":"","legacy_ns":["ns1.first-ns.de.","robotns2.second-ns.de.","robotns3.second-ns.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
+        01:24:00 +0000 UTC","verified":"2020-04-07 01:51:26.114056422 +0000 UTC m=+478.240428717","modified":"2020-06-11
+        07:02:20.999 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":9}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":12}}}
 
         '
     headers:
-      Access-Control-Allow-Origin:
+      access-control-allow-origin:
       - '*'
-      Connection:
+      connection:
       - keep-alive
-      Content-Length:
-      - '1329'
-      Content-Type:
+      content-length:
+      - '7886'
+      content-type:
       - application/json; charset=utf-8
-      Date:
-      - Mon, 13 Apr 2020 20:32:33 GMT
-      Vary:
+      date:
+      - Fri, 12 Jun 2020 08:20:36 GMT
+      transfer-encoding:
+      - chunked
+      vary:
       - Origin
-      Via:
+      via:
       - kong/2.0.2
-      X-Kong-Proxy-Latency:
+      x-kong-proxy-latency:
       - '1'
-      X-Kong-Upstream-Latency:
-      - '187'
+      x-kong-upstream-latency:
+      - '253'
     status:
       code: 200
       message: OK
