@@ -29,7 +29,7 @@ current document instructions and open a pull request.
 - KingHost
 - `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
 - `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
-- `Mythic Beasts <https://www.mythic-beasts.com/support/api/primary>`_
+- `Mythic Beasts <https://www.mythic-beasts.com/support/api/dnsv2>`_
 - `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
 - `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
 - `Servercow <https://servercow.de>`_
