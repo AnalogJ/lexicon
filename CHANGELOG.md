@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.5.4 - 17/03/2021
 ### Changed
 * Support both `tldextract` 2.x and 3.x
 * Upgrade third-party dependencies

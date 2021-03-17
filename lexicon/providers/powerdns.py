@@ -56,7 +56,9 @@ class Provider(BaseProvider):
 
         self.api_endpoint = self._get_provider_option("pdns_server")
         if not self.api_endpoint:
-            raise PowerDNSProviderError('PowerDNS API endpoint not defined (pdns_server)')
+            raise PowerDNSProviderError(
+                "PowerDNS API endpoint not defined (pdns_server)"
+            )
 
         self.disable_slave_notify = self._get_provider_option("pdns-disable-notify")
 
@@ -74,7 +76,7 @@ class Provider(BaseProvider):
 
         self.api_key = self._get_provider_option("auth_token")
         if not self.api_key:
-            raise PowerDNSProviderError('PowerDNS API key not defined (auth_token)')
+            raise PowerDNSProviderError("PowerDNS API key not defined (auth_token)")
 
         self._zone_data = None
 
