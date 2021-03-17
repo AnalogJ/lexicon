@@ -2,7 +2,7 @@
 import socket
 from unittest import TestCase
 
-import mock
+from unittest import mock
 import pytest
 
 from lexicon.providers.auto import _get_ns_records_domains_for_domain
