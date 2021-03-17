@@ -119,7 +119,7 @@ class Provider(BaseProvider):
                 raise Exception(
                     "Multiple records found matching type, name and content - won't update"
                 )
-        self._put("/records/{0}".format(update_identifier), data)
+        self._put(f"/records/{update_identifier}", data)
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -136,7 +136,7 @@ class Provider(BaseProvider):
             delete_record_ids.append(identifier)
 
         for record_id in delete_record_ids:
-            self._delete("/records/{0}".format(record_id))
+            self._delete(f"/records/{record_id}")
         return True
 
     # Helpers
@@ -175,7 +175,7 @@ class Provider(BaseProvider):
         for zone in zones:
             if zone["name"] == domain:
                 return zone
-        raise Exception("No zone was found in account matching {0}".format(domain))
+        raise Exception(f"No zone was found in account matching {domain}")
 
     def _get_record_name(self, domain, record_name):
         """

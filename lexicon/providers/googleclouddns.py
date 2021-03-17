@@ -109,6 +109,21 @@ class Provider(BaseProvider):
                 "key/project_id key)."
             )
 
+    # the complete list of zones may be paginated. So we recursively call
+    # the list managedZones api until no page_token is given, keeping a list
+    # of matched zone ids as we go.
+    def _get_managed_zone_ids(self, zone_ids, page_token=None):
+        results = self._get("/managedZones", {"pageToken": page_token})
+        zone_ids += [
+            managedZone["id"]
+            for managedZone in results["managedZones"]
+            if managedZone["dnsName"] == f"{self.domain}."
+        ]
+
+        if "nextPageToken" in results:
+            return self._get_managed_zone_ids(zone_ids, results["nextPageToken"])
+        return zone_ids
+
     # We have a real authentication here, that uses the OAuth protocol:
     #   - a JWT token is forged with the Google Cloud DNS access claims,
     #     using the service account info loaded by the constructor,
@@ -170,26 +185,15 @@ class Provider(BaseProvider):
         if not post_result["access_token"]:
             raise Exception(
                 "Error, could not grant RW access on the "
-                "Google Cloud DNS API for user: {0}".format(
-                    self._get_provider_option("auth_email")
-                )
+                f"Google Cloud DNS API for user: {self._get_provider_option('auth_email')}"
             )
 
         self._token = post_result["access_token"]
 
-        results = self._get("/managedZones")
-
-        targeted_managed_zone_ids = [
-            managedZone["id"]
-            for managedZone in results["managedZones"]
-            if managedZone["dnsName"] == "{0}.".format(self.domain)
-        ]
-
+        targeted_managed_zone_ids = self._get_managed_zone_ids([])
         if not targeted_managed_zone_ids:
             raise Exception(
-                "Error, domain {0} is not registered for this project".format(
-                    self.domain
-                )
+                f"Error, domain {self.domain} is not registered for this project"
             )
 
         self.domain_id = targeted_managed_zone_ids[0]
@@ -203,7 +207,7 @@ class Provider(BaseProvider):
     # the most general case, its preferable to always get all records and be free to filter
     # the way we want afterwards.
     def _list_records(self, rtype=None, name=None, content=None):
-        results = self._get("/managedZones/{0}/rrsets".format(self.domain_id))
+        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         records = []
 
@@ -250,7 +254,7 @@ class Provider(BaseProvider):
         query_params = {"type": rtype, "name": self._fqdn_name(name)}
 
         results = self._get(
-            "/managedZones/{0}/rrsets".format(self.domain_id), query_params=query_params
+            f"/managedZones/{self.domain_id}/rrsets", query_params=query_params
         )
 
         rrdatas = []
@@ -284,7 +288,7 @@ class Provider(BaseProvider):
             }
         ]
 
-        self._post("/managedZones/{0}/changes".format(self.domain_id), data=changes)
+        self._post(f"/managedZones/{self.domain_id}/changes", data=changes)
 
         LOGGER.debug("create_record: %s", identifier)
 
@@ -313,9 +317,7 @@ class Provider(BaseProvider):
 
         if not records_to_update:
             raise Exception(
-                "Error, could not find a record for given identifier: {0}".format(
-                    identifier
-                )
+                f"Error, could not find a record for given identifier: {identifier}"
             )
 
         if len(records_to_update) > 1:
@@ -365,7 +367,7 @@ class Provider(BaseProvider):
     #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #     for this type/name pair, all RecordSet needs to go away.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        results = self._get("/managedZones/{0}/rrsets".format(self.domain_id))
+        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         if identifier:
             changes = self._process_records_to_delete_by_identifier(results, identifier)
@@ -379,7 +381,7 @@ class Provider(BaseProvider):
                 "Could not find existing record matching the given parameters."
             )
 
-        self._post("/managedZones/{0}/changes".format(self.domain_id), data=changes)
+        self._post(f"/managedZones/{self.domain_id}/changes", data=changes)
 
         LOGGER.debug("delete_records: %s %s %s %s", identifier, rtype, name, content)
 
@@ -430,7 +432,7 @@ class Provider(BaseProvider):
             rrsets_to_modify = [
                 rrset
                 for rrset in rrsets_to_modify
-                if ('"{0}"'.format(content) if rrset["type"] == "TXT" else content)
+                if (f'"{content}"' if rrset["type"] == "TXT" else content)
                 in rrset["rrdatas"]
             ]
 
@@ -449,9 +451,7 @@ class Provider(BaseProvider):
             if content:
                 new_rrdatas = rrset_to_modify["rrdatas"][:]
                 new_rrdatas.remove(
-                    '"{0}"'.format(content)
-                    if rrset_to_modify["type"] == "TXT"
-                    else content
+                    f'"{content}"' if rrset_to_modify["type"] == "TXT" else content
                 )
                 if new_rrdatas:
                     changes["additions"].append(
@@ -473,9 +473,9 @@ class Provider(BaseProvider):
     @staticmethod
     def _normalize_content(rtype, content):
         if rtype == "TXT":
-            return '"{0}"'.format(content)
+            return f'"{content}"'
         if rtype == "CNAME":
-            return "{0}.".format(content) if not content.endswith(".") else content
+            return f"{content}." if not content.endswith(".") else content
 
         return content
 
@@ -502,12 +502,10 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         request = requests.request(
             action,
-            "https://content.googleapis.com/dns/v1/projects/{0}{1}".format(
-                self._service_account_info["project_id"], url
-            ),
+            f"https://content.googleapis.com/dns/v1/projects/{self._service_account_info['project_id']}{url}",
             params=None if not query_params else query_params,
             json=None if not data else data,
-            headers={"Authorization": "Bearer {0}".format(self._token)},
+            headers={"Authorization": f"Bearer {self._token}"},
         )
 
         request.raise_for_status()

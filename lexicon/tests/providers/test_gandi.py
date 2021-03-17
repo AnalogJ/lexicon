@@ -26,7 +26,7 @@ class GandiRESTProviderTests(TestCase, IntegrationTestsV2):
     provider_variant = "REST"
 
     def _filter_headers(self):
-        return ["X-Api-Key"]
+        return ["Authorization"]
 
     def _test_parameters_overrides(self):
         return {"api_protocol": "rest"}

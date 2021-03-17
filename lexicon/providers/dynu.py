@@ -47,7 +47,7 @@ class Provider(BaseProvider):
 
         created = False
         try:
-            payload = self._post("/dns/{0}/record".format(self.domain_id), record)
+            payload = self._post(f"/dns/{self.domain_id}/record", record)
             created = self._from_dynu_record(payload)
         except requests.exceptions.HTTPError as error:
             # HTTP 501 is expected when a record with the same type and content is sent to the
@@ -63,7 +63,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/dns/{0}/record".format(self.domain_id))
+        payload = self._get(f"/dns/{self.domain_id}/record")
 
         records = []
         for record in payload["dnsRecords"]:
@@ -120,9 +120,7 @@ class Provider(BaseProvider):
             add_rec = self._to_dynu_record(
                 rec["type"], self._relative_name(rec["name"]), rec["content"]
             )
-            payload = self._post(
-                "/dns/{0}/record/{1}".format(self.domain_id, ident), add_rec
-            )
+            payload = self._post(f"/dns/{self.domain_id}/record/{ident}", add_rec)
             update = self._from_dynu_record(payload)
             LOGGER.debug("update_record: %s", update)
         return True
@@ -141,7 +139,7 @@ class Provider(BaseProvider):
 
         for record_id in delete_record_id:
             try:
-                self._delete("/dns/{0}/record/{1}".format(self.domain_id, record_id))
+                self._delete(f"/dns/{self.domain_id}/record/{record_id}")
                 LOGGER.debug("delete_record: %s", record_id)
             except requests.exceptions.HTTPError as error:
                 if error.response.status_code == 501:
@@ -181,17 +179,14 @@ class Provider(BaseProvider):
 
     # Fetch a record by its ID
     def _fetch_record(self, identifier):
-        payload = self._get("/dns/{0}/record/{1}".format(self.domain_id, identifier))
+        payload = self._get(f"/dns/{self.domain_id}/record/{identifier}")
         return self._from_dynu_record(payload)
 
     # Takes a Dynu.com record and puts it into lexicon-shape
     @staticmethod
     def _from_dynu_record(record):
         rtype = record["recordType"]
-        options = {
-            "enabled": "state",
-            "lastUpdate": "updatedOn",
-        }
+        options = {"enabled": "state", "lastUpdate": "updatedOn"}
         options = {k: record[v] for k, v in options.items() if v in record}
         options["raw"] = record
 
@@ -255,10 +250,7 @@ class Provider(BaseProvider):
         if rtype == "SPF":
             raise NotImplementedError("SPF entries are not supported")
 
-        output = {
-            "recordType": rtype,
-            "state": True,
-        }
+        output = {"recordType": rtype, "state": True}
         if name is not None:
             output["nodeName"] = self._relative_name(name)
 

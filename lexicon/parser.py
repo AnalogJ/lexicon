@@ -61,7 +61,7 @@ def generate_cli_main_parser():
         "--version",
         help="show the current version of lexicon",
         action="version",
-        version="%(prog)s {0}".format(discovery.lexicon_version()),
+        version=f"%(prog)s {discovery.lexicon_version()}",
     )
     parser.add_argument("--delegated", help="specify the delegated domain")
     parser.add_argument(
@@ -82,7 +82,7 @@ def generate_cli_main_parser():
 
         subparser = subparsers.add_parser(
             provider,
-            help="{0} provider".format(provider),
+            help=f"{provider} provider",
             parents=[generate_base_provider_parser()],
         )
         provider_parser(subparser)
@@ -90,9 +90,7 @@ def generate_cli_main_parser():
         if not available:
             subparser.epilog = (
                 "WARNING: some required dependencies for this provider are not "
-                "installed. Please install lexicon[{0}] first before using it.".format(
-                    provider
-                )
+                f"installed. Please install lexicon[{provider}] first before using it."
             )
 
     return parser

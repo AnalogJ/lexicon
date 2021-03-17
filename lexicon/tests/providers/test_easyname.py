@@ -8,10 +8,10 @@ class EasynameProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for EasyName"""
 
     provider_name = "easyname"
-    domain = "nigl.it"
+    domain = "fivekindfilms.com"
 
     def _filter_post_data_parameters(self):
-        return ["username", "password"]
+        return ["emailAddress", "password"]
 
     def _filter_headers(self):
         return ["Cookie"]

@@ -61,10 +61,10 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
     method: GET
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/A/localhost
   response:
     body:
-      string: '[{"data":"ns71.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns72.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"}]
+      string: '[]
 
         '
     headers:
@@ -73,7 +73,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '235'
+      - '3'
       Content-Type:
       - application/json
       Date:
@@ -92,11 +92,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '[{"data": "ns71.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "ns72.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
-      3600, "type": "CNAME"}, {"type": "A", "name": "localhost", "data": "127.0.0.1",
-      "ttl": 3600}]'
+    body: '[{"type": "A", "name": "localhost", "data": "127.0.0.1", "ttl": 3600}]'
     headers:
       Accept:
       - application/json
@@ -105,13 +101,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '327'
+      - '69'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.23.0
     method: PUT
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/A/localhost
   response:
     body:
       string: ''

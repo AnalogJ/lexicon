@@ -55,17 +55,17 @@ class Provider(BaseProvider):
     def _authenticate(self):
         domain = self.domain
 
-        result = self._get("/domains/{0}".format(domain))
+        result = self._get(f"/domains/{domain}")
         self.domain_id = result["domainId"]
 
     def _list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
 
-        url = "/domains/{0}/records".format(domain)
+        url = f"/domains/{domain}/records"
         if rtype:
-            url += "/{0}".format(rtype)
+            url += f"/{rtype}"
         if name:
-            url += "/{0}".format(self._relative_name(name))
+            url += f"/{self._relative_name(name)}"
 
         raws = self._get(url)
 
@@ -94,15 +94,11 @@ class Provider(BaseProvider):
         ttl = self._get_lexicon_option("ttl")
 
         # Retrieve existing data in DNS zone.
-        records = self._get("/domains/{0}/records".format(domain))
+        records = self._get(f"/domains/{domain}/records/{rtype}/{relative_name}")
 
         # Check if a record already matches given parameters
         for record in records:
-            if (
-                record["type"] == rtype
-                and self._relative_name(record["name"]) == relative_name
-                and record["data"] == content
-            ):
+            if record["data"] == content:
                 LOGGER.debug(
                     "create_record (ignored, duplicate): %s %s %s", rtype, name, content
                 )
@@ -115,8 +111,8 @@ class Provider(BaseProvider):
 
         records.append(data)
 
-        # Synchronize data with inserted record into DNS zone.
-        self._put("/domains/{0}/records".format(domain), records)
+        # Insert the record
+        self._put(f"/domains/{domain}/records/{rtype}/{relative_name}", records)
 
         LOGGER.debug("create_record: %s %s %s", rtype, name, content)
 
@@ -142,8 +138,9 @@ class Provider(BaseProvider):
         if name:
             relative_name = self._relative_name(name)
 
+        updated_record = None
         # Retrieve existing data in DNS zone.
-        records = self._get("/domains/{0}/records".format(domain))
+        records = self._get(f"/domains/{domain}/records")
 
         # Get the record to update:
         #   - either explicitly by its identifier,
@@ -157,10 +154,20 @@ class Provider(BaseProvider):
                 and record["data"] != content
             ):
                 record["data"] = content
+                updated_record = record
                 break
 
         # Synchronize data with updated records into DNS zone.
-        self._put("/domains/{0}/records".format(domain), records)
+        if updated_record is not None:
+            if (
+                identifier
+                and self._relative_name(updated_record["name"]) != relative_name
+            ):
+                self._put(f"/domains/{domain}/records/{rtype}", records)
+            else:
+                self._put(
+                    f"/domains/{domain}/records/{rtype}/{relative_name}", updated_record
+                )
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
@@ -178,7 +185,7 @@ class Provider(BaseProvider):
         domain = self.domain
 
         # Retrieve all records in the DNS zone
-        records = self._get("/domains/{0}/records".format(domain))
+        records = self._get(f"/domains/{domain}/records")
 
         relative_name = None
         if name:
@@ -253,7 +260,7 @@ class Provider(BaseProvider):
                     filtered_records.append(record)
 
         # Synchronize data with expurged entries into DNS zone.
-        self._put("/domains/{0}/records".format(domain), filtered_records)
+        self._put(f"/domains/{domain}/records", filtered_records)
 
         LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
 
@@ -287,12 +294,12 @@ class Provider(BaseProvider):
         # (until modifications are propagated).
         # In this case, call to API will return 409 HTTP error.
         # We use the Retry extension to retry the requests until
-        # we get a processable reponse (402 HTTP status, or an HTTP error != 409)
+        # we get a processable response (402 HTTP status, or an HTTP error != 409)
         retries = Retry(
             total=10,
             backoff_factor=0.5,
             status_forcelist=[409],
-            method_whitelist=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
+            allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
         )
 
         session = requests.Session()
@@ -307,10 +314,7 @@ class Provider(BaseProvider):
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 # GoDaddy use a key/secret pair to authenticate
-                "Authorization": "sso-key {0}:{1}".format(
-                    self._get_provider_option("auth_key"),
-                    self._get_provider_option("auth_secret"),
-                ),
+                "Authorization": f"sso-key {self._get_provider_option('auth_key')}:{self._get_provider_option('auth_secret')}",
             },
         )
 

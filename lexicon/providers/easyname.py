@@ -1,6 +1,7 @@
 """Module provider for Easyname DNS"""
 from __future__ import absolute_import, print_function
 
+import json
 import logging
 
 from bs4 import BeautifulSoup, Tag
@@ -32,10 +33,13 @@ class Provider(BaseProvider):
 
     URLS = {
         "login": "https://my.easyname.com/en/login",
+        "login_endpoint": "https://my.easyname.com/en/authentication-api/login",
         "domain_list": "https://my.easyname.com/domains/",
+        "dashboard": "https://my.easyname.com/en/dashboard",
         "overview": "https://my.easyname.com/hosting/view-user.php",
         "dns": "https://my.easyname.com/en/domain/dns/index/domain/{}/",
         "dns_create_entry": "https://my.easyname.com/en/domain/dns/create/domain/{}",
+        "dns_update_entry": "https://my.easyname.com/en/domain/dns/edit/domain/{}/id/{}",
         "dns_delete_entry": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}",
         "dns_delete_entry_confirm": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}/confirm/1",
     }
@@ -46,20 +50,45 @@ class Provider(BaseProvider):
         self.domain_id = None
         self._records = None
 
+    def _get_csrf_token(self):
+        """Return the CSRF Token of easyname login form."""
+        home_response = self.session.get(self.URLS["login"])
+        self._log("Home", home_response)
+        assert home_response.status_code == 200, "Could not load Easyname login page."
+
+        csrf_token_field = home_response.cookies["CSRF-TOKEN"]
+
+        assert csrf_token_field is not None, "Could not find login token."
+        return csrf_token_field
+
+    def _login(self, csrf_token):
+        """Attempt to login session on easyname."""
+        payload = {
+            "emailAddress": self._get_provider_option("auth_username"),
+            "password": self._get_provider_option("auth_password"),
+        }
+        headers = self.session.headers
+        headers["X-CSRF-TOKEN"] = csrf_token
+
+        login_response = self.session.post(
+            self.URLS["login_endpoint"],
+            data=json.dumps(payload),
+            headers=headers,
+            allow_redirects=True,
+        )
+        self._log("Login", login_response)
+        json_response = json.loads(login_response.content)
+        assert (
+            login_response.status_code == 200
+        ), "Could not login due to a network error."
+
+        assert json_response["redirectUrl"] == self.URLS["dashboard"], (
+            "Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s"
+            % login_response.url
+        )
+
     def _authenticate(self):
-        """
-        Authenticates against Easyname website and try to find out the domain
-        id.
-        Easyname uses a CSRF token in its login form, so two requests are
-        neccessary to actually login.
 
-        Returns:
-          bool: True if domain id was found.
-
-        Raises:
-          AssertionError: When a request returns unexpected or unknown data.
-          ValueError: When login data is wrong or the domain does not exist.
-        """
         csrf_token = self._get_csrf_token()
         self._login(csrf_token)
 
@@ -94,20 +123,30 @@ class Provider(BaseProvider):
             return True
 
         data = self._get_post_data_to_create_dns_entry(rtype, name, content, identifier)
-        LOGGER.debug("Create DNS data: %s", data)
-        create_response = self.session.post(
-            self.URLS["dns_create_entry"].format(self.domain_id), data=data
-        )
+        if not identifier:
+            LOGGER.debug("Create DNS data: %s", data)
+            create_response = self.session.post(
+                self.URLS["dns_create_entry"].format(self.domain_id), data=data
+            )
+            self._log("Create DNS entry", create_response)
+        else:
+            LOGGER.debug("Update DNS data: %s", data)
+            update_response = self.session.post(
+                self.URLS["dns_update_entry"].format(self.domain_id, identifier),
+                data=data,
+            )
+            self._log("Update DNS entry", update_response)
+
         self._invalidate_records_cache()
-        self._log("Create DNS entry", create_response)
 
         # Pull a list of records and check for ours
         was_success = len(self._list_records(rtype, name, content)) > 0
-        if was_success:
-            msg = "Successfully added record %s"
+        if identifier != "" and was_success:
+            msg = "Successfully updated record {}".format(name)
+        elif was_success:
+            msg = "Successfully added record {}".format(name)
         else:
-            msg = "Failed to add record %s"
-
+            msg = "Failed to add/update record {}".format(name)
         LOGGER.info(msg, name)
         return was_success
 
@@ -139,7 +178,7 @@ class Provider(BaseProvider):
                 self.URLS["dns_delete_entry_confirm"].format(self.domain_id, rec_id)
             )
             self._invalidate_records_cache()
-            self._log("Delete DNS entry {}".format(rec_id), delete_response)
+            self._log("Delete DNS entry {rec_id}", delete_response)
             # success = success and delete_response_confirm.url == success_url
             success = "feedback-message--success" in delete_response_confirm.text
 
@@ -221,15 +260,17 @@ class Provider(BaseProvider):
                     rec = {}
                     columns = row.find_all("td")
                     rec["name"] = (columns[0].string or "").strip()
-                    rec["type"] = (columns[1].contents[1] or "").strip()
-                    rec["content"] = (columns[2].string or "").strip()
-                    rec["priority"] = (columns[3].string or "").strip()
-                    rec["ttl"] = (columns[4].string or "").strip()
-                    rec["id"] = int(columns[5].find("a")["href"].rsplit("/", 1)[-1])
-
+                    rec["type"] = (columns[1].contents[1].text or "").strip()
+                    rec["content"] = (columns[2].contents[1].string or "").strip()
+                    rec["priority"] = (columns[3].contents[1].string or "").strip()
+                    rec["ttl"] = (columns[4].contents[1].string or "").strip()
+                    rec["id"] = ""
+                    for a in columns[5].findAll(
+                        "a", class_="button--naked vers--compact theme--tolerance"
+                    ):
+                        rec["id"] = int(a["href"].rsplit("/", 1)[-1])
                     if rec["priority"]:
                         rec["priority"] = int(rec["priority"])
-
                     if rec["ttl"]:
                         rec["ttl"] = int(rec["ttl"])
                 except Exception as error:
@@ -238,7 +279,6 @@ class Provider(BaseProvider):
                     raise AssertionError(errmsg)
                 records.append(rec)
             self._records = records
-
         records = self._filter_records(self._records, rtype, name, content, identifier)
         LOGGER.debug("Final records (%d): %s", len(records), records)
         return records
@@ -313,11 +353,11 @@ class Provider(BaseProvider):
 
         html = BeautifulSoup(dns_list_response.content, "html.parser")
         self._log("DNS list", html)
-        dns_table = html.find("table", {"id": "cp_domains_dnseintraege"})
+        dns_table = html.find("table")
         assert dns_table is not None, "Could not find DNS entry table"
 
         def _is_zone_tr(elm):
-            return elm.name.lower() == "tr" and (not elm.has_attr("class"))
+            return elm.name.lower() == "tr" and (elm.has_attr("class"))
 
         rows = dns_table.findAll(_is_zone_tr)
         assert rows is not None and rows, "Could not find any DNS entries"
@@ -353,38 +393,6 @@ class Provider(BaseProvider):
             ]
         return records
 
-    def _get_csrf_token(self):
-        """Return the CSRF Token of easyname login form."""
-        home_response = self.session.get(self.URLS["login"])
-        self._log("Home", home_response)
-        assert home_response.status_code == 200, "Could not load Easyname login page."
-
-        html = BeautifulSoup(home_response.content, "html.parser")
-        self._log("Home", html)
-        csrf_token_field = html.find("input", {"id": "loginxtoken"})
-        assert csrf_token_field is not None, "Could not find login token."
-        return csrf_token_field["value"]
-
-    def _login(self, csrf_token):
-        """Attempt to login session on easyname."""
-        login_response = self.session.post(
-            self.URLS["login"],
-            data={
-                "username": self._get_provider_option("auth_username") or "",
-                "password": self._get_provider_option("auth_password") or "",
-                "submit": "",
-                "loginxtoken": csrf_token,
-            },
-        )
-        self._log("Login", login_response)
-        assert (
-            login_response.status_code == 200
-        ), "Could not login due to a network error."
-        assert login_response.url == self.URLS["domain_list"], (
-            "Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s"
-            % login_response.url
-        )
-
     def _get_domain_text_of_authoritative_zone(self):
         """Get the authoritative name zone."""
         # We are logged in, so get the domain list
@@ -396,7 +404,7 @@ class Provider(BaseProvider):
 
         html = BeautifulSoup(zones_response.content, "html.parser")
         self._log("Zone", html)
-        domain_table = html.find("table", {"id": "cp_domain_table"})
+        domain_table = html.find("table")
         assert domain_table is not None, "Could not find domain table"
 
         # (Sub)domains can either be managed in their own zones or by the
@@ -427,7 +435,7 @@ class Provider(BaseProvider):
         try:
             # Hierarchy: TR > TD > SPAN > Domain Text
             tr_anchor = domain_text_element.parent.parent.parent
-            td_anchor = tr_anchor.find("td", {"class": "td_2"})
+            td_anchor = tr_anchor.find("td", {"class": "entity__field taright"})
             link = td_anchor.find("a")["href"]
             domain_id = link.rsplit("/", 1)[-1]
             return domain_id

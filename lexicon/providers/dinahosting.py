@@ -109,7 +109,7 @@ class Provider(BaseProvider):
         if rtype:
             formatted_rtype = "Cname" if rtype == "CNAME" else rtype
             data = {
-                "command": "Domain_Zone_GetType{0}".format(formatted_rtype),
+                "command": f"Domain_Zone_GetType{formatted_rtype}",
                 "domain": self.domain,
             }
         else:
@@ -230,7 +230,7 @@ class Provider(BaseProvider):
 
         rjson = response.json()
         if int(rjson["responseCode"]) != RC_SUCCESS:
-            api_error_message = u"%s API Error for url: %s" % (
+            api_error_message = "%s API Error for url: %s" % (
                 rjson["responseCode"],
                 response.url,
             )
@@ -281,4 +281,4 @@ class Provider(BaseProvider):
     @staticmethod
     def _check_unsupported_type(rtype):
         if rtype in UNSUPPORTED_TYPES:
-            raise Exception("Record type {0} is not supported by the API".format(rtype))
+            raise Exception(f"Record type {rtype} is not supported by the API")

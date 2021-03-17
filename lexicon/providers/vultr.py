@@ -43,7 +43,7 @@ class Provider(BaseProvider):
             "priority": 0,
         }
         if rtype == "TXT":
-            record["data"] = '"{0}"'.format(content)
+            record["data"] = f'"{content}"'
         else:
             record["data"] = content
         if self._get_lexicon_option("ttl"):
@@ -62,7 +62,7 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 "type": record["type"],
-                "name": "{0}.{1}".format(record["name"], self.domain_id),
+                "name": f"{record['name']}.{self.domain_id}",
                 "ttl": record.get("ttl", self._get_lexicon_option("ttl")),
                 "content": record["data"],
                 "id": record["RECORDID"],
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
             data["name"] = self._relative_name(name)
         if content:
             if rtype == "TXT":
-                data["data"] = '"{0}"'.format(content)
+                data["data"] = f'"{content}"'
             else:
                 data["data"] = content
 

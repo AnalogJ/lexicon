@@ -42,7 +42,7 @@ class Provider(BaseProvider):
         self.shortname = None
 
     def _authenticate(self):
-        self._post("/dns/{0}/listRRs".format(self.domain))
+        self._post(f"/dns/{self.domain}/listRRs")
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
         if content is not None:
             params["data"] = content
 
-        url = "/dns/{0}/listRRs".format(self.domain_id)
+        url = f"/dns/{self.domain_id}/listRRs"
         records = self._post(url, params)
         records = [
             {
@@ -138,11 +138,11 @@ class Provider(BaseProvider):
         if ttl:
             record["ttl"] = ttl
 
-        self._post("/dns/{0}/addRR".format(self.domain_id), record)
+        self._post(f"/dns/{self.domain_id}/addRR", record)
         return True
 
     def _do_delete(self, rtype=None, name=None, content=None):
-        url = "/dns/{0}/removeRR".format(self.domain_id)
+        url = f"/dns/{self.domain_id}/removeRR"
         record = {"name": self._relative_name(name), "type": rtype, "data": content}
         self._post(url, record)
         return True

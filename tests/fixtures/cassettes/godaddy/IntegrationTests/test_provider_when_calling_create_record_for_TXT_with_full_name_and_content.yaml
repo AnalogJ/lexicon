@@ -63,10 +63,10 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
     method: GET
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/_acme-challenge.full
   response:
     body:
-      string: '[{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"ns71.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns72.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"challengetoken","name":"_acme-challenge.fqdn","ttl":3600,"type":"TXT"}]
+      string: '[]
 
         '
     headers:
@@ -91,19 +91,12 @@ interactions:
       X-Request-Id:
       - b162bb4dff8c57a3f5b914764ac0611c
       content-length:
-      - '445'
+      - '3'
     status:
       code: 200
       message: OK
 - request:
-    body: '[{"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"},
-      {"data": "ns71.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "ns72.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"},
-      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
-      3600, "type": "CNAME"}, {"data": "challengetoken", "name": "_acme-challenge.fqdn",
-      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "_acme-challenge.full",
-      "data": "challengetoken", "ttl": 3600}]'
+    body: '[{"type": "TXT", "name": "_acme-challenge.full", "data": "challengetoken", "ttl": 3600}]'
     headers:
       Accept:
       - application/json
@@ -112,13 +105,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '579'
+      - '87'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.23.0
     method: PUT
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/_acme-challenge.full
   response:
     body:
       string: ''

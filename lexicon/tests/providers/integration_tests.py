@@ -27,7 +27,7 @@ def _vcr_integration_test(decorated):
     @wraps(decorated)
     def wrapper(self):
         with PROVIDER_VCR.use_cassette(
-            self._cassette_path("IntegrationTests/{0}.yaml".format(decorated.__name__)),
+            self._cassette_path(f"IntegrationTests/{decorated.__name__}.yaml"),
             filter_headers=self._filter_headers(),
             filter_query_parameters=self._filter_query_parameters(),
             filter_post_data_parameters=self._filter_post_data_parameters(),
@@ -94,15 +94,13 @@ class IntegrationTestsV1(object):
         self.provider_module = None
 
     def setup_method(self, _):
-        self.provider_module = import_module(
-            "lexicon.providers.{0}".format(self.provider_name)
-        )
+        self.provider_module = import_module(f"lexicon.providers.{self.provider_name}")
 
     ###########################################################################
     # Provider module shape
     ###########################################################################
     def test_provider_module_shape(self):
-        module = import_module("lexicon.providers.{0}".format(self.provider_name))
+        module = import_module(f"lexicon.providers.{self.provider_name}")
 
         assert hasattr(module, "provider_parser")
         assert hasattr(module, "Provider")
@@ -162,7 +160,7 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "_acme-challenge.full.{0}".format(self.domain), "challengetoken"
+            "TXT", f"_acme-challenge.full.{self.domain}", "challengetoken"
         )
 
     @_vcr_integration_test
@@ -171,7 +169,7 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "_acme-challenge.fqdn.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"_acme-challenge.fqdn.{self.domain}.", "challengetoken"
         )
 
     ###########################################################################
@@ -192,7 +190,7 @@ class IntegrationTestsV1(object):
         assert len(records) == 1
         assert records[0]["content"] == "challengetoken"
         assert records[0]["type"] == "TXT"
-        assert records[0]["name"] == "random.test.{0}".format(self.domain)
+        assert records[0]["name"] == f"random.test.{self.domain}"
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_with_full_name_filter_should_return_record(
@@ -200,15 +198,13 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         provider.create_record(
-            "TXT", "random.fulltest.{0}".format(self.domain), "challengetoken"
+            "TXT", f"random.fulltest.{self.domain}", "challengetoken"
         )
-        records = provider.list_records(
-            "TXT", "random.fulltest.{0}".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"random.fulltest.{self.domain}")
         assert len(records) == 1
         assert records[0]["content"] == "challengetoken"
         assert records[0]["type"] == "TXT"
-        assert records[0]["name"] == "random.fulltest.{0}".format(self.domain)
+        assert records[0]["name"] == f"random.fulltest.{self.domain}"
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(
@@ -216,23 +212,21 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         provider.create_record(
-            "TXT", "random.fqdntest.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"random.fqdntest.{self.domain}.", "challengetoken"
         )
-        records = provider.list_records(
-            "TXT", "random.fqdntest.{0}.".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"random.fqdntest.{self.domain}.")
         assert len(records) == 1
         assert records[0]["content"] == "challengetoken"
         assert records[0]["type"] == "TXT"
-        assert records[0]["name"] == "random.fqdntest.{0}".format(self.domain)
+        assert records[0]["name"] == f"random.fqdntest.{self.domain}"
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_after_setting_ttl(self):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "ttl.fqdn.{0}.".format(self.domain), "ttlshouldbe3600"
+            "TXT", f"ttl.fqdn.{self.domain}.", "ttlshouldbe3600"
         )
-        records = provider.list_records("TXT", "ttl.fqdn.{0}".format(self.domain))
+        records = provider.list_records("TXT", f"ttl.fqdn.{self.domain}")
         assert len(records) == 1
         assert str(records[0]["ttl"]) == str(3600)
 
@@ -278,13 +272,13 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "orig.testfull.{0}".format(self.domain), "challengetoken"
+            "TXT", f"orig.testfull.{self.domain}", "challengetoken"
         )
-        records = provider.list_records("TXT", "orig.testfull.{0}".format(self.domain))
+        records = provider.list_records("TXT", f"orig.testfull.{self.domain}")
         assert provider.update_record(
             records[0].get("id", None),
             "TXT",
-            "updated.testfull.{0}".format(self.domain),
+            f"updated.testfull.{self.domain}",
             "challengetoken",
         )
 
@@ -294,13 +288,13 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "orig.testfqdn.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"orig.testfqdn.{self.domain}.", "challengetoken"
         )
-        records = provider.list_records("TXT", "orig.testfqdn.{0}.".format(self.domain))
+        records = provider.list_records("TXT", f"orig.testfqdn.{self.domain}.")
         assert provider.update_record(
             records[0].get("id", None),
             "TXT",
-            "updated.testfqdn.{0}.".format(self.domain),
+            f"updated.testfqdn.{self.domain}.",
             "challengetoken",
         )
 
@@ -332,14 +326,12 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "delete.testfull.{0}".format(self.domain), "challengetoken"
+            "TXT", f"delete.testfull.{self.domain}", "challengetoken"
         )
         assert provider.delete_record(
-            None, "TXT", "delete.testfull.{0}".format(self.domain), "challengetoken"
+            None, "TXT", f"delete.testfull.{self.domain}", "challengetoken"
         )
-        records = provider.list_records(
-            "TXT", "delete.testfull.{0}".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"delete.testfull.{self.domain}")
         assert not records
 
     @_vcr_integration_test
@@ -348,14 +340,12 @@ class IntegrationTestsV1(object):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "delete.testfqdn.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"delete.testfqdn.{self.domain}.", "challengetoken"
         )
         assert provider.delete_record(
-            None, "TXT", "delete.testfqdn.{0}.".format(self.domain), "challengetoken"
+            None, "TXT", f"delete.testfqdn.{self.domain}.", "challengetoken"
         )
-        records = provider.list_records(
-            "TXT", "delete.testfqdn.{0}.".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"delete.testfqdn.{self.domain}.")
         assert not records
 
     # Private helpers, mimicking the auth_* options provided by the Client
@@ -431,10 +421,8 @@ class IntegrationTestsV1(object):
             {provider}/{variant_name}-IntegrationTests
         """
         if self.provider_variant:
-            return "{0}/{1}-{2}".format(
-                self.provider_name, self.provider_variant, fixture_subpath
-            )
-        return "{0}/{1}".format(self.provider_name, fixture_subpath)
+            return f"{self.provider_name}/{self.provider_variant}-{fixture_subpath}"
+        return f"{self.provider_name}/{fixture_subpath}"
 
     def _construct_authenticated_provider(self):
         """
@@ -500,14 +488,12 @@ class IntegrationTestsV2(IntegrationTestsV1):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT", "_acme-challenge.noop.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"_acme-challenge.noop.{self.domain}.", "challengetoken"
         )
         assert provider.create_record(
-            "TXT", "_acme-challenge.noop.{0}.".format(self.domain), "challengetoken"
+            "TXT", f"_acme-challenge.noop.{self.domain}.", "challengetoken"
         )
-        records = provider.list_records(
-            "TXT", "_acme-challenge.noop.{0}.".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"_acme-challenge.noop.{self.domain}.")
         assert len(records) == 1
 
     @_vcr_integration_test
@@ -516,14 +502,10 @@ class IntegrationTestsV2(IntegrationTestsV1):
     ):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT",
-            "_acme-challenge.createrecordset.{0}.".format(self.domain),
-            "challengetoken1",
+            "TXT", f"_acme-challenge.createrecordset.{self.domain}.", "challengetoken1"
         )
         assert provider.create_record(
-            "TXT",
-            "_acme-challenge.createrecordset.{0}.".format(self.domain),
-            "challengetoken2",
+            "TXT", f"_acme-challenge.createrecordset.{self.domain}.", "challengetoken2"
         )
 
     @_vcr_integration_test
@@ -531,26 +513,20 @@ class IntegrationTestsV2(IntegrationTestsV1):
         self,
     ):
         provider = self._construct_authenticated_provider()
-        records = provider.list_records(
-            "TXT", "filter.thisdoesnotexist.{0}".format(self.domain)
-        )
+        records = provider.list_records("TXT", f"filter.thisdoesnotexist.{self.domain}")
         assert not records
 
     @_vcr_integration_test
     def test_provider_when_calling_list_records_should_handle_record_sets(self):
         provider = self._construct_authenticated_provider()
         provider.create_record(
-            "TXT",
-            "_acme-challenge.listrecordset.{0}.".format(self.domain),
-            "challengetoken1",
+            "TXT", f"_acme-challenge.listrecordset.{self.domain}.", "challengetoken1"
         )
         provider.create_record(
-            "TXT",
-            "_acme-challenge.listrecordset.{0}.".format(self.domain),
-            "challengetoken2",
+            "TXT", f"_acme-challenge.listrecordset.{self.domain}.", "challengetoken2"
         )
         records = provider.list_records(
-            "TXT", "_acme-challenge.listrecordset.{0}.".format(self.domain)
+            "TXT", f"_acme-challenge.listrecordset.{self.domain}."
         )
         assert len(records) == 2
 
@@ -558,21 +534,17 @@ class IntegrationTestsV2(IntegrationTestsV1):
     def test_provider_when_calling_delete_record_with_record_set_name_remove_all(self):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
-            "TXT",
-            "_acme-challenge.deleterecordset.{0}.".format(self.domain),
-            "challengetoken1",
+            "TXT", f"_acme-challenge.deleterecordset.{self.domain}.", "challengetoken1"
         )
         assert provider.create_record(
-            "TXT",
-            "_acme-challenge.deleterecordset.{0}.".format(self.domain),
-            "challengetoken2",
+            "TXT", f"_acme-challenge.deleterecordset.{self.domain}.", "challengetoken2"
         )
 
         assert provider.delete_record(
-            None, "TXT", "_acme-challenge.deleterecordset.{0}.".format(self.domain)
+            None, "TXT", f"_acme-challenge.deleterecordset.{self.domain}."
         )
         records = provider.list_records(
-            "TXT", "_acme-challenge.deleterecordset.{0}.".format(self.domain)
+            "TXT", f"_acme-challenge.deleterecordset.{self.domain}."
         )
         assert not records
 
@@ -583,22 +555,22 @@ class IntegrationTestsV2(IntegrationTestsV1):
         provider = self._construct_authenticated_provider()
         assert provider.create_record(
             "TXT",
-            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            f"_acme-challenge.deleterecordinset.{self.domain}.",
             "challengetoken1",
         )
         assert provider.create_record(
             "TXT",
-            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            f"_acme-challenge.deleterecordinset.{self.domain}.",
             "challengetoken2",
         )
 
         assert provider.delete_record(
             None,
             "TXT",
-            "_acme-challenge.deleterecordinset.{0}.".format(self.domain),
+            f"_acme-challenge.deleterecordinset.{self.domain}.",
             "challengetoken1",
         )
         records = provider.list_records(
-            "TXT", "_acme-challenge.deleterecordinset.{0}.".format(self.domain)
+            "TXT", f"_acme-challenge.deleterecordinset.{self.domain}."
         )
         assert len(records) == 1

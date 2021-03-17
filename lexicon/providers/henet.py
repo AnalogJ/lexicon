@@ -24,8 +24,7 @@ def provider_parser(subparser):
         "--auth-username", help="specify username for authentication"
     )
     subparser.add_argument(
-        "--auth-password",
-        help="specify password for authentication",
+        "--auth-password", help="specify password for authentication"
     )
 
 
@@ -69,7 +68,7 @@ class Provider(BaseProvider):
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
             LOGGER.warning("Domain %s not found in account", self.domain)
-            raise AssertionError("Domain {0} not found in account".format(self.domain))
+            raise AssertionError(f"Domain {self.domain} not found in account")
 
         self.domain_id = zone_img["value"]
         LOGGER.debug("HENET domain ID: %s", self.domain_id)
@@ -130,9 +129,7 @@ class Provider(BaseProvider):
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
-            "https://dns.he.net/?hosted_dns_zoneid={0}&menu=edit_zone&hosted_dns_editzone".format(
-                self.domain_id
-            )
+            f"https://dns.he.net/?hosted_dns_zoneid={self.domain_id}&menu=edit_zone&hosted_dns_editzone",
         )
 
         # Parse the HTML response, and list the table rows for DNS records

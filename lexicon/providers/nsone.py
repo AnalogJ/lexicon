@@ -28,7 +28,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
 
-        payload = self._get("/zones/{0}".format(self.domain))
+        payload = self._get(f"/zones/{self.domain}")
 
         if not payload["id"]:
             raise Exception("No domain found")
@@ -37,9 +37,7 @@ class Provider(BaseProvider):
 
     def _get_record_set(self, name, rtype):
         try:
-            payload = self._get(
-                "/zones/{0}/{1}/{2}".format(self.domain_id, name, rtype)
-            )
+            payload = self._get(f"/zones/{self.domain_id}/{name}/{rtype}")
         except requests.exceptions.HTTPError as error:
             if error.response.status_code == 404:
                 return None
@@ -67,8 +65,7 @@ class Provider(BaseProvider):
             if not _record_set_has_answer(existing_record_set, content):
                 existing_record_set["answers"].append({"answer": [content]})
                 self._post(
-                    "/zones/{0}/{1}/{2}".format(self.domain_id, name, rtype),
-                    existing_record_set,
+                    f"/zones/{self.domain_id}/{name}/{rtype}", existing_record_set
                 )
         else:
             record = {
@@ -80,9 +77,7 @@ class Provider(BaseProvider):
             }
             payload = {}
             try:
-                payload = self._put(
-                    "/zones/{0}/{1}/{2}".format(self.domain_id, name, rtype), record
-                )
+                payload = self._put(f"/zones/{self.domain_id}/{name}/{rtype}", record)
             except requests.exceptions.HTTPError as error:
                 # http 400 is ok here, because the record probably already exists
                 if error.response.status_code != 400:
@@ -104,7 +99,7 @@ class Provider(BaseProvider):
                 return False
             return True
 
-        payload = self._get("/search?q={0}&type=record".format(domain))
+        payload = self._get(f"/search?q={domain}&type=record")
         for record in payload:
             if _is_matching(record):
                 match = record
@@ -113,9 +108,7 @@ class Provider(BaseProvider):
             # no such domain on ns1
             return None
 
-        record = self._get(
-            "/zones/{0}/{1}/{2}".format(match["zone"], match["domain"], match["type"])
-        )
+        record = self._get(f"/zones/{match['zone']}/{match['domain']}/{match['type']}")
         if record.get("message", None):
             return None  # {"message":"record not found"}
         short_answers = [x["answer"][0] for x in record["answers"]]
@@ -146,7 +139,7 @@ class Provider(BaseProvider):
 
             return _resolve_link(match, recurse=recurse - 1)
 
-        payload = self._get("/zones/{0}".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}")
         records = []
         for record in payload["records"]:
 
@@ -176,9 +169,7 @@ class Provider(BaseProvider):
                     "content": answer,
                     # this id is useless unless your doing record linking. Lets return the
                     # original record identifier.
-                    "id": "{0}/{1}/{2}".format(
-                        self.domain_id, record["domain"], record["type"]
-                    ),
+                    "id": f"{self.domain_id}/{record['domain']}/{record['type']}",
                 }
                 records.append(processed_record)
 
@@ -188,20 +179,18 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         data = {}
-        new_identifier = "{0}/{1}/{2}".format(
-            self.domain_id, self._full_name(name), rtype
-        )
+        new_identifier = f"{self.domain_id}/{self._full_name(name)}/{rtype}"
 
         if new_identifier == identifier or (rtype is None and name is None):
             # the identifier hasnt changed, or type and name are both unspecified,
             # only update the content.
             data["answers"] = [{"answer": [content]}]
-            self._post("/zones/{0}".format(identifier), data)
+            self._post(f"/zones/{identifier}", data)
 
         else:
             # identifiers are different
             # get the old record, create a new one with updated data, delete the old record.
-            old_record = self._get("/zones/{0}".format(identifier))
+            old_record = self._get(f"/zones/{identifier}")
             self.create_record(
                 rtype or old_record["type"],
                 name or old_record["domain"],
@@ -234,15 +223,12 @@ class Provider(BaseProvider):
 
                 if record_set_new["answers"]:
                     self._post(
-                        "/zones/{0}/{1}/{2}".format(self.domain_id, name, rtype),
-                        record_set_new,
+                        f"/zones/{self.domain_id}/{name}/{rtype}", record_set_new
                     )
                 else:
-                    self._delete(
-                        "/zones/{0}/{1}/{2}".format(self.domain_id, name, rtype)
-                    )
+                    self._delete(f"/zones/{self.domain_id}/{name}/{rtype}")
         else:
-            self._delete("/zones/{0}".format(identifier))
+            self._delete(f"/zones/{identifier}")
 
         LOGGER.debug("delete_record: %s", True)
         return True

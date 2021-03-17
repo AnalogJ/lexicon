@@ -70,8 +70,7 @@ class Provider(BaseProvider):
             self.client.get_info(domain)
         except BaseException:
             raise Exception(
-                "Could not retrieve information about {0}, "
-                "is this domain yours?".format(domain)
+                f"Could not retrieve information about {domain}, is this domain yours?"
             )
         self.domain_id = domain
 
@@ -197,7 +196,7 @@ class Provider(BaseProvider):
         for record in records:
             _records.append(
                 {
-                    "id": "{0}-{1}".format(self._full_name(record.name), record.type),
+                    "id": f"{self._full_name(record.name)}-{record.type}",
                     "name": self._full_name(record.name),
                     "type": record.type,
                     "content": record.content,

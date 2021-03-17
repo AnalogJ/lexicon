@@ -50,7 +50,7 @@ class Provider(BaseProvider):
             return True
 
         self._post(
-            "/zones/{0}/records".format(self.domain_id),
+            f"/zones/{self.domain_id}/records",
             {
                 "type": rtype,
                 "name": self._fqdn_name(name),
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/zones/{0}/records".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}/records")
 
         records = []
         for record in payload:
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
         if content:
             data["content"] = content
 
-        self._put("/zones/{0}/records/{1}".format(self.domain_id, identifier), data)
+        self._put(f"/zones/{self.domain_id}/records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -121,7 +121,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/{0}/records/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/{self.domain_id}/records/{record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True

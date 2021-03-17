@@ -134,7 +134,7 @@ class Provider(BaseProvider):
 
         resource_list = payload.get("data", None)
         if not isinstance(resource_list, list):
-            raise Exception("unable to get records: %s" % payload)
+            raise Exception(f"unable to get records: {payload}")
 
         resource_list = [
             resource for resource in resource_list if resource["zone"] == self.domain
@@ -237,10 +237,8 @@ class Provider(BaseProvider):
         if result.get("result", "") != "success":
             err_msg = result.get("data", "")
             if err_msg in _DATA_NON_EXIST_ERROR_LIST:
-                raise NonExistError("Dreamhost non-exist error: {0}".format(result))
+                raise NonExistError(f"Dreamhost non-exist error: {result}")
             if err_msg in _DATA_ALREADY_EXIST_ERROR_LIST:
-                raise AlreadyExistError(
-                    "Dreamhost already-exist error: {0}".format(result)
-                )
-            raise Exception("Dreamhost api error: {0}".format(result))
+                raise AlreadyExistError(f"Dreamhost already-exist error: {result}")
+            raise Exception(f"Dreamhost api error: {result}")
         return result

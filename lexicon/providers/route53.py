@@ -117,7 +117,7 @@ class Provider(BaseProvider):
             if data["Config"]["PrivateZone"] != self.str2bool(self.private_zone):
                 return False
 
-        if data["Name"] != "{0}.".format(self.domain):
+        if data["Name"] != f"{self.domain}.":
             return False
 
         return True
@@ -130,9 +130,28 @@ class Provider(BaseProvider):
     def _authenticate(self):
         """Determine the hosted zone id for the domain."""
         try:
-            hosted_zones = self.r53_client.list_hosted_zones_by_name()["HostedZones"]
+            is_truncated = True
+            next_dns_name = None
+            next_hz_id = None
+            hosted_zones = []
+
+            while is_truncated:
+                if not next_dns_name:
+                    new_zones = self.r53_client.list_hosted_zones_by_name()
+                else:
+                    new_zones = self.r53_client.list_hosted_zones_by_name(
+                        DNSName=next_dns_name, HostedZoneId=next_hz_id
+                    )
+
+                hosted_zones.extend(new_zones.get("HostedZones"))
+                is_truncated = new_zones.get("IsTruncated")
+
+                if is_truncated:
+                    next_dns_name = new_zones.get("NextDNSName")
+                    next_hz_id = new_zones.get("NextHostedZoneId")
+
             hosted_zone = next(hz for hz in hosted_zones if self.filter_zone(hz))
-            self.domain_id = hosted_zone["Id"]
+            self.domain_id = hosted_zone.get("Id")
         except StopIteration:
             raise Exception("No domain found")
 
@@ -141,16 +160,16 @@ class Provider(BaseProvider):
         resource_records = []
         if isinstance(content, list):
             for i in content:
-                value = '"{0}"'.format(i) if rtype in ["TXT", "SPF"] else i
+                value = f'"{i}"' if rtype in ["TXT", "SPF"] else i
                 resource_records.append({"Value": value})
         else:
-            value = '"{0}"'.format(content) if rtype in ["TXT", "SPF"] else content
+            value = f'"{content}"' if rtype in ["TXT", "SPF"] else content
             resource_records.append({"Value": value})
         try:
             self.r53_client.change_resource_record_sets(
                 HostedZoneId=self.domain_id,
                 ChangeBatch={
-                    "Comment": "{0} using lexicon Route 53 provider".format(action),
+                    "Comment": f"{action} using lexicon Route 53 provider",
                     "Changes": [
                         {
                             "Action": action,
@@ -198,9 +217,7 @@ class Provider(BaseProvider):
                 if identifier == _identifier(record)
             ]
             if not records:
-                raise ValueError(
-                    "No record found for identifier {0}".format(identifier)
-                )
+                raise ValueError(f"No record found for identifier {identifier}")
             record = records[0]
             rtype = record["type"]
             name = record["name"]
@@ -237,9 +254,7 @@ class Provider(BaseProvider):
                 if identifier == _identifier(record)
             ]
             if not matching_records:
-                raise ValueError(
-                    "No record found for identifier {0}".format(identifier)
-                )
+                raise ValueError(f"No record found for identifier {identifier}")
             rtype = matching_records[0]["type"]
             name = matching_records[0]["name"]
             content = matching_records[0]["content"]

@@ -12,11 +12,11 @@ import importlib
 import pkgutil
 from types import ModuleType
 
-import mock
+from unittest import mock
 import pytest
 
-from lexicon.client import ProviderNotAvailableError
 from lexicon.config import ConfigResolver
+from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.providers.base import Provider as BaseProvider
 
 

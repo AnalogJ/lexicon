@@ -157,5 +157,5 @@ class Provider(BaseProvider):
             return ""
         result = response.json()
         if result["ERRORARRAY"]:
-            raise Exception("Linode api error: {0}".format(result["ERRORARRAY"]))
+            raise Exception(f"Linode api error: {result['ERRORARRAY']}")
         return result

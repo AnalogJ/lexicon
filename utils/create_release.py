@@ -2,7 +2,6 @@
 import datetime
 import os
 import subprocess
-import sys
 from distutils.version import StrictVersion
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))

@@ -63,7 +63,7 @@ class EUservProviderTests(TestCase, IntegrationTestsV2):
                         "ord_no": {"value": "ORDER_ID"},
                         "pg_id": {"value": self.product_id_domain},
                         "ord_description": {"value": "Contract Name\n" + self.domain},
-                    },
+                    }
                 ]
 
             response["body"]["string"] = json.dumps(filtered_body).encode("UTF-8")

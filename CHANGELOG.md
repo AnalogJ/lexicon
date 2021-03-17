@@ -2,6 +2,42 @@
 
 ## master - CURRENT
 
+## 3.5.3 - 02/01/2021
+## Modified
+* Handle large number of hosted zones in `route53` provider
+
+## 3.5.2 - 23/11/2020
+## Modified
+* Fix domains in "lock" state with `joker` provider
+
+## 3.5.1 - 16/11/2020
+## Added
+* Add the Joker.com provider
+* Add environment variable `TLDEXTRACT_CACHE_PATH` to configure a tldextract cache custom location for Lexicon
+
+## Modified
+* Old environment variable `TLDEXTRACT_CACHE_FILE` is deprecated and will be removed in a future release
+
+## 3.5.0 - 10/11/2020
+## Modified
+* Avoid installation problems with setuptools==50
+* Migrating codebase to Python 3.6+ specific features (Lexicon will explicitly break on older versions now)
+* Fix Easyname provider to work with their new website
+
+## 3.4.5 - 02/11/2020
+### Added
+* Add pagination support to Google Cloud DNS provider (#577)
+* Add official support to Python 3.9
+* Add SSHFP record support to CloudFlare provider (library only) (#612)
+
+### Modified
+* Fix create/update operations when CAA records are presents in GoDaddy provider (#545)
+* Fix Hover provider with new authentication URL (#618)
+
+## 3.4.4 - 25/10/2020
+### Modified
+* Fix Gandi provider to use the new LiveDNS API URL
+
 ## 3.4.3 - 07/09/2020
 ### Modified
 * Improve versions constraints by declaring latest major versions known to work with Lexicon
