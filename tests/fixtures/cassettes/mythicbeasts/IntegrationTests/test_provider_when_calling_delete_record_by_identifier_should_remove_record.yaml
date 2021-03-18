@@ -18,10 +18,9 @@ interactions:
     uri: https://auth.mythic-beasts.com/login
   response:
     body:
-      string:
-        access_token: null
-        expires_in: 300
-        token_type: bearer
+      string: '{"access_token": "DUMMY_TOKEN","expires_in":300,"token_type":"bearer"}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -30,7 +29,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:15 GMT
+      - Thu, 18 Mar 2021 16:21:27 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -57,10 +56,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones
   response:
     body:
-      string:
-        access_token: null
-        zones:
-        - lexitus.co.uk
+      string: '{"zones":["lexitus.co.uk"]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -69,7 +67,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:16 GMT
+      - Thu, 18 Mar 2021 16:21:27 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -97,10 +95,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records
   response:
     body:
-      string:
-        access_token: null
-        message: 1 records added
-        records_added: 1
+      string: '{"message":"1 records added","records_added":1}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -109,7 +106,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:16 GMT
+      - Thu, 18 Mar 2021 16:21:28 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -136,11 +133,8 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        errors:
-        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
-        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
     headers:
       Connection:
       - Keep-Alive
@@ -149,7 +143,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:16 GMT
+      - Thu, 18 Mar 2021 16:21:28 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -176,11 +170,8 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        errors:
-        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
-        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
     headers:
       Connection:
       - Keep-Alive
@@ -189,7 +180,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:27 GMT
+      - Thu, 18 Mar 2021 16:21:38 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -216,11 +207,8 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        errors:
-        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
-        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
     headers:
       Connection:
       - Keep-Alive
@@ -229,7 +217,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:37 GMT
+      - Thu, 18 Mar 2021 16:21:49 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -256,11 +244,8 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        errors:
-        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
-        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
     headers:
       Connection:
       - Keep-Alive
@@ -269,7 +254,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:48 GMT
+      - Thu, 18 Mar 2021 16:21:59 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -296,11 +281,8 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        errors:
-        - Received 0 record(s), expected 1 from ns1.mythic-beasts.com.
-        - Received 0 record(s), expected 1 from ns2.mythic-beasts.com.
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
     headers:
       Connection:
       - Keep-Alive
@@ -309,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:19:58 GMT
+      - Thu, 18 Mar 2021 16:22:10 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -336,13 +318,157 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
   response:
     body:
-      string:
-        access_token: null
-        records:
-        - data: challengetoken
-          host: delete.testid
-          ttl: 3600
-          type: TXT
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 18 Mar 2021 16:22:20 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
+  response:
+    body:
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 18 Mar 2021 16:22:31 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
+  response:
+    body:
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 18 Mar 2021 16:22:41 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
+  response:
+    body:
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 18 Mar 2021 16:22:52 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT?verify
+  response:
+    body:
+      string: '{"records":[{"data":"challengetoken","host":"delete.testid","ttl":3600,"type":"TXT"}]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -351,7 +477,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:20:09 GMT
+      - Thu, 18 Mar 2021 16:23:02 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -378,13 +504,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records?type=TXT&host=delete.testid
   response:
     body:
-      string:
-        access_token: null
-        records:
-        - data: challengetoken
-          host: delete.testid
-          ttl: 3600
-          type: TXT
+      string: '{"records":[{"data":"challengetoken","host":"delete.testid","ttl":3600,"type":"TXT"}]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -393,7 +515,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:20:10 GMT
+      - Thu, 18 Mar 2021 16:23:03 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -420,117 +542,19 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records
   response:
     body:
-      string:
-        access_token: null
-        records:
-        - _template: true
-          data: 46.235.227.111
-          host: '@'
-          ttl: 3600
-          type: A
-        - _template: true
-          data: 2a00:1098:82::6:1
-          host: '@'
-          ttl: 3600
-          type: AAAA
-        - _template: true
-          data: 46.235.227.111
-          host: www
-          ttl: 3600
-          type: A
-        - _template: true
-          data: 2a00:1098:82::6:1
-          host: www
-          ttl: 3600
-          type: AAAA
-        - _template: true
-          data: ns1.mythic-beasts.com.
-          host: '@'
-          ttl: 86400
-          type: NS
-        - _template: true
-          data: ns2.mythic-beasts.com.
-          host: '@'
-          ttl: 86400
-          type: NS
-        - _template: true
-          data: mx.mythic-beasts.com.
-          host: '@'
-          mx_priority: 10
-          ttl: 3600
-          type: MX
-        - _template: true
-          data: caracal.autoconfig.mythic-beasts.com.
-          host: _autodiscover._tcp
-          srv_port: 443
-          srv_priority: 50
-          srv_weight: 10
-          ttl: 300
-          type: SRV
-        - data: 127.0.0.1
-          host: localhost
-          ttl: 3600
-          type: A
-        - data: docs.example.com
-          host: docs
-          ttl: 3600
-          type: CNAME
-        - data: challengetoken
-          host: _acme-challenge.fqdn
-          ttl: 3600
-          type: TXT
-        - data: challengetoken
-          host: _acme-challenge.full
-          ttl: 3600
-          type: TXT
-        - data: challengetoken
-          host: _acme-challenge.test
-          ttl: 3600
-          type: TXT
-        - data: challengetoken1
-          host: _acme-challenge.createrecordset
-          ttl: 3600
-          type: TXT
-        - data: challengetoken2
-          host: _acme-challenge.createrecordset
-          ttl: 3600
-          type: TXT
-        - data: challengetoken
-          host: _acme-challenge.noop
-          ttl: 3600
-          type: TXT
-        - data: challengetoken
-          host: delete.testid
-          ttl: 3600
-          type: TXT
-        - data: v=spf1 include:_spf.mythic-beasts.com ~all
-          host: '@'
-          ttl: 300
-          type: TXT
-        - _generated: true
-          data: k3.lexitus.co.uk.dkim.mythic-beasts.com.
-          host: mythic-beasts-k3._domainkey
-          ttl: 300
-          type: CNAME
-        - _generated: true
-          data: k1.lexitus.co.uk.dkim.mythic-beasts.com.
-          host: mythic-beasts-k1._domainkey
-          ttl: 300
-          type: CNAME
-        - _generated: true
-          data: k2.lexitus.co.uk.dkim.mythic-beasts.com.
-          host: mythic-beasts-k2._domainkey
-          ttl: 300
-          type: CNAME
+      string: '{"records":[{"_template":true,"data":"46.235.227.111","host":"@","ttl":3600,"type":"A"},{"_template":true,"data":"2a00:1098:82::6:1","host":"@","ttl":3600,"type":"AAAA"},{"_template":true,"data":"46.235.227.111","host":"www","ttl":3600,"type":"A"},{"_template":true,"data":"2a00:1098:82::6:1","host":"www","ttl":3600,"type":"AAAA"},{"_template":true,"data":"ns1.mythic-beasts.com.","host":"@","ttl":86400,"type":"NS"},{"_template":true,"data":"ns2.mythic-beasts.com.","host":"@","ttl":86400,"type":"NS"},{"_template":true,"data":"mx.mythic-beasts.com.","host":"@","mx_priority":10,"ttl":3600,"type":"MX"},{"_template":true,"data":"caracal.autoconfig.mythic-beasts.com.","host":"_autodiscover._tcp","srv_port":443,"srv_priority":50,"srv_weight":10,"ttl":300,"type":"SRV"},{"data":"127.0.0.1","host":"localhost","ttl":3600,"type":"A"},{"data":"docs.example.com.lexitus.co.uk.","host":"docs","ttl":3600,"type":"CNAME"},{"data":"challengetoken","host":"_acme-challenge.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken","host":"_acme-challenge.full","ttl":3600,"type":"TXT"},{"data":"challengetoken","host":"_acme-challenge.test","ttl":3600,"type":"TXT"},{"data":"challengetoken1","host":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","host":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","host":"_acme-challenge.noop","ttl":3600,"type":"TXT"},{"data":"challengetoken","host":"delete.testid","ttl":3600,"type":"TXT"},{"data":"v=spf1
+        include:_spf.mythic-beasts.com ~all","host":"@","ttl":300,"type":"TXT"},{"_generated":true,"data":"k3.lexitus.co.uk.dkim.mythic-beasts.com.","host":"mythic-beasts-k3._domainkey","ttl":300,"type":"CNAME"},{"_generated":true,"data":"k1.lexitus.co.uk.dkim.mythic-beasts.com.","host":"mythic-beasts-k1._domainkey","ttl":300,"type":"CNAME"},{"_generated":true,"data":"k2.lexitus.co.uk.dkim.mythic-beasts.com.","host":"mythic-beasts-k2._domainkey","ttl":300,"type":"CNAME"}]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
       Content-Length:
-      - '1964'
+      - '1979'
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:20:10 GMT
+      - Thu, 18 Mar 2021 16:23:03 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -557,9 +581,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/delete.testid/TXT
   response:
     body:
-      string:
-        access_token: null
-        records_removed: 1
+      string: '{"records_removed":1}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -568,7 +592,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:20:10 GMT
+      - Thu, 18 Mar 2021 16:23:03 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -595,9 +619,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records?type=TXT&host=delete.testid
   response:
     body:
-      string:
-        access_token: null
-        records: []
+      string: '{"records":[]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -606,7 +630,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:20:11 GMT
+      - Thu, 18 Mar 2021 16:23:04 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

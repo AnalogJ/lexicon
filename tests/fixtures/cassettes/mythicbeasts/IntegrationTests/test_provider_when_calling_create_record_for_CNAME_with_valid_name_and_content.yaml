@@ -18,10 +18,9 @@ interactions:
     uri: https://auth.mythic-beasts.com/login
   response:
     body:
-      string:
-        access_token: null
-        expires_in: 300
-        token_type: bearer
+      string: '{"access_token": "DUMMY_TOKEN","expires_in":300,"token_type":"bearer"}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -30,7 +29,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:11:44 GMT
+      - Thu, 18 Mar 2021 16:11:33 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -57,10 +56,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones
   response:
     body:
-      string:
-        access_token: null
-        zones:
-        - lexitus.co.uk
+      string: '{"zones":["lexitus.co.uk"]}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -69,7 +67,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:11:44 GMT
+      - Thu, 18 Mar 2021 16:11:34 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -78,7 +76,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"records": [{"host": "docs", "type": "CNAME", "data": "docs.example.com",
+    body: '{"records": [{"host": "docs", "type": "CNAME", "data": "docs.example.com.lexitus.co.uk.",
       "ttl": 3600}]}'
     headers:
       Accept:
@@ -88,7 +86,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '89'
+      - '104'
       Content-Type:
       - application/json
       User-Agent:
@@ -97,10 +95,9 @@ interactions:
     uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records
   response:
     body:
-      string:
-        access_token: null
-        message: 1 records added
-        records_added: 1
+      string: '{"message":"1 records added","records_added":1}
+
+        '
     headers:
       Connection:
       - Keep-Alive
@@ -109,7 +106,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Feb 2021 17:11:45 GMT
+      - Thu, 18 Mar 2021 16:11:34 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
