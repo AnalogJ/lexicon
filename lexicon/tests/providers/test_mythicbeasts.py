@@ -1,8 +1,8 @@
 # Test for one implementation of the interface
 from unittest import TestCase
-
+import re
 from lexicon.tests.providers import integration_tests
-import json
+
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
@@ -22,10 +22,10 @@ class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     def _filter_response(self, response):
         """See `IntegrationTests._filter_response` for more information on how
         to filter the provider response."""
-        string = response['body']['string']
-        string=json.loads(string)
-        string['access_token']=None
-        response['body']['string']=string
+
+        if "string" in response["body"]:
+            response["body"]["string"] = re.sub(br"\"access_token\":\"[\w-]+\"", b"\"access_token\": \"DUMMY_TOKEN\"", response["body"]["string"])
+
         return response
 
     def _test_fallback_fn(self):
