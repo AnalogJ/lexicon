@@ -72,7 +72,7 @@ class Provider(BaseProvider):
         LOGGER.debug("content %s", content)
 
         if rtype == 'CNAME':
-             content = self._fqdn_name(content)
+            content = self._fqdn_name(content)
 
         data = {
             "records": [
@@ -90,21 +90,20 @@ class Provider(BaseProvider):
         try:
             payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
-            if err.response.status_code != 400 and err.response.json()["errors"][0][0:16] != 'Duplicate record': 
+            if err.response.status_code != 400 and err.response.json()["errors"][0][0:16] != 'Duplicate record':
                 raise
 
-        if rtype=='A' or rtype=="TXT":
-            #need to wait and poll here until verified that DNS change is live
+        if rtype == 'A' or rtype == "TXT":
+            # need to wait and poll here until verified that DNS change is live
             changes_are_live = False
             timeout = 300
             start = time.time()
 
-            while(not changes_are_live and time.time()-start < timeout):
+            while(not changes_are_live and time.time() - start < timeout):
                 try:
-                    verify = self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
+                    self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
                     changes_are_live = True
                 except requests.exceptions.HTTPError as err:
-                    
                     if err.response.status_code != 409:
                         raise
                     else:
@@ -113,12 +112,10 @@ class Provider(BaseProvider):
             if(not changes_are_live):
                 raise Exception("Timed out trying to verify changes were live")
 
-
         if "message" in payload:
             return payload["message"]
         elif "success" in payload:
             return payload["success"]
-
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -143,7 +140,7 @@ class Provider(BaseProvider):
                 "name": self._full_name(record["host"]),
                 "ttl": record["ttl"],
                 "content": record["data"],
-                #no id is available, so we need to make our own
+                # no id is available, so we need to make our own
                 "id": hashlib.md5(
                     (record["host"] + record["type"] + record["data"]).encode("utf-8")
                 ).hexdigest(),
@@ -162,7 +159,7 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
-            records = self._list_records(rtype,self._full_name(name))
+            records = self._list_records(rtype, self._full_name(name))
             if len(records) == 1:
                 matching_record = records[0]
                 filter_obj = {}

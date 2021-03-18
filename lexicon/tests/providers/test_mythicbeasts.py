@@ -30,4 +30,3 @@ class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
 
     def _test_fallback_fn(self):
         return lambda x: "placeholder_" + x if x not in ("auth_token") else ""
-
