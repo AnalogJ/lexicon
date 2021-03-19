@@ -18,7 +18,7 @@ interactions:
     uri: https://auth.mythic-beasts.com/login
   response:
     body:
-      string: '{"access_token":"jhj8a7ryy.puKskl","expires_in":300,"token_type":"bearer"}
+      string: '{"access_token": "DUMMY_TOKEN","expires_in":300,"token_type":"bearer"}
 
         '
     headers:
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:16 GMT
+      - Fri, 19 Mar 2021 14:12:22 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -67,7 +67,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:17 GMT
+      - Fri, 19 Mar 2021 14:12:23 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -106,7 +106,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:17 GMT
+      - Fri, 19 Mar 2021 14:12:23 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -143,7 +143,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:17 GMT
+      - Fri, 19 Mar 2021 14:12:24 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -180,7 +180,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:28 GMT
+      - Fri, 19 Mar 2021 14:12:24 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -217,7 +217,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:38 GMT
+      - Fri, 19 Mar 2021 14:12:25 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -254,7 +254,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:49 GMT
+      - Fri, 19 Mar 2021 14:12:28 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -291,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:25:59 GMT
+      - Fri, 19 Mar 2021 14:12:33 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -328,7 +328,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:10 GMT
+      - Fri, 19 Mar 2021 14:12:41 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -365,7 +365,44 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:20 GMT
+      - Fri, 19 Mar 2021 14:12:58 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.38 (Debian)
+    status:
+      code: 409
+      message: Inconsistent
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/_acme-challenge.deleterecordset/TXT?verify
+  response:
+    body:
+      string: "{\n  \"errors\": [\n    \"Received 0 record(s), expected 1 from ns1.mythic-beasts.com.\",\n
+        \   \"Received 0 record(s), expected 1 from ns2.mythic-beasts.com.\"\n  ]\n}"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 19 Mar 2021 14:13:30 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -403,7 +440,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:31 GMT
+      - Fri, 19 Mar 2021 14:14:35 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -442,7 +479,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:31 GMT
+      - Fri, 19 Mar 2021 14:14:35 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -479,7 +516,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:32 GMT
+      - Fri, 19 Mar 2021 14:14:36 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -516,7 +553,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:42 GMT
+      - Fri, 19 Mar 2021 14:14:36 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -553,7 +590,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:26:53 GMT
+      - Fri, 19 Mar 2021 14:14:37 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -590,7 +627,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:03 GMT
+      - Fri, 19 Mar 2021 14:14:40 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -627,7 +664,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:14 GMT
+      - Fri, 19 Mar 2021 14:14:44 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -664,81 +701,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:24 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache/2.4.38 (Debian)
-    status:
-      code: 409
-      message: Inconsistent
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.25.1
-    method: GET
-    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/_acme-challenge.deleterecordset/TXT?verify
-  response:
-    body:
-      string: "{\n  \"errors\": [\n    \"Received 1 record(s), expected 2 from ns1.mythic-beasts.com.\",\n
-        \   \"Received 1 record(s), expected 2 from ns2.mythic-beasts.com.\"\n  ]\n}"
-    headers:
-      Connection:
-      - Keep-Alive
-      Content-Length:
-      - '156'
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 18 Mar 2021 16:27:35 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache/2.4.38 (Debian)
-    status:
-      code: 409
-      message: Inconsistent
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.25.1
-    method: GET
-    uri: https://api.mythic-beasts.com/dns/v2/zones/lexitus.co.uk/records/_acme-challenge.deleterecordset/TXT?verify
-  response:
-    body:
-      string: "{\n  \"errors\": [\n    \"Received 1 record(s), expected 2 from ns1.mythic-beasts.com.\",\n
-        \   \"Received 1 record(s), expected 2 from ns2.mythic-beasts.com.\"\n  ]\n}"
-    headers:
-      Connection:
-      - Keep-Alive
-      Content-Length:
-      - '156'
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 18 Mar 2021 16:27:45 GMT
+      - Fri, 19 Mar 2021 14:14:53 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -776,7 +739,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:57 GMT
+      - Fri, 19 Mar 2021 14:15:09 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -814,7 +777,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:57 GMT
+      - Fri, 19 Mar 2021 14:15:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -852,7 +815,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:58 GMT
+      - Fri, 19 Mar 2021 14:15:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -890,7 +853,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:58 GMT
+      - Fri, 19 Mar 2021 14:15:14 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -928,7 +891,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Mar 2021 16:27:58 GMT
+      - Fri, 19 Mar 2021 14:15:14 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
