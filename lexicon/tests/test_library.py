@@ -11,8 +11,8 @@ import contextlib
 import importlib
 import pkgutil
 from types import ModuleType
-
 from unittest import mock
+
 import pytest
 
 from lexicon.config import ConfigResolver
