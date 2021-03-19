@@ -41,9 +41,6 @@ class Provider(BaseProvider):
         self.session = None
 
     def _authenticate(self):
-        # All requests will be done in one HTTPS session
-        self.session = requests.Session()
-
         domains = self._get("/1/product", {"service_name": "domain", "customer_name": self.domain})
 
         LOGGER.debug(
@@ -106,6 +103,13 @@ class Provider(BaseProvider):
                     "id": record["id"],
                 }
             )
+
+        if rtype:
+            records = [
+                record
+                for record in records
+                if record["type"] == rtype
+            ] 
 
         if name:
             records = [
@@ -195,7 +199,7 @@ class Provider(BaseProvider):
 
         headers["Authorization"] = f"Bearer {self._get_provider_option('auth_token')}"
 
-        result = self.session.request(
+        result = requests.request(
             method=action, url=target, params=query_params, data=body, headers=headers
         )
         result.raise_for_status()
