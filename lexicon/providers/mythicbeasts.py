@@ -3,7 +3,6 @@ from __future__ import absolute_import
 
 import json
 import logging
-import time as time
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -92,7 +91,7 @@ class Provider(BaseProvider):
             if self.domain not in payload["zones"]:
                 raise Exception("Requested domain not found")
 
-        self.domain_id =self.domain
+        self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -128,7 +127,7 @@ class Provider(BaseProvider):
             # need to wait and poll here until verified that DNS change is live
             try:
                 self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
-            except requests.exceptions.HTTPError as err:
+            except:
                 LOGGER.debug("Timed out trying to verify changes were live")
                 raise
 
@@ -287,10 +286,10 @@ class Provider(BaseProvider):
         return response.json()
 
 # Return hash id for record
-def _identifier(record): 
-    digest = hashes.Hash(hashes.SHA256(), backend=default_backend()) 
-    digest.update(("type=" + record.get("type", "") + ",").encode("utf-8")) 
-    digest.update(("name=" + record.get("name", "") + ",").encode("utf-8")) 
-    digest.update(("content=" + record.get("content", "") + ",").encode("utf-8")) 
+def _identifier(record):
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+    digest.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+    digest.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
     return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
