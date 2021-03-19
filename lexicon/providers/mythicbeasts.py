@@ -1,12 +1,17 @@
 """Module provider for Mythic Beasts"""
 from __future__ import absolute_import
 
-import hashlib
 import json
 import logging
 import time as time
 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+import binascii
+
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from lexicon.providers.base import Provider as BaseProvider
 
@@ -48,6 +53,30 @@ class Provider(BaseProvider):
         self.auth_token = None
 
     def _authenticate(self):
+        # may need to get auth token
+        if self.auth_token is None and self._get_provider_option("auth_token") is None:
+            auth_request = requests.request(
+                "POST",
+                "https://auth.mythic-beasts.com/login",
+                data={"grant_type": "client_credentials"},
+                auth=(
+                    self._get_provider_option("auth_username"),
+                    self._get_provider_option("auth_password"),
+                ),
+            )
+            auth_request.raise_for_status()
+            post_result = auth_request.json()
+
+            if not post_result["access_token"]:
+                raise Exception(
+                    "Error, could not get access token "
+                    f"for Mythic Beasts API for user: {self._get_provider_option('auth_username')}"
+                )
+
+            self.auth_token = post_result["access_token"]
+        elif self.auth_token is None:
+            self.auth_token = self._get_provider_option("auth_token")
+
         payload = self._get("/zones")
 
         if self.domain is None:
@@ -63,7 +92,7 @@ class Provider(BaseProvider):
             if self.domain not in payload["zones"]:
                 raise Exception("Requested domain not found")
 
-        self.domain_id = hashlib.md5(self.domain.encode("utf-8")).hexdigest()
+        self.domain_id =self.domain
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -90,27 +119,18 @@ class Provider(BaseProvider):
         try:
             payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
-            if err.response.status_code != 400 and err.response.json()["errors"][0][0:16] != 'Duplicate record':
+            if err.response.status_code == 400 and err.response.json()["errors"][0][0:16] == 'Duplicate record':
+                LOGGER.debug("create_record (ignored, duplicate)")
+            else:
                 raise
 
         if rtype == 'A' or rtype == "TXT":
             # need to wait and poll here until verified that DNS change is live
-            changes_are_live = False
-            timeout = 300
-            start = time.time()
-
-            while(not changes_are_live and time.time() - start < timeout):
-                try:
-                    self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
-                    changes_are_live = True
-                except requests.exceptions.HTTPError as err:
-                    if err.response.status_code != 409:
-                        raise
-                    else:
-                        time.sleep(10)
-
-            if(not changes_are_live):
-                raise Exception("Timed out trying to verify changes were live")
+            try:
+                self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
+            except requests.exceptions.HTTPError as err:
+                LOGGER.debug("Timed out trying to verify changes were live")
+                raise
 
         if "message" in payload:
             return payload["message"]
@@ -141,9 +161,7 @@ class Provider(BaseProvider):
                 "ttl": record["ttl"],
                 "content": record["data"],
                 # no id is available, so we need to make our own
-                "id": hashlib.md5(
-                    (record["host"] + record["type"] + record["data"]).encode("utf-8")
-                ).hexdigest(),
+                "id": _identifier(record)
             }
             if record["type"] == "MX" and record["mx_priority"]:
                 processed_record["options"] = {
@@ -241,34 +259,23 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        # may need to get auth token
-        if self.auth_token is None and self._get_provider_option("auth_token") is None:
-            auth_request = requests.request(
-                "POST",
-                "https://auth.mythic-beasts.com/login",
-                data={"grant_type": "client_credentials"},
-                auth=(
-                    self._get_provider_option("auth_username"),
-                    self._get_provider_option("auth_password"),
-                ),
-            )
+        # When editing DNS zone, results are not live immediately.
+        # In this case, call to verify will return 409 HTTP error.
+        # We use the Retry extension to retry the requests until
+        # we get a processable response (402 HTTP status, or an HTTP error != 409)
+        retries = Retry(
+            total=10,
+            backoff_factor=0.5,
+            status_forcelist=[409],
+            allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
+        )
 
-            auth_request.raise_for_status()
-            post_result = auth_request.json()
-
-            if not post_result["access_token"]:
-                raise Exception(
-                    "Error, could not get access token "
-                    f"for Mythic Beasts API for user: {self._get_provider_option('auth_username')}"
-                )
-
-            self.auth_token = post_result["access_token"]
-        elif self.auth_token is None:
-            self.auth_token = self._get_provider_option("auth_token")
+        session = requests.Session()
+        session.mount("https://", HTTPAdapter(max_retries=retries))
 
         headers = {"Content-Type": "application/json"}
         headers["Authorization"] = f"Bearer {self.auth_token}"
-        response = requests.request(
+        response = session.request(
             action,
             self.api_endpoint + url,
             params=query_params,
@@ -278,3 +285,12 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
+
+# Return hash id for record
+def _identifier(record): 
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend()) 
+    digest.update(("type=" + record.get("type", "") + ",").encode("utf-8")) 
+    digest.update(("name=" + record.get("name", "") + ",").encode("utf-8")) 
+    digest.update(("content=" + record.get("content", "") + ",").encode("utf-8")) 
+
+    return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
