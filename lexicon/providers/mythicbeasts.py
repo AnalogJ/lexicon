@@ -127,7 +127,7 @@ class Provider(BaseProvider):
             # need to wait and poll here until verified that DNS change is live
             try:
                 self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
-            except:
+            except requests.exceptions.HTTPError:
                 LOGGER.debug("Timed out trying to verify changes were live")
                 raise
 
@@ -284,6 +284,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
+
 
 # Return hash id for record
 def _identifier(record):
