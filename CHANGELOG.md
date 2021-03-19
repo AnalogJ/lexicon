@@ -2,24 +2,36 @@
 
 ## master - CURRENT
 
+## 3.5.4 - 17/03/2021
+### Changed
+* Support both `tldextract` 2.x and 3.x
+* Upgrade third-party dependencies
+* Validate PowerDNS provider parameters (#755)
+* Support dnspython>=2.1 for `localzone` provider (#760)
+* Update Mythic Beasts documentation (#693)
+* Fix documentation build and publication
+
+### Deleted
+* Remove `mock` and `nose` dependencies (#706)
+
 ## 3.5.3 - 02/01/2021
-## Modified
+### Modified
 * Handle large number of hosted zones in `route53` provider
 
 ## 3.5.2 - 23/11/2020
-## Modified
+### Modified
 * Fix domains in "lock" state with `joker` provider
 
 ## 3.5.1 - 16/11/2020
-## Added
+### Added
 * Add the Joker.com provider
 * Add environment variable `TLDEXTRACT_CACHE_PATH` to configure a tldextract cache custom location for Lexicon
 
-## Modified
+### Modified
 * Old environment variable `TLDEXTRACT_CACHE_FILE` is deprecated and will be removed in a future release
 
 ## 3.5.0 - 10/11/2020
-## Modified
+### Modified
 * Avoid installation problems with setuptools==50
 * Migrating codebase to Python 3.6+ specific features (Lexicon will explicitly break on older versions now)
 * Fix Easyname provider to work with their new website
