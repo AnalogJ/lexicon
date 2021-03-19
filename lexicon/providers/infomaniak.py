@@ -109,7 +109,7 @@ class Provider(BaseProvider):
                 record
                 for record in records
                 if record["type"] == rtype
-            ] 
+            ]
 
         if name:
             records = [
