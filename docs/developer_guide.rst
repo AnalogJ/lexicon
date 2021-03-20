@@ -287,22 +287,8 @@ instead of ``IntegrationTestsV2``:
 CODEOWNERS file
 ===============
 
-Next, you should add yourself to the `CODEOWNERS file`_, in the root of the repo.
+Finally you should add yourself to the `CODEOWNERS file`_, in the root of the repo.
 It's my way of keeping track of who to ping when I need updated recordings as the
 test suites expand & change.
 
 .. _CODEOWNERS file: https://github.com/AnalogJ/lexicon/blob/master/CODEOWNERS
-
-TODO list
-=========
-
-- [x] Create and Register a lexicon pip package.
-- [ ] Write documentation on supported environmental variables.
-- [x] Wire up automated release packaging on PRs.
-- [x] Check for additional dns hosts with apis (from fog_, dnsperf_, libcloud_)
-- [ ] Get a list of Letsencrypt clients, and create hook files for them `letsencrypt clients`_
-
-.. _fog: http://fog.io/about/provider_documentation.html
-.. _dnsperf: http://www.dnsperf.com/
-.. _libcloud: https://libcloud.readthedocs.io/en/latest/dns/supported_providers.html
-.. _letsencrypt clients: https://github.com/letsencrypt/letsencrypt/wiki/Links
