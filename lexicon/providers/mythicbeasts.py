@@ -1,14 +1,13 @@
 """Module provider for Mythic Beasts"""
 from __future__ import absolute_import
 
+import binascii
 import json
 import logging
 
+import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
-import binascii
-
-import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -99,7 +98,7 @@ class Provider(BaseProvider):
         LOGGER.debug("name %s", name)
         LOGGER.debug("content %s", content)
 
-        if rtype == 'CNAME':
+        if rtype == "CNAME":
             content = self._fqdn_name(content)
 
         data = {
@@ -118,15 +117,20 @@ class Provider(BaseProvider):
         try:
             payload = self._post(f"/zones/{self.domain}/records", data)
         except requests.exceptions.HTTPError as err:
-            if err.response.status_code == 400 and err.response.json()["errors"][0][0:16] == 'Duplicate record':
+            if (
+                err.response.status_code == 400
+                and err.response.json()["errors"][0][0:16] == "Duplicate record"
+            ):
                 LOGGER.debug("create_record (ignored, duplicate)")
             else:
                 raise
 
-        if rtype == 'A' or rtype == "TXT":
+        if rtype == "A" or rtype == "TXT":
             # need to wait and poll here until verified that DNS change is live
             try:
-                self._get(f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify")
+                self._get(
+                    f"/zones/{self.domain}/records/{self._relative_name(name)}/{rtype}?verify"
+                )
             except requests.exceptions.HTTPError:
                 LOGGER.debug("Timed out trying to verify changes were live")
                 raise
@@ -160,7 +164,7 @@ class Provider(BaseProvider):
                 "ttl": record["ttl"],
                 "content": record["data"],
                 # no id is available, so we need to make our own
-                "id": _identifier(record)
+                "id": _identifier(record),
             }
             if record["type"] == "MX" and record["mx_priority"]:
                 processed_record["options"] = {

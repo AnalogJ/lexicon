@@ -14,4 +14,4 @@ class InfomaniakProviderTests(TestCase, IntegrationTestsV2):
     domain = "testouille.at"
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]

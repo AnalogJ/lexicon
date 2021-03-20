@@ -1,6 +1,7 @@
 # Test for one implementation of the interface
-from unittest import TestCase
 import re
+from unittest import TestCase
+
 from lexicon.tests.providers import integration_tests
 
 
@@ -24,7 +25,11 @@ class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         to filter the provider response."""
 
         if "string" in response["body"]:
-            response["body"]["string"] = re.sub(br"\"access_token\":\"[\w-]+\"", b"\"access_token\": \"DUMMY_TOKEN\"", response["body"]["string"])
+            response["body"]["string"] = re.sub(
+                br"\"access_token\":\"[\w-]+\"",
+                b'"access_token": "DUMMY_TOKEN"',
+                response["body"]["string"],
+            )
 
         return response
 

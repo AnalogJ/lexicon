@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.5.5 - 20/03/2021
 ### Added
 * Add the Mythic Beasts provider (#739)
 * Add the Infomaniak provider (#685 #762)

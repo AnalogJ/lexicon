@@ -41,15 +41,15 @@ class Provider(BaseProvider):
         self.session = None
 
     def _authenticate(self):
-        domains = self._get("/1/product", {"service_name": "domain", "customer_name": self.domain})
-
-        LOGGER.debug(
-            "found domains %s", domains
+        domains = self._get(
+            "/1/product", {"service_name": "domain", "customer_name": self.domain}
         )
 
-        for domain in domains['data']:
-            if domain['customer_name'] == self.domain:
-                self.domain_id = domain['id']
+        LOGGER.debug("found domains %s", domains)
+
+        for domain in domains["data"]:
+            if domain["customer_name"] == self.domain:
+                self.domain_id = domain["id"]
                 break
 
         if not self.domain_id:
@@ -63,7 +63,7 @@ class Provider(BaseProvider):
                 lambda x: x["content"] == content
                 and x["type"] == rtype
                 and self._relative_name(x["name"]) == self._relative_name(name),
-                self._list_records(rtype, name, content)
+                self._list_records(rtype, name, content),
             )
         )
 
@@ -84,7 +84,7 @@ class Provider(BaseProvider):
 
         result = self._post(f"/1/domain/{self.domain_id}/dns/record", data)
 
-        LOGGER.debug("create_record: %s", result['data'])
+        LOGGER.debug("create_record: %s", result["data"])
 
         return True
 
@@ -93,7 +93,7 @@ class Provider(BaseProvider):
 
         record_data = self._get(f"/1/domain/{self.domain_id}/dns/record")
 
-        for record in record_data['data']:
+        for record in record_data["data"]:
             records.append(
                 {
                     "type": record["type"],
@@ -105,11 +105,7 @@ class Provider(BaseProvider):
             )
 
         if rtype:
-            records = [
-                record
-                for record in records
-                if record["type"] == rtype
-            ]
+            records = [record for record in records if record["type"] == rtype]
 
         if name:
             records = [
@@ -137,7 +133,7 @@ class Provider(BaseProvider):
             "name": record_data["data"]["source_idn"],
             "ttl": record_data["data"]["ttl"],
             "content": record_data["data"]["target_idn"],
-            "id": record_data["data"]["id"]
+            "id": record_data["data"]["id"],
         }
 
         LOGGER.debug("get_record: %s", record)
@@ -206,7 +202,7 @@ class Provider(BaseProvider):
 
         json_result = result.json()
 
-        if json_result['result'] != 'success':
+        if json_result["result"] != "success":
             raise Exception("API didn't return success status")
 
         return json_result
