@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add the Mythic Beasts provider (#739)
+* Add the Infomaniak provider (#685 #762)
+
+### Changed
+* Improve dev tooling (#761)
 
 ## 3.5.4 - 17/03/2021
 ### Changed
