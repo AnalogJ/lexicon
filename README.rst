@@ -135,7 +135,6 @@ The current supported providers are:
 - `Sakura Cloud by SAKURA Internet Inc. <https://developer.sakura.ad.jp/cloud/api/1.1/>`_
 - `SafeDNS by UKFast <https://developers.ukfast.io/documentation/safedns>`_
 - `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
-- Subreg (deprecated, use Gransy)
 - `Transip <https://www.transip.nl/transip/api/>`_
 - `UltraDNS <https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf>`_
 - `Vultr <https://www.vultr.com/api/>`_
