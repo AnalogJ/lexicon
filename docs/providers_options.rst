@@ -20,23 +20,25 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | henet_          | hetzner_        | hostingde_      | hover_          |
 +-----------------+-----------------+-----------------+-----------------+
-| infoblox_       | internetbs_     | inwx_           | joker_          |
+| infoblox_       | infomaniak_     | internetbs_     | inwx_           |
 +-----------------+-----------------+-----------------+-----------------+
-| linode_         | linode4_        | localzone_      | luadns_         |
+| joker_          | linode_         | linode4_        | localzone_      |
 +-----------------+-----------------+-----------------+-----------------+
-| memset_         | namecheap_      | namesilo_       | netcup_         |
+| luadns_         | memset_         | mythicbeasts_   | namecheap_      |
 +-----------------+-----------------+-----------------+-----------------+
-| nfsn_           | njalla_         | nsone_          | onapp_          |
+| namesilo_       | netcup_         | nfsn_           | njalla_         |
 +-----------------+-----------------+-----------------+-----------------+
-| online_         | ovh_            | plesk_          | pointhq_        |
+| nsone_          | onapp_          | online_         | ovh_            |
 +-----------------+-----------------+-----------------+-----------------+
-| powerdns_       | rackspace_      | rage4_          | rcodezero_      |
+| plesk_          | pointhq_        | powerdns_       | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+
-| route53_        | safedns_        | sakuracloud_    | softlayer_      |
+| rage4_          | rcodezero_      | route53_        | safedns_        |
 +-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | vultr_          | yandex_         |
+| sakuracloud_    | softlayer_      | transip_        | ultradns_       |
 +-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |
+| vultr_          | yandex_         | zeit_           | zilore_         |
++-----------------+-----------------+-----------------+-----------------+
+| zonomi_         |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -254,6 +256,11 @@ infoblox
     * ``ib_view`` Specify dns view to manage at the infoblox
     * ``ib_host`` Specify infoblox host exposing the wapi
 
+.. _infomaniak:
+
+infomaniak
+    * ``auth_token`` Specify the token
+
 .. _internetbs:
 
 internetbs
@@ -296,6 +303,13 @@ luadns
 
 memset
     * ``auth_token`` Specify api key for authentication
+
+.. _mythicbeasts:
+
+mythicbeasts
+    * ``auth_username`` Specify api credentials username
+    * ``auth_password`` Specify api credentials password
+    * ``auth_token`` Specify api token for authentication
 
 .. _namecheap:
 
