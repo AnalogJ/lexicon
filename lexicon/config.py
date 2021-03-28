@@ -7,7 +7,7 @@ import os
 import re
 import warnings
 from argparse import Namespace
-from typing import Any, Optional, Dict
+from typing import Any, Dict, Optional
 
 import yaml
 
@@ -224,7 +224,9 @@ class ConfigResolver(object):
 
         return None
 
-    def add_config_source(self, config_source: ConfigSource, position: Optional[int] = None) -> None:
+    def add_config_source(
+        self, config_source: ConfigSource, position: Optional[int] = None
+    ) -> None:
         """
         Add a config source to the current ConfigResolver instance.
         If position is not set, this source will be inserted with the lowest priority.
@@ -232,7 +234,7 @@ class ConfigResolver(object):
         rank = position if position is not None else len(self._config_sources)
         self._config_sources.insert(rank, config_source)
 
-    def with_config_source(self, config_source: ConfigSource) -> 'ConfigResolver':
+    def with_config_source(self, config_source: ConfigSource) -> "ConfigResolver":
         """
         Configure current resolver to use the provided ConfigSource instance to be used as a source.
         See documentation of ConfigSource to see how to implement correctly a ConfigSource.
@@ -240,7 +242,7 @@ class ConfigResolver(object):
         self.add_config_source(config_source)
         return self
 
-    def with_env(self) -> 'ConfigResolver':
+    def with_env(self) -> "ConfigResolver":
         """
         Configure current resolver to use available environment variables as a source.
         Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]'
@@ -248,7 +250,7 @@ class ConfigResolver(object):
         """
         return self.with_config_source(EnvironmentConfigSource())
 
-    def with_args(self, argparse_namespace: Namespace) -> 'ConfigResolver':
+    def with_args(self, argparse_namespace: Namespace) -> "ConfigResolver":
         """
         Configure current resolver to use a Namespace object given by a ArgParse instance
         using arg_parse() as a source. This method is typically used to allow a ConfigResolver
@@ -261,7 +263,7 @@ class ConfigResolver(object):
         """
         return self.with_config_source(ArgsConfigSource(argparse_namespace))
 
-    def with_dict(self, dict_object: Dict) -> 'ConfigResolver':
+    def with_dict(self, dict_object: Dict) -> "ConfigResolver":
         """
         Configure current resolver to use the given dict object, scoped to lexicon namespace.
         Example of valid dict object for lexicon:
@@ -275,7 +277,7 @@ class ConfigResolver(object):
         """
         return self.with_config_source(DictConfigSource(dict_object))
 
-    def with_config_file(self, file_path: str) -> 'ConfigResolver':
+    def with_config_file(self, file_path: str) -> "ConfigResolver":
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for Lexicon and any DNS provider.
@@ -289,7 +291,9 @@ class ConfigResolver(object):
         """
         return self.with_config_source(FileConfigSource(file_path))
 
-    def with_provider_config_file(self, provider_name: str, file_path: str) -> 'ConfigResolver':
+    def with_provider_config_file(
+        self, provider_name: str, file_path: str
+    ) -> "ConfigResolver":
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for a DNS provider exclusively.
@@ -308,7 +312,7 @@ class ConfigResolver(object):
             ProviderFileConfigSource(provider_name, file_path)
         )
 
-    def with_config_dir(self, dir_path: str) -> 'ConfigResolver':
+    def with_config_dir(self, dir_path: str) -> "ConfigResolver":
         """
         Configure current resolver to use every valid YAML configuration files available in the
         given directory path. To be taken into account, a configuration file must conform to the
@@ -347,7 +351,7 @@ class ConfigResolver(object):
 
         return self
 
-    def with_legacy_dict(self, legacy_dict_object: Dict) -> 'ConfigResolver':
+    def with_legacy_dict(self, legacy_dict_object: Dict) -> "ConfigResolver":
         """Configure a source that consumes the dict that where used on Lexicon 2.x"""
         warnings.warn(
             DeprecationWarning(

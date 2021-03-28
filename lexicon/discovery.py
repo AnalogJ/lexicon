@@ -40,7 +40,9 @@ def lexicon_version() -> str:
         return "unknown"
 
 
-def _resolve_requirements(provider: str, distribution: pkg_resources.Distribution) -> bool:
+def _resolve_requirements(
+    provider: str, distribution: pkg_resources.Distribution
+) -> bool:
     try:
         requirements = distribution.requires([provider])
     except pkg_resources.UnknownExtra:

@@ -1,7 +1,7 @@
 """Base provider module for all Lexicon providers"""
 import warnings
 from abc import ABC, abstractmethod
-from typing import Optional, Any, List, Dict, Union
+from typing import Any, Dict, List, Optional, Union
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
@@ -86,7 +86,13 @@ class Provider(ABC):
 
         return self._create_record(rtype, name, content)
 
-    def list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs) -> List[Dict]:
+    def list_records(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+        **kwargs,
+    ) -> List[Dict]:
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
@@ -102,7 +108,14 @@ class Provider(ABC):
 
         return self._list_records(rtype=rtype, name=name, content=content)
 
-    def update_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs) -> bool:
+    def update_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+        **kwargs,
+    ) -> bool:
         """
         Update a record. Identifier must be specified.
         """
@@ -116,7 +129,12 @@ class Provider(ABC):
         return self._update_record(identifier, rtype=rtype, name=name, content=content)
 
     def delete_record(
-        self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+        **kwargs,
     ) -> bool:
         """
         Delete an existing record.
@@ -144,33 +162,71 @@ class Provider(ABC):
         ...
 
     @abstractmethod
-    def _list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> List[Dict]:
+    def _list_records(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> List[Dict]:
         ...
 
     @abstractmethod
-    def _update_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> bool:
+    def _update_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
         ...
 
     @abstractmethod
-    def _delete_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> bool:
+    def _delete_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
         ...
 
     # Helpers
     @abstractmethod
-    def _request(self, action: str = "GET", url: str = "/", data: str = None, query_params: str = None) -> Any:
+    def _request(
+        self,
+        action: str = "GET",
+        url: str = "/",
+        data: str = None,
+        query_params: str = None,
+    ) -> Any:
         ...
 
     # Helpers
     def _get(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
         return self._request("GET", url, query_params=query_params)
 
-    def _post(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
+    def _post(
+        self,
+        url: str = "/",
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
+    ) -> Any:
         return self._request("POST", url, data=data, query_params=query_params)
 
-    def _put(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
+    def _put(
+        self,
+        url: str = "/",
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
+    ) -> Any:
         return self._request("PUT", url, data=data, query_params=query_params)
 
-    def _patch(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
+    def _patch(
+        self,
+        url: str = "/",
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
+    ) -> Any:
         return self._request("PATCH", url, data=data, query_params=query_params)
 
     def _delete(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:

@@ -2,7 +2,7 @@
 import importlib
 import logging
 import os
-from typing import Dict, Union, Optional, List, Type
+from typing import Dict, List, Optional, Type, Union
 
 import tldextract
 
@@ -15,7 +15,9 @@ from lexicon.providers.base import Provider
 class Client(object):
     """This is the Lexicon client, that will execute all the logic."""
 
-    def __init__(self, config: Optional[Union[helper_config.ConfigResolver, Dict]] = None):
+    def __init__(
+        self, config: Optional[Union[helper_config.ConfigResolver, Dict]] = None
+    ):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
             self.config = helper_config.non_interactive_config_resolver()

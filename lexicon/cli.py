@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import sys
-from typing import Optional, List, Dict
+from typing import Dict, List, Optional
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
@@ -13,7 +13,11 @@ from lexicon.parser import generate_cli_main_parser
 logger = logging.getLogger(__name__)
 
 
-def generate_list_table_result(lexicon_logger: logging.Logger, output: Optional[List] = None, without_header: Optional[bool] = None) -> Optional[str]:
+def generate_list_table_result(
+    lexicon_logger: logging.Logger,
+    output: Optional[List] = None,
+    without_header: Optional[bool] = None,
+) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
     if not isinstance(output, list):
         lexicon_logger.debug(
@@ -63,7 +67,9 @@ def generate_list_table_result(lexicon_logger: logging.Logger, output: Optional[
     return os.linesep.join(table)
 
 
-def generate_table_results(output: Optional[List[str]] = None, without_header: Optional[bool] = None) -> str:
+def generate_table_results(
+    output: Optional[List[str]] = None, without_header: Optional[bool] = None
+) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
     str_output = str(output)
