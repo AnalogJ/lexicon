@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Migrate Vultr provider to the V2 API (#770)
 
 ## 3.5.5 - 20/03/2021
 ### Added
