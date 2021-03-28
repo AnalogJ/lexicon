@@ -4,7 +4,7 @@ import logging
 import os
 from typing import Dict, List, Optional, Type, Union
 
-import tldextract
+import tldextract  # type: ignore
 
 from lexicon import config as helper_config
 from lexicon import discovery
@@ -45,21 +45,26 @@ class Client(object):
         domain_parts = domain_extractor(self.config.resolve("lexicon:domain"))
         runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
 
-        if self.config.resolve("lexicon:delegated"):
+        delegated = self.config.resolve("lexicon:delegated")
+        if delegated:
             # handle delegated domain
-            delegated = self.config.resolve("lexicon:delegated").rstrip(".")
-            if delegated != runtime_config.get("domain"):
+            delegated = str(delegated).rstrip(".")
+            initial_domain = str(runtime_config.get("domain"))
+            if delegated != initial_domain:
                 # convert to relative name
-                if delegated.endswith(runtime_config.get("domain")):
-                    delegated = delegated[: -len(runtime_config.get("domain"))]
+                if delegated.endswith(initial_domain):
+                    delegated = delegated[: -len(initial_domain)]
                     delegated = delegated.rstrip(".")
                 # update domain
-                runtime_config["domain"] = f"{delegated}.{runtime_config.get('domain')}"
+                runtime_config["domain"] = f"{delegated}.{initial_domain}"
 
         self.action = self.config.resolve("lexicon:action")
         self.provider_name = self.config.resolve(
             "lexicon:provider_name"
         ) or self.config.resolve("lexicon:provider")
+
+        if not self.provider_name:
+            raise ValueError("Could not resolve provider name.")
 
         self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
@@ -78,6 +83,8 @@ class Client(object):
         content = self.config.resolve("lexicon:content")
 
         if self.action == "create":
+            if not record_type or not name or not content:
+                raise ValueError("Missing record_type, name or content parameters.")
             return self.provider.create_record(record_type, name, content)
 
         if self.action == "list":
@@ -93,13 +100,11 @@ class Client(object):
 
     def _validate_config(self) -> None:
         provider_name = self.config.resolve("lexicon:provider_name")
-        if not self.config.resolve("lexicon:provider_name"):
+        if not provider_name:
             raise AttributeError("provider_name")
 
         try:
-            available = discovery.find_providers()[
-                self.config.resolve("lexicon:provider_name")
-            ]
+            available = discovery.find_providers()[provider_name]
         except KeyError:
             raise ProviderNotAvailableError(
                 f"This provider ({provider_name}) is not supported by Lexicon."

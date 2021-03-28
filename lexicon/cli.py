@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import sys
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def generate_list_table_result(
     lexicon_logger: logging.Logger,
-    output: Optional[List] = None,
+    output: Union[bool, List[Dict]] = None,
     without_header: Optional[bool] = None,
 ) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
@@ -68,7 +68,7 @@ def generate_list_table_result(
 
 
 def generate_table_results(
-    output: Optional[List[str]] = None, without_header: Optional[bool] = None
+    output: Union[bool, List[Dict]] = None, without_header: Optional[bool] = None
 ) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
@@ -82,7 +82,7 @@ def generate_table_results(
     return os.linesep.join(array)
 
 
-def handle_output(results: List[Dict], output_type: str, action: str) -> None:
+def handle_output(results: Union[bool, List[Dict]], output_type: str, action: str) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
         return
@@ -128,7 +128,11 @@ def main() -> None:
 
     results = client.execute()
 
-    handle_output(results, parsed_args.output, config.resolve("lexicon:action"))
+    action = config.resolve("lexicon:action")
+    if not action:
+        raise ValueError("Parameter action is not set.")
+
+    handle_output(results, parsed_args.output, action)
 
 
 if __name__ == "__main__":

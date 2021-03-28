@@ -4,7 +4,7 @@ from functools import wraps
 from importlib import import_module
 
 import pytest
-import vcr
+import vcr  # type: ignore
 
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 

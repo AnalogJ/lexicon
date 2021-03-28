@@ -58,7 +58,7 @@ class Provider(ABC):
         self.provider_name = self.config.resolve(
             "lexicon:provider_name"
         ) or self.config.resolve("lexicon:provider")
-        self.domain = self.config.resolve("lexicon:domain")
+        self.domain = str(self.config.resolve("lexicon:domain"))
         self.domain_id = None
 
     # Provider API
@@ -163,8 +163,8 @@ class Provider(ABC):
         self,
         action: str = "GET",
         url: str = "/",
-        data: str = None,
-        query_params: str = None,
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
     ) -> Any:
         ...
 
