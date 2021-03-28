@@ -137,7 +137,7 @@ The current supported providers are:
 - `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
 - `Transip <https://www.transip.nl/transip/api/>`_
 - `UltraDNS <https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf>`_
-- `Vultr <https://www.vultr.com/api/>`_
+- `Vultr <https://www.vultr.com/api/#tag/dns>`_
 - `Yandex <https://tech.yandex.com/domain/doc/reference/dns-add-docpage/>`_
 - `Zeit <https://zeit.co/api#post-domain-records>`_
 - `Zilore <https://zilore.com/en/help/api>`_
