@@ -1,6 +1,7 @@
 """Module provider for OnApp"""
 import json
 import logging
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -9,7 +10,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):

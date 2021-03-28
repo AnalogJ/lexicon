@@ -4,9 +4,9 @@ import logging
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import xmlrpclib
+    import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib
+    import xmlrpc.client as xmlrpclib  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 

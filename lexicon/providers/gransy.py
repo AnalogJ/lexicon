@@ -5,7 +5,7 @@ import logging
 from builtins import staticmethod
 
 try:
-    import zeep  # Optional dependency
+    import zeep  # type: ignore
 except BaseException:
     pass
 

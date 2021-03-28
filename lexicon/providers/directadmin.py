@@ -1,6 +1,7 @@
 """Module provider for DirectAdmin hosts"""
 import logging
 import warnings
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -10,7 +11,7 @@ from lexicon.providers.base import Provider as BaseProvider
 LOGGER = logging.getLogger(__name__)
 
 # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):

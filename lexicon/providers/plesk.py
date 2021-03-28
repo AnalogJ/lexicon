@@ -7,8 +7,9 @@ API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 """
 import logging
 from collections import defaultdict
-from typing import Dict
+from typing import Dict, List, Optional
 from xml.etree import cElementTree
+from xml.etree.ElementTree import Element
 
 import requests
 
@@ -18,7 +19,7 @@ LOGGER = logging.getLogger(__name__)
 
 PLEX_URL_SUFFIX = "/enterprise/control/agent.php"
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -280,18 +281,19 @@ class Provider(BaseProvider):
         pass
 
 
-def _etree_to_dict(t: cElementTree) -> Dict:
-    d = {t.tag: {} if t.attrib else None}
+def _etree_to_dict(t: Element) -> Optional[Dict]:
+    d: Optional[Dict] = {t.tag: {} if t.attrib else None}
     children = list(t)
     if children:
         dd = defaultdict(list)
         for dc in map(_etree_to_dict, children):
-            for k, v in dc.items():
-                dd[k].append(v)
+            if dc:
+                for k, v in dc.items():
+                    dd[k].append(v)
         d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}
-    if t.attrib:
+    if t.attrib and d:
         d[t.tag].update(("@" + k, v) for k, v in t.attrib.items())
-    if t.text:
+    if t.text and d:
         text = t.text.strip()
         if children or t.attrib:
             if text:
@@ -301,7 +303,7 @@ def _etree_to_dict(t: cElementTree) -> Dict:
     return d
 
 
-def _dict_to_etree(d: Dict) -> cElementTree:
+def _dict_to_etree(d: Dict) -> Element:
     def _to_etree(d1, root):
         if not d1:
             pass

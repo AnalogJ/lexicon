@@ -1,8 +1,5 @@
 """Module provider for CloudXNS"""
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 import hashlib
 import json

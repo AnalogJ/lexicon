@@ -1,25 +1,26 @@
 """Module provider for Transip"""
 import logging
+from typing import List
 
 from lexicon.providers.base import Provider as BaseProvider
 
 # Support various versions of Transip Python API
 try:
-    from transip.service.objects import DnsEntry
+    from transip.service.objects import DnsEntry  # type: ignore
 except ImportError:
     try:
-        from transip.service.dns import DnsEntry
+        from transip.service.dns import DnsEntry  # type: ignore
     except ImportError:
         pass
 
 try:
-    from transip.service.domain import DomainService
+    from transip.service.domain import DomainService  # type: ignore
 except ImportError:
     pass
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):

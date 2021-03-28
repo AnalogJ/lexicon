@@ -2,7 +2,7 @@
 import logging
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # type: ignore
 
 from lexicon.providers.base import Provider as BaseProvider
 

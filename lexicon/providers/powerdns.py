@@ -22,6 +22,7 @@ back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -29,7 +30,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):

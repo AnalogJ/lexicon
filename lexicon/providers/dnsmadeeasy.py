@@ -8,7 +8,7 @@ from hashlib import sha1
 
 import requests
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from urllib3.util.retry import Retry  # type: ignore
 
 from lexicon.providers.base import Provider as BaseProvider
 

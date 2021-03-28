@@ -6,8 +6,7 @@ import pkgutil
 import re
 import subprocess
 
-import six
-import tldextract
+import tldextract  # type: ignore
 
 from lexicon import config as helper_config
 from lexicon import providers
@@ -80,7 +79,7 @@ def _relevant_provider_for_domain(domain):
         if {
             ns_domain
             for ns_domain in ns_domains
-            if isinstance(ns_domain, six.string_types)
+            if isinstance(ns_domain, str)
         } & nameserver_domains:
             relevant_providers.append((provider_name, provider_module))
             continue

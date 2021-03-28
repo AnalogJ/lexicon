@@ -382,7 +382,10 @@ class _Api:
             # Response namespace must be prepended to tag names.
             xpath = ".//{%(ns)s}Errors/{%(ns)s}Error" % {"ns": _NAMESPACE}
             error = xml.find(xpath)
-            raise _ApiError(error.attrib["Number"], error.text)
+            if error:
+                raise _ApiError(error.attrib["Number"], error.text)
+            else:
+                raise _ApiError(0, "Unknown exception")
 
         return xml
 

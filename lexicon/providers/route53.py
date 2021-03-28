@@ -6,8 +6,8 @@ import re
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import boto3  # optional dep
-    import botocore  # optional dep
+    import boto3  # type: ignore
+    import botocore  # type: ignore
 except ImportError:
     pass
 

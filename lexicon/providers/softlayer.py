@@ -4,7 +4,7 @@ import logging
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import SoftLayer
+    import SoftLayer  # type: ignore
 except ImportError:
     pass
 

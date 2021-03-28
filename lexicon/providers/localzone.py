@@ -2,20 +2,21 @@
 import logging
 import types
 from time import localtime, strftime, time
+from typing import List
 
 from .base import Provider as BaseProvider
 
 # localzone is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
 try:
-    import localzone
+    import localzone  # type: ignore
 except ImportError:
     pass
 
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 # Monkeypatch localzone.models.Zone._increment_serial to make it compatible with dnspython 2.x

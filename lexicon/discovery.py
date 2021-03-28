@@ -4,7 +4,7 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 import pkgutil
-from typing import Dict, List
+from typing import Dict, List, cast
 
 import pkg_resources
 
@@ -16,7 +16,7 @@ def find_providers() -> Dict[str, bool]:
     providers_list = sorted(
         {
             modname
-            for (_, modname, _) in pkgutil.iter_modules(providers.__path__)
+            for (_, modname, _) in pkgutil.iter_modules(providers.__path__)  # type: ignore
             if modname != "base"
         }
     )
