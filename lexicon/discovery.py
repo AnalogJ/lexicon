@@ -4,7 +4,7 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 import pkgutil
-from typing import Dict, List, cast
+from typing import Dict, List
 
 import pkg_resources
 
@@ -52,7 +52,10 @@ def _resolve_requirements(
         # Extra is defined
         try:
             for requirement in requirements:
-                pkg_resources.get_distribution(requirement)
+                if hasattr(requirement, "name"):
+                    pkg_resources.get_distribution(requirement.name)  # type: ignore
+                else:
+                    pkg_resources.get_distribution(requirement)
         except (pkg_resources.DistributionNotFound, pkg_resources.VersionConflict):
             # At least one extra requirement is not fulfilled
             return False
