@@ -1,5 +1,4 @@
 """Base provider module for all Lexicon providers"""
-import warnings
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
@@ -73,17 +72,10 @@ class Provider(ABC):
         """
         self._authenticate()
 
-    def create_record(self, rtype: str, name: str, content: str, **kwargs) -> bool:
+    def create_record(self, rtype: str, name: str, content: str) -> bool:
         """
         Create record. If record already exists with the same content, do nothing.
         """
-        if not rtype and kwargs.get("type"):
-            warnings.warn(
-                'Parameter "type" is deprecated, use "rtype" instead.',
-                DeprecationWarning,
-            )
-            rtype = kwargs.get("type")
-
         return self._create_record(rtype, name, content)
 
     def list_records(
@@ -91,21 +83,12 @@ class Provider(ABC):
         rtype: Optional[str] = None,
         name: Optional[str] = None,
         content: Optional[str] = None,
-        **kwargs,
     ) -> List[Dict]:
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
         If possible filter during the query, otherwise filter after response is received.
         """
-
-        if not rtype and kwargs.get("type"):
-            warnings.warn(
-                'Parameter "type" is deprecated, use "rtype" instead.',
-                DeprecationWarning,
-            )
-            rtype = kwargs.get("type")
-
         return self._list_records(rtype=rtype, name=name, content=content)
 
     def update_record(
@@ -114,18 +97,10 @@ class Provider(ABC):
         rtype: Optional[str] = None,
         name: Optional[str] = None,
         content: Optional[str] = None,
-        **kwargs,
     ) -> bool:
         """
         Update a record. Identifier must be specified.
         """
-        if not rtype and kwargs.get("type"):
-            warnings.warn(
-                'Parameter "type" is deprecated, use "rtype" instead.',
-                DeprecationWarning,
-            )
-            rtype = kwargs.get("type")
-
         return self._update_record(identifier, rtype=rtype, name=name, content=content)
 
     def delete_record(
@@ -134,20 +109,12 @@ class Provider(ABC):
         rtype: Optional[str] = None,
         name: Optional[str] = None,
         content: Optional[str] = None,
-        **kwargs,
     ) -> bool:
         """
         Delete an existing record.
         If record does not exist, do nothing.
         If an identifier is specified, use it, otherwise do a lookup using type, name and content.
         """
-        if not rtype and kwargs.get("type"):
-            warnings.warn(
-                'Parameter "type" is deprecated, use "rtype" instead.',
-                DeprecationWarning,
-            )
-            rtype = kwargs.get("type")
-
         return self._delete_record(
             identifier=identifier, rtype=rtype, name=name, content=content
         )
