@@ -480,17 +480,6 @@ optional = true
 python-versions = ">=3.5"
 
 [[package]]
-name = "pynamecheap"
-version = "0.0.3"
-description = "Namecheap API client in Python"
-category = "main"
-optional = true
-python-versions = "*"
-
-[package.dependencies]
-requests = "*"
-
-[[package]]
 name = "pyparsing"
 version = "2.4.7"
 description = "Python parsing module"
@@ -880,10 +869,9 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
-full = ["pynamecheap", "boto3", "transip", "localzone", "softlayer", "zeep"]
+full = ["boto3", "transip", "localzone", "softlayer", "zeep"]
 gransy = ["zeep"]
 localzone = ["localzone"]
-namecheap = ["pynamecheap"]
 route53 = ["boto3"]
 softlayer = ["softlayer"]
 transip = ["transip"]
@@ -891,7 +879,7 @@ transip = ["transip"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "ddb551d6e9be105214092068ae4b383cbb7d3c29ef24a6482badb9650ab35aa4"
+content-hash = "6fabb39af7708490384153e38c8a9300dc8f02aa94fa4488ea56d6e8978bcd5a"
 
 [metadata.files]
 apipkg = [
@@ -1236,9 +1224,6 @@ pyflakes = [
 pygments = [
     {file = "Pygments-2.8.1-py3-none-any.whl", hash = "sha256:534ef71d539ae97d4c3a4cf7d6f110f214b0e687e92f9cb9d2a3b0d3101289c8"},
     {file = "Pygments-2.8.1.tar.gz", hash = "sha256:2656e1a6edcdabf4275f9a3640db59fd5de107d88e8663c5d4e9a0fa62f77f94"},
-]
-pynamecheap = [
-    {file = "PyNamecheap-0.0.3.tar.gz", hash = "sha256:d428f9455f6226f5dbe2e67c5a81b5b37a215edf94d55f7576164904c4e76b72"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},

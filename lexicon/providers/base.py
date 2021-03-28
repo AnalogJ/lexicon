@@ -1,10 +1,12 @@
 """Base provider module for all Lexicon providers"""
 import warnings
+from abc import ABC, abstractmethod
+from typing import Optional, Any, List, Dict, Union
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
-class Provider(object):
+class Provider(ABC):
     """
     This is the base class for all lexicon Providers.
     It provides common functionality and ensures that all implemented
@@ -34,7 +36,7 @@ class Provider(object):
     for this provider, merged from CLI and Env variables.
     """
 
-    def __init__(self, config):
+    def __init__(self, config: Union[ConfigResolver, Dict]):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
@@ -61,7 +63,7 @@ class Provider(object):
         self.domain_id = None
 
     # Provider API
-    def authenticate(self):
+    def authenticate(self) -> None:
         """
         Authenticate against provider,
         Make any requests required to get the domain's id for this provider,
@@ -69,9 +71,9 @@ class Provider(object):
         Should throw an error if authentication fails for any reason,
         of if the domain does not exist.
         """
-        return self._authenticate()
+        self._authenticate()
 
-    def create_record(self, rtype=None, name=None, content=None, **kwargs):
+    def create_record(self, rtype: str, name: str, content: str, **kwargs) -> bool:
         """
         Create record. If record already exists with the same content, do nothing.
         """
@@ -84,7 +86,7 @@ class Provider(object):
 
         return self._create_record(rtype, name, content)
 
-    def list_records(self, rtype=None, name=None, content=None, **kwargs):
+    def list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs) -> List[Dict]:
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
@@ -100,7 +102,7 @@ class Provider(object):
 
         return self._list_records(rtype=rtype, name=name, content=content)
 
-    def update_record(self, identifier, rtype=None, name=None, content=None, **kwargs):
+    def update_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs) -> bool:
         """
         Update a record. Identifier must be specified.
         """
@@ -114,8 +116,8 @@ class Provider(object):
         return self._update_record(identifier, rtype=rtype, name=name, content=content)
 
     def delete_record(
-        self, identifier=None, rtype=None, name=None, content=None, **kwargs
-    ):
+        self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None, **kwargs
+    ) -> bool:
         """
         Delete an existing record.
         If record does not exist, do nothing.
@@ -133,42 +135,48 @@ class Provider(object):
         )
 
     # Internal abstract implementations
-    def _authenticate(self):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _authenticate(self) -> None:
+        ...
 
-    def _create_record(self, rtype, name, content):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _create_record(self, rtype: str, name: str, content: str) -> bool:
+        ...
 
-    def _list_records(self, rtype=None, name=None, content=None):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> List[Dict]:
+        ...
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _update_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> bool:
+        ...
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _delete_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> bool:
+        ...
 
     # Helpers
-    def _request(self, action="GET", url="/", data=None, query_params=None):
-        raise NotImplementedError("Providers must implement this!")
+    @abstractmethod
+    def _request(self, action: str = "GET", url: str = "/", data: str = None, query_params: str = None) -> Any:
+        ...
 
     # Helpers
-    def _get(self, url="/", query_params=None):
+    def _get(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
         return self._request("GET", url, query_params=query_params)
 
-    def _post(self, url="/", data=None, query_params=None):
+    def _post(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
         return self._request("POST", url, data=data, query_params=query_params)
 
-    def _put(self, url="/", data=None, query_params=None):
+    def _put(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
         return self._request("PUT", url, data=data, query_params=query_params)
 
-    def _patch(self, url="/", data=None, query_params=None):
+    def _patch(self, url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
         return self._request("PATCH", url, data=data, query_params=query_params)
 
-    def _delete(self, url="/", query_params=None):
+    def _delete(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
         return self._request("DELETE", url, query_params=query_params)
 
-    def _fqdn_name(self, record_name):
+    def _fqdn_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
         record_name = record_name.rstrip(".")
         # check if the record_name is fully specified
@@ -176,7 +184,7 @@ class Provider(object):
             record_name = f"{record_name}.{self.domain}"
         return f"{record_name}."  # return the fqdn name
 
-    def _full_name(self, record_name):
+    def _full_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
         record_name = record_name.rstrip(".")
         # check if the record_name is fully specified
@@ -184,7 +192,7 @@ class Provider(object):
             record_name = f"{record_name}.{self.domain}"
         return record_name
 
-    def _relative_name(self, record_name):
+    def _relative_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
         record_name = record_name.rstrip(".")
         # check if the record_name is fully specified
@@ -193,15 +201,15 @@ class Provider(object):
             record_name = record_name.rstrip(".")
         return record_name
 
-    def _clean_TXT_record(self, record):
+    def _clean_TXT_record(self, record: Dict) -> Dict:
         if record["type"] == "TXT":
             # Some providers have quotes around the TXT records,
             # so we're going to remove those extra quotes
             record["content"] = record["content"][1:-1]
         return record
 
-    def _get_lexicon_option(self, option):
+    def _get_lexicon_option(self, option: str) -> Any:
         return self.config.resolve(f"lexicon:{option}")
 
-    def _get_provider_option(self, option):
+    def _get_provider_option(self, option: str) -> Any:
         return self.config.resolve(f"lexicon:{self.provider_name}:{option}")
