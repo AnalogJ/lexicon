@@ -48,7 +48,6 @@ beautifulsoup4 = "^4"
 pynamecheap = { version = "^0", optional = true }
 boto3 = { version = "^1", optional = true }
 transip = { version = "^2", optional = true }
-xmltodict = { version = "^0", optional = true }
 localzone = { version = ">=0.9.8,<1", optional = true }
 softlayer = {version = "^5", optional = true}
 zeep = { version = ">=3,<5", optional = true }
@@ -57,12 +56,11 @@ zeep = { version = ">=3,<5", optional = true }
 namecheap = ["pynamecheap"]
 route53 = ["boto3"]
 transip = ["transip"]
-plesk = ["xmltodict"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 # Extra "full" list must contain all other extras
-full = ["pynamecheap", "boto3", "transip", "xmltodict", "localzone", "softlayer", "zeep"]
+full = ["pynamecheap", "boto3", "transip", "localzone", "softlayer", "zeep"]
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
