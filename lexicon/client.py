@@ -2,18 +2,20 @@
 import importlib
 import logging
 import os
+from typing import Dict, Union, Optional, List, Type
 
 import tldextract
 
 from lexicon import config as helper_config
 from lexicon import discovery
 from lexicon.exceptions import ProviderNotAvailableError
+from lexicon.providers.base import Provider
 
 
 class Client(object):
     """This is the Lexicon client, that will execute all the logic."""
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Union[helper_config.ConfigResolver, Dict]] = None):
         if not config:
             # If there is not config specified, we load a non-interactive configuration.
             self.config = helper_config.non_interactive_config_resolver()
@@ -62,10 +64,10 @@ class Client(object):
         provider_module = importlib.import_module(
             "lexicon.providers." + self.provider_name
         )
-        provider_class = getattr(provider_module, "Provider")
+        provider_class: Type[Provider] = getattr(provider_module, "Provider")
         self.provider = provider_class(self.config)
 
-    def execute(self):
+    def execute(self) -> Union[bool, List[Dict]]:
         """Execute provided configuration in class constructor to the DNS records"""
         self.provider.authenticate()
         identifier = self.config.resolve("lexicon:identifier")
@@ -87,7 +89,7 @@ class Client(object):
 
         raise ValueError(f"Invalid action statement: {self.action}")
 
-    def _validate_config(self):
+    def _validate_config(self) -> None:
         provider_name = self.config.resolve("lexicon:provider_name")
         if not self.config.resolve("lexicon:provider_name"):
             raise AttributeError("provider_name")
@@ -115,7 +117,7 @@ class Client(object):
             raise AttributeError("type")
 
 
-def _get_tldextract_cache_path():
+def _get_tldextract_cache_path() -> str:
     if os.environ.get("TLDEXTRACT_CACHE_FILE"):
         logging.warning(
             "TLD_EXTRACT_CACHE_FILE environment variable is deprecated, please use TLDEXTRACT_CACHE_PATH instead."

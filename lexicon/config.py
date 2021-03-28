@@ -6,199 +6,12 @@ import logging
 import os
 import re
 import warnings
+from argparse import Namespace
+from typing import Any, Optional, Dict
 
 import yaml
 
 LOGGER = logging.getLogger(__name__)
-
-
-class ConfigResolver(object):
-    """
-    Highly customizable configuration resolver object, that gets configuration parameters
-    from various sources with a precedence order. Sources and their priority are configured
-    by calling the with* methods of this object, in the decreasing priority order.
-
-    A configuration parameter can be retrieved using the resolve() method. The configuration
-    parameter key needs to conform to a namespace, whose delimeters is ':'. Two namespaces will
-    be used in the context of Lexicon:
-        * the parameters relevant for Lexicon itself: 'lexicon:global_parameter'
-        * the parameters specific to a DNS provider: 'lexicon:cloudflare:cloudflare_parameter'
-
-    Example:
-        # This will resolve configuration parameters from environment variables,
-        # then from a configuration file named '/my/path/to/lexicon.yml'.
-        $ from lexicon.config import ConfigResolver
-        $ config = ConfigResolver()
-        $ config.with_env().with_config_file()
-        $ print(config.resolve('lexicon:delegated'))
-        $ print(config.resolve('lexicon:cloudflare:auth_token))
-
-    Config can resolve parameters for Lexicon and providers from:
-        * environment variables
-        * arguments parsed by ArgParse library
-        * YAML configuration files, generic or specific to a provider
-        * any object implementing the underlying ConfigSource class
-
-    Each parameter will be resolved against each source, and value from the higher priority source
-    is returned. If a parameter could not be resolve by any source, then None will be returned.
-    """
-
-    def __init__(self):
-        super(ConfigResolver, self).__init__()
-        self._config_sources = []
-
-    def resolve(self, config_key):
-        """
-        Resolve the value of the given config parameter key. Key must be correctly scoped for
-        Lexicon, and optionally for the DNS provider for which the parameter is consumed.
-        For instance:
-            * config.resolve('lexicon:delegated') will get the delegated parameter for Lexicon
-            * config.resolve('lexicon:cloudflare:auth_token') will get the auth_token parameter
-              consumed by cloudflare DNS provider.
-
-        Value is resolved against each configured source, and value from the highest priority source
-        is returned. None will be returned if the given config parameter key could not be resolved
-        from any source.
-        """
-        for config_source in self._config_sources:
-            value = config_source.resolve(config_key)
-            if value:
-                return value
-
-        return None
-
-    def add_config_source(self, config_source, position=None):
-        """
-        Add a config source to the current ConfigResolver instance.
-        If position is not set, this source will be inserted with the lowest priority.
-        """
-        rank = position if position is not None else len(self._config_sources)
-        self._config_sources.insert(rank, config_source)
-
-    def with_config_source(self, config_source):
-        """
-        Configure current resolver to use the provided ConfigSource instance to be used as a source.
-        See documentation of ConfigSource to see how to implement correctly a ConfigSource.
-        """
-        self.add_config_source(config_source)
-        return self
-
-    def with_env(self):
-        """
-        Configure current resolver to use available environment variables as a source.
-        Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]'
-        will be taken into account.
-        """
-        return self.with_config_source(EnvironmentConfigSource())
-
-    def with_args(self, argparse_namespace):
-        """
-        Configure current resolver to use a Namespace object given by a ArgParse instance
-        using arg_parse() as a source. This method is typically used to allow a ConfigResolver
-        to get parameters from the command line.
-
-        It is assumed that the argument parser have already checked that provided arguments are
-        valid for Lexicon or the current provider. No further namespace check on parameter keys will
-        be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token
-        present in the given Namespace object will be returned.
-        """
-        return self.with_config_source(ArgsConfigSource(argparse_namespace))
-
-    def with_dict(self, dict_object):
-        """
-        Configure current resolver to use the given dict object, scoped to lexicon namespace.
-        Example of valid dict object for lexicon:
-            {
-                'delegated': 'onedelegated',
-                'cloudflare': {
-                    'auth_token': 'SECRET_TOKEN'
-                }
-            }
-            => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
-        """
-        return self.with_config_source(DictConfigSource(dict_object))
-
-    def with_config_file(self, file_path):
-        """
-        Configure current resolver to use a YAML configuration file specified on the given path.
-        This file provides configuration parameters for Lexicon and any DNS provider.
-
-        Typical format is:
-            $ cat lexicon.yml
-            # Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
-            delegated: 'onedelegated'
-            cloudflare:
-            auth_token: SECRET_TOKEN
-        """
-        return self.with_config_source(FileConfigSource(file_path))
-
-    def with_provider_config_file(self, provider_name, file_path):
-        """
-        Configure current resolver to use a YAML configuration file specified on the given path.
-        This file provides configuration parameters for a DNS provider exclusively.
-
-        Typical format is:
-            $ cat lexicon_cloudflare.yml
-            # Will define properties 'lexicon:cloudflare:auth_token'
-            # and 'lexicon:cloudflare:auth_username'
-            auth_token: SECRET_TOKEN
-            auth_username: USERNAME
-
-        NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
-        by default, with [provider] equals to the given provider_name parameter.
-        """
-        return self.with_config_source(
-            ProviderFileConfigSource(provider_name, file_path)
-        )
-
-    def with_config_dir(self, dir_path):
-        """
-        Configure current resolver to use every valid YAML configuration files available in the
-        given directory path. To be taken into account, a configuration file must conform to the
-        following naming convention:
-            * 'lexicon.yml' for a global Lexicon config file (see with_config_file doc)
-            * 'lexicon_[provider].yml' for a DNS provider specific configuration file, with
-            [provider] equals to the DNS provider name (see with_provider_config_file doc)
-
-        Example:
-            $ ls /etc/lexicon
-            lexicon.yml # global Lexicon configuration file
-            lexicon_cloudflare.yml # specific configuration file for clouflare DNS provder
-        """
-        lexicon_provider_config_files = []
-        lexicon_config_files = []
-
-        for path in os.listdir(dir_path):
-            path = os.path.join(dir_path, path)
-            if os.path.isfile(path):
-                basename = os.path.basename(path)
-                search = re.search(r"^lexicon(?:_(\w+)|)\.yml$", basename)
-                if search:
-                    provider = search.group(1)
-                    if provider:
-                        lexicon_provider_config_files.append((provider, path))
-                    else:
-                        lexicon_config_files.append(path)
-
-        for lexicon_provider_config_file in lexicon_provider_config_files:
-            self.with_provider_config_file(
-                lexicon_provider_config_file[0], lexicon_provider_config_file[1]
-            )
-
-        for lexicon_config_file in lexicon_config_files:
-            self.with_config_file(lexicon_config_file)
-
-        return self
-
-    def with_legacy_dict(self, legacy_dict_object):
-        """Configure a source that consumes the dict that where used on Lexicon 2.x"""
-        warnings.warn(
-            DeprecationWarning(
-                "Legacy configuration object has been used "
-                "to load the ConfigResolver."
-            )
-        )
-        return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
 
 
 class ConfigSource(object):
@@ -356,7 +169,196 @@ class LegacyDictConfigSource(DictConfigSource):
         super(LegacyDictConfigSource, self).__init__(refactor_dict_object)
 
 
-def non_interactive_config_resolver():
+class ConfigResolver(object):
+    """
+    Highly customizable configuration resolver object, that gets configuration parameters
+    from various sources with a precedence order. Sources and their priority are configured
+    by calling the with* methods of this object, in the decreasing priority order.
+
+    A configuration parameter can be retrieved using the resolve() method. The configuration
+    parameter key needs to conform to a namespace, whose delimeters is ':'. Two namespaces will
+    be used in the context of Lexicon:
+        * the parameters relevant for Lexicon itself: 'lexicon:global_parameter'
+        * the parameters specific to a DNS provider: 'lexicon:cloudflare:cloudflare_parameter'
+
+    Example:
+        # This will resolve configuration parameters from environment variables,
+        # then from a configuration file named '/my/path/to/lexicon.yml'.
+        $ from lexicon.config import ConfigResolver
+        $ config = ConfigResolver()
+        $ config.with_env().with_config_file()
+        $ print(config.resolve('lexicon:delegated'))
+        $ print(config.resolve('lexicon:cloudflare:auth_token))
+
+    Config can resolve parameters for Lexicon and providers from:
+        * environment variables
+        * arguments parsed by ArgParse library
+        * YAML configuration files, generic or specific to a provider
+        * any object implementing the underlying ConfigSource class
+
+    Each parameter will be resolved against each source, and value from the higher priority source
+    is returned. If a parameter could not be resolve by any source, then None will be returned.
+    """
+
+    def __init__(self):
+        super(ConfigResolver, self).__init__()
+        self._config_sources = []
+
+    def resolve(self, config_key: str) -> Optional[Any]:
+        """
+        Resolve the value of the given config parameter key. Key must be correctly scoped for
+        Lexicon, and optionally for the DNS provider for which the parameter is consumed.
+        For instance:
+            * config.resolve('lexicon:delegated') will get the delegated parameter for Lexicon
+            * config.resolve('lexicon:cloudflare:auth_token') will get the auth_token parameter
+              consumed by cloudflare DNS provider.
+
+        Value is resolved against each configured source, and value from the highest priority source
+        is returned. None will be returned if the given config parameter key could not be resolved
+        from any source.
+        """
+        for config_source in self._config_sources:
+            value = config_source.resolve(config_key)
+            if value:
+                return value
+
+        return None
+
+    def add_config_source(self, config_source: ConfigSource, position: Optional[int] = None) -> None:
+        """
+        Add a config source to the current ConfigResolver instance.
+        If position is not set, this source will be inserted with the lowest priority.
+        """
+        rank = position if position is not None else len(self._config_sources)
+        self._config_sources.insert(rank, config_source)
+
+    def with_config_source(self, config_source: ConfigSource) -> 'ConfigResolver':
+        """
+        Configure current resolver to use the provided ConfigSource instance to be used as a source.
+        See documentation of ConfigSource to see how to implement correctly a ConfigSource.
+        """
+        self.add_config_source(config_source)
+        return self
+
+    def with_env(self) -> 'ConfigResolver':
+        """
+        Configure current resolver to use available environment variables as a source.
+        Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]'
+        will be taken into account.
+        """
+        return self.with_config_source(EnvironmentConfigSource())
+
+    def with_args(self, argparse_namespace: Namespace) -> 'ConfigResolver':
+        """
+        Configure current resolver to use a Namespace object given by a ArgParse instance
+        using arg_parse() as a source. This method is typically used to allow a ConfigResolver
+        to get parameters from the command line.
+
+        It is assumed that the argument parser have already checked that provided arguments are
+        valid for Lexicon or the current provider. No further namespace check on parameter keys will
+        be done here. Meaning that if 'lexicon:cloudflare:auth_token' is asked, any auth_token
+        present in the given Namespace object will be returned.
+        """
+        return self.with_config_source(ArgsConfigSource(argparse_namespace))
+
+    def with_dict(self, dict_object: Dict) -> 'ConfigResolver':
+        """
+        Configure current resolver to use the given dict object, scoped to lexicon namespace.
+        Example of valid dict object for lexicon:
+            {
+                'delegated': 'onedelegated',
+                'cloudflare': {
+                    'auth_token': 'SECRET_TOKEN'
+                }
+            }
+            => Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
+        """
+        return self.with_config_source(DictConfigSource(dict_object))
+
+    def with_config_file(self, file_path: str) -> 'ConfigResolver':
+        """
+        Configure current resolver to use a YAML configuration file specified on the given path.
+        This file provides configuration parameters for Lexicon and any DNS provider.
+
+        Typical format is:
+            $ cat lexicon.yml
+            # Will define properties 'lexicon:delegated' and 'lexicon:cloudflare:auth_token'
+            delegated: 'onedelegated'
+            cloudflare:
+            auth_token: SECRET_TOKEN
+        """
+        return self.with_config_source(FileConfigSource(file_path))
+
+    def with_provider_config_file(self, provider_name: str, file_path: str) -> 'ConfigResolver':
+        """
+        Configure current resolver to use a YAML configuration file specified on the given path.
+        This file provides configuration parameters for a DNS provider exclusively.
+
+        Typical format is:
+            $ cat lexicon_cloudflare.yml
+            # Will define properties 'lexicon:cloudflare:auth_token'
+            # and 'lexicon:cloudflare:auth_username'
+            auth_token: SECRET_TOKEN
+            auth_username: USERNAME
+
+        NB: If file_path is not specified, '/etc/lexicon/lexicon_[provider].yml' will be taken
+        by default, with [provider] equals to the given provider_name parameter.
+        """
+        return self.with_config_source(
+            ProviderFileConfigSource(provider_name, file_path)
+        )
+
+    def with_config_dir(self, dir_path: str) -> 'ConfigResolver':
+        """
+        Configure current resolver to use every valid YAML configuration files available in the
+        given directory path. To be taken into account, a configuration file must conform to the
+        following naming convention:
+            * 'lexicon.yml' for a global Lexicon config file (see with_config_file doc)
+            * 'lexicon_[provider].yml' for a DNS provider specific configuration file, with
+            [provider] equals to the DNS provider name (see with_provider_config_file doc)
+
+        Example:
+            $ ls /etc/lexicon
+            lexicon.yml # global Lexicon configuration file
+            lexicon_cloudflare.yml # specific configuration file for clouflare DNS provder
+        """
+        lexicon_provider_config_files = []
+        lexicon_config_files = []
+
+        for path in os.listdir(dir_path):
+            path = os.path.join(dir_path, path)
+            if os.path.isfile(path):
+                basename = os.path.basename(path)
+                search = re.search(r"^lexicon(?:_(\w+)|)\.yml$", basename)
+                if search:
+                    provider = search.group(1)
+                    if provider:
+                        lexicon_provider_config_files.append((provider, path))
+                    else:
+                        lexicon_config_files.append(path)
+
+        for lexicon_provider_config_file in lexicon_provider_config_files:
+            self.with_provider_config_file(
+                lexicon_provider_config_file[0], lexicon_provider_config_file[1]
+            )
+
+        for lexicon_config_file in lexicon_config_files:
+            self.with_config_file(lexicon_config_file)
+
+        return self
+
+    def with_legacy_dict(self, legacy_dict_object: Dict) -> 'ConfigResolver':
+        """Configure a source that consumes the dict that where used on Lexicon 2.x"""
+        warnings.warn(
+            DeprecationWarning(
+                "Legacy configuration object has been used "
+                "to load the ConfigResolver."
+            )
+        )
+        return self.with_config_source(LegacyDictConfigSource(legacy_dict_object))
+
+
+def non_interactive_config_resolver() -> ConfigResolver:
     """
     Create a typical config resolver in a non-interactive context (eg. lexicon used as a library).
     Configuration will be resolved againts env variables and lexicon config files in working dir.
@@ -364,7 +366,7 @@ def non_interactive_config_resolver():
     return ConfigResolver().with_env().with_config_dir(os.getcwd())
 
 
-def legacy_config_resolver(legacy_dict):
+def legacy_config_resolver(legacy_dict) -> ConfigResolver:
     """
     With the old legacy approach, we juste got a plain configuration dict object.
     Custom logic was to enrich this configuration with env variables.

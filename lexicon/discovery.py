@@ -4,13 +4,14 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 import pkgutil
+from typing import Dict
 
 import pkg_resources
 
 from lexicon import providers
 
 
-def find_providers():
+def find_providers() -> Dict[str, bool]:
     """Find all providers registered in Lexicon, and their availability"""
     providers_list = sorted(
         {
@@ -31,7 +32,7 @@ def find_providers():
         }
 
 
-def lexicon_version():
+def lexicon_version() -> str:
     """Retrieve current Lexicon version"""
     try:
         return pkg_resources.get_distribution("dns-lexicon").version
@@ -39,7 +40,7 @@ def lexicon_version():
         return "unknown"
 
 
-def _resolve_requirements(provider, distribution):
+def _resolve_requirements(provider: str, distribution: pkg_resources.Distribution) -> bool:
     try:
         requirements = distribution.requires([provider])
     except pkg_resources.UnknownExtra:
