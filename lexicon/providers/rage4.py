@@ -1,6 +1,4 @@
 """Module provider for rage4"""
-from __future__ import absolute_import
-
 import json
 import logging
 

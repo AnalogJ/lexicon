@@ -25,8 +25,6 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
-from __future__ import absolute_import
-
 import json
 import logging
 from builtins import object

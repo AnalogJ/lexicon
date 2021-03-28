@@ -1,6 +1,4 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
-from __future__ import absolute_import
-
 import hashlib
 import logging
 import re

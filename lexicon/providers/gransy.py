@@ -1,7 +1,5 @@
 """Provide support to Lexicon for DNS changes for Gransy sites subreg.cz, regtons.com and \
 regnames.eu."""
-from __future__ import absolute_import
-
 import collections
 import logging
 from builtins import staticmethod

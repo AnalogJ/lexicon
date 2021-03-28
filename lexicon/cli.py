@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 """Module for Lexicon command-line interface"""
-from __future__ import absolute_import, print_function
-
 import json
 import logging
 import os

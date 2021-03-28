@@ -1,6 +1,4 @@
 """Module provider for Yandex"""
-from __future__ import absolute_import
-
 import json
 import logging
 

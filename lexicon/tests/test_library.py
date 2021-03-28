@@ -5,8 +5,6 @@ In particular:
     - config should be passed correctly to provider,
     - relevant provider method should be invoked for a given config.
 """
-from __future__ import absolute_import, print_function
-
 import contextlib
 import importlib
 import pkgutil

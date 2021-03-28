@@ -1,6 +1,4 @@
 """Module provider for GratisDNS"""
-from __future__ import absolute_import
-
 import logging
 
 import requests

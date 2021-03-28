@@ -1,6 +1,4 @@
 """Module provider for auto"""
-from __future__ import absolute_import
-
 import argparse
 import importlib
 import logging

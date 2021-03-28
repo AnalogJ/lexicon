@@ -1,6 +1,4 @@
 """Unit tests for the Lexicon CLI parser"""
-from __future__ import absolute_import
-
 import pytest
 
 from lexicon import parser

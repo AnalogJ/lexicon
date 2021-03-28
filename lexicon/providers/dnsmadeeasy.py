@@ -1,6 +1,4 @@
 """Module provider for DNSMadeEasy"""
-from __future__ import absolute_import
-
 import hmac
 import json
 import logging

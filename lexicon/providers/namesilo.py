@@ -1,6 +1,4 @@
 """Module provider for Namesilo"""
-from __future__ import absolute_import
-
 import logging
 from xml.etree import ElementTree
 

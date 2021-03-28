@@ -1,6 +1,4 @@
 """Module provider for Linode V4"""
-from __future__ import absolute_import
-
 import json
 import logging
 

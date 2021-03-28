@@ -19,8 +19,6 @@ So all the hard work in this provider, apart from the authentication process, is
 Lexicon monovalued entries representation to/from the Google multivalued and stacked representation
 through create/update/list/delete processes.
 """
-from __future__ import absolute_import
-
 import binascii
 import json
 import logging

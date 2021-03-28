@@ -5,8 +5,6 @@ Author: Matthias Schoettle (@mschoettle), 2019
 
 EUserv API Docs: https://support.euserv.com/api-doc/
 """
-from __future__ import absolute_import
-
 import json
 import logging
 

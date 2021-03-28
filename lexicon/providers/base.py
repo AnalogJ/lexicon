@@ -1,6 +1,4 @@
 """Base provider module for all Lexicon providers"""
-from __future__ import absolute_import
-
 import warnings
 
 from lexicon.config import ConfigResolver, legacy_config_resolver

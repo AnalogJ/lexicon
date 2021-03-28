@@ -17,8 +17,6 @@ Implementation notes:
   'change the content of this record', because records are identified by their name,
   type and content.
 """
-from __future__ import absolute_import
-
 import logging
 from xml.etree import ElementTree
 

@@ -1,6 +1,4 @@
 """Module provider for UKFast's SafeDNS"""
-from __future__ import absolute_import
-
 import json
 import logging
 

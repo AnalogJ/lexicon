@@ -1,6 +1,4 @@
 """Module provider for CloudXNS"""
-from __future__ import absolute_import
-
 try:
     from urllib.parse import urlencode
 except ImportError:

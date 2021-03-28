@@ -1,6 +1,4 @@
 """Module provider for Dinahosting"""
-from __future__ import absolute_import
-
 # import re
 import hashlib
 import logging

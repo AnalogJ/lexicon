@@ -1,6 +1,4 @@
 """Module provider for a localzone"""
-from __future__ import absolute_import, print_function
-
 import logging
 import types
 from time import localtime, strftime, time

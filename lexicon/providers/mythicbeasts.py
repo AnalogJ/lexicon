@@ -1,6 +1,4 @@
 """Module provider for Mythic Beasts"""
-from __future__ import absolute_import
-
 import binascii
 import json
 import logging
