@@ -39,15 +39,13 @@ class Provider(BaseProvider):
         self.endpoint = self._get_provider_option("ddns_server")
         self.zone = self._get_provider_option("domain")
 
-    def _run_query(self, message: dns.message.Message):
+    def _run_query(self, message):
         return dns.query.tcp(message, self.endpoint, timeout=10)
 
     def _authenticate(self):
         if not self.endpoint:
             raise Exception("No DDNS server provided, use --ddns-server")
         pass
-
-
 
     # Create record. If record already exists with the same content, do nothing
     def _create_record(self, rtype, name, content):
@@ -66,16 +64,15 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        if rtype and name: # doing a simple query is enough if we have type and name
-            # TODO is name fully qualified? If no, qualify it
+        if rtype and name:  # doing a simple query is enough if we have type and name
             query = dns.message.make_query(name, rtype)
-        else: # if not, perform a zone transfert to get all records
+        else:  # if not, perform a zone transfert to get all records
             query = dns.xfr.make_query(dns.versioned.Zone(self.zone), keyring=self.keyring)[0]
 
         answers = self._run_query(query).answer
 
         records = []
-        for answer in answers: # filter unwanted results
+        for answer in answers:  # filter unwanted results
             a_name = answer.name.to_text().rstrip(".")
             if name and name != a_name:
                 continue
