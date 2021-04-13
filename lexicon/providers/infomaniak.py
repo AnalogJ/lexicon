@@ -4,7 +4,7 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -49,9 +49,8 @@ class Provider(BaseProvider):
             if domain["customer_name"] == self.domain:
                 self.domain_id = domain["id"]
                 break
-
-        if not self.domain_id:
-            raise Exception(f"Domain {self.domain} not found")
+        else:
+            raise AuthenticationError(f"Domain {self.domain} not found")
 
     def _create_record(self, rtype, name, content):
         ttl = self._get_lexicon_option("ttl")

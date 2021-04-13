@@ -1,7 +1,7 @@
 """Module provider for INWX"""
 import logging
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 try:
     import xmlrpclib  # type: ignore
@@ -76,7 +76,10 @@ class Provider(BaseProvider):
         opts = {"domain": self._domain}
         opts.update(self._auth)
         response = self._api.domain.info(opts)
-        self._validate_response(response=response, message="Failed to authenticate")
+        try:
+            self._validate_response(response=response, message="Failed to authenticate")
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         # set to fake id to pass tests, inwx doesn't work on domain id but
         # uses domain names for identification

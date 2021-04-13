@@ -4,7 +4,7 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -33,8 +33,8 @@ class Provider(BaseProvider):
             if domain["name"].lower() == self.domain.lower():
                 self.domain_id = domain["id"]
                 break
-        if not self.domain_id:
-            raise Exception("No matching domain found")
+        else:
+            raise AuthenticationError("No matching domain found")
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):

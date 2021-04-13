@@ -4,7 +4,7 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ["ns.hetzner.com"]
@@ -173,7 +173,7 @@ class Provider(BaseProvider):
         for zone in zones:
             if zone["name"] == domain:
                 return zone
-        raise Exception(f"No zone was found in account matching {domain}")
+        raise AuthenticationError(f"No zone was found in account matching {domain}")
 
     def _get_record_name(self, domain, record_name):
         """

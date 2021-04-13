@@ -5,6 +5,10 @@ from typing import Any, Dict, List, Optional, Union
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
+class AuthenticationError(Exception):
+    pass
+
+
 class Provider(ABC):
     """
     This is the base class for all lexicon Providers.
@@ -67,7 +71,7 @@ class Provider(ABC):
         Authenticate against provider,
         Make any requests required to get the domain's id for this provider,
         so it can be used in subsequent calls.
-        Should throw an error if authentication fails for any reason,
+        Should throw AuthenticationError or requests.HTTPError if authentication fails for any reason,
         of if the domain does not exist.
         """
         self._authenticate()

@@ -2,7 +2,7 @@
 import logging
 from typing import List
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 # Support various versions of Transip Python API
 try:
@@ -64,14 +64,13 @@ class Provider(BaseProvider):
     def _authenticate(self):
         # This request will fail when the domain does not exist,
         # allowing us to check for existence
-        domain = self.domain
         try:
-            self.client.get_info(domain)
+            self.client.get_info(self.domain)
         except BaseException:
-            raise Exception(
-                f"Could not retrieve information about {domain}, is this domain yours?"
+            raise AuthenticationError(
+                f"Could not retrieve information about {self.domain}, is this domain yours?"
             )
-        self.domain_id = domain
+        self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):

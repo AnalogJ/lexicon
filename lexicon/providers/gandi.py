@@ -31,7 +31,7 @@ from builtins import object
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 try:
     import xmlrpclib  # type: ignore
@@ -313,7 +313,7 @@ class GandiRPCSubProvider(object):
             self._zone_id = payload["zone_id"]
             return payload["id"]
         except xmlrpclib.Fault as err:
-            raise Exception(f"Failed to authenticate: '{err}'")
+            raise AuthenticationError(f"Failed to authenticate: '{err}'")
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, rtype, name, content, ttl):

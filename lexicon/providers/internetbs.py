@@ -18,7 +18,7 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,11 +46,11 @@ class Provider(BaseProvider):
 
         LOGGER.debug("authenticate debug: %s", payload)
         if not payload["status"]:
-            raise Exception("Internal error. This should not happen")
+            raise AuthenticationError("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception(f"Api error: {payload['message']}")
+            raise AuthenticationError(f"Api error: {payload['message']}")
         if self.domain not in payload["domain"]:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'

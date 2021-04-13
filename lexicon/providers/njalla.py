@@ -3,7 +3,7 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,10 +25,13 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         params = {"domain": self.domain}
-        result = self._api_call("get-domain", params)
+        try:
+            result = self._api_call("get-domain", params)
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         if result["name"] != self.domain:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
         self.domain_id = self.domain
 

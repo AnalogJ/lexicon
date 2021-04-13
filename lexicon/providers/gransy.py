@@ -9,7 +9,7 @@ try:
 except BaseException:
     pass
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -70,9 +70,9 @@ class Provider(BaseProvider):
             if any((domain["name"] == self.domain for domain in domains)):
                 self.domain_id = self.domain
             else:
-                raise Exception(f"Unknown domain {self.domain}")
+                raise AuthenticationError(f"Unknown domain {self.domain}")
         else:
-            raise Exception("No SSID provided by server")
+            raise AuthenticationError("No SSID provided by server")
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):

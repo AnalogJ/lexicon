@@ -9,7 +9,7 @@ from urllib.parse import urlencode
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -37,7 +37,10 @@ class Provider(BaseProvider):
         self.shortname = None
 
     def _authenticate(self):
-        self._post(f"/dns/{self.domain}/listRRs")
+        try:
+            self._post(f"/dns/{self.domain}/listRRs")
+        except Exception as e:
+            raise AuthenticationError(e)
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'

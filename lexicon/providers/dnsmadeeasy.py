@@ -10,7 +10,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
                 raise
 
         if not payload or not payload["id"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = payload["id"]
 

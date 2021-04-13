@@ -22,7 +22,7 @@ from xml.etree import ElementTree
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
+from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
         )
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception(f"Error with api {payload.find('is_ok').text}")
+            raise AuthenticationError(f"Error with api {payload.find('is_ok').text}")
 
         self.domain_id = self.domain
 
