@@ -49,9 +49,6 @@ class Provider(BaseProvider):
         if not self.api_endpoint.endswith(PLEX_URL_SUFFIX):
             self.api_endpoint += PLEX_URL_SUFFIX
 
-        self.site_name = self.domain
-        assert self.site_name is not None
-
         self.domain_id = None
 
         self.username = self._get_provider_option("auth_username")
@@ -110,7 +107,7 @@ class Provider(BaseProvider):
 
     def __find_site(self):
         return self.__simple_request(
-            "site", "get", {"filter": {"name": self.site_name, "dataset": {}}}
+            "site", "get", {"filter": {"name": self.domain, "dataset": {}}}
         )["result"]["id"]
 
     def _authenticate(self):
