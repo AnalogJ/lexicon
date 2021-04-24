@@ -1,6 +1,10 @@
 """Module provider for DDNS"""
 import logging
 
+import binascii
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+
 from lexicon.providers.base import Provider as BaseProvider
 from typing import List
 
@@ -38,6 +42,7 @@ class Provider(BaseProvider):
         self.keyring = dns.tsigkeyring.from_text({keyid : (alg, secret)})
         self.endpoint = self._get_provider_option("ddns_server")
         self.zone = self._get_provider_option("domain")
+        self.cached_zone_content = {}
 
     def _run_query(self, message):
         return dns.query.tcp(message, self.endpoint, timeout=10)
@@ -68,6 +73,7 @@ class Provider(BaseProvider):
             query = dns.message.make_query(name, rtype)
         else:  # if not, perform a zone transfert to get all records
             query = dns.xfr.make_query(dns.versioned.Zone(self.zone), keyring=self.keyring)[0]
+            self.cached_zone_content = {}
 
         answers = self._run_query(query).answer
 
@@ -83,14 +89,16 @@ class Provider(BaseProvider):
                 rdata = rdata.to_text()
                 if content and content != rdata:
                     continue
+                identifier = _identifier(a_rtype, a_name, rdata)
                 record = {
                     "type": a_rtype,
                     "name": a_name,
                     "ttl": answer.ttl,
                     "content": rdata,
-                    "id": f"{rtype}:{a_name}:{rdata}"
+                    "id": identifier
                 }
                 records.append(record)
+                self.cached_zone_content[identifier] = (a_rtype, a_name, rdata)
         LOGGER.debug("list_records: %s", records)
         LOGGER.debug("Number of records retrieved: %d", len(records))
         return records
@@ -109,7 +117,7 @@ class Provider(BaseProvider):
                 raise Exception("No records found matching type and name - won't update")
             else:
                 raise Exception("Multiple records found matching type and name - won't update")
-        d_rtype, d_name, d_content = identifier.split(":", 2)
+        d_rtype, d_name, d_content = self._resolve_identifier(identifier)
 
         if not rtype:
             rtype = d_rtype
@@ -129,7 +137,7 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            rtype, name, content = identifier.split(":", 2)
+            rtype, name, content = self._resolve_identifier(identifier)
 
         name = dns.name.from_text(name).relativize(dns.name.from_text(self.zone))
         update = dns.update.Update(self.zone, keyring=self.keyring)
@@ -141,5 +149,19 @@ class Provider(BaseProvider):
 
         return True
 
+    def _resolve_identifier(self, ident):
+        if not self.cached_zone_content.get(ident):
+            self._list_records()  # if cache miss, reload cache
+        return self.cached_zone_content[ident]
+
     def _request(self, action="GET", url="/", data=None, query_params=None):
         pass
+
+
+def _identifier(rtype, name, content):
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(("type=" + rtype + ",").encode("utf-8"))
+    digest.update(("name=" + name + ",").encode("utf-8"))
+    digest.update(("content=" + content + ",").encode("utf-8"))
+
+    return binascii.hexlify(digest.finalize()).decode("utf-8")[0:12]
