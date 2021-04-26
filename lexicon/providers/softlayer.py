@@ -1,7 +1,8 @@
 """Module provider for Softlayer"""
 import logging
 
-from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 try:
     import SoftLayer  # type: ignore

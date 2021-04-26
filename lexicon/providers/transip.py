@@ -2,7 +2,8 @@
 import logging
 from typing import List
 
-from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 # Support various versions of Transip Python API
 try:

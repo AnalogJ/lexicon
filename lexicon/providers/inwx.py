@@ -1,7 +1,8 @@
 """Module provider for INWX"""
 import logging
 
-from lexicon.providers.base import Provider as BaseProvider, AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 try:
     import xmlrpclib  # type: ignore

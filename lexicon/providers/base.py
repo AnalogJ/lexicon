@@ -5,10 +5,6 @@ from typing import Any, Dict, List, Optional, Union
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
 
-class AuthenticationError(Exception):
-    pass
-
-
 class Provider(ABC):
     """
     This is the base class for all lexicon Providers.
