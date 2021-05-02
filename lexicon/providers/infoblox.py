@@ -20,6 +20,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -96,7 +97,7 @@ class Provider(BaseProvider):
             self.domain_id = domains[0]["_ref"]
         except IndexError:
             LOGGER.error("Domain %s not found in view", self.domain)
-            raise Exception(f"Domain {self.domain} not found in view")
+            raise AuthenticationError(f"Domain {self.domain} not found in view")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):

@@ -7,6 +7,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,16 +47,14 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             # A 401 error will be returned in case of incorrect or missing
             # credentials
-            cause = err.response.json()["error"]
-            raise Exception(cause)
+            raise err
 
         # The response is a URL encoded array containing all available domains
         domains = [domain.split("=").pop() for domain in response.split("&")]
-
         try:
             self.domain_id = domains.index(self.domain)
-        except BaseException:
-            raise Exception(f"Domain {self.domain} not found")
+        except ValueError:
+            raise AuthenticationError(f"Domain {self.domain} not found")
 
     def _create_record(self, rtype, name, content):
         # Refuse to create duplicate records

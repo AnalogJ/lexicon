@@ -4,6 +4,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +30,7 @@ class Provider(BaseProvider):
         payload = self._post("/Domain.Info", {"domain": self.domain})
 
         if payload["status"]["code"] != "1":
-            raise Exception(payload["status"]["message"])
+            raise AuthenticationError(payload["status"]["message"])
 
         self.domain_id = payload["domain"]["id"]
 

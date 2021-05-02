@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 __author__ = "Aliaksandr Kharkevich"
 __license__ = "MIT"
@@ -34,7 +35,7 @@ class Provider(BaseProvider):
     def _authenticate(self):
         payload = self._get(f"/list?domain={self.domain}")
         if payload["success"] != "ok":
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):

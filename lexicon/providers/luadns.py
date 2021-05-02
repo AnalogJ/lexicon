@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ class Provider(BaseProvider):
         )
 
         if not domain_info:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = domain_info["id"]
 

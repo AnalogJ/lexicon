@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ class Provider(BaseProvider):
             self.domain_id = self.domain
         except requests.exceptions.HTTPError as err:
             if err.response.status_code == 404:
-                raise Exception("No domain found")
+                raise AuthenticationError("No domain found")
             raise err
 
     # List all records. Return an empty list if no records found.

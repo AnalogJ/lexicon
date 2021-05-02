@@ -7,6 +7,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -53,9 +54,8 @@ class Provider(BaseProvider):
             if zone["dns_zone"]["name"] == domain:
                 self.domain_id = zone["dns_zone"]["id"]
                 break
-
-        if self.domain_id is None:
-            raise Exception(f"Could not find {domain} in OnApp DNS Zones")
+        else:
+            raise AuthenticationError(f"Could not find {domain} in OnApp DNS Zones")
 
     def _create_record(self, rtype, name, content):
         data = {

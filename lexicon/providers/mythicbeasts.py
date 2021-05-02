@@ -10,6 +10,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -64,7 +65,7 @@ class Provider(BaseProvider):
             post_result = auth_request.json()
 
             if not post_result["access_token"]:
-                raise Exception(
+                raise AuthenticationError(
                     "Error, could not get access token "
                     f"for Mythic Beasts API for user: {self._get_provider_option('auth_username')}"
                 )
@@ -77,16 +78,16 @@ class Provider(BaseProvider):
 
         if self.domain is None:
             if not payload["zones"]:
-                raise Exception("No domain found")
+                raise AuthenticationError("No domain found")
             if len(payload["zones"]) > 1:
-                raise Exception("Too many domains found. This should not happen")
+                raise AuthenticationError("Too many domains found. This should not happen")
             else:
                 self.domain = payload["zones"][0]
         else:
             if not payload["zones"]:
-                raise Exception("No domain found")
+                raise AuthenticationError("No domain found")
             if self.domain not in payload["zones"]:
-                raise Exception("Requested domain not found")
+                raise AuthenticationError("Requested domain not found")
 
         self.domain_id = self.domain
 

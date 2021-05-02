@@ -5,6 +5,7 @@ from xml.etree import ElementTree
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +28,10 @@ class Provider(BaseProvider):
         )
 
     def _authenticate(self):
-        self._get("/getDomainInfo", {"domain": self.domain})
+        try:
+            self._get("/getDomainInfo", {"domain": self.domain})
+        except Exception as e:
+            raise AuthenticationError(str(e))
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'

@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -85,9 +86,9 @@ class Provider(BaseProvider):
         payload = self._get("/domains", {"name": self._fqdn_name(self.domain)})
 
         if not payload["domains"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         if len(payload["domains"]) > 1:
-            raise Exception("Too many domains found. This should not happen")
+            raise AuthenticationError("Too many domains found. This should not happen")
 
         self.domain_id = payload["domains"][0]["id"]
 

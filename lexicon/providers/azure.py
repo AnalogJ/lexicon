@@ -17,6 +17,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -279,7 +280,7 @@ class Provider(BaseProvider):
         ]
 
         if not our_data:
-            raise Exception(
+            raise AuthenticationError(
                 "Resource group `{0}` in subscription `{1}` "
                 "does not contain the DNS zone `{2}`".format(
                     resource_group, subscription_id, self.domain

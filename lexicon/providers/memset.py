@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class Provider(BaseProvider):
     def _authenticate(self):
         payload = self._get("/dns.zone_domain_info", {"domain": self.domain})
         if not payload["zone_id"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         self.domain_id = payload["zone_id"]
 
     # Create record. If record already exists with the same content, do nothing'

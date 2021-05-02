@@ -31,6 +31,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -181,7 +182,7 @@ class Provider(BaseProvider):
         post_result = auth_request.json()
 
         if not post_result["access_token"]:
-            raise Exception(
+            raise AuthenticationError(
                 "Error, could not grant RW access on the "
                 f"Google Cloud DNS API for user: {self._get_provider_option('auth_email')}"
             )
@@ -190,7 +191,7 @@ class Provider(BaseProvider):
 
         targeted_managed_zone_ids = self._get_managed_zone_ids([])
         if not targeted_managed_zone_ids:
-            raise Exception(
+            raise AuthenticationError(
                 f"Error, domain {self.domain} is not registered for this project"
             )
 

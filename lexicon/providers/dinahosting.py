@@ -6,6 +6,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -61,14 +62,13 @@ class Provider(BaseProvider):
         payload = self._post("", data)
 
         if not payload["data"]:
-            raise Exception("No domain found")
-        domain_found = False
+            raise AuthenticationError("No domain found")
+
         for data in payload["data"]:
             if data["domain"] == self.domain:
-                domain_found = True
                 break
-        if not domain_found:
-            raise Exception("Requested domain is not among the owned domains")
+        else:
+            raise AuthenticationError("Requested domain is not among the owned domains")
 
         self.domain_id = self.domain
 

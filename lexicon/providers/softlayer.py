@@ -2,6 +2,7 @@
 import logging
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 try:
     import SoftLayer  # type: ignore
@@ -50,9 +51,9 @@ class Provider(BaseProvider):
         payload = self.sl_dns.resolve_ids(domain)
 
         if not payload:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         if len(payload) > 1:
-            raise Exception("Too many domains found. This should not happen")
+            raise AuthenticationError("Too many domains found. This should not happen")
 
         LOGGER.debug("domain id: %s", payload[0])
         self.domain_id = payload[0]

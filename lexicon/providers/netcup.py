@@ -5,6 +5,7 @@ import logging
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ class Provider(BaseProvider):
         login_info = self._apicall("login")
         self.api_session_id = login_info["apisessionid"]
         if not self.api_session_id:
-            raise Exception("Login failed")
+            raise AuthenticationError("Login failed")
         # query ttl and verify access to self.domain:
         zone_info = self._apicall("infoDnsZone", domainname=self.domain)
         self.zone_ttl = zone_info["ttl"]
