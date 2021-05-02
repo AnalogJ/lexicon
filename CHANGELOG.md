@@ -1,6 +1,23 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Vendor `pynamecheap` project for `namecheap` provider
+* Annotate public API with types
+* Check mypy types during CI
+* Add the RFC2136 DynDNS provider (named `ddns`)
+* Use Lexicon specific exceptions in code: `AuthenticationError` for authentication problems
+
+### Modified
+* Implement the base provider as an ABC class
+* Improve `plesk` provider for wildcard domains or subdomains
+* Use `poetry-core` instead of `poetry` for the builds
+* Switch to GitHub-native Dependabot
+
+### Deleted
+* Remove dependency of `plesk` provider to `xmltodict`
+* Remove some Python 2 specific code
+* Remove deprecated `type` parameter in providers public methods
 
 ## 3.5.6 - 28/03/2021
 ### Modified
