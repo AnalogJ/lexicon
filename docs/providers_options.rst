@@ -8,37 +8,37 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | cloudns_        | cloudxns_       | conoha_         | constellix_     |
 +-----------------+-----------------+-----------------+-----------------+
-| digitalocean_   | dinahosting_    | directadmin_    | dnsimple_       |
+| ddns_           | digitalocean_   | dinahosting_    | directadmin_    |
 +-----------------+-----------------+-----------------+-----------------+
-| dnsmadeeasy_    | dnspark_        | dnspod_         | dreamhost_      |
+| dnsimple_       | dnsmadeeasy_    | dnspark_        | dnspod_         |
 +-----------------+-----------------+-----------------+-----------------+
-| dynu_           | easydns_        | easyname_       | euserv_         |
+| dreamhost_      | dynu_           | easydns_        | easyname_       |
 +-----------------+-----------------+-----------------+-----------------+
-| exoscale_       | gandi_          | gehirn_         | glesys_         |
+| euserv_         | exoscale_       | gandi_          | gehirn_         |
 +-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
+| glesys_         | godaddy_        | googleclouddns_ | gransy_         |
 +-----------------+-----------------+-----------------+-----------------+
-| henet_          | hetzner_        | hostingde_      | hover_          |
+| gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+
-| infoblox_       | infomaniak_     | internetbs_     | inwx_           |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     |
 +-----------------+-----------------+-----------------+-----------------+
-| joker_          | linode_         | linode4_        | localzone_      |
+| inwx_           | joker_          | linode_         | linode4_        |
 +-----------------+-----------------+-----------------+-----------------+
-| luadns_         | memset_         | mythicbeasts_   | namecheap_      |
+| localzone_      | luadns_         | memset_         | mythicbeasts_   |
 +-----------------+-----------------+-----------------+-----------------+
-| namesilo_       | netcup_         | nfsn_           | njalla_         |
+| namecheap_      | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+
-| nsone_          | onapp_          | online_         | ovh_            |
+| njalla_         | nsone_          | onapp_          | online_         |
 +-----------------+-----------------+-----------------+-----------------+
-| plesk_          | pointhq_        | powerdns_       | rackspace_      |
+| ovh_            | plesk_          | pointhq_        | powerdns_       |
 +-----------------+-----------------+-----------------+-----------------+
-| rage4_          | rcodezero_      | route53_        | safedns_        |
+| rackspace_      | rage4_          | rcodezero_      | route53_        |
 +-----------------+-----------------+-----------------+-----------------+
-| sakuracloud_    | softlayer_      | transip_        | ultradns_       |
+| safedns_        | sakuracloud_    | softlayer_      | transip_        |
 +-----------------+-----------------+-----------------+-----------------+
-| vultr_          | yandex_         | zeit_           | zilore_         |
+| ultradns_       | vultr_          | yandex_         | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+
-| zonomi_         |                 |                 |                 |
+| zilore_         | zonomi_         |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -102,6 +102,12 @@ conoha
 constellix
     * ``auth_username`` Specify the api key username for authentication
     * ``auth_token`` Specify secret key for authenticate=
+
+.. _ddns:
+
+ddns
+    * ``auth_token`` Specify the key used in format <alg>:<key_id>:<secret>
+    * ``ddns_server`` Specify ip of the ddns server
 
 .. _digitalocean:
 
