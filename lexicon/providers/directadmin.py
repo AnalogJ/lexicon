@@ -6,8 +6,8 @@ from typing import List
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

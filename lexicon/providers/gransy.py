@@ -9,8 +9,8 @@ try:
 except BaseException:
     pass
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

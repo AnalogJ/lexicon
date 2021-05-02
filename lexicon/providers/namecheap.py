@@ -6,8 +6,8 @@ from xml.etree.ElementTree import Element, fromstring
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

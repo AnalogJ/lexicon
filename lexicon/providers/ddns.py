@@ -1,13 +1,13 @@
 """Module provider for DDNS"""
-import logging
-
 import binascii
+import logging
+from typing import List
+
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
-from typing import List
 
 # dnspython is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
@@ -40,7 +40,7 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         alg, keyid, secret = self._get_provider_option("auth_token").split(":")
-        self.keyring = dns.tsigkeyring.from_text({keyid : (alg, secret)})
+        self.keyring = dns.tsigkeyring.from_text({keyid: (alg, secret)})
         self.endpoint = self._get_provider_option("ddns_server")
         self.zone = self._get_provider_option("domain")
         self.cached_zone_content = {}
@@ -73,7 +73,9 @@ class Provider(BaseProvider):
         if rtype and name:  # doing a simple query is enough if we have type and name
             query = dns.message.make_query(name, rtype)
         else:  # if not, perform a zone transfert to get all records
-            query = dns.xfr.make_query(dns.versioned.Zone(self.zone), keyring=self.keyring)[0]
+            query = dns.xfr.make_query(
+                dns.versioned.Zone(self.zone), keyring=self.keyring
+            )[0]
             self.cached_zone_content = {}
 
         answers = self._run_query(query).answer
@@ -96,7 +98,7 @@ class Provider(BaseProvider):
                     "name": a_name,
                     "ttl": answer.ttl,
                     "content": rdata,
-                    "id": identifier
+                    "id": identifier,
                 }
                 records.append(record)
                 self.cached_zone_content[identifier] = (a_rtype, a_name, rdata)
@@ -115,9 +117,13 @@ class Provider(BaseProvider):
             if len(rrset) == 1:
                 identifier = rrset[0]["id"]
             elif len(rrset) < 1:
-                raise Exception("No records found matching type and name - won't update")
+                raise Exception(
+                    "No records found matching type and name - won't update"
+                )
             else:
-                raise Exception("Multiple records found matching type and name - won't update")
+                raise Exception(
+                    "Multiple records found matching type and name - won't update"
+                )
         d_rtype, d_name, d_content = self._resolve_identifier(identifier)
 
         if not rtype:

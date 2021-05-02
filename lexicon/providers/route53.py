@@ -3,8 +3,8 @@ import hashlib
 import logging
 import re
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 try:
     import boto3  # type: ignore

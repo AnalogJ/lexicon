@@ -11,8 +11,8 @@ from hashlib import sha1
 import requests
 from six.moves import urllib
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -43,7 +43,9 @@ class Provider(BaseProvider):
         response = self._request_aliyun("DescribeDomainInfo")
 
         if "DomainId" not in response:
-            raise AuthenticationError(f"failed to fetch basic domain info for {self.domain}")
+            raise AuthenticationError(
+                f"failed to fetch basic domain info for {self.domain}"
+            )
 
         self.domain_id = response["DomainId"]
 

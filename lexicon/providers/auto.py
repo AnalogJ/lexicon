@@ -77,9 +77,7 @@ def _relevant_provider_for_domain(domain):
 
         # Test plain domain string comparison
         if {
-            ns_domain
-            for ns_domain in ns_domains
-            if isinstance(ns_domain, str)
+            ns_domain for ns_domain in ns_domains if isinstance(ns_domain, str)
         } & nameserver_domains:
             relevant_providers.append((provider_name, provider_module))
             continue

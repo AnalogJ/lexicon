@@ -4,8 +4,8 @@ import logging
 import requests
 from bs4 import BeautifulSoup  # type: ignore
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

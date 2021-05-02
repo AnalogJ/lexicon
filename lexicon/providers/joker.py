@@ -19,8 +19,8 @@ import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -80,7 +80,9 @@ class Provider(BaseProvider):
         items = data.split(" ")
 
         if items[2] not in ["production", "lock"]:
-            raise AuthenticationError(f"Current status for domain {self.domain} is: {items[2]}")
+            raise AuthenticationError(
+                f"Current status for domain {self.domain} is: {items[2]}"
+            )
 
         self.domain_id = self.domain
 

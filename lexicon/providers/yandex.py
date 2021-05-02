@@ -4,8 +4,8 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 __author__ = "Aliaksandr Kharkevich"
 __license__ = "MIT"

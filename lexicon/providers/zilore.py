@@ -3,8 +3,8 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -44,7 +44,9 @@ class Provider(BaseProvider):
         ]
 
         if not target_domain:
-            raise AuthenticationError(f"Domain {self.domain} is not available on this account")
+            raise AuthenticationError(
+                f"Domain {self.domain} is not available on this account"
+            )
 
         self.domain_id = target_domain[0]["domain_id"]
 

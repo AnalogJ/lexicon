@@ -9,8 +9,8 @@ from cryptography.hazmat.primitives import hashes
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -80,7 +80,9 @@ class Provider(BaseProvider):
             if not payload["zones"]:
                 raise AuthenticationError("No domain found")
             if len(payload["zones"]) > 1:
-                raise AuthenticationError("Too many domains found. This should not happen")
+                raise AuthenticationError(
+                    "Too many domains found. This should not happen"
+                )
             else:
                 self.domain = payload["zones"][0]
         else:

@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.6.0 - 02/05/2021
 ### Added
 * Vendor `pynamecheap` project for `namecheap` provider
 * Annotate public API with types

@@ -4,13 +4,12 @@ import logging
 import random
 import string
 import time
-
 from urllib.parse import urlencode
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

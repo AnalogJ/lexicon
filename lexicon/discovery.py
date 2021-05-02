@@ -44,7 +44,9 @@ def _resolve_requirements(
     provider: str, distribution: pkg_resources.Distribution
 ) -> bool:
     try:
-        requirements: List[pkg_resources.Requirement] = distribution.requires(extras=(provider,))
+        requirements: List[pkg_resources.Requirement] = distribution.requires(
+            extras=(provider,)
+        )
     except pkg_resources.UnknownExtra:
         # No extra for this provider
         return True
