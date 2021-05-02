@@ -132,6 +132,7 @@ The current supported providers are:
 - `Rackspace <https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/>`_
 - `Rage4 <https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api>`_
 - `RcodeZero <https://my.rcodezero.at/api-doc>`_
+- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
 - `Sakura Cloud by SAKURA Internet Inc. <https://developer.sakura.ad.jp/cloud/api/1.1/>`_
 - `SafeDNS by UKFast <https://developers.ukfast.io/documentation/safedns>`_
 - `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
