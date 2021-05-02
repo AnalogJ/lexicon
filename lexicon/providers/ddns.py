@@ -5,6 +5,7 @@ import binascii
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 from typing import List
 
@@ -49,7 +50,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         if not self.endpoint:
-            raise Exception("No DDNS server provided, use --ddns-server")
+            raise AuthenticationError("No DDNS server provided, use --ddns-server")
         pass
 
     # Create record. If record already exists with the same content, do nothing
