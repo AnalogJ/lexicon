@@ -12,6 +12,9 @@ from lexicon.providers.base import Provider as BaseProvider
 # dnspython is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
 try:
+    import dns.resolver
+    import dns.rdatatype
+    import dns.rdataclass
     import dns.message
     import dns.query
     import dns.tsigkeyring
@@ -42,8 +45,12 @@ class Provider(BaseProvider):
         alg, keyid, secret = self._get_provider_option("auth_token").split(":")
         self.keyring = dns.tsigkeyring.from_text({keyid: (alg, secret)})
         self.endpoint = self._get_provider_option("ddns_server")
-        self.zone = self._get_provider_option("domain")
+        self.domain = self._get_provider_option("domain")
         self.cached_zone_content = {}
+
+    @property
+    def zone(self):
+        return self.domain
 
     def _run_query(self, message):
         return dns.query.tcp(message, self.endpoint, timeout=10)
@@ -51,7 +58,23 @@ class Provider(BaseProvider):
     def _authenticate(self):
         if not self.endpoint:
             raise AuthenticationError("No DDNS server provided, use --ddns-server")
-        pass
+
+        record = dns.resolver.resolve(self.domain, rdtype="SOA", raise_on_no_answer=False)
+        if not record.answer.authority:
+            # response has no authority, we can not validate
+            return
+
+        for authority in record.answer.authority:
+            if authority.rdclass == dns.rdataclass.IN and authority.rdtype == dns.rdatatype.SOA:
+                break
+        else:
+            # no soa found - we can't validate
+            return
+
+        zone = authority.name.to_text(omit_final_dot=True).lower()
+        if zone != self.zone.lower():
+            raise AuthenticationError(
+                "The dns zone configured ({}) for the domain {} mismatches the dns zone retrieved via SOA ({})".format(self.zone, self.domain, zone))
 
     # Create record. If record already exists with the same content, do nothing
     def _create_record(self, rtype, name, content):
