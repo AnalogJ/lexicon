@@ -76,7 +76,7 @@ class Provider(BaseProvider):
         """
         opts = {"domain": self._domain}
         opts.update(self._auth)
-        response = self._api.domain.info(opts)
+        response = self._api.nameserver.info(opts)
         try:
             self._validate_response(response=response, message="Failed to authenticate")
         except Exception as e:
