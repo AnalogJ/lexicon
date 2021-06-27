@@ -1,6 +1,10 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Support deprecated `method_whitelist` parameter in urllib3.util.retry.Retry for urllib3<1.26
+* Fix support of registered domains for INWX provider (#828)
+* Update `mypy` and use external types modules
 
 ## 3.6.0 - 02/05/2021
 ### Added
