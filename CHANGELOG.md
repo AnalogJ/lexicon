@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.6.1 - 27/06/2021
 ### Modified
 * Support deprecated `method_whitelist` parameter in urllib3.util.retry.Retry for urllib3<1.26
 * Fix support of registered domains for INWX provider (#828)
