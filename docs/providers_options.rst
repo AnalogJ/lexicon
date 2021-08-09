@@ -38,7 +38,7 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | transip_        | ultradns_       | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+
-| yandex_         | zilore_         | zonomi_         |                 |
+| yandex_         | zeit_           | zilore_         | zonomi_         |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -479,6 +479,11 @@ vultr
 
 yandex
     * ``auth_token`` Specify pdd token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)
+
+.. _zeit:
+
+zeit
+    * ``auth_token`` Specify your api token
 
 .. _zilore:
 
