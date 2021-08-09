@@ -1,0 +1,258 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:26 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com
+  response:
+    body:
+      string: '{"zoneType":"PRIMARY","name":"lexicon-test.com","externalMasters":[],"self":"https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com","timeCreated":"2021-06-23T10:07:46Z","version":"445","serial":445,"nameservers":[{"hostname":"ns1.p68.dns.oraclecloud.net"},{"hostname":"ns2.p68.dns.oraclecloud.net"},{"hostname":"ns3.p68.dns.oraclecloud.net"},{"hostname":"ns4.p68.dns.oraclecloud.net"}],"compartmentId":"OCI-COMPARTMENT-ID","id":"DNS-ZONE-ID","lifecycleState":"ACTIVE","scope":"GLOBAL","viewId":null,"isProtected":false}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:20:28 GMT
+      ETag:
+      - '"445ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168docid1.compartment.oc1..aaaaaaaakklh3onuoqfzgpe4tlflbmabkytrmmukcllef5vfc65quvqhtfsq164374825086dc65cd5dc548c248f61328b5d668#application/json--gzip"'
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '645'
+      opc-request-id:
+      - /B98E56D1BC501A72DA2425E2DFA45C0B/112097AD760F7FCE59ED3A6DC8602F11
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"items": [{"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken1",
+      "ttl": 3600}]}'
+    headers:
+      Content-Length:
+      - '90'
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:28 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: PATCH
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.deleterecordset.lexicon-test.com
+  response:
+    body:
+      string: '{"items":[{"domain":"_acme-challenge.deleterecordset.lexicon-test.com","recordHash":"2f064ab900906b5b2c4a7e74c4e8c676","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"446","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '218'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:20:31 GMT
+      ETag:
+      - '"446ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      opc-request-id:
+      - /F8F8B2D63FF7D776459657B8A64FE1F4/51016F7F8C1B495A390AEFA8F6D920BA
+      opc-total-items:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"items": [{"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken2",
+      "ttl": 3600}]}'
+    headers:
+      Content-Length:
+      - '90'
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:31 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: PATCH
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.deleterecordset.lexicon-test.com
+  response:
+    body:
+      string: '{"items":[{"domain":"_acme-challenge.deleterecordset.lexicon-test.com","recordHash":"2f064ab900906b5b2c4a7e74c4e8c676","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"447","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.deleterecordset.lexicon-test.com","recordHash":"ded7b12876d5ce61f018792d0c523742","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"447","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '424'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:20:34 GMT
+      ETag:
+      - '"447ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      opc-request-id:
+      - /40F291CE27CE4B237184AD3F9675BA0D/1C20672943ACC133368E900D011DF8D8
+      opc-total-items:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:34 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.deleterecordset.lexicon-test.com?limit=100&rtype=TXT
+  response:
+    body:
+      string: '{"items":[{"domain":"_acme-challenge.deleterecordset.lexicon-test.com","recordHash":"2f064ab900906b5b2c4a7e74c4e8c676","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"447","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.deleterecordset.lexicon-test.com","recordHash":"ded7b12876d5ce61f018792d0c523742","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"447","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:20:36 GMT
+      ETag:
+      - '"447ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json--gzip"'
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '424'
+      opc-request-id:
+      - /2C1B4A14F83DBC5A3D59DCD52B6C227E/A6005BA3D4C24A64F4C8E145C0B32236
+      opc-total-items:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:36 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: DELETE
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.deleterecordset.lexicon-test.com/TXT
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/plain
+      Date:
+      - Mon, 28 Jun 2021 22:20:39 GMT
+      opc-request-id:
+      - /BEED751195CE5284C8A08F771A9DF57C/39A4D0D6B164555D1C408085970C3FBC
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:20:39 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.deleterecordset.lexicon-test.com?limit=100&rtype=TXT
+  response:
+    body:
+      string: '{"items":[]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '13'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:20:41 GMT
+      ETag:
+      - '"448ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      Vary:
+      - Accept-Encoding
+      opc-request-id:
+      - /C20B552C09094E31365FAAFE8D1CE32B/205CB36F8B08E04F9E9C4594D9CCE2A4
+      opc-total-items:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

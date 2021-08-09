@@ -1,11 +1,10 @@
 """Module provider for NSOne"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
         payload = self._get(f"/zones/{self.domain}")
 
         if not payload["id"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = self.domain
 

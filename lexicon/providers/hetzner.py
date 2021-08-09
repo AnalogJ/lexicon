@@ -1,11 +1,10 @@
 """Module provider for Hetzner"""
-from __future__ import absolute_import, unicode_literals
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -175,7 +174,7 @@ class Provider(BaseProvider):
         for zone in zones:
             if zone["name"] == domain:
                 return zone
-        raise Exception(f"No zone was found in account matching {domain}")
+        raise AuthenticationError(f"No zone was found in account matching {domain}")
 
     def _get_record_name(self, domain, record_name):
         """

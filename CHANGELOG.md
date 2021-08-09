@@ -2,24 +2,82 @@
 
 ## master - CURRENT
 
+## 3.7.0 - 09/08/2021
+### Added
+* Add the Vercel provider (formerly known as Zeit)
+* Add the OpenShift Cloud Infrastructure (OCI) DNS provider (#860)
+
+### Modified
+* Keep old Zeit provider for compatibility purpose with deprecation notices
+* Support multiple domain statuses for Joker provider (#880)
+
+## 3.6.1 - 27/06/2021
+### Modified
+* Support deprecated `method_whitelist` parameter in urllib3.util.retry.Retry for urllib3<1.26
+* Fix support of registered domains for INWX provider (#828)
+* Update `mypy` and use external types modules
+
+## 3.6.0 - 02/05/2021
+### Added
+* Vendor `pynamecheap` project for `namecheap` provider
+* Annotate public API with types
+* Check mypy types during CI
+* Add the RFC2136 DynDNS provider (named `ddns`)
+* Use Lexicon specific exceptions in code: `AuthenticationError` for authentication problems
+
+### Modified
+* Implement the base provider as an ABC class
+* Improve `plesk` provider for wildcard domains or subdomains
+* Use `poetry-core` instead of `poetry` for the builds
+* Switch to GitHub-native Dependabot
+
+### Deleted
+* Remove dependency of `plesk` provider to `xmltodict`
+* Remove some Python 2 specific code
+* Remove deprecated `type` parameter in providers public methods
+
+## 3.5.6 - 28/03/2021
+### Modified
+* Migrate Vultr provider to the V2 API (#770)
+
+## 3.5.5 - 20/03/2021
+### Added
+* Add the Mythic Beasts provider (#739)
+* Add the Infomaniak provider (#685 #762)
+
+### Changed
+* Improve dev tooling (#761)
+
+## 3.5.4 - 17/03/2021
+### Changed
+* Support both `tldextract` 2.x and 3.x
+* Upgrade third-party dependencies
+* Validate PowerDNS provider parameters (#755)
+* Support dnspython>=2.1 for `localzone` provider (#760)
+* Update Mythic Beasts documentation (#693)
+* Fix documentation build and publication
+
+### Deleted
+* Remove `mock` and `nose` dependencies (#706)
+
 ## 3.5.3 - 02/01/2021
-## Modified
+### Modified
 * Handle large number of hosted zones in `route53` provider
 
 ## 3.5.2 - 23/11/2020
-## Modified
+### Modified
 * Fix domains in "lock" state with `joker` provider
 
 ## 3.5.1 - 16/11/2020
-## Added
+### Added
 * Add the Joker.com provider
 * Add environment variable `TLDEXTRACT_CACHE_PATH` to configure a tldextract cache custom location for Lexicon
 
-## Modified
+### Modified
 * Old environment variable `TLDEXTRACT_CACHE_FILE` is deprecated and will be removed in a future release
 
 ## 3.5.0 - 10/11/2020
-## Modified
+### Modified
 * Avoid installation problems with setuptools==50
 * Migrating codebase to Python 3.6+ specific features (Lexicon will explicitly break on older versions now)
 * Fix Easyname provider to work with their new website

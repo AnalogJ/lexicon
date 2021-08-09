@@ -1,27 +1,27 @@
 """Module provider for Transip"""
-from __future__ import absolute_import
-
 import logging
+from typing import List
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 # Support various versions of Transip Python API
 try:
-    from transip.service.objects import DnsEntry
+    from transip.service.objects import DnsEntry  # type: ignore
 except ImportError:
     try:
-        from transip.service.dns import DnsEntry
+        from transip.service.dns import DnsEntry  # type: ignore
     except ImportError:
         pass
 
 try:
-    from transip.service.domain import DomainService
+    from transip.service.domain import DomainService  # type: ignore
 except ImportError:
     pass
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -65,14 +65,13 @@ class Provider(BaseProvider):
     def _authenticate(self):
         # This request will fail when the domain does not exist,
         # allowing us to check for existence
-        domain = self.domain
         try:
-            self.client.get_info(domain)
+            self.client.get_info(self.domain)
         except BaseException:
-            raise Exception(
-                f"Could not retrieve information about {domain}, is this domain yours?"
+            raise AuthenticationError(
+                f"Could not retrieve information about {self.domain}, is this domain yours?"
             )
-        self.domain_id = domain
+        self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):

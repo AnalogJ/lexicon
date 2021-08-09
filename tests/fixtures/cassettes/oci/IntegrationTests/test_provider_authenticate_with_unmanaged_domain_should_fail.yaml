@@ -1,0 +1,41 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:18:28 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/thisisadomainidonotown.com
+  response:
+    body:
+      string: '{"code":"NotAuthorizedOrNotFound","message":"Authorization failed or
+        requested resource not found."}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '101'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:18:30 GMT
+      opc-request-id:
+      - /FA6FF86C0661513126F5FD7EB7A14AE8/830F7AFFF82E011C9A026688E1004579
+    status:
+      code: 404
+      message: Not Found
+version: 1

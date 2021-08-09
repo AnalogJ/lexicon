@@ -2,9 +2,10 @@
 import os
 from functools import wraps
 from importlib import import_module
+from typing import Optional
 
 import pytest
-import vcr
+import vcr  # type: ignore
 
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 
@@ -433,7 +434,7 @@ class IntegrationTestsV1(object):
         return provider
 
     # Optional. Used to identify the test variant, if any.
-    provider_variant = None
+    provider_variant: Optional[str] = None
 
     def _filter_headers(self):
         return []

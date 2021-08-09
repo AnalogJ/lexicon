@@ -108,6 +108,7 @@ The current supported providers are:
 - `Hurricane Electric DNS <https://dns.he.net/>`_
 - `Hetzner <https://dns.hetzner.com/api-docs/>`_
 - `Infoblox <https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal>`_
+- `Infomaniak <https://www.infomaniak.com>`_
 - `Internet.bs <https://internetbs.net/ResellerRegistrarDomainNameAPI>`_
 - `INWX <https://www.inwx.de/en/offer/api>`_
 - `Joker.com <https://joker.com/faq/index.php?action=show&cat=39>`_
@@ -115,6 +116,7 @@ The current supported providers are:
 - `Linode v4 <https://developers.linode.com/api/docs/v4#tag/Domains>`_
 - `LuaDNS <http://www.luadns.com/api.html>`_
 - `Memset <https://www.memset.com/apidocs/methods_dns.html>`_
+- `Mythic Beasts (v2 API) <https://www.mythic-beasts.com/support/api/dnsv2>`_
 - `Njalla <https://njal.la/api/>`_
 - `Namecheap <https://www.namecheap.com/support/api/methods.aspx>`_
 - `Namesilo <https://www.namesilo.com/api_reference.php>`_
@@ -130,15 +132,15 @@ The current supported providers are:
 - `Rackspace <https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/>`_
 - `Rage4 <https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api>`_
 - `RcodeZero <https://my.rcodezero.at/api-doc>`_
+- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
 - `Sakura Cloud by SAKURA Internet Inc. <https://developer.sakura.ad.jp/cloud/api/1.1/>`_
 - `SafeDNS by UKFast <https://developers.ukfast.io/documentation/safedns>`_
 - `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
-- Subreg (deprecated, use Gransy)
 - `Transip <https://www.transip.nl/transip/api/>`_
 - `UltraDNS <https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf>`_
-- `Vultr <https://www.vultr.com/api/>`_
+- `Vercel <https://vercel.com/docs/api#endpoints/dns>`_
+- `Vultr <https://www.vultr.com/api/#tag/dns>`_
 - `Yandex <https://tech.yandex.com/domain/doc/reference/dns-add-docpage/>`_
-- `Zeit <https://zeit.co/api#post-domain-records>`_
 - `Zilore <https://zilore.com/en/help/api>`_
 - `Zonomi <http://zonomi.com/app/dns/dyndns.jsp>`_
 

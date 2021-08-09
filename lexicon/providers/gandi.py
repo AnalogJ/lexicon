@@ -25,20 +25,19 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
-from __future__ import absolute_import
-
 import json
 import logging
 from builtins import object
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import xmlrpclib
+    import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib
+    import xmlrpc.client as xmlrpclib  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 
@@ -315,7 +314,7 @@ class GandiRPCSubProvider(object):
             self._zone_id = payload["zone_id"]
             return payload["id"]
         except xmlrpclib.Fault as err:
-            raise Exception(f"Failed to authenticate: '{err}'")
+            raise AuthenticationError(f"Failed to authenticate: '{err}'")
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, rtype, name, content, ttl):

@@ -1,6 +1,4 @@
 """Module provider for OVH"""
-from __future__ import absolute_import
-
 import hashlib
 import json
 import logging
@@ -8,6 +6,7 @@ import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -85,11 +84,11 @@ class Provider(BaseProvider):
 
         domains = self._get("/domain/zone/")
         if domain not in domains:
-            raise Exception(f"Domain {domain} not found")
+            raise AuthenticationError(f"Domain {domain} not found")
 
         status = self._get(f"/domain/zone/{domain}/status")
         if not status["isDeployed"]:
-            raise Exception(f"Zone {domain} is not deployed")
+            raise AuthenticationError(f"Zone {domain} is not deployed")
 
         self.domain_id = domain
 

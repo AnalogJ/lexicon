@@ -1,11 +1,10 @@
 """Module provider for GratisDNS"""
-from __future__ import absolute_import
-
 import logging
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # type: ignore
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -46,7 +45,7 @@ class Provider(BaseProvider):
         response.raise_for_status()
 
         if "ORGID" not in response.cookies:
-            raise Exception("Unexpected auth response")
+            raise AuthenticationError("Unexpected auth response")
         self.cookies["ORGID"] = response.cookies["ORGID"]
 
         # Make sure domain exists
@@ -56,9 +55,9 @@ class Provider(BaseProvider):
             if domain == self.domain:
                 # Domain name is the ID
                 self.domain_id = domain
-
-        if self.domain_id is None:
-            raise Exception(f"Domain {self.domain} not found")
+                break
+        else:
+            raise AuthenticationError(f"Domain {self.domain} not found")
 
     def _list_domains(self):
         query_params = {"action": "dns_primarydns"}

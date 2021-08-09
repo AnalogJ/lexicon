@@ -1,6 +1,4 @@
 """ Ensure that stdout corresponds to the given reference output """
-from __future__ import absolute_import
-
 import json
 
 from lexicon import cli

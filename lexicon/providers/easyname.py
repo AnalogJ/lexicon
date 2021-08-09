@@ -1,10 +1,8 @@
 """Module provider for Easyname DNS"""
-from __future__ import absolute_import, print_function
-
 import json
 import logging
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup, Tag  # type: ignore
 from requests import Response, Session
 
 from lexicon.providers.base import Provider as BaseProvider

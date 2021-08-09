@@ -1,11 +1,10 @@
 """Module provider for DNS Simple"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
         payload = self._get("/accounts")
 
         if not payload[0]["id"]:
-            raise Exception("No account id found")
+            raise AuthenticationError("No account id found")
 
         for account in payload:
             if account["plan_identifier"] is None:
@@ -62,9 +61,9 @@ class Provider(BaseProvider):
             if dompayload and dompayload[0]["id"]:
                 self.account_id = account["id"]
                 self.domain_id = dompayload[0]["id"]
-
-        if not self.account_id:
-            raise Exception(f"No domain found like {self.domain}")
+                break
+        else:
+            raise AuthenticationError(f"No domain found like {self.domain}")
 
     # Create record. If record already exists with the same content, do nothing
 

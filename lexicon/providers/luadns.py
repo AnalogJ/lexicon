@@ -1,11 +1,10 @@
 """Module provider for luadns"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -37,7 +36,7 @@ class Provider(BaseProvider):
         )
 
         if not domain_info:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = domain_info["id"]
 

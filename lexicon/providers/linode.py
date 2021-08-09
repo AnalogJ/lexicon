@@ -1,11 +1,10 @@
 """Module provider for Linode"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -32,8 +31,9 @@ class Provider(BaseProvider):
         for domain in payload["DATA"]:
             if domain["DOMAIN"].lower() == self.domain.lower():
                 self.domain_id = domain["DOMAINID"]
-        if self.domain_id is None:
-            raise Exception("Domain not found")
+                break
+        else:
+            raise AuthenticationError("Domain not found")
 
     def _create_record(self, rtype, name, content):
         if not self._list_records(rtype, name, content):
