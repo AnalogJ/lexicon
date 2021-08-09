@@ -8,23 +8,21 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | cloudns_        | cloudxns_       | conoha_         | constellix_     |
 +-----------------+-----------------+-----------------+-----------------+
-| ddns_           | digitalocean_   | dinahosting_    | directadmin_    |
+| digitalocean_   | dinahosting_    | directadmin_    | dnsimple_       |
 +-----------------+-----------------+-----------------+-----------------+
-| dnsimple_       | dnsmadeeasy_    | dnspark_        | dnspod_         |
+| dnsmadeeasy_    | dnspark_        | dnspod_         | dreamhost_      |
 +-----------------+-----------------+-----------------+-----------------+
-| dreamhost_      | dynu_           | easydns_        | easyname_       |
+| dynu_           | easydns_        | easyname_       | euserv_         |
 +-----------------+-----------------+-----------------+-----------------+
-| euserv_         | exoscale_       | gandi_          | gehirn_         |
+| exoscale_       | gandi_          | gehirn_         | glesys_         |
 +-----------------+-----------------+-----------------+-----------------+
-| glesys_         | godaddy_        | googleclouddns_ | gransy_         |
+| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
 +-----------------+-----------------+-----------------+-----------------+
-| gratisdns_      | henet_          | hetzner_        | hostingde_      |
+| henet_          | hetzner_        | hostingde_      | hover_          |
 +-----------------+-----------------+-----------------+-----------------+
-| hover_          | infoblox_       | infomaniak_     | internetbs_     |
+| infoblox_       | internetbs_     | inwx_           | linode_         |
 +-----------------+-----------------+-----------------+-----------------+
-| inwx_           | joker_          | linode_         | linode4_        |
-+-----------------+-----------------+-----------------+-----------------+
-| localzone_      | luadns_         | memset_         | mythicbeasts_   |
+| linode4_        | localzone_      | luadns_         | memset_         |
 +-----------------+-----------------+-----------------+-----------------+
 | namecheap_      | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+
@@ -102,12 +100,6 @@ conoha
 constellix
     * ``auth_username`` Specify the api key username for authentication
     * ``auth_token`` Specify secret key for authenticate=
-
-.. _ddns:
-
-ddns
-    * ``auth_token`` Specify the key used in format <alg>:<key_id>:<secret>
-    * ``ddns_server`` Specify ip of the ddns server
 
 .. _digitalocean:
 
@@ -262,11 +254,6 @@ infoblox
     * ``ib_view`` Specify dns view to manage at the infoblox
     * ``ib_host`` Specify infoblox host exposing the wapi
 
-.. _infomaniak:
-
-infomaniak
-    * ``auth_token`` Specify the token
-
 .. _internetbs:
 
 internetbs
@@ -278,11 +265,6 @@ internetbs
 inwx
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
-
-.. _joker:
-
-joker
-    * ``auth_token`` Specify the api key to connect to the joker.com api
 
 .. _linode:
 
@@ -309,13 +291,6 @@ luadns
 
 memset
     * ``auth_token`` Specify api key for authentication
-
-.. _mythicbeasts:
-
-mythicbeasts
-    * ``auth_username`` Specify api credentials username
-    * ``auth_password`` Specify api credentials password
-    * ``auth_token`` Specify api token for authentication
 
 .. _namecheap:
 
