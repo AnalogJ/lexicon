@@ -2,7 +2,7 @@ jobs:
   - job: test
     variables:
       IMAGE: ubuntu-18.04
-      TOXENV: standard
+      TOXENV: py
       PYTEST_ADDOPTS: --numprocesses 4
       BRANCH_NAME: $(Build.SourceBranch)
     strategy:
