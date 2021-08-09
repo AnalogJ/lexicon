@@ -1,4 +1,4 @@
-"""Module provider for Zeit"""
+"""Module provider for Vercel"""
 import json
 import logging
 
@@ -9,21 +9,21 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["zeit.world"]
+NAMESERVER_DOMAINS = ["vercel-dns.com"]
 
 
 def provider_parser(subparser):
-    """Configure provider parser for Zeit"""
+    """Configure provider parser for Vercel"""
     subparser.description = """
-        Zeit Provider requires a token to access its API.
+        Vercel provider requires a token to access its API.
         You can generate one for your account on the following URL:
-        https://zeit.co/account/tokens"""
+        https://vercel.com/account/tokens"""
     subparser.add_argument("--auth-token", help="specify your API token")
 
 
 class Provider(BaseProvider):
     """
-    Implements the DNS Zeit provider.
+    Implements the DNS Vercel provider.
     The API is quite simple: you can list all records, add one record or delete one record.
         - list is pretty straightforward: we get all records then filter for given parameters,
         - add uses directly the API to add a new record without any added complexity,
@@ -36,18 +36,20 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = "https://api.zeit.co/v2/domains"
+        self.api_endpoint = "https://api.vercel.com"
 
     def _authenticate(self):
-        result = self._get(f"/{self.domain}")
+        result = self._get(f"/v5/domains/{self.domain}")
 
-        if not result["uid"]:
+        identifier = result.get("domain", {}).get("id")
+
+        if not identifier:
             raise AuthenticationError(f"Error, domain {self.domain} not found")
 
-        self.domain_id = result["uid"]
+        self.domain_id = identifier
 
     def _list_records(self, rtype=None, name=None, content=None):
-        result = self._get(f"/{self.domain}/records")
+        result = self._get(f"/v4/domains/{self.domain}/records")
 
         raw_records = result["records"]
         if rtype:
@@ -75,6 +77,7 @@ class Provider(BaseProvider):
                     "type": raw_record["type"],
                     "name": self._full_name(raw_record["name"]),
                     "content": raw_record["value"],
+                    "ttl": raw_record["ttl"],
                 }
             )
 
@@ -91,7 +94,10 @@ class Provider(BaseProvider):
 
         data = {"type": rtype, "name": self._relative_name(name), "value": content}
 
-        result = self._post(f"/{self.domain}/records", data)
+        if self._get_lexicon_option("ttl"):
+            data["ttl"] = self._get_lexicon_option("ttl")
+
+        result = self._post(f"/v2/domains/{self.domain}/records", data)
 
         if not result["uid"]:
             raise Exception("Error occured when inserting the new record.")
@@ -101,7 +107,7 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-        # Zeit do not allow to update a record, only add or remove.
+        # Vercel do not allow to update a record, only add or remove.
         # So we get the corresponding record, dump or update
         # its content and insert it as a new record.
         # Then we remove the old record.
@@ -130,9 +136,11 @@ class Provider(BaseProvider):
             data["name"] = self._relative_name(records[0]["name"])
         if not content:
             data["value"] = records[0]["content"]
+        if self._get_lexicon_option("ttl"):
+            data["ttl"] = self._get_lexicon_option("ttl")
 
-        result = self._post(f"/{self.domain}/records", data)
-        self._delete(f"/{self.domain}/records/{records[0]['id']}")
+        result = self._post(f"/v2/domains/{self.domain}/records", data)
+        self._delete(f"/v2/domains/{self.domain}/records/{records[0]['id']}")
 
         LOGGER.debug("update_record: %s => %s", records[0]["id"], result["uid"])
 
@@ -149,7 +157,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete(f"/{self.domain}/records/{delete_record_id}")
+            self._delete(f"/v2/domains/{self.domain}/records/{delete_record_id}")
 
         LOGGER.debug("delete_record: %s", True)
 
