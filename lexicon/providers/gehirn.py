@@ -1,6 +1,4 @@
 """Module provider for Gehirn"""
-from __future__ import absolute_import
-
 import base64
 import json
 import logging
@@ -9,6 +7,7 @@ import re
 import requests
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -63,7 +62,7 @@ class Provider(BaseProvider):
 
         domains = [item for item in payload if item["name"] == self.domain]
         if not domains:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = domains[0]["id"]
         self.version_id = domains[0]["current_version_id"]

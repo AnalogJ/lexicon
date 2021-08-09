@@ -1,12 +1,11 @@
 """Module provider for Henet"""
-from __future__ import absolute_import
-
 import logging
 import re
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -68,7 +67,7 @@ class Provider(BaseProvider):
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if zone_img is None:
             LOGGER.warning("Domain %s not found in account", self.domain)
-            raise AssertionError(f"Domain {self.domain} not found in account")
+            raise AuthenticationError(f"Domain {self.domain} not found in account")
 
         self.domain_id = zone_img["value"]
         LOGGER.debug("HENET domain ID: %s", self.domain_id)

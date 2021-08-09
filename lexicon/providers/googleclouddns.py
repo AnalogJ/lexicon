@@ -19,8 +19,6 @@ So all the hard work in this provider, apart from the authentication process, is
 Lexicon monovalued entries representation to/from the Google multivalued and stacked representation
 through create/update/list/delete processes.
 """
-from __future__ import absolute_import
-
 import binascii
 import json
 import logging
@@ -32,6 +30,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -183,7 +182,7 @@ class Provider(BaseProvider):
         post_result = auth_request.json()
 
         if not post_result["access_token"]:
-            raise Exception(
+            raise AuthenticationError(
                 "Error, could not grant RW access on the "
                 f"Google Cloud DNS API for user: {self._get_provider_option('auth_email')}"
             )
@@ -192,7 +191,7 @@ class Provider(BaseProvider):
 
         targeted_managed_zone_ids = self._get_managed_zone_ids([])
         if not targeted_managed_zone_ids:
-            raise Exception(
+            raise AuthenticationError(
                 f"Error, domain {self.domain} is not registered for this project"
             )
 

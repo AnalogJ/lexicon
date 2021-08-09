@@ -15,8 +15,6 @@ but here's what you need to be aware of:
     This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 """
-from __future__ import absolute_import
-
 import base64
 import hashlib
 import hmac
@@ -26,6 +24,7 @@ import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -63,10 +62,9 @@ class Provider(BaseProvider):
             if domain["name"] == self.domain:
                 self.domain_id = domain["id"]
                 self.domain_details = domain
-                continue
-
-        if not self.domain_id:
-            raise Exception("No domain found")
+                break
+        else:
+            raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
 

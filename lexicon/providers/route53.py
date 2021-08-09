@@ -1,15 +1,14 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
-from __future__ import absolute_import
-
 import hashlib
 import logging
 import re
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import boto3  # optional dep
-    import botocore  # optional dep
+    import boto3  # type: ignore
+    import botocore  # type: ignore
 except ImportError:
     pass
 
@@ -153,7 +152,7 @@ class Provider(BaseProvider):
             hosted_zone = next(hz for hz in hosted_zones if self.filter_zone(hz))
             self.domain_id = hosted_zone.get("Id")
         except StopIteration:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
     def _change_record_sets(self, action, rtype, name, content):
         ttl = self._get_lexicon_option("ttl")

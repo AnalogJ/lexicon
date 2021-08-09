@@ -14,13 +14,12 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
     --content 10.10.10.11 --name lexicon1
 
 """
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -98,7 +97,7 @@ class Provider(BaseProvider):
             self.domain_id = domains[0]["_ref"]
         except IndexError:
             LOGGER.error("Domain %s not found in view", self.domain)
-            raise Exception(f"Domain {self.domain} not found in view")
+            raise AuthenticationError(f"Domain {self.domain} not found in view")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):

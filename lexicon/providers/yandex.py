@@ -1,11 +1,10 @@
 """Module provider for Yandex"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 __author__ = "Aliaksandr Kharkevich"
@@ -36,7 +35,7 @@ class Provider(BaseProvider):
     def _authenticate(self):
         payload = self._get(f"/list?domain={self.domain}")
         if payload["success"] != "ok":
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):

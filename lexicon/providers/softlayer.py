@@ -1,12 +1,11 @@
 """Module provider for Softlayer"""
-from __future__ import absolute_import
-
 import logging
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import SoftLayer
+    import SoftLayer  # type: ignore
 except ImportError:
     pass
 
@@ -52,9 +51,9 @@ class Provider(BaseProvider):
         payload = self.sl_dns.resolve_ids(domain)
 
         if not payload:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         if len(payload) > 1:
-            raise Exception("Too many domains found. This should not happen")
+            raise AuthenticationError("Too many domains found. This should not happen")
 
         LOGGER.debug("domain id: %s", payload[0])
         self.domain_id = payload[0]

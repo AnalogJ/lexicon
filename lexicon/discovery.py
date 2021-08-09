@@ -4,18 +4,19 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 import pkgutil
+from typing import Dict, List
 
 import pkg_resources
 
 from lexicon import providers
 
 
-def find_providers():
+def find_providers() -> Dict[str, bool]:
     """Find all providers registered in Lexicon, and their availability"""
     providers_list = sorted(
         {
             modname
-            for (_, modname, _) in pkgutil.iter_modules(providers.__path__)
+            for (_, modname, _) in pkgutil.iter_modules(providers.__path__)  # type: ignore
             if modname != "base"
         }
     )
@@ -31,7 +32,7 @@ def find_providers():
         }
 
 
-def lexicon_version():
+def lexicon_version() -> str:
     """Retrieve current Lexicon version"""
     try:
         return pkg_resources.get_distribution("dns-lexicon").version
@@ -39,9 +40,13 @@ def lexicon_version():
         return "unknown"
 
 
-def _resolve_requirements(provider, distribution):
+def _resolve_requirements(
+    provider: str, distribution: pkg_resources.Distribution
+) -> bool:
     try:
-        requirements = distribution.requires([provider])
+        requirements: List[pkg_resources.Requirement] = distribution.requires(
+            extras=(provider,)
+        )
     except pkg_resources.UnknownExtra:
         # No extra for this provider
         return True
@@ -50,7 +55,7 @@ def _resolve_requirements(provider, distribution):
         try:
             for requirement in requirements:
                 if hasattr(requirement, "name"):
-                    pkg_resources.get_distribution(requirement.name)
+                    pkg_resources.get_distribution(requirement.name)  # type: ignore
                 else:
                     pkg_resources.get_distribution(requirement)
         except (pkg_resources.DistributionNotFound, pkg_resources.VersionConflict):
