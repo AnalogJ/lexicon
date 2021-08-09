@@ -37,11 +37,8 @@ from lexicon.providers.base import Provider as BaseProvider
 try:
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
     from oci.config import from_file, validate_config  # type: ignore
-    from oci.exceptions import (
-        ConfigFileNotFound,  # type: ignore
-        InvalidConfig,
-        ProfileNotFound,
-    )
+    from oci.exceptions import ConfigFileNotFound  # type: ignore
+    from oci.exceptions import InvalidConfig, ProfileNotFound  # type: ignore
     from oci.signer import Signer  # type: ignore
 except ImportError:
     pass
