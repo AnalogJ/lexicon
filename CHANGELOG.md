@@ -1,6 +1,13 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add the Vercel provider (formerly known as Zeit)
+* Add the OpenShift Cloud Infrastructure (OCI) DNS provider (#860)
+
+### Modified
+* Keep old Zeit provider for compatibility purpose with deprecation notices
+* Support multiple domain statuses for Joker provider (#880)
 
 ## 3.6.1 - 27/06/2021
 ### Modified
