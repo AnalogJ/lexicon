@@ -9,7 +9,7 @@ from lexicon.tests.providers import integration_tests
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class ZiloreProviderTests(TestCase, integration_tests.IntegrationTestsV2):
-    """TestCase for Zeit"""
+    """TestCase for Zilore"""
 
     Provider = Provider
     provider_name = "zilore"

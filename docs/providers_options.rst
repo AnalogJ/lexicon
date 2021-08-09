@@ -8,35 +8,37 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | cloudns_        | cloudxns_       | conoha_         | constellix_     |
 +-----------------+-----------------+-----------------+-----------------+
-| digitalocean_   | dinahosting_    | directadmin_    | dnsimple_       |
+| ddns_           | digitalocean_   | dinahosting_    | directadmin_    |
 +-----------------+-----------------+-----------------+-----------------+
-| dnsmadeeasy_    | dnspark_        | dnspod_         | dreamhost_      |
+| dnsimple_       | dnsmadeeasy_    | dnspark_        | dnspod_         |
 +-----------------+-----------------+-----------------+-----------------+
-| dynu_           | easydns_        | easyname_       | euserv_         |
+| dreamhost_      | dynu_           | easydns_        | easyname_       |
 +-----------------+-----------------+-----------------+-----------------+
-| exoscale_       | gandi_          | gehirn_         | glesys_         |
+| euserv_         | exoscale_       | gandi_          | gehirn_         |
 +-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
+| glesys_         | godaddy_        | googleclouddns_ | gransy_         |
 +-----------------+-----------------+-----------------+-----------------+
-| henet_          | hetzner_        | hostingde_      | hover_          |
+| gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+
-| infoblox_       | internetbs_     | inwx_           | linode_         |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     |
 +-----------------+-----------------+-----------------+-----------------+
-| linode4_        | localzone_      | luadns_         | memset_         |
+| inwx_           | joker_          | linode_         | linode4_        |
++-----------------+-----------------+-----------------+-----------------+
+| localzone_      | luadns_         | memset_         | mythicbeasts_   |
 +-----------------+-----------------+-----------------+-----------------+
 | namecheap_      | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | onapp_          | online_         |
+| njalla_         | nsone_          | oci_            | onapp_          |
 +-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | powerdns_       |
+| online_         | ovh_            | plesk_          | pointhq_        |
 +-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        |
+| powerdns_       | rackspace_      | rage4_          | rcodezero_      |
 +-----------------+-----------------+-----------------+-----------------+
-| safedns_        | sakuracloud_    | softlayer_      | transip_        |
+| route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+
-| ultradns_       | vultr_          | yandex_         | zeit_           |
+| transip_        | ultradns_       | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+
-| zilore_         | zonomi_         |                 |                 |
+| yandex_         | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -100,6 +102,12 @@ conoha
 constellix
     * ``auth_username`` Specify the api key username for authentication
     * ``auth_token`` Specify secret key for authenticate=
+
+.. _ddns:
+
+ddns
+    * ``auth_token`` Specify the key used in format <alg>:<key_id>:<secret>
+    * ``ddns_server`` Specify ip of the ddns server
 
 .. _digitalocean:
 
@@ -254,6 +262,11 @@ infoblox
     * ``ib_view`` Specify dns view to manage at the infoblox
     * ``ib_host`` Specify infoblox host exposing the wapi
 
+.. _infomaniak:
+
+infomaniak
+    * ``auth_token`` Specify the token
+
 .. _internetbs:
 
 internetbs
@@ -265,6 +278,11 @@ internetbs
 inwx
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. _joker:
+
+joker
+    * ``auth_token`` Specify the api key to connect to the joker.com api
 
 .. _linode:
 
@@ -291,6 +309,13 @@ luadns
 
 memset
     * ``auth_token`` Specify api key for authentication
+
+.. _mythicbeasts:
+
+mythicbeasts
+    * ``auth_username`` Specify api credentials username
+    * ``auth_password`` Specify api credentials password
+    * ``auth_token`` Specify api token for authentication
 
 .. _namecheap:
 
@@ -327,6 +352,18 @@ njalla
 
 nsone
     * ``auth_token`` Specify token for authentication
+
+.. _oci:
+
+oci
+    * ``auth_config_file`` The full path including filename to an oci configuration file.
+    * ``auth_user`` The ocid of the user calling the api.
+    * ``auth_tenancy`` The ocid of your tenancy.
+    * ``auth_fingerprint`` The fingerprint for the public key that was added to the calling user.
+    * ``auth_key_content`` The full content of the calling user's private signing key in pem format.
+    * ``auth_pass_phrase`` If the private key is encrypted, the pass phrase must be provided.
+    * ``auth_region`` The home region of your tenancy.
+    * ``auth_type`` Valid options are 'api_key' (default) or 'instance_principal'.
 
 .. _onapp:
 
@@ -428,6 +465,11 @@ ultradns
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
 
+.. _vercel:
+
+vercel
+    * ``auth_token`` Specify your api token
+
 .. _vultr:
 
 vultr
@@ -437,11 +479,6 @@ vultr
 
 yandex
     * ``auth_token`` Specify pdd token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)
-
-.. _zeit:
-
-zeit
-    * ``auth_token`` Specify your api token
 
 .. _zilore:
 
