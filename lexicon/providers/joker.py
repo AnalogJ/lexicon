@@ -10,8 +10,6 @@
 #   - all headers and data are contained in the response body; then this kind of body is composed
 #     of several lines of type key: value containing the headers (including errors), then a blank
 #     line makes the separation with the data itself (see _process_response for the body parsing).
-from __future__ import absolute_import
-
 import binascii
 import json
 import logging
@@ -21,6 +19,7 @@ import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -73,15 +72,18 @@ class Provider(BaseProvider):
         )
 
         if not response.data:
-            raise ValueError(
+            raise AuthenticationError(
                 f"Domain {self.domain} is not registered with this account."
             )
 
         data = response.data[0]
         items = data.split(" ")
+        domain_status = items[2].split(",")
 
-        if items[2] not in ["production", "lock"]:
-            raise ValueError(f"Current status for domain {self.domain} is: {items[2]}")
+        if len(set(domain_status).difference(["production", "lock", "autorenew"])) > 0:
+            raise AuthenticationError(
+                f"Current status for domain {self.domain} is: {items[2]}"
+            )
 
         self.domain_id = self.domain
 

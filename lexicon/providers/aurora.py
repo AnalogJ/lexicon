@@ -1,6 +1,4 @@
 """Module provider for Aurora"""
-from __future__ import absolute_import
-
 import base64
 import datetime
 import hashlib
@@ -10,6 +8,7 @@ import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -34,17 +33,14 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.auroradns.eu"
 
     def _authenticate(self):
-        zone = None
         payload = self._get("/zones")
 
         for item in payload:
             if item["name"] == self.domain:
-                zone = item
-
-        if not zone:
-            raise Exception("No domain found")
-
-        self.domain_id = zone["id"]
+                self.domain_id = item["id"]
+                break
+        else:
+            raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):

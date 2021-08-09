@@ -1,6 +1,4 @@
 """Module provider for Dreamhost"""
-from __future__ import absolute_import
-
 import base64
 import json
 import logging
@@ -8,6 +6,7 @@ import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -104,13 +103,13 @@ class Provider(BaseProvider):
         payload = self._get("domain-list_domains")
         data = payload.get("data", None)
         if data is None:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
         for domain in data:
             if domain.get("domain", "") == self.domain:
                 self.domain_id = self.domain
         if self.domain_id is None:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
     def _create_record(self, rtype, name, content):
         name = self._full_name(name)

@@ -1,6 +1,4 @@
 """Module provider for exoscale"""
-from __future__ import absolute_import
-
 import logging
 
 import requests

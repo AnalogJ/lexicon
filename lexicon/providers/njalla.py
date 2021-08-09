@@ -1,10 +1,9 @@
 """Module provider for Njalla"""
-from __future__ import absolute_import
-
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -27,10 +26,13 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         params = {"domain": self.domain}
-        result = self._api_call("get-domain", params)
+        try:
+            result = self._api_call("get-domain", params)
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         if result["name"] != self.domain:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
         self.domain_id = self.domain
 

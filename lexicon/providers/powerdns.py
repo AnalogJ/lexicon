@@ -20,10 +20,9 @@ type and content.
 This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
-from __future__ import absolute_import
-
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -31,7 +30,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -44,6 +43,10 @@ def provider_parser(subparser):
     )
 
 
+class PowerDNSProviderError(Exception):
+    """Generic PowerDNS exception"""
+
+
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
@@ -51,6 +54,11 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
 
         self.api_endpoint = self._get_provider_option("pdns_server")
+        if not self.api_endpoint:
+            raise PowerDNSProviderError(
+                "PowerDNS API endpoint not defined (pdns_server)"
+            )
+
         self.disable_slave_notify = self._get_provider_option("pdns-disable-notify")
 
         if self.api_endpoint.endswith("/"):
@@ -66,7 +74,9 @@ class Provider(BaseProvider):
         self.api_endpoint += "/servers/" + self.server_id
 
         self.api_key = self._get_provider_option("auth_token")
-        assert self.api_key is not None
+        if not self.api_key:
+            raise PowerDNSProviderError("PowerDNS API key not defined (auth_token)")
+
         self._zone_data = None
 
     def notify_slaves(self):

@@ -1,19 +1,14 @@
 """Module provider for nfsn"""
-from __future__ import absolute_import, print_function
-
 import hashlib
 import logging
 import random
 import string
 import time
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,7 +37,10 @@ class Provider(BaseProvider):
         self.shortname = None
 
     def _authenticate(self):
-        self._post(f"/dns/{self.domain}/listRRs")
+        try:
+            self._post(f"/dns/{self.domain}/listRRs")
+        except Exception as e:
+            raise AuthenticationError(e)
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'

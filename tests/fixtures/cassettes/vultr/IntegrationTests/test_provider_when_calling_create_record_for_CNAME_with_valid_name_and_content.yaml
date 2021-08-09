@@ -2,51 +2,136 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.9.1]
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
     method: GET
-    uri: https://api.vultr.com/v1/dns/list
+    uri: https://api.vultr.com/v2/domains
   response:
-    body: {string: !!python/unicode '[{"domain":"capsulecd.com","date_created":"2016-04-13
-        19:03:44"}]'}
+    body:
+      string: '{"domains":[{"domain":"lexicon-test.eu","date_created":"2021-03-27T09:40:29+00:00"},{"domain":"sielski.be","date_created":"2020-09-13T18:19:59+00:00"}],"meta":{"total":2,"links":{"next":"","prev":""}}}'
     headers:
-      cache-control: [no-cache]
-      connection: [keep-alive]
-      content-length: ['65']
-      content-type: [application/json]
-      date: ['Thu, 14 Apr 2016 00:09:16 GMT']
-      expires: ['Thu, 14 Apr 2016 00:09:15 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      x-content-type-options: [nosniff]
-      x-frame-options: [DENY]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 27 Mar 2021 09:41:24 GMT
+      Expires:
+      - Sat, 27 Mar 2021 09:41:23 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Robots-Tag:
+      - noindex,noarchive
+      content-length:
+      - '201'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: priority=0&data=docs.example.com&domain=capsulecd.com&type=CNAME&name=docs
+    body: null
     headers:
-      Accept: [application/json]
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['74']
-      Content-Type: [application/x-www-form-urlencoded]
-      User-Agent: [python-requests/2.9.1]
-    method: POST
-    uri: https://api.vultr.com/v1/dns/create_record
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.vultr.com/v2/domains/lexicon-test.eu/records
   response:
-    body: {string: !!python/unicode ''}
+    body:
+      string: '{"records":[{"id":"727732b8-d5bb-48d2-a7dc-0d9244aac37b","type":"NS","name":"","data":"ns1.vultr.com","priority":-1,"ttl":300},{"id":"598e95b7-0a10-4bc4-a0a9-478ff7fa480c","type":"NS","name":"","data":"ns2.vultr.com","priority":-1,"ttl":300},{"id":"53feecb3-f006-4182-ab9c-f654a3b96e0f","type":"A","name":"","data":"127.0.0.1","priority":-1,"ttl":300},{"id":"401e8910-51dd-4f33-9345-cc089c501e35","type":"CNAME","name":"*","data":"lexicon-test.eu","priority":-1,"ttl":300},{"id":"6cd3c3fb-0aee-457e-929b-4729e5c8e6e0","type":"MX","name":"","data":"lexicon-test.eu","priority":10,"ttl":300},{"id":"b4ec45d4-8bf8-4aad-a189-4f5a4ac8567b","type":"A","name":"localhost","data":"127.0.0.1","priority":0,"ttl":3600}],"meta":{"total":6,"links":{"next":"","prev":""}}}'
     headers:
-      cache-control: [no-cache]
-      connection: [keep-alive]
-      content-length: ['0']
-      content-type: [text/html; charset=UTF-8]
-      date: ['Thu, 14 Apr 2016 00:09:19 GMT']
-      expires: ['Thu, 14 Apr 2016 00:09:18 GMT']
-      server: [nginx]
-      strict-transport-security: [max-age=31536000]
-      transfer-encoding: [chunked]
-      x-content-type-options: [nosniff]
-      x-frame-options: [DENY]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 27 Mar 2021 09:41:24 GMT
+      Expires:
+      - Sat, 27 Mar 2021 09:41:23 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Robots-Tag:
+      - noindex,noarchive
+      content-length:
+      - '759'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "CNAME", "name": "docs", "data": "docs.example.com", "priority":
+      0, "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://api.vultr.com/v2/domains/lexicon-test.eu/records
+  response:
+    body:
+      string: '{"record":{"id":"a15297f8-4050-41e5-8b6f-e31fca44ba9b","type":"CNAME","name":"docs","data":"docs.example.com","priority":0,"ttl":3600}}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 27 Mar 2021 09:41:25 GMT
+      Expires:
+      - Sat, 27 Mar 2021 09:41:24 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Robots-Tag:
+      - noindex,noarchive
+    status:
+      code: 201
+      message: Created
 version: 1

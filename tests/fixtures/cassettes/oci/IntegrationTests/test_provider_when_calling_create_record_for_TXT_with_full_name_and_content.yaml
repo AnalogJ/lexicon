@@ -1,0 +1,89 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:18:43 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com
+  response:
+    body:
+      string: '{"zoneType":"PRIMARY","name":"lexicon-test.com","externalMasters":[],"self":"https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com","timeCreated":"2021-06-23T10:07:46Z","version":"435","serial":435,"nameservers":[{"hostname":"ns1.p68.dns.oraclecloud.net"},{"hostname":"ns2.p68.dns.oraclecloud.net"},{"hostname":"ns3.p68.dns.oraclecloud.net"},{"hostname":"ns4.p68.dns.oraclecloud.net"}],"compartmentId":"OCI-COMPARTMENT-ID","id":"DNS-ZONE-ID","lifecycleState":"ACTIVE","scope":"GLOBAL","viewId":null,"isProtected":false}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:18:44 GMT
+      ETag:
+      - '"435ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168docid1.compartment.oc1..aaaaaaaakklh3onuoqfzgpe4tlflbmabkytrmmukcllef5vfc65quvqhtfsq164374825086dc65cd5dc548c248f61328b5d668#application/json--gzip"'
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '645'
+      opc-request-id:
+      - /DF0FE4D6E837CF26A21769A4905C7AEB/735E7FCD0E375CFD5EA6018251BAF627
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"items": [{"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken",
+      "ttl": 3600}]}'
+    headers:
+      Content-Length:
+      - '89'
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:18:45 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: PATCH
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/_acme-challenge.full.lexicon-test.com
+  response:
+    body:
+      string: '{"items":[{"domain":"_acme-challenge.full.lexicon-test.com","recordHash":"92f11feb1c17981adef50d1c93ec3c5e","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"280","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '206'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:18:47 GMT
+      ETag:
+      - '"280ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      opc-request-id:
+      - /EBCA2C5017DFF21D3E44B414A76FA197/CEE962DCE27DE4CAF5B4B11880267F17
+      opc-total-items:
+      - '1'
+    status:
+      code: 200
+      message: OK
+version: 1

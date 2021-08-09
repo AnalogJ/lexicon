@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 """Module for Lexicon command-line interface"""
-from __future__ import absolute_import, print_function
-
 import json
 import logging
 import os
 import sys
+from typing import Dict, List, Optional, Union
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
@@ -14,7 +13,11 @@ from lexicon.parser import generate_cli_main_parser
 logger = logging.getLogger(__name__)
 
 
-def generate_list_table_result(lexicon_logger, output=None, without_header=None):
+def generate_list_table_result(
+    lexicon_logger: logging.Logger,
+    output: Union[bool, List[Dict]] = None,
+    without_header: Optional[bool] = None,
+) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
     if not isinstance(output, list):
         lexicon_logger.debug(
@@ -64,7 +67,9 @@ def generate_list_table_result(lexicon_logger, output=None, without_header=None)
     return os.linesep.join(table)
 
 
-def generate_table_results(output=None, without_header=None):
+def generate_table_results(
+    output: Union[bool, List[Dict]] = None, without_header: Optional[bool] = None
+) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
     str_output = str(output)
@@ -77,7 +82,9 @@ def generate_table_results(output=None, without_header=None):
     return os.linesep.join(array)
 
 
-def handle_output(results, output_type, action):
+def handle_output(
+    results: Union[bool, List[Dict]], output_type: str, action: str
+) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
         return
@@ -103,7 +110,7 @@ def handle_output(results, output_type, action):
             )
 
 
-def main():
+def main() -> None:
     """Main function of Lexicon."""
     # Dynamically determine all the providers available and gather command line arguments.
     parsed_args = generate_cli_main_parser().parse_args()
@@ -123,7 +130,11 @@ def main():
 
     results = client.execute()
 
-    handle_output(results, parsed_args.output, config.resolve("lexicon:action"))
+    action = config.resolve("lexicon:action")
+    if not action:
+        raise ValueError("Parameter action is not set.")
+
+    handle_output(results, parsed_args.output, action)
 
 
 if __name__ == "__main__":

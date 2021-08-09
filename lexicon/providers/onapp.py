@@ -1,17 +1,17 @@
 """Module provider for OnApp"""
-from __future__ import absolute_import
-
 import json
 import logging
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -54,9 +54,8 @@ class Provider(BaseProvider):
             if zone["dns_zone"]["name"] == domain:
                 self.domain_id = zone["dns_zone"]["id"]
                 break
-
-        if self.domain_id is None:
-            raise Exception(f"Could not find {domain} in OnApp DNS Zones")
+        else:
+            raise AuthenticationError(f"Could not find {domain} in OnApp DNS Zones")
 
     def _create_record(self, rtype, name, content):
         data = {

@@ -1,14 +1,13 @@
 """Module provider for INWX"""
-from __future__ import absolute_import
-
 import logging
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import xmlrpclib
+    import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib
+    import xmlrpc.client as xmlrpclib  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 
@@ -77,8 +76,11 @@ class Provider(BaseProvider):
         """
         opts = {"domain": self._domain}
         opts.update(self._auth)
-        response = self._api.domain.info(opts)
-        self._validate_response(response=response, message="Failed to authenticate")
+        response = self._api.nameserver.info(opts)
+        try:
+            self._validate_response(response=response, message="Failed to authenticate")
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         # set to fake id to pass tests, inwx doesn't work on domain id but
         # uses domain names for identification
