@@ -1,8 +1,6 @@
 """Integration tests for Vercel"""
 from unittest import TestCase
 
-import pytest
-
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
