@@ -23,11 +23,11 @@ dynamic group that includes the compute instance.
 See https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm
 for in-depth documentation on managing DNS via the OCI console, SDK or API.
 """
-import os
 import logging
-import requests
-
+import os
 from pathlib import Path
+
+import requests
 
 from lexicon.exceptions import LexiconError
 from lexicon.providers.base import Provider as BaseProvider
@@ -37,7 +37,11 @@ from lexicon.providers.base import Provider as BaseProvider
 try:
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
     from oci.config import from_file, validate_config  # type: ignore
-    from oci.exceptions import ConfigFileNotFound, ProfileNotFound, InvalidConfig  # type: ignore
+    from oci.exceptions import (
+        ConfigFileNotFound,  # type: ignore
+        InvalidConfig,
+        ProfileNotFound,
+    )
     from oci.signer import Signer  # type: ignore
 except ImportError:
     pass
@@ -130,7 +134,9 @@ class Provider(BaseProvider):
 
         oci_config = {}
         try:
-            oci_config = from_file(file_location=file_location, profile_name=profile_name)
+            oci_config = from_file(
+                file_location=file_location, profile_name=profile_name
+            )
         except (ConfigFileNotFound, ProfileNotFound):
             pass
 
@@ -171,7 +177,9 @@ class Provider(BaseProvider):
             self.domain_id = zone["id"]
             self.zone_name = zone["name"]
         except requests.exceptions.HTTPError:
-            LOGGER.error(f"Error: invalid zone or permission denied accessing {self.domain}")
+            LOGGER.error(
+                f"Error: invalid zone or permission denied accessing {self.domain}"
+            )
             raise
 
     # Create record. If record already exists with the same content, do nothing

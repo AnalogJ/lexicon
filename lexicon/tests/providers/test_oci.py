@@ -2,9 +2,9 @@
 # Copyright (c) 2016, Jason Kulatunga
 # Copyright (c) 2021, Oracle and/or its affiliates.
 import re
+from unittest import TestCase
 
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
-from unittest import TestCase
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -50,7 +50,7 @@ h+yo8BsvENltolhke/UwKnMyzFR7asRBFIJATN698bmPeWv7PUmtRCBt3i9lHfvI
 Spzc4VkUFCDazQqxbG2/4ElGUzw+z0C0KMsSfSXTIk/YpNkyrCTwsllyvZrH7gVP
 qpq9aJr7G9qW+9Yovwm2qLR1joa4XoOqn13bkEU7lc96fyRBr0ucDg==
 -----END RSA PRIVATE KEY-----
-"""
+""",
         }
 
     def _filter_headers(self):
