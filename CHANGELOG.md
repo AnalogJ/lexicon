@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.7.1 - 04/10/2021
 ### Modified
 * Allow to use newer versions of `cryptography`
 * Fix doc about unit tests
