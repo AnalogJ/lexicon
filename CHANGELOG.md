@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.8.0 - 04/10/2021
 ## Modified
 * `transip` provider is deprecated and not maintained anymore, it will be replaced
    soon by a new `transip` provider build on top of the TransIP v6 REST API
