@@ -1,6 +1,13 @@
 # Changelog
 
 ## master - CURRENT
+## Modified
+* `transip` provider is deprecated and not maintained anymore, it will be replaced
+   soon by a new `transip` provider build on top of the TransIP v6 REST API
+
+## Deleted
+* `transip` provider is not part of the `full` dns-lexicon extra, you need to install
+  explicitly the `transip` extra instead
 
 ## 3.7.1 - 04/10/2021
 ### Modified
