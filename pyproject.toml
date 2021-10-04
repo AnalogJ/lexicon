@@ -59,7 +59,7 @@ gransy = ["zeep"]
 ddns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
-#full = ["boto3", "transip", "localzone", "softlayer", "zeep", "ddns", "oci"]
+# NB: transip is excluded from the full list because it cannot be maintained anymore.
 full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
 
 [tool.poetry.dev-dependencies]
