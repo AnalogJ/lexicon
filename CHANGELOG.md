@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+## Modified
+* Fix `rackspace` provider by not sending a body request for `GET` requests (#989)
 
 ## 3.8.0 - 04/10/2021
 ## Modified
