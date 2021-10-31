@@ -100,14 +100,15 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         self.domain_id = None
-        payload = self._get("domain-list_domains")
+        payload = self._get("dns-list_records")
         data = payload.get("data", None)
         if data is None:
             raise AuthenticationError("Domain not found")
 
-        for domain in data:
-            if domain.get("domain", "") == self.domain:
+        for record in data:
+            if record.get("record", "") == self.domain and record.get("type", "") in ["A", "AAAA"]:
                 self.domain_id = self.domain
+                break
         if self.domain_id is None:
             raise AuthenticationError("Domain not found")
 
