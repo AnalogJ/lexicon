@@ -106,7 +106,10 @@ class Provider(BaseProvider):
             raise AuthenticationError("Domain not found")
 
         for record in data:
-            if record.get("record", "") == self.domain and record.get("type", "") in ["A", "AAAA"]:
+            if record.get("record", "") == self.domain and record.get("type", "") in [
+                "A",
+                "AAAA",
+            ]:
                 self.domain_id = self.domain
                 break
         if self.domain_id is None:
