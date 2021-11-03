@@ -9,9 +9,9 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: https://api.dreamhost.com/?cmd=domain-list_domains&format=json
+    uri: https://api.dreamhost.com/?cmd=dns-list_records&format=json
   response:
-    body: {string: !!python/unicode '{"result":"success","data":[{"domain":"lexicon-example.com","AXFR_IPS":"none","TTL_SEC":0,"DOMAINID":1047330,"SOA_EMAIL":"trinopoty@hotmail.com","EXPIRE_SEC":0,"RETRY_SEC":0,"STATUS":1,"DESCRIPTION":"","LPM_DISPLAYGROUP":"","REFRESH_SEC":0,"MASTER_IPS":"","TYPE":"master"}],"ERRORARRAY":[]}'}
+    body: {string: !!python/unicode '{"result":"success","data":[{"type":"A","record":"lexicon-example.com"}]}'}
     headers:
       access-control-allow-origin: ['*']
       connection: [keep-alive]
