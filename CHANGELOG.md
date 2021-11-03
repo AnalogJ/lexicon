@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+## Modified
+* Fix `dreamhost` provider since deprecated API endpoints are removed (#998)
 
 ## 3.8.1 - 15/10/2021
 ## Modified
