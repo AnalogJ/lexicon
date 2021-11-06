@@ -108,7 +108,7 @@ class Provider(BaseProvider):
 
     def __find_site(self):
         return self.__simple_request(
-            "site", "get", {"filter": {"name": self.domain, "dataset": {}}}
+            "site", "get", {"filter": {"name": self.domain}, "dataset": {}}
         )["result"]["id"]
 
     def _authenticate(self):
