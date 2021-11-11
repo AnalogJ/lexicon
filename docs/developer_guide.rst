@@ -67,7 +67,7 @@ Make sure the tests pass:
 
 .. code-block:: bash
 
-    $ tox -e standard
+    $ tox -e py
 
 You can test a specific provider using:
 
