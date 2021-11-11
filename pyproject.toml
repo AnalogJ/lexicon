@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.7.0"
+version = "3.8.2"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -36,19 +36,19 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-tldextract = ">=2,<4"
-cryptography = ">=2,<4"
-pyyaml = ">=3,<6"
-requests = "^2"
-beautifulsoup4 = "^4"
+tldextract = ">=2"
+cryptography = ">=2"
+pyyaml = ">=3"
+requests = ">=2"
+beautifulsoup4 = ">=4"
 # Optional dependencies required by some providers
-boto3 = { version = "^1", optional = true }
-dnspython = { version = "^2", optional = true }
-localzone = { version = ">=0.9.8,<1", optional = true }
-transip = { version = "^2", optional = true }
-softlayer = {version = "^5", optional = true}
-zeep = { version = ">=3,<5", optional = true }
-oci = {version = "^2", optional = true}
+boto3 = { version = ">=1", optional = true }
+dnspython = { version = ">=2", optional = true }
+localzone = { version = ">=0.9.8", optional = true }
+transip = { version = ">=2", optional = true }
+softlayer = {version = ">=5", optional = true}
+zeep = { version = ">=3", optional = true }
+oci = {version = ">=2", optional = true}
 
 [tool.poetry.extras]
 route53 = ["boto3"]
@@ -59,7 +59,8 @@ gransy = ["zeep"]
 ddns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "transip", "localzone", "softlayer", "zeep", "ddns", "oci"]
+# NB: transip is excluded from the full list because it cannot be maintained anymore.
+full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
 
 [tool.poetry.dev-dependencies]
 pytest = "*"

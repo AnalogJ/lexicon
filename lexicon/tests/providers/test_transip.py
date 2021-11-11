@@ -54,6 +54,9 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
+@pytest.mark.skip(
+    reason="TransIP SOAP API is deprecated and cannot be maintained anymore."
+)
 class TransipProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Transip"""
 
