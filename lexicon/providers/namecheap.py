@@ -11,7 +11,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["namecheap.com"]
+NAMESERVER_DOMAINS = ["namecheap.com", "registrar-servers.com"]
 
 _NAMESPACE = "http://api.namecheap.com/xml.response"
 
