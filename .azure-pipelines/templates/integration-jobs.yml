@@ -28,10 +28,10 @@ jobs:
           IMAGE: macOS-10.15
           PYTHON_VERSION: 3.9
         windows-python-3.6:
-          IMAGE: vs2017-win2016
+          IMAGE: windows-latest
           PYTHON_VERSION: 3.6
         windows-python-3.9:
-          IMAGE: vs2017-win2016
+          IMAGE: windows-latest
           PYTHON_VERSION: 3.9
     pool:
       vmImage: $(IMAGE)
