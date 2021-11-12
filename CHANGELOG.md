@@ -1,17 +1,19 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix `plesk` provider (#1004)
 
 ## 3.8.2 - 03/11/2021
-## Modified
+### Modified
 * Fix `dreamhost` provider since deprecated API endpoints are removed (#998)
 
 ## 3.8.1 - 15/10/2021
-## Modified
+### Modified
 * Fix `rackspace` provider by not sending a body request for `GET` requests (#989)
 
 ## 3.8.0 - 04/10/2021
-## Modified
+### Modified
 * `transip` provider is deprecated and not maintained anymore, it will be replaced
    soon by a new `transip` provider build on top of the TransIP v6 REST API
 
