@@ -5,6 +5,7 @@
 ## 3.8.3 - 12/11/2021
 ### Modified
 * Fix `plesk` provider (#1004)
+* Update nameservers in `namecheap` provider (#911)
 
 ## 3.8.2 - 03/11/2021
 ### Modified
