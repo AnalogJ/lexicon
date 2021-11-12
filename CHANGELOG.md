@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.8.3 - 12/11/2021
 ### Modified
 * Fix `plesk` provider (#1004)
 
