@@ -11,7 +11,7 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["inwx.com"]
+NAMESERVER_DOMAINS = ["ns.inwx.de", "ns2.inwx.de", "ns3.inwx.eu", "ns4.inwx.com", "ns5.inwx.net", "ns.domrobot.com", "ns.domrobot.net", "ns.domrobot.org", "ns.domrobot.info", "ns.domrobot.biz"]
 
 
 def provider_parser(subparser):
