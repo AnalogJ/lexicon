@@ -10,6 +10,43 @@ from lexicon import config as helper_config
 from lexicon import discovery
 from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.providers.base import Provider
+from lexicon.records import Record, RecordsFilter, from_dict
+
+
+class ClientAction:
+    def __init__(
+        self, config: helper_config.ConfigResolver, provider: Provider
+    ) -> None:
+        self.config = config
+        self.provider = provider
+
+    def create(self, record: Record) -> bool:
+        return self.provider.create_record(record.type, record.name, record.content)
+
+    def list(self, record_filter: Optional[RecordsFilter] = None) -> List[Record]:
+        if not record_filter:
+            record_filter = RecordsFilter(
+                identifier=None, type=None, name=None, content=None
+            )
+        output = self.provider.list_records(
+            record_filter.type, record_filter.name, record_filter.content
+        )
+
+        return [from_dict(entry) for entry in output]
+
+    def update(self, identifier: str, record: Record) -> bool:
+        # In this new implementation, update() can only update record based on the identifier
+        return self.provider.update_record(
+            identifier, record.type, record.name, record.content
+        )
+
+    def delete(self, record_filter: RecordsFilter) -> bool:
+        return self.provider.delete_record(
+            record_filter.identifier,
+            record_filter.type,
+            record_filter.name,
+            record_filter.content,
+        )
 
 
 class Client(object):
@@ -29,7 +66,7 @@ class Client(object):
             self.config = config
 
         # Validate configuration
-        self._validate_config()
+        _validate_config(self.config)
 
         runtime_config = {}
 
@@ -58,7 +95,6 @@ class Client(object):
                 # update domain
                 runtime_config["domain"] = f"{delegated}.{initial_domain}"
 
-        self.action = self.config.resolve("lexicon:action")
         self.provider_name = self.config.resolve(
             "lexicon:provider_name"
         ) or self.config.resolve("lexicon:provider")
@@ -76,52 +112,66 @@ class Client(object):
 
     def execute(self) -> Union[bool, List[Dict]]:
         """Execute provided configuration in class constructor to the DNS records"""
-        self.provider.authenticate()
-        identifier = self.config.resolve("lexicon:identifier")
+        action = self.config.resolve("lexicon:action")
         record_type = self.config.resolve("lexicon:type")
+
+        if not action:
+            raise AttributeError("action")
+        if not record_type:
+            raise AttributeError("type")
+
+        identifier = self.config.resolve("lexicon:identifier")
         name = self.config.resolve("lexicon:name")
         content = self.config.resolve("lexicon:content")
 
-        if self.action == "create":
+        self.provider.authenticate()
+
+        if action == "create":
             if not record_type or not name or not content:
                 raise ValueError("Missing record_type, name or content parameters.")
             return self.provider.create_record(record_type, name, content)
 
-        if self.action == "list":
+        if action == "list":
             return self.provider.list_records(record_type, name, content)
 
-        if self.action == "update":
+        if action == "update":
             return self.provider.update_record(identifier, record_type, name, content)
 
-        if self.action == "delete":
+        if action == "delete":
             return self.provider.delete_record(identifier, record_type, name, content)
 
-        raise ValueError(f"Invalid action statement: {self.action}")
+        raise ValueError(f"Invalid action statement: {action}")
 
-    def _validate_config(self) -> None:
-        provider_name = self.config.resolve("lexicon:provider_name")
-        if not provider_name:
-            raise AttributeError("provider_name")
+    def __enter__(self) -> ClientAction:
+        self.provider.authenticate()
+        self.authenticated = True
 
-        try:
-            available = discovery.find_providers()[provider_name]
-        except KeyError:
+        return ClientAction(self.config, self.provider)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+
+def _validate_config(config: helper_config.ConfigResolver) -> None:
+    provider_name = config.resolve("lexicon:provider_name")
+    if not provider_name:
+        raise AttributeError("provider_name")
+
+    try:
+        available = discovery.find_providers()[provider_name]
+    except KeyError:
+        raise ProviderNotAvailableError(
+            f"This provider ({provider_name}) is not supported by Lexicon."
+        )
+    else:
+        if not available:
             raise ProviderNotAvailableError(
-                f"This provider ({provider_name}) is not supported by Lexicon."
+                f"This provider ({provider_name}) has required dependencies that are missing. "
+                f"Please install lexicon[{provider_name}] first."
             )
-        else:
-            if not available:
-                raise ProviderNotAvailableError(
-                    f"This provider ({provider_name}) has required dependencies that are missing. "
-                    f"Please install lexicon[{provider_name}] first."
-                )
 
-        if not self.config.resolve("lexicon:action"):
-            raise AttributeError("action")
-        if not self.config.resolve("lexicon:domain"):
-            raise AttributeError("domain")
-        if not self.config.resolve("lexicon:type"):
-            raise AttributeError("type")
+    if not config.resolve("lexicon:domain"):
+        raise AttributeError("domain")
 
 
 def _get_tldextract_cache_path() -> str:

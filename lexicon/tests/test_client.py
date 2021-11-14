@@ -25,7 +25,7 @@ def test_client_basic_init():
     client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == options["domain"]
     assert client.config.resolve("lexicon:type") == options["type"]
 
@@ -42,7 +42,7 @@ def test_client_legacy_init(monkeypatch):
         client = lexicon.client.Client(options)
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == options["domain"]
     assert client.config.resolve("lexicon:type") == options["type"]
     assert client.config.resolve("lexicon:fakeprovider:auth_key") == "MY_KEY"
@@ -58,7 +58,7 @@ def test_client_init_when_domain_includes_subdomain_should_strip():
     client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
 
@@ -74,7 +74,7 @@ def test_client_init_with_delegated_domain_name():
     client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "sub.example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
 
@@ -90,7 +90,7 @@ def test_client_init_with_delegated_domain_fqdn():
     client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "sub.example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
 
@@ -106,7 +106,7 @@ def test_client_init_with_same_delegated_domain_fqdn():
     client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
 
@@ -117,26 +117,28 @@ def test_client_init_when_missing_provider_should_fail():
         lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
-def test_client_init_when_missing_action_should_fail():
-    options = {"provider_name": "fakeprovider", "domain": "example.com", "type": "TXT"}
-    with pytest.raises(AttributeError):
-        lexicon.client.Client(ConfigResolver().with_dict(options))
-
-
 def test_client_init_when_missing_domain_should_fail():
     options = {"provider_name": "fakeprovider", "action": "list", "type": "TXT"}
     with pytest.raises(AttributeError):
         lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
-def test_client_init_when_missing_type_should_fail():
+def test_client_execute_when_missing_action_should_fail():
+    options = {"provider_name": "fakeprovider", "domain": "example.com", "type": "TXT"}
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+    with pytest.raises(AttributeError):
+        client.execute()
+
+
+def test_client_execute_when_missing_type_should_fail():
     options = {
         "provider_name": "fakeprovider",
         "action": "list",
         "domain": "example.com",
     }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
     with pytest.raises(AttributeError):
-        lexicon.client.Client(ConfigResolver().with_dict(options))
+        client.execute()
 
 
 def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
@@ -153,7 +155,7 @@ def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
     client = lexicon.client.Client(ConfigResolver().with_dict(options).with_env())
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
     assert client.config.resolve("lexicon:fakeprovider:auth_token") is None
@@ -172,7 +174,7 @@ def test_client_parse_env_with_auth_keys(monkeypatch):
     client = lexicon.client.Client(ConfigResolver().with_dict(options).with_env())
 
     assert client.provider_name == options["provider_name"]
-    assert client.action == options["action"]
+    assert client.config.resolve("lexicon:action") == options["action"]
     assert client.config.resolve("lexicon:domain") == "example.com"
     assert client.config.resolve("lexicon:type") == options["type"]
     assert client.config.resolve("lexicon:fakeprovider:auth_token") == "test-token"

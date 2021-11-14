@@ -143,22 +143,9 @@ def test_missing_required_client_config_parameter_raises_error(lexicon_client):
         lexicon_client.Client(
             ConfigResolver().with_dict(
                 {
-                    "no-action": "list",
-                    "provider_name": "fakeprovider",
-                    "domain": "example.com",
-                    "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
-                }
-            )
-        )
-    with pytest.raises(AttributeError):
-        lexicon_client.Client(
-            ConfigResolver().with_dict(
-                {
-                    "action": "list",
                     "no-provider_name": "fakeprovider",
                     "domain": "example.com",
+                    "action": "list",
                     "type": "TXT",
                     "name": "fake",
                     "content": "fake",
@@ -169,23 +156,10 @@ def test_missing_required_client_config_parameter_raises_error(lexicon_client):
         lexicon_client.Client(
             ConfigResolver().with_dict(
                 {
-                    "action": "list",
                     "provider_name": "fakeprovider",
                     "no-domain": "example.com",
-                    "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
-                }
-            )
-        )
-    with pytest.raises(AttributeError):
-        lexicon_client.Client(
-            ConfigResolver().with_dict(
-                {
                     "action": "list",
-                    "provider_name": "fakeprovider",
-                    "domain": "example.com",
-                    "no-type": "TXT",
+                    "type": "TXT",
                     "name": "fake",
                     "content": "fake",
                 }
@@ -197,10 +171,10 @@ def test_missing_optional_client_config_parameter_does_not_raise_error(lexicon_c
     lexicon_client.Client(
         ConfigResolver().with_dict(
             {
-                "action": "list",
                 "provider_name": "fakeprovider",
                 "domain": "example.com",
-                "type": "TXT",
+                "no-action": "list",
+                "no-type": "TXT",
                 "no-name": "fake",
                 "no-content": "fake",
             }
@@ -237,9 +211,9 @@ def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {
-                "action": "create",
                 "provider_name": "fakeprovider",
                 "domain": "example.com",
+                "action": "create",
                 "type": "TXT",
                 "name": "fake",
                 "content": "fake-content",
@@ -262,10 +236,10 @@ def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {
-                "action": "update",
                 "provider_name": "fakeprovider",
                 "domain": "example.com",
                 "identifier": "fake-id",
+                "action": "update",
                 "type": "TXT",
                 "name": "fake",
                 "content": "fake-content",
