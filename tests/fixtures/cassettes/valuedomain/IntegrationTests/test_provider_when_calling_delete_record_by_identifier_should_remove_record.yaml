@@ -1,0 +1,471 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains
+  response:
+    body:
+      string: '{"paging":{"max":1,"limit":10,"page":1},"results":[{"domainid":2623680,"domainname":"canadian-wisteria.net","registrar":"ENOM","expirationdate":"2023-10-13","autorenew":0,"autorenew_all":0,"autorenew_domain":0}],"request_id":"202111151828549157840311570V","request":{"path":"\/v1\/domains","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773bb7dea49ba-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:54 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken","ttl":"600"},"request_id":"202111151828558387530311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773bf1fc3d9dc-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:55 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"ns_type": "valuedomain1", "records": "a * 60.71.198.145\na localhost
+      127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn challengetoken\ntxt
+      _acme-challenge.full challengetoken\ntxt _acme-challenge.test challengetoken\ntxt
+      _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+      challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+      challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+      challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+      random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+      challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull challengetoken\ntxt
+      delete.testid challengetoken", "ttl": 600}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Content-Length:
+      - '834'
+      Content-Type:
+      - application/json
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: PUT
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken\ntxt delete.testid challengetoken","ttl":600},"request_id":"202111151828566885560311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken\ntxt delete.testid challengetoken","ttl":600}}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773c359004840-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:56 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken\ntxt delete.testid challengetoken","ttl":"600"},"request_id":"202111151828560533000311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773ca1df946a9-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:56 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken\ntxt delete.testid challengetoken","ttl":"600"},"request_id":"202111151828575764340311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773cdec455659-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:57 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"ns_type": "valuedomain1", "records": "a * 60.71.198.145\na localhost
+      127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn challengetoken\ntxt
+      _acme-challenge.full challengetoken\ntxt _acme-challenge.test challengetoken\ntxt
+      _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+      challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+      challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+      challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+      random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+      challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull challengetoken",
+      "ttl": 600}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Content-Length:
+      - '800'
+      Content-Type:
+      - application/json
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: PUT
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken","ttl":600},"request_id":"202111151828580320830311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken","ttl":600}}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773d19ce74b80-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:58 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - close
+      Host:
+      - api.value-domain.com
+      User-Agent:
+      - curl/7.74.0
+    method: GET
+    uri: https://api.value-domain.com/v1/domains/canadian-wisteria.net/dns
+  response:
+    body:
+      string: '{"results":{"domainid":2623680,"domainname":"canadian-wisteria.net","ns_type":"valuedomain1","records":"a
+        * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
+        challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
+        challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
+        challengetoken2\ntxt _acme-challenge.noop challengetoken\ntxt _acme-challenge.deleterecordinset
+        challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
+        challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
+        random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
+        challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+        challengetoken","ttl":"600"},"request_id":"202111151828593103810311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6ae773d799dd1ac4-SIN
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Nov 2021 09:28:59 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
+      set-cookie:
+      - u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - s=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None; secure
+      - ss=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; SameSite=None;
+        secure
+    status:
+      code: 200
+      message: OK
+version: 1
