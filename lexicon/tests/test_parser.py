@@ -5,7 +5,7 @@ from lexicon import parser
 
 
 def test_base_provider_parser():
-    baseparser = parser.generate_base_provider_parser()
+    baseparser = parser.generate_provider_subparser()
     parsed = baseparser.parse_args(["list", "capsulecd.com", "TXT"])
     assert parsed.action == "list"
     assert parsed.domain == "capsulecd.com"
@@ -15,13 +15,13 @@ def test_base_provider_parser():
 
 
 def test_base_provider_parser_without_domain():
-    baseparser = parser.generate_base_provider_parser()
+    baseparser = parser.generate_provider_subparser()
     with pytest.raises(SystemExit):
         baseparser.parse_args(["list"])
 
 
 def test_base_provider_parser_without_options():
-    baseparser = parser.generate_base_provider_parser()
+    baseparser = parser.generate_provider_subparser()
     with pytest.raises(SystemExit):
         baseparser.parse_args([])
 

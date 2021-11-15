@@ -103,8 +103,24 @@ class MXRecord(Record):
     rdatatype = dns.rdatatype.MX
 
 
+class NSRecord(Record):
+    rdatatype = dns.rdatatype.NS
+
+
+class SOARecord(Record):
+    rdatatype = dns.rdatatype.SOA
+
+
 class TXTRecord(Record):
     rdatatype = dns.rdatatype.TXT
+
+
+class SRVRecord(Record):
+    rdatatype = dns.rdatatype.SRV
+
+
+class LOCRecord(Record):
+    rdatatype = dns.rdatatype.LOC
 
 
 _RECORD_CLASSES: Dict[RdataType, Type[Record]] = {

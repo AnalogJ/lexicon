@@ -4,11 +4,12 @@ import json
 import logging
 import os
 import sys
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Any
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
+from lexicon.records import RecordsFilter, Record, from_text
 
 logger = logging.getLogger(__name__)
 
@@ -113,7 +114,8 @@ def handle_output(
 def main() -> None:
     """Main function of Lexicon."""
     # Dynamically determine all the providers available and gather command line arguments.
-    parsed_args = generate_cli_main_parser().parse_args()
+    parser_type, parser = generate_cli_main_parser()
+    parsed_args = parser.parse_args()
 
     log_level = logging.getLevelName(parsed_args.log_level)
     logging.basicConfig(stream=sys.stdout, level=log_level, format="%(message)s")
@@ -126,13 +128,42 @@ def main() -> None:
     config = ConfigResolver()
     config.with_args(parsed_args).with_env().with_config_dir(parsed_args.config_dir)
 
-    client = Client(config)
-
-    results = client.execute()
-
     action = config.resolve("lexicon:action")
     if not action:
         raise ValueError("Parameter action is not set.")
+
+    results: Union[bool, List[Dict[str, Any]], List[Record]]
+    if parser_type == "LEGACY":
+        client = Client(config)
+
+        results = client.execute()
+    else:
+        record_filter = RecordsFilter(
+            identifier=config.resolve("lexicon:with_identifier"),
+            type=config.resolve("lexicon:with_type"),
+            name=config.resolve("lexicon:with_name"),
+            content=config.resolve("lexicon:with_content"),
+        )
+
+        record = config.resolve("lexicon:record")
+
+        print(parsed_args)
+        print(action)
+        print(record_filter)
+        print(record)
+        print(from_text(record))
+
+        return
+
+        with Client(config) as client_action:
+            if action == "create":
+                results = client_action.create(from_text(record))
+            elif action == "update":
+                results = client_action.update(record_filter.identifier, from_text(record))
+            elif action == "delete":
+                results = client_action.delete(record_filter)
+            else:  # Implicit list
+                results = client_action.list(record_filter)
 
     handle_output(results, parsed_args.output, action)
 
