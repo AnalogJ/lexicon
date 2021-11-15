@@ -28,7 +28,3 @@ class ValueDomainProviderTests(TestCase, IntegrationTestsV2):
         """See `IntegrationTests._filter_response` for more information on how
         to filter the provider response."""
         return response
-
-    @pytest.mark.skip(reason="can not set ttl when creating/updating records")
-    def test_provider_when_calling_list_records_after_setting_ttl(self):
-        return

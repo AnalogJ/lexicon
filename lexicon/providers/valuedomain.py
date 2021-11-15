@@ -88,7 +88,7 @@ T = TypeVar('T')
 LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ["value-domain.com"]
 
-DEFAULT_TTL=600
+DEFAULT_TTL=3600
 
 ########################################################################
 ### Util
@@ -189,7 +189,7 @@ def vdapi_create_caller(auth_token:str):
     return vdapi_build_caller(restapi_build_opener(), "application/json", {
         'User-Agent': 'curl/7.74.0', # Value-Domain API rejects the request with default Python User-Agent.
         "Cache-Control": "no-cache, no-store",
-         "Authorization": f"Bearer {auth_token}"
+        "Authorization": f"Bearer {auth_token}"
     }, convert_json_to_bytes)
 
 def vdapi_get_domain_list(caller:RESTAPI_CALLER_TYPE)->list[str]:             
@@ -255,15 +255,17 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype:str, name:str, content:str):
-        self._assert_initialized()        
-        rl = vdapi_get_domain_data(self.caller, self.domain)
-        rec = self._create_record_data(rtype, self._relative_name(name), content)            
-        if rl != None and rec not in rl.records:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData(rl.records + [ rec ], rl.ttl))
-        elif rl != None:
+        self._assert_initialized()
+        ttl_option = self._get_lexicon_option("ttl")   
+        domain_data = vdapi_get_domain_data(self.caller, self.domain)        
+        rec = self._create_record_data(rtype, self._relative_name(name), content)          
+        
+        if domain_data != None and rec not in domain_data.records:
+            vdapi_set_domain_data(self.caller, self.domain, DomainData(domain_data.records + [ rec ], ttl_option if ttl_option != None and ttl_option > 0 else DEFAULT_TTL if ttl_option != None else domain_data.ttl))
+        elif domain_data != None:
             pass
         else:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData([ rec ] , DEFAULT_TTL))
+            vdapi_set_domain_data(self.caller, self.domain, DomainData([ rec ] , ttl_option if ttl_option != None and ttl_option > 0 else DEFAULT_TTL))
 
         return True
 
@@ -271,7 +273,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype:Optional[str]=None, name:Optional[str]=None, content:Optional[str]=None):
-        self._assert_initialized()
+        self._assert_initialized()        
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
         return [ {
                 'id': record_data.id(),
@@ -285,12 +287,13 @@ class Provider(BaseProvider):
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         self._assert_initialized()
+        ttl_option = self._get_lexicon_option("ttl")   
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
         target = [ record for record in domain_data.records if record.id() == identifier ]
         
         if len(target) > 0:
             vdapi_set_domain_data(self.caller, self.domain, DomainData( [ record for record in domain_data.records if record.id() != identifier ] +
-                [ self._create_record_data(rtype or target[0].rtype, name or self._relative_name(target[0].name), content or target[0].content) ], domain_data.ttl))
+                [ self._create_record_data(rtype or target[0].rtype, name or self._relative_name(target[0].name), content or target[0].content) ], ttl_option if ttl_option != None and ttl_option > 0 else DEFAULT_TTL if ttl_option != None else domain_data.ttl))
 
         return True
 

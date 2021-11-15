@@ -14,18 +14,18 @@ interactions:
     uri: https://api.value-domain.com/v1/domains
   response:
     body:
-      string: '{"paging":{"max":1,"limit":10,"page":1},"results":[{"domainid":2623680,"domainname":"canadian-wisteria.net","registrar":"ENOM","expirationdate":"2023-10-13","autorenew":0,"autorenew_all":0,"autorenew_domain":0}],"request_id":"202111151828599035590311570V","request":{"path":"\/v1\/domains","method":"GET","params":[]}}'
+      string: '{"paging":{"max":1,"limit":10,"page":1},"results":[{"domainid":2623680,"domainname":"canadian-wisteria.net","registrar":"ENOM","expirationdate":"2023-10-13","autorenew":0,"autorenew_all":0,"autorenew_domain":0}],"request_id":"202111151920142738940311570V","request":{"path":"\/v1\/domains","method":"GET","params":[]}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773db88b74565-SIN
+      - 6ae7beef5c886c33-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:28:59 GMT
+      - Mon, 15 Nov 2021 10:20:14 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -76,18 +76,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken","ttl":"600"},"request_id":"202111151829009247300311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken","ttl":"3600"},"request_id":"202111151920159896610311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773df8b614685-SIN
+      - 6ae7bef399894927-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:00 GMT
+      - Mon, 15 Nov 2021 10:20:15 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -124,14 +125,16 @@ interactions:
       challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
       random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
       challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull challengetoken\ntxt
-      _acme-challenge.deleterecordinset challengetoken1", "ttl": 600}'
+      updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+      challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1", "ttl":
+      3600}'
     headers:
       Cache-Control:
       - no-cache, no-store
       Connection:
       - close
       Content-Length:
-      - '855'
+      - '963'
       Content-Type:
       - application/json
       Host:
@@ -151,7 +154,8 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":600},"request_id":"202111151829017045490311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":3600},"request_id":"202111151920164984030311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
         * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
         challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
         challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
@@ -160,18 +164,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":600}}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":3600}}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773e3bde52ebc-SIN
+      - 6ae7bef74fc14b74-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:01 GMT
+      - Mon, 15 Nov 2021 10:20:16 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -222,18 +227,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":"600"},"request_id":"202111151829020070880311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":"3600"},"request_id":"202111151920173486200311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773ea19e04a6b-SIN
+      - 6ae7befd48d718c2-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:02 GMT
+      - Mon, 15 Nov 2021 10:20:17 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -284,18 +290,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":"600"},"request_id":"202111151829021017050311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken\ntxt _acme-challenge.deleterecordinset challengetoken1","ttl":"3600"},"request_id":"202111151920173427260311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773edbf2ade01-SIN
+      - 6ae7bf0118916c87-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:02 GMT
+      - Mon, 15 Nov 2021 10:20:17 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -331,15 +338,16 @@ interactions:
       challengetoken2\ntxt _acme-challenge.listrecordset challengetoken1\ntxt _acme-challenge.listrecordset
       challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
       random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
-      challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull challengetoken",
-      "ttl": 600}'
+      challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull challengetoken\ntxt
+      updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
+      challengetoken", "ttl": 3600}'
     headers:
       Cache-Control:
       - no-cache, no-store
       Connection:
       - close
       Content-Length:
-      - '800'
+      - '908'
       Content-Type:
       - application/json
       Host:
@@ -359,7 +367,8 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken","ttl":600},"request_id":"202111151829034000670311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken","ttl":3600},"request_id":"202111151920188826200311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"PUT","params":{"ns_type":"valuedomain1","records":"a
         * 60.71.198.145\na localhost 127.0.0.1\ncname docs docs.example.com\ntxt _acme-challenge.fqdn
         challengetoken\ntxt _acme-challenge.full challengetoken\ntxt _acme-challenge.test
         challengetoken\ntxt _acme-challenge.createrecordset challengetoken1\ntxt _acme-challenge.createrecordset
@@ -368,18 +377,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken","ttl":600}}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken","ttl":3600}}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773f19c2f2e7a-SIN
+      - 6ae7bf04cdee4d57-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:03 GMT
+      - Mon, 15 Nov 2021 10:20:18 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
@@ -430,18 +440,19 @@ interactions:
         challengetoken2\ntxt random.fqdntest challengetoken\ntxt random.fulltest challengetoken\ntxt
         random.test challengetoken\ntxt updated.test challengetoken\ntxt orig.nameonly.test
         challengetoken\ntxt updated.testfqdn challengetoken\ntxt updated.testfull
-        challengetoken","ttl":"600"},"request_id":"202111151829036739820311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
+        challengetoken\ntxt updated.test challengetoken\ntxt updated.testfqdn challengetoken\ntxt
+        updated.testfull challengetoken","ttl":"3600"},"request_id":"202111151920197298230311570V","request":{"path":"\/v1\/domains\/canadian-wisteria.net\/dns","method":"GET","params":[]}}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 6ae773f6ccdc2eb6-SIN
+      - 6ae7bf0c3960470f-SIN
       Connection:
       - close
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 15 Nov 2021 09:29:04 GMT
+      - Mon, 15 Nov 2021 10:20:19 GMT
       Expect-CT:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
