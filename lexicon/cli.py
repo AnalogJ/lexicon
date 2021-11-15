@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def generate_list_table_result(
     lexicon_logger: logging.Logger,
-    output: Union[bool, List[Dict]] = None,
+    output: Union[bool, List[Dict[str, Any]]] = None,
     without_header: Optional[bool] = None,
 ) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
@@ -69,7 +69,7 @@ def generate_list_table_result(
 
 
 def generate_table_results(
-    output: Union[bool, List[Dict]] = None, without_header: Optional[bool] = None
+    output: Union[bool, List[Dict[str, Any]]] = None, without_header: Optional[bool] = None
 ) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
@@ -84,7 +84,7 @@ def generate_table_results(
 
 
 def handle_output(
-    results: Union[bool, List[Dict]], output_type: str, action: str
+    results: Union[bool, List[Dict[str, Any]]], output_type: str, action: str
 ) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
@@ -132,28 +132,20 @@ def main() -> None:
     if not action:
         raise ValueError("Parameter action is not set.")
 
-    results: Union[bool, List[Dict[str, Any]], List[Record]]
+    results: Union[bool, List[Dict[str, Any]]]
     if parser_type == "LEGACY":
         client = Client(config)
 
         results = client.execute()
     else:
         record_filter = RecordsFilter(
-            identifier=config.resolve("lexicon:with_identifier"),
-            type=config.resolve("lexicon:with_type"),
-            name=config.resolve("lexicon:with_name"),
-            content=config.resolve("lexicon:with_content"),
+            identifier=config.resolve("lexicon:for_identifier"),
+            type=config.resolve("lexicon:for_type"),
+            name=config.resolve("lexicon:for_name"),
+            content=config.resolve("lexicon:for_content"),
         )
 
         record = config.resolve("lexicon:record")
-
-        print(parsed_args)
-        print(action)
-        print(record_filter)
-        print(record)
-        print(from_text(record))
-
-        return
 
         with Client(config) as client_action:
             if action == "create":
@@ -163,7 +155,7 @@ def main() -> None:
             elif action == "delete":
                 results = client_action.delete(record_filter)
             else:  # Implicit list
-                results = client_action.list(record_filter)
+                results = [result.to_dict() for result in client_action.list(record_filter)]
 
     handle_output(results, parsed_args.output, action)
 

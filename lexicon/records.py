@@ -51,6 +51,8 @@ class Record(ABC):
         dict_ = {"type": self.type, "name": self.name, "content": self.content}
         if self.ttl:
             dict_["ttl"] = self.ttl
+        if self.identifier:
+            dict_["id"] = self.identifier
 
         return dict_
 
@@ -77,14 +79,18 @@ class Record(ABC):
 
     @classmethod
     def from_dict(cls: Type[T], dict_: Dict[str, Any]) -> T:
-        return cls.create(dict_["name"], dict_["content"], ttl=dict_.get("ttl"))
+        return cls.create(dict_["name"], dict_["content"],
+                          identifier=dict_.get("id"), ttl=dict_.get("ttl"))
 
     @classmethod
-    def create(cls, name: str, content: str, ttl: Optional[int] = None):
+    def create(cls, name: str, content: str,
+               identifier: Optional[str] = None, ttl: Optional[int] = None) -> T:
+        if name.startswith("."):
+            name = name[1:]
         rname = dns.name.from_text(name)
         rdata = dns.rdata.from_text(dns.rdataclass.IN, cls.rdatatype, content)
 
-        return cls(rname=rname, rdata=rdata, ttl=ttl)
+        return cls(rname=rname, rdata=rdata, identifier=identifier, ttl=ttl)
 
 
 class ARecord(Record):

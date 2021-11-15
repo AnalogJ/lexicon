@@ -31,24 +31,32 @@ def configure_base_provider_subparser(parser: argparse.ArgumentParser,
         )
 
         if action == "create":
+            subparser.description = "Create a single DNS record."
             subparser.add_argument("record", help="the record to add, in BIND9 syntax")
         elif action == "update":
+            subparser.description = "Update a single DNS record by identifier."
             subparser.add_argument("record", help="the updated record, in BIND9 syntax")
-            subparser.add_argument("--with-identifier", help="the identifier to filter for update", required=True)
+            group = subparser.add_argument_group(f"({action} action) required arguments")
+            group.add_argument("--for-identifier", help="the identifier to filter for update",
+                               required=True)
         elif action == "delete":
-            subparser.add_argument("--with-identifier", help="the identifier to delete")
-            subparser.add_argument("--with-type", help="the type to filter for delete",
-                                   default="TXT",
-                                   choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"])
-            subparser.add_argument("--with-name", help="the name to filter for delete")
-            subparser.add_argument("--with-content", help="the content to filter for delete")
+            subparser.description = "Delete one or more DNS records."
+            group = subparser.add_argument_group(f"({action} action) optional arguments")
+            group.add_argument("--for-identifier", help="the identifier to delete")
+            group.add_argument("--for-type", help="the type to filter for delete",
+                               default="TXT",
+                               choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"])
+            group.add_argument("--for-name", help="the name to filter for delete")
+            group.add_argument("--for-content", help="the content to filter for delete")
         else:  # Implicit list
-            subparser.add_argument("--with-identifier", help="the identifier to filter for list")
-            subparser.add_argument("--with-type", help="the type to filter for list",
-                                   default="TXT",
-                                   choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"])
-            subparser.add_argument("--with-name", help="the name to filter for list")
-            subparser.add_argument("--with-content", help="the content to filter for list")
+            subparser.description = "List one or more DNS records."
+            group = subparser.add_argument_group(f"({action} action) optional arguments")
+            group.add_argument("--for-identifier", help="the identifier to filter for list")
+            group.add_argument("--for-type", help="the type to filter for list",
+                               default="TXT",
+                               choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"])
+            group.add_argument("--for-name", help="the name to filter for list")
+            group.add_argument("--for-content", help="the content to filter for list")
 
         provider_parser_config(subparser)
 
@@ -165,7 +173,8 @@ def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
             provider_parser(subparser)
         else:
             def parser_config(aparser: argparse.ArgumentParser) -> None:
-                provider_parser(aparser)
+                group = aparser.add_argument_group(f"({provider} provider) optional arguments")
+                provider_parser(group)
                 generic_parser_config(aparser)
             configure_base_provider_subparser(subparser, parser_config)
 
