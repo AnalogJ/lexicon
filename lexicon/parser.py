@@ -5,7 +5,6 @@ import os
 import sys
 from typing import Tuple
 from typing import Callable
-import logging
 
 from lexicon import discovery
 
@@ -152,7 +151,7 @@ def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
                 "a JSON string (JSON) or no output (QUIET)"
             ),
             default="TABLE",
-            choices=["TABLE", "TABLE-NO-HEADER", "JSON", "QUIET"],
+            choices=["TABLE", "TABLE-NO-HEADER", "JSON", "BIND9", "QUIET"],
         )
 
     subparsers = parser.add_subparsers(

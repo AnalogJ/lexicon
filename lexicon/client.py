@@ -35,7 +35,7 @@ class ClientAction:
         return [from_dict(entry) for entry in output]
 
     def update(self, identifier: str, record: Record) -> bool:
-        # In this new implementation, update() can only update record based on the identifier
+        # In this new implementation, update() can only update records based on the identifier.
         return self.provider.update_record(
             identifier, record.type, record.name, record.content
         )

@@ -16,24 +16,23 @@ logger = logging.getLogger(__name__)
 
 def generate_list_table_result(
     lexicon_logger: logging.Logger,
-    output: Union[bool, List[Dict[str, Any]]] = None,
+    output: Optional[Union[bool, List[Record]]] = None,
     without_header: Optional[bool] = None,
 ) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
-    if not isinstance(output, list):
+    if not isinstance(output, List):
         lexicon_logger.debug(
-            "Command output is not a list, and then cannot "
-            "be printed with --quiet parameter not enabled."
+            "Command output is not a list or records, and then cannot be printed as a table."
         )
         return None
 
     array = [
         [
-            row.get("id", ""),
-            row.get("type", ""),
-            row.get("name", ""),
-            row.get("content", ""),
-            row.get("ttl", ""),
+            row.identifier or "",
+            row.type or "",
+            row.name or "",
+            row.content or "",
+            row.ttl or "",
         ]
         for row in output
     ]
@@ -69,7 +68,7 @@ def generate_list_table_result(
 
 
 def generate_table_results(
-    output: Union[bool, List[Dict[str, Any]]] = None, without_header: Optional[bool] = None
+    output: Union[bool, List[Record]] = None, without_header: Optional[bool] = None
 ) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
@@ -84,13 +83,13 @@ def generate_table_results(
 
 
 def handle_output(
-    results: Union[bool, List[Dict[str, Any]]], output_type: str, action: str
+    results: Union[bool, List[Record]], output_type: str, action: str
 ) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
         return
 
-    if not output_type == "JSON":
+    if output_type in ["TABLE", "TABLE-NO-HEADER"]:
         if action == "list":
             table = generate_list_table_result(
                 logger, results, output_type == "TABLE-NO-HEADER"
@@ -99,16 +98,28 @@ def handle_output(
             table = generate_table_results(results, output_type == "TABLE-NO-HEADER")
         if table:
             print(table)
-    else:
-        try:
-            json_str = json.dumps(results)
-            if json_str:
-                print(json_str)
-        except TypeError:
+        return
+
+    if output_type == "BIND9":
+        if isinstance(results, List):
+            for result in results:
+                print(result.to_text())
+        else:
             logger.debug(
-                "Output is not JSON serializable, and then cannot "
-                "be printed with --output=JSON parameter."
+                "Command output is not a list or records, and then cannot be printed as a table."
             )
+        return
+
+    # Default case: JSON
+    try:
+        json_str = json.dumps([result.to_dict() for result in results])
+        if json_str:
+            print(json_str)
+    except TypeError:
+        logger.debug(
+            "Output is not JSON serializable, and then cannot "
+            "be printed with --output=JSON parameter."
+        )
 
 
 def main() -> None:
@@ -132,11 +143,15 @@ def main() -> None:
     if not action:
         raise ValueError("Parameter action is not set.")
 
-    results: Union[bool, List[Dict[str, Any]]]
+    results: Union[bool, List[Record]]
     if parser_type == "LEGACY":
         client = Client(config)
 
-        results = client.execute()
+        results_raw = client.execute()
+        if isinstance(results_raw, list):
+            results = [Record.from_dict(dict_) for dict_ in results_raw]
+        else:
+            results = results_raw
     else:
         record_filter = RecordsFilter(
             identifier=config.resolve("lexicon:for_identifier"),
@@ -155,7 +170,7 @@ def main() -> None:
             elif action == "delete":
                 results = client_action.delete(record_filter)
             else:  # Implicit list
-                results = [result.to_dict() for result in client_action.list(record_filter)]
+                results = client_action.list(record_filter)
 
     handle_output(results, parsed_args.output, action)
 
