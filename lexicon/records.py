@@ -5,10 +5,9 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import Any, ClassVar, Dict, List, Optional, Type, TypeVar, Union
 
-import dns
-from dns.name import Name
-from dns.rdata import Rdata
-from dns.rdatatype import RdataType
+import dns.name
+import dns.rdata
+import dns.rdatatype
 
 T = TypeVar("T", bound="Record")
 
@@ -23,11 +22,11 @@ class RecordsFilter:
 
 @dataclass
 class Record(ABC):
-    rname: Name
-    rdata: Rdata
+    rname: dns.name.Name
+    rdata: dns.rdata.Rdata
     identifier: Optional[str] = None
     ttl: Optional[int] = None
-    rdatatype: ClassVar[RdataType] = NotImplemented
+    rdatatype: ClassVar[dns.rdatatype.RdataType] = NotImplemented
 
     @property
     def name(self) -> str:
@@ -55,42 +54,6 @@ class Record(ABC):
             dict_["id"] = self.identifier
 
         return dict_
-
-    @classmethod
-    def from_text(cls: Type[T], text: str) -> T:
-        rdtype = dns.rdatatype.to_text(cls.rdatatype)
-        match = re.match(rf"^(.*)IN {rdtype}(.*)$", text)
-        if not match:
-            raise ValueError(f"Invalid string to split: {text}")
-
-        name_ttl = match.group(1).strip()
-        content = match.group(2).strip()
-
-        match = re.match(r"^(.*)\s+(\d+[smhdw])$", name_ttl)
-        ttl: Optional[int]
-        if match:
-            name = match.group(1).strip()
-            ttl = _parse_duration(match.group(2).strip())
-        else:
-            name = name_ttl
-            ttl = None
-
-        return cls.create(name, content, ttl=ttl)
-
-    @classmethod
-    def from_dict(cls: Type[T], dict_: Dict[str, Any]) -> T:
-        return cls.create(dict_["name"], dict_["content"],
-                          identifier=dict_.get("id"), ttl=dict_.get("ttl"))
-
-    @classmethod
-    def create(cls, name: str, content: str,
-               identifier: Optional[str] = None, ttl: Optional[int] = None) -> T:
-        if name.startswith("."):
-            name = name[1:]
-        rname = dns.name.from_text(name)
-        rdata = dns.rdata.from_text(dns.rdataclass.IN, cls.rdatatype, content)
-
-        return cls(rname=rname, rdata=rdata, identifier=identifier, ttl=ttl)
 
 
 class ARecord(Record):
@@ -129,7 +92,7 @@ class LOCRecord(Record):
     rdatatype = dns.rdatatype.LOC
 
 
-_RECORD_CLASSES: Dict[RdataType, Type[Record]] = {
+_RECORD_CLASSES: Dict[dns.rdatatype.RdataType, Type[Record]] = {
     entry[1].rdatatype: entry[1]
     for entry in inspect.getmembers(
         sys.modules[__name__], lambda o: inspect.isclass(o) and issubclass(o, Record)
@@ -139,9 +102,9 @@ _RECORD_CLASSES: Dict[RdataType, Type[Record]] = {
 
 def from_text(text: str) -> Record:
     exceptions: List[Exception] = []
-    for record in _RECORD_CLASSES.values():
+    for record_type in _RECORD_CLASSES.values():
         try:
-            return record.from_text(text)
+            return _one_from_text(record_type, text)
         except Exception as e:
             # Ignore, we try all possible types
             exceptions.append(e)
@@ -157,7 +120,39 @@ def from_dict(dict_: Dict[str, Any]) -> Record:
     if rdatatype not in _RECORD_CLASSES:
         raise ValueError(f"Unsupported rdatatype: {rdatatype}")
 
-    return _RECORD_CLASSES[rdatatype].from_dict(dict_)
+    return _create(_RECORD_CLASSES[rdatatype], dict_["name"], dict_["content"],
+                   identifier=dict_.get("id"), ttl=dict_.get("ttl"))
+
+
+def _one_from_text(cls: Type[T], text: str) -> T:
+    rdtype = dns.rdatatype.to_text(cls.rdatatype)
+    match = re.match(rf"^(.*)IN {rdtype}(.*)$", text)
+    if not match:
+        raise ValueError(f"Invalid string to split: {text}")
+
+    name_ttl = match.group(1).strip()
+    content = match.group(2).strip()
+
+    match = re.match(r"^(.*)\s+(\d+[smhdw])$", name_ttl)
+    ttl: Optional[int]
+    if match:
+        name = match.group(1).strip()
+        ttl = _parse_duration(match.group(2).strip())
+    else:
+        name = name_ttl
+        ttl = None
+
+    return cls.create(name, content, ttl=ttl)
+
+
+def _create(cls: Type[T], name: str, content: str,
+            identifier: Optional[str] = None, ttl: Optional[int] = None) -> T:
+    if name.startswith("."):
+        name = name[1:]
+    rname = dns.name.from_text(name)
+    rdata = dns.rdata.from_text(dns.rdataclass.IN, cls.rdatatype, content)
+
+    return cls(rname=rname, rdata=rdata, identifier=identifier, ttl=ttl)
 
 
 def _parse_duration(duration: str) -> int:

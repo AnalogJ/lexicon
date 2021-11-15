@@ -60,7 +60,8 @@ def configure_base_provider_subparser(parser: argparse.ArgumentParser,
         provider_parser_config(subparser)
 
 
-def configure_base_provider_legacy_subparser(parser: argparse.ArgumentParser) -> None:
+def configure_base_provider_legacy_subparser(parser: argparse.ArgumentParser,
+                                             provider_parser_config: Callable[[argparse.ArgumentParser], None]) -> None:
     """
     Function that generates the base provider provider (legacy) to be used by all dns providers.
     """
@@ -80,29 +81,17 @@ def configure_base_provider_legacy_subparser(parser: argparse.ArgumentParser) ->
         choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"],
     )
 
-    parser.add_argument("--name", help="specify the record name")
-    parser.add_argument("--content", help="specify the record content")
-    parser.add_argument("--ttl", type=int, help="specify the record time-to-live")
-    parser.add_argument("--priority", help="specify the record priority")
-    parser.add_argument(
+    group = parser.add_argument_group("(record) optional arguments")
+
+    group.add_argument("--name", help="specify the record name")
+    group.add_argument("--content", help="specify the record content")
+    group.add_argument("--ttl", type=int, help="specify the record time-to-live")
+    group.add_argument("--priority", help="specify the record priority")
+    group.add_argument(
         "--identifier", help="specify the record for update or delete actions"
     )
-    parser.add_argument(
-        "--log_level",
-        help="specify the log level",
-        default="ERROR",
-        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
-    )
-    parser.add_argument(
-        "--output",
-        help=(
-            "specify the type of output: by default a formatted table (TABLE), "
-            "a formatted table without header (TABLE-NO-HEADER), "
-            "a JSON string (JSON) or no output (QUIET)"
-        ),
-        default="TABLE",
-        choices=["TABLE", "TABLE-NO-HEADER", "JSON", "QUIET"],
-    )
+
+    provider_parser_config(parser)
 
 
 def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
@@ -128,22 +117,22 @@ def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
         action="store_true",
     )
 
-    def generic_parser_config(subparser: argparse.ArgumentParser) -> None:
-        subparser.add_argument("--delegated", help="specify the delegated domain")
-        subparser.add_argument(
+    def generic_parser_config(aparser: argparse.ArgumentParser) -> None:
+        aparser.add_argument("--delegated", help="specify the delegated domain")
+        aparser.add_argument(
             "--config-dir",
             default=os.getcwd(),
             help="specify the directory where to search lexicon.yml and "
                  "lexicon_[provider].yml configuration files "
                  "(default: current directory).",
         )
-        subparser.add_argument(
-            "--log_level",
+        aparser.add_argument(
+            "--log-level",
             help="specify the log level",
             default="ERROR",
             choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
         )
-        subparser.add_argument(
+        aparser.add_argument(
             "--output",
             help=(
                 "specify the type of output: by default a formatted table (TABLE), "
@@ -167,14 +156,15 @@ def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
             provider,
             help=f"{provider} provider",
         )
+
+        def parser_config(aparser: argparse.ArgumentParser) -> None:
+            group = aparser.add_argument_group(f"({provider} provider) optional arguments")
+            provider_parser(group)
+            generic_parser_config(aparser)
+
         if parser_type == "LEGACY":
-            configure_base_provider_legacy_subparser(subparser)
-            provider_parser(subparser)
+            configure_base_provider_legacy_subparser(subparser, parser_config)
         else:
-            def parser_config(aparser: argparse.ArgumentParser) -> None:
-                group = aparser.add_argument_group(f"({provider} provider) optional arguments")
-                provider_parser(group)
-                generic_parser_config(aparser)
             configure_base_provider_subparser(subparser, parser_config)
 
         if not available:
@@ -191,6 +181,9 @@ def _guess_main_parser() -> str:
         return "LEGACY"
 
     if {"--name", "--content", "--identifier", "--ttl", "--priority"}.intersection(set(sys.argv)):
+        return "LEGACY"
+
+    if {"A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"}.intersection(set(sys.argv)):
         return "LEGACY"
 
     if os.environ.get("LEXICON_LEGACY_CLI"):

@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Union, Any
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
 from lexicon.parser import generate_cli_main_parser
-from lexicon.records import RecordsFilter, Record, from_text
+from lexicon.records import RecordsFilter, Record, from_text, from_dict
 
 logger = logging.getLogger(__name__)
 
@@ -149,7 +149,7 @@ def main() -> None:
 
         results_raw = client.execute()
         if isinstance(results_raw, list):
-            results = [Record.from_dict(dict_) for dict_ in results_raw]
+            results = [from_dict(dict_) for dict_ in results_raw]
         else:
             results = results_raw
     else:
