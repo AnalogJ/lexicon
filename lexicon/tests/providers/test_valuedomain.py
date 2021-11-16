@@ -1,7 +1,5 @@
 """Test for valuedomain implementation of the interface."""
 from unittest import TestCase
-
-# Test for one implementation of the interface
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -10,7 +8,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 class ValueDomainProviderTests(TestCase, IntegrationTestsV2):
-    """Integration tests for Foo provider"""
+    """Integration tests for value-domain provider"""
     provider_name = 'valuedomain'
     domain = 'canadian-wisteria.net'
 
