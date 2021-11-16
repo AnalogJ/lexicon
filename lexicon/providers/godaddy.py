@@ -164,7 +164,7 @@ class Provider(BaseProvider):
                 self._put(f"/domains/{domain}/records/{rtype}", records)
             else:
                 self._put(
-                    f"/domains/{domain}/records/{rtype}/{relative_name}", updated_record
+                    f"/domains/{domain}/records/{rtype}/{relative_name}", [updated_record]
                 )
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
