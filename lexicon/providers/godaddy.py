@@ -172,12 +172,6 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        # For the LOL. GoDaddy does not accept an empty array
-        # when updating a particular set of records.
-        # It means that you cannot request to remove all records
-        # matching a particular rtype and/or name.
-        # Instead, we get ALL records in the DNS zone, update the set,
-        # and replace EVERYTHING in the DNS zone.
         # You will always have at minimal NS/SRV entries in the array,
         # otherwise your DNS zone is broken, and updating the zone is the least of your problem ...
         domain = self.domain
@@ -191,12 +185,12 @@ class Provider(BaseProvider):
 
         # Filter out all records which matches the pattern (either identifier
         # or some combination of rtype/name/content).
-        filtered_records = []
+        records_to_remove = []
         if identifier:
-            filtered_records = [
+            records_to_remove = [
                 record
                 for record in records
-                if Provider._identifier(record) != identifier
+                if Provider._identifier(record) == identifier
             ]
         else:
             for record in records:
@@ -206,42 +200,42 @@ class Provider(BaseProvider):
                         rtype
                         and not relative_name
                         and not content
-                        and record["type"] != rtype
+                        and record["type"] == rtype
                     )
                     or (
                         not rtype
                         and relative_name
                         and not content
-                        and self._relative_name(record["name"]) != relative_name
+                        and self._relative_name(record["name"]) == relative_name
                     )
                     or (
                         not rtype
                         and not relative_name
                         and content
-                        and record["data"] != content
+                        and record["data"] == content
                     )
                     or (
                         rtype
                         and relative_name
                         and not content
                         and (
-                            record["type"] != rtype
-                            or self._relative_name(record["name"]) != relative_name
+                            record["type"] == rtype
+                            and self._relative_name(record["name"]) == relative_name
                         )
                     )
                     or (
                         rtype
                         and not relative_name
                         and content
-                        and (record["type"] != rtype or record["data"] != content)
+                        and (record["type"] == rtype and record["data"] == content)
                     )
                     or (
                         not rtype
                         and relative_name
                         and content
                         and (
-                            self._relative_name(record["name"]) != relative_name
-                            or record["data"] != content
+                            self._relative_name(record["name"]) == relative_name
+                            and record["data"] == content
                         )
                     )
                     or (
@@ -249,16 +243,19 @@ class Provider(BaseProvider):
                         and relative_name
                         and content
                         and (
-                            record["type"] != rtype
-                            or self._relative_name(record["name"]) != relative_name
-                            or record["data"] != content
+                            record["type"] == rtype
+                            and self._relative_name(record["name"]) == relative_name
+                            or record["data"] == content
                         )
                     )
                 ):
-                    filtered_records.append(record)
+                    records_to_remove.append(record)
 
-        # Synchronize data with expurged entries into DNS zone.
-        self._put(f"/domains/{domain}/records", filtered_records)
+        # Remove them
+        for record in records_to_remove:
+            rec_type = record["type"]
+            rec_name = record["name"]
+            self._delete(f"/domains/{domain}/records/{rec_type}/{rec_name}")
 
         LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
 
@@ -283,7 +280,7 @@ class Provider(BaseProvider):
         return sha256.hexdigest()[0:7]
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
-        if not data:
+        if not data and action != "DELETE":  # all GoDaddy 'DELETE' APIs accept no data:
             data = {}
         if not query_params:
             query_params = {}
@@ -316,7 +313,7 @@ class Provider(BaseProvider):
             action,
             self.api_endpoint + url,
             params=query_params,
-            data=json.dumps(data),
+            data=json.dumps(data) if data is not None else None,
             headers={
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -330,7 +327,7 @@ class Provider(BaseProvider):
         try:
             # Return the JSON body response if exists.
             return result.json()
-        except ValueError:
+        except (ValueError, json.decoder.JSONDecodeError):
             # For some requests command (eg. PUT), GoDaddy will not
             # return any JSON, just an HTTP status without body.
             return None
