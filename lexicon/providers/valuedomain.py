@@ -69,18 +69,14 @@ Reference: https://www.value-domain.com/moddnsfree.php
 import json, logging, hashlib, time
 
 from urllib import request
-from functools import reduce
 from urllib.error import HTTPError
 from http.client import HTTPResponse
+from urllib.request import OpenerDirector
 from http import cookiejar
-from collections import namedtuple
 
-from lexicon.exceptions import AuthenticationError, ProviderNotAvailableError, LexiconError
 from lexicon.providers.base import Provider as BaseProvider
 
-from typing import Union, Tuple, Callable, Optional, TypeVar, NamedTuple, Dict, Any, List
-from urllib.request import OpenerDirector
-
+from typing import Union, Callable, Optional, TypeVar, NamedTuple, Dict, Any, List
 
 
 T = TypeVar('T')
@@ -117,14 +113,14 @@ RESTAPI_CALLER_TYPE = Callable[[str,str,Optional[T]],RestApiResponse]
 
 def reastapi_add_content_type(_headers:Optional[Dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> Dict[str,str]:
     '''Add 'Content-Type' header if exists'''
-    headers = _headers.copy() if _headers != None else {}    
-    if content_type != None and content != None and len(content) != 0:
+    headers = _headers.copy() if _headers is not None else {}    
+    if content_type is not None and content is not None and len(content) != 0:
         headers['Content-Type'] = content_type
     return headers
 
 def restapi_create_request(url:str, method:str, headers:Optional[Dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> request.Request:
     '''Create Request instance including content if exists'''
-    return request.Request(url, data=content if content != None and len(content) > 0 else None, method=method, headers=reastapi_add_content_type(headers, content_type, content))
+    return request.Request(url, data=content if content is not None and len(content) > 0 else None, method=method, headers=reastapi_add_content_type(headers, content_type, content))
 
 def restapi_call(opener:OpenerDirector, url:str, method:str, headers:Optional[Dict[str,str]], content_type:Optional[str] = None, content:Optional[bytes] = None) -> RestApiResponse:
     '''Execute HTTP Request with OpenerDirector'''
@@ -134,11 +130,6 @@ def restapi_call(opener:OpenerDirector, url:str, method:str, headers:Optional[Di
 def restapi_build_opener() -> OpenerDirector:
     '''Create OpenerDirector instance with cookie processor'''
     return request.build_opener(request.BaseHandler(), request.HTTPCookieProcessor(cookiejar.CookieJar()))
-
-def restapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[Dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
-    def _(url:str, method:str, content:Optional[T] = None) -> Tuple[HTTPResponse, bytes]:        
-        return restapi_call(opener, url, method, headers, content_type, content_decoder(content) if content != None else None)
-    return _
 
 def restapi_exception_not_200(response:HTTPResponse):
     # HTTPError will be raised if status >= 400
@@ -164,7 +155,7 @@ class RecordData(NamedTuple):
         return f"{self.rtype.lower()} {self.name.lower()} {self.content}"
 
     def match(self, rtype:Optional[str]=None, name:Optional[str]=None, content:Optional[str]=None)->bool:
-        return (rtype == None or rtype.lower() == self.rtype.lower()) and (name == None or name.lower() == self.name.lower()) and (content == None or content.lower() == self.content.lower())
+        return (rtype is None or rtype.lower() == self.rtype.lower()) and (name is None or name.lower() == self.name.lower()) and (content is None or content.lower() == self.content.lower())
 
     def id(self):
         return hashlib.md5(str(self).encode('utf-8')).hexdigest()
@@ -173,12 +164,12 @@ class DomainData(NamedTuple):
     records: List[RecordData]
     ttl: int
 
-def vdapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[Dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
-    def _(url:str, method:str, content:Optional[T] = None, interval=1) -> Tuple[HTTPResponse, bytes]:
+def vdapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[Dict[str,str]] = None,  content_decoder = lambda x: x) -> RESTAPI_CALLER_TYPE:    
+    def _(url:str, method:str, content:Optional[T] = None, interval=1) -> RestApiResponse:
         try:
             return restapi_call(opener, url, method, headers, content_type, content_decoder(content) if content != None else None)
         except HTTPError as http_error:
-            if http_error.status == 429: # Too much Request
+            if http_error.code == 429: # Too much Request
                 time.sleep(interval)
                 return _(url, method, content, interval * 2)
             else:
@@ -193,19 +184,19 @@ def vdapi_create_caller(auth_token:str):
     }, convert_json_to_bytes)
 
 def vdapi_get_domain_list(caller:RESTAPI_CALLER_TYPE)->List[str]:             
-    resp:RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains', "GET")
+    resp:RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains', "GET", None)
     restapi_exception_not_200(resp.header)
     return list(filter(lambda x: x != None, [ domain.get("domainname") for domain in json.loads(resp.data.decode('utf-8').strip()).get("results") ]))
 
 def vdapi_get_domain_data(caller:RESTAPI_CALLER_TYPE, domainname:str)->Optional[DomainData]:    
-    resp:RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains/{domainname}/dns', 'GET')        
+    resp:RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains/{domainname}/dns', 'GET', None)        
     restapi_exception_not_200(resp.header)
     domain_info:dict = json.loads(resp.data.decode('utf-8').strip())
     domain_records:Optional[str] = domain_info.get('results',{}).get('records')     
     return DomainData(
         [ RecordData(elem[0], elem[1], elem[2]) for elem in [ line.split(' ', 3) for line in domain_records.split('\n') ] if len(elem) == 3 ],
         int(domain_info.get('results',{}).get('ttl', DEFAULT_TTL))
-     ) if domain_records != None else None
+     ) if domain_records is not None else None
 
 def vdapi_set_domain_data(caller:RESTAPI_CALLER_TYPE, domainname:str, data:DomainData):    
     resp = caller(f"{VDAPI_ENDPOINT}/domains/{domainname}/dns", "PUT", {
@@ -234,8 +225,13 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.caller:Optional[RESTAPI_CALLER_TYPE] = None
+        #self.caller:Optional[RESTAPI_CALLER_TYPE] = None
         self.domain_id:Optional[list[str]] = None
+
+        auth_token = self._get_provider_option("auth_token")
+        assert auth_token != None, "No authenticaion token defined"
+                
+        self.caller:RESTAPI_CALLER_TYPE = vdapi_create_caller(auth_token)
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider,
@@ -243,10 +239,6 @@ class Provider(BaseProvider):
     # Should throw an error if authentication fails for any reason,
     # of if the domain does not exist.
     def _authenticate(self):
-        auth_token = self._get_provider_option("auth_token")
-        assert auth_token != None, "No authenticaion token defined"
-                
-        self.caller = vdapi_create_caller(auth_token)
         self.domain_id = vdapi_get_domain_list(self.caller)
 
         assert len(self.domain_id) > 0, "Failed to get domain names"
@@ -260,9 +252,9 @@ class Provider(BaseProvider):
         domain_data = vdapi_get_domain_data(self.caller, self.domain)        
         rec = self._create_record_data(rtype, self._relative_name(name), content)          
         
-        if domain_data != None and rec not in domain_data.records:
+        if domain_data is not None and rec not in domain_data.records:
             vdapi_set_domain_data(self.caller, self.domain, DomainData(domain_data.records + [ rec ], ttl_option if ttl_option != None and ttl_option > 0 else DEFAULT_TTL if ttl_option != None else domain_data.ttl))
-        elif domain_data != None:
+        elif domain_data is not None:
             pass
         else:
             vdapi_set_domain_data(self.caller, self.domain, DomainData([ rec ] , ttl_option if ttl_option != None and ttl_option > 0 else DEFAULT_TTL))
@@ -281,8 +273,8 @@ class Provider(BaseProvider):
                 'type': record_data.rtype.upper(),
                 'name': self._fqdn_name(record_data.name) if record_data.rtype.lower() != "txt" else self._full_name(record_data.name),
                 'content': record_data.content
-            } for record_data in domain_data.records if record_data.match(rtype, self._relative_name(name) if name != None else None, content)
-        ] if domain_data != None else []
+            } for record_data in domain_data.records if record_data.match(rtype, self._relative_name(name) if name is not None else None, content)
+        ] if domain_data is not None else []
 
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
