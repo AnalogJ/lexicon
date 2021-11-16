@@ -78,7 +78,7 @@ from collections import namedtuple
 from lexicon.exceptions import AuthenticationError, ProviderNotAvailableError, LexiconError
 from lexicon.providers.base import Provider as BaseProvider
 
-from typing import Union, Tuple, Callable, Optional, TypeVar, NamedTuple, Dict, Any
+from typing import Union, Tuple, Callable, Optional, TypeVar, NamedTuple, Dict, Any, List
 from urllib.request import OpenerDirector
 
 
@@ -115,18 +115,18 @@ class RestApiResponse(NamedTuple):
 RESTAPI_CALLER_TYPE = Callable[[str,str,Optional[T]],RestApiResponse]
 
 
-def reastapi_add_content_type(_headers:Optional[dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> dict[str,str]:
+def reastapi_add_content_type(_headers:Optional[Dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> Dict[str,str]:
     '''Add 'Content-Type' header if exists'''
     headers = _headers.copy() if _headers != None else {}    
     if content_type != None and content != None and len(content) != 0:
         headers['Content-Type'] = content_type
     return headers
 
-def restapi_create_request(url:str, method:str, headers:Optional[dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> request.Request:
+def restapi_create_request(url:str, method:str, headers:Optional[Dict[str,str]], content_type:Optional[str], content:Optional[bytes]) -> request.Request:
     '''Create Request instance including content if exists'''
     return request.Request(url, data=content if content != None and len(content) > 0 else None, method=method, headers=reastapi_add_content_type(headers, content_type, content))
 
-def restapi_call(opener:OpenerDirector, url:str, method:str, headers:Optional[dict[str,str]], content_type:Optional[str] = None, content:Optional[bytes] = None) -> RestApiResponse:
+def restapi_call(opener:OpenerDirector, url:str, method:str, headers:Optional[Dict[str,str]], content_type:Optional[str] = None, content:Optional[bytes] = None) -> RestApiResponse:
     '''Execute HTTP Request with OpenerDirector'''
     with opener.open(restapi_create_request(url, method, headers, content_type, content)) as response:         
         return RestApiResponse(response, response.read())
@@ -135,7 +135,7 @@ def restapi_build_opener() -> OpenerDirector:
     '''Create OpenerDirector instance with cookie processor'''
     return request.build_opener(request.BaseHandler(), request.HTTPCookieProcessor(cookiejar.CookieJar()))
 
-def restapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
+def restapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[Dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
     def _(url:str, method:str, content:Optional[T] = None) -> Tuple[HTTPResponse, bytes]:        
         return restapi_call(opener, url, method, headers, content_type, content_decoder(content) if content != None else None)
     return _
@@ -170,10 +170,10 @@ class RecordData(NamedTuple):
         return hashlib.md5(str(self).encode('utf-8')).hexdigest()
 
 class DomainData(NamedTuple):
-    records: list[RecordData]
+    records: List[RecordData]
     ttl: int
 
-def vdapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
+def vdapi_build_caller(opener:OpenerDirector, content_type:str, headers:Optional[Dict[str,str]] = None,  content_decoder:Callable[[T],bytes] = lambda x: x) -> RESTAPI_CALLER_TYPE:    
     def _(url:str, method:str, content:Optional[T] = None, interval=1) -> Tuple[HTTPResponse, bytes]:
         try:
             return restapi_call(opener, url, method, headers, content_type, content_decoder(content) if content != None else None)
@@ -192,7 +192,7 @@ def vdapi_create_caller(auth_token:str):
         "Authorization": f"Bearer {auth_token}"
     }, convert_json_to_bytes)
 
-def vdapi_get_domain_list(caller:RESTAPI_CALLER_TYPE)->list[str]:             
+def vdapi_get_domain_list(caller:RESTAPI_CALLER_TYPE)->List[str]:             
     resp:RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains', "GET")
     restapi_exception_not_200(resp.header)
     return list(filter(lambda x: x != None, [ domain.get("domainname") for domain in json.loads(resp.data.decode('utf-8').strip()).get("results") ]))
