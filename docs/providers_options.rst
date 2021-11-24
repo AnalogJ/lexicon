@@ -55,6 +55,7 @@ aliyun
    The referrence for Aliyun DNS production:
    https://help.aliyun.com/product/29697.html
 
+
     * ``auth_key_id`` Specify access key id for authentication
     * ``auth_secret`` Specify access secret for authentication
 
@@ -76,6 +77,7 @@ azure
    Domain.ReadWrite.All" to this Active Directory, and must have a usable Client secret.
    
 
+
     * ``auth_client_id`` Specify the client id (aka application id) of the app registration
     * ``auth_client_secret`` Specify the client secret of the app registration
     * ``auth_tenant_id`` Specify the tenant id (aka directory id) of the app registration
@@ -96,6 +98,7 @@ cloudflare
    3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone),
        with --auth-token and --zone-id flags.
    
+
 
     * ``auth_username`` Specify email address for authentication (for global api key only)
     * ``auth_token`` Specify token for authentication (global api key or api token)
@@ -206,6 +209,7 @@ easyname
    
    A provider for Easyname DNS.
 
+
     * ``auth_username`` Specify username used to authenticate
     * ``auth_password`` Specify password used to authenticate
 
@@ -256,6 +260,7 @@ googleclouddns
    You can create a new service account, associate a private key, and download its info through this url:
    https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2
 
+
     * ``auth_service_account_info`` 
         specify the service account info in the google json format:
         can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
@@ -269,6 +274,7 @@ gransy
 .. note::
    
    DNS manipulation provider for Gransy sites subreg.cz, regtons.com and regnames.eu.
+
 
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
@@ -289,6 +295,7 @@ henet
            NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
                  YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
            
+
 
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
@@ -327,6 +334,7 @@ infomaniak
    It can be generated for your Infomaniak account on the following URL:
    https://manager.infomaniak.com/v3/infomaniak-api
 
+
     * ``auth_token`` Specify the token
 
 .. _internetbs:
@@ -350,6 +358,7 @@ joker
    The Joker.com provider requires a valid token for authentication.
    You can create one in the section 'Manage Joker.com API access keys' of 'My Profile' in your Joker.com account.
    
+
 
     * ``auth_token`` Specify the api key to connect to the joker.com api
 
@@ -391,6 +400,7 @@ mythicbeasts
    2 - With an API token, using --auth-token flags.
    These credentials and tokens must be generated using the Mythic Beasts API v2.
    
+
 
     * ``auth_username`` Specify api credentials username
     * ``auth_password`` Specify api credentials password
@@ -441,6 +451,7 @@ oci
    Oracle Cloud Infrastructure (OCI) DNS provider
    
 
+
     * ``auth_config_file`` The full path including filename to an oci configuration file.
     * ``auth_user`` The ocid of the user calling the api.
     * ``auth_tenancy`` The ocid of your tenancy.
@@ -460,6 +471,7 @@ onapp
    API token, which can be found on your /profile page on the Control Panel interface.
    The server is your dashboard URL, with format like https://dashboard.youronapphost.org
 
+
     * ``auth_username`` Specify email address of the onapp account
     * ``auth_token`` Specify api key for the onapp account
     * ``auth_server`` Specify url to the onapp control panel server
@@ -478,6 +490,7 @@ ovh
    OVH Provider requires a token with full rights on /domain/*.
    It can be generated for your OVH account on the following URL:
    https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*
+
 
     * ``auth_entrypoint`` Specify the ovh entrypoint
     * ``auth_application_key`` Specify the application key
@@ -544,6 +557,7 @@ safedns
    You can generate one for your account on the following URL:
    https://my.ukfast.co.uk/applications/index.php
 
+
     * ``auth_token`` Specify the api key to authenticate with
 
 .. _sakuracloud:
@@ -581,6 +595,7 @@ vercel
    You can generate one for your account on the following URL:
    https://vercel.com/account/tokens
 
+
     * ``auth_token`` Specify your api token
 
 .. _vultr:
@@ -603,6 +618,7 @@ zeit
    You can generate one for your account on the following URL:
    https://vercel.com/account/tokens
 
+
     * ``auth_token`` Specify your api token
 
 .. _zilore:
@@ -614,6 +630,7 @@ zilore
    Zilore API requires an API key that can be found in your Zilore profile, at the API tab.
    The API access is available only for paid plans.
    
+
 
     * ``auth_key`` Specify the zilore api key to use
 
