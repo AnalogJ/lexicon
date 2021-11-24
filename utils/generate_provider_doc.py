@@ -44,6 +44,7 @@ List of options
    
 {_cleanup_description(parser.description)}
 
+
 """)
 
         for action in parser._actions:
