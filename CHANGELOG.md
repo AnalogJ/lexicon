@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.8.4 - 28/12/2021
 ### Added
 * Add the Value Domain provider (#1018)
 
