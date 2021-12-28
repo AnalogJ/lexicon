@@ -1,6 +1,11 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add the Value Domain provider (#1018)
+
+### Modified
+* Fix issue on the GoDaddy provider for update actions
 
 ## 3.8.3 - 12/11/2021
 ### Modified
