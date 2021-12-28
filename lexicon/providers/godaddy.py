@@ -105,7 +105,7 @@ class Provider(BaseProvider):
         # Append a new entry corresponding to given parameters.
         data = {"type": rtype, "name": relative_name, "data": content}
         if ttl:
-            data["ttl"] = ttl
+            data["ttl"] = int(ttl)
 
         records.append(data)
 
