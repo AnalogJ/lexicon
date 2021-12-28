@@ -154,7 +154,7 @@ class Provider(BaseProvider):
                 record["data"] = content
                 updated_record = record
                 break
-            
+
         if not relative_name:
             relative_name = self._relative_name(updated_record["name"])
 
