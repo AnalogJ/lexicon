@@ -39,13 +39,15 @@ List of options
         ]
 
         if parser.description:
-            provider_content.append(f"""
+            provider_content.append(
+                f"""
 .. note::
    
 {_cleanup_description(parser.description)}
 
 
-""")
+"""
+            )
 
         for action in parser._actions:
             if action.dest == "help":
@@ -79,6 +81,7 @@ def _generate_table(items):
         table = [*table, line, delimiter]
 
     return "\n".join(table)
+
 
 def _cleanup_description(description: str):
     lines = description.split(os.linesep)

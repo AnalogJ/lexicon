@@ -66,23 +66,20 @@ Reference: https://www.value-domain.com/moddnsfree.php
   - srv _smtp._tcp 1 2 25 server1.your.domain   : SRV record for _smtp._tcp.<YOUR-DOMAIN> (Priority:1, Weight:2, Port:25)
 """
 
+import hashlib
 import json
 import logging
-import hashlib
 import time
-
+from http import cookiejar
+from http.client import HTTPResponse
+from typing import Any, Callable, Dict, List, NamedTuple, Optional, TypeVar, Union
 from urllib import request
 from urllib.error import HTTPError
-from http.client import HTTPResponse
 from urllib.request import OpenerDirector
-from http import cookiejar
 
 from lexicon.providers.base import Provider as BaseProvider
 
-from typing import Union, Callable, Optional, TypeVar, NamedTuple, Dict, Any, List
-
-
-T = TypeVar('T')
+T = TypeVar("T")
 
 LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ["value-domain.com"]
@@ -95,16 +92,26 @@ DEFAULT_TTL = 3600
 
 
 def convert_json_to_bytes(x):
-    return bytes(json.dumps(x), 'utf-8')
+    return bytes(json.dumps(x), "utf-8")
 
 
 def is_domain(target: str) -> bool:
-    return len(target) > 1 and len(target.strip('.')) > 0 and target[0] != '.' and target[-1] == '.'
+    return (
+        len(target) > 1
+        and len(target.strip(".")) > 0
+        and target[0] != "."
+        and target[-1] == "."
+    )
 
 
 def is_sub_domain(target: str, domainname: str) -> Union[str, bool]:
     idx = target.rfind(domainname)
-    return target[0:idx].strip('.') if idx >= 0 and is_domain(target) and idx + len(domainname) + 1 == len(target) else False
+    return (
+        target[0:idx].strip(".")
+        if idx >= 0 and is_domain(target) and idx + len(domainname) + 1 == len(target)
+        else False
+    )
+
 
 ########################################################################
 # Rest API
@@ -119,28 +126,54 @@ class RestApiResponse(NamedTuple):
 RESTAPI_CALLER_TYPE = Callable[[str, str, Optional[T]], RestApiResponse]
 
 
-def reastapi_add_content_type(_headers: Optional[Dict[str, str]], content_type: Optional[str], content: Optional[bytes]) -> Dict[str, str]:
-    '''Add 'Content-Type' header if exists'''
+def reastapi_add_content_type(
+    _headers: Optional[Dict[str, str]],
+    content_type: Optional[str],
+    content: Optional[bytes],
+) -> Dict[str, str]:
+    """Add 'Content-Type' header if exists"""
     headers = _headers.copy() if _headers is not None else {}
     if content_type is not None and content is not None and len(content) != 0:
-        headers['Content-Type'] = content_type
+        headers["Content-Type"] = content_type
     return headers
 
 
-def restapi_create_request(url: str, method: str, headers: Optional[Dict[str, str]], content_type: Optional[str], content: Optional[bytes]) -> request.Request:
-    '''Create Request instance including content if exists'''
-    return request.Request(url, data=content if content is not None and len(content) > 0 else None, method=method, headers=reastapi_add_content_type(headers, content_type, content))
+def restapi_create_request(
+    url: str,
+    method: str,
+    headers: Optional[Dict[str, str]],
+    content_type: Optional[str],
+    content: Optional[bytes],
+) -> request.Request:
+    """Create Request instance including content if exists"""
+    return request.Request(
+        url,
+        data=content if content is not None and len(content) > 0 else None,
+        method=method,
+        headers=reastapi_add_content_type(headers, content_type, content),
+    )
 
 
-def restapi_call(opener: OpenerDirector, url: str, method: str, headers: Optional[Dict[str, str]], content_type: Optional[str] = None, content: Optional[bytes] = None) -> RestApiResponse:
-    '''Execute HTTP Request with OpenerDirector'''
-    with opener.open(restapi_create_request(url, method, headers, content_type, content)) as response:
+def restapi_call(
+    opener: OpenerDirector,
+    url: str,
+    method: str,
+    headers: Optional[Dict[str, str]],
+    content_type: Optional[str] = None,
+    content: Optional[bytes] = None,
+) -> RestApiResponse:
+    """Execute HTTP Request with OpenerDirector"""
+    with opener.open(
+        restapi_create_request(url, method, headers, content_type, content)
+    ) as response:
         return RestApiResponse(response, response.read())
 
 
 def restapi_build_opener() -> OpenerDirector:
-    '''Create OpenerDirector instance with cookie processor'''
-    return request.build_opener(request.BaseHandler(), request.HTTPCookieProcessor(cookiejar.CookieJar()))
+    """Create OpenerDirector instance with cookie processor"""
+    return request.build_opener(
+        request.BaseHandler(), request.HTTPCookieProcessor(cookiejar.CookieJar())
+    )
 
 
 def restapi_exception_not_200(response: HTTPResponse):
@@ -148,6 +181,7 @@ def restapi_exception_not_200(response: HTTPResponse):
     if response.status != 200:
         LOGGER.error(f"HTTP Status: {response.status}")
         raise Exception(f"HTTP Status: {response.status}")
+
 
 ########################################################################
 # Value Domain API
@@ -163,16 +197,29 @@ class RecordData(NamedTuple):
     content: str
 
     def __eq__(self, other):
-        return self.rtype.lower() == other.rtype.lower() and self.name.lower() == other.name.lower() and self.content == other.content
+        return (
+            self.rtype.lower() == other.rtype.lower()
+            and self.name.lower() == other.name.lower()
+            and self.content == other.content
+        )
 
     def __str__(self):
         return f"{self.rtype.lower()} {self.name.lower()} {self.content}"
 
-    def match(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> bool:
-        return (rtype is None or rtype.lower() == self.rtype.lower()) and (name is None or name.lower() == self.name.lower()) and (content is None or content.lower() == self.content.lower())
+    def match(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
+        return (
+            (rtype is None or rtype.lower() == self.rtype.lower())
+            and (name is None or name.lower() == self.name.lower())
+            and (content is None or content.lower() == self.content.lower())
+        )
 
     def id(self):
-        return hashlib.md5(str(self).encode('utf-8')).hexdigest()
+        return hashlib.md5(str(self).encode("utf-8")).hexdigest()
 
 
 class DomainData(NamedTuple):
@@ -180,60 +227,106 @@ class DomainData(NamedTuple):
     ttl: int
 
 
-def vdapi_build_caller(opener: OpenerDirector, content_type: str, headers: Optional[Dict[str, str]] = None, content_decoder=lambda x: x) -> RESTAPI_CALLER_TYPE:
-    def _(url: str, method: str, content: Optional[T] = None, interval=1) -> RestApiResponse:
+def vdapi_build_caller(
+    opener: OpenerDirector,
+    content_type: str,
+    headers: Optional[Dict[str, str]] = None,
+    content_decoder=lambda x: x,
+) -> RESTAPI_CALLER_TYPE:
+    def _(
+        url: str, method: str, content: Optional[T] = None, interval=1
+    ) -> RestApiResponse:
         try:
-            return restapi_call(opener, url, method, headers, content_type, content_decoder(content) if content is not None else None)
+            return restapi_call(
+                opener,
+                url,
+                method,
+                headers,
+                content_type,
+                content_decoder(content) if content is not None else None,
+            )
         except HTTPError as http_error:
             if http_error.code == 429:  # Too much Request
                 time.sleep(interval)
                 return _(url, method, content, interval * 2)
             else:
                 raise http_error
+
     return _
 
 
 def vdapi_create_caller(auth_token: str):
-    return vdapi_build_caller(restapi_build_opener(), "application/json", {
-        # Value-Domain API rejects the request with default Python User-Agent.
-        'User-Agent': 'curl/7.74.0',
-        "Cache-Control": "no-cache, no-store",
-        "Authorization": f"Bearer {auth_token}"
-    }, convert_json_to_bytes)
+    return vdapi_build_caller(
+        restapi_build_opener(),
+        "application/json",
+        {
+            # Value-Domain API rejects the request with default Python User-Agent.
+            "User-Agent": "curl/7.74.0",
+            "Cache-Control": "no-cache, no-store",
+            "Authorization": f"Bearer {auth_token}",
+        },
+        convert_json_to_bytes,
+    )
 
 
 def vdapi_get_domain_list(caller: RESTAPI_CALLER_TYPE) -> List[str]:
-    resp: RestApiResponse = caller(f'{VDAPI_ENDPOINT}/domains', "GET", None)
+    resp: RestApiResponse = caller(f"{VDAPI_ENDPOINT}/domains", "GET", None)
     restapi_exception_not_200(resp.header)
-    return list(filter(lambda x: x is not None, [domain.get("domainname") for domain in json.loads(resp.data.decode('utf-8').strip()).get("results")]))
+    return list(
+        filter(
+            lambda x: x is not None,
+            [
+                domain.get("domainname")
+                for domain in json.loads(resp.data.decode("utf-8").strip()).get(
+                    "results"
+                )
+            ],
+        )
+    )
 
 
-def vdapi_get_domain_data(caller: RESTAPI_CALLER_TYPE, domainname: str) -> Optional[DomainData]:
+def vdapi_get_domain_data(
+    caller: RESTAPI_CALLER_TYPE, domainname: str
+) -> Optional[DomainData]:
     resp: RestApiResponse = caller(
-        f'{VDAPI_ENDPOINT}/domains/{domainname}/dns', 'GET', None)
+        f"{VDAPI_ENDPOINT}/domains/{domainname}/dns", "GET", None
+    )
     restapi_exception_not_200(resp.header)
-    domain_info: dict = json.loads(resp.data.decode('utf-8').strip())
-    domain_records: Optional[str] = domain_info.get(
-        'results', {}).get('records')
-    return DomainData(
-        [RecordData(elem[0], elem[1], elem[2]) for elem in [line.split(' ', 3)
-                                                            for line in domain_records.split('\n')] if len(elem) == 3],
-        int(domain_info.get('results', {}).get('ttl', DEFAULT_TTL))
-    ) if domain_records is not None else None
+    domain_info: dict = json.loads(resp.data.decode("utf-8").strip())
+    domain_records: Optional[str] = domain_info.get("results", {}).get("records")
+    return (
+        DomainData(
+            [
+                RecordData(elem[0], elem[1], elem[2])
+                for elem in [line.split(" ", 3) for line in domain_records.split("\n")]
+                if len(elem) == 3
+            ],
+            int(domain_info.get("results", {}).get("ttl", DEFAULT_TTL)),
+        )
+        if domain_records is not None
+        else None
+    )
 
 
-def vdapi_set_domain_data(caller: RESTAPI_CALLER_TYPE, domainname: str, data: DomainData):
-    resp = caller(f"{VDAPI_ENDPOINT}/domains/{domainname}/dns", "PUT", {
-        "ns_type": "valuedomain1",
-        "records": '\n'.join([str(record) for record in data.records]),
-        "ttl": data.ttl
-    })
+def vdapi_set_domain_data(
+    caller: RESTAPI_CALLER_TYPE, domainname: str, data: DomainData
+):
+    resp = caller(
+        f"{VDAPI_ENDPOINT}/domains/{domainname}/dns",
+        "PUT",
+        {
+            "ns_type": "valuedomain1",
+            "records": "\n".join([str(record) for record in data.records]),
+            "ttl": data.ttl,
+        },
+    )
     restapi_exception_not_200(resp.header)
 
 
 ########################################################################
 # Lexicon Provider for Value-Domain
 ########################################################################
+
 
 def provider_parser(subparser):
     """Configure provider parser for Value Domain"""
@@ -273,47 +366,101 @@ class Provider(BaseProvider):
         self._assert_initialized()
         ttl_option = self._get_lexicon_option("ttl")
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
-        rec = self._create_record_data(
-            rtype, self._relative_name(name), content)
+        rec = self._create_record_data(rtype, self._relative_name(name), content)
 
         if domain_data is not None and rec not in domain_data.records:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData(
-                domain_data.records + [rec], ttl_option if ttl_option is not None and ttl_option > 0 else DEFAULT_TTL if ttl_option is not None else domain_data.ttl))
+            vdapi_set_domain_data(
+                self.caller,
+                self.domain,
+                DomainData(
+                    domain_data.records + [rec],
+                    ttl_option
+                    if ttl_option is not None and ttl_option > 0
+                    else DEFAULT_TTL
+                    if ttl_option is not None
+                    else domain_data.ttl,
+                ),
+            )
         elif domain_data is not None:
             pass
         else:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData(
-                [rec], ttl_option if ttl_option is not None and ttl_option > 0 else DEFAULT_TTL))
+            vdapi_set_domain_data(
+                self.caller,
+                self.domain,
+                DomainData(
+                    [rec],
+                    ttl_option
+                    if ttl_option is not None and ttl_option > 0
+                    else DEFAULT_TTL,
+                ),
+            )
 
         return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None):
+    def _list_records(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ):
         self._assert_initialized()
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
-        return [{
-            'id': record_data.id(),
-                'ttl': domain_data.ttl,
-                'type': record_data.rtype.upper(),
-                'name': self._fqdn_name(record_data.name) if record_data.rtype.lower() != "txt" else self._full_name(record_data.name),
-                'content': record_data.content
-                } for record_data in domain_data.records if record_data.match(rtype, self._relative_name(name) if name is not None else None, content)
-                ] if domain_data is not None else []
+        return (
+            [
+                {
+                    "id": record_data.id(),
+                    "ttl": domain_data.ttl,
+                    "type": record_data.rtype.upper(),
+                    "name": self._fqdn_name(record_data.name)
+                    if record_data.rtype.lower() != "txt"
+                    else self._full_name(record_data.name),
+                    "content": record_data.content,
+                }
+                for record_data in domain_data.records
+                if record_data.match(
+                    rtype,
+                    self._relative_name(name) if name is not None else None,
+                    content,
+                )
+            ]
+            if domain_data is not None
+            else []
+        )
 
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         self._assert_initialized()
         ttl_option = self._get_lexicon_option("ttl")
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
-        target = [record for record in domain_data.records if record.id()
-                  == identifier]
+        target = [record for record in domain_data.records if record.id() == identifier]
 
         if len(target) > 0:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData([record for record in domain_data.records if record.id() != identifier]
-                                                                       + [self._create_record_data(rtype or target[0].rtype, name or self._relative_name(target[0].name), content or target[0].content)],
-                                                                       ttl_option if ttl_option is not None and ttl_option > 0 else DEFAULT_TTL if ttl_option is not None else domain_data.ttl))
+            vdapi_set_domain_data(
+                self.caller,
+                self.domain,
+                DomainData(
+                    [
+                        record
+                        for record in domain_data.records
+                        if record.id() != identifier
+                    ]
+                    + [
+                        self._create_record_data(
+                            rtype or target[0].rtype,
+                            name or self._relative_name(target[0].name),
+                            content or target[0].content,
+                        )
+                    ],
+                    ttl_option
+                    if ttl_option is not None and ttl_option > 0
+                    else DEFAULT_TTL
+                    if ttl_option is not None
+                    else domain_data.ttl,
+                ),
+            )
 
         return True
 
@@ -324,43 +471,71 @@ class Provider(BaseProvider):
         self._assert_initialized()
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
         if domain_data is not None and identifier is not None:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData(
-                [record for record in domain_data.records if record.id() != identifier], domain_data.ttl))
+            vdapi_set_domain_data(
+                self.caller,
+                self.domain,
+                DomainData(
+                    [
+                        record
+                        for record in domain_data.records
+                        if record.id() != identifier
+                    ],
+                    domain_data.ttl,
+                ),
+            )
         elif domain_data is not None:
-            vdapi_set_domain_data(self.caller, self.domain, DomainData(
-                [record for record in domain_data.records if not record.match(rtype, self._relative_name(name), content)], domain_data.ttl))
+            vdapi_set_domain_data(
+                self.caller,
+                self.domain,
+                DomainData(
+                    [
+                        record
+                        for record in domain_data.records
+                        if not record.match(rtype, self._relative_name(name), content)
+                    ],
+                    domain_data.ttl,
+                ),
+            )
 
         return True
 
-    def _request(self, action: str = "GET", url: str = "/", data: Optional[Dict] = None, query_params: Optional[Dict] = None) -> Any:
+    def _request(
+        self,
+        action: str = "GET",
+        url: str = "/",
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
+    ) -> Any:
         pass
-#        self._assert_initialized()
-#        return self.caller(url, action, data)
+
+    #        self._assert_initialized()
+    #        return self.caller(url, action, data)
 
     def _assert_initialized(self):
         if self.caller is None or self.domain_id is None:
             self._authenticate()
 
         assert self.caller is not None, "HTTP caller not defined"
-        assert self.domain_id is not None or len(self.domain_id == 0), "Domain name not retriebed"
+        assert self.domain_id is not None or len(
+            self.domain_id == 0
+        ), "Domain name not retriebed"
 
     def _create_record_data(self, rtype: str, name: str, content: str) -> RecordData:
         return RecordData(rtype.lower(), self._relative_name(name).lower(), content)
 
 
-if __name__ == '__main__':
-    import unittest
+if __name__ == "__main__":
     import os
+    import unittest
 
-    DUMMY_TYPE = 'a'
-    DUMMY_NAME = 'test'
-    DUMMY_CONTENT = '1.2.3.4'
+    DUMMY_TYPE = "a"
+    DUMMY_NAME = "test"
+    DUMMY_CONTENT = "1.2.3.4"
     DUMMY_CONTENT2 = "2.3.4.5"
 
     class TestValueDomain(unittest.TestCase):
-
         def setUp(self):
-            self.auth_token = os.environ.get('LEXICON_VALUEDOMAIN_AUTH_TOKEN')
+            self.auth_token = os.environ.get("LEXICON_VALUEDOMAIN_AUTH_TOKEN")
             if self.auth_token is None:
                 raise Exception("LEXICON_VALUEDOMAIN_AUTH_TOKEN not defined")
             self.caller = vdapi_create_caller(self.auth_token)
@@ -369,13 +544,13 @@ if __name__ == '__main__':
             pass
 
         def _create_provide(self, domainname: str):
-            return Provider({
-                'provider_name': 'valuedomain',
-                'domain': domainname,
-                'valuedomain': {
-                    'auth_token': self.auth_token
+            return Provider(
+                {
+                    "provider_name": "valuedomain",
+                    "domain": domainname,
+                    "valuedomain": {"auth_token": self.auth_token},
                 }
-            })
+            )
 
         def test_vdapi_get_domain_list(self):
             domain_list = vdapi_get_domain_list(self.caller)
@@ -395,16 +570,17 @@ if __name__ == '__main__':
             for domainname in domain_list:
                 domain_data = vdapi_get_domain_data(self.caller, domainname)
                 dummy = RecordData(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                vdapi_set_domain_data(self.caller, domainname, DomainData(
-                    domain_data.records + [dummy], domain_data.ttl))
-                updated_domain_data = vdapi_get_domain_data(
-                    self.caller, domainname)
+                vdapi_set_domain_data(
+                    self.caller,
+                    domainname,
+                    DomainData(domain_data.records + [dummy], domain_data.ttl),
+                )
+                updated_domain_data = vdapi_get_domain_data(self.caller, domainname)
                 self.assertIn(dummy, updated_domain_data.records)
 
                 # cleanup
                 vdapi_set_domain_data(self.caller, domainname, domain_data)
-                updated_domain_data = vdapi_get_domain_data(
-                    self.caller, domainname)
+                updated_domain_data = vdapi_get_domain_data(self.caller, domainname)
                 self.assertNotIn(dummy, updated_domain_data.records)
 
         def test_list_records(self):
@@ -416,10 +592,10 @@ if __name__ == '__main__':
                 records = provider._list_records()
                 self.assertGreater(len(records), 0)
 
-                records = provider._list_records(rtype='A')
+                records = provider._list_records(rtype="A")
                 self.assertGreater(len(records), 0)
 
-                records = provider._list_records(rtype='B')
+                records = provider._list_records(rtype="B")
                 self.assertEqual(len(records), 0)
 
         def test_create_records(self):
@@ -430,19 +606,34 @@ if __name__ == '__main__':
 
                 provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 records = provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)
+                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                )
                 self.assertGreater(len(records), 0)
 
                 provider._create_record(
-                    DUMMY_TYPE, f"{DUMMY_NAME}.{domainname}.", DUMMY_CONTENT)
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=f"DUMMY_NAME.{domainname}.", content=DUMMY_CONTENT)), 0)
+                    DUMMY_TYPE, f"{DUMMY_NAME}.{domainname}.", DUMMY_CONTENT
+                )
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE,
+                            name=f"DUMMY_NAME.{domainname}.",
+                            content=DUMMY_CONTENT,
+                        )
+                    ),
+                    0,
+                )
 
                 # cleanup
-                provider._delete_record(
-                    None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)), 0)
+                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                        )
+                    ),
+                    0,
+                )
 
         def test_delete_records_by_id(self):
             domain_list = vdapi_get_domain_list(self.caller)
@@ -452,11 +643,18 @@ if __name__ == '__main__':
 
                 provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 recl = provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)
+                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                )
                 self.assertGreater(len(recl), 0)
-                provider._delete_record(identifier=recl[0].get('id'))
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)), 0)
+                provider._delete_record(identifier=recl[0].get("id"))
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                        )
+                    ),
+                    0,
+                )
 
         def test_delete_records_by_data(self):
             domain_list = vdapi_get_domain_list(self.caller)
@@ -466,12 +664,18 @@ if __name__ == '__main__':
 
                 provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 recl = provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)
+                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                )
                 self.assertGreater(len(recl), 0)
-                provider._delete_record(
-                    None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)), 0)
+                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                        )
+                    ),
+                    0,
+                )
 
         def test_update_record(self):
             domain_list = vdapi_get_domain_list(self.caller)
@@ -482,19 +686,38 @@ if __name__ == '__main__':
 
                 provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 recl = provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)
+                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                )
                 self.assertGreater(len(recl), 0)
                 provider._update_record(
-                    identifier=recl[0].get('id'), content=DUMMY_CONTENT2)
-                self.assertGreater(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2)), 0)
+                    identifier=recl[0].get("id"), content=DUMMY_CONTENT2
+                )
+                self.assertGreater(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2
+                        )
+                    ),
+                    0,
+                )
 
                 # cleanup
-                provider._delete_record(
-                    None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT2)
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT)), 0)
-                self.assertEqual(len(provider._list_records(
-                    rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2)), 0)
+                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT2)
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
+                        )
+                    ),
+                    0,
+                )
+                self.assertEqual(
+                    len(
+                        provider._list_records(
+                            rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2
+                        )
+                    ),
+                    0,
+                )
 
     unittest.main()
