@@ -36,9 +36,11 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | vercel_         | vultr_          |
+| transip_        | ultradns_       | valuedomain_    | vercel_         |
 +-----------------+-----------------+-----------------+-----------------+
-| yandex_         | zeit_           | zilore_         | zonomi_         |
+| vultr_          | yandex_         | zeit_           | zilore_         |
++-----------------+-----------------+-----------------+-----------------+
+| zonomi_         |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -584,6 +586,19 @@ ultradns
     * ``auth_token`` Specify token for authentication; if not set --auth-token, --auth-password are used
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. _valuedomain:
+
+valuedomain
+
+.. note::
+   
+   Value Domain requires a token to access its API.
+   You can generate one for your account on the following URL:
+   https://www.value-domain.com/vdapi/
+
+
+    * ``auth_token`` Specify youyr api token
 
 .. _vercel:
 
