@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Complete redesign of the update action in GoDaddy provider to fix several issues
 
 ## 3.8.4 - 28/12/2021
 ### Added
