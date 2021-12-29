@@ -2,6 +2,8 @@
 
 ## master - CURRENT
 
+## 3.8.6 - 29/12/2021
+
 ## 3.8.5 - 29/12/2021
 ### Modified
 * Complete redesign of the update action in GoDaddy provider to fix several issues

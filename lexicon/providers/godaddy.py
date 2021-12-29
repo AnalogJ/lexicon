@@ -242,7 +242,7 @@ class Provider(BaseProvider):
             identifiers = [identifier]
         else:
             identifiers = [self._identifier(record) for record in matching_records]
-            
+
         # Clean up the records list:
         # - by removing all records that are not matching the target type
         # - by removing all records that must be evicted in the current call
@@ -264,7 +264,9 @@ class Provider(BaseProvider):
             # then use the endpoint `DELETE /domains/{domain}/records/{rtype}/{name}` to remove
             # the remaining record.
             self._put(f"/domains/{self.domain}/records/{rtype}", [matching_records[0]])
-            self._delete(f"/domains/{self.domain}/records/{rtype}/{matching_records[0]['name']}")
+            self._delete(
+                f"/domains/{self.domain}/records/{rtype}/{matching_records[0]['name']}"
+            )
 
         LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
 
