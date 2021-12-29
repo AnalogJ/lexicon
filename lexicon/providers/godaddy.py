@@ -8,6 +8,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
 from lexicon.providers.base import Provider as BaseProvider
+from lexicon.exceptions import LexiconError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -131,44 +132,72 @@ class Provider(BaseProvider):
         if not identifier and not name:
             raise Exception("ERROR: name is required")
 
-        domain = self.domain
-        relative_name = None
-        if name:
-            relative_name = self._relative_name(name)
-
-        updated_record = None
         # Retrieve existing data in DNS zone.
-        records = self._get(f"/domains/{domain}/records")
+        records = self._get(f"/domains/{self.domain}/records")
 
-        # Get the record to update:
-        #   - either explicitly by its identifier,
-        #   - or the first matching by its rtype+name where content does not match
-        #     (first match, see first method comment for explanation).
-        for record in records:
-            if (identifier and Provider._identifier(record) == identifier) or (
-                not identifier
-                and record["type"] == rtype
-                and self._relative_name(record["name"]) == relative_name
-                and record["data"] != content
-            ):
-                record["data"] = content
-                updated_record = record
-                break
+        # Find matching record, either by identifier matching, or rtype + name matching
+        if identifier:
+            matching_records = [
+                record
+                for record in records
+                if Provider._identifier(record) == identifier
+            ]
 
-        if not relative_name:
-            relative_name = self._relative_name(updated_record["name"])
-
-        # Synchronize data with updated records into DNS zone.
-        if updated_record is not None:
-            if (
-                identifier
-                and self._relative_name(updated_record["name"]) != relative_name
-            ):
-                self._put(f"/domains/{domain}/records/{rtype}", records)
-            else:
-                self._put(
-                    f"/domains/{domain}/records/{rtype}/{relative_name}", updated_record
+            if not matching_records:
+                raise LexiconError(
+                    f"Could not find record matching identifier: {identifier}"
                 )
+        else:
+            matching_records = [
+                record
+                for record in records
+                if record["type"] == rtype
+                and self._relative_name(record["name"]) == self._relative_name(name)
+            ]
+
+            if not matching_records:
+                raise LexiconError(
+                    f"Could not find record matching type: {rtype}, name: {name}"
+                )
+
+        if len(matching_records) > 1:
+            LOGGER.warn(
+                "Warning, multiple matching updatable records found, first one is picked."
+            )
+
+        matching_record = matching_records[0]
+
+        # Ensure all content to update is defined
+        rtype = rtype if rtype else matching_record["type"]
+        name = name if name else matching_record["name"]
+        content = content if content else matching_record["data"]
+        relative_name = self._relative_name(name)
+
+        # Filter out DNS zone records to focus on the target rtype
+        records = [record for record in records if record["type"] == rtype]
+
+        # Prepare update in-place
+        matching_record["type"] = rtype
+        matching_record["name"] = relative_name
+        matching_record["data"] = content
+
+        # Actual update, with two possible strategies
+        if self._relative_name(matching_record["name"]) == relative_name:
+            # If the name of the record stays the same, we use the scoped API on this name to
+            # redefine specifically the records of this rtype and name, including the updated one.
+            records = [
+                record
+                for record in records
+                if self._relative_name(record["name"]) == relative_name
+            ]
+            self._put(
+                f"/domains/{self.domain}/records/{rtype}/{relative_name}",
+                records,
+            )
+        else:
+            # If the name of the record changes, we redefine the whole set to records of this rtype
+            # using the list of records, including the updated one.
+            self._put(f"/domains/{self.domain}/records/{rtype}", records)
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
@@ -328,7 +357,12 @@ class Provider(BaseProvider):
             },
         )
 
-        result.raise_for_status()
+        try:
+            result.raise_for_status()
+        except:
+            print(data)
+            print(result.json())
+            raise
 
         try:
             # Return the JSON body response if exists.
