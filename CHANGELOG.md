@@ -2,6 +2,13 @@
 
 ## master - CURRENT
 
+## 3.8.4 - 28/12/2021
+### Added
+* Add the Value Domain provider (#1018)
+
+### Modified
+* Fix issue on the GoDaddy provider for update actions
+
 ## 3.8.3 - 12/11/2021
 ### Modified
 * Fix `plesk` provider (#1004)
