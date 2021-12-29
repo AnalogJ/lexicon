@@ -2,6 +2,7 @@
 import hashlib
 import json
 import logging
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -117,16 +118,13 @@ class Provider(BaseProvider):
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        # No identifier is used with GoDaddy.
-        # We can rely either:
-        #   - only on rtype/name to get the relevant records, both of them are required
-        #     or we will could update to much records ...,
-        #   - or by the pseudo-identifier provided
-        # Furthermore for rtype/name approach, we cannot update all matching records, as it
-        # would lead o an error (two entries of same rtype + name cannot have the same content).
-        # So for rtype/name approach, we search first matching record for rtype/name on which
-        # content is different, and we update it before synchronizing the DNS zone.
+    def _find_matching_records(
+        self,
+        identifier: Optional[str],
+        rtype: Optional[str],
+        name: Optional[str],
+        content: Optional[str],
+    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
         if not identifier and not rtype:
             raise Exception("ERROR: rtype is required")
         if not identifier and not name:
@@ -135,7 +133,7 @@ class Provider(BaseProvider):
         # Retrieve existing data in DNS zone.
         records = self._get(f"/domains/{self.domain}/records")
 
-        # Find matching record, either by identifier matching, or rtype + name matching
+        # Find matching record, either by identifier matching, or rtype + name + content matching
         if identifier:
             matching_records = [
                 record
@@ -155,10 +153,38 @@ class Provider(BaseProvider):
                 and self._relative_name(record["name"]) == self._relative_name(name)
             ]
 
+            if content:
+                matching_records = [
+                    record for record in matching_records if record["data"] == content
+                ]
+
             if not matching_records:
+                suffix = f", content: {content}" if content else ""
                 raise LexiconError(
-                    f"Could not find record matching type: {rtype}, name: {name}"
+                    f"Could not find record matching type: {rtype}, name: {name}{suffix}"
                 )
+
+        return matching_records, records
+
+    def _merge_records_list(self, url: str, records: List[Dict[str, Any]]) -> None:
+        if records:
+            self._put(url, records)
+        else:
+            self._delete(url)
+
+    def _update_record(self, identifier, rtype=None, name=None, content=None):
+        # No identifier is used with GoDaddy.
+        # We can rely either:
+        #   - only on rtype/name to get the relevant records, both of them are required
+        #     or we will could update to much records ...,
+        #   - or by the pseudo-identifier provided
+        # Furthermore for rtype/name approach, we cannot update all matching records, as it
+        # would lead o an error (two entries of same rtype + name cannot have the same content).
+        # So for rtype/name approach, we search first matching record for rtype/name on which
+        # content is different, and we update it before synchronizing the DNS zone.
+        matching_records, records = self._find_matching_records(
+            identifier, rtype, name, None
+        )
 
         if len(matching_records) > 1:
             LOGGER.warn(
@@ -190,14 +216,14 @@ class Provider(BaseProvider):
                 for record in records
                 if self._relative_name(record["name"]) == relative_name
             ]
-            self._put(
+            self._merge_records_list(
                 f"/domains/{self.domain}/records/{rtype}/{relative_name}",
                 records,
             )
         else:
             # If the name of the record changes, we redefine the whole set to records of this rtype
             # using the list of records, including the updated one.
-            self._put(f"/domains/{self.domain}/records/{rtype}", records)
+            self._merge_records_list(f"/domains/{self.domain}/records/{rtype}", records)
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
