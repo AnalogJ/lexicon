@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.0 - 06/01/2022
 ## Deleted
 * Drop Python 3.6 support
 
