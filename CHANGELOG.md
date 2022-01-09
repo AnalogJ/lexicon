@@ -2,16 +2,36 @@
 
 ## master - CURRENT
 
+## 3.9.0 - 06/01/2022
+## Deleted
+* Drop Python 3.6 support
+
+## 3.8.5 - 29/12/2021
+### Modified
+* Complete redesign of the update and delete actions in GoDaddy provider to fix several issues
+
+## 3.8.4 - 28/12/2021
+### Added
+* Add the Value Domain provider (#1018)
+
+### Modified
+* Fix issue on the GoDaddy provider for update actions
+
+## 3.8.3 - 12/11/2021
+### Modified
+* Fix `plesk` provider (#1004)
+* Update nameservers in `namecheap` provider (#911)
+
 ## 3.8.2 - 03/11/2021
-## Modified
+### Modified
 * Fix `dreamhost` provider since deprecated API endpoints are removed (#998)
 
 ## 3.8.1 - 15/10/2021
-## Modified
+### Modified
 * Fix `rackspace` provider by not sending a body request for `GET` requests (#989)
 
 ## 3.8.0 - 04/10/2021
-## Modified
+### Modified
 * `transip` provider is deprecated and not maintained anymore, it will be replaced
    soon by a new `transip` provider build on top of the TransIP v6 REST API
 

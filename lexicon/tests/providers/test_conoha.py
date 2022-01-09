@@ -14,7 +14,7 @@ class ConohaProviderTests(TestCase, IntegrationTestsV2):
     domain = "narusejun.com"
 
     def _test_parameters_overrides(self):
-        return {"region": "tyo1"}
+        return {"auth_region": "tyo1"}
 
     def _test_fallback_fn(self):
         return lambda x: None if x in ("priority") else "placeholder_" + x

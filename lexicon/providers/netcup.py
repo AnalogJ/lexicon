@@ -9,7 +9,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["netcup.de"]
+NAMESERVER_DOMAINS = ["netcup.net"]
 
 
 def provider_parser(subparser):
