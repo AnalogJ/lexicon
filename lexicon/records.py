@@ -30,7 +30,8 @@ class Record(ABC):
 
     @property
     def name(self) -> str:
-        return self.rname.to_text()
+        # Remove trailing dot
+        return self.rname.to_text()[:-1]
 
     @property
     def content(self) -> str:
@@ -82,6 +83,11 @@ class SOARecord(Record):
 
 class TXTRecord(Record):
     rdatatype = dns.rdatatype.TXT
+
+    @property
+    def content(self) -> str:
+        # Remove surrounding double-quotes
+        return self.rdata.to_text()[1:-1]
 
 
 class SRVRecord(Record):

@@ -5,6 +5,7 @@ import os
 import sys
 from typing import Tuple
 from typing import Callable
+from typing import Optional
 
 from lexicon import discovery
 
@@ -94,8 +95,8 @@ def configure_base_provider_legacy_subparser(parser: argparse.ArgumentParser,
     provider_parser_config(parser)
 
 
-def generate_cli_main_parser() -> Tuple[str, argparse.ArgumentParser]:
-    parser_type = _guess_main_parser()
+def generate_cli_main_parser(parser_type: Optional[str] = None) -> Tuple[str, argparse.ArgumentParser]:
+    parser_type = parser_type if parser_type else _guess_main_parser()
 
     if parser_type == "LEGACY":
         print("Warning: Legacy CLI detected. This CLI will be dropped "

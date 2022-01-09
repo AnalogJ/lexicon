@@ -2,22 +2,23 @@
 import json
 
 from lexicon import cli
+from lexicon import records
 
 DATA = [
-    {
+    records.from_dict({
         "id": "fake-id",
         "type": "TXT",
         "name": "fake.example.com",
         "content": "fake",
         "ttl": 3600,
-    },
-    {
+    }),
+    records.from_dict({
         "id": "fake2-id",
         "type": "TXT",
         "name": "fake2.example.com",
         "content": "fake2",
         "ttl": 3600,
-    },
+    })
 ]
 
 
