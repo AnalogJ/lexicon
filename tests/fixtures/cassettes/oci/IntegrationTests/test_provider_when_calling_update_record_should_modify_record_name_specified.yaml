@@ -1,0 +1,178 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:21:43 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com
+  response:
+    body:
+      string: '{"zoneType":"PRIMARY","name":"lexicon-test.com","externalMasters":[],"self":"https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com","timeCreated":"2021-06-23T10:07:46Z","version":"448","serial":448,"nameservers":[{"hostname":"ns1.p68.dns.oraclecloud.net"},{"hostname":"ns2.p68.dns.oraclecloud.net"},{"hostname":"ns3.p68.dns.oraclecloud.net"},{"hostname":"ns4.p68.dns.oraclecloud.net"}],"compartmentId":"OCI-COMPARTMENT-ID","id":"DNS-ZONE-ID","lifecycleState":"ACTIVE","scope":"GLOBAL","viewId":null,"isProtected":false}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:21:45 GMT
+      ETag:
+      - '"448ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168docid1.compartment.oc1..aaaaaaaakklh3onuoqfzgpe4tlflbmabkytrmmukcllef5vfc65quvqhtfsq164374825086dc65cd5dc548c248f61328b5d668#application/json--gzip"'
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '645'
+      opc-request-id:
+      - /F575570A1A652403461B4FE2A31CB21C/840BBFFCC11DC422AB758F01E851BEB9
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"items": [{"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken",
+      "ttl": 3600}]}'
+    headers:
+      Content-Length:
+      - '89'
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:21:45 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: PATCH
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.nameonly.test.lexicon-test.com
+  response:
+    body:
+      string: '{"items":[{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"896d848b26f834d9c8fe08f83aaa580b","isProtected":false,"rdata":"\"updated\"","rrsetVersion":"321","rtype":"TXT","ttl":3600},{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"d96871ac7da8df9d246600731475f74a","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"321","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '389'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:21:47 GMT
+      ETag:
+      - '"321ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      opc-request-id:
+      - /5EFCCA3A6FC2E7D8FB3CC8A86E329CFD/D492B1DEAC226EE01FEF485DC8025CC2
+      opc-total-items:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:21:47 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.nameonly.test.lexicon-test.com?limit=100&rtype=TXT
+  response:
+    body:
+      string: '{"items":[{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"896d848b26f834d9c8fe08f83aaa580b","isProtected":false,"rdata":"\"updated\"","rrsetVersion":"321","rtype":"TXT","ttl":3600},{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"d96871ac7da8df9d246600731475f74a","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"321","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:21:52 GMT
+      ETag:
+      - '"321ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json--gzip"'
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '389'
+      opc-request-id:
+      - /37CD2429E68DC95A647A313D501ACE51/607F21C01A4A7AFE3F6E6A667944DACD
+      opc-total-items:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"items": [{"operation": "REMOVE", "recordHash": "896d848b26f834d9c8fe08f83aaa580b"},
+      {"operation": "ADD", "rtype": "TXT", "rdata": "updated", "ttl": 3600}]}'
+    headers:
+      Content-Length:
+      - '157'
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Mon, 28 Jun 2021 22:21:52 GMT
+      host:
+      - dns.us-ashburn-1.oraclecloud.com
+      user-agent:
+      - python-requests/2.25.1
+    method: PATCH
+    uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.nameonly.test.lexicon-test.com
+  response:
+    body:
+      string: '{"items":[{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"896d848b26f834d9c8fe08f83aaa580b","isProtected":false,"rdata":"\"updated\"","rrsetVersion":"321","rtype":"TXT","ttl":3600},{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"d96871ac7da8df9d246600731475f74a","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"321","rtype":"TXT","ttl":3600}]}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '389'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Jun 2021 22:21:54 GMT
+      ETag:
+      - '"321ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      opc-request-id:
+      - /4126FECB2DC642BED6E258F2B152F696/3C371FB43C15A4A57A36F190DA1A5BC1
+      opc-total-items:
+      - '2'
+    status:
+      code: 200
+      message: OK
+version: 1

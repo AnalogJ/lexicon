@@ -15,7 +15,7 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
     method: GET
-    uri: https://dns.hetzner.com/api/v1/zones
+    uri: https://dns.hetzner.com/api/v1/zones?name=hetzner-api-test.de
   response:
     body:
       string: !!python/unicode '{"zones":[{"id":"hetznerapizoneid","name":"hetzner-api-test.de","ttl":3600,"registrar":"","legacy_dns_host":"","legacy_ns":["ns1.first-ns.de.","robotns2.second-ns.de.","robotns3.second-ns.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07

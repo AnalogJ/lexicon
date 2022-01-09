@@ -46,10 +46,10 @@ class Provider(BaseProvider):
         self.domain_id = None
 
         self.api_endpoint = "https://dns-service.{0}.conoha.io/v1".format(
-            self._get_provider_option("region") or "tyo1"
+            self._get_provider_option("auth_region") or "tyo1"
         )
         self.auth_api_endpoint = "https://identity.{0}.conoha.io/v2.0".format(
-            self._get_provider_option("region") or "tyo1"
+            self._get_provider_option("auth_region") or "tyo1"
         )
         self.auth_token = None
 

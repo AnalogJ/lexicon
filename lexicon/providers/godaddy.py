@@ -2,11 +2,13 @@
 import hashlib
 import json
 import logging
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
+from lexicon.exceptions import LexiconError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -105,7 +107,7 @@ class Provider(BaseProvider):
         # Append a new entry corresponding to given parameters.
         data = {"type": rtype, "name": relative_name, "data": content}
         if ttl:
-            data["ttl"] = ttl
+            data["ttl"] = int(ttl)
 
         records.append(data)
 
@@ -115,6 +117,56 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s %s %s", rtype, name, content)
 
         return True
+
+    def _find_matching_records(
+        self,
+        identifier: Optional[str],
+        rtype: Optional[str],
+        name: Optional[str],
+        content: Optional[str],
+    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+        # Retrieve existing data in DNS zone.
+        records = self._get(f"/domains/{self.domain}/records")
+
+        # Find matching record, either by identifier matching, or rtype + name + content matching
+        if identifier:
+            matching_records = [
+                record
+                for record in records
+                if Provider._identifier(record) == identifier
+            ]
+
+            if not matching_records:
+                raise LexiconError(
+                    f"Could not find record matching identifier: {identifier}"
+                )
+        else:
+            matching_records = records.copy()
+
+            if rtype:
+                matching_records = [
+                    record for record in matching_records if record["type"] == rtype
+                ]
+
+            if name:
+                matching_records = [
+                    record
+                    for record in matching_records
+                    if self._relative_name(record["name"]) == self._relative_name(name)
+                ]
+
+            if content:
+                matching_records = [
+                    record for record in matching_records if record["data"] == content
+                ]
+
+            if not matching_records:
+                suffix = f", content: {content}" if content else ""
+                raise LexiconError(
+                    f"Could not find record matching type: {rtype}, name: {name}{suffix}"
+                )
+
+        return matching_records, records
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         # No identifier is used with GoDaddy.
@@ -131,134 +183,90 @@ class Provider(BaseProvider):
         if not identifier and not name:
             raise Exception("ERROR: name is required")
 
-        domain = self.domain
-        relative_name = None
-        if name:
-            relative_name = self._relative_name(name)
+        matching_records, records = self._find_matching_records(
+            identifier, rtype, name, None
+        )
 
-        updated_record = None
-        # Retrieve existing data in DNS zone.
-        records = self._get(f"/domains/{domain}/records")
+        if len(matching_records) > 1:
+            LOGGER.warn(
+                "Warning, multiple matching updatable records found, first one is picked."
+            )
 
-        # Get the record to update:
-        #   - either explicitly by its identifier,
-        #   - or the first matching by its rtype+name where content does not match
-        #     (first match, see first method comment for explanation).
-        for record in records:
-            if (identifier and Provider._identifier(record) == identifier) or (
-                not identifier
-                and record["type"] == rtype
-                and self._relative_name(record["name"]) == relative_name
-                and record["data"] != content
-            ):
-                record["data"] = content
-                updated_record = record
-                break
+        matching_record = matching_records[0]
 
-        # Synchronize data with updated records into DNS zone.
-        if updated_record is not None:
-            if (
-                identifier
-                and self._relative_name(updated_record["name"]) != relative_name
-            ):
-                self._put(f"/domains/{domain}/records/{rtype}", records)
-            else:
-                self._put(
-                    f"/domains/{domain}/records/{rtype}/{relative_name}", updated_record
-                )
+        # Ensure all content to update is defined
+        rtype = rtype if rtype else matching_record["type"]
+        name = name if name else matching_record["name"]
+        content = content if content else matching_record["data"]
+        relative_name = self._relative_name(name)
+
+        # Filter out DNS zone records to focus on the target rtype
+        records = [record for record in records if record["type"] == rtype]
+
+        # Prepare update in-place
+        matching_record["type"] = rtype
+        matching_record["name"] = relative_name
+        matching_record["data"] = content
+
+        # Actual update, with two possible strategies
+        if self._relative_name(matching_record["name"]) == relative_name:
+            # If the name of the record stays the same, we use the scoped API on this name to
+            # redefine specifically the records of this rtype and name, including the updated one.
+            records = [
+                record
+                for record in records
+                if self._relative_name(record["name"]) == relative_name
+            ]
+            self._put(
+                f"/domains/{self.domain}/records/{rtype}/{relative_name}",
+                records,
+            )
+        else:
+            # If the name of the record changes, we redefine the whole set to records of this rtype
+            # using the list of records, including the updated one.
+            self._put(f"/domains/{self.domain}/records/{rtype}", records)
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        # For the LOL. GoDaddy does not accept an empty array
-        # when updating a particular set of records.
-        # It means that you cannot request to remove all records
-        # matching a particular rtype and/or name.
-        # Instead, we get ALL records in the DNS zone, update the set,
-        # and replace EVERYTHING in the DNS zone.
-        # You will always have at minimal NS/SRV entries in the array,
-        # otherwise your DNS zone is broken, and updating the zone is the least of your problem ...
-        domain = self.domain
+        # Get the list of records to evict and the list of all current records in the DNS zone.
+        matching_records, records = self._find_matching_records(
+            identifier, rtype, name, content
+        )
 
-        # Retrieve all records in the DNS zone
-        records = self._get(f"/domains/{domain}/records")
-
-        relative_name = None
-        if name:
-            relative_name = self._relative_name(name)
-
-        # Filter out all records which matches the pattern (either identifier
-        # or some combination of rtype/name/content).
-        filtered_records = []
         if identifier:
-            filtered_records = [
-                record
-                for record in records
-                if Provider._identifier(record) != identifier
-            ]
+            # When identifier is used, by definition only one unique record can match.
+            rtype = matching_records[0]["type"]
+            identifiers = [identifier]
         else:
-            for record in records:
-                if (
-                    (not rtype and not relative_name and not content)
-                    or (
-                        rtype
-                        and not relative_name
-                        and not content
-                        and record["type"] != rtype
-                    )
-                    or (
-                        not rtype
-                        and relative_name
-                        and not content
-                        and self._relative_name(record["name"]) != relative_name
-                    )
-                    or (
-                        not rtype
-                        and not relative_name
-                        and content
-                        and record["data"] != content
-                    )
-                    or (
-                        rtype
-                        and relative_name
-                        and not content
-                        and (
-                            record["type"] != rtype
-                            or self._relative_name(record["name"]) != relative_name
-                        )
-                    )
-                    or (
-                        rtype
-                        and not relative_name
-                        and content
-                        and (record["type"] != rtype or record["data"] != content)
-                    )
-                    or (
-                        not rtype
-                        and relative_name
-                        and content
-                        and (
-                            self._relative_name(record["name"]) != relative_name
-                            or record["data"] != content
-                        )
-                    )
-                    or (
-                        rtype
-                        and relative_name
-                        and content
-                        and (
-                            record["type"] != rtype
-                            or self._relative_name(record["name"]) != relative_name
-                            or record["data"] != content
-                        )
-                    )
-                ):
-                    filtered_records.append(record)
+            identifiers = [self._identifier(record) for record in matching_records]
 
-        # Synchronize data with expurged entries into DNS zone.
-        self._put(f"/domains/{domain}/records", filtered_records)
+        # Clean up the records list:
+        # - by removing all records that are not matching the target type
+        # - by removing all records that must be evicted in the current call
+        records = [
+            record
+            for record in records
+            if record["type"] == rtype and self._identifier(record) not in identifiers
+        ]
+
+        # Resynchronize the current set of records for the target type using the cleaned list,
+        # which effectively deletes the records to evict.
+        if records:
+            self._put(f"/domains/{self.domain}/records/{rtype}", records)
+        else:
+            # List records is empty, the intention here is to delete all records of a given type.
+            # Sadly GoDaddy API ignores empty arrays in a PUT request, so it is not possible to
+            # do that directly using the endpoint `PUT /domains/{domain}/records/{rtype}`.
+            # The trick here is to use PUT with one unique record remaining (matching_records[0]),
+            # then use the endpoint `DELETE /domains/{domain}/records/{rtype}/{name}` to remove
+            # the remaining record.
+            self._put(f"/domains/{self.domain}/records/{rtype}", [matching_records[0]])
+            self._delete(
+                f"/domains/{self.domain}/records/{rtype}/{matching_records[0]['name']}"
+            )
 
         LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
 
@@ -283,22 +291,26 @@ class Provider(BaseProvider):
         return sha256.hexdigest()[0:7]
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
-        if not data:
-            data = {}
-        if not query_params:
-            query_params = {}
-
         # When editing DNS zone, API is unavailable for few seconds
         # (until modifications are propagated).
         # In this case, call to API will return 409 HTTP error.
         # We use the Retry extension to retry the requests until
         # we get a processable response (402 HTTP status, or an HTTP error != 409)
-        retries = Retry(
-            total=10,
-            backoff_factor=0.5,
-            status_forcelist=[409],
-            allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
-        )
+        try:
+            retries = Retry(
+                total=10,
+                backoff_factor=0.5,
+                status_forcelist=[409],
+                allowed_methods=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
+            )
+        except TypeError:
+            # Support for urllib3<1.26
+            retries = Retry(
+                total=10,
+                backoff_factor=0.5,
+                status_forcelist=[409],
+                method_whitelist=frozenset(["GET", "PUT", "POST", "DELETE", "PATCH"]),
+            )
 
         session = requests.Session()
         session.mount("https://", HTTPAdapter(max_retries=retries))
@@ -307,11 +319,11 @@ class Provider(BaseProvider):
             action,
             self.api_endpoint + url,
             params=query_params,
-            data=json.dumps(data),
+            data=json.dumps(data) if data else None,
             headers={
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                # GoDaddy use a key/secret pair to authenticate
+                # GoDaddy uses a key/secret pair to authenticate
                 "Authorization": f"sso-key {self._get_provider_option('auth_key')}:{self._get_provider_option('auth_secret')}",
             },
         )

@@ -78,8 +78,9 @@ class Provider(BaseProvider):
 
         data = response.data[0]
         items = data.split(" ")
+        domain_status = items[2].split(",")
 
-        if items[2] not in ["production", "lock"]:
+        if len(set(domain_status).difference(["production", "lock", "autorenew"])) > 0:
             raise AuthenticationError(
                 f"Current status for domain {self.domain} is: {items[2]}"
             )

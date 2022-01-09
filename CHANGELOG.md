@@ -2,6 +2,63 @@
 
 ## master - CURRENT
 
+## 3.9.0 - 06/01/2022
+## Deleted
+* Drop Python 3.6 support
+
+## 3.8.5 - 29/12/2021
+### Modified
+* Complete redesign of the update and delete actions in GoDaddy provider to fix several issues
+
+## 3.8.4 - 28/12/2021
+### Added
+* Add the Value Domain provider (#1018)
+
+### Modified
+* Fix issue on the GoDaddy provider for update actions
+
+## 3.8.3 - 12/11/2021
+### Modified
+* Fix `plesk` provider (#1004)
+* Update nameservers in `namecheap` provider (#911)
+
+## 3.8.2 - 03/11/2021
+### Modified
+* Fix `dreamhost` provider since deprecated API endpoints are removed (#998)
+
+## 3.8.1 - 15/10/2021
+### Modified
+* Fix `rackspace` provider by not sending a body request for `GET` requests (#989)
+
+## 3.8.0 - 04/10/2021
+### Modified
+* `transip` provider is deprecated and not maintained anymore, it will be replaced
+   soon by a new `transip` provider build on top of the TransIP v6 REST API
+
+## Deleted
+* `transip` provider is not part of the `full` dns-lexicon extra, you need to install
+  explicitly the `transip` extra instead
+
+## 3.7.1 - 04/10/2021
+### Modified
+* Allow to use newer versions of `cryptography`
+* Fix doc about unit tests
+
+## 3.7.0 - 09/08/2021
+### Added
+* Add the Vercel provider (formerly known as Zeit)
+* Add the OpenShift Cloud Infrastructure (OCI) DNS provider (#860)
+
+### Modified
+* Keep old Zeit provider for compatibility purpose with deprecation notices
+* Support multiple domain statuses for Joker provider (#880)
+
+## 3.6.1 - 27/06/2021
+### Modified
+* Support deprecated `method_whitelist` parameter in urllib3.util.retry.Retry for urllib3<1.26
+* Fix support of registered domains for INWX provider (#828)
+* Update `mypy` and use external types modules
+
 ## 3.6.0 - 02/05/2021
 ### Added
 * Vendor `pynamecheap` project for `namecheap` provider

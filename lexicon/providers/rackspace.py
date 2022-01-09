@@ -206,11 +206,12 @@ class Provider(BaseProvider):
         full_url = (
             f"{self.api_endpoint}/{self._get_rackspace_option('auth_account')}{url}"
         )
+        # For data= argument, use None value for GET requests to comply with Rackspace API
         response = requests.request(
             action,
             full_url,
             params=query_params,
-            data=json.dumps(data),
+            data=json.dumps(data) if action != "GET" else None,
             headers={
                 "X-Auth-Token": self._get_rackspace_option("auth_token"),
                 "Content-Type": "application/json",

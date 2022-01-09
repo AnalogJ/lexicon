@@ -120,7 +120,7 @@ class Provider(BaseProvider):
         return records
 
     def _clean_rrtype(self, rtype):
-        """ UltraDNS returns records with types like 'MX (15)' """
+        """UltraDNS returns records with types like 'MX (15)'"""
         return rtype.split()[0]
 
     def _clean_content(self, rtype, content):

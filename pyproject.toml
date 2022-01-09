@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.6.0"
+version = "3.9.0"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -20,10 +20,10 @@ classifiers = [
     "Topic :: Utilities",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 authors = [
     "Jason Kulatunga", "Adrien Ferrand"
@@ -33,21 +33,23 @@ repository = "https://github.com/AnalogJ/lexicon"
 packages = [
     { include = "lexicon" },
 ]
+exclude = [ "lexicon/tests/providers/" ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-tldextract = ">=2,<4"
-cryptography = ">=2,<4"
-pyyaml = ">=3,<6"
-requests = "^2"
-beautifulsoup4 = "^4"
+python = "^3.7"
+tldextract = ">=2"
+cryptography = ">=2"
+pyyaml = ">=3"
+requests = ">=2"
+beautifulsoup4 = ">=4"
 # Optional dependencies required by some providers
-boto3 = { version = "^1", optional = true }
-dnspython = { version = "^2", optional = true }
-localzone = { version = ">=0.9.8,<1", optional = true }
-transip = { version = "^2", optional = true }
-softlayer = {version = "^5", optional = true}
-zeep = { version = ">=3,<5", optional = true }
+boto3 = { version = ">=1", optional = true }
+dnspython = { version = ">=2", optional = true }
+localzone = { version = ">=0.9.8", optional = true }
+transip = { version = ">=2", optional = true }
+softlayer = {version = ">=5", optional = true}
+zeep = { version = ">=3", optional = true }
+oci = {version = ">=2", optional = true}
 
 [tool.poetry.extras]
 route53 = ["boto3"]
@@ -56,8 +58,10 @@ localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 ddns = ["dnspython"]
+oci = ["oci"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "transip", "localzone", "softlayer", "zeep", "ddns"]
+# NB: transip is excluded from the full list because it cannot be maintained anymore.
+full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
@@ -69,6 +73,12 @@ isort = "*"
 tox = "*"
 black = { version = "*", allow-prereleases = true }
 mypy = "*"
+types-PyYAML = "*"
+types-pytz = "*"
+types-requests = "*"
+types-setuptools = "*"
+types-six = "*"
+types-toml = "*"
 
 [tool.poetry.scripts]
 lexicon = "lexicon.cli:main"
