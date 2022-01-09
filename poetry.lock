@@ -206,7 +206,7 @@ name = "dnspython"
 version = "2.1.0"
 description = "DNS toolkit"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.extras]
@@ -976,7 +976,6 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
-ddns = ["dnspython"]
 full = ["boto3", "localzone", "softlayer", "zeep", "oci"]
 gransy = ["zeep"]
 localzone = ["localzone"]
@@ -988,7 +987,7 @@ transip = ["transip"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a579ba08bcbbf981b9abb03b36ca7909743068ffc856d35f8b5aa8cb9c070e01"
+content-hash = "1a78f4e59362dbe7eb167920f81945f16b30e328185e7197e8ebf91980175869"
 
 [metadata.files]
 atomicwrites = [

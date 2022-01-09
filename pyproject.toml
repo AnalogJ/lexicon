@@ -41,9 +41,9 @@ cryptography = ">=2"
 pyyaml = ">=3"
 requests = ">=2"
 beautifulsoup4 = ">=4"
+dnspython = ">=2"
 # Optional dependencies required by some providers
 boto3 = { version = ">=1", optional = true }
-dnspython = { version = ">=2", optional = true }
 localzone = { version = ">=0.9.8", optional = true }
 transip = { version = ">=2", optional = true }
 softlayer = {version = ">=5", optional = true}
@@ -56,11 +56,10 @@ transip = ["transip"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
-ddns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
 # NB: transip is excluded from the full list because it cannot be maintained anymore.
-full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "oci"]
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
