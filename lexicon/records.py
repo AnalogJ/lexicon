@@ -148,7 +148,7 @@ def _one_from_text(cls: Type[T], text: str) -> T:
         name = name_ttl
         ttl = None
 
-    return cls.create(name, content, ttl=ttl)
+    return _create(cls, name, content, ttl=ttl)
 
 
 def _create(cls: Type[T], name: str, content: str,
