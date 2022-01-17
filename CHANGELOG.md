@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.2 - 17/01/2022
 ### Modified
 * Fix configuration reference
 
