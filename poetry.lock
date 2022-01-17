@@ -64,14 +64,14 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.20.31"
+version = "1.20.37"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.23.31,<1.24.0"
+botocore = ">=1.23.37,<1.24.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
@@ -80,7 +80,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.23.31"
+version = "1.23.37"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -387,7 +387,7 @@ python-versions = "*"
 
 [[package]]
 name = "oci"
-version = "2.53.1"
+version = "2.54.0"
 description = "Oracle Cloud Infrastructure Python SDK"
 category = "main"
 optional = true
@@ -715,14 +715,6 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "suds-jurko"
-version = "0.6"
-description = "Lightweight SOAP client (Jurko's fork)"
-category = "main"
-optional = true
-python-versions = "*"
-
-[[package]]
 name = "tldextract"
 version = "3.1.2"
 description = "Accurately separate the TLD from the registered domain and subdomains of a URL, using the Public Suffix List. By default, this includes the public ICANN TLDs and their exceptions. You can optionally support the Public Suffix List's private domains as well."
@@ -776,19 +768,6 @@ docs = ["pygments-github-lexers (>=0.0.5)", "sphinx (>=2.0.0)", "sphinxcontrib-a
 testing = ["flaky (>=3.4.0)", "freezegun (>=0.3.11)", "pytest (>=4.0.0)", "pytest-cov (>=2.5.1)", "pytest-mock (>=1.10.0)", "pytest-randomly (>=1.0.0)", "psutil (>=5.6.1)", "pathlib2 (>=2.3.3)"]
 
 [[package]]
-name = "transip"
-version = "2.1.2"
-description = "TransIP API Connector"
-category = "main"
-optional = true
-python-versions = "*"
-
-[package.dependencies]
-cryptography = "*"
-requests = "*"
-suds-jurko = "*"
-
-[[package]]
 name = "typed-ast"
 version = "1.5.1"
 description = "a fork of Python 2 and 3 ast modules with type comment support"
@@ -814,7 +793,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-requests"
-version = "2.27.3"
+version = "2.27.7"
 description = "Typing stubs for requests"
 category = "dev"
 optional = false
@@ -849,7 +828,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-urllib3"
-version = "1.26.1"
+version = "1.26.7"
 description = "Typing stubs for urllib3"
 category = "dev"
 optional = false
@@ -983,12 +962,11 @@ localzone = ["localzone"]
 oci = ["oci"]
 route53 = ["boto3"]
 softlayer = ["softlayer"]
-transip = ["transip"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a579ba08bcbbf981b9abb03b36ca7909743068ffc856d35f8b5aa8cb9c070e01"
+content-hash = "f1e8229028e0b5930823a9124928eb78e02cbe5c332097a0d4839f6fa4a3629c"
 
 [metadata.files]
 atomicwrites = [
@@ -1008,12 +986,12 @@ black = [
     {file = "black-21.12b0.tar.gz", hash = "sha256:77b80f693a569e2e527958459634f18df9b0ba2625ba4e0c2d5da5be42e6f2b3"},
 ]
 boto3 = [
-    {file = "boto3-1.20.31-py3-none-any.whl", hash = "sha256:948e81af347085e6bc5ff08368d7901afec9e7628adf180c9cc856c7b0ae3395"},
-    {file = "boto3-1.20.31.tar.gz", hash = "sha256:3003d64ebef678b89a9909d2df3836160c7cbad5cbfe6c995a61de0875b36237"},
+    {file = "boto3-1.20.37-py3-none-any.whl", hash = "sha256:55c7004af4296648ee497417dfc454d9c39770c265f67e28e1c5f10e11f3b644"},
+    {file = "boto3-1.20.37.tar.gz", hash = "sha256:0e2f8aa8ee71f144d8afbe9ff7d0bb40525b94535e0695bdb200687970c9f452"},
 ]
 botocore = [
-    {file = "botocore-1.23.31-py3-none-any.whl", hash = "sha256:187c736ce242bbea3d1440c580d270e0fd839276c5cc3938a85b8c59366c1803"},
-    {file = "botocore-1.23.31.tar.gz", hash = "sha256:bb34fa60ab894f9a4a1f7de36e32a68ce17f302108f83732c3ca99c7da2bf68c"},
+    {file = "botocore-1.23.37-py3-none-any.whl", hash = "sha256:9ea3eb6e507684900418ad100e5accd1d98979d41c49bacf15f970f0d72f75d4"},
+    {file = "botocore-1.23.37.tar.gz", hash = "sha256:f3077f1ca19e6ab6b7a84c61e01e136a97c7732078a8d806908aee44f1042f5f"},
 ]
 cached-property = [
     {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
@@ -1370,8 +1348,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 oci = [
-    {file = "oci-2.53.1-py2.py3-none-any.whl", hash = "sha256:eb7f26582ded5a87e394d90e2e8cb34aaec27ea730c88d237c0d1a6dc857bf32"},
-    {file = "oci-2.53.1.tar.gz", hash = "sha256:c7636c86597a1079852a32b5fc342de672d38896e41ff6691851b08a9b712a8e"},
+    {file = "oci-2.54.0-py2.py3-none-any.whl", hash = "sha256:86aedc780f1d17e9fe765afec97d7938c9f294217b5ad1a1ecac4d2767764575"},
+    {file = "oci-2.54.0.tar.gz", hash = "sha256:c0555a0d59b1ac19a577fef86c1c79fb72a4fd18af0506f885c9d4772f4b700b"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
@@ -1511,10 +1489,6 @@ soupsieve = [
     {file = "soupsieve-2.3.1-py3-none-any.whl", hash = "sha256:1a3cca2617c6b38c0343ed661b1fa5de5637f257d4fe22bd9f1338010a1efefb"},
     {file = "soupsieve-2.3.1.tar.gz", hash = "sha256:b8d49b1cd4f037c7082a9683dfa1801aa2597fb11c3a1155b7a5b94829b4f1f9"},
 ]
-suds-jurko = [
-    {file = "suds-jurko-0.6.tar.bz2", hash = "sha256:29edb72fd21e3044093d86f33c66cf847c5aaab26d64cb90e69e528ef014e57f"},
-    {file = "suds-jurko-0.6.zip", hash = "sha256:1cb7252cb13018fc32887c3a834ed7c6648a5b5c4c159be5806da2e1785399e8"},
-]
 tldextract = [
     {file = "tldextract-3.1.2-py2.py3-none-any.whl", hash = "sha256:f55e05f6bf4cc952a87d13594386d32ad2dd265630a8bdfc3df03bd60425c6b0"},
     {file = "tldextract-3.1.2.tar.gz", hash = "sha256:d2034c3558651f7d8fdadea83fb681050b2d662dc67a00d950326dc902029444"},
@@ -1530,10 +1504,6 @@ tomli = [
 tox = [
     {file = "tox-3.24.5-py2.py3-none-any.whl", hash = "sha256:be3362472a33094bce26727f5f771ca0facf6dafa217f65875314e9a6600c95c"},
     {file = "tox-3.24.5.tar.gz", hash = "sha256:67e0e32c90e278251fea45b696d0fef3879089ccbe979b0c556d35d5a70e2993"},
-]
-transip = [
-    {file = "transip-2.1.2-py2.py3-none-any.whl", hash = "sha256:ad49b41316105d1b6cb091a49b6c49421a874ecd4a147f289e07c8fa42028501"},
-    {file = "transip-2.1.2.tar.gz", hash = "sha256:e8c66ae9803fbdc4555e5b4a7373cd9053017a5952b2890e6e3ca6563775f7b3"},
 ]
 typed-ast = [
     {file = "typed_ast-1.5.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:5d8314c92414ce7481eee7ad42b353943679cf6f30237b5ecbf7d835519e1212"},
@@ -1565,8 +1535,8 @@ types-pyyaml = [
     {file = "types_PyYAML-6.0.3-py3-none-any.whl", hash = "sha256:8b50294b55a9db89498cdc5a65b1b4545112b6cd1cf4465bd693d828b0282a17"},
 ]
 types-requests = [
-    {file = "types-requests-2.27.3.tar.gz", hash = "sha256:9fe61821910eb5b33bc774165d0c8fbdf933902ef57b0d5040f96b59bc428efa"},
-    {file = "types_requests-2.27.3-py3-none-any.whl", hash = "sha256:20cba29db305c005305dab4d29d5f0de01af7820a375c0853b68159269e8e2da"},
+    {file = "types-requests-2.27.7.tar.gz", hash = "sha256:f38bd488528cdcbce5b01dc953972f3cead0d060cfd9ee35b363066c25bab13c"},
+    {file = "types_requests-2.27.7-py3-none-any.whl", hash = "sha256:2e0e100dd489f83870d4f61949d3a7eae4821e7bfbf46c57e463c38f92d473d4"},
 ]
 types-setuptools = [
     {file = "types-setuptools-57.4.7.tar.gz", hash = "sha256:9677d969b00ec1c14552f5be2b2b47a6fbea4d0ed4de0fdcee18abdaa0cc9267"},
@@ -1581,8 +1551,8 @@ types-toml = [
     {file = "types_toml-0.10.3-py3-none-any.whl", hash = "sha256:988457744d9774d194e3539388772e3a685d8057b7c4a89407afeb0a6cbd1b14"},
 ]
 types-urllib3 = [
-    {file = "types-urllib3-1.26.1.tar.gz", hash = "sha256:b09ed6a9396727d4faeac90a922738e68cf9816ad8d937efc63fd4e8c7d6599e"},
-    {file = "types_urllib3-1.26.1-py3-none-any.whl", hash = "sha256:bcfe29253dbd01c1e7f32bb10d0fbfb3044bc52ce3dfa2226e0b31ee61e64429"},
+    {file = "types-urllib3-1.26.7.tar.gz", hash = "sha256:cfd1fbbe4ba9a605ed148294008aac8a7b8b7472651d1cc357d507ae5962e3d2"},
+    {file = "types_urllib3-1.26.7-py3-none-any.whl", hash = "sha256:3adcf2cb5981809091dbff456e6999fe55f201652d8c360f99997de5ac2f556e"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.0.1-py3-none-any.whl", hash = "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"},

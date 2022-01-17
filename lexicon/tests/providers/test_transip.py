@@ -4,9 +4,12 @@ import re
 from tempfile import mkstemp
 from unittest import TestCase
 
-from lexicon.tests.providers.integration_tests import IntegrationTestsV2, vcr_integration_test
+import pytest
 
-FAKE_KEY = b"""
+from lexicon.tests.providers.integration_tests import (IntegrationTestsV2,
+                                                       vcr_integration_test)
+
+FAKE_KEY = """
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAxV08IlJRwNq9WyyGO2xRyT0F6XIBD2R5CrwJoP7gIHVU/Mhk
 KeK8//+MbUZtKFoeJi9lI8Cbkqe7GVk9yab6R2/vVzV21XRh+57R79nEh+QTf/vZ
@@ -51,18 +54,6 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
     provider_name = "transip"
     domain = "nuvius.nl"
 
-    def setUp(self) -> None:
-        _, _fake_key = mkstemp()
-        with open(_fake_key, "wb") as file_h:
-            file_h.write(FAKE_KEY)
-        self._fake_key = _fake_key
-
-    def tearDown(self) -> None:
-        try:
-            os.unlink(self._fake_key)
-        except AttributeError:
-            pass
-
     @vcr_integration_test
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
         self,
@@ -70,6 +61,11 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
         provider = self._construct_authenticated_provider()
         # TransIP CNAME records values must be a FQDN with trailing dot for external domains.
         assert provider.create_record("CNAME", "docs", "docs.example.com.")
+
+    @pytest.fixture(autouse=True)
+    def _generate_fake_key(self, tmp_path):
+        self._fake_key = tmp_path / "key.pem"
+        self._fake_key.write_text(FAKE_KEY)
 
     def _filter_headers(self):
         return ["Signature", "Authorization"]
@@ -91,4 +87,4 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
         return response
 
     def _test_parameters_overrides(self):
-        return {"auth_api_key": self._fake_key, "auth_key_is_global": True}
+        return {"auth_api_key": str(self._fake_key), "auth_key_is_global": True}
