@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Reimplement the `transip` provider using the new REST v6 API
 
 ## 3.9.0 - 06/01/2022
 ## Deleted
