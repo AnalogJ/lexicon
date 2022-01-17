@@ -2,6 +2,14 @@
 
 ## master - CURRENT
 
+## 3.9.2 - 17/01/2022
+### Modified
+* Fix configuration reference
+
+## 3.9.1 - 17/01/2022
+### Modified
+* Reimplement the `transip` provider using the new REST v6 API
+
 ## 3.9.0 - 06/01/2022
 ## Deleted
 * Drop Python 3.6 support

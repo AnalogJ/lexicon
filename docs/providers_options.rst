@@ -49,6 +49,8 @@ List of options
 .. _aliyun:
 
 aliyun
+    * ``auth_key_id`` Specify access key id for authentication
+    * ``auth_secret`` Specify access secret for authentication
 
 .. note::
    
@@ -57,9 +59,6 @@ aliyun
    The referrence for Aliyun DNS production:
    https://help.aliyun.com/product/29697.html
 
-
-    * ``auth_key_id`` Specify access key id for authentication
-    * ``auth_secret`` Specify access secret for authentication
 
 .. _aurora:
 
@@ -70,6 +69,11 @@ aurora
 .. _azure:
 
 azure
+    * ``auth_client_id`` Specify the client id (aka application id) of the app registration
+    * ``auth_client_secret`` Specify the client secret of the app registration
+    * ``auth_tenant_id`` Specify the tenant id (aka directory id) of the app registration
+    * ``auth_subscription_id`` Specify the subscription id attached to the resource group
+    * ``resource_group`` Specify the resource group hosting the dns zone to edit
 
 .. note::
    
@@ -80,15 +84,12 @@ azure
    
 
 
-    * ``auth_client_id`` Specify the client id (aka application id) of the app registration
-    * ``auth_client_secret`` Specify the client secret of the app registration
-    * ``auth_tenant_id`` Specify the tenant id (aka directory id) of the app registration
-    * ``auth_subscription_id`` Specify the subscription id attached to the resource group
-    * ``resource_group`` Specify the resource group hosting the dns zone to edit
-
 .. _cloudflare:
 
 cloudflare
+    * ``auth_username`` Specify email address for authentication (for global api key only)
+    * ``auth_token`` Specify token for authentication (global api key or api token)
+    * ``zone_id`` Specify the zone id (if set, api token can be scoped to the target zone)
 
 .. note::
    
@@ -101,10 +102,6 @@ cloudflare
        with --auth-token and --zone-id flags.
    
 
-
-    * ``auth_username`` Specify email address for authentication (for global api key only)
-    * ``auth_token`` Specify token for authentication (global api key or api token)
-    * ``zone_id`` Specify the zone id (if set, api token can be scoped to the target zone)
 
 .. _cloudns:
 
@@ -206,14 +203,13 @@ easydns
 .. _easyname:
 
 easyname
+    * ``auth_username`` Specify username used to authenticate
+    * ``auth_password`` Specify password used to authenticate
 
 .. note::
    
    A provider for Easyname DNS.
 
-
-    * ``auth_username`` Specify username used to authenticate
-    * ``auth_password`` Specify password used to authenticate
 
 .. _euserv:
 
@@ -254,6 +250,11 @@ godaddy
 .. _googleclouddns:
 
 googleclouddns
+    * ``auth_service_account_info`` 
+        specify the service account info in the google json format:
+        can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
+        or the base64 encoded content of this file prefixed by 'base64::'
+        (eg. base64::eyjhbgcioyj...)
 
 .. note::
    
@@ -263,23 +264,16 @@ googleclouddns
    https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2
 
 
-    * ``auth_service_account_info`` 
-        specify the service account info in the google json format:
-        can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
-        or the base64 encoded content of this file prefixed by 'base64::'
-        (eg. base64::eyjhbgcioyj...)
-
 .. _gransy:
 
 gransy
+    * ``auth_username`` Specify username for authentication
+    * ``auth_password`` Specify password for authentication
 
 .. note::
    
    DNS manipulation provider for Gransy sites subreg.cz, regtons.com and regnames.eu.
 
-
-    * ``auth_username`` Specify username for authentication
-    * ``auth_password`` Specify password for authentication
 
 .. _gratisdns:
 
@@ -290,6 +284,8 @@ gratisdns
 .. _henet:
 
 henet
+    * ``auth_username`` Specify username for authentication
+    * ``auth_password`` Specify password for authentication
 
 .. note::
    
@@ -298,9 +294,6 @@ henet
                  YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
            
 
-
-    * ``auth_username`` Specify username for authentication
-    * ``auth_password`` Specify password for authentication
 
 .. _hetzner:
 
@@ -329,6 +322,7 @@ infoblox
 .. _infomaniak:
 
 infomaniak
+    * ``auth_token`` Specify the token
 
 .. note::
    
@@ -336,8 +330,6 @@ infomaniak
    It can be generated for your Infomaniak account on the following URL:
    https://manager.infomaniak.com/v3/infomaniak-api
 
-
-    * ``auth_token`` Specify the token
 
 .. _internetbs:
 
@@ -354,6 +346,7 @@ inwx
 .. _joker:
 
 joker
+    * ``auth_token`` Specify the api key to connect to the joker.com api
 
 .. note::
    
@@ -361,8 +354,6 @@ joker
    You can create one in the section 'Manage Joker.com API access keys' of 'My Profile' in your Joker.com account.
    
 
-
-    * ``auth_token`` Specify the api key to connect to the joker.com api
 
 .. _linode:
 
@@ -393,6 +384,9 @@ memset
 .. _mythicbeasts:
 
 mythicbeasts
+    * ``auth_username`` Specify api credentials username
+    * ``auth_password`` Specify api credentials password
+    * ``auth_token`` Specify api token for authentication
 
 .. note::
    
@@ -403,10 +397,6 @@ mythicbeasts
    These credentials and tokens must be generated using the Mythic Beasts API v2.
    
 
-
-    * ``auth_username`` Specify api credentials username
-    * ``auth_password`` Specify api credentials password
-    * ``auth_token`` Specify api token for authentication
 
 .. _namecheap:
 
@@ -447,13 +437,6 @@ nsone
 .. _oci:
 
 oci
-
-.. note::
-   
-   Oracle Cloud Infrastructure (OCI) DNS provider
-   
-
-
     * ``auth_config_file`` The full path including filename to an oci configuration file.
     * ``auth_user`` The ocid of the user calling the api.
     * ``auth_tenancy`` The ocid of your tenancy.
@@ -463,9 +446,18 @@ oci
     * ``auth_region`` The home region of your tenancy.
     * ``auth_type`` Valid options are 'api_key' (default) or 'instance_principal'.
 
+.. note::
+   
+   Oracle Cloud Infrastructure (OCI) DNS provider
+   
+
+
 .. _onapp:
 
 onapp
+    * ``auth_username`` Specify email address of the onapp account
+    * ``auth_token`` Specify api key for the onapp account
+    * ``auth_server`` Specify url to the onapp control panel server
 
 .. note::
    
@@ -473,10 +465,6 @@ onapp
    API token, which can be found on your /profile page on the Control Panel interface.
    The server is your dashboard URL, with format like https://dashboard.youronapphost.org
 
-
-    * ``auth_username`` Specify email address of the onapp account
-    * ``auth_token`` Specify api key for the onapp account
-    * ``auth_server`` Specify url to the onapp control panel server
 
 .. _online:
 
@@ -486,6 +474,10 @@ online
 .. _ovh:
 
 ovh
+    * ``auth_entrypoint`` Specify the ovh entrypoint
+    * ``auth_application_key`` Specify the application key
+    * ``auth_application_secret`` Specify the application secret
+    * ``auth_consumer_key`` Specify the consumer key
 
 .. note::
    
@@ -493,11 +485,6 @@ ovh
    It can be generated for your OVH account on the following URL:
    https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*
 
-
-    * ``auth_entrypoint`` Specify the ovh entrypoint
-    * ``auth_application_key`` Specify the application key
-    * ``auth_application_secret`` Specify the application secret
-    * ``auth_consumer_key`` Specify the consumer key
 
 .. _plesk:
 
@@ -552,6 +539,7 @@ route53
 .. _safedns:
 
 safedns
+    * ``auth_token`` Specify the api key to authenticate with
 
 .. note::
    
@@ -559,8 +547,6 @@ safedns
    You can generate one for your account on the following URL:
    https://my.ukfast.co.uk/applications/index.php
 
-
-    * ``auth_token`` Specify the api key to authenticate with
 
 .. _sakuracloud:
 
@@ -578,7 +564,8 @@ softlayer
 
 transip
     * ``auth_username`` Specify username for authentication
-    * ``auth_api_key`` Specify api private key for authentication
+    * ``auth_api_key`` Specify the private key to use for api authentication, in pem format: can be either the path of the key file (eg. /tmp/key.pem) or the base64 encoded content of this file prefixed by 'base64::' (eg. base64::eyjhbgcioyj...)
+    * ``auth_key_is_global`` Set this flag is the private key used is a global key with no ip whitelist restriction
 
 .. _ultradns:
 
@@ -590,6 +577,7 @@ ultradns
 .. _valuedomain:
 
 valuedomain
+    * ``auth_token`` Specify youyr api token
 
 .. note::
    
@@ -598,11 +586,10 @@ valuedomain
    https://www.value-domain.com/vdapi/
 
 
-    * ``auth_token`` Specify youyr api token
-
 .. _vercel:
 
 vercel
+    * ``auth_token`` Specify your api token
 
 .. note::
    
@@ -610,8 +597,6 @@ vercel
    You can generate one for your account on the following URL:
    https://vercel.com/account/tokens
 
-
-    * ``auth_token`` Specify your api token
 
 .. _vultr:
 
@@ -626,6 +611,7 @@ yandex
 .. _zeit:
 
 zeit
+    * ``auth_token`` Specify your api token
 
 .. note::
    
@@ -634,11 +620,10 @@ zeit
    https://vercel.com/account/tokens
 
 
-    * ``auth_token`` Specify your api token
-
 .. _zilore:
 
 zilore
+    * ``auth_key`` Specify the zilore api key to use
 
 .. note::
    
@@ -646,8 +631,6 @@ zilore
    The API access is available only for paid plans.
    
 
-
-    * ``auth_key`` Specify the zilore api key to use
 
 .. _zonomi:
 
