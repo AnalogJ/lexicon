@@ -47,7 +47,7 @@ List of options
     * ``{action.dest}`` {action.help.capitalize().replace("`", "'")}
 """
             )
-            
+
         if parser.description:
             provider_content.append(
                 f"""
