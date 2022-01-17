@@ -169,9 +169,7 @@ class Provider(BaseProvider):
         :raises KeyError, ValueError: If the response is malformed
         :raises urllib.error.HttpError: If request to /zones did not return 200
         """
-        filter_obj = {
-            'name': domain
-        }
+        filter_obj = {"name": domain}
         payload = self._get("/zones", filter_obj)
         zones = payload["zones"]
         for zone in zones:
