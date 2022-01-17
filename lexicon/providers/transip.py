@@ -30,11 +30,9 @@ def provider_parser(subparser):
     )
     subparser.add_argument(
         "--auth-api-key",
-        help=
-        """specify the private key to use for API authentication, in PEM format:
-        can be either the path of the key file (eg. /tmp/key.pem)
-        or the base64 encoded content of this file prefixed by 'base64::'
-        (eg. base64::eyJhbGciOyJ...)""",
+        help="specify the private key to use for API authentication, in PEM format: can be either "
+             "the path of the key file (eg. /tmp/key.pem) or the base64 encoded content of this "
+             "file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)",
     )
     subparser.add_argument(
         "--auth-key-is-global",
