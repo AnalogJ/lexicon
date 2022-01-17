@@ -1,42 +1,51 @@
-"""Module provider for Transip"""
+"""Module provider for TransIP"""
+import binascii
+import json
 import logging
-from typing import List
+import uuid
+from base64 import b64decode, b64encode
+from typing import Any, Dict, List, Optional
 
-from lexicon.exceptions import AuthenticationError
+import requests
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
+from requests.exceptions import JSONDecodeError
+
+from lexicon.exceptions import LexiconError
 from lexicon.providers.base import Provider as BaseProvider
-
-# Support various versions of Transip Python API
-try:
-    from transip.service.objects import DnsEntry  # type: ignore
-except ImportError:
-    try:
-        from transip.service.dns import DnsEntry  # type: ignore
-    except ImportError:
-        pass
-
-try:
-    from transip.service.domain import DomainService  # type: ignore
-except ImportError:
-    pass
 
 LOGGER = logging.getLogger(__name__)
 
 NAMESERVER_DOMAINS: List[str] = []
 
+API_BASE_URL = "https://api.transip.nl/v6"
+
 
 def provider_parser(subparser):
-    """Configure provider parser for Transip"""
+    """Configure provider parser for TransIP"""
     subparser.add_argument(
         "--auth-username", help="specify username for authentication"
     )
     subparser.add_argument(
-        "--auth-api-key", help="specify API private key for authentication"
+        "--auth-api-key",
+        help="""
+        specify the private key to use for API authentication, in PEM format:
+        can be either the path of the key file (eg. file::/tmp/key.pem)
+        or the base64 encoded content of this file prefixed by 'base64::'
+        (eg. base64::eyJhbGciOyJ...)""",
+    )
+    subparser.add_argument(
+        "--auth-key-is-global",
+        action="store_true",
+        help="set this flag is the private key used is a global key with no IP whitelist restriction",
     )
 
 
 class Provider(BaseProvider):
     """
-    Provider class for Transip
+    Provider class for TransIP
 
     provider_options can be overwritten by a Provider to setup custom defaults.
     They will be overwritten by any options set via the CLI or Env.
@@ -49,186 +58,229 @@ class Provider(BaseProvider):
         self.provider_name = "transip"
         self.domain_id = None
 
-        username = self._get_provider_option("auth_username")
-        key_file = self._get_provider_option("auth_api_key")
+        private_key_conf = self._get_provider_option("auth_api_key")
+        if private_key_conf.startswith("base64::"):
+            private_key_bytes = b64decode(private_key_conf.replace("base64::", ""))
+        else:
+            with open(
+                private_key_conf,
+                "rb",
+            ) as file:
+                private_key_bytes = file.read()
 
-        if not username or not key_file:
-            raise Exception("No username and/or keyfile was specified")
+        self.private_key = load_pem_private_key(private_key_bytes, password=None)
+        self.token: str
 
-        self.client = DomainService(login=username, private_key_file=key_file)
-
-    # Authenticate against provider,
-    # Make any requests required to get the domain's id for this provider,
-    # so it can be used in subsequent calls.
-    # Should throw an error if authentication fails for any reason,
-    # of if the domain does not exist.
     def _authenticate(self):
-        # This request will fail when the domain does not exist,
-        # allowing us to check for existence
-        try:
-            self.client.get_info(self.domain)
-        except BaseException:
-            raise AuthenticationError(
-                f"Could not retrieve information about {self.domain}, is this domain yours?"
+        request_body = {
+            "login": self._get_provider_option("auth_username"),
+            "nonce": uuid.uuid4().hex,
+            "global_key": self._get_provider_option("auth_key_is_global") or False,
+        }
+
+        request_body_bytes = json.dumps(request_body).encode()
+
+        signature = self.private_key.sign(
+            request_body_bytes,
+            padding.PKCS1v15(),
+            hashes.SHA512(),
+        )
+
+        headers = {"Signature": b64encode(signature).decode()}
+
+        response = requests.request(
+            "POST", f"{API_BASE_URL}/auth", json=request_body, headers=headers
+        )
+        response.raise_for_status()
+
+        self.token = response.json()["token"]
+
+        data = self._get(f"/domains/{self.domain}")
+
+        self.domain_id = data["domain"]["authCode"]
+
+    def _create_record(self, rtype: str, name: str, content: str) -> bool:
+        if not rtype or not name or not content:
+            raise Exception(
+                "Error, rtype, name and content are mandatory to create a record."
             )
-        self.domain_id = self.domain
 
-    # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
-        records = self.client.get_info(self.domain).dnsEntries
+        identifier = Provider._identifier(
+            {"type": rtype, "name": self._full_name(name), "content": content}
+        )
 
-        if self._filter_records(records, rtype, name, content):
-            # Nothing to do, record already exists
-            LOGGER.debug("create_record: already exists")
+        if any(
+            record
+            for record in self._list_records(rtype=rtype, name=name, content=content)
+            if record["id"] == identifier
+        ):
+            LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
             return True
 
-        records.append(
-            DnsEntry(
-                **{
-                    "name": self._relative_name(name),
-                    "record_type": rtype,
-                    "content": self._bind_format_target(rtype, content),
-                    "expire": self._get_lexicon_option("ttl"),
-                }
-            )
-        )
+        data = {
+            "dnsEntry": {
+                "type": rtype,
+                "name": self._relative_name(name),
+                "content": content,
+                "expire": self._get_lexicon_option("ttl"),
+            },
+        }
 
-        self.client.set_dns_entries(self.domain, records)
-        status = (
-            len(self._list_records_internal(rtype, name, content, show_output=False))
-            >= 1
-        )
-        LOGGER.debug("create_record: %s", status)
-        return status
+        self._post(f"/domains/{self.domain}/dns", data=data)
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
-        return self._list_records_internal(rtype=rtype, name=name, content=content)
+        LOGGER.debug("create_record: %s", identifier)
 
-    def _list_records_internal(
-        self, rtype=None, name=None, content=None, show_output=True
-    ):
-        all_records = self._convert_records(
-            self.client.get_info(self.domain).dnsEntries
-        )
-        records = self._filter_records(
-            records=all_records, rtype=rtype, name=name, content=content
-        )
+        return True
 
-        if show_output:
-            LOGGER.debug("list_records: %s", records)
+    def _list_records(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        data = self._get(f"/domains/{self.domain}/dns")
+
+        records = []
+        for entry in data["dnsEntries"]:
+            record = {
+                "type": entry["type"],
+                "name": self._full_name(entry["name"]),
+                "ttl": entry["expire"],
+                "content": entry["content"],
+            }
+            record["id"] = Provider._identifier(record)
+            records.append(record)
+
+        if rtype:
+            records = [record for record in records if record["type"] == rtype]
+        if name:
+            records = [
+                record for record in records if record["name"] == self._full_name(name)
+            ]
+        if content:
+            records = [record for record in records if record["content"] == content]
+
+        LOGGER.debug("list_records: %s", records)
+
         return records
 
-    # Update a record. Identifier must be specified.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
-        if not (rtype or name or content):
-            raise Exception("At least one of rtype, name or content must be specified.")
+    def _update_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
+        if not identifier and (not rtype or not name):
+            raise Exception("Error, identifier or rtype+name parameters are required.")
 
-        all_records = self._list_records_internal(show_output=False)
-        filtered_records = self._filter_records(all_records, rtype, name)
+        if identifier:
+            records = self._list_records()
+            records_to_update = [
+                record for record in records if record["id"] == identifier
+            ]
+        else:
+            records_to_update = self._list_records(rtype=rtype, name=name)
 
-        for record in filtered_records:
-            all_records.remove(record)
-        all_records.append(
-            {
-                "name": name,
-                "type": rtype,
-                "content": self._bind_format_target(rtype, content),
-                "ttl": self._get_lexicon_option("ttl"),
-            }
-        )
-
-        self.client.set_dns_entries(
-            self.domain, self._convert_records_back(all_records)
-        )
-        status = (
-            len(self._list_records_internal(rtype, name, content, show_output=False))
-            >= 1
-        )
-        LOGGER.debug("update_record: %s", status)
-        return status
-
-    # Delete an existing record.
-    # If record does not exist, do nothing.
-    # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        if not (rtype or name or content):
-            raise Exception("At least one of rtype, name or content must be specified.")
-
-        all_records = self._list_records_internal(show_output=False)
-        filtered_records = self._filter_records(all_records, rtype, name, content)
-
-        for record in filtered_records:
-            all_records.remove(record)
-
-        self.client.set_dns_entries(
-            self.domain, self._convert_records_back(all_records)
-        )
-        status = (
-            len(self._list_records_internal(rtype, name, content, show_output=False))
-            == 0
-        )
-        LOGGER.debug("delete_record: %s", status)
-        return status
-
-    def _full_name(self, record_name):
-        if record_name == "@":
-            record_name = self.domain
-        return super(Provider, self)._full_name(record_name)
-
-    def _relative_name(self, record_name):
-        name = super(Provider, self)._relative_name(record_name)
-        if not name:
-            name = "@"
-        return name
-
-    def _bind_format_target(self, rtype, target):
-        if rtype == "CNAME" and not target.endswith("."):
-            target += "."
-        return target
-
-    # Convert the objects from transip to dicts, for easier processing
-    def _convert_records(self, records):
-        _records = []
-        for record in records:
-            _records.append(
-                {
-                    "id": f"{self._full_name(record.name)}-{record.type}",
-                    "name": self._full_name(record.name),
-                    "type": record.type,
-                    "content": record.content,
-                    "ttl": record.expire,
-                }
+        if not records_to_update:
+            raise Exception(
+                f"Error, could not find a record for given identifier: {identifier}"
             )
-        return _records
 
-    def _to_dns_entry(self, _entry):
-        return DnsEntry(
-            self._relative_name(_entry["name"]),
-            _entry["ttl"],
-            _entry["type"],
-            _entry["content"],
+        if len(records_to_update) > 1:
+            LOGGER.warning(
+                "Warning, multiple records found for given parameters, "
+                "only first one will be updated: %s",
+                records_to_update,
+            )
+
+        record = records_to_update[0]
+
+        # TransIP API is not designed to update one record out of several records
+        # matching the same type+name (eg. multi-valued TXT entries).
+        # To circumvent the limitation, we remove first the record to update, then
+        # recreate it with the updated content.
+
+        data = {
+            "dnsEntry": {
+                "type": record["type"],
+                "name": self._relative_name(record["name"]),
+                "content": record["content"],
+                "expire": record["ttl"],
+            },
+        }
+
+        self._request("DELETE", f"/domains/{self.domain}/dns", data=data)
+
+        data["dnsEntry"]["content"] = content
+
+        self._post(f"/domains/{self.domain}/dns", data=data)
+
+        LOGGER.debug("update_record: %s", record["id"])
+
+        return True
+
+    def _delete_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
+        if identifier:
+            records = self._list_records()
+            records = [record for record in records if record["id"] == identifier]
+
+            if not records:
+                raise LexiconError(
+                    f"Could not find a record matching the identifier provider: {identifier}"
+                )
+        else:
+            records = self._list_records(rtype, name, content)
+
+        for record in records:
+            data = {
+                "dnsEntry": {
+                    "type": record["type"],
+                    "name": self._relative_name(record["name"]),
+                    "content": record["content"],
+                    "expire": record["ttl"],
+                },
+            }
+
+            self._request("DELETE", f"/domains/{self.domain}/dns", data=data)
+
+        LOGGER.debug("delete_records: %s %s %s %s", identifier, rtype, name, content)
+
+        return True
+
+    def _request(
+        self,
+        action: str = "GET",
+        url: str = "/",
+        data: Optional[Dict] = None,
+        query_params: Optional[Dict] = None,
+    ) -> Optional[Dict[str, Any]]:
+        response = requests.request(
+            action,
+            f"{API_BASE_URL}{url}",
+            params=query_params,
+            json=data,
+            headers={"Authorization": f"Bearer {self.token}"},
         )
 
-    def _convert_records_back(self, _records):
-        return [self._to_dns_entry(record) for record in _records]
+        response.raise_for_status()
 
-    # Filter a list of records based on criteria
-    def _filter_records(self, records, rtype=None, name=None, content=None):
-        _records = []
-        for record in records:
-            if (
-                (not rtype or record["type"] == rtype)
-                and (
-                    not name or self._full_name(record["name"]) == self._full_name(name)
-                )
-                and (not content or record["content"] == content)
-            ):
-                _records.append(record)
-        return _records
+        try:
+            return response.json()
+        except JSONDecodeError:
+            return None
 
-    def _request(self, action="GET", url="/", data=None, query_params=None):
-        # Helper _request is not used in Transip.
-        pass
+    @staticmethod
+    def _identifier(record):
+        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+        digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+        digest.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+        digest.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
+
+        return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]

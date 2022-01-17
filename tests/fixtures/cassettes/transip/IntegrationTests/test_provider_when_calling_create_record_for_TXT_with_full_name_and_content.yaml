@@ -1,205 +1,146 @@
 interactions:
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
-      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
-      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
-      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    body: '{"nonce": "3b31ac15bb83409caa73e96c7789f846", "global_key": true}'
     headers:
-      Connection: [close]
-      Content-Length: ['634']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [api.transip.nl]
-      Soapaction:
-      - !!binary |
-        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
-      User-Agent: [Python-urllib/3.6]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '84'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
     method: POST
-    uri: https://api.transip.nl/soap/?service=DomainService
+    uri: https://api.transip.nl/v6/auth
   response:
-    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
-
-        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
-        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
-        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
-        SOAP-ENC:arrayType="ns1:DnsEntry[2]" xsi:type="ns1:ArrayOfDnsEntry"><item
-        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
-        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
-        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
-        xsi:type="xsd:string">_acme-challenge.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
-        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
-        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
-        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
-        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
-        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
-        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
-
-        '}
+    body:
+      string: '{"token":"TOKEN"}'
     headers:
-      Connection: [close]
-      Content-Length: ['4937']
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Wed, 28 Mar 2018 16:02:06 GMT']
-      Server: [Apache]
-    status: {code: 200, message: OK}
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:47:03 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 201
+      message: Created
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
-      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
-      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
-      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    body: null
     headers:
-      Connection: [close]
-      Content-Length: ['634']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [api.transip.nl]
-      Soapaction:
-      - !!binary |
-        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
-      User-Agent: [Python-urllib/3.6]
-    method: POST
-    uri: https://api.transip.nl/soap/?service=DomainService
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://api.transip.nl/v6/domains/nuvius.nl
   response:
-    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
-
-        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
-        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
-        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
-        SOAP-ENC:arrayType="ns1:DnsEntry[2]" xsi:type="ns1:ArrayOfDnsEntry"><item
-        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
-        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
-        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
-        xsi:type="xsd:string">_acme-challenge.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
-        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
-        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
-        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
-        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
-        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
-        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
-
-        '}
+    body:
+      string: '{"domain":{"name":"nuvius.nl","authCode":"AUTH_CODE","isTransferLocked":false,"registrationDate":"2020-01-05","renewalDate":"2023-01-05","isWhitelabel":false,"isDnsOnly":false,"cancellationDate":"","cancellationStatus":"","hasActionRunning":false,"supportsLocking":false,"tags":[],"hasAutoDns":false},"_links":[{"rel":"self","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl"},{"rel":"branding","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/branding"},{"rel":"contacts","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/contacts"},{"rel":"dns","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/dns"},{"rel":"nameservers","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/nameservers"},{"rel":"actions","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/actions"},{"rel":"zone-file","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/zone-file"}]}'
     headers:
-      Connection: [close]
-      Content-Length: ['4937']
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Wed, 28 Mar 2018 16:02:07 GMT']
-      Server: [Apache]
-    status: {code: 200, message: OK}
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:47:03 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      X-Rate-Limit-Limit:
+      - '1000'
+      X-Rate-Limit-Remaining:
+      - '939'
+      X-Rate-Limit-Reset:
+      - '1642373790'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
-      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
-      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:setDnsEntries><domainName
-      xsi:type="ns1:string">hurrdurr.nl</domainName><dnsEntries xsi:type="ns2:ArrayOfDnsEntry"
-      ns3:arrayType="ns2:DnsEntry[3]"><item xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">localhost</name><expire
-      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">A</type><content
-      xsi:type="ns1:string">127.0.0.1</content></item><item xsi:type="ns2:DnsEntry"><name
-      xsi:type="ns1:string">_acme-challenge.fqdn</name><expire xsi:type="ns1:int">3600</expire><type
-      xsi:type="ns1:string">TXT</type><content xsi:type="ns1:string">challengetoken</content></item><item
-      xsi:type="ns2:DnsEntry"><name xsi:type="ns1:string">_acme-challenge.full</name><expire
-      xsi:type="ns1:int">3600</expire><type xsi:type="ns1:string">TXT</type><content
-      xsi:type="ns1:string">challengetoken</content></item></dnsEntries></ns2:setDnsEntries></ns0:Body></SOAP-ENV:Envelope>
+    body: null
     headers:
-      Connection: [close]
-      Content-Length: ['1391']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [api.transip.nl]
-      Soapaction:
-      - !!binary |
-        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjc2V0RG5zRW50cmllcyI=
-      User-Agent: [Python-urllib/3.6]
-    method: POST
-    uri: https://api.transip.nl/soap/?service=DomainService
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://api.transip.nl/v6/domains/nuvius.nl/dns
   response:
-    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
-
-        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:setDnsEntriesResponse/></SOAP-ENV:Body></SOAP-ENV:Envelope>
-
-        '}
+    body:
+      string: '{"dnsEntries":[{"name":"2019._domainkey","expire":86400,"type":"TXT","content":"v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsWlsP40XKeHQ\/fv4NmubpGi\/Szvlw5M4WPyEwTPCeUjNC9RlhMDsniEgWyUw22pZ5xe0JzfMvykkDjRRhJ3lb21MPwJkBAwto07rh2epg0W4CDR6k74KdWXshS8Z0l8dcX6obp5bCADJgjSi0xq3ivDtR5+lFc5K+wDvj08JIw0dDyxd7yIc5Q2hOBI7fMr4\/5uayoUYp8aa8JmnlfDx826qWml2R3EqfUQf0KV6wq4U2YoKR48B4pvG3lAKXzOklQVyBSZPNyFq9KRKSvy5bDVeeSfwsCJgio36+SXVUVwWJ5y+dKo\/kfJt25GoAnIedtKieCgq7oXYFac8SW39ywIDAQAB"},{"name":"@","expire":300,"type":"A","content":"45.83.235.134"},{"name":"@","expire":300,"type":"AAAA","content":"2a10:3781:1968::45:83:235:134"},{"name":"@","expire":86400,"type":"MX","content":"10
+        services.dotOne.nl."},{"name":"@","expire":86400,"type":"TXT","content":"v=spf1
+        mx a -all"},{"name":"@","expire":86400,"type":"CAA","content":"0 issue \"letsencrypt.org\""},{"name":"dkim._domainkey","expire":86400,"type":"TXT","content":"v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsWlsP40XKeHQ\/fv4NmubpGi\/Szvlw5M4WPyEwTPCeUjNC9RlhMDsniEgWyUw22pZ5xe0JzfMvykkDjRRhJ3lb21MPwJkBAwto07rh2epg0W4CDR6k74KdWXshS8Z0l8dcX6obp5bCADJgjSi0xq3ivDtR5+lFc5K+wDvj08JIw0dDyxd7yIc5Q2hOBI7fMr4\/5uayoUYp8aa8JmnlfDx826qWml2R3EqfUQf0KV6wq4U2YoKR48B4pvG3lAKXzOklQVyBSZPNyFq9KRKSvy5bDVeeSfwsCJgio36+SXVUVwWJ5y+dKo\/kfJt25GoAnIedtKieCgq7oXYFac8SW39ywIDAQAB"},{"name":"docs","expire":3600,"type":"CNAME","content":"docs.example.com."},{"name":"localhost","expire":3600,"type":"A","content":"127.0.0.1"},{"name":"mta-sts","expire":86400,"type":"CNAME","content":"services.dotOne.nl."},{"name":"_acme-challenge.fqdn","expire":3600,"type":"TXT","content":"challengetoken"},{"name":"_dmarc","expire":86400,"type":"TXT","content":"v=DMARC1;
+        p=quarantine; rua=mailto:admin@dotOne.nl; ruf=mailto:admin@dotOne.nl; sp=reject"},{"name":"_mta-sts","expire":86400,"type":"TXT","content":"v=STSv1;
+        id=2019091101"},{"name":"_smtp._tls","expire":86400,"type":"TXT","content":"v=TLSRPTv1;
+        rua=mailto:postmaster@dotOne.nl"}],"_links":[{"rel":"self","link":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl\/dns"},{"rel":"domain","href":"https:\/\/api.transip.nl\/v6\/domains\/nuvius.nl"}]}'
     headers:
-      Connection: [close]
-      Content-Length: ['407']
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Wed, 28 Mar 2018 16:02:07 GMT']
-      Server: [Apache]
-    status: {code: 200, message: OK}
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:47:03 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      X-Rate-Limit-Limit:
+      - '1000'
+      X-Rate-Limit-Remaining:
+      - '938'
+      X-Rate-Limit-Reset:
+      - '1642373790'
+    status:
+      code: 200
+      message: OK
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
-      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
-      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
-      xsi:type="ns1:string">hurrdurr.nl</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    body: '{"dnsEntry": {"type": "TXT", "name": "_acme-challenge.full", "content":
+      "challengetoken", "expire": 3600}}'
     headers:
-      Connection: [close]
-      Content-Length: ['634']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [api.transip.nl]
-      Soapaction:
-      - !!binary |
-        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
-      User-Agent: [Python-urllib/3.6]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '106'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
     method: POST
-    uri: https://api.transip.nl/soap/?service=DomainService
+    uri: https://api.transip.nl/v6/domains/nuvius.nl/dns
   response:
-    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
-
-        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:ns1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-        SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getInfoResponse><return
-        xsi:type="ns1:Domain"><name xsi:type="xsd:string">hurrdurr.nl</name><nameservers
-        SOAP-ENC:arrayType="ns1:Nameserver[3]" xsi:type="ns1:ArrayOfNameserver"><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns0.transip.net</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns1.transip.nl</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item><item
-        xsi:type="ns1:Nameserver"><hostname xsi:type="xsd:string">ns2.transip.eu</hostname><ipv4
-        xsi:type="xsd:string"></ipv4><ipv6 xsi:type="xsd:string"></ipv6></item></nameservers><dnsEntries
-        SOAP-ENC:arrayType="ns1:DnsEntry[3]" xsi:type="ns1:ArrayOfDnsEntry"><item
-        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">localhost</name><expire
-        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">A</type><content
-        xsi:type="xsd:string">127.0.0.1</content></item><item xsi:type="ns1:DnsEntry"><name
-        xsi:type="xsd:string">_acme-challenge.fqdn</name><expire xsi:type="xsd:int">3600</expire><type
-        xsi:type="xsd:string">TXT</type><content xsi:type="xsd:string">challengetoken</content></item><item
-        xsi:type="ns1:DnsEntry"><name xsi:type="xsd:string">_acme-challenge.full</name><expire
-        xsi:type="xsd:int">3600</expire><type xsi:type="xsd:string">TXT</type><content
-        xsi:type="xsd:string">challengetoken</content></item></dnsEntries><branding
-        xsi:type="ns1:DomainBranding"><companyName xsi:type="xsd:string">TransIP</companyName><supportEmail
-        xsi:type="xsd:string">support@transip.nl</supportEmail><companyUrl xsi:type="xsd:string">http://www.transip.nl</companyUrl><termsOfUsageUrl
-        xsi:type="xsd:string"></termsOfUsageUrl><bannerLine1 xsi:type="xsd:string">TransIP</bannerLine1><bannerLine2
-        xsi:type="xsd:string">Realtime domeinregistratie en DNS-beheer vanaf 3,99
-        Euro!</bannerLine2><bannerLine3 xsi:type="xsd:string">https://www.transip.nl/domeinnaam/</bannerLine3></branding><isLocked xsi:type="xsd:boolean">false</isLocked></return></ns1:getInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
-
-        '}
+    body:
+      string: '[]'
     headers:
-      Connection: [close]
-      Content-Length: ['5162']
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Wed, 28 Mar 2018 16:02:08 GMT']
-      Server: [Apache]
-    status: {code: 200, message: OK}
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:47:04 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      X-Rate-Limit-Limit:
+      - '1000'
+      X-Rate-Limit-Remaining:
+      - '937'
+      X-Rate-Limit-Reset:
+      - '1642373790'
+    status:
+      code: 201
+      message: Created
 version: 1
