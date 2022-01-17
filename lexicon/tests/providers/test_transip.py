@@ -1,7 +1,5 @@
 """Integration tests for Transip"""
-import os
 import re
-from tempfile import mkstemp
 from unittest import TestCase
 
 import pytest
