@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.3 - 27/01/2022
 ### Modified
 * Fix compatibility with requests>=2 in `transip` provider
 
