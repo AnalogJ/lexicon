@@ -76,9 +76,13 @@ types-requests = "*"
 types-setuptools = "*"
 types-six = "*"
 types-toml = "*"
+types-simplejson = "*"
 
 [tool.poetry.scripts]
 lexicon = "lexicon.cli:main"
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
+
+[tool.mypy]
+show_error_codes = true
