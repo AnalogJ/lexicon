@@ -96,8 +96,7 @@ class Provider(BaseProvider):
             "data[DnsSetting][pref-mx]": "0",
             "data[DnsSetting][value]": content,
             "data[DnsSetting][action]": "newsub",
-            "data[DnsSetting][domain_id]": self.domain_id,
-               }
+            "data[DnsSetting][domain_id]": self.domain_id, }
         ttl = self._get_lexicon_option("ttl")
         if ttl:
             if ttl <= 0:
