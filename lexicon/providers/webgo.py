@@ -1,6 +1,6 @@
 """Module provider for Webgo"""
 import logging
-import re
+
 
 from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
@@ -53,7 +53,7 @@ class Provider(BaseProvider):
         html = BeautifulSoup(login_response.content, "html.parser")
         if html.find("div", {"class": "loginformerror"}) is not None:
             LOGGER.warning("Webgo login failed, check Username and Password")
-            raise AuthenticationError(f"Webgo login failed, check Username and Password")
+            raise AuthenticationError("Webgo login failed, check Username and Password")
             return False
 
         # Make an authenticated GET to the DNS management page
@@ -62,9 +62,9 @@ class Provider(BaseProvider):
         html = BeautifulSoup(zones_response.content, "html.parser")
         domain_table = html.find("table", {"class": "alltable"})
         rows = domain_table.find_all('tr')
-        dns_link=None
-        for row in rows[1:]:            
-            domain = row.findAll('td')[1].renderContents().decode()            
+        dns_link = None
+        for row in rows[1:]:
+            domain = row.findAll('td')[1].renderContents().decode()
             if domain == self.domain:
                 dns_link = row.findAll('td')[5]
                 dns_link = dns_link.find("a", {"class": "domainButton fcon-sliders"}).get('href')
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
             "data[DnsSetting][value]": content,
             "data[DnsSetting][action]": "newsub",
             "data[DnsSetting][domain_id]": self.domain_id,
-         }
+            }
         ttl = self._get_lexicon_option("ttl")
         if ttl:
             if ttl <= 0:
@@ -160,7 +160,7 @@ class Provider(BaseProvider):
             dns_link = tds[5]
             dns_link = dns_link.find("a", {"class": "domainButton fcon-edit"}).get('href')
             rec["id"] = dns_link.rsplit("/", 2)[1]
-            if rec["content"].startswith ('"'):
+            if rec["content"].startswith('"'):
                 rec = self._clean_TXT_record(rec)
             new_records.append(rec)
         records = new_records

@@ -24,14 +24,12 @@ class WebgoProviderTests(TestCase, IntegrationTestsV2):
         return ["pass"]
 
     def _filter_response(self, response):
-        
         body = response["body"]["string"].decode("utf-8")
         # Filter out all Customer/Service IDs from Response
-        body = re.sub(r"\b\d{5}\b", "XXXXX", body)
+        body = re.sub(r"\b(16)([0-9]{3})\b", "XXXXX", body)
         # Filter out Clearname from Response
         body = re.sub(r"<div class=\"welcome\">.*?<\/div>", "<div class=\"welcome\">John Doe</div>", body)
         # Filter out all Domains not tested
-        body = re.sub(r'<td>(.*?\.[a-z]{2,3})<\/td>', '<td>'+self.domain+'</td>', body)
+        body = re.sub(r'<\s*td[^>]*>(?!(' + re.escape(self.domain) + r'))(.[A-Za-z0-9]*\.[a-z]{2,3})<\s*/\s*td>', '<td>filtereddomain.de</td>', body)
         response["body"]["string"] = body.encode("utf-8")
-
         return response
