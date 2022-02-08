@@ -82,10 +82,14 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         LOGGER.debug("Creating record for zone %s", name)
         # Pull a list of records and check for ours
+        if name:
+            if name == self.domain:
+                LOGGER.warning("Unable to create record because your main domain %s can't be re-created", self.domain)
+                return False
+            name = self._relative_name(name)
         if rtype == "CNAME" and not content.endswith("."):
             content += "."
         records = self._list_records(rtype=rtype, name=name, content=content)
-        LOGGER.info(records)
         if len(records) >= 1:
             LOGGER.warning("Duplicate record %s %s %s, NOOP", rtype, name, content)
             return True
@@ -130,6 +134,8 @@ class Provider(BaseProvider):
     def _list_records_internal(
         self, rtype=None, name=None, content=None, identifier=None
     ):
+        if name:
+            name = self._relative_name(name)
         records = []
         # Make an authenticated GET to the DNS management page
         edit_response = self.session.get(
@@ -140,13 +146,25 @@ class Provider(BaseProvider):
         html = BeautifulSoup(edit_response.content, "html.parser")
         dns_table = html.find("table", {"class": "alltable"})
         records = dns_table.findAll("tr")
-
         # If the tag couldn't be found, error, otherwise, return the value of the tag
         if records is None or not records:
             LOGGER.warning("Domains not found in account")
             return records
-
         new_records = []
+        # Find Main Record
+        rec = {}
+        mainip = html.find("span", {"class": "mainIp"})
+        mainip_record = mainip.find_next("span").text
+        dns_link = mainip.find_next("a").get('href')
+        rec["name"] = self.domain
+        rec["ttl"] = "3600"
+        rec["type"] = "A"
+        rec["prio"] = "10"
+        rec["content"] = mainip_record
+        rec["id"] = dns_link.rsplit("/", 2)[1]
+        rec["option"] = "main"
+        new_records.append(rec)
+        # Find Subrecords
         for dns_tr in records[1:]:
             tds = dns_tr.findAll("td")
             # Process HTML in the TR children to derive each object
@@ -161,11 +179,12 @@ class Provider(BaseProvider):
             rec["id"] = dns_link.rsplit("/", 2)[1]
             if rec["content"].startswith('"'):
                 rec = self._clean_TXT_record(rec)
+            rec["option"] = "sub"
             new_records.append(rec)
         records = new_records
         if identifier:
             LOGGER.debug("Filtering %d records by id: %s", len(records), identifier)
-            records = [record for record in records if record["id"] == identifier]
+            records = [record for record in records if str(record["id"]) == str(identifier)]
         if rtype:
             LOGGER.debug("Filtering %d records by rtype: %s", len(records), rtype)
             records = [record for record in records if record["type"] == rtype]
@@ -188,20 +207,56 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        # Delete record if it exists
-        self._delete_record(identifier, rtype, name, content)
-        return self._create_record(rtype, name, content)
+    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+        maindata = None
+        sub_update = None
+        if identifier is not None:
+            records = self._list_records_internal(identifier=identifier)
+        else:
+            records = self._list_records_internal(name=name, rtype=rtype)
+        for record in records:
+            # Check whether Main-Domain needs to be updated
+            if record["option"] == "main":
+                maindata = {
+                    "data[DnsSetting][value]": content,
+                    "data[DnsSetting][action]": "main",
+                    "data[DnsSetting][domain_id]": record["id"], }
+            # Update every Subrecord
+            else:
+                # Delete record if it exists
+                # Record ID is changed after Update from main!
+                self._delete_record(identifier=record["id"])
+                self._create_record(record["type"], record["name"], content)
+                sub_update = True
+        # Check whether we need to update main
+        if maindata is not None:
+            # If we updated an Subdomain in the meantime, the ID changed and we need to refresh it for the main-domain
+            if sub_update is not None:
+                if identifier is not None:
+                    records = self._list_records_internal(identifier=identifier)
+                else:
+                    records = self._list_records_internal(name=name, rtype=rtype)
+                for record in records:
+                    # Check whether Main-Domain needs to be updated
+                    if record["option"] == "main":
+                        maindata = {
+                            "data[DnsSetting][value]": content,
+                            "data[DnsSetting][action]": "main",
+                            "data[DnsSetting][domain_id]": record["id"], }
+                self.session.post("https://login.webgo.de/dns_settings/domainDnsEditForm", data=maindata)
+                self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok")
+                LOGGER.debug("Updated Main Domain %s", records[0]["name"])
+        return True
 
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
-        if not identifier:
-            records = self._list_records(rtype, name, content)
-            delete_record_ids = [record["id"] for record in records]
-        else:
-            delete_record_ids.append(identifier)
+        records = self._list_records_internal(rtype, name, content, identifier)
+        if "main" in [record["option"] for record in records]:
+            LOGGER.warning("Unable to delete records because your main domain %s can't be deleted", self.domain)
+            return False
+        delete_record_ids = [record["id"] for record in records]
         LOGGER.debug("Record IDs to delete: %s", delete_record_ids)
         for rec_id in delete_record_ids:
             response = self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{rec_id}/delete")
