@@ -141,6 +141,7 @@ The current supported providers are:
 - `Value-Domain <https://www.value-domain.com/service/api/>`_
 - `Vercel <https://vercel.com/docs/api#endpoints/dns>`_
 - `Vultr <https://www.vultr.com/api/#tag/dns>`_
+- `WebGo <https://www.webgo.de/>`_
 - `Yandex <https://tech.yandex.com/domain/doc/reference/dns-add-docpage/>`_
 - `Zilore <https://zilore.com/en/help/api>`_
 - `Zonomi <http://zonomi.com/app/dns/dyndns.jsp>`_
