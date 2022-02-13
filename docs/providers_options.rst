@@ -38,9 +38,9 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | transip_        | ultradns_       | valuedomain_    | vercel_         |
 +-----------------+-----------------+-----------------+-----------------+
-| vultr_          | yandex_         | zeit_           | zilore_         |
+| vultr_          | webgo_          | yandex_         | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+
-| zonomi_         |                 |                 |                 |
+| zilore_         | zonomi_         |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -602,6 +602,17 @@ vercel
 
 vultr
     * ``auth_token`` Specify token for authentication
+
+.. _webgo:
+
+webgo
+    * ``auth_username`` Specify username for authentication
+    * ``auth_password`` Specify password for authentication
+
+.. note::
+   
+   A provider for Webgo.
+
 
 .. _yandex:
 
