@@ -1,6 +1,11 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `webgo` provider (#1102)
+
+### Modified
+* Extend possible record types list for `dreamhost` provider (#1110)
 
 ## 3.9.3 - 27/01/2022
 ### Modified
