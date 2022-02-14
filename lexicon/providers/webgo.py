@@ -1,7 +1,6 @@
 """Module provider for Webgo"""
 import logging
 
-
 from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
 
@@ -44,8 +43,10 @@ class Provider(BaseProvider):
         login_response = self.session.post(
             "https://login.webgo.de/login",
             data={
-                "data[User][username]": self._get_provider_option("auth_username") or "",
-                "data[User][password]": self._get_provider_option("auth_password") or "",
+                "data[User][username]": self._get_provider_option("auth_username")
+                or "",
+                "data[User][password]": self._get_provider_option("auth_password")
+                or "",
             },
         )
 
@@ -61,13 +62,15 @@ class Provider(BaseProvider):
 
         html = BeautifulSoup(zones_response.content, "html.parser")
         domain_table = html.find("table", {"class": "alltable"})
-        rows = domain_table.find_all('tr')
+        rows = domain_table.find_all("tr")
         dns_link = None
         for row in rows[1:]:
-            domain = row.findAll('td')[1].renderContents().decode()
+            domain = row.findAll("td")[1].renderContents().decode()
             if domain == self.domain:
-                dns_link = row.findAll('td')[5]
-                dns_link = dns_link.find("a", {"class": "domainButton fcon-sliders"}).get('href')
+                dns_link = row.findAll("td")[5]
+                dns_link = dns_link.find(
+                    "a", {"class": "domainButton fcon-sliders"}
+                ).get("href")
 
         # If the Domain couldn't be found, error, otherwise, return the value of the tag
         if dns_link is None:
@@ -84,7 +87,10 @@ class Provider(BaseProvider):
         # Pull a list of records and check for ours
         if name:
             if name == self.domain:
-                LOGGER.warning("Unable to create record because your main domain %s can't be re-created", self.domain)
+                LOGGER.warning(
+                    "Unable to create record because your main domain %s can't be re-created",
+                    self.domain,
+                )
                 return False
             name = self._relative_name(name)
         if rtype == "CNAME" and not content.endswith("."):
@@ -100,7 +106,8 @@ class Provider(BaseProvider):
             "data[DnsSetting][pref-mx]": "0",
             "data[DnsSetting][value]": content,
             "data[DnsSetting][action]": "newsub",
-            "data[DnsSetting][domain_id]": self.domain_id, }
+            "data[DnsSetting][domain_id]": self.domain_id,
+        }
         ttl = self._get_lexicon_option("ttl")
         if ttl:
             if ttl <= 0:
@@ -114,8 +121,12 @@ class Provider(BaseProvider):
             else:
                 data["data[DnsSetting][pref-mx]"] = str(prio)
 
-        self.session.post("https://login.webgo.de/dns_settings/domainDnsEditForm", data=data)
-        self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok")
+        self.session.post(
+            "https://login.webgo.de/dns_settings/domainDnsEditForm", data=data
+        )
+        self.session.get(
+            f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok"
+        )
         # Pull a list of records and check for ours
         records = self._list_records(name=name)
         if len(records) >= 1:
@@ -155,7 +166,7 @@ class Provider(BaseProvider):
         rec = {}
         mainip = html.find("span", {"class": "mainIp"})
         mainip_record = mainip.find_next("span").text
-        dns_link = mainip.find_next("a").get('href')
+        dns_link = mainip.find_next("a").get("href")
         rec["name"] = self.domain
         rec["ttl"] = "3600"
         rec["type"] = "A"
@@ -175,7 +186,9 @@ class Provider(BaseProvider):
             rec["prio"] = tds[3].string
             rec["content"] = tds[4].string
             dns_link = tds[5]
-            dns_link = dns_link.find("a", {"class": "domainButton fcon-edit"}).get('href')
+            dns_link = dns_link.find("a", {"class": "domainButton fcon-edit"}).get(
+                "href"
+            )
             rec["id"] = dns_link.rsplit("/", 2)[1]
             if rec["content"].startswith('"'):
                 rec = self._clean_TXT_record(rec)
@@ -184,7 +197,9 @@ class Provider(BaseProvider):
         records = new_records
         if identifier:
             LOGGER.debug("Filtering %d records by id: %s", len(records), identifier)
-            records = [record for record in records if str(record["id"]) == str(identifier)]
+            records = [
+                record for record in records if str(record["id"]) == str(identifier)
+            ]
         if rtype:
             LOGGER.debug("Filtering %d records by rtype: %s", len(records), rtype)
             records = [record for record in records if record["type"] == rtype]
@@ -220,7 +235,8 @@ class Provider(BaseProvider):
                 maindata = {
                     "data[DnsSetting][value]": content,
                     "data[DnsSetting][action]": "main",
-                    "data[DnsSetting][domain_id]": record["id"], }
+                    "data[DnsSetting][domain_id]": record["id"],
+                }
             # Update every Subrecord
             else:
                 # Delete record if it exists
@@ -242,9 +258,15 @@ class Provider(BaseProvider):
                         maindata = {
                             "data[DnsSetting][value]": content,
                             "data[DnsSetting][action]": "main",
-                            "data[DnsSetting][domain_id]": record["id"], }
-                self.session.post("https://login.webgo.de/dns_settings/domainDnsEditForm", data=maindata)
-                self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok")
+                            "data[DnsSetting][domain_id]": record["id"],
+                        }
+                self.session.post(
+                    "https://login.webgo.de/dns_settings/domainDnsEditForm",
+                    data=maindata,
+                )
+                self.session.get(
+                    f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok"
+                )
                 LOGGER.debug("Updated Main Domain %s", records[0]["name"])
         return True
 
@@ -254,14 +276,21 @@ class Provider(BaseProvider):
         delete_record_ids = []
         records = self._list_records_internal(rtype, name, content, identifier)
         if "main" in [record["option"] for record in records]:
-            LOGGER.warning("Unable to delete records because your main domain %s can't be deleted", self.domain)
+            LOGGER.warning(
+                "Unable to delete records because your main domain %s can't be deleted",
+                self.domain,
+            )
             return False
         delete_record_ids = [record["id"] for record in records]
         LOGGER.debug("Record IDs to delete: %s", delete_record_ids)
         for rec_id in delete_record_ids:
-            response = self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{rec_id}/delete")
+            response = self.session.get(
+                f"https://login.webgo.de/dnsSettings/domainDnsDo/{rec_id}/delete"
+            )
             if response.status_code == 200:
-                self.session.get(f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok")
+                self.session.get(
+                    f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok"
+                )
             else:
                 LOGGER.warning("Unable to delete record %s", rec_id)
                 return False
