@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.4 - 14/02/2022
 ### Added
 * Add `webgo` provider (#1102)
 

@@ -75,12 +75,12 @@ class TransipProviderTests(TestCase, IntegrationTestsV2):
 
     def _filter_response(self, response):
         response["body"]["string"] = re.sub(
-            br'"token":"[\w.-]+"',
+            rb'"token":"[\w.-]+"',
             b'"token":"TOKEN"',
             response["body"]["string"],
         )
         response["body"]["string"] = re.sub(
-            br'"authCode":"[\w.-]+"',
+            rb'"authCode":"[\w.-]+"',
             b'"authCode":"AUTH_CODE"',
             response["body"]["string"],
         )

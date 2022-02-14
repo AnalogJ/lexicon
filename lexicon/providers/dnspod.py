@@ -40,7 +40,7 @@ class Provider(BaseProvider):
             "domain_id": self.domain_id,
             "sub_domain": self._relative_name(name),
             "record_type": rtype,
-            "record_line": u"\u9ED8\u8BA4",
+            "record_line": "\u9ED8\u8BA4",
             "value": content,
         }
         if self._get_lexicon_option("ttl"):
@@ -93,7 +93,7 @@ class Provider(BaseProvider):
             "record_id": identifier,
             "sub_domain": self._relative_name(name),
             "record_type": rtype,
-            "record_line": u"\u9ED8\u8BA4",
+            "record_line": "\u9ED8\u8BA4",
             "value": content,
         }
         if self._get_lexicon_option("ttl"):

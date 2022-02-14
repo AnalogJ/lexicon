@@ -107,7 +107,14 @@ class Provider(BaseProvider):
 
         for record in data:
             if record.get("record", "") == self.domain and record.get("type", "") in [
-                "A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV"
+                "A",
+                "AAAA",
+                "CNAME",
+                "MX",
+                "NS",
+                "SOA",
+                "TXT",
+                "SRV",
             ]:
                 self.domain_id = self.domain
                 break
