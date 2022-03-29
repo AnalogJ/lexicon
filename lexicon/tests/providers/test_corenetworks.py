@@ -14,7 +14,7 @@ class CorenetworksProviderTests(TestCase, IntegrationTestsV2):
     * LEXICON_CORENETWORKS_AUTH_PASSWORD
     * LEXICON_CORENETWORKS_API_ENDPOINT"""
     provider_name = 'corenetworks'
-    domain = '***REMOVED***'
+    domain = 'fluchtkapsel.de'
     endpoint = 'https://beta.api.core-networks.de'
 
     def _filter_post_data_parameters(self):

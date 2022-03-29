@@ -16,7 +16,7 @@ interactions:
     uri: https://beta.api.core-networks.de/dnszones/
   response:
     body:
-      string: '[{"name":"***REMOVED***","type":"master"}]'
+      string: '[{"name":"fluchtkapsel.de","type":"master"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -57,7 +57,7 @@ interactions:
       User-Agent:
       - python-requests/2.25.1
     method: GET
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/?data=challengetoken&name=_acme-challenge.fqdn&type=TXT
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken&name=_acme-challenge.fqdn&type=TXT
   response:
     body:
       string: '[]'
@@ -102,7 +102,7 @@ interactions:
       User-Agent:
       - python-requests/2.25.1
     method: POST
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/
   response:
     body:
       string: ''
@@ -140,7 +140,7 @@ interactions:
       User-Agent:
       - python-requests/2.25.1
     method: POST
-    uri: https://beta.api.core-networks.de/dnszones/***REMOVED***/records/commit
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
   response:
     body:
       string: ''

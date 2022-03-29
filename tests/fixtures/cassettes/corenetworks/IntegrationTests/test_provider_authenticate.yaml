@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"login": "***REMOVED***", "password": "***REMOVED***"}'
+    body: '{"login": "", "password": ""}'
     headers:
       Accept:
       - '*/*'
@@ -16,7 +16,7 @@ interactions:
     uri: https://beta.api.core-networks.de/auth/token
   response:
     body:
-      string: '{"token":"***REMOVED***","expires":3600}'
+      string: '{"token":"","expires":3600}'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -60,7 +60,7 @@ interactions:
     uri: https://beta.api.core-networks.de/dnszones/
   response:
     body:
-      string: '[{"name":"***REMOVED***","type":"master"}]'
+      string: '[{"name":"fluchtkapsel.de","type":"master"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
