@@ -25,8 +25,8 @@ def provider_parser(subparser):
         "--auth-username", help="Specify login for authentication")
     subparser.add_argument(
         "--auth-password", help="Specify password for authentication")
-    subparser.add_argument(
-        "--auth-file", help="Specify location for authentication file. If this contains a valid token it will be used. Otherwise --auth-username and --auth-password are necessary. Defaults to ~/corenetworks_auth.json if ~ is writable by lexicon, otherwise $TMP/corenetworks_auth.json. In most cases you don't need to specify it as it will be used by default before acquiring a new token from the provider. The token has a lifetime of 1 hour after which it must be re-issued using the credentials. The most common use-case would be to consistently set this to some secure location where only lexicon has access. Might be deprecated in the future.")
+#    subparser.add_argument(
+#        "--auth-file", help="Specify location for authentication file. If this contains a valid token it will be used. Otherwise --auth-username and --auth-password are necessary. Defaults to ~/corenetworks_auth.json if ~ is writable by lexicon, otherwise $TMP/corenetworks_auth.json. In most cases you don't need to specify it as it will be used by default before acquiring a new token from the provider. The token has a lifetime of 1 hour after which it must be re-issued using the credentials. The most common use-case would be to consistently set this to some secure location where only lexicon has access. Might be deprecated in the future.")
 
 class _CommitTrigger:
     def __init__(self):
@@ -38,7 +38,7 @@ class _CommitTrigger:
 
     @need_commit.setter
     def need_commit(self, set_need_commit):
-#        CorenetworksLog.debug("Entering need.commit(set_need_commit = %s)" % set_need_commit)
+        CorenetworksLog.debug("Entering need.commit(set_need_commit = %s)" % set_need_commit)
         self._need_commit = set_need_commit
 
 
@@ -47,7 +47,7 @@ class Provider(BaseProvider):
     def ensure_commit(self):
         commit_trigger = _CommitTrigger()
         try:
-            CorenetworksLog.info("Still trying.")
+            CorenetworksLog.info("Still working.")
             yield commit_trigger
         finally:
             if commit_trigger.need_commit:
@@ -62,7 +62,6 @@ class Provider(BaseProvider):
         self.account_id = None      # unused?
         self.token = None           # provided by service after auth
         self.expiry = None          # token expiry time, calculated after auth
- #       self.modified = False       # some API calls need to be committed; this will be done on object destruction in __del__
         self.auth_file = { 'token': None, 'expiry': None }
         # Core Networks enforces a limit on the amount of logins per minute.
         # As the token is valid for 1 hour it's sensible to store it for
@@ -71,17 +70,9 @@ class Provider(BaseProvider):
             path = os.path.expanduser("~")
         else:
             path = tempfile.gettempdir()
-        self.auth_file_path = self._get_provider_option('auth_file') or (path+'/corenetworks_auth.json')
+#        self.auth_file_path = self._get_provider_option('auth_file') or (path+'/corenetworks_auth.json')
+        self.auth_file_path = (path+'/corenetworks_auth.json')
         self.api_endpoint = 'https://beta.api.core-networks.de'
-
-#    def __del__(self):
-#        """Destructor of the class.
-#        Changes to the zone need to be committed.
-#        # https://beta.api.core-networks.de/doc/#functon_dnszones_commit"""
-#        if self.modified == True:
-#            payload = self._post("/dnszones/{0}/records/commit".format(self.domain))
-#            self.modified == False
-#        return True
 
     def _authenticate(self):
         """Authenticate by either providing stored access token or
@@ -227,17 +218,12 @@ class Provider(BaseProvider):
                 payload = self._post("/dnszones/{0}/records/delete".format(self.domain), data)
                 # Changes to the zone need to be committed.
                 # https://beta.api.core-networks.de/doc/#functon_dnszones_commit
-#                self.modified = True
                 commit_trigger.need_commit = True
             else:
                 records = self._list_records( rtype, name, content)
                 if len(records) > 0:
                     for record in records:
                         self._delete_record(identifier = record['id'], rtype = record['type'], name = record['name'], content = record['content'] )
-                    # Changes to the zone need to be committed.
-                    # https://beta.api.core-networks.de/doc/#functon_dnszones_commit
-#                    self.modified = True
-                    commit_trigger.need_commit = True
                 else:
                     return True
             return True

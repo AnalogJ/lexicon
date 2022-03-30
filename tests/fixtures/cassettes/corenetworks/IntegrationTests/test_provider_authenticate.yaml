@@ -1,49 +1,5 @@
 interactions:
 - request:
-    body: '{"login": "", "password": ""}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '62'
-      User-Agent:
-      - python-requests/2.25.1
-    method: POST
-    uri: https://beta.api.core-networks.de/auth/token
-  response:
-    body:
-      string: '{"token":"","expires":3600}'
-    headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - Upgrade, Keep-Alive
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Fri, 08 Jan 2021 12:39:38 GMT
-      Expires:
-      - '0'
-      Keep-Alive:
-      - timeout=60, max=1000
-      Pragma:
-      - no-cache
-      Server:
-      - Apache
-      Upgrade:
-      - h2,h2c
-      Vary:
-      - Accept-Encoding
-      content-length:
-      - '91'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -55,12 +11,12 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://beta.api.core-networks.de/dnszones/
   response:
     body:
-      string: '[{"name":"fluchtkapsel.de","type":"master"}]'
+      string: '[{"name":"fluchtkapsel.de","type":"master"},{"name":"larp-bb.de","type":"master"},{"name":"wiedner.berlin","type":"master"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -69,11 +25,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:39:39 GMT
+      - Wed, 30 Mar 2022 18:31:58 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -83,7 +39,7 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '44'
+      - '124'
     status:
       code: 200
       message: OK

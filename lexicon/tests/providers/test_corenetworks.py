@@ -15,7 +15,7 @@ class CorenetworksProviderTests(TestCase, IntegrationTestsV2):
     * LEXICON_CORENETWORKS_API_ENDPOINT"""
     provider_name = 'corenetworks'
     domain = 'fluchtkapsel.de'
-    endpoint = 'https://beta.api.core-networks.de'
+#    endpoint = 'https://beta.api.core-networks.de'
 
     def _filter_post_data_parameters(self):
         return ['login', 'password']
@@ -31,7 +31,7 @@ class CorenetworksProviderTests(TestCase, IntegrationTestsV2):
         to filter the provider response."""
         return response
 
-    def _test_parameters_overrides(self):
-        return {
-            'api_endpoint': 'https://beta.api.core-networks.de',
-            }
+#    def _test_parameters_overrides(self):
+#        return {
+#            'api_endpoint': 'https://beta.api.core-networks.de',
+#            }

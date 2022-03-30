@@ -11,12 +11,12 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://beta.api.core-networks.de/dnszones/
   response:
     body:
-      string: '[{"name":"fluchtkapsel.de","type":"master"}]'
+      string: '[{"name":"fluchtkapsel.de","type":"master"},{"name":"larp-bb.de","type":"master"},{"name":"wiedner.berlin","type":"master"}]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -25,11 +25,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:40:28 GMT
+      - Wed, 30 Mar 2022 18:32:44 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -39,7 +39,7 @@ interactions:
       Vary:
       - Accept-Encoding
       content-length:
-      - '44'
+      - '124'
     status:
       code: 200
       message: OK
@@ -55,7 +55,7 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken&name=delete.testfqdn&type=TXT
   response:
@@ -69,11 +69,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:40:28 GMT
+      - Wed, 30 Mar 2022 18:32:44 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -100,7 +100,7 @@ interactions:
       Content-Length:
       - '81'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: POST
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/
   response:
@@ -112,11 +112,11 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 12:40:29 GMT
+      - Wed, 30 Mar 2022 18:32:44 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -138,7 +138,7 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: POST
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
   response:
@@ -150,11 +150,11 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 12:40:29 GMT
+      - Wed, 30 Mar 2022 18:32:44 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -176,7 +176,7 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken&name=delete.testfqdn&type=TXT
   response:
@@ -190,11 +190,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:40:33 GMT
+      - Wed, 30 Mar 2022 18:32:50 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -220,7 +220,7 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken&name=delete.testfqdn&type=TXT
   response:
@@ -234,11 +234,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:40:33 GMT
+      - Wed, 30 Mar 2022 18:32:50 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -264,7 +264,7 @@ interactions:
       Content-Length:
       - '68'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: POST
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/delete
   response:
@@ -274,11 +274,13 @@ interactions:
       Cache-Control:
       - no-cache, no-store, must-revalidate
       Connection:
-      - Upgrade, close
+      - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 12:40:33 GMT
+      - Wed, 30 Mar 2022 18:32:50 GMT
       Expires:
       - '0'
+      Keep-Alive:
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -300,7 +302,7 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: POST
     uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
   response:
@@ -312,11 +314,11 @@ interactions:
       Connection:
       - Upgrade, Keep-Alive
       Date:
-      - Fri, 08 Jan 2021 12:40:34 GMT
+      - Wed, 30 Mar 2022 18:32:50 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
@@ -338,35 +340,36 @@ interactions:
       Content-Length:
       - '2'
       User-Agent:
-      - python-requests/2.25.1
-    method: POST
-    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?name=delete.testfqdn&type=TXT
   response:
     body:
-      string: "Die Zone konnte nicht auf den Server \xFCbertragen werden da aktuell
-        bereits ein Update der Zone l\xE4uft."
+      string: '[]'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
       Connection:
       - Upgrade, Keep-Alive
       Content-Type:
-      - text/html; charset=utf-8
+      - application/json; charset=utf-8
       Date:
-      - Fri, 08 Jan 2021 12:40:38 GMT
+      - Wed, 30 Mar 2022 18:32:54 GMT
       Expires:
       - '0'
       Keep-Alive:
-      - timeout=60, max=1000
+      - timeout=1, max=100
       Pragma:
       - no-cache
       Server:
       - Apache
-      Transfer-Encoding:
-      - chunked
       Upgrade:
       - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2'
     status:
-      code: 429
-      message: Too Many Requests
+      code: 200
+      message: OK
 version: 1
