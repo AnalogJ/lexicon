@@ -53,7 +53,7 @@ List of options
 
 def _generate_table(providers: List[str]) -> None:
     items = [f"{provider}_" for provider in providers]
-    nb_columns = 4
+    nb_columns = 5
     max_width = max(len(item) for item in items) + 1
     delimiter = f"+{'-' * (max_width + 1)}" * nb_columns + "+"
 
