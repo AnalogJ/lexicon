@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: null
+    body: '{"api-key": "DUMMY_API_KEY"}'
     headers:
       Accept:
       - '*/*'
@@ -10,8 +10,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/login?api-key=DUMMY_API_KEY
+    method: POST
+    uri: https://dmapi.joker.com/request/login
   response:
     body:
       string: "Status-Code: 0\nStatus-Text: OK\nSvTrId: 01d6bb9b6ec74a3ccbfbfdd02669abc7\n\
