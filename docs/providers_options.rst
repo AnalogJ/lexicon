@@ -24,23 +24,23 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | inwx_           | joker_          | linode_         | linode4_        |
 +-----------------+-----------------+-----------------+-----------------+
-| localzone_      | luadns_         | memset_         | mythicbeasts_   |
+| localzone_      | luadns_         | memset_         | misaka_         |
 +-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namesilo_       | netcup_         | nfsn_           |
+| mythicbeasts_   | namecheap_      | namesilo_       | netcup_         |
 +-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | oci_            | onapp_          |
+| nfsn_           | njalla_         | nsone_          | oci_            |
 +-----------------+-----------------+-----------------+-----------------+
-| online_         | ovh_            | plesk_          | pointhq_        |
+| onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+
-| powerdns_       | rackspace_      | rage4_          | rcodezero_      |
+| pointhq_        | powerdns_       | rackspace_      | rage4_          |
 +-----------------+-----------------+-----------------+-----------------+
-| route53_        | safedns_        | sakuracloud_    | softlayer_      |
+| rcodezero_      | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | valuedomain_    | vercel_         |
+| softlayer_      | transip_        | ultradns_       | valuedomain_    |
 +-----------------+-----------------+-----------------+-----------------+
-| vultr_          | webgo_          | yandex_         | zeit_           |
+| vercel_         | vultr_          | webgo_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+
-| zilore_         | zonomi_         |                 |                 |
+| zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
 List of options
@@ -380,6 +380,11 @@ luadns
 
 memset
     * ``auth_token`` Specify api key for authentication
+
+.. _misaka:
+
+misaka
+    * ``auth_token`` Specify token for authentication
 
 .. _mythicbeasts:
 

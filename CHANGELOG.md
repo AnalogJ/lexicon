@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `misaka` provider (#1205 #556)
+
+### Modified
+* Fix `yandex` provider for MX/SRV records (#1201)
+* Fix `joker` provider by using POST requests instead of GET (#1201)
 
 ## 3.9.4 - 14/02/2022
 ### Added
