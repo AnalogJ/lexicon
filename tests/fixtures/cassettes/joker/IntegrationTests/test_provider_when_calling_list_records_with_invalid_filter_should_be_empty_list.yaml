@@ -86,7 +86,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "pattern": "erdtfrau.de", "showstatus": 1}'
     headers:
       Accept:
       - '*/*'
@@ -96,8 +96,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/query-domain-list?auth-sid=DUMMY_AUTH_SID&pattern=erdtfrau.de&showstatus=1
+    method: POST
+    uri: https://dmapi.joker.com/request/query-domain-list
   response:
     body:
       string: 'Status-Code: 0
@@ -129,7 +129,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "domain": "erdtfrau.de"}'
     headers:
       Accept:
       - '*/*'
@@ -139,8 +139,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/dns-zone-get?auth-sid=DUMMY_AUTH_SID&domain=erdtfrau.de
+    method: POST
+    uri: https://dmapi.joker.com/request/dns-zone-get
   response:
     body:
       string: 'Tracking-Id: 01d6bb9b994b2508879ca109ce2444b2

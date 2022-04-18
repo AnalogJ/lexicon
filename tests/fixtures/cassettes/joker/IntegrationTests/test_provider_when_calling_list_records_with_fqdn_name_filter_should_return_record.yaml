@@ -86,7 +86,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "pattern": "erdtfrau.de", "showstatus": 1}'
     headers:
       Accept:
       - '*/*'
@@ -96,8 +96,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/query-domain-list?auth-sid=DUMMY_AUTH_SID&pattern=erdtfrau.de&showstatus=1
+    method: POST
+    uri: https://dmapi.joker.com/request/query-domain-list
   response:
     body:
       string: 'Status-Text: Command completed successfully
@@ -129,7 +129,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "domain": "erdtfrau.de"}'
     headers:
       Accept:
       - '*/*'
@@ -139,8 +139,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/dns-zone-get?auth-sid=DUMMY_AUTH_SID&domain=erdtfrau.de
+    method: POST
+    uri: https://dmapi.joker.com/request/dns-zone-get
   response:
     body:
       string: 'Version: 1.2.53
@@ -200,7 +200,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "domain": "erdtfrau.de", "zone": "$dnssec=no\n$dyndns=no::\nlocalhost A 0 127.0.0.1 3600\ndocs CNAME 0 docs.example.com 3600\n_acme-challenge.fqdn TXT 0 "challengetoken" 3600\n_acme-challenge.full TXT 0 "challengetoken" 3600\n_acme-challenge.test TXT 0 "challengetoken" 3600\n_acme-challenge.createrecordset TXT 0 "challengetoken1" 3600\n_acme-challenge.createrecordset TXT 0 "challengetoken2" 3600\n_acme-challenge.noop TXT 0 "challengetoken" 3600\n_acme-challenge.deleterecordinset TXT 0 "challengetoken2" 3600\nttl.fqdn TXT 0 "ttlshouldbe3600" 3600\n_acme-challenge.listrecordset TXT 0 "challengetoken1" 3600\n_acme-challenge.listrecordset TXT 0 "challengetoken2" 3600\nrandom.fqdntest TXT 0 "challengetoken" 3600"}'
     headers:
       Accept:
       - '*/*'
@@ -210,8 +210,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/dns-zone-put?auth-sid=DUMMY_AUTH_SID&domain=erdtfrau.de&zone=%24dnssec%3Dno%0A%24dyndns%3Dno%3A%3A%0Alocalhost+A+0+127.0.0.1+3600%0Adocs+CNAME+0+docs.example.com+3600%0A_acme-challenge.fqdn+TXT+0+%22challengetoken%22+3600%0A_acme-challenge.full+TXT+0+%22challengetoken%22+3600%0A_acme-challenge.test+TXT+0+%22challengetoken%22+3600%0A_acme-challenge.createrecordset+TXT+0+%22challengetoken1%22+3600%0A_acme-challenge.createrecordset+TXT+0+%22challengetoken2%22+3600%0A_acme-challenge.noop+TXT+0+%22challengetoken%22+3600%0A_acme-challenge.deleterecordinset+TXT+0+%22challengetoken2%22+3600%0Attl.fqdn+TXT+0+%22ttlshouldbe3600%22+3600%0A_acme-challenge.listrecordset+TXT+0+%22challengetoken1%22+3600%0A_acme-challenge.listrecordset+TXT+0+%22challengetoken2%22+3600%0Arandom.fqdntest+TXT+0+%22challengetoken%22+3600
+    method: POST
+    uri: https://dmapi.joker.com/request/dns-zone-put
   response:
     body:
       string: 'Version: 1.2.53
@@ -245,7 +245,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "domain": "erdtfrau.de"}'
     headers:
       Accept:
       - '*/*'
@@ -255,8 +255,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/dns-zone-get?auth-sid=DUMMY_AUTH_SID&domain=erdtfrau.de
+    method: POST
+    uri: https://dmapi.joker.com/request/dns-zone-get
   response:
     body:
       string: 'Tracking-Id: 01d6bb9b94c0f2c4b0d559c8cef5737d

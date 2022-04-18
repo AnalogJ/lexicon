@@ -86,7 +86,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"auth-sid": "DUMMY_AUTH_SID", "pattern": "erdtfrau.de", "showstatus": 1}'
     headers:
       Accept:
       - '*/*'
@@ -96,8 +96,8 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.24.0
-    method: GET
-    uri: https://dmapi.joker.com/request/query-domain-list?auth-sid=DUMMY_AUTH_SID&pattern=erdtfrau.de&showstatus=1
+    method: POST
+    uri: https://dmapi.joker.com/request/query-domain-list
   response:
     body:
       string: 'Version: 1.2.53
