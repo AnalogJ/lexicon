@@ -62,13 +62,13 @@ class Provider(BaseProvider):
     def _authenticate(self):
         auth_token = self._get_provider_option("auth_token")
 
-        response = requests.get(API_BASE_URL + "/login", params={"api-key": auth_token})
+        response = requests.post(API_BASE_URL + "/login", data={"api-key": auth_token})
 
         result = _process_response(response)
         self._session_id = result.headers["Auth-Sid"]
 
-        response = self._get(
-            "/query-domain-list", query_params={"pattern": self.domain, "showstatus": 1}
+        response = self._post(
+            "/query-domain-list", data={"pattern": self.domain, "showstatus": 1}
         )
 
         if not response.data:
@@ -87,17 +87,17 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-    def _request(self, action="GET", url="/", data=None, query_params=None):
-        if not query_params:
-            query_params = {}
+    def _request(self, action="POST", url="/", data=None, query_params=None):
+        if not data:
+            data = {}
 
-        query_params["auth-sid"] = self._session_id
+        data["auth-sid"] = self._session_id
 
-        response = requests.get(API_BASE_URL + url, params=query_params)
+        response = requests.post(API_BASE_URL + url, data=data)
         return _process_response(response)
 
     def _list_records(self, rtype=None, name=None, content=None):
-        response = self._get("/dns-zone-get", query_params={"domain": self.domain_id})
+        response = self._post("/dns-zone-get", data={"domain": self.domain_id})
         zone_data = _extract_zonedata(response.data)
 
         zone_data = [entry for entry in zone_data if entry["type"]]
@@ -136,7 +136,7 @@ class Provider(BaseProvider):
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
-        response = self._get("/dns-zone-get", query_params={"domain": self.domain_id})
+        response = self._post("/dns-zone-get", data={"domain": self.domain_id})
         zonedata = _extract_zonedata(response.data)
 
         new_entry = {
@@ -172,7 +172,7 @@ class Provider(BaseProvider):
                 "Error, either identifier or rtype + name are mandatory to update a record."
             )
 
-        response = self._get("/dns-zone-get", query_params={"domain": self.domain_id})
+        response = self._post("/dns-zone-get", data={"domain": self.domain_id})
         zonedata = _extract_zonedata(response.data)
 
         selector_info = (
@@ -219,7 +219,7 @@ class Provider(BaseProvider):
                 "Error, either rtype or identifier are mandatory to delete a record."
             )
 
-        response = self._get("/dns-zone-get", query_params={"domain": self.domain_id})
+        response = self._post("/dns-zone-get", data={"domain": self.domain_id})
         zonedata = _extract_zonedata(response.data)
 
         if identifier:
@@ -267,9 +267,9 @@ class Provider(BaseProvider):
 
                 data.append(line)
 
-        self._get(
+        self._post(
             "/dns-zone-put",
-            query_params={"domain": self.domain_id, "zone": "\n".join(data)},
+            data={"domain": self.domain_id, "zone": "\n".join(data)},
         )
 
     def _identifier(self, record):
