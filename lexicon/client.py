@@ -2,7 +2,7 @@
 import importlib
 import logging
 import os
-from typing import Dict, List, Optional, Type, Union
+from typing import Dict, List, Optional, Type, Union, cast
 
 import tldextract  # type: ignore
 
@@ -42,7 +42,7 @@ class Client(object):
             domain_extractor = tldextract.TLDExtract(
                 cache_file=_get_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
             )
-        domain_parts = domain_extractor(self.config.resolve("lexicon:domain"))
+        domain_parts = domain_extractor(cast(str, self.config.resolve("lexicon:domain")))
         runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
 
         delegated = self.config.resolve("lexicon:delegated")
