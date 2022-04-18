@@ -4,9 +4,7 @@ Providers available
 
 The following Lexicon providers are available:
 
-.. include:: ../README.rst
-    :start-after: tag: providers-table-begin
-    :end-before: tag: providers-table-end
+.. include:: providers/table.rst
 
 List of options
 ---------------
