@@ -26,9 +26,9 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
 
     def _replace_auth(self, cookie):
         cookie = re.sub(
-            "hover_session=.*;", "hover_session={};".format(self.hover_session), cookie
+            "hover_session=.*;", f"hover_session={self.hover_session};", cookie
         )
-        cookie = re.sub("hoverauth=.*;", "hoverauth={};".format(self.hoverauth), cookie)
+        cookie = re.sub("hoverauth=.*;", f"hoverauth={self.hoverauth};", cookie)
         return cookie
 
     def _filter_response(self, response):
@@ -63,7 +63,7 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
                         "id": self.domain_id,
                         "domain_name": self.domain,
                         "status": "active",
-                    },
+                    }
                 ]
 
             response["body"]["string"] = json.dumps(filtered_body).encode("UTF-8")

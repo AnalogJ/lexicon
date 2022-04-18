@@ -1,18 +1,13 @@
 """Module provider for CloudXNS"""
-from __future__ import absolute_import
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
-
 import hashlib
 import json
 import logging
 import time
+from urllib.parse import urlencode
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -41,9 +36,8 @@ class Provider(BaseProvider):
             if record["domain"] == self.domain + ".":
                 self.domain_id = record["id"]
                 break
-
-        if self.domain_id is None:
-            raise Exception("No domain found")
+        else:
+            raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -176,15 +170,9 @@ class Provider(BaseProvider):
             "API-KEY": self._get_provider_option("auth_username"),
             "API-REQUEST-DATE": date,
             "API-HMAC": hashlib.md5(
-                "{0}{1}{2}{3}{4}{5}{6}".format(
-                    self._get_provider_option("auth_username"),
-                    self.api_endpoint,
-                    url,
-                    query_string,
-                    data,
-                    date,
-                    self._get_provider_option("auth_token"),
-                ).encode("utf-8")
+                f"{self._get_provider_option('auth_username')}{self.api_endpoint}{url}{query_string}{data}{date}{self._get_provider_option('auth_token')}".encode(
+                    "utf-8"
+                )
             ).hexdigest(),
             "API-FORMAT": "json",
         }

@@ -1,11 +1,10 @@
 """Module provider for Hetzner"""
-from __future__ import absolute_import, unicode_literals
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -119,7 +118,7 @@ class Provider(BaseProvider):
                 raise Exception(
                     "Multiple records found matching type, name and content - won't update"
                 )
-        self._put("/records/{0}".format(update_identifier), data)
+        self._put(f"/records/{update_identifier}", data)
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -136,7 +135,7 @@ class Provider(BaseProvider):
             delete_record_ids.append(identifier)
 
         for record_id in delete_record_ids:
-            self._delete("/records/{0}".format(record_id))
+            self._delete(f"/records/{record_id}")
         return True
 
     # Helpers
@@ -170,12 +169,13 @@ class Provider(BaseProvider):
         :raises KeyError, ValueError: If the response is malformed
         :raises urllib.error.HttpError: If request to /zones did not return 200
         """
-        payload = self._get("/zones")
+        filter_obj = {"name": domain}
+        payload = self._get("/zones", filter_obj)
         zones = payload["zones"]
         for zone in zones:
             if zone["name"] == domain:
                 return zone
-        raise Exception("No zone was found in account matching {0}".format(domain))
+        raise AuthenticationError(f"No zone was found in account matching {domain}")
 
     def _get_record_name(self, domain, record_name):
         """

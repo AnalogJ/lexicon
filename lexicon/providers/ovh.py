@@ -1,6 +1,4 @@
 """Module provider for OVH"""
-from __future__ import absolute_import
-
 import hashlib
 import json
 import logging
@@ -8,6 +6,7 @@ import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -77,7 +76,7 @@ class Provider(BaseProvider):
         self.session = requests.Session()
 
         # Calculate delta time between local and OVH to avoid requests rejection
-        server_time = self.session.get("{0}/auth/time".format(self.endpoint_api)).json()
+        server_time = self.session.get(f"{self.endpoint_api}/auth/time").json()
         self.time_delta = server_time - int(time.time())
 
         # Get domain and status
@@ -85,11 +84,11 @@ class Provider(BaseProvider):
 
         domains = self._get("/domain/zone/")
         if domain not in domains:
-            raise Exception("Domain {0} not found".format(domain))
+            raise AuthenticationError(f"Domain {domain} not found")
 
-        status = self._get("/domain/zone/{0}/status".format(domain))
+        status = self._get(f"/domain/zone/{domain}/status")
         if not status["isDeployed"]:
-            raise Exception("Zone {0} is not deployed".format(domain))
+            raise AuthenticationError(f"Zone {domain} is not deployed")
 
         self.domain_id = domain
 
@@ -118,8 +117,8 @@ class Provider(BaseProvider):
         if ttl:
             data["ttl"] = ttl
 
-        result = self._post("/domain/zone/{0}/record".format(domain), data)
-        self._post("/domain/zone/{0}/refresh".format(domain))
+        result = self._post(f"/domain/zone/{domain}/record", data)
+        self._post(f"/domain/zone/{domain}/refresh")
 
         LOGGER.debug("create_record: %s", result["id"])
 
@@ -135,10 +134,10 @@ class Provider(BaseProvider):
         if name:
             params["subDomain"] = self._relative_name(name)
 
-        record_ids = self._get("/domain/zone/{0}/record".format(domain), params)
+        record_ids = self._get(f"/domain/zone/{domain}/record", params)
 
         for record_id in record_ids:
-            raw = self._get("/domain/zone/{0}/record/{1}".format(domain, record_id))
+            raw = self._get(f"/domain/zone/{domain}/record/{record_id}")
             records.append(
                 {
                     "type": raw["fieldType"],
@@ -178,8 +177,8 @@ class Provider(BaseProvider):
         if content:
             data["target"] = content
 
-        self._put("/domain/zone/{0}/record/{1}".format(domain, identifier), data)
-        self._post("/domain/zone/{0}/refresh".format(domain))
+        self._put(f"/domain/zone/{domain}/record/{identifier}", data)
+        self._post(f"/domain/zone/{domain}/refresh")
 
         LOGGER.debug("update_record: %s", identifier)
 
@@ -198,9 +197,9 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/domain/zone/{0}/record/{1}".format(domain, record_id))
+            self._delete(f"/domain/zone/{domain}/record/{record_id}")
 
-        self._post("/domain/zone/{0}/refresh".format(domain))
+        self._post(f"/domain/zone/{domain}/refresh")
 
         LOGGER.debug("delete_record: %s", True)
 

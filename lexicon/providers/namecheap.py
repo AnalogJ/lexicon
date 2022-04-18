@@ -1,19 +1,19 @@
 """Module provider for Namecheap"""
-from __future__ import absolute_import
-
 import logging
+import sys
+from typing import Dict, Optional, Tuple
+from xml.etree.ElementTree import Element, fromstring
 
+import requests
+
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
-
-try:
-    # this module uses the optional `PyNamecheap` library from PyPi
-    import namecheap  # optional dep
-except ImportError:
-    pass
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["namecheap.com"]
+NAMESERVER_DOMAINS = ["namecheap.com", "registrar-servers.com"]
+
+_NAMESPACE = "http://api.namecheap.com/xml.response"
 
 
 def provider_parser(subparser):
@@ -58,13 +58,12 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.client = namecheap.Api(
-            ApiUser=self._get_provider_option("auth_username") or "",
-            ApiKey=self._get_provider_option("auth_token") or "",
-            UserName=self._get_provider_option("auth_username") or "",
-            ClientIP=self._get_provider_option("auth_client_ip") or "",
+        self.client = _Api(
+            api_user=self._get_provider_option("auth_username") or "",
+            api_key=self._get_provider_option("auth_token") or "",
+            username=self._get_provider_option("auth_username") or "",
+            client_ip=self._get_provider_option("auth_client_ip") or "",
             sandbox=self._get_provider_option("auth_sandbox") or False,
-            debug=False,
         )
         self.domain = self.domain
         self.domain_id = None
@@ -110,21 +109,19 @@ class Provider(BaseProvider):
             <Nameserver>dns2.registrar-servers.com</Nameserver>
           </DnsDetails>
         """
-        extra_payload = {
-            "DomainName": self.domain,
-        }
+        extra_payload = {"DomainName": self.domain}
 
         try:
-            xml = self.client._call("namecheap.domains.getInfo", extra_payload)
-        except namecheap.ApiError as err:
+            xml = self.client.call("namecheap.domains.getInfo", extra_payload)
+        except _ApiError as err:
             # this will happen if there is an API connection error
             # OR if the user is not permissioned to manage this domain
             # OR the API request came from a not whitelisted IP
             # we should print the error, so people know how to correct it.
-            raise Exception("Authentication failed: `%s`" % str(err))
+            raise AuthenticationError(f"Authentication failed: `{str(err)}`")
 
         xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
-            "ns": namecheap.NAMESPACE
+            "ns": _NAMESPACE
         }
         domain_info = xml.find(xpath)
 
@@ -140,7 +137,7 @@ class Provider(BaseProvider):
             # look for rights
             xpath_alt = (
                 ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult"
-                "/{%(ns)s}Modificationrights" % {"ns": namecheap.NAMESPACE}
+                "/{%(ns)s}Modificationrights" % {"ns": _NAMESPACE}
             )
             rights_info = xml.find(xpath_alt)
             if rights_info is None:
@@ -150,18 +147,17 @@ class Provider(BaseProvider):
             if rights_info.attrib["All"].lower() == "true":
                 return True
 
-            for right in rights_info.getchildren():
+            for right in rights_info:
                 if right.attrib["Type"].lower() == "hosts":
                     # we're only looking at hosts, so we can exit now
                     return right.text.lower() == "ok"
 
             return None
 
-        permissioned = _check_hosts_permission()
-        if not permissioned:
+        authorized = _check_hosts_permission()
+        if not authorized:
             raise Exception(
-                "The domain {} is not controlled by this Namecheap "
-                "account".format(self.domain)
+                f"The domain {self.domain} is not controlled by this Namecheap account"
             )
 
         # FIXME What is this for?
@@ -207,7 +203,7 @@ class Provider(BaseProvider):
             record["TTL"] = option_ttl
         # LOGGER.debug('create_record: %s', 'id' in payload)
         # return 'id' in payload
-        self.client.domains_dns_addHost(self.domain, record)
+        self.client.domains_dns_add_host(self.domain, record)
         return True
 
     # List all records. Return an empty list if no records found.
@@ -221,7 +217,7 @@ class Provider(BaseProvider):
         self, rtype=None, name=None, content=None, identifier=None
     ):
         records = []
-        raw_records = self.client.domains_dns_getHosts(self.domain)
+        raw_records = self.client.domains_dns_get_hosts(self.domain)
         for record in raw_records:
             records.append(self._convert_to_lexicon(record))
 
@@ -256,13 +252,13 @@ class Provider(BaseProvider):
             rtype=rtype, name=name, content=content, identifier=identifier
         )
         for record in records:
-            self.client.domains_dns_delHost(
+            self.client.domains_dns_del_host(
                 self.domain, self._convert_to_namecheap(record)
             )
         return True
 
     def _convert_to_namecheap(self, record):
-        """ converts from lexicon format record to namecheap format record,
+        """converts from lexicon format record to namecheap format record,
         suitable to sending through the api to namecheap"""
 
         processed_record = {}
@@ -292,16 +288,15 @@ class Provider(BaseProvider):
         return processed_record
 
     def _convert_to_lexicon(self, record):
-        """ converts from namecheap raw record format to lexicon format record
-        """
+        """converts from namecheap raw record format to lexicon format record"""
 
         name = record["Name"]
 
         if not name.endswith(self.domain):
-            name += ".{}".format(self.domain)
+            name += f".{self.domain}"
 
         content = (
-            "{} {}".format(record["MXPref"], record["Address"])
+            f"{record['MXPref']} {record['Address']}"
             if record["Type"] == "MX"
             else record["Address"]
         )
@@ -319,3 +314,161 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used by Namecheap provider
         pass
+
+
+# Code below is a borrowed and simplified version of the Namecheap Python API
+# implementation available here: https://github.com/Bemmu/PyNamecheap
+
+
+class _ApiError(Exception):
+    def __init__(self, number, text):
+        Exception.__init__(self, "%s - %s" % (number, text))
+        self.number = number
+        self.text = text
+
+
+class _Api:
+    def __init__(
+        self,
+        api_user: str,
+        api_key: str,
+        username: str,
+        client_ip: str,
+        sandbox: bool = True,
+    ):
+        self.api_user = api_user
+        self.api_key = api_key
+        self.username = username
+        self.client_ip = client_ip
+
+        if sandbox:
+            self.endpoint = "https://api.sandbox.namecheap.com/xml.response"
+        else:
+            self.endpoint = "https://api.namecheap.com/xml.response"
+
+    def call(self, command: str, extra_payload: Optional[Dict] = None) -> Element:
+        if not extra_payload:
+            extra_payload = {}
+        payload, extra_payload = self._payload(command, extra_payload)
+        xml = self._fetch_xml(payload, extra_payload)
+        return xml
+
+    def _payload(self, command: str, extra_payload: Dict) -> Tuple[Dict, Dict]:
+        payload = {
+            "ApiUser": self.api_user,
+            "ApiKey": self.api_key,
+            "UserName": self.username,
+            "ClientIP": self.client_ip,
+            "Command": command,
+        }
+        # Namecheap recommends to use HTTPPOST method when setting more than 10 hostnames
+        # https://www.namecheap.com/support/api/methods/domains-dns/set-hosts.aspx
+        if len(extra_payload) < 10:
+            payload.update(extra_payload)
+            extra_payload = {}
+        return payload, extra_payload
+
+    def _fetch_xml(self, payload: Dict, extra_payload: Dict = None) -> Element:
+        if extra_payload:
+            response = requests.post(self.endpoint, params=payload, data=extra_payload)
+        else:
+            response = requests.post(self.endpoint, params=payload)
+
+        if not 200 <= response.status_code <= 299:
+            raise _ApiError("1", "Did not receive 200 (Ok) response")
+
+        xml = fromstring(response.text)
+
+        if xml.attrib["Status"] == "ERROR":
+            # Response namespace must be prepended to tag names.
+            xpath = ".//{%(ns)s}Errors/{%(ns)s}Error" % {"ns": _NAMESPACE}
+            error = xml.find(xpath)
+            if error:
+                raise _ApiError(error.attrib["Number"], error.text)
+            else:
+                raise _ApiError(0, "Unknown exception")
+
+        return xml
+
+    def domains_dns_get_hosts(self, domain):
+        sld, tld = domain.split(".")
+        extra_payload = {"SLD": sld, "TLD": tld}
+        xml = self.call("namecheap.domains.dns.getHosts", extra_payload)
+        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainDNSGetHostsResult/*" % {
+            "ns": _NAMESPACE
+        }
+        results = []
+        for host in xml.findall(xpath):
+            results.append(host.attrib)
+        return results
+
+    def domains_dns_add_host(self, domain, host_record):
+        host_records_remote = self.domains_dns_get_hosts(domain)
+
+        print("Remote: %i" % len(host_records_remote))
+
+        host_records_remote.append(host_record)
+        host_records_remote = [_elements_names_fix(x) for x in host_records_remote]
+
+        print("To set: %i" % len(host_records_remote))
+
+        extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_remote)
+        sld, tld = domain.split(".")
+        extra_payload.update({"SLD": sld, "TLD": tld})
+        self.call("namecheap.domains.dns.setHosts", extra_payload)
+
+    def domains_dns_del_host(self, domain, host_record) -> None:
+        host_records_remote = self.domains_dns_get_hosts(domain)
+
+        print("Remote: %i" % len(host_records_remote))
+
+        host_records_new = []
+        for r in host_records_remote:
+            cond_type = r["Type"] == host_record["Type"]
+            cond_name = r["Name"] == host_record["Name"]
+            cond_addr = r["Address"] == host_record["Address"]
+
+            if cond_type and cond_name and cond_addr:
+                # skipping this record as it is the one we want to delete
+                pass
+            else:
+                host_records_new.append(r)
+
+        host_records_new = [_elements_names_fix(x) for x in host_records_new]
+
+        print("To set: %i" % len(host_records_new))
+
+        # Check that we delete not more than 1 record at a time
+        if len(host_records_remote) != len(host_records_new) + 1:
+            sys.stderr.write(
+                "Something went wrong while removing host record, delta > 1: %i -> %i, aborting API call.\n"
+                % (len(host_records_remote), len(host_records_new))
+            )
+            return
+
+        extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_new)
+        sld, tld = domain.split(".")
+        extra_payload.update({"SLD": sld, "TLD": tld})
+        self.call("namecheap.domains.dns.setHosts", extra_payload)
+
+
+def _elements_names_fix(host_record):
+    conversion_map = [("Name", "HostName"), ("Type", "RecordType")]
+
+    for field in conversion_map:
+        # if source field exists
+        if field[0] in host_record:
+            # convert it to target field and delete old one
+            host_record[field[1]] = host_record[field[0]]
+            del host_record[field[0]]
+
+    return host_record
+
+
+def _list_of_dictionaries_to_numbered_payload(data):
+    return dict(
+        sum(
+            [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)],
+            [],
+        )
+    )

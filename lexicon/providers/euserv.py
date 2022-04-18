@@ -5,13 +5,12 @@ Author: Matthias Schoettle (@mschoettle), 2019
 
 EUserv API Docs: https://support.euserv.com/api-doc/
 """
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -53,7 +52,7 @@ class Provider(BaseProvider):
             self._get_provider_option("auth_username")
             and self._get_provider_option("auth_password")
         ):
-            raise Exception(
+            raise ValueError(
                 "username and password must be specified, add --help for details"
             )
 
@@ -83,9 +82,8 @@ class Provider(BaseProvider):
                 if order_description[1] == self.domain:
                     self.order_id = order["ord_no"]["value"]
                     break
-
-        if self.order_id is None:
-            raise Exception("Order for domain not found")
+        else:
+            raise AuthenticationError("Order for domain not found")
 
         # Select the order for the given domain so we can use the DNS actions
         LOGGER.info("Choosing order %s", self.order_id)
@@ -99,9 +97,8 @@ class Provider(BaseProvider):
             if domain["dom_domain"]["value"] == self.domain:
                 self.domain_id = domain["dom_id"]["value"]
                 break
-
-        if self.domain_id is None:
-            raise Exception("Domain not found in DNS records")
+        else:
+            raise AuthenticationError("Domain not found in DNS records")
 
     def _create_record(self, rtype, name, content):
         records = self._list_records(rtype, name, content)
@@ -243,9 +240,7 @@ class Provider(BaseProvider):
 
         if int(response_json["code"]) != RC_SUCCESS:
             raise Exception(
-                "Error {0} in request: {1}".format(
-                    response_json["code"], response_json["message"]
-                )
+                f"Error {response_json['code']} in request: {response_json['message']}"
             )
 
         return response_json

@@ -1,6 +1,4 @@
 """Module provider for RcodeZero"""
-from __future__ import absolute_import
-
 import hashlib
 import json
 import logging
@@ -50,7 +48,7 @@ class Provider(BaseProvider):
 
         updated_data["records"].append({"content": newcontent, "disabled": False})
 
-        payload = self._get("/zones/{0}/rrsets?page_size=-1".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}/rrsets?page_size=-1")
 
         for rrset in payload["data"]:
             if rrset["name"] == rname and rrset["type"] == rtype:
@@ -85,7 +83,7 @@ class Provider(BaseProvider):
         if content:
             filter_obj["content"] = content
 
-        payload = self._get("/zones/{0}/rrsets?page_size=-1".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}/rrsets?page_size=-1")
 
         records = []
         for rrset in payload["data"]:
@@ -125,7 +123,7 @@ class Provider(BaseProvider):
         if identifier is None and (rtype is None or name is None):
             raise Exception("Must specify at least id or  both rtype and name")
 
-        payload = self._get("/zones/{0}/rrsets?page_size=-1".format(self.domain_id))
+        payload = self._get(f"/zones/{self.domain_id}/rrsets?page_size=-1")
 
         if identifier is not None:
             rtype, name, content = self._parse_identifier(identifier, payload)
@@ -209,7 +207,7 @@ class Provider(BaseProvider):
                     content = self._unclean_content(rrset["type"], record["content"])
                     return rtype, name, content
 
-        raise Exception("Record with ID {} not found ".format(identifier))
+        raise Exception(f"Record with ID {identifier} not found ")
 
     def _clean_content(self, rtype, content):
         if rtype in ("TXT", "LOC"):

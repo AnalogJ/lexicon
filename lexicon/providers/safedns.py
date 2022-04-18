@@ -1,11 +1,10 @@
 """Module provider for UKFast's SafeDNS"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -34,17 +33,17 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         try:
-            self._get("/zones/{0}".format(self.domain))
+            self._get(f"/zones/{self.domain}")
             self.domain_id = self.domain
         except requests.exceptions.HTTPError as err:
             if err.response.status_code == 404:
-                raise Exception("No domain found")
+                raise AuthenticationError("No domain found")
             raise err
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
     def _list_records(self, rtype=None, name=None, content=None):
-        url = "/zones/{0}/records".format(self.domain_id)
+        url = f"/zones/{self.domain_id}/records"
         records = []
         payload = {}
 
@@ -114,7 +113,7 @@ class Provider(BaseProvider):
 
         data = {"name": self._full_name(name), "type": rtype, "content": content}
 
-        self._post("/zones/{0}/records".format(self.domain), data)
+        self._post(f"/zones/{self.domain}/records", data)
         LOGGER.debug("create_record: %s", True)
         return True
 
@@ -149,7 +148,7 @@ class Provider(BaseProvider):
         if content:
             data["content"] = content
 
-        self._patch("/zones/{0}/records/{1}".format(self.domain, identifier), data)
+        self._patch(f"/zones/{self.domain}/records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -169,7 +168,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_ids)
 
         for delete_record_id in delete_record_ids:
-            self._delete("/zones/{0}/records/{1}".format(self.domain, delete_record_id))
+            self._delete(f"/zones/{self.domain}/records/{delete_record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -182,7 +181,7 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "{0}".format(self._get_provider_option("auth_token")),
+            "Authorization": f"{self._get_provider_option('auth_token')}",
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
@@ -216,5 +215,5 @@ class Provider(BaseProvider):
     def _add_quotes(rtype, content):
         if rtype == "TXT":
             if not content.startswith('"') and not content.endswith('"'):
-                return '"{0}"'.format(content)
+                return f'"{content}"'
         return content

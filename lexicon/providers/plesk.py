@@ -5,26 +5,22 @@ Author: Jens Reimann, 2018
 
 API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 """
-from __future__ import absolute_import
-
 import logging
-from collections import OrderedDict
+from collections import defaultdict
+from typing import Dict, List, Optional
+from xml.etree import cElementTree
+from xml.etree.ElementTree import Element
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
-
-try:
-    import xmltodict  # optional dependency
-except ImportError:
-    pass
-
 
 LOGGER = logging.getLogger(__name__)
 
 PLEX_URL_SUFFIX = "/enterprise/control/agent.php"
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -54,9 +50,6 @@ class Provider(BaseProvider):
         if not self.api_endpoint.endswith(PLEX_URL_SUFFIX):
             self.api_endpoint += PLEX_URL_SUFFIX
 
-        self.site_name = self.domain
-        assert self.site_name is not None
-
         self.domain_id = None
 
         self.username = self._get_provider_option("auth_username")
@@ -75,24 +68,28 @@ class Provider(BaseProvider):
             for record in result:
                 if record["status"] == "error":
                     raise Exception(
-                        "API returned at least one error: %s" % record["errtext"]
+                        f"API returned at least one error: {record['errtext']}"
                     )
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception("API returned error: %s (%s)" % (errcode, errtext))
+            raise Exception(f"API returned error: {errcode} ({errtext})")
 
         return response
 
     def __plesk_request(self, request):
 
-        headers = {}
-        headers["Content-type"] = "text/xml"
-        headers["HTTP_PRETTY_PRINT"] = "TRUE"
-        headers["HTTP_AUTH_LOGIN"] = self.username
-        headers["HTTP_AUTH_PASSWD"] = self.password
+        headers = {
+            "Content-type": "text/xml",
+            "HTTP_PRETTY_PRINT": "TRUE",
+            "HTTP_AUTH_LOGIN": self.username,
+            "HTTP_AUTH_PASSWD": self.password,
+        }
 
-        xml = xmltodict.unparse({"packet": request}, pretty=True)
+        xml = f"""\
+<?xml version="1.0" encoding="utf-8"?>
+{cElementTree.tostring(_dict_to_etree({"packet": request}), encoding="unicode")}\
+"""
 
         LOGGER.debug("Request: %s", xml)
 
@@ -106,21 +103,19 @@ class Provider(BaseProvider):
         data = response.text
 
         LOGGER.debug("Response: %s", data)
-        result = xmltodict.parse(data)
+        result = _etree_to_dict(cElementTree.XML(data))
         return result["packet"]
 
     def __find_site(self):
         return self.__simple_request(
-            "site",
-            "get",
-            OrderedDict([("filter", {"name": self.site_name}), ("dataset", {})]),
+            "site", "get", {"filter": {"name": self.domain}, "dataset": {}}
         )["result"]["id"]
 
     def _authenticate(self):
         self.domain_id = self.__find_site()
 
         if self.domain_id is None:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
     def _create_record(self, rtype, name, content):
         return self.__create_entry(rtype, name, content, None)
@@ -176,15 +171,13 @@ class Provider(BaseProvider):
         self.__simple_request(
             "dns",
             "add_rec",
-            OrderedDict(
-                [
-                    ("site-id", self.domain_id),
-                    ("type", rtype),
-                    ("host", self._relative_name(host)),
-                    ("value", value),
-                    ("opt", opt),
-                ]
-            ),
+            {
+                "site-id": self.domain_id,
+                "type": rtype,
+                "host": self._relative_name(host),
+                "value": value,
+                "opt": opt,
+            },
         )
 
         return True
@@ -284,3 +277,55 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used for Plesk provider
         pass
+
+
+def _etree_to_dict(t: Element) -> Optional[Dict]:
+    d: Optional[Dict] = {t.tag: {} if t.attrib else None}
+    children = list(t)
+    if children:
+        dd = defaultdict(list)
+        for dc in map(_etree_to_dict, children):
+            if dc:
+                for k, v in dc.items():
+                    dd[k].append(v)
+        d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}
+    if t.attrib and d:
+        d[t.tag].update(("@" + k, v) for k, v in t.attrib.items())
+    if t.text and d:
+        text = t.text.strip()
+        if children or t.attrib:
+            if text:
+                d[t.tag]["#text"] = text
+        else:
+            d[t.tag] = text
+    return d
+
+
+def _dict_to_etree(d: Dict) -> Element:
+    def _to_etree(d1, root):
+        if not d1:
+            pass
+        elif isinstance(d1, str):
+            root.text = d1
+        elif isinstance(d1, dict):
+            for k, v in d1.items():
+                assert isinstance(k, str)
+                if k.startswith("#"):
+                    assert k == "#text" and isinstance(v, str)
+                    root.text = v
+                elif k.startswith("@"):
+                    assert isinstance(v, str)
+                    root.set(k[1:], v)
+                elif isinstance(v, list):
+                    for e in v:
+                        _to_etree(e, cElementTree.SubElement(root, k))
+                else:
+                    _to_etree(v, cElementTree.SubElement(root, k))
+        else:
+            raise TypeError("invalid type: " + str(type(d1)))
+
+    assert isinstance(d, dict) and len(d) == 1
+    tag, body = next(iter(d.items()))
+    node = cElementTree.Element(tag)
+    _to_etree(body, node)
+    return node

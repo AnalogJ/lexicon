@@ -1,6 +1,4 @@
 """Module provider for Aliyun"""
-from __future__ import absolute_import
-
 import base64
 import datetime
 import hmac
@@ -13,6 +11,7 @@ from hashlib import sha1
 import requests
 from six.moves import urllib
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,9 @@ class Provider(BaseProvider):
         response = self._request_aliyun("DescribeDomainInfo")
 
         if "DomainId" not in response:
-            raise ValueError("failed to fetch basic domain info for %s" % (self.domain))
+            raise AuthenticationError(
+                f"failed to fetch basic domain info for {self.domain}"
+            )
 
         self.domain_id = response["DomainId"]
 
@@ -114,7 +115,7 @@ class Provider(BaseProvider):
             identifier = record["id"] if record else None
 
         if not identifier:
-            raise ValueError("updating %s identifier not exists" % identifier)
+            raise ValueError(f"updating {identifier} identifier not exists")
 
         if len(resources) > 1:
             LOGGER.warning(

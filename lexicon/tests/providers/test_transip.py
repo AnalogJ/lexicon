@@ -1,13 +1,15 @@
 """Integration tests for Transip"""
-import os
-from tempfile import mkstemp
+import re
 from unittest import TestCase
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+from lexicon.tests.providers.integration_tests import (
+    IntegrationTestsV2,
+    vcr_integration_test,
+)
 
-FAKE_KEY = b"""
+FAKE_KEY = """
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAxV08IlJRwNq9WyyGO2xRyT0F6XIBD2R5CrwJoP7gIHVU/Mhk
 KeK8//+MbUZtKFoeJi9lI8Cbkqe7GVk9yab6R2/vVzV21XRh+57R79nEh+QTf/vZ
@@ -37,65 +39,52 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 -----END RSA PRIVATE KEY-----
 """
 
-
-# The following fields were removed from the test fixtures:
-#   getInfo: contacts, authcode, registrationDate, renewalDate
-# using:
-#   find tests/fixtures/cassettes/transip/
-#       -name \*.json -exec sed -i 's/<contacts.*<\/contacts>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/
-#       -name \*.json -exec sed -i 's/<authCode.*<\/authCode>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/
-#       -name \*.json -exec sed -i 's/<registrationDate.*<\/registrationDate>//g' '{}' \;
-#   find tests/fixtures/cassettes/transip/
-#       -name \*.json -exec sed -i 's/<renewalDate.*<\/renewalDate>//g' '{}' \;
+# Currently TransipProviderTests class is configured to use a fake key so that the CI system does
+# not need an actual key when integration tests are run with the recorded cassettes.
+# If you want to run again manually the integration tests against the live API, and so use a valid
+# a real key, please modify the following elements in this file:
+#  - comment out the setUp function,
+#  - comment out the tearDown function,
+#  - remove auth_api_key entry from the dict returned by _test_parameters_overrides function.
 
 
-# Hook into testing framework by inheriting unittest.TestCase and reuse
-# the tests which *each and every* implementation of the interface must
-# pass, by inheritance from define_tests.TheTests
 class TransipProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Transip"""
 
     provider_name = "transip"
-    domain = "hurrdurr.nl"
+    domain = "nuvius.nl"
 
-    # Disable setUp and tearDown, and set a real username and key in
-    # provider_opts to execute real calls
-    def _test_parameters_overrides(self):
-        (_fake_fd, _fake_key) = mkstemp()
-        _fake_file = os.fdopen(_fake_fd, "wb", 1024)
-        _fake_file.write(FAKE_KEY)
-        _fake_file.close()
-        self._fake_key = _fake_key
-
-        options = {"auth_username": "foo", "auth_api_key": _fake_key}
-
-        return options
-
-    def tearDown(self):
-        try:
-            os.unlink(self._fake_key)
-        except AttributeError:
-            # Method _test_options may not have been executed,
-            # in this case self._fake_key does not exist.
-            pass
-
-    def _filter_headers(self):
-        return ["Cookie"]
-
-    @pytest.mark.skip(reason="manipulating records by id is not supported")
-    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(
-        self,
-    ):
-        return
-
-    @pytest.mark.skip(
-        reason=(
-            "adding docs.example.com as a CNAME target will result in a RFC 1035 error"
-        )
-    )
+    @vcr_integration_test
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
         self,
     ):
-        return
+        provider = self._construct_authenticated_provider()
+        # TransIP CNAME records values must be a FQDN with trailing dot for external domains.
+        assert provider.create_record("CNAME", "docs", "docs.example.com.")
+
+    @pytest.fixture(autouse=True)
+    def _generate_fake_key(self, tmp_path):
+        self._fake_key = tmp_path / "key.pem"
+        self._fake_key.write_text(FAKE_KEY)
+
+    def _filter_headers(self):
+        return ["Signature", "Authorization"]
+
+    def _filter_post_data_parameters(self):
+        return ["login"]
+
+    def _filter_response(self, response):
+        response["body"]["string"] = re.sub(
+            rb'"token":"[\w.-]+"',
+            b'"token":"TOKEN"',
+            response["body"]["string"],
+        )
+        response["body"]["string"] = re.sub(
+            rb'"authCode":"[\w.-]+"',
+            b'"authCode":"AUTH_CODE"',
+            response["body"]["string"],
+        )
+        return response
+
+    def _test_parameters_overrides(self):
+        return {"auth_api_key": str(self._fake_key), "auth_key_is_global": True}

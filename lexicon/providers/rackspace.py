@@ -1,12 +1,11 @@
 """Rackspace provider implementation"""
-from __future__ import absolute_import
-
 import json
 import logging
 import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -92,9 +91,9 @@ class Provider(BaseProvider):
         payload = self._get("/domains", {"name": self.domain})
 
         if not payload["domains"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         if len(payload["domains"]) > 1:
-            raise Exception("Too many domains found. This should not happen")
+            raise AuthenticationError("Too many domains found. This should not happen")
 
         self.domain_id = payload["domains"][0]["id"]
 
@@ -108,9 +107,7 @@ class Provider(BaseProvider):
             data["records"][0]["ttl"] = self._get_lexicon_option("ttl")
 
         try:
-            payload = self._post_and_wait(
-                "/domains/{0}/records".format(self.domain_id), data
-            )
+            payload = self._post_and_wait(f"/domains/{self.domain_id}/records", data)
         except Exception as error:
             if str(error).startswith("Record is a duplicate of another record"):
                 return self._update_record(None, rtype, name, content)
@@ -133,7 +130,7 @@ class Provider(BaseProvider):
         # if content:
         #     params['data'] = content
 
-        payload = self._get("/domains/{0}/records".format(self.domain_id), params)
+        payload = self._get(f"/domains/{self.domain_id}/records", params)
 
         records = list(payload["records"])
         if content:
@@ -170,9 +167,7 @@ class Provider(BaseProvider):
                 raise Exception("Unable to find record to modify: " + name)
             identifier = records[0]["id"]
 
-        self._put_and_wait(
-            "/domains/{0}/records/{1}".format(self.domain_id, identifier), data
-        )
+        self._put_and_wait(f"/domains/{self.domain_id}/records/{identifier}", data)
 
         # If it didn't raise from the http status code, then we're good
         LOGGER.debug("update_record: %s", identifier)
@@ -191,9 +186,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete_and_wait(
-                "/domains/{0}/records/{1}".format(self.domain_id, record_id)
-            )
+            self._delete_and_wait(f"/domains/{self.domain_id}/records/{record_id}")
 
         # If it didn't raise from the http status code, then we're good
         success = True
@@ -210,14 +203,15 @@ class Provider(BaseProvider):
         LOGGER.debug(
             "request tenant ID: %s", self._get_rackspace_option("auth_account")
         )
-        full_url = (self.api_endpoint + "/{0}" + url).format(
-            self._get_rackspace_option("auth_account")
+        full_url = (
+            f"{self.api_endpoint}/{self._get_rackspace_option('auth_account')}{url}"
         )
+        # For data= argument, use None value for GET requests to comply with Rackspace API
         response = requests.request(
             action,
             full_url,
             params=query_params,
-            data=json.dumps(data),
+            data=json.dumps(data) if action != "GET" else None,
             headers={
                 "X-Auth-Token": self._get_rackspace_option("auth_token"),
                 "Content-Type": "application/json",

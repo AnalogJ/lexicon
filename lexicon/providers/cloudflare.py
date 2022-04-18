@@ -1,11 +1,10 @@
 """Module provider for Cloudflare"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -52,28 +51,36 @@ class Provider(BaseProvider):
             payload = self._get("/zones", {"name": self.domain, "status": "active"})
 
             if not payload["result"]:
-                raise Exception("No domain found")
+                raise AuthenticationError("No domain found")
             if len(payload["result"]) > 1:
-                raise Exception("Too many domains found. This should not happen")
+                raise AuthenticationError(
+                    "Too many domains found. This should not happen"
+                )
 
             self.domain_id = payload["result"][0]["id"]
         else:
-            payload = self._get("/zones/{0}".format(zone_id))
+            payload = self._get(f"/zones/{zone_id}")
 
             if not payload["result"]:
-                raise Exception("No domain found for Zone ID {0}".format(zone_id))
+                raise AuthenticationError(f"No domain found for Zone ID {zone_id}")
 
             self.domain_id = zone_id
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
-        data = {"type": rtype, "name": self._full_name(name), "content": content}
+        content, cf_data = self._format_content(rtype, content)
+        data = {
+            "type": rtype,
+            "name": self._full_name(name),
+            "content": content,
+            "data": cf_data,
+        }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
         payload = {"success": True}
         try:
-            payload = self._post("/zones/{0}/dns_records".format(self.domain_id), data)
+            payload = self._post(f"/zones/{self.domain_id}/dns_records", data)
         except requests.exceptions.HTTPError as err:
             already_exists = next(
                 (
@@ -103,9 +110,7 @@ class Provider(BaseProvider):
 
         records = []
         while True:
-            payload = self._get(
-                "/zones/{0}/dns_records".format(self.domain_id), filter_obj
-            )
+            payload = self._get(f"/zones/{self.domain_id}/dns_records", filter_obj)
 
             LOGGER.debug("payload: %s", payload)
 
@@ -154,9 +159,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
-        payload = self._put(
-            "/zones/{0}/dns_records/{1}".format(self.domain_id, identifier), data
-        )
+        payload = self._put(f"/zones/{self.domain_id}/dns_records/{identifier}", data)
 
         LOGGER.debug("update_record: %s", payload["success"])
         return payload["success"]
@@ -174,7 +177,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/{0}/dns_records/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/{self.domain_id}/dns_records/{record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -190,9 +193,9 @@ class Provider(BaseProvider):
             headers["X-Auth-Email"] = self._get_provider_option("auth_username")
             headers["X-Auth-Key"] = self._get_provider_option("auth_token")
         else:
-            headers["Authorization"] = "Bearer {}".format(
-                self._get_provider_option("auth_token")
-            )
+            headers[
+                "Authorization"
+            ] = f"Bearer {self._get_provider_option('auth_token')}"
         response = requests.request(
             action,
             self.api_endpoint + url,
@@ -203,3 +206,23 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
+
+    def _format_content(self, rtype, content):
+        """
+        Special case handling from some record types that Cloudflare needs
+        formatted differently
+
+        Returns new values for the content and data properties to be sent
+        on the request
+        """
+        data = None
+        if rtype == "SSHFP":
+            # For some reason the CloudFlare API does not let you set content
+            # directly when creating an SSHFP record. You need to pass the
+            # fields that make up the record seperately, then the API joins
+            # them back together
+            _fp = content.split(" ")
+            data = {"algorithm": _fp[0], "type": _fp[1], "fingerprint": _fp[2]}
+            content = None
+
+        return content, data

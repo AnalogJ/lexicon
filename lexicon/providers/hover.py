@@ -1,11 +1,10 @@
 """Module provider for Hover"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
             "password": self._get_provider_option("auth_password"),
         }
         response = requests.post(
-            "https://www.hover.com/signin/auth.json", json=payload, cookies=self.cookies
+            "https://www.hover.com/api/login/", json=payload, cookies=self.cookies
         )
         response.raise_for_status()
 
@@ -57,9 +56,9 @@ class Provider(BaseProvider):
         for domain in domains:
             if domain["name"] == self.domain:
                 self.domain_id = domain["id"]
-
-        if self.domain_id is None:
-            raise Exception("Domain {} not found".format(self.domain))
+                break
+        else:
+            raise AuthenticationError(f"Domain {self.domain} not found")
 
     def _list_domains(self):
         response = self._get("/domains")
@@ -80,7 +79,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/domains/{0}/dns".format(self.domain_id))
+        payload = self._get(f"/domains/{self.domain_id}/dns")
 
         # payload['domains'] should be a list of len 1
         try:
@@ -130,7 +129,7 @@ class Provider(BaseProvider):
             record["ttl"] = self._get_lexicon_option("ttl")
 
         LOGGER.debug("create_record: %s", record)
-        payload = self._post("/domains/{0}/dns".format(self.domain_id), record)
+        payload = self._post(f"/domains/{self.domain_id}/dns", record)
         return payload["succeeded"]
 
     # Update a record. Hover cannot update name so we delete and recreate.
@@ -168,7 +167,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_ids)
 
         for record_id in delete_record_ids:
-            self._delete("/dns/{0}".format(record_id))
+            self._delete(f"/dns/{record_id}")
             LOGGER.debug("delete_record: %s", record_id)
         return True
 

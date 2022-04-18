@@ -1,11 +1,10 @@
 """Module provider for DNS Simple"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
         payload = self._get("/accounts")
 
         if not payload[0]["id"]:
-            raise Exception("No account id found")
+            raise AuthenticationError("No account id found")
 
         for account in payload:
             if account["plan_identifier"] is None:
@@ -57,15 +56,14 @@ class Provider(BaseProvider):
                 continue
 
             dompayload = self._get(
-                "/{0}/domains".format(account["id"]),
-                query_params={"name_like": self.domain},
+                f"/{account['id']}/domains", query_params={"name_like": self.domain}
             )
             if dompayload and dompayload[0]["id"]:
                 self.account_id = account["id"]
                 self.domain_id = dompayload[0]["id"]
-
-        if not self.account_id:
-            raise Exception("No domain found like {}".format(self.domain))
+                break
+        else:
+            raise AuthenticationError(f"No domain found like {self.domain}")
 
     # Create record. If record already exists with the same content, do nothing
 
@@ -83,9 +81,7 @@ class Provider(BaseProvider):
         if self._get_provider_option("regions"):
             record["regions"] = self._get_provider_option("regions")
 
-        payload = self._post(
-            "/{0}/zones/{1}/records".format(self.account_id, self.domain), record
-        )
+        payload = self._post(f"/{self.account_id}/zones/{self.domain}/records", record)
 
         LOGGER.debug("create_record: %s", "id" in payload)
         return "id" in payload
@@ -100,17 +96,16 @@ class Provider(BaseProvider):
         if name:
             filter_query["name"] = self._relative_name(name)
         payload = self._get(
-            "/{0}/zones/{1}/records".format(self.account_id, self.domain),
-            query_params=filter_query,
+            f"/{self.account_id}/zones/{self.domain}/records", query_params=filter_query
         )
 
         records = []
         for record in payload:
             processed_record = {
                 "type": record["type"],
-                "name": "{}".format(self.domain)
+                "name": f"{self.domain}"
                 if record["name"] == ""
-                else "{0}.{1}".format(record["name"], self.domain),
+                else f"{record['name']}.{self.domain}",
                 "ttl": record["ttl"],
                 "content": record["content"],
                 "id": record["id"],
@@ -149,10 +144,7 @@ class Provider(BaseProvider):
 
         for one_identifier in identifiers:
             self._patch(
-                "/{0}/zones/{1}/records/{2}".format(
-                    self.account_id, self.domain, one_identifier
-                ),
-                data,
+                f"/{self.account_id}/zones/{self.domain}/records/{one_identifier}", data
             )
             LOGGER.debug("update_record: %s", one_identifier)
 
@@ -172,11 +164,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete(
-                "/{0}/zones/{1}/records/{2}".format(
-                    self.account_id, self.domain, record_id
-                )
-            )
+            self._delete(f"/{self.account_id}/zones/{self.domain}/records/{record_id}")
 
         # is always True at this point; if a non 2xx response is returned, an error is raised.
         LOGGER.debug("delete_record: True")
@@ -196,9 +184,9 @@ class Provider(BaseProvider):
         default_auth = None
 
         if self._get_provider_option("auth_token"):
-            default_headers["Authorization"] = "Bearer {0}".format(
-                self._get_provider_option("auth_token")
-            )
+            default_headers[
+                "Authorization"
+            ] = f"Bearer {self._get_provider_option('auth_token')}"
         elif self._get_provider_option("auth_username") and self._get_provider_option(
             "auth_password"
         ):

@@ -1,18 +1,28 @@
 """Module provider for INWX"""
-from __future__ import absolute_import
-
 import logging
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import xmlrpclib
+    import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib
+    import xmlrpc.client as xmlrpclib  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["inwx.com"]
+NAMESERVER_DOMAINS = [
+    "ns.inwx.de",
+    "ns2.inwx.de",
+    "ns3.inwx.eu",
+    "ns4.inwx.com",
+    "ns5.inwx.net",
+    "ns.domrobot.com",
+    "ns.domrobot.net",
+    "ns.domrobot.org",
+    "ns.domrobot.info",
+    "ns.domrobot.biz",
+]
 
 
 def provider_parser(subparser):
@@ -64,9 +74,7 @@ class Provider(BaseProvider):
             if exclude_code is not None and response["code"] == exclude_code:
                 return
 
-            raise Exception(
-                "{0}: {1} ({2})".format(message, response["msg"], response["code"])
-            )
+            raise Exception(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
     def _authenticate(self):
@@ -79,8 +87,11 @@ class Provider(BaseProvider):
         """
         opts = {"domain": self._domain}
         opts.update(self._auth)
-        response = self._api.domain.info(opts)
-        self._validate_response(response=response, message="Failed to authenticate")
+        response = self._api.nameserver.info(opts)
+        try:
+            self._validate_response(response=response, message="Failed to authenticate")
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         # set to fake id to pass tests, inwx doesn't work on domain id but
         # uses domain names for identification

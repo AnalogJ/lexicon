@@ -19,8 +19,6 @@ type and content.
 This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format UltraDNS expects, and the format Lexicon uses
 """
-from __future__ import absolute_import
-
 import hashlib
 import json
 import logging
@@ -122,7 +120,7 @@ class Provider(BaseProvider):
         return records
 
     def _clean_rrtype(self, rtype):
-        """ UltraDNS returns records with types like 'MX (15)' """
+        """UltraDNS returns records with types like 'MX (15)'"""
         return rtype.split()[0]
 
     def _clean_content(self, rtype, content):
@@ -164,16 +162,12 @@ class Provider(BaseProvider):
 
         if found:
             self._put(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=updated_data,
             )
         else:
             self._post(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=updated_data,
             )
 
@@ -236,16 +230,12 @@ class Provider(BaseProvider):
 
         if update_data["rdata"]:
             self._put(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                ),
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=update_data,
             )
         else:
             self._delete(
-                "/zones/{0}/rrsets/{1}/{2}".format(
-                    self._ensure_dot(self.domain), rtype, rname
-                )
+                f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}"
             )
 
         return True

@@ -2,7 +2,6 @@
 import datetime
 import os
 import subprocess
-import sys
 from distutils.version import StrictVersion
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -10,7 +9,9 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 def main():
     git_clean = subprocess.check_output(
-        "git status --porcelain", shell=True, universal_newlines=True,
+        "git status --porcelain",
+        shell=True,
+        universal_newlines=True,
     ).strip()
     if git_clean:
         raise RuntimeError("Error, git workspace is not clean: \n{0}".format(git_clean))

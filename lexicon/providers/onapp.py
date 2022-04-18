@@ -1,17 +1,17 @@
 """Module provider for OnApp"""
-from __future__ import absolute_import
-
 import json
 import logging
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -54,9 +54,8 @@ class Provider(BaseProvider):
             if zone["dns_zone"]["name"] == domain:
                 self.domain_id = zone["dns_zone"]["id"]
                 break
-
-        if self.domain_id is None:
-            raise Exception("Could not find {0} in OnApp DNS Zones".format(domain))
+        else:
+            raise AuthenticationError(f"Could not find {domain} in OnApp DNS Zones")
 
     def _create_record(self, rtype, name, content):
         data = {
@@ -67,10 +66,10 @@ class Provider(BaseProvider):
 
         ttl = self._get_lexicon_option("ttl")
         if ttl:
-            data["ttl"] = "{0}".format(ttl)
+            data["ttl"] = f"{ttl}"
 
         result = self._post(
-            "/dns_zones/{0}/records.json".format(self.domain_id), {"dns_record": data}
+            f"/dns_zones/{self.domain_id}/records.json", {"dns_record": data}
         )
         LOGGER.debug("create_record: %s", result)
 
@@ -79,7 +78,7 @@ class Provider(BaseProvider):
     def _list_records(self, rtype=None, name=None, content=None):
         records = []
 
-        response = self._get("/dns_zones/{0}/records.json".format(self.domain_id))
+        response = self._get(f"/dns_zones/{self.domain_id}/records.json")
         for record_type in response["dns_zone"]["records"]:
 
             # For now we do not support other RR types so we ignore them, also see
@@ -124,7 +123,7 @@ class Provider(BaseProvider):
         if not name or not ttl:
             if not existing:
                 existing = self._get(
-                    "/dns_zones/{0}/records/{1}.json".format(self.domain_id, identifier)
+                    f"/dns_zones/{self.domain_id}/records/{identifier}.json"
                 )
             if not name:
                 name = existing["name"]
@@ -133,12 +132,12 @@ class Provider(BaseProvider):
 
         request = {
             "name": self._relative_name(name),
-            "ttl": "{0}".format(ttl),
+            "ttl": f"{ttl}",
             self._key_for_record_type(rtype): content,
         }
 
         result = self._put(
-            "/dns_zones/{0}/records/{1}.json".format(self.domain_id, identifier),
+            f"/dns_zones/{self.domain_id}/records/{identifier}.json",
             {"dns_record": request},
         )
         LOGGER.debug("update_record: %s", result)
@@ -155,9 +154,7 @@ class Provider(BaseProvider):
             deletion_ids.append(identifier)
 
         for one_id in deletion_ids:
-            self._delete(
-                "/dns_zones/{0}/records/{1}.json".format(self.domain_id, one_id)
-            )
+            self._delete(f"/dns_zones/{self.domain_id}/records/{one_id}.json")
 
         LOGGER.debug("delete_record: %s", True)
 
@@ -197,11 +194,9 @@ class Provider(BaseProvider):
             return "txt"
         if record_type in ("MX", "NS", "SOA", "SRV", "LOC"):
             raise Exception(
-                "{0} record type is not supported in the OnApp Provider".format(
-                    record_type
-                )
+                f"{record_type} record type is not supported in the OnApp Provider"
             )
-        raise Exception("{0} record type is unknown".format(record_type))
+        raise Exception(f"{record_type} record type is unknown")
 
     def _guess_record(self, rtype, name=None, content=None):
         records = self._list_records(rtype=rtype, name=name, content=content)

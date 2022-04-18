@@ -1,11 +1,10 @@
 """Module provider for PointHQ"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -31,10 +30,10 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
 
-        payload = self._get("/zones/{0}".format(self.domain))
+        payload = self._get(f"/zones/{self.domain}")
 
         if not payload["zone"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = payload["zone"]["id"]
 
@@ -46,7 +45,7 @@ class Provider(BaseProvider):
             return True
 
         payload = self._post(
-            "/zones/{0}/records".format(self.domain_id),
+            f"/zones/{self.domain_id}/records",
             {
                 "zone_record": {
                     "record_type": rtype,
@@ -69,7 +68,7 @@ class Provider(BaseProvider):
         if name:
             filter_query["name"] = self._relative_name(name)
 
-        payload = self._get("/zones/{0}/records".format(self.domain_id), filter_query)
+        payload = self._get(f"/zones/{self.domain_id}/records", filter_query)
 
         records = []
         for record in payload:
@@ -101,8 +100,7 @@ class Provider(BaseProvider):
             data["data"] = content
 
         payload = self._put(
-            "/zones/{0}/records/{1}".format(self.domain_id, identifier),
-            {"zone_record": data},
+            f"/zones/{self.domain_id}/records/{identifier}", {"zone_record": data}
         )
 
         LOGGER.debug("update_record: %s", payload)
@@ -121,7 +119,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/zones/{0}/records/{1}".format(self.domain_id, record_id))
+            self._delete(f"/zones/{self.domain_id}/records/{record_id}")
 
         LOGGER.debug("delete_record: %s", True)
         return True

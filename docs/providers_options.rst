@@ -8,33 +8,37 @@ The following Lexicon providers are available:
 +-----------------+-----------------+-----------------+-----------------+
 | cloudns_        | cloudxns_       | conoha_         | constellix_     |
 +-----------------+-----------------+-----------------+-----------------+
-| digitalocean_   | dinahosting_    | directadmin_    | dnsimple_       |
+| ddns_           | digitalocean_   | dinahosting_    | directadmin_    |
 +-----------------+-----------------+-----------------+-----------------+
-| dnsmadeeasy_    | dnspark_        | dnspod_         | dreamhost_      |
+| dnsimple_       | dnsmadeeasy_    | dnspark_        | dnspod_         |
 +-----------------+-----------------+-----------------+-----------------+
-| dynu_           | easydns_        | easyname_       | euserv_         |
+| dreamhost_      | dynu_           | easydns_        | easyname_       |
 +-----------------+-----------------+-----------------+-----------------+
-| exoscale_       | gandi_          | gehirn_         | glesys_         |
+| euserv_         | exoscale_       | gandi_          | gehirn_         |
 +-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
+| glesys_         | godaddy_        | googleclouddns_ | gransy_         |
 +-----------------+-----------------+-----------------+-----------------+
-| henet_          | hetzner_        | hostingde_      | hover_          |
+| gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+
-| infoblox_       | internetbs_     | inwx_           | linode_         |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     |
 +-----------------+-----------------+-----------------+-----------------+
-| linode4_        | localzone_      | luadns_         | memset_         |
+| inwx_           | joker_          | linode_         | linode4_        |
++-----------------+-----------------+-----------------+-----------------+
+| localzone_      | luadns_         | memset_         | mythicbeasts_   |
 +-----------------+-----------------+-----------------+-----------------+
 | namecheap_      | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | onapp_          | online_         |
+| njalla_         | nsone_          | oci_            | onapp_          |
 +-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | powerdns_       |
+| online_         | ovh_            | plesk_          | pointhq_        |
 +-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        |
+| powerdns_       | rackspace_      | rage4_          | rcodezero_      |
 +-----------------+-----------------+-----------------+-----------------+
-| safedns_        | sakuracloud_    | softlayer_      | transip_        |
+| route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+
-| ultradns_       | vultr_          | yandex_         | zeit_           |
+| transip_        | ultradns_       | valuedomain_    | vercel_         |
++-----------------+-----------------+-----------------+-----------------+
+| vultr_          | webgo_          | yandex_         | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+
 | zilore_         | zonomi_         |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
@@ -47,6 +51,14 @@ List of options
 aliyun
     * ``auth_key_id`` Specify access key id for authentication
     * ``auth_secret`` Specify access secret for authentication
+
+.. note::
+   
+   Aliyun Provider requires an access key id and access secret with full rights on dns.
+   Better to use RAM on Aliyun cloud to create a specified user for the dns operation.
+   The referrence for Aliyun DNS production:
+   https://help.aliyun.com/product/29697.html
+
 
 .. _aurora:
 
@@ -63,12 +75,33 @@ azure
     * ``auth_subscription_id`` Specify the subscription id attached to the resource group
     * ``resource_group`` Specify the resource group hosting the dns zone to edit
 
+.. note::
+   
+   The Azure provider orchestrates the DNS zones hosted in a resource group for a subscription
+   in Microsoft Azure Cloud. To authenticate, an App registration must be created in an Azure
+   Active Directory. This App registration must be granted Admin for API permissions to
+   Domain.ReadWrite.All" to this Active Directory, and must have a usable Client secret.
+   
+
+
 .. _cloudflare:
 
 cloudflare
     * ``auth_username`` Specify email address for authentication (for global api key only)
     * ``auth_token`` Specify token for authentication (global api key or api token)
     * ``zone_id`` Specify the zone id (if set, api token can be scoped to the target zone)
+
+.. note::
+   
+   There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+   1 - A Global API key,
+       with --auth-username and --auth-token flags.
+   2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones),
+       with --auth-token flag.
+   3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone),
+       with --auth-token and --zone-id flags.
+   
+
 
 .. _cloudns:
 
@@ -100,6 +133,12 @@ conoha
 constellix
     * ``auth_username`` Specify the api key username for authentication
     * ``auth_token`` Specify secret key for authenticate=
+
+.. _ddns:
+
+ddns
+    * ``auth_token`` Specify the key used in format <alg>:<key_id>:<secret>
+    * ``ddns_server`` Specify ip of the ddns server
 
 .. _digitalocean:
 
@@ -167,6 +206,11 @@ easyname
     * ``auth_username`` Specify username used to authenticate
     * ``auth_password`` Specify password used to authenticate
 
+.. note::
+   
+   A provider for Easyname DNS.
+
+
 .. _euserv:
 
 euserv
@@ -212,11 +256,24 @@ googleclouddns
         or the base64 encoded content of this file prefixed by 'base64::'
         (eg. base64::eyjhbgcioyj...)
 
+.. note::
+   
+   The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
+   This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
+   You can create a new service account, associate a private key, and download its info through this url:
+   https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2
+
+
 .. _gransy:
 
 gransy
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. note::
+   
+   DNS manipulation provider for Gransy sites subreg.cz, regtons.com and regnames.eu.
+
 
 .. _gratisdns:
 
@@ -229,6 +286,14 @@ gratisdns
 henet
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. note::
+   
+   A provider for Hurricane Electric DNS.
+           NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
+                 YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
+           
+
 
 .. _hetzner:
 
@@ -254,6 +319,18 @@ infoblox
     * ``ib_view`` Specify dns view to manage at the infoblox
     * ``ib_host`` Specify infoblox host exposing the wapi
 
+.. _infomaniak:
+
+infomaniak
+    * ``auth_token`` Specify the token
+
+.. note::
+   
+   Infomaniak Provider requires a token with domain scope.
+   It can be generated for your Infomaniak account on the following URL:
+   https://manager.infomaniak.com/v3/infomaniak-api
+
+
 .. _internetbs:
 
 internetbs
@@ -265,6 +342,18 @@ internetbs
 inwx
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
+
+.. _joker:
+
+joker
+    * ``auth_token`` Specify the api key to connect to the joker.com api
+
+.. note::
+   
+   The Joker.com provider requires a valid token for authentication.
+   You can create one in the section 'Manage Joker.com API access keys' of 'My Profile' in your Joker.com account.
+   
+
 
 .. _linode:
 
@@ -291,6 +380,23 @@ luadns
 
 memset
     * ``auth_token`` Specify api key for authentication
+
+.. _mythicbeasts:
+
+mythicbeasts
+    * ``auth_username`` Specify api credentials username
+    * ``auth_password`` Specify api credentials password
+    * ``auth_token`` Specify api token for authentication
+
+.. note::
+   
+   There are two ways to provide an authentication granting access to the Mythic Beasts API
+   1 - With your API credentials (user/password),
+       with --auth-username and --auth-password flags.
+   2 - With an API token, using --auth-token flags.
+   These credentials and tokens must be generated using the Mythic Beasts API v2.
+   
+
 
 .. _namecheap:
 
@@ -328,12 +434,37 @@ njalla
 nsone
     * ``auth_token`` Specify token for authentication
 
+.. _oci:
+
+oci
+    * ``auth_config_file`` The full path including filename to an oci configuration file.
+    * ``auth_user`` The ocid of the user calling the api.
+    * ``auth_tenancy`` The ocid of your tenancy.
+    * ``auth_fingerprint`` The fingerprint for the public key that was added to the calling user.
+    * ``auth_key_content`` The full content of the calling user's private signing key in pem format.
+    * ``auth_pass_phrase`` If the private key is encrypted, the pass phrase must be provided.
+    * ``auth_region`` The home region of your tenancy.
+    * ``auth_type`` Valid options are 'api_key' (default) or 'instance_principal'.
+
+.. note::
+   
+   Oracle Cloud Infrastructure (OCI) DNS provider
+   
+
+
 .. _onapp:
 
 onapp
     * ``auth_username`` Specify email address of the onapp account
     * ``auth_token`` Specify api key for the onapp account
     * ``auth_server`` Specify url to the onapp control panel server
+
+.. note::
+   
+   The OnApp provider requires your OnApp account's email address and
+   API token, which can be found on your /profile page on the Control Panel interface.
+   The server is your dashboard URL, with format like https://dashboard.youronapphost.org
+
 
 .. _online:
 
@@ -347,6 +478,13 @@ ovh
     * ``auth_application_key`` Specify the application key
     * ``auth_application_secret`` Specify the application secret
     * ``auth_consumer_key`` Specify the consumer key
+
+.. note::
+   
+   OVH Provider requires a token with full rights on /domain/*.
+   It can be generated for your OVH account on the following URL:
+   https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*
+
 
 .. _plesk:
 
@@ -403,6 +541,13 @@ route53
 safedns
     * ``auth_token`` Specify the api key to authenticate with
 
+.. note::
+   
+   SafeDNS provider requires an API key in all interactions.
+   You can generate one for your account on the following URL:
+   https://my.ukfast.co.uk/applications/index.php
+
+
 .. _sakuracloud:
 
 sakuracloud
@@ -419,7 +564,8 @@ softlayer
 
 transip
     * ``auth_username`` Specify username for authentication
-    * ``auth_api_key`` Specify api private key for authentication
+    * ``auth_api_key`` Specify the private key to use for api authentication, in pem format: can be either the path of the key file (eg. /tmp/key.pem) or the base64 encoded content of this file prefixed by 'base64::' (eg. base64::eyjhbgcioyj...)
+    * ``auth_key_is_global`` Set this flag is the private key used is a global key with no ip whitelist restriction
 
 .. _ultradns:
 
@@ -428,10 +574,45 @@ ultradns
     * ``auth_username`` Specify username for authentication
     * ``auth_password`` Specify password for authentication
 
+.. _valuedomain:
+
+valuedomain
+    * ``auth_token`` Specify youyr api token
+
+.. note::
+   
+   Value Domain requires a token to access its API.
+   You can generate one for your account on the following URL:
+   https://www.value-domain.com/vdapi/
+
+
+.. _vercel:
+
+vercel
+    * ``auth_token`` Specify your api token
+
+.. note::
+   
+   Vercel provider requires a token to access its API.
+   You can generate one for your account on the following URL:
+   https://vercel.com/account/tokens
+
+
 .. _vultr:
 
 vultr
     * ``auth_token`` Specify token for authentication
+
+.. _webgo:
+
+webgo
+    * ``auth_username`` Specify username for authentication
+    * ``auth_password`` Specify password for authentication
+
+.. note::
+   
+   A provider for Webgo.
+
 
 .. _yandex:
 
@@ -443,10 +624,24 @@ yandex
 zeit
     * ``auth_token`` Specify your api token
 
+.. note::
+   
+   Vercel provider requires a token to access its API.
+   You can generate one for your account on the following URL:
+   https://vercel.com/account/tokens
+
+
 .. _zilore:
 
 zilore
     * ``auth_key`` Specify the zilore api key to use
+
+.. note::
+   
+   Zilore API requires an API key that can be found in your Zilore profile, at the API tab.
+   The API access is available only for paid plans.
+   
+
 
 .. _zonomi:
 

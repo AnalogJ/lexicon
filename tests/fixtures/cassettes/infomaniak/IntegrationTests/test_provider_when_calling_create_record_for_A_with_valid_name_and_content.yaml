@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.infomaniak.com/1/product?service_name=domain&customer_name=testouille.at
+  response:
+    body:
+      string: '{"result":"success","data":[{"id":890190,"account_id":1578,"service_id":14,"service_name":"domain","customer_name":"testouille.at","internal_name":null,"created_at":1540455848,"expired_at":1634680800,"version":1,"maintenance":false,"locked":false,"operation_in_progress":false,"tags":[],"unique_id":2787023,"description":"","is_free":false,"is_zero_price":false,"rights":{"technical":true}}]}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '392'
+      content-type:
+      - application/json
+      date:
+      - Fri, 08 Jan 2021 08:55:24 GMT
+      server:
+      - Apache
+      set-cookie:
+      - SRVAPI=SERV73; path=/
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - SRVAPI=SERV73
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://api.infomaniak.com/1/domain/890190/dns/record
+  response:
+    body:
+      string: '{"result":"success","data":[]}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '30'
+      content-type:
+      - application/json
+      date:
+      - Fri, 08 Jan 2021 08:55:25 GMT
+      server:
+      - Apache
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "A", "source": "localhost", "target": "127.0.0.1", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '72'
+      Content-type:
+      - application/json
+      Cookie:
+      - SRVAPI=SERV73
+      User-Agent:
+      - python-requests/2.25.1
+    method: POST
+    uri: https://api.infomaniak.com/1/domain/890190/dns/record
+  response:
+    body:
+      string: '{"result":"success","data":"10041035"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '38'
+      content-type:
+      - application/json
+      date:
+      - Fri, 08 Jan 2021 08:55:26 GMT
+      server:
+      - Apache
+    status:
+      code: 201
+      message: Created
+version: 1

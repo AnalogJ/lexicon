@@ -1,19 +1,14 @@
 """Module provider for Njalla"""
-from __future__ import absolute_import
-
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = [
-    "1-you.njalla.no",
-    "2-can.njalla.in",
-    "3-get.njalla.fo",
-]
+NAMESERVER_DOMAINS = ["1-you.njalla.no", "2-can.njalla.in", "3-get.njalla.fo"]
 
 
 def provider_parser(subparser):
@@ -30,13 +25,14 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://njal.la/api/1/"
 
     def _authenticate(self):
-        params = {
-            "domain": self.domain,
-        }
-        result = self._api_call("get-domain", params)
+        params = {"domain": self.domain}
+        try:
+            result = self._api_call("get-domain", params)
+        except Exception as e:
+            raise AuthenticationError(str(e))
 
         if result["name"] != self.domain:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
         self.domain_id = self.domain
 
@@ -60,9 +56,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        params = {
-            "domain": self.domain,
-        }
+        params = {"domain": self.domain}
         result = self._api_call("list-records", params)
 
         records = result["records"]
@@ -94,11 +88,7 @@ class Provider(BaseProvider):
         if not identifier:
             identifier = self._get_record_identifier(rtype=rtype, name=name)
 
-        params = {
-            "id": identifier,
-            "domain": self.domain,
-            "content": content,
-        }
+        params = {"id": identifier, "domain": self.domain, "content": content}
         result = self._api_call("edit-record", params)
 
         LOGGER.debug("update_record: %s", result)
@@ -112,10 +102,7 @@ class Provider(BaseProvider):
                 rtype=rtype, name=name, content=content
             )
 
-        params = {
-            "domain": self.domain,
-            "id": identifier,
-        }
+        params = {"domain": self.domain, "id": identifier}
         self._api_call("remove-record", params)
 
         LOGGER.debug("delete_record: %s", True)
@@ -126,10 +113,7 @@ class Provider(BaseProvider):
         if self._get_provider_option("auth_token") is None:
             raise Exception("Must provide API token")
 
-        data = {
-            "method": method,
-            "params": params,
-        }
+        data = {"method": method, "params": params}
         response = self._request("POST", "", data)
 
         if "error" in response.keys():

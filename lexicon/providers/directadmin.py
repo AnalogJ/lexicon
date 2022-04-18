@@ -1,16 +1,18 @@
 """Module provider for DirectAdmin hosts"""
 import logging
 import warnings
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
 # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
-NAMESERVER_DOMAINS = []
+NAMESERVER_DOMAINS: List[str] = []
 
 
 def provider_parser(subparser):
@@ -45,16 +47,14 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             # A 401 error will be returned in case of incorrect or missing
             # credentials
-            cause = err.response.json()["error"]
-            raise Exception(cause)
+            raise err
 
         # The response is a URL encoded array containing all available domains
         domains = [domain.split("=").pop() for domain in response.split("&")]
-
         try:
             self.domain_id = domains.index(self.domain)
-        except BaseException:
-            raise Exception("Domain {0} not found".format(self.domain))
+        except ValueError:
+            raise AuthenticationError(f"Domain {self.domain} not found")
 
     def _create_record(self, rtype, name, content):
         # Refuse to create duplicate records
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
         query_params = {
             "action": "add",
             "json": "yes",
-            "name": "{0}.".format(self._full_name(name)),
+            "name": f"{self._full_name(name)}.",
             "type": rtype,
             "value": content,
         }
@@ -143,7 +143,7 @@ class Provider(BaseProvider):
             "action": "edit",
             "json": "yes",
             delete_key: identifier,
-            "name": "{0}.".format(self._full_name(name)),
+            "name": f"{self._full_name(name)}.",
             "type": rtype,
             "value": content,
         }
@@ -206,7 +206,7 @@ class Provider(BaseProvider):
             if record["id"] == identifier:
                 existing_record_index = index
 
-        return "{0}recs{1}".format(rtype, existing_record_index).lower()
+        return f"{rtype}recs{existing_record_index}".lower()
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

@@ -1,12 +1,11 @@
 """Module provider for Sakura Cloud"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
                 self.domain_id = item["ID"]
                 return
 
-        raise Exception("No domain found")
+        raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -191,7 +190,7 @@ class Provider(BaseProvider):
         return -1
 
     def _get_resource_record_sets(self):
-        payload = self._get("/commonserviceitem/{0}".format(self.domain_id))
+        payload = self._get(f"/commonserviceitem/{self.domain_id}")
         return payload["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"]
 
     def _update_resource_record_sets(self, resource_record_sets):
@@ -200,7 +199,7 @@ class Provider(BaseProvider):
                 "Settings": {"DNS": {"ResourceRecordSets": resource_record_sets}}
             }
         }
-        return self._put("/commonserviceitem/{0}".format(self.domain_id), content)
+        return self._put(f"/commonserviceitem/{self.domain_id}", content)
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

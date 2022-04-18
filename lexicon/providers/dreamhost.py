@@ -1,6 +1,4 @@
 """Module provider for Dreamhost"""
-from __future__ import absolute_import
-
 import base64
 import json
 import logging
@@ -8,6 +6,7 @@ import time
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -101,16 +100,26 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         self.domain_id = None
-        payload = self._get("domain-list_domains")
+        payload = self._get("dns-list_records")
         data = payload.get("data", None)
         if data is None:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
-        for domain in data:
-            if domain.get("domain", "") == self.domain:
+        for record in data:
+            if record.get("record", "") == self.domain and record.get("type", "") in [
+                "A",
+                "AAAA",
+                "CNAME",
+                "MX",
+                "NS",
+                "SOA",
+                "TXT",
+                "SRV",
+            ]:
                 self.domain_id = self.domain
+                break
         if self.domain_id is None:
-            raise Exception("Domain not found")
+            raise AuthenticationError("Domain not found")
 
     def _create_record(self, rtype, name, content):
         name = self._full_name(name)
@@ -134,7 +143,7 @@ class Provider(BaseProvider):
 
         resource_list = payload.get("data", None)
         if not isinstance(resource_list, list):
-            raise Exception("unable to get records: %s" % payload)
+            raise Exception(f"unable to get records: {payload}")
 
         resource_list = [
             resource for resource in resource_list if resource["zone"] == self.domain
@@ -237,10 +246,8 @@ class Provider(BaseProvider):
         if result.get("result", "") != "success":
             err_msg = result.get("data", "")
             if err_msg in _DATA_NON_EXIST_ERROR_LIST:
-                raise NonExistError("Dreamhost non-exist error: {0}".format(result))
+                raise NonExistError(f"Dreamhost non-exist error: {result}")
             if err_msg in _DATA_ALREADY_EXIST_ERROR_LIST:
-                raise AlreadyExistError(
-                    "Dreamhost already-exist error: {0}".format(result)
-                )
-            raise Exception("Dreamhost api error: {0}".format(result))
+                raise AlreadyExistError(f"Dreamhost already-exist error: {result}")
+            raise Exception(f"Dreamhost api error: {result}")
         return result

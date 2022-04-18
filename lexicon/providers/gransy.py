@@ -1,16 +1,15 @@
 """Provide support to Lexicon for DNS changes for Gransy sites subreg.cz, regtons.com and \
 regnames.eu."""
-from __future__ import absolute_import
-
 import collections
 import logging
 from builtins import staticmethod
 
 try:
-    import zeep  # Optional dependency
+    import zeep  # type: ignore
 except BaseException:
     pass
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -72,9 +71,9 @@ class Provider(BaseProvider):
             if any((domain["name"] == self.domain for domain in domains)):
                 self.domain_id = self.domain
             else:
-                raise Exception("Unknown domain {}".format(self.domain))
+                raise AuthenticationError(f"Unknown domain {self.domain}")
         else:
-            raise Exception("No SSID provided by server")
+            raise AuthenticationError("No SSID provided by server")
 
     # Create record. If record already exists with the same content, do nothing.
     def _create_record(self, rtype, name, content):
@@ -274,11 +273,11 @@ class Provider(BaseProvider):
         if len(records) > 1:
             raise Exception(
                 "Identifier was not provided and several existing "
-                "records match the request for {0}/{1}".format(rtype, name)
+                f"records match the request for {rtype}/{name}"
             )
         raise Exception(
             "Identifier was not provided and no existing records match "
-            "the request for {0}/{1}".format(rtype, name)
+            f"the request for {rtype}/{name}"
         )
 
     def _request_login(self, login, password):
@@ -349,6 +348,4 @@ class GransyError(Exception):
         super(GransyError, self).__init__()
 
     def __str__(self):
-        return "Major: {} Minor: {} Message: {}".format(
-            self.major, self.minor, self.message
-        )
+        return f"Major: {self.major} Minor: {self.minor} Message: {self.message}"

@@ -1,16 +1,15 @@
 """Module provider for Netcup"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["netcup.de"]
+NAMESERVER_DOMAINS = ["netcup.net"]
 
 
 def provider_parser(subparser):
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
         login_info = self._apicall("login")
         self.api_session_id = login_info["apisessionid"]
         if not self.api_session_id:
-            raise Exception("Login failed")
+            raise AuthenticationError("Login failed")
         # query ttl and verify access to self.domain:
         zone_info = self._apicall("infoDnsZone", domainname=self.domain)
         self.zone_ttl = zone_info["ttl"]
@@ -167,7 +166,7 @@ class Provider(BaseProvider):
             "POST", url="", data={"action": method, "param": dict(params, **auth)}
         )
         if data["status"] != "success":
-            raise Exception("{} ({})".format(data["longmessage"], data["statuscode"]))
+            raise Exception(f"{data['longmessage']} ({data['statuscode']})")
         return data.get("responsedata", {})
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

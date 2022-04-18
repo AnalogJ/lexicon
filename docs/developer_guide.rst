@@ -25,13 +25,11 @@ current document instructions and open a pull request.
 - `ironDNS <https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0>`_ ($$ requires paid account $$)
 - ISPConfig
 - `InternetX autoDNS <https://internetx.com>`_
-- Knot DNS
 - KingHost
 - `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
 - `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
-- `Mythic Beasts <https://www.mythic-beasts.com/support/api/primary>`_
 - `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
-- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
+- `Porkbun <https://porkbun.com/api/json/v3/documentation/>`
 - `Servercow <https://servercow.de>`_
 - selectel.com
 - `TELE3 <https://www.tele3.cz>`_
@@ -70,7 +68,7 @@ Make sure the tests pass:
 
 .. code-block:: bash
 
-    $ tox -e standard
+    $ tox -e py
 
 You can test a specific provider using:
 
@@ -287,22 +285,8 @@ instead of ``IntegrationTestsV2``:
 CODEOWNERS file
 ===============
 
-Next, you should add yourself to the `CODEOWNERS file`_, in the root of the repo.
+Finally you should add yourself to the `CODEOWNERS file`_, in the root of the repo.
 It's my way of keeping track of who to ping when I need updated recordings as the
 test suites expand & change.
 
 .. _CODEOWNERS file: https://github.com/AnalogJ/lexicon/blob/master/CODEOWNERS
-
-TODO list
-=========
-
-- [x] Create and Register a lexicon pip package.
-- [ ] Write documentation on supported environmental variables.
-- [x] Wire up automated release packaging on PRs.
-- [x] Check for additional dns hosts with apis (from fog_, dnsperf_, libcloud_)
-- [ ] Get a list of Letsencrypt clients, and create hook files for them `letsencrypt clients`_
-
-.. _fog: http://fog.io/about/provider_documentation.html
-.. _dnsperf: http://www.dnsperf.com/
-.. _libcloud: https://libcloud.readthedocs.io/en/latest/dns/supported_providers.html
-.. _letsencrypt clients: https://github.com/letsencrypt/letsencrypt/wiki/Links

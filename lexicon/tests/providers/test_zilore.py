@@ -9,7 +9,7 @@ from lexicon.tests.providers import integration_tests
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class ZiloreProviderTests(TestCase, integration_tests.IntegrationTestsV2):
-    """TestCase for Zeit"""
+    """TestCase for Zilore"""
 
     Provider = Provider
     provider_name = "zilore"
@@ -19,7 +19,7 @@ class ZiloreProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return ["X-Auth-Key"]
 
     # We override this test because Zilore refuses to create a A record with '127.0.0.1' value.
-    @integration_tests._vcr_integration_test
+    @integration_tests.vcr_integration_test
     def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
         self,
     ):

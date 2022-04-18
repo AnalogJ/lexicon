@@ -43,13 +43,13 @@ class EUservProviderTests(TestCase, IntegrationTestsV2):
         if "string" in response["body"]:
             # Replace session and order id with placeholders
             response["body"]["string"] = re.sub(
-                br'"sess_id":{"value":"[\w.-]+"',
+                rb'"sess_id":{"value":"[\w.-]+"',
                 b'"sess_id":{"value":"SESSION_ID"',
                 response["body"]["string"],
             )
 
             response["body"]["string"] = re.sub(
-                br'"ord_no":{"value":"[\w.-]+"',
+                rb'"ord_no":{"value":"[\w.-]+"',
                 b'"ord_no":{"value":"ORDER_ID"',
                 response["body"]["string"],
             )
@@ -63,7 +63,7 @@ class EUservProviderTests(TestCase, IntegrationTestsV2):
                         "ord_no": {"value": "ORDER_ID"},
                         "pg_id": {"value": self.product_id_domain},
                         "ord_description": {"value": "Contract Name\n" + self.domain},
-                    },
+                    }
                 ]
 
             response["body"]["string"] = json.dumps(filtered_body).encode("UTF-8")

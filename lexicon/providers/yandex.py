@@ -1,11 +1,10 @@
 """Module provider for Yandex"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 __author__ = "Aliaksandr Kharkevich"
@@ -34,9 +33,9 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://pddimp.yandex.ru/api2/admin/dns"
 
     def _authenticate(self):
-        payload = self._get("/list?domain={0}".format(self.domain))
+        payload = self._get(f"/list?domain={self.domain}")
         if payload["success"] != "ok":
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         self.domain_id = self.domain
 
     def _create_record(self, rtype, name, content):
@@ -44,11 +43,9 @@ class Provider(BaseProvider):
             # make sure a the data is always a FQDN for CNAMe.
             content = content.rstrip(".") + "."
 
-        querystring = "domain={0}&type={1}&subdomain={2}&content={3}".format(
-            self.domain_id, rtype, self._relative_name(name), content
-        )
+        querystring = f"domain={self.domain_id}&type={rtype}&subdomain={self._relative_name(name)}&content={content}"
         if self._get_lexicon_option("ttl"):
-            querystring += "&ttl={0}".format(self._get_lexicon_option("ttl"))
+            querystring += f"&ttl={self._get_lexicon_option('ttl')}"
 
         payload = self._post("/add", {}, querystring)
 
@@ -58,7 +55,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        url = "/list?domain={0}".format(self.domain_id)
+        url = f"/list?domain={self.domain_id}"
         records = []
         payload = {}
 
@@ -75,11 +72,22 @@ class Provider(BaseProvider):
                 next_url = None
 
             for record in payload["records"]:
+                if record["type"] == 'MX':
+                    assembled_content = f"{record['priority']} {record['content']}"
+                if record["type"] == 'SRV':
+                    if 'target' in record:
+                        srv_target = record['target']
+                    else:
+                        srv_target = record['content']
+                    assembled_content = f"{record['priority']} {record['weight']} {record['port']} {srv_target}"
+                else:
+                    assembled_content = record.get("content")
+                record_name = f"{record['subdomain']}.{self.domain_id}" if record['subdomain'] != '@' else self.domain_id
                 processed_record = {
                     "type": record["type"],
-                    "name": "{0}.{1}".format(record["subdomain"], self.domain_id),
+                    "name": record_name,
                     "ttl": record["ttl"],
-                    "content": record.get("content"),
+                    "content": assembled_content,
                     "id": record["record_id"],
                 }
                 records.append(processed_record)
@@ -112,16 +120,14 @@ class Provider(BaseProvider):
 
         data = ""
         if rtype:
-            data += "&type={0}".format(rtype)
+            data += f"&type={rtype}"
         if name:
-            data += "&subdomain={0}".format(self._relative_name(name))
+            data += f"&subdomain={self._relative_name(name)}"
         if content:
-            data += "&content={0}".format(content)
+            data += f"&content={content}"
 
         payload = self._post(
-            "/edit",
-            {},
-            "domain={0}&record_id={1}".format(self.domain_id, identifier) + data,
+            "/edit", {}, f"domain={self.domain_id}&record_id={identifier}" + data
         )
 
         return self._check_exitcode(payload, "update_record")
@@ -139,9 +145,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._post(
-                "/del", {}, "domain={0}&record_id={1}".format(self.domain_id, record_id)
-            )
+            self._post("/del", {}, f"domain={self.domain_id}&record_id={record_id}")
 
         # return self._check_exitcode(payload, 'delete_record')
         return True

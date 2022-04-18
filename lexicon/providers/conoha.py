@@ -1,11 +1,10 @@
 """Module provider for Conoha"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -47,10 +46,10 @@ class Provider(BaseProvider):
         self.domain_id = None
 
         self.api_endpoint = "https://dns-service.{0}.conoha.io/v1".format(
-            self._get_provider_option("region") or "tyo1"
+            self._get_provider_option("auth_region") or "tyo1"
         )
         self.auth_api_endpoint = "https://identity.{0}.conoha.io/v2.0".format(
-            self._get_provider_option("region") or "tyo1"
+            self._get_provider_option("auth_region") or "tyo1"
         )
         self.auth_token = None
 
@@ -71,7 +70,7 @@ class Provider(BaseProvider):
                 )
             auth_response = self._send_request(
                 "POST",
-                "{0}/tokens".format(self.auth_api_endpoint),
+                f"{self.auth_api_endpoint}/tokens",
                 {
                     "auth": {
                         "passwordCredentials": {
@@ -87,9 +86,9 @@ class Provider(BaseProvider):
         payload = self._get("/domains", {"name": self._fqdn_name(self.domain)})
 
         if not payload["domains"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
         if len(payload["domains"]) > 1:
-            raise Exception("Too many domains found. This should not happen")
+            raise AuthenticationError("Too many domains found. This should not happen")
 
         self.domain_id = payload["domains"][0]["id"]
 
@@ -106,7 +105,7 @@ class Provider(BaseProvider):
 
         try:
             self._post(
-                "/domains/{0}/records".format(self.domain_id),
+                f"/domains/{self.domain_id}/records",
                 self._record_payload(rtype, name, content),
             )
         except requests.exceptions.HTTPError as err:
@@ -121,7 +120,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/domains/{0}/records".format(self.domain_id))
+        payload = self._get(f"/domains/{self.domain_id}/records")
         records = payload["records"]
 
         if rtype:
@@ -156,7 +155,7 @@ class Provider(BaseProvider):
             identifier = records[0]["id"]
 
         self._put(
-            "/domains/{0}/records/{1}".format(self.domain_id, identifier),
+            f"/domains/{self.domain_id}/records/{identifier}",
             self._record_payload(rtype, name, content),
         )
 
@@ -173,9 +172,7 @@ class Provider(BaseProvider):
             records = [record for record in records if record["id"] == identifier]
 
         for record in records:
-            self._delete(
-                "/domains/{0}/records/{1}".format(self.domain_id, record["id"])
-            )
+            self._delete(f"/domains/{self.domain_id}/records/{record['id']}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -183,7 +180,7 @@ class Provider(BaseProvider):
     # Helpers
     def _request(self, action="GET", url="/", data=None, query_params=None):
         return self._send_request(
-            action, "{0}{1}".format(self.api_endpoint, url), data, query_params
+            action, f"{self.api_endpoint}{url}", data, query_params
         )
 
     def _send_request(self, action, url, data=None, query_params=None):
@@ -209,7 +206,7 @@ class Provider(BaseProvider):
         return response.text
 
     def _record_name(self, name):
-        return "%s." % name.rstrip(".") if name else None
+        return f"{name.rstrip('.')}." if name else None
 
     def _record_payload(self, rtype, name, content):
         priority = self._get_lexicon_option("priority")

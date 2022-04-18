@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
       - application/json
@@ -8,17 +8,23 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.26.0
     method: GET
     uri: https://api.godaddy.com/v1/domains/fullm3tal.online
   response:
     body:
-      string: '{"contactAdmin":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactBilling":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactRegistrant":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"contactTech":{"addressMailing":{"address1":"h4drien@gmail.com","address2":"","city":"Suresnes","country":"FR","postalCode":"92150","state":"Hauts-De-Seine"},"email":"ferrand.ad@gmail.com","fax":"","nameFirst":"Adrien","nameLast":"Ferrand","organization":"","phone":"+33.0674653958"},"createdAt":"2020-06-13T21:43:05.000Z","domain":"fullm3tal.online","domainId":320256437,"expirationProtected":false,"expires":"2021-06-13T23:59:59.000Z","exposeWhois":false,"holdRegistrar":false,"locked":true,"nameServers":["ns71.domaincontrol.com","ns72.domaincontrol.com"],"privacy":false,"renewAuto":true,"renewDeadline":"2021-07-28T14:43:02.000Z","renewable":true,"status":"ACTIVE","transferAwayEligibleAt":"2020-08-12T21:43:05.000Z","transferProtected":false}
+      string: '{"authCode":"184CR9F8C8924799","contactAdmin":{"addressMailing":{"address1":"485
+        ROUTE DU PIN MONTARD","address2":"","city":"SOPHIA ANTIPOLIS","country":"FR","postalCode":"06902","state":"PACA"},"email":"accounting@amadeus.com","fax":"","nameFirst":"ALAIN","nameLast":"HERAUD","organization":"AMADEUS
+        SAS","phone":"+33.497151296"},"contactBilling":{"addressMailing":{"address1":"485
+        ROUTE DU PIN MONTARD","address2":"","city":"SOPHIA ANTIPOLIS","country":"FR","postalCode":"06902","state":"PACA"},"email":"accounting@amadeus.com","fax":"","nameFirst":"ALAIN","nameLast":"HERAUD","organization":"AMADEUS
+        SAS","phone":"+33.497151296"},"contactRegistrant":{"addressMailing":{"address1":"485
+        ROUTE DU PIN MONTARD","address2":"","city":"SOPHIA ANTIPOLIS","country":"FR","postalCode":"06902","state":"PACA"},"email":"accounting@amadeus.com","fax":"","nameFirst":"ALAIN","nameLast":"HERAUD","organization":"AMADEUS
+        SAS","phone":"+33.497151296"},"contactTech":{"addressMailing":{"address1":"485
+        ROUTE DU PIN MONTARD","address2":"","city":"SOPHIA ANTIPOLIS","country":"FR","postalCode":"06902","state":"PACA"},"email":"accounting@amadeus.com","fax":"","nameFirst":"ALAIN","nameLast":"HERAUD","organization":"AMADEUS
+        SAS","phone":"+33.497151296"},"createdAt":"2018-02-02T14:26:44.000Z","domain":"fullm3tal.online","domainId":261238997,"expirationProtected":false,"expires":"2022-02-02T14:26:44.000Z","exposeWhois":false,"holdRegistrar":false,"locked":true,"nameServers":["ns09.domaincontrol.com","ns10.domaincontrol.com"],"privacy":false,"renewAuto":true,"renewDeadline":"2022-03-19T14:26:44.000Z","renewable":true,"redeemable":false,"status":"ACTIVE","transferProtected":false}
 
         '
     headers:
@@ -27,91 +33,67 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '1612'
+      - '1671'
       Content-Type:
       - application/json
       Date:
-      - Sat, 13 Jun 2020 22:26:09 GMT
+      - Wed, 29 Dec 2021 19:07:43 GMT
       Expires:
-      - Sat, 13 Jun 2020 22:26:09 GMT
+      - Wed, 29 Dec 2021 19:07:43 GMT
       Pragma:
       - no-cache
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
       X-DataCenter:
-      - PHX3
+      - US_EAST_1
       X-Request-Id:
-      - 0c4249b2aa608b6496d74c77103e7efd
-    status:
-      code: 203
-      message: Non-Authoritative Information
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.23.0
-    method: GET
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
-  response:
-    body:
-      string: '[{"data":"127.0.0.1","name":"localhost","ttl":3600,"type":"A"},{"data":"ns71.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"ns72.domaincontrol.com","name":"@","ttl":3600,"type":"NS"},{"data":"docs.example.com","name":"docs","ttl":3600,"type":"CNAME"},{"data":"_domainconnect.gd.domaincontrol.com","name":"_domainconnect","ttl":3600,"type":"CNAME"},{"data":"challengetoken","name":"random.fqdntest","ttl":3600,"type":"TXT"},{"data":"ttlshouldbe3600","name":"ttl.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.createrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.deleterecordinset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.fqdn","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.full","ttl":3600,"type":"TXT"},{"data":"challengetoken1","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken2","name":"_acme-challenge.listrecordset","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.noop","ttl":3600,"type":"TXT"},{"data":"challengetoken","name":"_acme-challenge.test","ttl":3600,"type":"TXT"}]
-
-        '
-    headers:
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Date:
-      - Sat, 13 Jun 2020 22:26:10 GMT
-      Expires:
-      - Sat, 13 Jun 2020 22:26:10 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      Vary:
-      - Accept-Encoding
-      X-DataCenter:
-      - PHX3
-      X-Request-Id:
-      - 1c4c3c86affdb2d71c386db5bc367c00
-      content-length:
-      - '1287'
+      - 6uJmqKK4EZ4AXvLaRzbFbg
     status:
       code: 200
       message: OK
 - request:
-    body: '[{"data": "127.0.0.1", "name": "localhost", "ttl": 3600, "type": "A"},
-      {"data": "ns71.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "ns72.domaincontrol.com", "name": "@", "ttl": 3600, "type": "NS"},
-      {"data": "docs.example.com", "name": "docs", "ttl": 3600, "type": "CNAME"},
-      {"data": "_domainconnect.gd.domaincontrol.com", "name": "_domainconnect", "ttl":
-      3600, "type": "CNAME"}, {"data": "challengetoken", "name": "random.fqdntest",
-      "ttl": 3600, "type": "TXT"}, {"data": "ttlshouldbe3600", "name": "ttl.fqdn",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.createrecordset",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.createrecordset",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.deleterecordinset",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.fqdn",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.full",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken1", "name": "_acme-challenge.listrecordset",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken2", "name": "_acme-challenge.listrecordset",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.noop",
-      "ttl": 3600, "type": "TXT"}, {"data": "challengetoken", "name": "_acme-challenge.test",
-      "ttl": 3600, "type": "TXT"}, {"type": "TXT", "name": "random.fulltest", "data":
-      "challengetoken", "ttl": 3600}]'
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/random.fulltest
+  response:
+    body:
+      string: '[]
+
+        '
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '3'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 29 Dec 2021 19:07:44 GMT
+      Expires:
+      - Wed, 29 Dec 2021 19:07:44 GMT
+      Pragma:
+      - no-cache
+      X-DataCenter:
+      - US_EAST_1
+      X-Request-Id:
+      - agy9fFwVLF4C1Lg3SLURQY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '[{"type": "TXT", "name": "random.fulltest", "data": "challengetoken", "ttl":
+      3600}]'
     headers:
       Accept:
       - application/json
@@ -120,13 +102,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '1496'
+      - '83'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.26.0
     method: PUT
-    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records
+    uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/random.fulltest
   response:
     body:
       string: ''
@@ -138,22 +120,20 @@ interactions:
       Content-Length:
       - '0'
       Date:
-      - Sat, 13 Jun 2020 22:26:11 GMT
+      - Wed, 29 Dec 2021 19:07:45 GMT
       Expires:
-      - Sat, 13 Jun 2020 22:26:11 GMT
+      - Wed, 29 Dec 2021 19:07:45 GMT
       Pragma:
       - no-cache
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
       X-DataCenter:
-      - PHX3
+      - US_EAST_1
       X-Request-Id:
-      - 56226c90776ea523131c7d0160d00a6f
+      - nbyHgPR3fn3G9VQgm5UX99
     status:
       code: 200
       message: OK
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
       - application/json
@@ -161,12 +141,10 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.26.0
     method: GET
     uri: https://api.godaddy.com/v1/domains/fullm3tal.online/records/TXT/random.fulltest
   response:
@@ -184,17 +162,15 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 13 Jun 2020 22:26:12 GMT
+      - Wed, 29 Dec 2021 19:07:45 GMT
       Expires:
-      - Sat, 13 Jun 2020 22:26:12 GMT
+      - Wed, 29 Dec 2021 19:07:45 GMT
       Pragma:
       - no-cache
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
       X-DataCenter:
-      - PHX3
+      - US_EAST_1
       X-Request-Id:
-      - 5da968756a002b1e583692f51f8a1b30
+      - pH5yCJNzXtX1EYuRfzLzbY
     status:
       code: 200
       message: OK

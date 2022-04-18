@@ -1,11 +1,10 @@
 """Module provider for DNSPark"""
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -29,10 +28,10 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
 
-        payload = self._get("/dns/{0}".format(self.domain))
+        payload = self._get(f"/dns/{self.domain}")
 
         if not payload["additional"]["domain_id"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = payload["additional"]["domain_id"]
 
@@ -41,7 +40,7 @@ class Provider(BaseProvider):
     def _create_record(self, rtype, name, content):
         record = {"rname": self._relative_name(name), "rtype": rtype, "rdata": content}
         try:
-            self._post("/dns/{0}".format(self.domain_id), record)
+            self._post(f"/dns/{self.domain_id}", record)
         except requests.exceptions.HTTPError as error:
             if error.response.status_code != 400:
                 raise
@@ -53,7 +52,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-        payload = self._get("/dns/{0}".format(self.domain_id))
+        payload = self._get(f"/dns/{self.domain_id}")
         records = []
         for record in payload["records"]:
             processed_record = {
@@ -87,7 +86,7 @@ class Provider(BaseProvider):
         if content:
             data["rdata"] = content
 
-        self._put("/dns/{0}".format(identifier), data)
+        self._put(f"/dns/{identifier}", data)
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -105,7 +104,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete("/dns/{0}".format(record_id))
+            self._delete(f"/dns/{record_id}")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)

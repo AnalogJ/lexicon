@@ -25,20 +25,19 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
-from __future__ import absolute_import
-
 import json
 import logging
 from builtins import object
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 try:
-    import xmlrpclib
+    import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib
+    import xmlrpc.client as xmlrpclib  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 
@@ -80,14 +79,14 @@ class Provider(BaseProvider):
                 self._full_name,
             )
         else:
-            self.api_endpoint = "https://dns.api.gandi.net/api/v5"
+            self.api_endpoint = "https://api.gandi.net/v5/livedns"
 
     def _authenticate(self):
         if self.protocol == "rpc":
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
         else:
-            self._get("/domains/{0}".format(self.domain))
+            self._get(f"/domains/{self.domain}")
             self.domain_id = self.domain.lower()
 
     def _create_record(self, rtype, name, content):
@@ -104,19 +103,27 @@ class Provider(BaseProvider):
         ]
         if current_values != [content]:
             # a change is necessary
-            url = "/domains/{0}/records/{1}/{2}".format(
-                self.domain_id, self._relative_name(name), rtype
+            url = (
+                f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{rtype}"
             )
             if current_values:
                 record = {"rrset_values": current_values + [content]}
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl")
+                    record["rrset_ttl"] = (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl") >= 300
+                        else 300
+                    )
                 self._put(url, record)
             else:
                 record = {"rrset_values": [content]}
                 # add the ttl, if this is a new record
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = self._get_lexicon_option("ttl")
+                    record["rrset_ttl"] = (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl") >= 300
+                        else 300
+                    )
                 self._post(url, record)
         LOGGER.debug("create_record: %s", True)
         return True
@@ -134,19 +141,15 @@ class Provider(BaseProvider):
                 if rtype is not None:
                     query_results = [
                         self._get(
-                            "/domains/{0}/records/{1}/{2}".format(
-                                self.domain_id, self._relative_name(name), rtype
-                            )
+                            f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{rtype}"
                         )
                     ]
                 else:
                     query_results = self._get(
-                        "/domains/{0}/records/{1}".format(
-                            self.domain_id, self._relative_name(name)
-                        )
+                        f"/domains/{self.domain_id}/records/{self._relative_name(name)}"
                     )
             else:
-                query_results = self._get("/domains/{0}/records".format(self.domain_id))
+                query_results = self._get(f"/domains/{self.domain_id}/records")
                 if rtype is not None:
                     query_results = [
                         item for item in query_results if item["rrset_type"] == rtype
@@ -198,15 +201,13 @@ class Provider(BaseProvider):
                 data["rrset_values"] = [content]
         if rtype is not None:
             # replace the records of a specific rtype
-            url = "/domains/{0}/records/{1}/{2}".format(
-                self.domain_id, identifier or self._relative_name(name), rtype
-            )
+            effect_id = identifier or self._relative_name(name)
+            url = f"/domains/{self.domain_id}/records/{effect_id}/{rtype}"
             self._put(url, data)
         else:
             # replace all records with a matching name
-            url = "/domains/{0}/records/{1}".format(
-                self.domain_id, identifier or self._relative_name(name)
-            )
+            effect_id = identifier or self._relative_name(name)
+            url = f"/domains/{self.domain_id}/records/{effect_id}"
             self._put(url, {"items": [data]})
         LOGGER.debug("update_record: %s", True)
         return True
@@ -234,9 +235,7 @@ class Provider(BaseProvider):
                         for record in matching_records
                         if record["content"] != content
                     ]
-                url = "/domains/{0}/records/{1}/{2}".format(
-                    self.domain_id, self._relative_name(name), current_type
-                )
+                url = f"/domains/{self.domain_id}/records/{self._relative_name(name)}/{current_type}"
                 if len(matching_records) == len(remaining_values):
                     # no matching item should be removed for this rtype
                     pass
@@ -252,7 +251,7 @@ class Provider(BaseProvider):
             if remove_count == 0:
                 raise Exception("Record identifier could not be found.")
         else:
-            self._delete("/domains/{0}/records/{1}".format(self.domain_id, identifier))
+            self._delete(f"/domains/{self.domain_id}/records/{identifier}")
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)
@@ -267,7 +266,7 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "X-Api-Key": self._get_provider_option("auth_token"),
+            "Authorization": "Apikey " + self._get_provider_option("auth_token"),
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
@@ -315,7 +314,7 @@ class GandiRPCSubProvider(object):
             self._zone_id = payload["zone_id"]
             return payload["id"]
         except xmlrpclib.Fault as err:
-            raise Exception("Failed to authenticate: '{0}'".format(err))
+            raise AuthenticationError(f"Failed to authenticate: '{err}'")
 
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, rtype, name, content, ttl):

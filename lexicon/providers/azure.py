@@ -16,6 +16,7 @@ import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ class Provider(BaseProvider):
         self._access_token = None
 
     def _list_records(self, rtype=None, name=None, content=None):
-        result = self._get("/{0}".format(rtype if rtype else "recordsets"))
+        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
 
         records = []
         for raw_record in result["value"]:
@@ -133,8 +134,7 @@ class Provider(BaseProvider):
             properties["TTL"] = ttl
 
         self._put(
-            "/{0}/{1}".format(rtype, self._relative_name(name)),
-            data={"properties": properties},
+            f"/{rtype}/{self._relative_name(name)}", data={"properties": properties}
         )
 
         return identifier
@@ -153,9 +153,7 @@ class Provider(BaseProvider):
 
         if not records_to_update:
             raise Exception(
-                "Error, could not find a record for given identifier: {0}".format(
-                    identifier
-                )
+                f"Error, could not find a record for given identifier: {identifier}"
             )
 
         if len(records_to_update) > 1:
@@ -191,7 +189,7 @@ class Provider(BaseProvider):
     def _delete_record_internal(
         self, identifier=None, rtype=None, name=None, content=None
     ):
-        result = self._get("/{0}".format(rtype if rtype else "recordsets"))
+        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
 
         to_delete = []
         to_shrink = []
@@ -231,14 +229,12 @@ class Provider(BaseProvider):
 
         for record in to_delete:
             record_rtype = record["type"].replace("Microsoft.Network/dnszones/", "")
-            self._delete(
-                "/{0}/{1}".format(record_rtype, self._relative_name(record["name"]))
-            )
+            self._delete(f"/{record_rtype}/{self._relative_name(record['name'])}")
         for record in to_shrink:
             record_rtype = record["type"].replace("Microsoft.Network/dnszones/", "")
             self._request(
                 "PATCH",
-                "/{0}/{1}".format(record_rtype, self._relative_name(record["name"])),
+                f"/{record_rtype}/{self._relative_name(record['name'])}",
                 data={"properties": record["properties"]},
             )
 
@@ -255,7 +251,7 @@ class Provider(BaseProvider):
         assert subscription_id
         assert resource_group
 
-        url = "{0}/{1}/oauth2/token".format(AZURE_AD_URL, tenant_id)
+        url = f"{AZURE_AD_URL}/{tenant_id}/oauth2/token"
         data = {
             "grant_type": "client_credentials",
             "client_id": client_id,
@@ -271,7 +267,7 @@ class Provider(BaseProvider):
         url = "{0}/subscriptions/{1}/resourceGroups/{2}/providers/Microsoft.Network/dnsZones".format(
             MANAGEMENT_URL, subscription_id, resource_group
         )
-        headers = {"Authorization": "Bearer {0}".format(self._access_token)}
+        headers = {"Authorization": f"Bearer {self._access_token}"}
         params = {"api-version": API_VERSION}
 
         result = requests.get(url, headers=headers, params=params)
@@ -284,7 +280,7 @@ class Provider(BaseProvider):
         ]
 
         if not our_data:
-            raise Exception(
+            raise AuthenticationError(
                 "Resource group `{0}` in subscription `{1}` "
                 "does not contain the DNS zone `{2}`".format(
                     resource_group, subscription_id, self.domain
@@ -296,7 +292,7 @@ class Provider(BaseProvider):
     def _request(self, action="GET", url="/", data=None, query_params=None):
         query_params = {} if not query_params else query_params.copy()
         query_params["api-version"] = API_VERSION
-        headers = {"Authorization": "Bearer {0}".format(self._access_token)}
+        headers = {"Authorization": f"Bearer {self._access_token}"}
         request = requests.request(
             action,
             MANAGEMENT_URL + self.domain_id + url,
@@ -335,9 +331,7 @@ def _get_values_from_recordset(rtype, record):
     if values:
         return values
 
-    raise Exception(
-        "Error, `{0}` entries are not supported by this provider.".format(rtype)
-    )
+    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _build_recordset_from_values(rtype, values):
@@ -362,9 +356,7 @@ def _build_recordset_from_values(rtype, values):
     if recordset:
         return recordset
 
-    raise Exception(
-        "Error, `{0}` entries are not supported by this provider.".format(rtype)
-    )
+    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _identifier(record):

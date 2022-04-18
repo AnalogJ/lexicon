@@ -1,0 +1,53 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://api.vercel.com/v5/domains/thisisadomainidonotown.com
+  response:
+    body:
+      string: '{"error":{"code":"not_found","message":"Domain name `thisisadomainidonotown.com`
+        not found","name":"thisisadomainidonotown.com"}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Accept, Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS, GET, POST, PUT, PATCH, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '129'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 09 Aug 2021 20:03:55 GMT
+      X-RateLimit-Limit:
+      - '500'
+      X-RateLimit-Remaining:
+      - '498'
+      X-RateLimit-Reset:
+      - '1628539494'
+      cache-control:
+      - s-maxage=0
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      x-vercel-id:
+      - sfo1::grcrn-1628539435489-810ed5f2592a
+    status:
+      code: 404
+      message: Not Found
+version: 1

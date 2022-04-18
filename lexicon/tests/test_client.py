@@ -30,19 +30,22 @@ def test_client_basic_init():
     assert client.config.resolve("lexicon:type") == options["type"]
 
 
-def test_client_legacy_init():
+def test_client_legacy_init(monkeypatch):
+    monkeypatch.setenv("LEXICON_FAKEPROVIDER_AUTH_KEY", "MY_KEY")
     options = {
         "provider_name": "fakeprovider",
         "action": "list",
         "domain": "example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    with pytest.deprecated_call():
+        client = lexicon.client.Client(options)
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
     assert client.config.resolve("lexicon:domain") == options["domain"]
     assert client.config.resolve("lexicon:type") == options["type"]
+    assert client.config.resolve("lexicon:fakeprovider:auth_key") == "MY_KEY"
 
 
 def test_client_init_when_domain_includes_subdomain_should_strip():
@@ -52,7 +55,7 @@ def test_client_init_when_domain_includes_subdomain_should_strip():
         "domain": "www.example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
@@ -68,7 +71,7 @@ def test_client_init_with_delegated_domain_name():
         "delegated": "sub",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
@@ -84,7 +87,7 @@ def test_client_init_with_delegated_domain_fqdn():
         "delegated": "sub.example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
@@ -100,7 +103,7 @@ def test_client_init_with_same_delegated_domain_fqdn():
         "delegated": "example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
@@ -111,19 +114,19 @@ def test_client_init_with_same_delegated_domain_fqdn():
 def test_client_init_when_missing_provider_should_fail():
     options = {"action": "list", "domain": "example.com", "type": "TXT"}
     with pytest.raises(AttributeError):
-        lexicon.client.Client(options)
+        lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 def test_client_init_when_missing_action_should_fail():
     options = {"provider_name": "fakeprovider", "domain": "example.com", "type": "TXT"}
     with pytest.raises(AttributeError):
-        lexicon.client.Client(options)
+        lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 def test_client_init_when_missing_domain_should_fail():
     options = {"provider_name": "fakeprovider", "action": "list", "type": "TXT"}
     with pytest.raises(AttributeError):
-        lexicon.client.Client(options)
+        lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 def test_client_init_when_missing_type_should_fail():
@@ -133,7 +136,7 @@ def test_client_init_when_missing_type_should_fail():
         "domain": "example.com",
     }
     with pytest.raises(AttributeError):
-        lexicon.client.Client(options)
+        lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
@@ -147,7 +150,7 @@ def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch):
         "domain": "www.example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options).with_env())
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]
@@ -166,7 +169,7 @@ def test_client_parse_env_with_auth_keys(monkeypatch):
         "domain": "www.example.com",
         "type": "TXT",
     }
-    client = lexicon.client.Client(options)
+    client = lexicon.client.Client(ConfigResolver().with_dict(options).with_env())
 
     assert client.provider_name == options["provider_name"]
     assert client.action == options["action"]

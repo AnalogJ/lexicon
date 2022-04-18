@@ -14,13 +14,12 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
     --content 10.10.10.11 --name lexicon1
 
 """
-from __future__ import absolute_import
-
 import json
 import logging
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -80,8 +79,8 @@ class Provider(BaseProvider):
         )
         self.version = "2.6.1"  # WAPI version supported by NIOS 8.3 and above
         self.session.headers.update({"Content-Type": "application/json"})
-        self.api_endpoint = "https://{0}/wapi/v{1}/".format(
-            self._get_provider_option("ib_host"), self.version
+        self.api_endpoint = (
+            f"https://{self._get_provider_option('ib_host')}/wapi/v{self.version}/"
         )
 
     # Authenticate against provider,
@@ -91,16 +90,14 @@ class Provider(BaseProvider):
     # of if the domain does not exist.
     def _authenticate(self):
         response = self.session.get(
-            "{0}zone_auth?fqdn={1}&view={2}".format(
-                self.api_endpoint, self.domain, self.view
-            )
+            f"{self.api_endpoint}zone_auth?fqdn={self.domain}&view={self.view}"
         )
         domains = response.json()
         try:
             self.domain_id = domains[0]["_ref"]
         except IndexError:
             LOGGER.error("Domain %s not found in view", self.domain)
-            raise Exception("Domain {0} not found in view".format(self.domain))
+            raise AuthenticationError(f"Domain {self.domain} not found in view")
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
@@ -142,7 +139,7 @@ class Provider(BaseProvider):
         else:
             raise Exception("Name not specified, no FQDN could be build")
         if rtype.upper() in IB_TYPE2CONTENT:
-            uri = "{0}{1}".format(self.api_endpoint, IB_TYPE2CONTENT[rtype.upper()][1],)
+            uri = self.api_endpoint + IB_TYPE2CONTENT[rtype.upper()][1]
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
@@ -254,7 +251,7 @@ class Provider(BaseProvider):
         return True
 
     def _update_record_internal(self, identifier, rtype=None, name=None, content=None):
-        uri = "{0}{1}".format(self.api_endpoint, identifier)
+        uri = self.api_endpoint + identifier
         payload = self._generate_payload(rtype, name, content)
         # remove view and name from the payload, as they can not be updated
         del payload["view"]
@@ -285,7 +282,7 @@ class Provider(BaseProvider):
 
     def _delete_record_internal(self, identifier=None):
         if identifier:
-            uri = "{0}{1}".format(self.api_endpoint, identifier,)
+            uri = f"{self.api_endpoint}{identifier}"
             try:
                 response = self.session.delete(uri)
             except BaseException:
@@ -324,8 +321,8 @@ class Provider(BaseProvider):
         )  # strip trailing period from fqdn if present
         # check if the record_name is fully specified
         if not record_name.endswith(self.domain):
-            record_name = "{0}.{1}".format(record_name, self.domain)
-        return "{0}".format(record_name)  # return the fqdn name without trailing dot
+            record_name = f"{record_name}.{self.domain}"
+        return f"{record_name}"  # return the fqdn name without trailing dot
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # Helper _request is not used in Infoflox provider
