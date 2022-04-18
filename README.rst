@@ -76,76 +76,84 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 The current supported providers are:
 
-- `Aliyun.com <https://help.aliyun.com/document_detail/29739.html>`_
-- `AuroraDNS <https://www.pcextreme.com/aurora/dns>`_
-- `AWS Route53 <https://docs.aws.amazon.com/Route53/latest/APIReference/Welcome.html>`_
-- `Azure DNS <https://docs.microsoft.com/en-us/rest/api/dns/>`_
-- `Cloudflare <https://api.cloudflare.com/#endpoints>`_
-- `ClouDNS <https://www.cloudns.net/wiki/article/56/>`_
-- `CloudXNS <https://www.cloudxns.net/Support/lists/cid/17.html>`_
-- `ConoHa <https://www.conoha.jp/docs/>`_
-- `Constellix <https://api-docs.constellix.com/?version=latest>`_
-- `DigitalOcean <https://developers.digitalocean.com/documentation/v2/#create-a-new-domain>`_
-- `Dinahosting <https://en.dinahosting.com/api>`_
-- `DirectAdmin <https://www.directadmin.com/features.php?id=504>`_
-- DNSimple `v1 <https://developer.dnsimple.com/>`_, `v2 <https://developer.dnsimple.com/v2/>`_
-- `DnsMadeEasy <https://api-docs.dnsmadeeasy.com/?version=latest>`_
-- `DNSPark <https://dnspark.zendesk.com/entries/31210577-REST-API-DNS-Documentation>`_
-- `DNSPod <https://support.dnspod.cn/Support/api>`_
-- `Dreamhost <https://help.dreamhost.com/hc/en-us/articles/217560167-API_overview>`_
-- `Dynu <https://www.dynu.com/Support/API>`_
-- `EasyDNS <http://docs.sandbox.rest.easydns.net/>`_
-- `Easyname <https://www.easyname.com/en>`_
-- `EUserv <https://support.euserv.com/api-doc/>`_
-- `ExoScale <https://community.exoscale.com/documentation/dns/api/>`_
-- Gandi `RPC (old) <http://doc.rpc.gandi.net>`_ / `LiveAPI <http://doc.livedns.gandi.net/>`_
-- `Gehirn <https://support.gehirn.jp/apidocs/gis/dns/index.html>`_
-- `Glesys <https://github.com/glesys/API/wiki/>`_
-- `GoDaddy <https://developer.godaddy.com/getstarted#access>`_
-- `Google Cloud DNS <https://cloud.google.com/dns/api/v1/>`_
-- `Gransy (sites subreg.cz, regtons.com and regnames.eu) <https://subreg.cz/manual/>`_
-- `Hover <https://hoverapi.docs.apiary.io/>`_
-- `Hurricane Electric DNS <https://dns.he.net/>`_
-- `Hetzner <https://dns.hetzner.com/api-docs/>`_
-- `Infoblox <https://docs.infoblox.com/display/ILP/Infoblox+Documentation+Portal>`_
-- `Infomaniak <https://www.infomaniak.com>`_
-- `Internet.bs <https://internetbs.net/ResellerRegistrarDomainNameAPI>`_
-- `INWX <https://www.inwx.de/en/offer/api>`_
-- `Joker.com <https://joker.com/faq/index.php?action=show&cat=39>`_
-- `Linode <https://www.linode.com/api/dns>`_
-- `Linode v4 <https://developers.linode.com/api/docs/v4#tag/Domains>`_
-- `LuaDNS <http://www.luadns.com/api.html>`_
-- `Memset <https://www.memset.com/apidocs/methods_dns.html>`_
-- `Misaka.io <https://misaka.io/dns/>`_
-- `Mythic Beasts (v2 API) <https://www.mythic-beasts.com/support/api/dnsv2>`_
-- `Njalla <https://njal.la/api/>`_
-- `Namecheap <https://www.namecheap.com/support/api/methods.aspx>`_
-- `Namesilo <https://www.namesilo.com/api_reference.php>`_
-- `Netcup <https://ccp.netcup.net/run/webservice/servers/endpoint.php>`_
-- NFSN (NearlyFreeSpeech)
-- `NS1 <https://ns1.com/api/>`_
-- `OnApp <https://docs.onapp.com/display/55API/OnApp+5.5+API+Guide>`_
-- Online
-- `OVH <https://api.ovh.com/>`_
-- `Plesk <https://docs.plesk.com/en-US/onyx/api-rpc/about-xml-api.28709/>`_
-- `PointHQ <https://pointhq.com/api/docs>`_
-- `PowerDNS <https://doc.powerdns.com/md/httpapi/api_spec/>`_
-- `Rackspace <https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/>`_
-- `Rage4 <https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api>`_
-- `RcodeZero <https://my.rcodezero.at/api-doc>`_
-- `RFC2136 <https://en.wikipedia.org/wiki/Dynamic_DNS>`_
-- `Sakura Cloud by SAKURA Internet Inc. <https://developer.sakura.ad.jp/cloud/api/1.1/>`_
-- `SafeDNS by UKFast <https://developers.ukfast.io/documentation/safedns>`_
-- `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
-- `Transip <https://api.transip.nl/rest/docs.html>`_
-- `UltraDNS <https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf>`_
-- `Value-Domain <https://www.value-domain.com/service/api/>`_
-- `Vercel <https://vercel.com/docs/api#endpoints/dns>`_
-- `Vultr <https://www.vultr.com/api/#tag/dns>`_
-- `WebGo <https://www.webgo.de/>`_
-- `Yandex <https://tech.yandex.com/domain/doc/reference/dns-add-docpage/>`_
-- `Zilore <https://zilore.com/en/help/api>`_
-- `Zonomi <http://zonomi.com/app/dns/dyndns.jsp>`_
+.. include:: docs/providers/table.rst
+
+.. _aliyun: https://help.aliyun.com/document_detail/29739.html
+.. _aurora: https://www.pcextreme.com/aurora/dns
+.. _azure: https://docs.microsoft.com/en-us/rest/api/dns/
+.. _cloudflare: https://api.cloudflare.com/#endpoints
+.. _cloudns: https://www.cloudns.net/wiki/article/56/
+.. _cloudxns: https://www.cloudxns.net/support/lists/cid/17.html
+.. _conoha: https://www.conoha.jp/docs/
+.. _constellix: https://api-docs.constellix.com/?version=latest
+.. _ddns:
+.. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
+.. _dinahosting: https://en.dinahosting.com/api
+.. _directadmin: https://www.directadmin.com/features.php?id=504
+.. _dnsimple: https://developer.dnsimple.com/v2/
+.. _dnsmadeeasy: https://api-docs.dnsmadeeasy.com/?version=latest
+.. _dnspark: https://dnspark.zendesk.com/entries/31210577-rest-api-dns-documentation
+.. _dnspod: https://support.dnspod.cn/support/api
+.. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
+.. _dynu: https://www.dynu.com/support/api
+.. _easydns: http://docs.sandbox.rest.easydns.net/
+.. _easyname: https://www.easyname.com/en
+.. _euserv: https://support.euserv.com/api-doc/
+.. _exoscale: https://community.exoscale.com/documentation/dns/api/
+.. _gandi: http://doc.livedns.gandi.net/
+.. _gehirn: https://support.gehirn.jp/apidocs/gis/dns/index.html
+.. _glesys: https://github.com/glesys/api/wiki/
+.. _godaddy: https://developer.godaddy.com/getstarted#access
+.. _googleclouddns: https://cloud.google.com/dns/api/v1/
+.. _gransy: https://subreg.cz/manual/
+.. _gratisdns:
+.. _henet: https://dns.he.net/
+.. _hetzner: https://dns.hetzner.com/api-docs/
+.. _hostingde:
+.. _hover: https://hoverapi.docs.apiary.io/
+.. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
+.. _infomaniak: https://www.infomaniak.com
+.. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
+.. _inwx: https://www.inwx.de/en/offer/api
+.. _joker: https://joker.com/faq/index.php?action=show&cat=39
+.. _linode: https://www.linode.com/api/dns
+.. _linode4: https://developers.linode.com/api/docs/v4#tag/domains
+.. _localzone:
+.. _luadns: http://www.luadns.com/api.html
+.. _memset: https://www.memset.com/apidocs/methods_dns.html
+.. _misaka: https://misaka.io/dns/
+.. _mythicbeasts: https://www.mythic-beasts.com/support/api/dnsv2
+.. _namecheap: https://www.namecheap.com/support/api/methods.aspx
+.. _namesilo: https://www.namesilo.com/api_reference.php
+.. _netcup: https://ccp.netcup.net/run/webservice/servers/endpoint.php
+.. _nfsn:
+.. _njalla: https://njal.la/api/
+.. _nsone: https://ns1.com/api/
+.. _oci:
+.. _onapp: https://docs.onapp.com/display/55api/onapp+5.5+api+guide
+.. _online:
+.. _ovh: https://api.ovh.com/
+.. _plesk: https://docs.plesk.com/en-us/onyx/api-rpc/about-xml-api.28709/
+.. _pointhq: https://pointhq.com/api/docs
+.. _powerdns: https://doc.powerdns.com/md/httpapi/api_spec/
+.. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
+.. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
+.. _rcodezero: https://my.rcodezero.at/api-doc
+.. _rfc2136: https://en.wikipedia.org/wiki/dynamic_dns
+.. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
+.. _safedns: https://developers.ukfast.io/documentation/safedns
+.. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
+.. _softlayer: https://sldn.softlayer.com/article/rest#http_request_types
+.. _transip: https://api.transip.nl/rest/docs.html
+.. _ultradns: https://ultra-portalstatic.ultradns.com/static/docs/rest-api_user_guide.pdf
+.. _valuedomain: https://www.value-domain.com/service/api/
+.. _vercel: https://vercel.com/docs/api#endpoints/dns
+.. _vultr: https://www.vultr.com/api/#tag/dns
+.. _webgo: https://www.webgo.de/
+.. _yandex: https://tech.yandex.com/domain/doc/reference/dns-add-docpage/
+.. _zeit:
+.. _zilore: https://zilore.com/en/help/api
+.. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
 
 .. tag:intro-end
 
