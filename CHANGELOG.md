@@ -2,6 +2,40 @@
 
 ## master - CURRENT
 
+## 3.9.4 - 14/02/2022
+### Added
+* Add `webgo` provider (#1102)
+
+### Modified
+* Extend possible record types list for `dreamhost` provider (#1110)
+
+## 3.9.3 - 27/01/2022
+### Modified
+* Fix compatibility with requests>=2 in `transip` provider
+
+## 3.9.2 - 17/01/2022
+### Modified
+* Fix configuration reference
+
+## 3.9.1 - 17/01/2022
+### Modified
+* Reimplement the `transip` provider using the new REST v6 API
+
+## 3.9.0 - 06/01/2022
+## Deleted
+* Drop Python 3.6 support
+
+## 3.8.5 - 29/12/2021
+### Modified
+* Complete redesign of the update and delete actions in GoDaddy provider to fix several issues
+
+## 3.8.4 - 28/12/2021
+### Added
+* Add the Value Domain provider (#1018)
+
+### Modified
+* Fix issue on the GoDaddy provider for update actions
+
 ## 3.8.3 - 12/11/2021
 ### Modified
 * Fix `plesk` provider (#1004)

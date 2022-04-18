@@ -38,15 +38,6 @@ List of options
 """
         ]
 
-        if parser.description:
-            provider_content.append(f"""
-.. note::
-   
-{_cleanup_description(parser.description)}
-
-
-""")
-
         for action in parser._actions:
             if action.dest == "help":
                 continue
@@ -56,6 +47,17 @@ List of options
     * ``{action.dest}`` {action.help.capitalize().replace("`", "'")}
 """
             )
+
+        if parser.description:
+            provider_content.append(
+                f"""
+.. note::
+   
+{_cleanup_description(parser.description)}
+
+"""
+            )
+
         output = output + "".join(provider_content) + "\n"
 
     with open(os.path.join("docs", "providers_options.rst"), "w") as f:
@@ -79,6 +81,7 @@ def _generate_table(items):
         table = [*table, line, delimiter]
 
     return "\n".join(table)
+
 
 def _cleanup_description(description: str):
     lines = description.split(os.linesep)
