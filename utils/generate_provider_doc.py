@@ -67,9 +67,17 @@ def _generate_table(providers: List[str]) -> None:
     for data in divided:
         line = "".join(f"| {item:<{max_width}}" for item in data) + "|"
         table = [*table, line, delimiter]
+        
+    with open(join(_ROOT, "README.rst")) as f:
+        readme_lines = f.readlines()
+        
+    begin_idx = readme_lines.index(".. tag: providers-table-begin")
+    end_idx = readme_lines.index(".. tag: providers-table-end")
+    
+    readme_lines = readme_lines[:begin_idx] + table + readme_lines[end_idx:]
 
-    with open(join(_PROVIDERS, "table.rst"), "w") as f:
-        f.write("\n".join(table))
+    with open(join(_ROOT, "README.rst"), "w") as f:
+        f.writelines(readme_lines)
 
 
 def _generate_provider_details(provider: str) -> None:
