@@ -59,12 +59,12 @@ qpq9aJr7G9qW+9Yovwm2qLR1joa4XoOqn13bkEU7lc96fyRBr0ucDg==
     def _filter_response(self, response):
 
         response["body"]["string"] = re.sub(
-            br'"compartmentId":"[\w.-]+"',
+            rb'"compartmentId":"[\w.-]+"',
             b'"compartmentId":"OCI-COMPARTMENT-ID"',
             response["body"]["string"],
         )
         response["body"]["string"] = re.sub(
-            br'"id":"[\w.-]+"',
+            rb'"id":"[\w.-]+"',
             b'"id":"DNS-ZONE-ID"',
             response["body"]["string"],
         )

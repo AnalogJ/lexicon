@@ -26,7 +26,7 @@ class MythicBeastsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
 
         if "string" in response["body"]:
             response["body"]["string"] = re.sub(
-                br"\"access_token\":\"[\w-]+\"",
+                rb"\"access_token\":\"[\w-]+\"",
                 b'"access_token": "DUMMY_TOKEN"',
                 response["body"]["string"],
             )

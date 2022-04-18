@@ -136,11 +136,12 @@ The current supported providers are:
 - `Sakura Cloud by SAKURA Internet Inc. <https://developer.sakura.ad.jp/cloud/api/1.1/>`_
 - `SafeDNS by UKFast <https://developers.ukfast.io/documentation/safedns>`_
 - `SoftLayer <https://sldn.softlayer.com/article/REST#HTTP_Request_Types>`_
-- `Transip <https://www.transip.nl/transip/api/>`_
+- `Transip <https://api.transip.nl/rest/docs.html>`_
 - `UltraDNS <https://ultra-portalstatic.ultradns.com/static/docs/REST-API_User_Guide.pdf>`_
 - `Value-Domain <https://www.value-domain.com/service/api/>`_
 - `Vercel <https://vercel.com/docs/api#endpoints/dns>`_
 - `Vultr <https://www.vultr.com/api/#tag/dns>`_
+- `WebGo <https://www.webgo.de/>`_
 - `Yandex <https://tech.yandex.com/domain/doc/reference/dns-add-docpage/>`_
 - `Zilore <https://zilore.com/en/help/api>`_
 - `Zonomi <http://zonomi.com/app/dns/dyndns.jsp>`_

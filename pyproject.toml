@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.9.0"
+version = "3.9.4"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -46,21 +46,18 @@ beautifulsoup4 = ">=4"
 boto3 = { version = ">=1", optional = true }
 dnspython = { version = ">=2", optional = true }
 localzone = { version = ">=0.9.8", optional = true }
-transip = { version = ">=2", optional = true }
 softlayer = {version = ">=5", optional = true}
 zeep = { version = ">=3", optional = true }
 oci = {version = ">=2", optional = true}
 
 [tool.poetry.extras]
 route53 = ["boto3"]
-transip = ["transip"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 ddns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
-# NB: transip is excluded from the full list because it cannot be maintained anymore.
 full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
 
 [tool.poetry.dev-dependencies]
@@ -79,9 +76,13 @@ types-requests = "*"
 types-setuptools = "*"
 types-six = "*"
 types-toml = "*"
+types-simplejson = "*"
 
 [tool.poetry.scripts]
 lexicon = "lexicon.cli:main"
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
+
+[tool.mypy]
+show_error_codes = true
