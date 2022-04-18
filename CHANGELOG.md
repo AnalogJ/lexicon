@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.5 - 18/04/2022
 ### Added
 * Add `misaka` provider (#1205 #556)
 

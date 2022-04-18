@@ -72,17 +72,21 @@ class Provider(BaseProvider):
                 next_url = None
 
             for record in payload["records"]:
-                if record["type"] == 'MX':
+                if record["type"] == "MX":
                     assembled_content = f"{record['priority']} {record['content']}"
-                if record["type"] == 'SRV':
-                    if 'target' in record:
-                        srv_target = record['target']
+                if record["type"] == "SRV":
+                    if "target" in record:
+                        srv_target = record["target"]
                     else:
-                        srv_target = record['content']
+                        srv_target = record["content"]
                     assembled_content = f"{record['priority']} {record['weight']} {record['port']} {srv_target}"
                 else:
                     assembled_content = record.get("content")
-                record_name = f"{record['subdomain']}.{self.domain_id}" if record['subdomain'] != '@' else self.domain_id
+                record_name = (
+                    f"{record['subdomain']}.{self.domain_id}"
+                    if record["subdomain"] != "@"
+                    else self.domain_id
+                )
                 processed_record = {
                     "type": record["type"],
                     "name": record_name,

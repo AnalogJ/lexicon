@@ -15,6 +15,11 @@ class MisakaProviderTests(TestCase, IntegrationTestsV2):
 
     def _filter_headers(self):
         return [
-            "Authorization", "Set-Cookie",
-            "X-Misaka-Debug", "X-Request-Id", "X-Served-By", "CF-RAY", "cf-request-id",
+            "Authorization",
+            "Set-Cookie",
+            "X-Misaka-Debug",
+            "X-Request-Id",
+            "X-Served-By",
+            "CF-RAY",
+            "cf-request-id",
         ]
