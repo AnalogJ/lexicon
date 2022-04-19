@@ -118,6 +118,7 @@ The current supported providers are:
 - `Memset <https://www.memset.com/apidocs/methods_dns.html>`_
 - `Mythic Beasts (v2 API) <https://www.mythic-beasts.com/support/api/dnsv2>`_
 - `Njalla <https://njal.la/api/>`_
+- `Name.com <https://www.name.com/api-docs/DNS>`_
 - `Namecheap <https://www.namecheap.com/support/api/methods.aspx>`_
 - `Namesilo <https://www.namesilo.com/api_reference.php>`_
 - `Netcup <https://ccp.netcup.net/run/webservice/servers/endpoint.php>`_
