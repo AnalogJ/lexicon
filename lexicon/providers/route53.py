@@ -33,6 +33,9 @@ def provider_parser(subparser):
         ),
     )
 
+    # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
+    subparser.add_argument("--zone-id", help="the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'")
+
     # TODO: these are only required for testing, we should figure out
     # a way to remove them & update the integration tests
     # to dynamically populate the auth credentials that are required.
@@ -99,7 +102,8 @@ class Provider(BaseProvider):
     def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
         super(Provider, self).__init__(config)
-        self.domain_id = None
+        # Allow setting domain_id from the command line
+        self.domain_id = self._get_provider_option("zone_id") or None
         self.private_zone = self._get_provider_option("private_zone")
         # instantiate the client
         self.r53_client = boto3.client(
@@ -127,7 +131,22 @@ class Provider(BaseProvider):
         return input_string.lower() in ("true", "yes")
 
     def _authenticate(self):
+        """Authenticate the credentials early in the process"""
+
+        # if this was set via the command-line argument, we don't need to look it up
+        if self.domain_id is None:
+            self._lookup_hosted_zone()
+        # per https://github.com/AnalogJ/lexicon/pull/481#issuecomment-623203995
+        # authenticate should do something even if we already know the ZoneID.
+        # This will raise an exception if the credentials are wrong.
+        # However, we do not want to do this if they have not specified the
+        # ZoneID, since this may break existing user IAM roles.
+        else:
+            self.r53_client.get_hosted_zone(Id=self.domain_id)
+
+    def _lookup_hosted_zone(self):
         """Determine the hosted zone id for the domain."""
+
         try:
             is_truncated = True
             next_dns_name = None
