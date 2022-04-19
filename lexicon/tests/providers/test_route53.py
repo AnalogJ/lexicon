@@ -1,5 +1,4 @@
 """Test for route53 implementation of the interface."""
-from contextlib import contextmanager
 from unittest import TestCase
 
 import pytest
@@ -16,7 +15,7 @@ class Route53ProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     def _filter_headers(self):
         """Sensitive headers to be filtered."""
         return ["Authorization"]
-    
+
     def _test_fallback_fn(self):
         return lambda x: None if x in ("zone_id") else f"placeholder_{x}"
 
