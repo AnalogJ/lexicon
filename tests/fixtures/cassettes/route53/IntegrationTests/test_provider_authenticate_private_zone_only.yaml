@@ -1,0 +1,37 @@
+interactions:
+- request:
+    body: null
+    headers:
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4yMS40MiBQeXRob24vMy44LjEwIExpbnV4LzUuMTAuMTAyLjEtbWljcm9zb2Z0LXN0
+        YW5kYXJkLVdTTDIgQm90b2NvcmUvMS4yNC40Mg==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMjA0MTlUMjA1ODAwWg==
+      amz-sdk-invocation-id:
+      - !!binary |
+        OWQ3ZGE4NjctNjQyNi00NWVjLWE3ZTAtZGE1NDNlYTFhZGM2
+      amz-sdk-request:
+      - !!binary |
+        YXR0ZW1wdD0x
+    method: GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzonesbyname
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/Z040120927RX9CM38HPQQ</Id><Name>fullcr1stal.tk.</Name><CallerReference>01f9750a-3dfe-4a6a-95fd-519b1359643f</CallerReference><Config><Comment>Test</Comment><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>20</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'
+    headers:
+      Content-Length:
+      - '511'
+      Content-Type:
+      - text/xml
+      Date:
+      - Tue, 19 Apr 2022 20:57:44 GMT
+      x-amzn-RequestId:
+      - 7c4e044e-e073-4359-83f7-ee24a439b35b
+    status:
+      code: 200
+      message: OK
+version: 1
