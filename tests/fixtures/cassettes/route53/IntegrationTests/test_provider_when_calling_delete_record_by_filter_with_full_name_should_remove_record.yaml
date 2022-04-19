@@ -2,76 +2,186 @@ interactions:
 - request:
     body: null
     headers:
-      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
-      X-Amz-Date: [20161009T013241Z]
-    method: !!python/unicode GET
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODQ5Wg==
+    method: GET
     uri: https://route53.amazonaws.com/2013-04-01/hostedzonesbyname
   response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
+    body:
+      string: '<?xml version="1.0"?>
 
-        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/ZBEJSHF5L79VI</Id><Name>capsulecd.com.</Name><CallerReference>CD167CD7-84D9-E9B6-A9CA-368CF9590C4F</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>7</ResourceRecordSetCount></HostedZone><HostedZone><Id>/hostedzone/Z26VK10YTMHFYG</Id><Name>eadmundo.com.</Name><CallerReference>D3154B90-A6B5-C702-9EC1-F2C63DCCF274</CallerReference><Config><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>17</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'}
+        <ListHostedZonesByNameResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><HostedZones><HostedZone><Id>/hostedzone/Z0748009194T9V149ZJ4F</Id><Name>fullcr1stal.tk.</Name><CallerReference>5690397D-6924-5D5D-9590-8F324E67569A</CallerReference><Config><Comment></Comment><PrivateZone>false</PrivateZone></Config><ResourceRecordSetCount>9</ResourceRecordSetCount></HostedZone></HostedZones><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListHostedZonesByNameResponse>'
     headers:
-      content-length: ['735']
-      content-type: [text/xml]
-      date: ['Sun, 09 Oct 2016 01:32:42 GMT']
-      x-amzn-requestid: [45c7d4b2-8dc0-11e6-8007-f92dc2d345fb]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>CREATE
-      using lexicon Route 53 provider</Comment><Changes><Change><ResourceRecordSet><Type>TXT</Type><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Name>delete.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet><Action>CREATE</Action></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
-    headers:
-      Content-Length: ['475']
-      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
-      X-Amz-Date: [20161009T013241Z]
-    method: !!python/unicode POST
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset/
-  response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
-
-        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/CE0NHMZGUPDL5</Id><Status>PENDING</Status><SubmittedAt>2016-10-09T01:32:42.698Z</SubmittedAt><Comment>CREATE
-        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'}
-    headers:
-      content-length: ['332']
-      content-type: [text/xml]
-      date: ['Sun, 09 Oct 2016 01:32:42 GMT']
-      x-amzn-requestid: [45dbf8f4-8dc0-11e6-8007-f92dc2d345fb]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>DELETE
-      using lexicon Route 53 provider</Comment><Changes><Change><ResourceRecordSet><Type>TXT</Type><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords><Name>delete.testfull.capsulecd.com.</Name><TTL>300</TTL></ResourceRecordSet><Action>DELETE</Action></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
-    headers:
-      Content-Length: ['475']
-      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
-      X-Amz-Date: [20161009T013241Z]
-    method: !!python/unicode POST
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset/
-  response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
-
-        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/CUT13HX23V72I</Id><Status>PENDING</Status><SubmittedAt>2016-10-09T01:32:42.847Z</SubmittedAt><Comment>DELETE
-        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'}
-    headers:
-      content-length: ['332']
-      content-type: [text/xml]
-      date: ['Sun, 09 Oct 2016 01:32:42 GMT']
-      x-amzn-requestid: [45f2dc6d-8dc0-11e6-8007-f92dc2d345fb]
-    status: {code: 200, message: OK}
+      Content-Length:
+      - '506'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:49 GMT
+      x-amzn-RequestId:
+      - 33f006e4-88ff-4cf9-8a00-8b3bde17f01e
+    status:
+      code: 200
+      message: OK
 - request:
     body: null
     headers:
-      User-Agent: [Boto3/1.4.1 Python/2.7.11 Darwin/15.6.0 Botocore/1.4.60]
-      X-Amz-Date: [20161009T013242Z]
-    method: !!python/unicode GET
-    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/ZBEJSHF5L79VI/rrset
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODQ5Wg==
+    method: GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset
   response:
-    body: {string: !!python/unicode '<?xml version="1.0"?>
+    body:
+      string: '<?xml version="1.0"?>
 
-        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>capsulecd.com.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-157.awsdns-19.com.</Value></ResourceRecord><ResourceRecord><Value>ns-581.awsdns-08.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1197.awsdns-21.org.</Value></ResourceRecord><ResourceRecord><Value>ns-1858.awsdns-40.co.uk.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>capsulecd.com.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-157.awsdns-19.com.
-        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.capsulecd.com.</Name><Type>CNAME</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.capsulecd.com.</Name><Type>A</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.capsulecd.com.</Name><Type>TXT</Type><TTL>300</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'}
+        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.</Value></ResourceRecord><ResourceRecord><Value>ns-714.awsdns-25.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1610.awsdns-09.co.uk.</Value></ResourceRecord><ResourceRecord><Value>ns-1141.awsdns-14.org.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.
+        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.createrecordset.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken1&quot;</Value></ResourceRecord><ResourceRecord><Value>&quot;challengetoken2&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.fullcr1stal.tk.</Name><Type>CNAME</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.fullcr1stal.tk.</Name><Type>A</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.noop.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'
     headers:
-      content-length: ['1982']
-      content-type: [text/xml]
-      date: ['Sun, 09 Oct 2016 01:32:42 GMT']
-      x-amzn-requestid: [4609bfde-8dc0-11e6-8007-f92dc2d345fb]
-    status: {code: 200, message: OK}
+      Content-Length:
+      - '2537'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:50 GMT
+      vary:
+      - accept-encoding
+      x-amzn-RequestId:
+      - d7c0326a-ece4-4f43-864a-71aaf845b8b3
+    status:
+      code: 200
+      message: OK
+- request:
+    body: <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>CREATE
+      using lexicon Route 53 provider</Comment><Changes><Change><Action>CREATE</Action><ResourceRecordSet><Name>delete.testfull.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
+    headers:
+      Content-Length:
+      - '477'
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODUwWg==
+    method: POST
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset/
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C05613963067PGVSARJ37</Id><Status>PENDING</Status><SubmittedAt>2020-05-06T09:28:50.554Z</SubmittedAt><Comment>CREATE
+        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'
+    headers:
+      Content-Length:
+      - '340'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:50 GMT
+      x-amzn-RequestId:
+      - 9a237ec4-efda-4743-adbd-0976ca7e91c8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODUwWg==
+    method: GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.</Value></ResourceRecord><ResourceRecord><Value>ns-714.awsdns-25.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1610.awsdns-09.co.uk.</Value></ResourceRecord><ResourceRecord><Value>ns-1141.awsdns-14.org.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.
+        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.createrecordset.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken1&quot;</Value></ResourceRecord><ResourceRecord><Value>&quot;challengetoken2&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.fullcr1stal.tk.</Name><Type>CNAME</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.fullcr1stal.tk.</Name><Type>A</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.noop.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>delete.testfull.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'
+    headers:
+      Content-Length:
+      - '2760'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:50 GMT
+      vary:
+      - accept-encoding
+      x-amzn-RequestId:
+      - 901fb41f-44c9-4596-bf32-b76d096ac6bc
+    status:
+      code: 200
+      message: OK
+- request:
+    body: <ChangeResourceRecordSetsRequest xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeBatch><Comment>DELETE
+      using lexicon Route 53 provider</Comment><Changes><Change><Action>DELETE</Action><ResourceRecordSet><Name>delete.testfull.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>"challengetoken"</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></Change></Changes></ChangeBatch></ChangeResourceRecordSetsRequest>
+    headers:
+      Content-Length:
+      - '477'
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODUwWg==
+    method: POST
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset/
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ChangeResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ChangeInfo><Id>/change/C05613831VEYZ85WT9YFB</Id><Status>PENDING</Status><SubmittedAt>2020-05-06T09:28:51.059Z</SubmittedAt><Comment>DELETE
+        using lexicon Route 53 provider</Comment></ChangeInfo></ChangeResourceRecordSetsResponse>'
+    headers:
+      Content-Length:
+      - '340'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:50 GMT
+      x-amzn-RequestId:
+      - 1042badb-feab-4e3e-b761-073c5fb1594a
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      User-Agent:
+      - !!binary |
+        Qm90bzMvMS4xMy4xIFB5dGhvbi8zLjguMCBXaW5kb3dzLzEwIEJvdG9jb3JlLzEuMTYuMQ==
+      X-Amz-Date:
+      - !!binary |
+        MjAyMDA1MDZUMDkyODUwWg==
+    method: GET
+    uri: https://route53.amazonaws.com/2013-04-01/hostedzone/Z0748009194T9V149ZJ4F/rrset
+  response:
+    body:
+      string: '<?xml version="1.0"?>
+
+        <ListResourceRecordSetsResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/"><ResourceRecordSets><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>NS</Type><TTL>172800</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.</Value></ResourceRecord><ResourceRecord><Value>ns-714.awsdns-25.net.</Value></ResourceRecord><ResourceRecord><Value>ns-1610.awsdns-09.co.uk.</Value></ResourceRecord><ResourceRecord><Value>ns-1141.awsdns-14.org.</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>fullcr1stal.tk.</Name><Type>SOA</Type><TTL>900</TTL><ResourceRecords><ResourceRecord><Value>ns-310.awsdns-38.com.
+        awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.createrecordset.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken1&quot;</Value></ResourceRecord><ResourceRecord><Value>&quot;challengetoken2&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>docs.fullcr1stal.tk.</Name><Type>CNAME</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>docs.example.com</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.fqdn.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.full.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>localhost.fullcr1stal.tk.</Name><Type>A</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>127.0.0.1</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.noop.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet><ResourceRecordSet><Name>_acme-challenge.test.fullcr1stal.tk.</Name><Type>TXT</Type><TTL>3600</TTL><ResourceRecords><ResourceRecord><Value>&quot;challengetoken&quot;</Value></ResourceRecord></ResourceRecords></ResourceRecordSet></ResourceRecordSets><IsTruncated>false</IsTruncated><MaxItems>100</MaxItems></ListResourceRecordSetsResponse>'
+    headers:
+      Content-Length:
+      - '2537'
+      Content-Type:
+      - text/xml
+      Date:
+      - Wed, 06 May 2020 09:28:51 GMT
+      vary:
+      - accept-encoding
+      x-amzn-RequestId:
+      - 3f92353c-3f3b-46aa-a696-627f4db7317e
+    status:
+      code: 200
+      message: OK
 version: 1

@@ -1,0 +1,185 @@
+============
+|logo_named|
+============
+
+Manipulate DNS records on various DNS providers in a standardized/agnostic way.
+
+|build_status| |coverage_status| |docker_pulls| |pypy_version| |pypy_python_support| |github_license|
+
+.. |logo_named| image:: https://raw.githubusercontent.com/AnalogJ/lexicon/master/docs/images/logo_named.svg
+    :alt: Lexicon
+
+.. |build_status| image:: https://dev.azure.com/AnalogJ/lexicon/_apis/build/status/AnalogJ.lexicon?branchName=master
+    :target: https://dev.azure.com/AnalogJ/lexicon/_build/latest?definitionId=1&branchName=master
+
+.. |coverage_status| image:: https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg
+    :target: https://coveralls.io/github/AnalogJ/lexicon?branch=master
+
+.. |docker_pulls| image:: https://img.shields.io/docker/pulls/analogj/lexicon.svg
+    :target: https://hub.docker.com/r/analogj/lexicon
+
+.. |pypy_version| image:: https://img.shields.io/pypi/v/dns-lexicon.svg
+    :target: https://pypi.python.org/pypi/dns-lexicon
+
+.. |pypy_python_support| image:: https://img.shields.io/pypi/pyversions/dns-lexicon.svg
+    :target: https://pypi.python.org/pypi/dns-lexicon
+
+.. |github_license| image:: https://img.shields.io/github/license/AnalogJ/lexicon.svg
+    :target: https://github.com/AnalogJ/lexicon/blob/master/LICENSE
+
+.. contents:: Table of Contents
+   :local:
+
+.. tag:intro-begin
+
+Why using Lexicon?
+==================
+
+Lexicon provides a way to manipulate DNS records on multiple DNS providers in a standardized way.
+
+Lexicon can be used as:
+
+- a CLI tool:
+
+.. code-block:: bash
+
+    # Create a TXT entry in domain.net zone hosted by CloudFlare
+    lexicon cloudflare create domain.net TXT --name foo --content bar
+
+- or a Python library:
+
+.. code-block:: python
+
+    # Create a TXT entry in domain.net zone hosted by CloudFlare
+    from lexicon.client import Client
+    from lexicon.config import ConfigResolver
+
+    action = {
+        "provider_name" : "cloudflare",
+        "action": "create",
+        "domain": "domain.net",
+        "type": "TXT",
+        "name": "foo",
+        "content": "bar",
+    }
+    config = ConfigResolver().with_env().with_dict(action)
+    Client(config).execute()
+
+Lexicon was designed to be used in automation, specifically letsencrypt.
+
+* `Generating Intranet & Private Network SSL Certificates using Lets Encrypt & Lexicon <http://blog.thesparktree.com/post/138999997429/generating-intranet-and-private-network-ssl>`_
+
+Supported providers
+===================
+
+Only DNS providers who have an API can be supported by `lexicon`.
+
+The current supported providers are:
+
+.. include:: docs/providers/table.rst
+
+.. _aliyun: https://help.aliyun.com/document_detail/29739.html
+.. _aurora: https://www.pcextreme.com/aurora/dns
+.. _azure: https://docs.microsoft.com/en-us/rest/api/dns/
+.. _cloudflare: https://api.cloudflare.com/#endpoints
+.. _cloudns: https://www.cloudns.net/wiki/article/56/
+.. _cloudxns: https://www.cloudxns.net/support/lists/cid/17.html
+.. _conoha: https://www.conoha.jp/docs/
+.. _constellix: https://api-docs.constellix.com/?version=latest
+.. _ddns:
+.. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
+.. _dinahosting: https://en.dinahosting.com/api
+.. _directadmin: https://www.directadmin.com/features.php?id=504
+.. _dnsimple: https://developer.dnsimple.com/v2/
+.. _dnsmadeeasy: https://api-docs.dnsmadeeasy.com/?version=latest
+.. _dnspark: https://dnspark.zendesk.com/entries/31210577-rest-api-dns-documentation
+.. _dnspod: https://support.dnspod.cn/support/api
+.. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
+.. _dynu: https://www.dynu.com/support/api
+.. _easydns: http://docs.sandbox.rest.easydns.net/
+.. _easyname: https://www.easyname.com/en
+.. _euserv: https://support.euserv.com/api-doc/
+.. _exoscale: https://community.exoscale.com/documentation/dns/api/
+.. _gandi: http://doc.livedns.gandi.net/
+.. _gehirn: https://support.gehirn.jp/apidocs/gis/dns/index.html
+.. _glesys: https://github.com/glesys/api/wiki/
+.. _godaddy: https://developer.godaddy.com/getstarted#access
+.. _googleclouddns: https://cloud.google.com/dns/api/v1/
+.. _gransy: https://subreg.cz/manual/
+.. _gratisdns:
+.. _henet: https://dns.he.net/
+.. _hetzner: https://dns.hetzner.com/api-docs/
+.. _hostingde:
+.. _hover: https://hoverapi.docs.apiary.io/
+.. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
+.. _infomaniak: https://www.infomaniak.com
+.. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
+.. _inwx: https://www.inwx.de/en/offer/api
+.. _joker: https://joker.com/faq/index.php?action=show&cat=39
+.. _linode: https://www.linode.com/api/dns
+.. _linode4: https://developers.linode.com/api/docs/v4#tag/domains
+.. _localzone:
+.. _luadns: http://www.luadns.com/api.html
+.. _memset: https://www.memset.com/apidocs/methods_dns.html
+.. _misaka: https://misaka.io/dns/
+.. _mythicbeasts: https://www.mythic-beasts.com/support/api/dnsv2
+.. _namecheap: https://www.namecheap.com/support/api/methods.aspx
+.. _namesilo: https://www.namesilo.com/api_reference.php
+.. _netcup: https://ccp.netcup.net/run/webservice/servers/endpoint.php
+.. _nfsn:
+.. _njalla: https://njal.la/api/
+.. _nsone: https://ns1.com/api/
+.. _oci:
+.. _onapp: https://docs.onapp.com/display/55api/onapp+5.5+api+guide
+.. _online:
+.. _ovh: https://api.ovh.com/
+.. _plesk: https://docs.plesk.com/en-us/onyx/api-rpc/about-xml-api.28709/
+.. _pointhq: https://pointhq.com/api/docs
+.. _powerdns: https://doc.powerdns.com/md/httpapi/api_spec/
+.. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
+.. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
+.. _rcodezero: https://my.rcodezero.at/api-doc
+.. _rfc2136: https://en.wikipedia.org/wiki/dynamic_dns
+.. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
+.. _safedns: https://developers.ukfast.io/documentation/safedns
+.. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
+.. _softlayer: https://sldn.softlayer.com/article/rest#http_request_types
+.. _transip: https://api.transip.nl/rest/docs.html
+.. _ultradns: https://ultra-portalstatic.ultradns.com/static/docs/rest-api_user_guide.pdf
+.. _valuedomain: https://www.value-domain.com/service/api/
+.. _vercel: https://vercel.com/docs/api#endpoints/dns
+.. _vultr: https://www.vultr.com/api/#tag/dns
+.. _webgo: https://www.webgo.de/
+.. _yandex: https://tech.yandex.com/domain/doc/reference/dns-add-docpage/
+.. _zeit:
+.. _zilore: https://zilore.com/en/help/api
+.. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
+
+.. tag:intro-end
+
+Documentation
+=============
+
+Online documentation (user guide, configuration reference) is available in the `Lexicon documentation`_.
+
+For a quick start, please have a look in particular at the `User guide`_.
+
+.. _Lexicon documentation: https://dns-lexicon.readthedocs.io
+.. _User guide: https://dns-lexicon.readthedocs.io/en/latest/user_guide.html
+
+Contributing
+============
+
+If you want to help in the Lexicon development, you are welcome!
+
+Please have a look at the `Developer guide`_ page to know how to start.
+
+.. _Developer guide: https://dns-lexicon.readthedocs.io/en/latest/developer_guide.html
+
+Licensing
+=========
+
+- MIT
+- Logo_: transform by Mike Rowe from the Noun Project
+
+.. _Logo: https://thenounproject.com/term/transform/397964

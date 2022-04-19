@@ -1,34 +1,68 @@
 interactions:
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-      xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
-      xmlns:ns2="http://www.transip.nl/soap" xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
-      SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header/><ns0:Body><ns2:getInfo><domainName
-      xsi:type="ns1:string">thisisadomainidonotown.com</domainName></ns2:getInfo></ns0:Body></SOAP-ENV:Envelope>
+    body: '{"nonce": "85d994802e5e4810a1a17cd30d3aee43", "global_key": true}'
     headers:
-      Connection: [close]
-      Content-Length: ['647']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [api.transip.nl]
-      Soapaction:
-      - !!binary |
-        InVybjpEb21haW5TZXJ2aWNlI0RvbWFpblNlcnZpY2VTZXJ2ZXIjZ2V0SW5mbyI=
-      User-Agent: [Python-urllib/3.6]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '84'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
     method: POST
-    uri: https://api.transip.nl/soap/?service=DomainService
+    uri: https://api.transip.nl/v6/auth
   response:
-    body: {string: '<?xml version="1.0" encoding="UTF-8"?>
-
-        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Body><SOAP-ENV:Fault><faultcode>102</faultcode><faultstring>One
-        or more domains could not be found.</faultstring></SOAP-ENV:Fault></SOAP-ENV:Body></SOAP-ENV:Envelope>
-
-        '}
+    body:
+      string: '{"token":"TOKEN"}'
     headers:
-      Connection: [close]
-      Content-Length: ['294']
-      Content-Type: [text/xml; charset=utf-8]
-      Date: ['Wed, 28 Mar 2018 16:02:00 GMT']
-      Server: [Apache]
-    status: {code: 500, message: Internal Service Error}
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:46:53 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://api.transip.nl/v6/domains/thisisadomainidonotown.com
+  response:
+    body:
+      string: '{"error":"Domain with name ''thisisadomainidonotown.com'' not found"}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 16 Jan 2022 22:46:53 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      X-Rate-Limit-Limit:
+      - '1000'
+      X-Rate-Limit-Remaining:
+      - '949'
+      X-Rate-Limit-Reset:
+      - '1642373790'
+    status:
+      code: 404
+      message: Not Found
 version: 1

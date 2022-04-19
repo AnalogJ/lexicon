@@ -2,139 +2,151 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.23.0
     method: POST
-    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=example-aptise-2.com
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.getInfo&DomainName=unittest-seconddomain.dev
   response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult\
-        \ Status=\"Ok\" ID=\"277442\" DomainName=\"example-aptise-2.com\" OwnerName=\"\
-        jvsandbox2\" IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\
-        \n        <CreatedDate>03/26/2018</CreatedDate>\r\n        <ExpiredDate>03/26/2019</ExpiredDate>\r\
-        \n        <NumYears>0</NumYears>\r\n      </DomainDetails>\r\n      <LockDetails\
-        \ />\r\n      <Whoisguard Enabled=\"True\">\r\n        <ID>233216</ID>\r\n\
-        \        <ExpiredDate>03/25/2019</ExpiredDate>\r\n        <EmailDetails WhoisGuardEmail=\"\
-        bdf487b65d844ddfafe33163f0e709f0.protect@whoisguard.com\" ForwardedTo=\"namecheap.sandbox.2@2xlp.com\"\
-        \ LastAutoEmailChangeDate=\"\" AutoEmailChangeFrequencyDays=\"0\" />\r\n \
-        \     </Whoisguard>\r\n      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\
-        \n        <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\
-        \n        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n       \
-        \ <IsActive>false</IsActive>\r\n      </PremiumDnsSubscription>\r\n      <DnsDetails\
-        \ ProviderType=\"FREE\" IsUsingOurDNS=\"true\" HostCount=\"23\" EmailType=\"\
-        FWD\" DynamicDNSStatus=\"false\" IsFailover=\"false\">\r\n        <Nameserver>dns1.registrar-servers.com</Nameserver>\r\
-        \n        <Nameserver>dns2.registrar-servers.com</Nameserver>\r\n      </DnsDetails>\r\
-        \n      <Modificationrights All=\"false\">\r\n        <Rights Type=\"dns\"\
-        >OK</Rights>\r\n        <Rights Type=\"hosts\">OK</Rights>\r\n        <Rights\
-        \ Type=\"ddns\">OK</Rights>\r\n        <Rights Type=\"nameserver\">OK</Rights>\r\
-        \n        <Rights Type=\"premiumDns\">OK</Rights>\r\n        <Rights Type=\"\
-        dnsSec\">OK</Rights>\r\n      </Modificationrights>\r\n    </DomainGetInfoResult>\r\
-        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.047</ExecutionTime>\r\n</ApiResponse>"}
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ApiResponse Status=\"OK\"
+        xmlns=\"http://api.namecheap.com/xml.response\">\r\n  <Errors />\r\n  <Warnings
+        />\r\n  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>\r\n
+        \ <CommandResponse Type=\"namecheap.domains.getInfo\">\r\n    <DomainGetInfoResult
+        Status=\"Ok\" ID=\"589668\" DomainName=\"unittest-seconddomain.dev\" OwnerName=\"phassberg2\"
+        IsOwner=\"false\" IsPremium=\"false\">\r\n      <DomainDetails>\r\n        <CreatedDate>05/20/2020</CreatedDate>\r\n
+        \       <ExpiredDate>05/20/2021</ExpiredDate>\r\n        <NumYears>0</NumYears>\r\n
+        \     </DomainDetails>\r\n      <LockDetails />\r\n      <Whoisguard Enabled=\"True\">\r\n
+        \       <ID>481122</ID>\r\n        <ExpiredDate>05/20/2021</ExpiredDate>\r\n
+        \       <EmailDetails WhoisGuardEmail=\"af9bb0ea7b894617af45bb0fa4809b21.protect@whoisguard.com\"
+        ForwardedTo=\"drdoddo@gmail.com\" LastAutoEmailChangeDate=\"05/20/2020\" AutoEmailChangeFrequencyDays=\"3\"
+        />\r\n      </Whoisguard>\r\n      <PremiumDnsSubscription>\r\n        <UseAutoRenew>false</UseAutoRenew>\r\n
+        \       <SubscriptionId>-1</SubscriptionId>\r\n        <CreatedDate>0001-01-01T00:00:00</CreatedDate>\r\n
+        \       <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>\r\n        <IsActive>false</IsActive>\r\n
+        \     </PremiumDnsSubscription>\r\n      <DnsDetails ProviderType=\"FREE\"
+        IsUsingOurDNS=\"true\" HostCount=\"16\" EmailType=\"FWD\" DynamicDNSStatus=\"false\"
+        IsFailover=\"false\">\r\n        <Nameserver>dns1.registrar-servers.com</Nameserver>\r\n
+        \       <Nameserver>dns2.registrar-servers.com</Nameserver>\r\n      </DnsDetails>\r\n
+        \     <Modificationrights All=\"false\">\r\n        <Rights Type=\"dns\">OK</Rights>\r\n
+        \       <Rights Type=\"eforward\">OK</Rights>\r\n        <Rights Type=\"rlock\">OK</Rights>\r\n
+        \       <Rights Type=\"parkpage\">OK</Rights>\r\n        <Rights Type=\"hosts\">OK</Rights>\r\n
+        \       <Rights Type=\"ddns\">OK</Rights>\r\n        <Rights Type=\"extend\">OK</Rights>\r\n
+        \       <Rights Type=\"nameserver\">OK</Rights>\r\n        <Rights Type=\"autorenew\">OK</Rights>\r\n
+        \       <Rights Type=\"whoisguard\">OK</Rights>\r\n        <Rights Type=\"premiumDns\">OK</Rights>\r\n
+        \       <Rights Type=\"dnsSec\">OK</Rights>\r\n      </Modificationrights>\r\n
+        \   </DomainGetInfoResult>\r\n  </CommandResponse>\r\n  <Server>PHX01SBAPIEXT01</Server>\r\n
+        \ <GMTTimeDifference>--4:00</GMTTimeDifference>\r\n  <ExecutionTime>0.185</ExecutionTime>\r\n</ApiResponse>"
     headers:
-      cache-control: [private]
-      content-length: ['2034']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:45:45 GMT']
-      server: [Microsoft-IIS/8.5]
-      vary: [Accept-Encoding]
-      x-aspnet-version: [4.0.30319]
-      x-powered-by: [ASP.NET]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Wed, 20 May 2020 19:04:16 GMT
+      Server:
+      - Microsoft-IIS/8.5
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      content-length:
+      - '2309'
+    status:
+      code: 200
+      message: OK
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['0']
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.23.0
     method: POST
-    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.getHosts&SLD=example-aptise-2&TLD=com
+    uri: https://api.sandbox.namecheap.com/xml.response?ClientIP=127.0.0.1&Command=namecheap.domains.dns.getHosts&SLD=unittest-seconddomain&TLD=dev
   response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
-        <ApiResponse Status=\"OK\" xmlns=\"http://api.namecheap.com/xml.response\"\
-        >\r\n  <Errors />\r\n  <Warnings />\r\n  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>\r\
-        \n  <CommandResponse Type=\"namecheap.domains.dns.getHosts\">\r\n    <DomainDNSGetHostsResult\
-        \ Domain=\"example-aptise-2.com\" EmailType=\"FWD\" IsUsingOurDNS=\"true\"\
-        >\r\n      <host HostId=\"524191\" Name=\"localhost\" Type=\"A\" Address=\"\
-        127.0.0.1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524190\"\
-        \ Name=\"www\" Type=\"A\" Address=\"127.0.0.1\" MXPref=\"10\" TTL=\"1799\"\
-        \ AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
-        false\" />\r\n      <host HostId=\"524192\" Name=\"docs\" Type=\"CNAME\" Address=\"\
-        docs.example.com.\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524845\"\
-        \ Name=\"_acme-challenge.createrecordset\" Type=\"TXT\" Address=\"challengetoken1\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
-        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524846\" Name=\"\
-        _acme-challenge.createrecordset\" Type=\"TXT\" Address=\"challengetoken2\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
-        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524853\" Name=\"\
-        _acme-challenge.deleterecordinset\" Type=\"TXT\" Address=\"challengetoken2\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
-        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524193\" Name=\"\
-        _acme-challenge.fqdn\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\"\
-        \ TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524194\" Name=\"_acme-challenge.full\"\
-        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524856\" Name=\"_acme-challenge.listrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken1\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524857\" Name=\"_acme-challenge.listrecordset\" Type=\"\
-        TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524847\" Name=\"_acme-challenge.noop\" Type=\"TXT\" Address=\"\
-        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524195\"\
-        \ Name=\"_acme-challenge.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
-        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524205\" Name=\"orig.nameonly.test\"\
-        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524206\" Name=\"orig.nameonly.test\" Type=\"TXT\" Address=\"\
-        updated\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524203\"\
-        \ Name=\"orig.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\"\
-        \ TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524207\" Name=\"orig.testfqdn\"\
-        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524209\" Name=\"orig.testfull\" Type=\"TXT\" Address=\"\
-        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524200\"\
-        \ Name=\"random.fqdntest\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"\
-        10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"\
-        \ IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524201\" Name=\"random.fulltest\"\
-        \ Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524202\" Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\"\
-        \ MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"\
-        true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"524204\" Name=\"\
-        updated.test\" Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"\
-        1800\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"\
-        false\" />\r\n      <host HostId=\"524208\" Name=\"updated.testfqdn\" Type=\"\
-        TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\
-        \" FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    \
-        \  <host HostId=\"524210\" Name=\"updated.testfull\" Type=\"TXT\" Address=\"\
-        challengetoken\" MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"\
-        \" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\
-        \n  </CommandResponse>\r\n  <Server>PHX01SBAPI02</Server>\r\n  <GMTTimeDifference>--7:00</GMTTimeDifference>\r\
-        \n  <ExecutionTime>0.752</ExecutionTime>\r\n</ApiResponse>"}
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ApiResponse Status=\"OK\"
+        xmlns=\"http://api.namecheap.com/xml.response\">\r\n  <Errors />\r\n  <Warnings
+        />\r\n  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>\r\n
+        \ <CommandResponse Type=\"namecheap.domains.dns.getHosts\">\r\n    <DomainDNSGetHostsResult
+        Domain=\"unittest-seconddomain.dev\" EmailType=\"FWD\" IsUsingOurDNS=\"true\">\r\n
+        \     <host HostId=\"746390\" Name=\"localhost\" Type=\"A\" Address=\"127.0.0.1\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746391\" Name=\"docs\"
+        Type=\"CNAME\" Address=\"docs.example.com.\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746357\" Name=\"www\" Type=\"CNAME\" Address=\"parkingpage.namecheap.com.\"
+        MXPref=\"10\" TTL=\"1800\" AssociatedAppTitle=\"\" FriendlyName=\"CNAME Record\"
+        IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746395\"
+        Name=\"_acme-challenge.createrecordset\" Type=\"TXT\" Address=\"challengetoken1\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746396\" Name=\"_acme-challenge.createrecordset\"
+        Type=\"TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746403\" Name=\"_acme-challenge.deleterecordinset\" Type=\"TXT\"
+        Address=\"challengetoken2\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746392\" Name=\"_acme-challenge.fqdn\" Type=\"TXT\" Address=\"challengetoken\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746393\" Name=\"_acme-challenge.full\"
+        Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746406\" Name=\"_acme-challenge.listrecordset\" Type=\"TXT\" Address=\"challengetoken1\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746407\" Name=\"_acme-challenge.listrecordset\"
+        Type=\"TXT\" Address=\"challengetoken2\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746397\" Name=\"_acme-challenge.noop\" Type=\"TXT\" Address=\"challengetoken\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746394\" Name=\"_acme-challenge.test\"
+        Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746408\" Name=\"random.fqdntest\" Type=\"TXT\" Address=\"challengetoken\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746409\" Name=\"random.fulltest\"
+        Type=\"TXT\" Address=\"challengetoken\" MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\"
+        FriendlyName=\"\" IsActive=\"true\" IsDDNSEnabled=\"false\" />\r\n      <host
+        HostId=\"746410\" Name=\"random.test\" Type=\"TXT\" Address=\"challengetoken\"
+        MXPref=\"10\" TTL=\"3600\" AssociatedAppTitle=\"\" FriendlyName=\"\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n      <host HostId=\"746356\" Name=\"@\" Type=\"URL\"
+        Address=\"http://www.unittest-seconddomain.dev/\" MXPref=\"10\" TTL=\"1800\"
+        AssociatedAppTitle=\"URL Forwarding\" FriendlyName=\"URL Record\" IsActive=\"true\"
+        IsDDNSEnabled=\"false\" />\r\n    </DomainDNSGetHostsResult>\r\n  </CommandResponse>\r\n
+        \ <Server>PHX01SBAPIEXT02</Server>\r\n  <GMTTimeDifference>--4:00</GMTTimeDifference>\r\n
+        \ <ExecutionTime>0.714</ExecutionTime>\r\n</ApiResponse>"
     headers:
-      cache-control: [private]
-      content-length: ['4980']
-      content-type: [text/xml; charset=utf-8]
-      date: ['Mon, 26 Mar 2018 17:45:47 GMT']
-      server: [Microsoft-IIS/8.5]
-      vary: [Accept-Encoding]
-      x-aspnet-version: [4.0.30319]
-      x-powered-by: [ASP.NET]
-    status: {code: 200, message: OK}
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Wed, 20 May 2020 19:04:17 GMT
+      Server:
+      - Microsoft-IIS/8.5
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      content-length:
+      - '3736'
+    status:
+      code: 200
+      message: OK
 version: 1
