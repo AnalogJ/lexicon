@@ -110,7 +110,9 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| webgo_          | yandex_         | zeit_           | zilore_         | zonomi_         |
+| webgo_          | yandex_         | yandexcloud_    | zeit_           | zilore_         |
++-----------------+-----------------+-----------------+-----------------+-----------------+
+| zonomi_         |                 |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 .. tag: providers-table-end
 
@@ -187,6 +189,7 @@ The current supported providers are:
 .. _vultr: https://www.vultr.com/api/#tag/dns
 .. _webgo: https://www.webgo.de/
 .. _yandex: https://yandex.com/dev/domain/doc/reference/dns-add.html
+.. _yandexcloud: https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/
 .. _zeit:
 .. _zilore: https://zilore.com/en/help/api
 .. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
