@@ -1,4 +1,7 @@
-"""Module provider for Yandex"""
+"""Module provider for Yandex PDD
+
+API doc: https://yandex.com/dev/domain/doc/reference/dns-add.html
+"""
 import json
 import logging
 
@@ -17,15 +20,15 @@ NAMESERVER_DOMAINS = ["yandex.com"]
 
 
 def provider_parser(subparser):
-    """Generate parser provider for Yandex"""
+    """Generate parser provider for Yandex PDD"""
     subparser.add_argument(
         "--auth-token",
-        help="specify PDD token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)",
+        help="specify PDD token (https://yandex.com/dev/domain/doc/concepts/access.html)",
     )
 
 
 class Provider(BaseProvider):
-    """Provider class for Yandex"""
+    """Provider class for Yandex PDD"""
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
