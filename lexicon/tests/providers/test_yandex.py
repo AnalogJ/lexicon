@@ -1,4 +1,4 @@
-"""Integration tests for Yandes"""
+"""Integration tests for Yandex PDD"""
 from unittest import TestCase
 
 import pytest
@@ -10,7 +10,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 class YandexPDDProviderTests(TestCase, IntegrationTestsV2):
-    """TestCase for Yandex"""
+    """TestCase for Yandex PDD"""
 
     provider_name = "yandex"
     domain = "capsulecd.com"
