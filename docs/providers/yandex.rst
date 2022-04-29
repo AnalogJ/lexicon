@@ -1,2 +1,2 @@
 yandex
-    * ``auth_token`` Specify pdd token (https://tech.yandex.com/domain/doc/concepts/access-docpage/)
+    * ``auth_token`` Specify pdd token (https://yandex.com/dev/domain/doc/concepts/access.html)

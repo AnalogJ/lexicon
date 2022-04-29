@@ -186,7 +186,7 @@ The current supported providers are:
 .. _vercel: https://vercel.com/docs/api#endpoints/dns
 .. _vultr: https://www.vultr.com/api/#tag/dns
 .. _webgo: https://www.webgo.de/
-.. _yandex: https://tech.yandex.com/domain/doc/reference/dns-add-docpage/
+.. _yandex: https://yandex.com/dev/domain/doc/reference/dns-add.html
 .. _zeit:
 .. _zilore: https://zilore.com/en/help/api
 .. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
