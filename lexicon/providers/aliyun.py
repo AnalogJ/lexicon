@@ -3,9 +3,8 @@ import base64
 import datetime
 import hmac
 import logging
-import random
 import sys
-import time
+import uuid
 from hashlib import sha1
 
 import requests
@@ -227,7 +226,7 @@ class Provider(BaseProvider):
                 "auth-key-id (access key id) is not specified, did you forget that?"
             )
 
-        signature_nonce = str(int(time.time())) + str(random.randint(1000, 9999))
+        signature_nonce = str(uuid.uuid4())
 
         return {
             "SignatureMethod": "HMAC-SHA1",
