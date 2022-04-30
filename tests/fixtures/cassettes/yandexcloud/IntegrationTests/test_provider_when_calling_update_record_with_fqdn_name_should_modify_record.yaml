@@ -1,0 +1,285 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones?folderId=b1gm2f812hg4h5s5jsgn&filter=zone%3D%27example.com.%27
+  response:
+    body:
+      string: "{\n \"dnsZones\": [\n  {\n   \"privateVisibility\": {},\n   \"id\"\
+        : \"dns3a9nospukjt4jlqdm\",\n   \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n\
+        \   \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n   \"zone\": \"example.com.\"\
+        \n  }\n ]\n}\n"
+    headers:
+      content-length:
+      - '200'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:42 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=orig.testfqdn.example.com.&type=TXT
+  response:
+    body:
+      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"orig.testfqdn.example.com.\"\
+        ,\n \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+    headers:
+      content-length:
+      - '108'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:43 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"replacements": [{"name": "orig.testfqdn.example.com.", "type": "TXT",
+      "ttl": 3600, "data": ["challengetoken"]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '114'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+  response:
+    body:
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
+        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
+        \n },\n \"id\": \"dnsv2gchb69hil95ot6q\",\n \"description\": \"Upsert DNS\
+        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:24:44.287306077Z\",\n \"\
+        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:24:44.287396101Z\"\
+        \n}\n"
+    headers:
+      content-length:
+      - '396'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:44 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:listRecordSets?filter=type%3D%27TXT%27%20AND%20name%3D%27orig.testfqdn.example.com.%27
+  response:
+    body:
+      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken\"\n\
+        \   ],\n   \"name\": \"orig.testfqdn.example.com.\",\n   \"type\": \"TXT\"\
+        ,\n   \"ttl\": \"3600\"\n  }\n ]\n}\n"
+    headers:
+      content-length:
+      - '148'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:45 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:listRecordSets?filter=
+  response:
+    body:
+      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken1\"\
+        ,\n    \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.createrecordset.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.deleterecordinset.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken\"\n   ],\n   \"name\": \"_acme-challenge.fqdn.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken\"\n   ],\n   \"name\": \"_acme-challenge.full.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken1\",\n    \"challengetoken2\"\n   ],\n   \"name\": \"\
+        _acme-challenge.listrecordset.example.com.\",\n   \"type\": \"TXT\",\n   \"\
+        ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n\
+        \   \"name\": \"_acme-challenge.noop.example.com.\",\n   \"type\": \"TXT\"\
+        ,\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\
+        \n   ],\n   \"name\": \"_acme-challenge.test.example.com.\",\n   \"type\"\
+        : \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"docs.example.com\"\
+        \n   ],\n   \"name\": \"docs.example.com.\",\n   \"type\": \"CNAME\",\n  \
+        \ \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"127.0.0.1\"\n   ],\n\
+        \   \"name\": \"localhost.example.com.\",\n   \"type\": \"A\",\n   \"ttl\"\
+        : \"3600\"\n  },\n  {\n   \"data\": [\n    \"updated\"\n   ],\n   \"name\"\
+        : \"orig.nameonly.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\"\
+        : \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"\
+        name\": \"orig.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"\
+        3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\"\
+        : \"orig.testfqdn.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
+        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
+        orig.testfull.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
+        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
+        random.fqdntest.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
+        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
+        random.fulltest.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
+        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
+        random.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n\
+        \  },\n  {\n   \"data\": [\n    \"ttlshouldbe3600\"\n   ],\n   \"name\": \"\
+        ttl.fqdn.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n\
+        \  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"updated.test.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken\"\n   ],\n   \"name\": \"updated.testfqdn.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
+        \    \"challengetoken\"\n   ],\n   \"name\": \"updated.testfull.example.com.example.com.\"\
+        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  }\n ]\n}\n"
+    headers:
+      content-length:
+      - '2647'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:45 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=orig.testfqdn.example.com.&type=TXT
+  response:
+    body:
+      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"orig.testfqdn.example.com.\"\
+        ,\n \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+    headers:
+      content-length:
+      - '108'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:46 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"replacements": [{"data": ["challengetoken"], "name": "updated.testfqdn.example.com.",
+      "type": "TXT", "ttl": "3600"}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '119'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+  response:
+    body:
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
+        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
+        \n },\n \"id\": \"dns9uldm3km9beacg4c4\",\n \"description\": \"Upsert DNS\
+        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:24:47.103909409Z\",\n \"\
+        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:24:47.103977136Z\"\
+        \n}\n"
+    headers:
+      content-length:
+      - '396'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:24:46 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+version: 1

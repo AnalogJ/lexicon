@@ -225,6 +225,9 @@ List of options
 .. _yandex:
 .. include:: providers/yandex.rst
 
+.. _yandexcloud:
+.. include:: providers/yandexcloud.rst
+
 .. _zeit:
 .. include:: providers/zeit.rst
 

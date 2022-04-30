@@ -1,0 +1,108 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones?folderId=b1gm2f812hg4h5s5jsgn&filter=zone%3D%27example.com.%27
+  response:
+    body:
+      string: "{\n \"dnsZones\": [\n  {\n   \"privateVisibility\": {},\n   \"id\"\
+        : \"dns3a9nospukjt4jlqdm\",\n   \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n\
+        \   \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n   \"zone\": \"example.com.\"\
+        \n  }\n ]\n}\n"
+    headers:
+      content-length:
+      - '200'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:23:28 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=_acme-challenge.fqdn.example.com.&type=TXT
+  response:
+    body:
+      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"_acme-challenge.fqdn.example.com.\"\
+        ,\n \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+    headers:
+      content-length:
+      - '115'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:23:28 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"replacements": [{"name": "_acme-challenge.fqdn.example.com.", "type":
+      "TXT", "ttl": 3600, "data": ["challengetoken"]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '121'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+  response:
+    body:
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
+        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
+        \n },\n \"id\": \"dnsiqgnqs8l5vj7e9f7k\",\n \"description\": \"Upsert DNS\
+        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:23:29.946377122Z\",\n \"\
+        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:23:29.946437491Z\"\
+        \n}\n"
+    headers:
+      content-length:
+      - '396'
+      content-type:
+      - application/json
+      date:
+      - Sat, 30 Apr 2022 16:23:29 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+version: 1

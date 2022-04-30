@@ -56,13 +56,13 @@ Usage
 
     $ lexicon -h
       usage: lexicon [-h] [--version] [--delegated DELEGATED]
-                     {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,zonomi}
+                     {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,yandexcloud,zonomi}
                      ...
 
       Create, Update, Delete, List DNS entries
 
       positional arguments:
-        {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,zonomi}
+        {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,yandexcloud,zonomi}
                               specify the DNS provider to use
           cloudflare          cloudflare provider
           cloudxns            cloudxns provider
@@ -72,6 +72,7 @@ Usage
           route53             route53 provider
           vultr               vultr provider
           yandex              yandex provider
+          yandexcloud         yandexcloud provider
           zonomi              zonomi provider
 
       optional arguments:
