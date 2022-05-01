@@ -1,6 +1,14 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `--zone-id` CLI flag for `route53` provider
+* Add `yandexcloud` provider dedicated to Yandex Cloud solution (#1213)
+
+### Modified
+* Improve documentation with auto-generation
+* Clarify that `yandex` provider supports Yandex PDD only (#1211)
+* Use UUIDs in `aliyun` provider to avoid nonce collisions
 
 ## 3.9.5 - 18/04/2022
 ### Added
