@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.9.6 - 01/05/2022
 ### Added
 * Add `--zone-id` CLI flag for `route53` provider
 * Add `yandexcloud` provider dedicated to Yandex Cloud solution (#1213)

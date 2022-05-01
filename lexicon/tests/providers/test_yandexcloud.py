@@ -1,6 +1,7 @@
 """Integration tests for Yandex Cloud provider"""
-from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 from unittest import TestCase
+
+from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -14,24 +15,25 @@ class YandexCloudProviderTests(TestCase, IntegrationTestsV2):
     LEXICON_YANDEXCLOUD_CLOUD_ID
     LEXICON_YANDEXCLOUD_FOLDER_ID
     """
-    provider_name = 'yandexcloud'
-    domain = 'example.com'
+
+    provider_name = "yandexcloud"
+    domain = "example.com"
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]
 
     # filter out data which change on each run
     def _filter_response(self, response):
-        if 'x-envoy-upstream-service-time' in response['headers']:
-            del response['headers']['x-envoy-upstream-service-time']
-        if 'x-request-id' in response['headers']:
-            del response['headers']['x-request-id']
-        if 'x-server-trace-id' in response['headers']:
-            del response['headers']['x-server-trace-id']
-        if 'grpc-message' in response['headers']:
-            del response['headers']['grpc-message']
-        if 'grpc-status' in response['headers']:
-            del response['headers']['grpc-status']
+        if "x-envoy-upstream-service-time" in response["headers"]:
+            del response["headers"]["x-envoy-upstream-service-time"]
+        if "x-request-id" in response["headers"]:
+            del response["headers"]["x-request-id"]
+        if "x-server-trace-id" in response["headers"]:
+            del response["headers"]["x-server-trace-id"]
+        if "grpc-message" in response["headers"]:
+            del response["headers"]["grpc-message"]
+        if "grpc-status" in response["headers"]:
+            del response["headers"]["grpc-status"]
         return response
 
     def _test_parameters_overrides(self):

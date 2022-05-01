@@ -12,7 +12,7 @@ import hashlib
 import json
 import logging
 import urllib
-from typing import List, Dict
+from typing import Dict, List
 
 import requests
 
@@ -41,12 +41,12 @@ def provider_parser(subparser):
     subparser.add_argument(
         "--cloud-id",
         help="specify the Cloud ID (visible in the cloud selector in the web interface), might be needed"
-             " if DNS zone ID is not set",
+        " if DNS zone ID is not set",
     )
     subparser.add_argument(
         "--folder-id",
         help="specify the Folder ID (https://cloud.yandex.com/en/docs/resource-manager/operations/folder/get-id) "
-             "might be needed if DNS zone ID is not set",
+        "might be needed if DNS zone ID is not set",
     )
 
 
@@ -58,7 +58,9 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.default_ttl = 600  # 10 minutes: default value, used in Yandex.Cloud DNS
         self.api_endpoint = "https://dns.api.cloud.yandex.net/dns/v1"
-        self.resources_api_endpoint = "https://resource-manager.api.cloud.yandex.net/resource-manager/v1"
+        self.resources_api_endpoint = (
+            "https://resource-manager.api.cloud.yandex.net/resource-manager/v1"
+        )
 
     def _full_name_with_dot(self, s: str) -> str:
         return self._full_name(s) + "."
@@ -90,7 +92,9 @@ class Provider(BaseProvider):
         if "clouds" not in payload:
             raise AuthenticationError("No clouds found")
         if len(payload["clouds"]) > 1:
-            raise AuthenticationError("Too many clouds found, you must specify one explicitly, or set DNS zone ID")
+            raise AuthenticationError(
+                "Too many clouds found, you must specify one explicitly, or set DNS zone ID"
+            )
 
         return payload["clouds"][0]["id"]
 
@@ -101,12 +105,16 @@ class Provider(BaseProvider):
         if self._get_provider_option("folder_id"):
             return self._get_provider_option("folder_id")
 
-        payload: Dict = self._get(f"{self.resources_api_endpoint}/folders", {"cloudId": cloud_id})
+        payload: Dict = self._get(
+            f"{self.resources_api_endpoint}/folders", {"cloudId": cloud_id}
+        )
 
         if "folders" not in payload:
             raise AuthenticationError(f"No folders found for Cloud ID {cloud_id}")
         if len(payload["folders"]) > 1:
-            raise AuthenticationError("Too many folders found, you must specify one explicitly, or set DNS zone ID")
+            raise AuthenticationError(
+                "Too many folders found, you must specify one explicitly, or set DNS zone ID"
+            )
 
         return payload["folders"][0]["id"]
 
@@ -114,7 +122,9 @@ class Provider(BaseProvider):
         """Gets Domain ID from DnsZone API
         https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/list
         """
-        payload: Dict = self._get("/zones", {"folderId": folder_id, "filter": f"zone='{self.domain}.'"})
+        payload: Dict = self._get(
+            "/zones", {"folderId": folder_id, "filter": f"zone='{self.domain}.'"}
+        )
 
         if "dnsZones" not in payload:
             raise AuthenticationError(f"No domain found for Folder ID {folder_id}")
@@ -156,13 +166,17 @@ class Provider(BaseProvider):
             for record in payload["recordSets"]:
                 for entry in record["data"]:
                     # artificially generate ID for deletion and update
-                    records.append({
-                        "id": self._identifier(record["type"], record["name"], entry),
-                        "name": self._full_name(record["name"]),
-                        "type": record["type"],
-                        "ttl": record["ttl"],
-                        "content": entry,
-                    })
+                    records.append(
+                        {
+                            "id": self._identifier(
+                                record["type"], record["name"], entry
+                            ),
+                            "name": self._full_name(record["name"]),
+                            "type": record["type"],
+                            "ttl": record["ttl"],
+                            "content": entry,
+                        }
+                    )
 
         if content:
             records = [record for record in records if record["content"] == content]
@@ -181,9 +195,9 @@ class Provider(BaseProvider):
         # re-request it in this function
         if identifier:
             for record in self._list_records():
-                if record['id'] == identifier:
-                    rtype = record['type']
-                    name = record['name']
+                if record["id"] == identifier:
+                    rtype = record["type"]
+                    name = record["name"]
 
         if name is not None:
             name = self._full_name_with_dot(name)
@@ -196,8 +210,8 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         """Create a record. Return True if record was created, or already the same precise record exists,
-         False if record already exists or there is another problem.
-         All params are required.
+        False if record already exists or there is another problem.
+        All params are required.
         """
 
         # name should be in full form, transform it in case it's not
@@ -216,16 +230,19 @@ class Provider(BaseProvider):
             if error.response.status_code != 404:
                 raise error
 
-        payload = self._post(f"/zones/{self.domain_id}/upsertRecordSets", {
-            "replacements": [
-                {
-                    "name": name,
-                    "type": rtype,
-                    "ttl": self._get_lexicon_option("ttl") or self.default_ttl,
-                    "data": data,
-                }
-            ]
-        })
+        payload = self._post(
+            f"/zones/{self.domain_id}/upsertRecordSets",
+            {
+                "replacements": [
+                    {
+                        "name": name,
+                        "type": rtype,
+                        "ttl": self._get_lexicon_option("ttl") or self.default_ttl,
+                        "data": data,
+                    }
+                ]
+            },
+        )
 
         return self._check_request_success(payload, "create_record")
 
@@ -245,22 +262,26 @@ class Provider(BaseProvider):
                 if content and content in record["data"] and len(record["data"]) > 1:
                     # identifier is associated with particular content line
                     for i, entry in enumerate(record["data"]):
-                        if identifier == self._identifier(record["type"], record["name"], entry):
+                        if identifier == self._identifier(
+                            record["type"], record["name"], entry
+                        ):
                             del record["data"][i]
                             record["data"].extend(content.split("\n"))
                             break
                 # if we have the name and type alongside with id, use them instead of retrieved ones
                 if name:
-                    record['name'] = name
+                    record["name"] = name
                 if rtype:
-                    record['type'] = rtype
+                    record["type"] = rtype
         except requests.exceptions.HTTPError as error:
             if error.response.status_code == 404:
                 LOGGER.info("update_record: identifier=%s does not exist", identifier)
                 return True
             raise error
 
-        payload = self._post(f"/zones/{self.domain_id}/upsertRecordSets", {"replacements": [record]})
+        payload = self._post(
+            f"/zones/{self.domain_id}/upsertRecordSets", {"replacements": [record]}
+        )
         return self._check_request_success(payload, "update_record")
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -273,7 +294,12 @@ class Provider(BaseProvider):
             record = self._get_record(identifier, rtype, name)
         except requests.exceptions.HTTPError as error:
             if error.response.status_code == 404:
-                LOGGER.info("delete_record: id=%s type=%s name=%s does not exist", identifier, rtype, name)
+                LOGGER.info(
+                    "delete_record: id=%s type=%s name=%s does not exist",
+                    identifier,
+                    rtype,
+                    name,
+                )
                 return True
             raise error
 
@@ -284,11 +310,9 @@ class Provider(BaseProvider):
             action = "replacements"
 
         # deletion requires full match on also TTL and data, which would require us to find such entry first
-        payload = self._post(f"/zones/{self.domain_id}/upsertRecordSets", {
-            action: [
-                record
-            ]
-        })
+        payload = self._post(
+            f"/zones/{self.domain_id}/upsertRecordSets", {action: [record]}
+        )
 
         return self._check_request_success(payload, "delete_record")
 
@@ -323,7 +347,11 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         # response.raise_for_status() will throw and error, so the line below is just logging
         if "code" in response.json():
-            LOGGER.warning("error making request: %d, %s", response.json()["code"], response.json()["message"])
+            LOGGER.warning(
+                "error making request: %d, %s",
+                response.json()["code"],
+                response.json()["message"],
+            )
         response.raise_for_status()
         return response.json()
 
