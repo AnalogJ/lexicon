@@ -12,9 +12,6 @@ stages:
   - stage: Test
     jobs:
       - template: templates/integration-jobs.yml
-  - stage: Package
-    jobs:
-      - template: templates/packaging-jobs.yml
   - stage: Release
     jobs:
       - template: templates/release-jobs.yml
