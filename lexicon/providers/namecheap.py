@@ -1,6 +1,8 @@
 """Module provider for Namecheap"""
 import logging
 import sys
+import tldextract
+
 from typing import Dict, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 
@@ -391,7 +393,9 @@ class _Api:
         return xml
 
     def domains_dns_get_hosts(self, domain):
-        sld, tld = domain.split(".")
+        extracted = tldextract.extract(domain)
+        sld = extracted.domain
+        tld = extracted.suffix
         extra_payload = {"SLD": sld, "TLD": tld}
         xml = self.call("namecheap.domains.dns.getHosts", extra_payload)
         xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainDNSGetHostsResult/*" % {
@@ -413,7 +417,9 @@ class _Api:
         print("To set: %i" % len(host_records_remote))
 
         extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_remote)
-        sld, tld = domain.split(".")
+        extracted = tldextract.extract(domain)
+        sld = extracted.domain
+        tld = extracted.suffix
         extra_payload.update({"SLD": sld, "TLD": tld})
         self.call("namecheap.domains.dns.setHosts", extra_payload)
 
@@ -447,7 +453,9 @@ class _Api:
             return
 
         extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_new)
-        sld, tld = domain.split(".")
+        extracted = tldextract.extract(domain)
+        sld = extracted.domain
+        tld = extracted.suffix
         extra_payload.update({"SLD": sld, "TLD": tld})
         self.call("namecheap.domains.dns.setHosts", extra_payload)
 
