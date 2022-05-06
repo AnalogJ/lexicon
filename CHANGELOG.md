@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.11.0 - 06/05/2022
 ### Added
 * Add `namecom` provider (#1212)
 

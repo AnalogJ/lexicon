@@ -1,12 +1,11 @@
 """Module provider for Namecheap"""
 import logging
 import sys
-import tldextract
-
 from typing import Dict, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 
 import requests
+import tldextract
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
