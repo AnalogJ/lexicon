@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `namecom` provider (#1212)
+
+### Modified
+* Fix TLD with two parts for `namecheap` provider (#1237)
+* Fix `entity__name` parsing in `easyname` provider (#1230)
 
 ## 3.10.0 - 01/05/2022
 ### Added
