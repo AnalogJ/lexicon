@@ -82,6 +82,7 @@ The current supported providers are:
   using the following syntax: .. _provider: URL_API
 
 .. tag: providers-table-begin
+
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | aliyun_         | aurora_         | azure_          | cloudflare_     | cloudns_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
@@ -115,6 +116,7 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | zonomi_         |                 |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
+
 .. tag: providers-table-end
 
 .. _aliyun: https://help.aliyun.com/document_detail/29739.html

@@ -76,7 +76,9 @@ def _generate_table(providers: List[str]) -> None:
 
     readme_lines = (
         readme_lines[: begin_idx + 1]
+        + ["\n"]
         + [f"{item}\n" for item in table]
+        + ["\n"]
         + readme_lines[end_idx:]
     )
 
