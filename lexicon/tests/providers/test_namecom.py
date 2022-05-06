@@ -3,7 +3,7 @@ import json
 from unittest import TestCase
 
 import pytest
-from unittest.mock import ANY, Mock, patch
+from unittest.mock import ANY, Mock, patch, call
 from requests import HTTPError
 
 from lexicon.config import DictConfigSource
@@ -136,7 +136,7 @@ class NamecomProviderTests(TestCase, IntegrationTestsV2):
         provider = self._construct_authenticated_provider()
         provider.delete_record(None, 'TXT', 'missingrecord')
         warning.assert_called_once()
-        assert 'no record' in warning.call_args.args[0]
+        assert call('delete_record: there is no record to delete') == warning.call_args
 
 
 def test_subparser_configuration():
