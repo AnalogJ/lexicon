@@ -257,7 +257,7 @@ class Provider(BaseProvider):
                 try:
                     rec = {}
                     columns = row.find_all("td")
-                    rec["name"] = (columns[0].string or "").strip()
+                    rec["name"] = (columns[0].contents[0].string or "").strip()
                     rec["type"] = (columns[1].contents[1].text or "").strip()
                     rec["content"] = (columns[2].contents[1].string or "").strip()
                     rec["priority"] = (columns[3].contents[1].string or "").strip()
