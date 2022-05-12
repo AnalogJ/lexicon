@@ -1,57 +1,89 @@
 # coding: utf-8
 # Copyright (c) 2016, Jason Kulatunga
 # Copyright (c) 2021, Oracle and/or its affiliates.
+import os
 import re
 from unittest import TestCase
 
+import pytest
+import requests
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+
+try:
+    from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
+except ImportError:
+    pass
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+
+KEY_FILE = "oci_api_key.pem"
+
+
+class MockSigner(requests.auth.AuthBase):
+    """Mock client-side no-op signer."""
+
+    def __init__(self):
+        self.region = "us-ashburn-1"
+
+    def __call__(self, r):
+        return r
+
+
+@pytest.fixture(autouse=True)
+def test_mock_signer(monkeypatch):
+    """Enable the mock signer when not testing live."""
+
+    if os.environ.get("LEXICON_LIVE_TESTS", "false") == "false":
+
+        monkeypatch.setattr(
+            InstancePrincipalsSecurityTokenSigner, "__init__", MockSigner.__init__
+        )
+        monkeypatch.setattr(
+            InstancePrincipalsSecurityTokenSigner, "__call__", MockSigner.__call__
+        )
+
+
+@pytest.fixture(scope="module", autouse=True)
+def test_key_file():
+    """Create a valid private key to test provider validation."""
+    private_key = rsa.generate_private_key(
+        public_exponent=65537, key_size=2048, backend=default_backend()
+    )
+    with open(KEY_FILE, "wb") as test_key_file:
+        test_key_file.write(
+            private_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.PKCS8,
+                encryption_algorithm=serialization.NoEncryption(),
+            )
+        )
+    yield
+    os.remove(KEY_FILE)
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 class OciProviderTests(TestCase, IntegrationTestsV2):
-    """Integration tests for OCI provider"""
+    """Integration tests for OCI provider using API key authentication."""
 
     provider_name = "oci"
     domain = "lexicon-test.com"
 
-    # Provide a fake credentials but the same region as the recorded tests
+    # Provide credentials that conform to requirements to test validation
     def _test_parameters_overrides(self):
         return {
-            "auth_user": "ocid1.user.oc1..aaaaaaa",
-            "auth_tenancy": "ocid1.tenancy.oc1..aaaaaaaa",
-            "auth_fingerprint": "aa:11:bb:22:cc:33:dd:44:ee:55:ff:66:a1:77:a2:88",
-            "auth_region": "us-ashburn-1",
-            "auth_key_content": """-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEA17lz4CMII+rpvu9Pi/AkOosjQR+kvDxdpbbxYY2JMkRnTuuN
-nb7kefWQ9fEqsmTJcaUl0rrDORrYU+W+WYmuPYh839BeKPFbg/WbfPFMhLwF2X6G
-w2Ozj7a9JceEYsuOptxtYawYabsN3wbPLAuTvY4B08kGLgVIzs7A3L/6JPbHJhjV
-YuiRwWe2zzD64ERe3UuGEOXcTyU/guS3bX91W46E4vw6CFL2GiNgI5Q46xF3D31/
-P/GKdFewm8rr7kAEouGW4mhOw0KI/mqgNrctQt+YQAzw/QKI4+umMu01ZtuYXRbF
-40JsTuQOxnmClf7P59YrsI3ltBA94XthyVxh0QIDAQABAoIBADqnXt0zSTRS2+kh
-MjSvP3p3eEdtriHMG/5BppHKpOH4/UnU+/VHAOI0JYzpXJ2Sj78JkyYfx5LQPL9a
-+Q1pROnQIXvNMLzbGvHfJr6q8Q4p/UEsiMG5awoJOpZ6EAG4rPmrd0YWP7EHvfbE
-6DFmmG3ynYaS4s5Ce5BXYNLkk8PWoWpEBGDOrdOU6bvMFqEgzqjnlbVNwGDP09HQ
-fGtnycAqOsyC2CnrpNoOq6TWr/Y7s0EViajYxxTgoSgXnscntz8M2tqCW3Hd1T94
-w2DOe1W5EGIkVrNpTePwFCkqPI47kTUT1eHDowf5NmRADJVDHr5H6yNCk7d/u2mr
-6JsggE0CgYEA8YUBc/fagXLVAsEi3sOcyJrq04C+oy3Zz7zHz7ZH72cfJvaPlBPI
-FPLVhEptn7bPMR7JuzUL6BckEnoPdXG52ncnZZbKMKXfBS6IkC/SSYjX6TWBXH9I
-523QUi45N68UGb+opX/0iTvSrimK4wDWdz+Umx3rbt6uqmwuCHj9dn8CgYEA5KiG
-7bnMRQAMadOOeFQePpViisEuHAAtL4f8qbXrwEjEjCjFBb3Hifdl6bRsvU8LEcN2
-6YUM+KQXTOu+10N+4ANptjXzHJMIliO6FQ+7S8Rs/wDSrtuKHaEQR19HgyJzPfSi
-ptZNWBFphrFE3nYO2GoYqCGwFYqNkW084XPBH68CgYEAyZcJBXEF0zK0FV576pA/
-1zlndC5r8Owed8TMytUM6gia+fynDyQLx2CBU7CEG+GMwyU9oKLAU3KtSzbSnGbW
-iEEYgzT/gueQZVTX6/Hehj5QaXmdhkU/5tvEHDQ00gOytWNCMxHAXKOwUGqgYKWc
-XWCWe3rXvmzkQZ+WNMA4X6UCgYEAgJcmClsKvWMhmAIZhSIJQDjSiiXJwIV449oe
-BXMBeclyf0AOTQRFSxmOfrewz2W8W+kI3pqsiMf/MosBcB3NJD3HHWmJpvApTAYb
-h+yo8BsvENltolhke/UwKnMyzFR7asRBFIJATN698bmPeWv7PUmtRCBt3i9lHfvI
-2SE34pECgYABPlBhx/irQMLXOacZxpXdVUj6/ivy4asiHe4OZN4uSXS1WqmrRHBe
-Spzc4VkUFCDazQqxbG2/4ElGUzw+z0C0KMsSfSXTIk/YpNkyrCTwsllyvZrH7gVP
-qpq9aJr7G9qW+9Yovwm2qLR1joa4XoOqn13bkEU7lc96fyRBr0ucDg==
------END RSA PRIVATE KEY-----
-""",
+            "auth_type": "api_key",
+            "auth_user": "ocid1.user.oc1..0a1a2a3a4a5a6a7a8a9a0b1b2b3b4b5b6b7b8b9b0c1c2c3c4c5c6c7c8c9c",
+            "auth_tenancy": "ocid1.tenancy.oc1..0d1d2d3d4d5d6d7d8d9d0e1e2e3e4e5e6e7e8e9e0f1f2f3f4f5f6f7f8f9f",
+            "auth_fingerprint": "aa:00:bb:11:cc:22:dd:33:ee:44:ff:55:00:66:77:88",
+            "auth_key_file": KEY_FILE,
         }
+
+    def _test_fallback_fn(self):
+        return lambda _: None
 
     def _filter_headers(self):
         return ["authorization", "x-content-sha256"]
@@ -68,4 +100,19 @@ qpq9aJr7G9qW+9Yovwm2qLR1joa4XoOqn13bkEU7lc96fyRBr0ucDg==
             b'"id":"DNS-ZONE-ID"',
             response["body"]["string"],
         )
+        response["body"]["string"] = re.sub(
+            rb'"CreatedBy":"[\w.-\/@]+"',
+            b'"CreatedBy":"USER-ID"',
+            response["body"]["string"],
+        )
+
         return response
+
+
+class OciInstancePrincipalProviderTests(OciProviderTests):
+    """Integration tests for OCI Provider using instance principal authentication."""
+
+    provider_variant = "instance_principal"
+
+    def _test_parameters_overrides(self):
+        return {"auth_type": "instance_principal"}

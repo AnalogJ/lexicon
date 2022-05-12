@@ -11,16 +11,16 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 28 Jun 2021 22:21:30 GMT
+      - Fri, 13 May 2022 21:23:41 GMT
       host:
       - dns.us-ashburn-1.oraclecloud.com
       user-agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com
   response:
     body:
-      string: '{"zoneType":"PRIMARY","name":"lexicon-test.com","externalMasters":[],"self":"https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com","timeCreated":"2021-06-23T10:07:46Z","version":"448","serial":448,"nameservers":[{"hostname":"ns1.p68.dns.oraclecloud.net"},{"hostname":"ns2.p68.dns.oraclecloud.net"},{"hostname":"ns3.p68.dns.oraclecloud.net"},{"hostname":"ns4.p68.dns.oraclecloud.net"}],"compartmentId":"OCI-COMPARTMENT-ID","id":"DNS-ZONE-ID","lifecycleState":"ACTIVE","scope":"GLOBAL","viewId":null,"isProtected":false}
+      string: '{"zoneType":"PRIMARY","name":"lexicon-test.com","externalMasters":[],"self":"https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com","timeCreated":"2022-05-13T19:21:39Z","version":"77","serial":77,"nameservers":[{"hostname":"ns1.p68.dns.oraclecloud.net"},{"hostname":"ns2.p68.dns.oraclecloud.net"},{"hostname":"ns3.p68.dns.oraclecloud.net"},{"hostname":"ns4.p68.dns.oraclecloud.net"}],"compartmentId":"OCI-COMPARTMENT-ID","id":"DNS-ZONE-ID","lifecycleState":"ACTIVE","definedTags":{"Oracle-Tags":{"CreatedBy":"USER-ID","CreatedOn":"2022-05-13T19:21:38.526Z"}},"scope":"GLOBAL","viewId":null,"isProtected":false,"dnssecState":"Disabled","dnssecConfig":null}
 
         '
     headers:
@@ -29,24 +29,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 28 Jun 2021 22:21:32 GMT
+      - Fri, 13 May 2022 21:23:42 GMT
       ETag:
-      - '"448ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168docid1.compartment.oc1..aaaaaaaakklh3onuoqfzgpe4tlflbmabkytrmmukcllef5vfc65quvqhtfsq164374825086dc65cd5dc548c248f61328b5d668#application/json--gzip"'
+      - '"77ocid1.dns-zone.oc1..cf5fb531cabb4f329118b700b7d89f65-b76469c1df67f3a1078010f356d0d815a13fff620a82562f86461ef12b97119238a13e42#application/json--gzip"'
       Vary:
       - Accept-Encoding
       content-length:
-      - '645'
+      - '822'
       opc-request-id:
-      - /5D84C44A5C454FB3B4453E0D3610375B/4576B034FD51B2664C748C1757CCE01F
+      - /8DD4A382B681B7B94398ECA4E5C18BB9/283A485978DCF13C48A4AAAD3D3E6DB4
     status:
       code: 200
       message: OK
 - request:
-    body: '{"items": [{"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken",
-      "ttl": 3600}]}'
+    body: '{"items": [{"operation": "ADD", "domain": "orig.test.lexicon-test.com",
+      "rtype": "TXT", "rdata": "challengetoken", "ttl": 3600}]}'
     headers:
       Content-Length:
-      - '89'
+      - '129'
       accept:
       - '*/*'
       accept-encoding:
@@ -56,31 +56,31 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 28 Jun 2021 22:21:33 GMT
+      - Fri, 13 May 2022 21:23:42 GMT
       host:
       - dns.us-ashburn-1.oraclecloud.com
       user-agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: PATCH
     uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.test.lexicon-test.com
   response:
     body:
-      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"c7825b2895d6a22416fe1e807f86d27d","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"304","rtype":"TXT","ttl":3600}]}
+      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"dfc05ad57f1aad758f9d4e3b1590d6c7","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"30","rtype":"TXT","ttl":3600}]}
 
         '
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '195'
+      - '194'
       Content-Type:
       - application/json
       Date:
-      - Mon, 28 Jun 2021 22:21:35 GMT
+      - Fri, 13 May 2022 21:23:43 GMT
       ETag:
-      - '"304ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      - '"30ocid1.dns-zone.oc1..cf5fb531cabb4f329118b700b7d89f65#application/json"'
       opc-request-id:
-      - /2D5A706F2595AA39480CD3528EEBF73E/09D0020A996C4C53643A809A63B77B34
+      - /E7409F0F079070EA4818327118B0DC83/AB51E969D8D291D9CA4BF8B72BBEAFE8
       opc-total-items:
       - '1'
     status:
@@ -98,33 +98,33 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 28 Jun 2021 22:21:35 GMT
+      - Fri, 13 May 2022 21:23:43 GMT
       host:
       - dns.us-ashburn-1.oraclecloud.com
       user-agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.test.lexicon-test.com?limit=100&rtype=TXT
   response:
     body:
-      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"c7825b2895d6a22416fe1e807f86d27d","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"304","rtype":"TXT","ttl":3600}]}
+      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"dfc05ad57f1aad758f9d4e3b1590d6c7","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"30","rtype":"TXT","ttl":3600}]}
 
         '
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '195'
+      - '194'
       Content-Type:
       - application/json
       Date:
-      - Mon, 28 Jun 2021 22:21:36 GMT
+      - Fri, 13 May 2022 21:23:44 GMT
       ETag:
-      - '"304ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      - '"30ocid1.dns-zone.oc1..cf5fb531cabb4f329118b700b7d89f65#application/json"'
       Vary:
       - Accept-Encoding
       opc-request-id:
-      - /CECCC92A8C918836B0F2582DCF6604AB/D32FC25CB8B7DD35B7C9C039349CDBAA
+      - /38CCADCCEB70F2BD0B70D98509902E1D/98957A78B5D0EC14FE41B75981FE8D17
       opc-total-items:
       - '1'
     status:
@@ -142,16 +142,16 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 28 Jun 2021 22:21:37 GMT
+      - Fri, 13 May 2022 21:23:44 GMT
       host:
       - dns.us-ashburn-1.oraclecloud.com
       user-agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: GET
     uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records?limit=100&rtype=TXT
   response:
     body:
-      string: '{"items":[{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"896d848b26f834d9c8fe08f83aaa580b","isProtected":false,"rdata":"\"updated\"","rrsetVersion":"321","rtype":"TXT","ttl":3600},{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"d96871ac7da8df9d246600731475f74a","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"321","rtype":"TXT","ttl":3600},{"domain":"orig.test.lexicon-test.com","recordHash":"c7825b2895d6a22416fe1e807f86d27d","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"304","rtype":"TXT","ttl":3600},{"domain":"orig.testfqdn.lexicon-test.com","recordHash":"b157b0f18514bf637d2da9a60c2d5db7","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"306","rtype":"TXT","ttl":3600},{"domain":"orig.testfull.lexicon-test.com","recordHash":"5812b10f4c43f8ac590a8bd07f5dce3c","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"307","rtype":"TXT","ttl":3600},{"domain":"random.fqdntest.lexicon-test.com","recordHash":"5d5b4b9a09be257562199ec4184d0a93","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"301","rtype":"TXT","ttl":3600},{"domain":"random.fulltest.lexicon-test.com","recordHash":"da642cca98776d00b0f61fad4051e489","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"302","rtype":"TXT","ttl":3600},{"domain":"random.test.lexicon-test.com","recordHash":"5939d233a3249cb1034c6267ee7d1013","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"303","rtype":"TXT","ttl":3600},{"domain":"ttl.fqdn.lexicon-test.com","recordHash":"b1a860728a050a1e193737002a8c392e","isProtected":false,"rdata":"\"ttlshouldbe3600\"","rrsetVersion":"298","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.createrecordset.lexicon-test.com","recordHash":"b6ebc41fde88500b72e3c74ed37f555e","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"283","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.createrecordset.lexicon-test.com","recordHash":"eaca746d30c89bd96cf39ad069a282ce","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"283","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.deleterecordinset.lexicon-test.com","recordHash":"05a878f361773a0bcaa7ac0b74900b7f","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"445","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.fqdn.lexicon-test.com","recordHash":"2e1d5026438c46441999c0ed61cb6450","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"279","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.full.lexicon-test.com","recordHash":"92f11feb1c17981adef50d1c93ec3c5e","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"280","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.listrecordset.lexicon-test.com","recordHash":"06c966e4438fe15715878d4105682b58","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"300","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.listrecordset.lexicon-test.com","recordHash":"cc91cf484d8cd148c3e9ddd3fd4018c0","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"300","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.noop.lexicon-test.com","recordHash":"575c16c67d0a8ec908f50cca7bc8c0cb","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"284","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.test.lexicon-test.com","recordHash":"768ea81c2972b69ac41fd65fe5bb53be","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"281","rtype":"TXT","ttl":3600}]}
+      string: '{"items":[{"domain":"orig.nameonly.test.lexicon-test.com","recordHash":"b7cc5b46f09925b4216d3ad16b8cbf78","isProtected":false,"rdata":"\"updated\"","rrsetVersion":"64","rtype":"TXT","ttl":3600},{"domain":"orig.test.lexicon-test.com","recordHash":"dfc05ad57f1aad758f9d4e3b1590d6c7","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"30","rtype":"TXT","ttl":3600},{"domain":"orig.testfqdn.lexicon-test.com","recordHash":"b0ebc5aa3fa1999d275cfca021fbe8a0","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"33","rtype":"TXT","ttl":3600},{"domain":"orig.testfull.lexicon-test.com","recordHash":"01003d82d88ebce5edd385f05ee73716","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"34","rtype":"TXT","ttl":3600},{"domain":"random.fqdntest.lexicon-test.com","recordHash":"ed57e7dc9d4c358ae9522a3148b4b6ff","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"27","rtype":"TXT","ttl":3600},{"domain":"random.fulltest.lexicon-test.com","recordHash":"ba24163967a8b8699b2ed550f0861ac4","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"28","rtype":"TXT","ttl":3600},{"domain":"random.test.lexicon-test.com","recordHash":"66c3ff7200d225bc381c30bbbf81671b","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"29","rtype":"TXT","ttl":3600},{"domain":"ttl.fqdn.lexicon-test.com","recordHash":"acf590302d4c44f8e70b904dc0f7764f","isProtected":false,"rdata":"\"ttlshouldbe3600\"","rrsetVersion":"24","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.createrecordset.lexicon-test.com","recordHash":"1817c099caf4a83d3488b04646e8a9af","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"8","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.createrecordset.lexicon-test.com","recordHash":"769fa3708e340219ddce0fb0bf90df13","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"8","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.deleterecordinset.lexicon-test.com","recordHash":"6f873a8d4526663515c66450b6b2b3dd","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"74","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.fqdn.lexicon-test.com","recordHash":"495fb7907b335dbb06acec4856920767","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"4","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.full.lexicon-test.com","recordHash":"ffdf9e5dda5e0ba0895117a2996efead","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"5","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.listrecordset.lexicon-test.com","recordHash":"15004456198ea9400cda40e72165cf24","isProtected":false,"rdata":"\"challengetoken1\"","rrsetVersion":"26","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.listrecordset.lexicon-test.com","recordHash":"56b3dadc9142176a2b6eea46967043c6","isProtected":false,"rdata":"\"challengetoken2\"","rrsetVersion":"26","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.noop.lexicon-test.com","recordHash":"70936d5fe8494b180e575095c0e11d66","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"9","rtype":"TXT","ttl":3600},{"domain":"_acme-challenge.test.lexicon-test.com","recordHash":"fd914b8514d6c145b9cf007105536b0a","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"6","rtype":"TXT","ttl":3600}]}
 
         '
     headers:
@@ -160,22 +160,22 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 28 Jun 2021 22:21:38 GMT
+      - Fri, 13 May 2022 21:23:45 GMT
       ETag:
-      - '"448ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json--gzip"'
+      - '"77ocid1.dns-zone.oc1..cf5fb531cabb4f329118b700b7d89f65#application/json--gzip"'
       Vary:
       - Accept-Encoding
       content-length:
-      - '3496'
+      - '3281'
       opc-request-id:
-      - /DD0FBDC655931FCAB54301A887ABC99D/A302B8EDF2611D1D72C2820E4FD03E48
+      - /088E086A3B86184D1D81A0445A4C0234/7200E782FF06F2383397C50B4BF1E0E4
       opc-total-items:
-      - '18'
+      - '17'
     status:
       code: 200
       message: OK
 - request:
-    body: '{"items": [{"operation": "REMOVE", "recordHash": "c7825b2895d6a22416fe1e807f86d27d"},
+    body: '{"items": [{"operation": "REMOVE", "recordHash": "dfc05ad57f1aad758f9d4e3b1590d6c7"},
       {"operation": "ADD", "rtype": "TXT", "rdata": "challengetoken", "ttl": 3600}]}'
     headers:
       Content-Length:
@@ -189,31 +189,31 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 28 Jun 2021 22:21:39 GMT
+      - Fri, 13 May 2022 21:23:45 GMT
       host:
       - dns.us-ashburn-1.oraclecloud.com
       user-agent:
-      - python-requests/2.25.1
+      - python-requests/2.27.1
     method: PATCH
     uri: https://dns.us-ashburn-1.oraclecloud.com/20180115/zones/lexicon-test.com/records/orig.test.lexicon-test.com
   response:
     body:
-      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"c7825b2895d6a22416fe1e807f86d27d","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"304","rtype":"TXT","ttl":3600}]}
+      string: '{"items":[{"domain":"orig.test.lexicon-test.com","recordHash":"dfc05ad57f1aad758f9d4e3b1590d6c7","isProtected":false,"rdata":"\"challengetoken\"","rrsetVersion":"30","rtype":"TXT","ttl":3600}]}
 
         '
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '195'
+      - '194'
       Content-Type:
       - application/json
       Date:
-      - Mon, 28 Jun 2021 22:21:43 GMT
+      - Fri, 13 May 2022 21:23:52 GMT
       ETag:
-      - '"304ocid1.dns-zone.oc1..847c27f48092401b867140660ee2168d#application/json"'
+      - '"30ocid1.dns-zone.oc1..cf5fb531cabb4f329118b700b7d89f65#application/json"'
       opc-request-id:
-      - /1671FDC36577DE414AF15275DB29B93F/0BD66BBD2435C7E5C5B5B24CA93AF3C1
+      - /176356C292EFB4318F23BF39F2021A45/E27870ED74090934B0CB33A140B3C65A
       opc-total-items:
       - '1'
     status:
