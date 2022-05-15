@@ -170,7 +170,7 @@ The current supported providers are:
 .. _nfsn:
 .. _njalla: https://njal.la/api/
 .. _nsone: https://ns1.com/api/
-.. _oci:
+.. _oci: https://docs.oracle.com/en-us/iaas/Content/DNS/home.htm
 .. _onapp: https://docs.onapp.com/display/55api/onapp+5.5+api+guide
 .. _online:
 .. _ovh: https://api.ovh.com/
