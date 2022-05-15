@@ -7,7 +7,10 @@ import pkgutil
 import re
 from typing import Dict
 
-from importlib_metadata import Distribution, PackageNotFoundError
+try:
+    from importlib.metadata import Distribution, PackageNotFoundError
+except ModuleNotFoundError:
+    from importlib_metadata import Distribution, PackageNotFoundError
 
 from lexicon import providers
 
