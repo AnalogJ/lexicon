@@ -92,7 +92,7 @@
 ## 3.7.0 - 09/08/2021
 ### Added
 * Add the Vercel provider (formerly known as Zeit)
-* Add the OpenShift Cloud Infrastructure (OCI) DNS provider (#860)
+* Add the Oracle Cloud Infrastructure (OCI) DNS provider (#860)
 
 ### Modified
 * Keep old Zeit provider for compatibility purpose with deprecation notices
