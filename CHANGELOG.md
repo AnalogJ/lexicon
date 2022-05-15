@@ -1,6 +1,9 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Improve the Oracle Cloud DNS (`oci`) provider on the authentication mechanism (#1251)
+* Add API documentation to Oracle Cloud DNS (#1247)
 
 ## 3.11.0 - 06/05/2022
 ### Added
