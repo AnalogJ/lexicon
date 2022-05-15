@@ -10,7 +10,7 @@ from typing import Dict
 try:
     from importlib.metadata import Distribution, PackageNotFoundError
 except ModuleNotFoundError:
-    from importlib_metadata import Distribution, PackageNotFoundError
+    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[misc]
 
 from lexicon import providers
 
@@ -45,9 +45,13 @@ def lexicon_version() -> str:
 
 
 def _resolve_requirements(provider: str, distribution: Distribution) -> bool:
+    requires = distribution.requires
+    if requires is None:
+        raise ValueError("Error while trying finding requirements.")
+
     requirements = [
         re.sub(r"^(.*)\s\(.*\)(?:;.*|)$", r"\1", requirement)
-        for requirement in distribution.requires
+        for requirement in requires
         if f'extra == "{provider}"' in requirement
     ]
 
