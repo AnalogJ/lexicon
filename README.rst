@@ -165,6 +165,7 @@ The current supported providers are:
 .. _misaka: https://misaka.io/dns/
 .. _mythicbeasts: https://www.mythic-beasts.com/support/api/dnsv2
 .. _namecheap: https://www.namecheap.com/support/api/methods.aspx
+.. _namecom: https://www.name.com/api-docs
 .. _namesilo: https://www.namesilo.com/api_reference.php
 .. _netcup: https://ccp.netcup.net/run/webservice/servers/endpoint.php
 .. _nfsn:
