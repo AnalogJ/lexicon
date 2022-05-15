@@ -4,7 +4,9 @@ Providers available
 
 The following Lexicon providers are available:
 
-.. include:: providers/table.rst
+.. include:: ../README.rst
+    :start-after: tag: providers-table-begin
+    :end-before: tag: providers-table-end
 
 List of options
 ---------------
@@ -146,6 +148,9 @@ List of options
 
 .. _namecheap:
 .. include:: providers/namecheap.rst
+
+.. _namecom:
+.. include:: providers/namecom.rst
 
 .. _namesilo:
 .. include:: providers/namesilo.rst

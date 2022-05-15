@@ -102,19 +102,19 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | localzone_      | luadns_         | memset_         | misaka_         | mythicbeasts_   |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namesilo_       | netcup_         | nfsn_           | njalla_         |
+| namecheap_      | namecom_        | namesilo_       | netcup_         | nfsn_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| nsone_          | oci_            | onapp_          | online_         | ovh_            |
+| njalla_         | nsone_          | oci_            | onapp_          | online_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| plesk_          | pointhq_        | powerdns_       | rackspace_      | rage4_          |
+| ovh_            | plesk_          | pointhq_        | powerdns_       | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
+| rage4_          | rcodezero_      | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
+| softlayer_      | transip_        | ultradns_       | valuedomain_    | vercel_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| webgo_          | yandex_         | yandexcloud_    | zeit_           | zilore_         |
+| vultr_          | webgo_          | yandex_         | yandexcloud_    | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zonomi_         |                 |                 |                 |                 |
+| zilore_         | zonomi_         |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
