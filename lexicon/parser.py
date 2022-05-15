@@ -90,7 +90,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
         if not available:
             subparser.epilog = (
                 "WARNING: some required dependencies for this provider are not "
-                f"installed. Please install lexicon[{provider}] first before using it."
+                f"installed. Please run `pip install lexicon[{provider}]` first before using it."
             )
 
     return parser

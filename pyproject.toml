@@ -42,13 +42,14 @@ cryptography = ">=2"
 pyyaml = ">=3"
 requests = ">=2"
 beautifulsoup4 = ">=4"
+importlib-metadata = ">=4"
 # Optional dependencies required by some providers
-boto3 = { version = ">=1", optional = true }
-dnspython = { version = ">=2", optional = true }
-localzone = { version = ">=0.9.8", optional = true }
-softlayer = {version = ">=5", optional = true}
-zeep = { version = ">=3", optional = true }
-oci = {version = ">=2", optional = true}
+boto3 = { version = ">=1", optional = true }  # route53
+localzone = { version = ">=0.9.8", optional = true }  # localzone
+softlayer = {version = ">=5", optional = true}  # softlayer
+zeep = { version = ">=3", optional = true }  # gransy
+dnspython = { version = ">=2", optional = true }  # ddns
+oci = {version = ">=2", optional = true}  # oci
 
 [tool.poetry.extras]
 route53 = ["boto3"]
@@ -58,7 +59,7 @@ gransy = ["zeep"]
 ddns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "localzone", "softlayer", "zeep", "ddns", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
@@ -73,7 +74,6 @@ mypy = "*"
 types-PyYAML = "*"
 types-pytz = "*"
 types-requests = "*"
-types-setuptools = "*"
 types-six = "*"
 types-toml = "*"
 types-simplejson = "*"

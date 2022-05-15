@@ -808,14 +808,6 @@ python-versions = "*"
 types-urllib3 = "<1.27"
 
 [[package]]
-name = "types-setuptools"
-version = "57.4.14"
-description = "Typing stubs for setuptools"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "types-simplejson"
 version = "3.17.6"
 description = "Typing stubs for simplejson"
@@ -969,7 +961,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [extras]
 ddns = ["dnspython"]
-full = ["boto3", "localzone", "softlayer", "zeep", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
 gransy = ["zeep"]
 localzone = ["localzone"]
 oci = ["oci"]
@@ -979,7 +971,7 @@ softlayer = ["softlayer"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "060faea3f98abaf6b6da523dd9a3b993a01b4e390159428421196171595f262b"
+content-hash = "5e6ec3de44829dd8e3e2386997cb71c371c820891aed7aaf24f055f78acea36b"
 
 [metadata.files]
 atomicwrites = [
@@ -1562,10 +1554,6 @@ types-pyyaml = [
 types-requests = [
     {file = "types-requests-2.27.25.tar.gz", hash = "sha256:805ae7e38fd9d157153066dc4381cf585fd34dfa212f2fc1fece248c05aac571"},
     {file = "types_requests-2.27.25-py3-none-any.whl", hash = "sha256:2444905c89731dbcb6bbcd6d873a04252445df7623917c640e463b2b28d2a708"},
-]
-types-setuptools = [
-    {file = "types-setuptools-57.4.14.tar.gz", hash = "sha256:df02fe1dd244f58cf4e67cfc3d0a97930a2d61a72dd89f21d81c71017cd83f9a"},
-    {file = "types_setuptools-57.4.14-py3-none-any.whl", hash = "sha256:828f7e7e51e157876f47c80518b23ba0c3c36aa8081efd39d5d39f393938aec9"},
 ]
 types-simplejson = [
     {file = "types-simplejson-3.17.6.tar.gz", hash = "sha256:ffa2eddd49e8e4a61d552f1f17e620d90ec872788622424f2c61ac292fbc6fa8"},

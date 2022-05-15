@@ -4,9 +4,13 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 import pkgutil
-from typing import Dict, List
+import re
+from typing import Dict
 
-import pkg_resources
+try:
+    from importlib.metadata import Distribution, PackageNotFoundError
+except ModuleNotFoundError:
+    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[misc]
 
 from lexicon import providers
 
@@ -22,8 +26,8 @@ def find_providers() -> Dict[str, bool]:
     )
 
     try:
-        distribution = pkg_resources.get_distribution("dns-lexicon")
-    except pkg_resources.DistributionNotFound:
+        distribution = Distribution.from_name("dns-lexicon")
+    except PackageNotFoundError:
         return {provider: True for provider in providers_list}
     else:
         return {
@@ -35,31 +39,32 @@ def find_providers() -> Dict[str, bool]:
 def lexicon_version() -> str:
     """Retrieve current Lexicon version"""
     try:
-        return pkg_resources.get_distribution("dns-lexicon").version
-    except pkg_resources.DistributionNotFound:
+        return Distribution.from_name("dns-lexicon").version
+    except PackageNotFoundError:
         return "unknown"
 
 
-def _resolve_requirements(
-    provider: str, distribution: pkg_resources.Distribution
-) -> bool:
-    try:
-        requirements: List[pkg_resources.Requirement] = distribution.requires(
-            extras=(provider,)
-        )
-    except pkg_resources.UnknownExtra:
+def _resolve_requirements(provider: str, distribution: Distribution) -> bool:
+    requires = distribution.requires
+    if requires is None:
+        raise ValueError("Error while trying finding requirements.")
+
+    requirements = [
+        re.sub(r"^(.*)\s\(.*\)(?:;.*|)$", r"\1", requirement)
+        for requirement in requires
+        if f'extra == "{provider}"' in requirement
+    ]
+
+    if not requirements:
         # No extra for this provider
         return True
-    else:
-        # Extra is defined
+
+    for requirement in requirements:
         try:
-            for requirement in requirements:
-                if hasattr(requirement, "name"):
-                    pkg_resources.get_distribution(requirement.name)  # type: ignore
-                else:
-                    pkg_resources.get_distribution(requirement)
-        except (pkg_resources.DistributionNotFound, pkg_resources.VersionConflict):
+            Distribution.from_name(requirement)
+        except PackageNotFoundError:
             # At least one extra requirement is not fulfilled
             return False
 
+    # All extra requirements are fulfilled
     return True
