@@ -35,8 +35,9 @@ from lexicon.providers.base import Provider as BaseProvider
 # oci is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
 try:
+    from oci._vendor.requests.exceptions import ConnectTimeout  # type: ignore
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
-    from oci.config import from_file, validate_config  # type: ignore
+    from oci.config import from_file  # type: ignore
     from oci.exceptions import ConfigFileNotFound  # type: ignore
     from oci.exceptions import InvalidConfig, ProfileNotFound  # type: ignore
     from oci.signer import Signer  # type: ignore
@@ -54,7 +55,6 @@ CONFIG_VARS = {
     "key_file",
     "key_content",
     "pass_phrase",
-    "region",
 }
 
 
@@ -66,6 +66,10 @@ def provider_parser(subparser):
     subparser.add_argument(
         "--auth-config-file",
         help="The full path including filename to an OCI configuration file.",
+    )
+    subparser.add_argument(
+        "--auth-profile",
+        help="The name of the profile to use (case-sensitive).",
     )
     subparser.add_argument(
         "--auth-user",
@@ -84,12 +88,16 @@ def provider_parser(subparser):
         help="The full content of the calling user's private signing key in PEM format.",
     )
     subparser.add_argument(
+        "--auth-key-file",
+        help="The full path including filename to the calling user's private signing key in PEM format.",
+    )
+    subparser.add_argument(
         "--auth-pass-phrase",
         help="If the private key is encrypted, the pass phrase must be provided.",
     )
     subparser.add_argument(
         "--auth-region",
-        help="The home region of your tenancy.",
+        help="An OCI region identifier. Select the closest region for best performance.",
     )
     subparser.add_argument(
         "--auth-type",
@@ -106,6 +114,7 @@ class Provider(BaseProvider):
         """Initialize OCI DNS client."""
         super(Provider, self).__init__(config)
         self.domain_id = None
+        self._signer = None
 
         file_location = (
             self._get_provider_option("auth_config_file")
@@ -123,52 +132,45 @@ class Provider(BaseProvider):
             else "api_key"
         )
 
-        signer = (
-            InstancePrincipalsSecurityTokenSigner()
-            if auth_type == "instance_principal"
-            else None
-        )
+        if auth_type == "instance_principal":
+            try:
+                self._signer = InstancePrincipalsSecurityTokenSigner()
+                region = self._signer.region
+            except ConnectTimeout:
+                raise
 
-        oci_config = {}
-        try:
-            oci_config = from_file(
-                file_location=file_location, profile_name=profile_name
+        else:
+            oci_config = {}
+            try:
+                oci_config = from_file(
+                    file_location=file_location, profile_name=profile_name
+                )
+            except (ConfigFileNotFound, ProfileNotFound):
+                for var in CONFIG_VARS:
+                    if os.environ.get(f"OCI_CLI_{var.upper()}"):
+                        oci_config[var] = os.environ.get(f"OCI_CLI_{var.upper()}")
+
+                    if self._get_provider_option(f"auth_{var}"):
+                        oci_config[var] = self._get_provider_option(f"auth_{var}")
+
+            region = (
+                self._get_provider_option("auth_region")
+                if self._get_provider_option("auth_region")
+                else "us-ashburn-1"
             )
-        except (ConfigFileNotFound, ProfileNotFound):
-            pass
+            if hasattr(oci_config, "region") is False:
+                oci_config["region"] = region
 
-        for var in CONFIG_VARS:
-            if os.environ.get(f"OCI_CLI_{var.upper()}"):
-                oci_config[var] = os.environ.get(f"OCI_CLI_{var.upper()}")
+            try:
+                self._signer = Signer.from_config(oci_config)
+            except InvalidConfig:
+                raise
 
-            if self._get_provider_option(f"auth_{var}"):
-                oci_config[var] = self._get_provider_option(f"auth_{var}")
-
-            if var not in oci_config.keys():
-                oci_config[var] = None
-
-        try:
-            validate_config(oci_config)
-        except InvalidConfig:
-            raise
-
-        self.auth = (
-            signer
-            if signer
-            else Signer(
-                oci_config["tenancy"],
-                oci_config["user"],
-                oci_config["fingerprint"],
-                oci_config["key_file"],
-                oci_config["pass_phrase"],
-                oci_config["key_content"],
-            )
-        )
-
-        self.endpoint = f"https://dns.{oci_config['region']}.oraclecloud.com/20180115"
+        self.endpoint = f"https://dns.{region}.oraclecloud.com/20180115"
         LOGGER.debug(f"Activated OCI provider with endpoint: {self.endpoint}")
 
     def _authenticate(self):
+
         try:
             zone = self._get(f"/zones/{self.domain}")
             self.domain_id = zone["id"]
@@ -187,6 +189,7 @@ class Provider(BaseProvider):
             "items": [
                 {
                     "operation": "ADD",
+                    "domain": name,
                     "rtype": rtype,
                     "rdata": content,
                     "ttl": self._get_lexicon_option("ttl")
@@ -337,7 +340,7 @@ class Provider(BaseProvider):
             action,
             url,
             params=query_params,
-            auth=self.auth,
+            auth=self._signer,
             json=data if data else None,
         )
         response.raise_for_status()
