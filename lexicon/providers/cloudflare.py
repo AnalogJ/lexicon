@@ -16,12 +16,9 @@ def provider_parser(subparser):
     """Return the parser for this provider"""
     subparser.description = """
         There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
-        1 - A Global API key,
-            with --auth-username and --auth-token flags.
-        2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones),
-            with --auth-token flag.
-        3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone),
-            with --auth-token and --zone-id flags.
+        1 - A Global API key, with --auth-username and --auth-token flags.
+        2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with --auth-token flag.
+        3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
     """
     subparser.add_argument(
         "--auth-username",
