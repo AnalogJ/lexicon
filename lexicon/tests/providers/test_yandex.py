@@ -1,8 +1,6 @@
 """Integration tests for Yandex PDD"""
 from unittest import TestCase
 
-import pytest
-
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
@@ -13,15 +11,16 @@ class YandexPDDProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Yandex PDD"""
 
     provider_name = "yandex"
-    domain = "capsulecd.com"
+    domain = "example.com"
 
     def _filter_headers(self):
         """Sensitive headers to be filtered."""
         return ["Authorization", "PddToken"]
 
-    # TODO: enable the skipped tests
-    @pytest.mark.skip(reason="new test, missing recording")
-    def test_provider_when_calling_update_record_should_modify_record_name_specified(
-        self,
-    ):
-        return
+    # filter out data which change on each run
+    def _filter_response(self, response):
+        if "X-Request-Id" in response["headers"]:
+            del response["headers"]["X-Request-Id"]
+        if "X-qloud-router" in response["headers"]:
+            del response["headers"]["X-qloud-router"]
+        return response

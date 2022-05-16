@@ -58,11 +58,6 @@ interactions:
         "subdomain": "random.fulltest", "type": "TXT", "priority": ""}, {"record_id":
         33346432, "ttl": 3600, "content": "challengetoken", "domain": "example.com",
         "fqdn": "updated.test.example.com", "subdomain": "updated.test", "type": "TXT",
-        "priority": ""}, {"record_id": 33346433, "ttl": 3600, "content": "updated",
-        "domain": "example.com", "fqdn": "orig.nameonly.test.example.com", "subdomain":
-        "orig.nameonly.test", "type": "TXT", "priority": ""}, {"record_id": 33346434,
-        "ttl": 3600, "content": "challengetoken", "domain": "example.com", "fqdn":
-        "updated.testfqdn.example.com", "subdomain": "updated.testfqdn", "type": "TXT",
         "priority": ""}], "success": "ok"}'
     headers:
       Connection:
@@ -70,7 +65,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 16 May 2022 17:49:05 GMT
+      - Mon, 16 May 2022 17:48:59 GMT
       Keep-Alive:
       - timeout=120
       Server:
@@ -78,7 +73,7 @@ interactions:
       Transfer-Encoding:
       - chunked
       content-length:
-      - '3649'
+      - '3264'
     status:
       code: 200
       message: OK
@@ -98,21 +93,22 @@ interactions:
       User-Agent:
       - python-requests/2.27.1
     method: POST
-    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=example.com&type=TXT&subdomain=orig.testfull&content=challengetoken&ttl=3600
+    uri: https://pddimp.yandex.ru/api2/admin/dns/add?domain=example.com&type=TXT&subdomain=orig.nameonly.test&content=challengetoken&ttl=3600
   response:
     body:
-      string: '{"domain": "example.com", "record": {"content": "challengetoken", "subdomain":
-        "orig.testfull", "priority": "", "ttl": 3600, "domain": "example.com", "record_id":
-        33346435, "fqdn": "orig.testfull.example.com", "type": "TXT"}, "success": "ok"}'
+      string: '{"domain": "example.com", "record": {"subdomain": "orig.nameonly.test",
+        "record_id": 33346433, "domain": "example.com", "priority": "", "ttl": 3600,
+        "fqdn": "orig.nameonly.test.example.com", "content": "challengetoken", "type":
+        "TXT"}, "success": "ok"}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '239'
+      - '249'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 16 May 2022 17:49:06 GMT
+      - Mon, 16 May 2022 17:48:59 GMT
       Keep-Alive:
       - timeout=120
       Server:
@@ -139,60 +135,56 @@ interactions:
     uri: https://pddimp.yandex.ru/api2/admin/dns/list?domain=example.com
   response:
     body:
-      string: '{"records": [{"domain": "example.com", "priority": "", "subdomain":
-        "_acme-challenge.fqdn", "content": "challengetoken", "record_id": 33346411,
-        "type": "TXT", "fqdn": "_acme-challenge.fqdn.example.com", "ttl": 3600}, {"domain":
-        "example.com", "priority": "", "subdomain": "_acme-challenge.test", "content":
-        "challengetoken", "record_id": 33346413, "type": "TXT", "fqdn": "_acme-challenge.test.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "_acme-challenge.createrecordset",
-        "content": "challengetoken1", "record_id": 33346414, "type": "TXT", "fqdn":
-        "_acme-challenge.createrecordset.example.com", "ttl": 3600}, {"domain": "example.com",
-        "priority": "", "subdomain": "_acme-challenge.createrecordset", "content":
-        "challengetoken2", "record_id": 33346415, "type": "TXT", "fqdn": "_acme-challenge.createrecordset.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "_acme-challenge.deleterecordinset",
-        "content": "challengetoken2", "record_id": 33346423, "type": "TXT", "fqdn":
-        "_acme-challenge.deleterecordinset.example.com", "ttl": 3600}, {"domain": "example.com",
-        "priority": "", "subdomain": "ttl.fqdn", "content": "ttlshouldbe3600", "record_id":
-        33346426, "type": "TXT", "fqdn": "ttl.fqdn.example.com", "ttl": 3600}, {"domain":
-        "example.com", "priority": "", "subdomain": "_acme-challenge.listrecordset",
-        "content": "challengetoken1", "record_id": 33346427, "type": "TXT", "fqdn":
-        "_acme-challenge.listrecordset.example.com", "ttl": 3600}, {"domain": "example.com",
-        "priority": "", "subdomain": "random.test", "content": "challengetoken", "record_id":
-        33346431, "type": "TXT", "fqdn": "random.test.example.com", "ttl": 3600}, {"domain":
-        "example.com", "priority": "", "subdomain": "orig.testfull", "content": "challengetoken",
-        "record_id": 33346435, "type": "TXT", "fqdn": "orig.testfull.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "localhost",
-        "content": "127.0.0.1", "record_id": 33346409, "type": "A", "fqdn": "localhost.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "docs",
-        "content": "docs.example.com.", "record_id": 33346410, "type": "CNAME", "fqdn":
-        "docs.example.com", "ttl": 3600}, {"domain": "example.com", "priority": "",
-        "subdomain": "_acme-challenge.full", "content": "challengetoken", "record_id":
-        33346412, "type": "TXT", "fqdn": "_acme-challenge.full.example.com", "ttl":
-        3600}, {"domain": "example.com", "priority": "", "subdomain": "_acme-challenge.noop",
-        "content": "challengetoken", "record_id": 33346416, "type": "TXT", "fqdn":
-        "_acme-challenge.noop.example.com", "ttl": 3600}, {"domain": "example.com",
-        "priority": "", "subdomain": "_acme-challenge.listrecordset", "content": "challengetoken2",
-        "record_id": 33346428, "type": "TXT", "fqdn": "_acme-challenge.listrecordset.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "random.fqdntest",
-        "content": "challengetoken", "record_id": 33346429, "type": "TXT", "fqdn":
-        "random.fqdntest.example.com", "ttl": 3600}, {"domain": "example.com", "priority":
-        "", "subdomain": "random.fulltest", "content": "challengetoken", "record_id":
-        33346430, "type": "TXT", "fqdn": "random.fulltest.example.com", "ttl": 3600},
-        {"domain": "example.com", "priority": "", "subdomain": "updated.test", "content":
-        "challengetoken", "record_id": 33346432, "type": "TXT", "fqdn": "updated.test.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "orig.nameonly.test",
-        "content": "updated", "record_id": 33346433, "type": "TXT", "fqdn": "orig.nameonly.test.example.com",
-        "ttl": 3600}, {"domain": "example.com", "priority": "", "subdomain": "updated.testfqdn",
-        "content": "challengetoken", "record_id": 33346434, "type": "TXT", "fqdn":
-        "updated.testfqdn.example.com", "ttl": 3600}], "domain": "example.com", "success":
-        "ok"}'
+      string: '{"domain": "example.com", "records": [{"record_id": 33346411, "ttl":
+        3600, "content": "challengetoken", "domain": "example.com", "fqdn": "_acme-challenge.fqdn.example.com",
+        "subdomain": "_acme-challenge.fqdn", "type": "TXT", "priority": ""}, {"record_id":
+        33346413, "ttl": 3600, "content": "challengetoken", "domain": "example.com",
+        "fqdn": "_acme-challenge.test.example.com", "subdomain": "_acme-challenge.test",
+        "type": "TXT", "priority": ""}, {"record_id": 33346414, "ttl": 3600, "content":
+        "challengetoken1", "domain": "example.com", "fqdn": "_acme-challenge.createrecordset.example.com",
+        "subdomain": "_acme-challenge.createrecordset", "type": "TXT", "priority":
+        ""}, {"record_id": 33346415, "ttl": 3600, "content": "challengetoken2", "domain":
+        "example.com", "fqdn": "_acme-challenge.createrecordset.example.com", "subdomain":
+        "_acme-challenge.createrecordset", "type": "TXT", "priority": ""}, {"record_id":
+        33346423, "ttl": 3600, "content": "challengetoken2", "domain": "example.com",
+        "fqdn": "_acme-challenge.deleterecordinset.example.com", "subdomain": "_acme-challenge.deleterecordinset",
+        "type": "TXT", "priority": ""}, {"record_id": 33346426, "ttl": 3600, "content":
+        "ttlshouldbe3600", "domain": "example.com", "fqdn": "ttl.fqdn.example.com",
+        "subdomain": "ttl.fqdn", "type": "TXT", "priority": ""}, {"record_id": 33346427,
+        "ttl": 3600, "content": "challengetoken1", "domain": "example.com", "fqdn":
+        "_acme-challenge.listrecordset.example.com", "subdomain": "_acme-challenge.listrecordset",
+        "type": "TXT", "priority": ""}, {"record_id": 33346431, "ttl": 3600, "content":
+        "challengetoken", "domain": "example.com", "fqdn": "random.test.example.com",
+        "subdomain": "random.test", "type": "TXT", "priority": ""}, {"record_id":
+        33346433, "ttl": 3600, "content": "challengetoken", "domain": "example.com",
+        "fqdn": "orig.nameonly.test.example.com", "subdomain": "orig.nameonly.test",
+        "type": "TXT", "priority": ""}, {"record_id": 33346409, "ttl": 3600, "content":
+        "127.0.0.1", "domain": "example.com", "fqdn": "localhost.example.com", "subdomain":
+        "localhost", "type": "A", "priority": ""}, {"record_id": 33346410, "ttl":
+        3600, "content": "docs.example.com.", "domain": "example.com", "fqdn": "docs.example.com",
+        "subdomain": "docs", "type": "CNAME", "priority": ""}, {"record_id": 33346412,
+        "ttl": 3600, "content": "challengetoken", "domain": "example.com", "fqdn":
+        "_acme-challenge.full.example.com", "subdomain": "_acme-challenge.full", "type":
+        "TXT", "priority": ""}, {"record_id": 33346416, "ttl": 3600, "content": "challengetoken",
+        "domain": "example.com", "fqdn": "_acme-challenge.noop.example.com", "subdomain":
+        "_acme-challenge.noop", "type": "TXT", "priority": ""}, {"record_id": 33346428,
+        "ttl": 3600, "content": "challengetoken2", "domain": "example.com", "fqdn":
+        "_acme-challenge.listrecordset.example.com", "subdomain": "_acme-challenge.listrecordset",
+        "type": "TXT", "priority": ""}, {"record_id": 33346429, "ttl": 3600, "content":
+        "challengetoken", "domain": "example.com", "fqdn": "random.fqdntest.example.com",
+        "subdomain": "random.fqdntest", "type": "TXT", "priority": ""}, {"record_id":
+        33346430, "ttl": 3600, "content": "challengetoken", "domain": "example.com",
+        "fqdn": "random.fulltest.example.com", "subdomain": "random.fulltest", "type":
+        "TXT", "priority": ""}, {"record_id": 33346432, "ttl": 3600, "content": "challengetoken",
+        "domain": "example.com", "fqdn": "updated.test.example.com", "subdomain": "updated.test",
+        "type": "TXT", "priority": ""}], "success": "ok"}'
     headers:
       Connection:
       - keep-alive
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 16 May 2022 17:49:06 GMT
+      - Mon, 16 May 2022 17:49:00 GMT
       Keep-Alive:
       - timeout=120
       Server:
@@ -200,7 +192,7 @@ interactions:
       Transfer-Encoding:
       - chunked
       content-length:
-      - '3837'
+      - '3462'
     status:
       code: 200
       message: OK
@@ -220,22 +212,22 @@ interactions:
       User-Agent:
       - python-requests/2.27.1
     method: POST
-    uri: https://pddimp.yandex.ru/api2/admin/dns/edit?domain=example.com&record_id=33346435&type=TXT&subdomain=updated.testfull&content=challengetoken
+    uri: https://pddimp.yandex.ru/api2/admin/dns/edit?domain=example.com&record_id=33346433&type=TXT&subdomain=orig.nameonly.test&content=updated
   response:
     body:
-      string: '{"record": {"ttl": 3600, "type": "TXT", "record_id": 33346435, "content":
-        "challengetoken", "domain": "example.com", "priority": "", "fqdn": "updated.testfull.example.com",
-        "subdomain": "updated.testfull"}, "domain": "example.com", "record_id": 33346435,
-        "success": "ok"}'
+      string: '{"domain": "example.com", "record": {"domain": "example.com", "priority":
+        "", "subdomain": "orig.nameonly.test", "content": "updated", "record_id":
+        33346433, "type": "TXT", "fqdn": "orig.nameonly.test.example.com", "ttl": 3600},
+        "record_id": 33346433, "success": "ok"}'
     headers:
       Connection:
       - keep-alive
       Content-Length:
-      - '268'
+      - '265'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 16 May 2022 17:49:07 GMT
+      - Mon, 16 May 2022 17:49:02 GMT
       Keep-Alive:
       - timeout=120
       Server:
