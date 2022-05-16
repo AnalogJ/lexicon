@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Changed
+* Add support of record update without an identifier in `yandex` provider (#1253)
 
 ## 3.11.1 - 15/05/2022
 ### Modified
