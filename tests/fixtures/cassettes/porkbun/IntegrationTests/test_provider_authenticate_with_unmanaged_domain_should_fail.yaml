@@ -1,0 +1,110 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '170'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://porkbun.com/api/json/v3/ping
+  response:
+    body:
+      string: '{"status":"SUCCESS","yourIp":"8.8.8.8"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en-US, en
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 12 Jun 2022 01:15:19 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - origin
+      Server:
+      - openresty
+      Set-Cookie:
+      - AWSALB=eF9GZWfd/uxk8YIAqfcN0M+8eN90FVf7zHCf1ZMmeSEv0stBT0T8q01BJVSYIeQshRTX3DIMvgpB7GMzmoPrt9yjACgnnh1PN6STytJKRolHBbF5JQz4XdUFBAzf;
+        Expires=Sun, 19 Jun 2022 01:15:18 GMT; Path=/
+      - AWSALBCORS=eF9GZWfd/uxk8YIAqfcN0M+8eN90FVf7zHCf1ZMmeSEv0stBT0T8q01BJVSYIeQshRTX3DIMvgpB7GMzmoPrt9yjACgnnh1PN6STytJKRolHBbF5JQz4XdUFBAzf;
+        Expires=Sun, 19 Jun 2022 01:15:18 GMT; Path=/; SameSite=None; Secure
+      - BUNSESSION2=swiDvwW4GwvXQRAJFhYfPKUByp%2CwdSNPpqcgRIwYfhSJwOeQ; path=/; secure;
+        HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '170'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://porkbun.com/api/json/v3/dns/retrieve/thisisadomainidonotown.com
+  response:
+    body:
+      string: '{"status":"ERROR","message":"Invalid domain."}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 12 Jun 2022 01:15:19 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - openresty
+      Set-Cookie:
+      - AWSALB=3gWR2yb+gb8H/Hy2YZIbYoda7XtuUtQe48Ja+EPmowVmljwOybkbYCVPxNrXCh60i4Jz41VkDKE4EN7Yo59WynercV7iWe2Op90a57Nk2bd/70QthXg6g/NRW0QF;
+        Expires=Sun, 19 Jun 2022 01:15:19 GMT; Path=/
+      - AWSALBCORS=3gWR2yb+gb8H/Hy2YZIbYoda7XtuUtQe48Ja+EPmowVmljwOybkbYCVPxNrXCh60i4Jz41VkDKE4EN7Yo59WynercV7iWe2Op90a57Nk2bd/70QthXg6g/NRW0QF;
+        Expires=Sun, 19 Jun 2022 01:15:19 GMT; Path=/; SameSite=None; Secure
+      - BUNSESSION2=Ntx20ZtrP1ATOywF-gdOkn55xe9vOJgEzKG7iI9HouKufOHW; path=/; secure;
+        HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 400
+      message: ''
+version: 1

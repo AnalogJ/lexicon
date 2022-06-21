@@ -1,0 +1,120 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '170'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://porkbun.com/api/json/v3/ping
+  response:
+    body:
+      string: '{"status":"SUCCESS","yourIp":"8.8.8.8"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en-US, en
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 12 Jun 2022 01:15:17 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - origin
+      Server:
+      - openresty
+      Set-Cookie:
+      - AWSALB=B7r1kQtkaZNk+JDxYzONZVyzGKg4pGhlNH6CMAYGQar54tjSRckgI1w8XYfBNr+P8pQOeuocEM4NN/cGs1QVM3tIijqYOMacSZrgIoR98IzEPPQRyNYrmDDYYzbh;
+        Expires=Sun, 19 Jun 2022 01:15:17 GMT; Path=/
+      - AWSALBCORS=B7r1kQtkaZNk+JDxYzONZVyzGKg4pGhlNH6CMAYGQar54tjSRckgI1w8XYfBNr+P8pQOeuocEM4NN/cGs1QVM3tIijqYOMacSZrgIoR98IzEPPQRyNYrmDDYYzbh;
+        Expires=Sun, 19 Jun 2022 01:15:17 GMT; Path=/; SameSite=None; Secure
+      - BUNSESSION2=gDtESXOxSvvBcZ%2CbRXLGtvML1vO784tXkYlfe9aP6M9JriGM; path=/; secure;
+        HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '170'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://porkbun.com/api/json/v3/dns/retrieve/example.xyz
+  response:
+    body:
+      string: '{"status":"SUCCESS","cloudflare":"disabled","records":[{"id":"236096065","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236238296","name":"www.example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"230514990","name":"example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514991","name":"www.example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514992","name":"*.example.xyz","type":"CNAME","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514985","name":"example.xyz","type":"MX","content":"fwd1.porkbun.com","ttl":"600","prio":"10"},{"id":"230514986","name":"example.xyz","type":"MX","content":"fwd2.porkbun.com","ttl":"600","prio":"20"}]}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en-US, en
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 12 Jun 2022 01:15:18 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - origin
+      Server:
+      - openresty
+      Set-Cookie:
+      - AWSALB=okCtZrqDYouwVsj+B133KA4OZhdpVtmVMl4mLOpoW2EUf7qR4eQgRuwZUSKZcEWbvYNSLUGMpFzdqEDjnv/mmdpIisHZ7U47tfG1sphcuZBYiXhyPWG7K6qdJvQe;
+        Expires=Sun, 19 Jun 2022 01:15:17 GMT; Path=/
+      - AWSALBCORS=okCtZrqDYouwVsj+B133KA4OZhdpVtmVMl4mLOpoW2EUf7qR4eQgRuwZUSKZcEWbvYNSLUGMpFzdqEDjnv/mmdpIisHZ7U47tfG1sphcuZBYiXhyPWG7K6qdJvQe;
+        Expires=Sun, 19 Jun 2022 01:15:17 GMT; Path=/; SameSite=None; Secure
+      - BUNSESSION2=E-5gLYTfTi3zrhWyRGTmtE%2CsltPckNlkkX4To7Igmsu0y1p4; path=/; secure;
+        HttpOnly; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
