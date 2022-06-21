@@ -185,6 +185,9 @@ List of options
 .. _pointhq:
 .. include:: providers/pointhq.rst
 
+.. _porkbun:
+.. include:: providers/porkbun.rst
+
 .. _powerdns:
 .. include:: providers/powerdns.rst
 
