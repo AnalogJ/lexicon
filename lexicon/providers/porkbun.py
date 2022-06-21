@@ -1,8 +1,10 @@
+import json
 import logging
+
 import requests
+
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
-import json
 
 LOGGER = logging.getLogger(__name__)
 

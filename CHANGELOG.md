@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.11.3 - 21/06/2022
 ### Added
 * Add `porkbun` provider (#1283)
 
