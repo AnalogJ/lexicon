@@ -74,12 +74,26 @@ class Provider(BaseProvider):
         return sha256.hexdigest()[0:7]
 
     def _authenticate(self):
-        if self._get_provider_option("dns_zone_id"):
-            self.domain_id = self._get_provider_option("dns_zone_id")
+        dns_zone_id = self._get_provider_option("dns_zone_id")
+        if dns_zone_id and self._cloud_id_matches_domain(dns_zone_id):
+            self.domain_id = dns_zone_id
 
-        cloud_id = self._get_cloud_id()
-        folder_id = self._get_folder_id(cloud_id)
-        self.domain_id = self._get_dns_zone_id(folder_id)
+        # in case DNS zone ID is not set or set but not valid, fall back to retrieving it from the list
+        if not self.domain_id:
+            cloud_id = self._get_cloud_id()
+            folder_id = self._get_folder_id(cloud_id)
+            self.domain_id = self._get_dns_zone_id(folder_id)
+
+    # verifies that the domain ID matches the domain in question
+    def _cloud_id_matches_domain(self, dns_zone_id: str) -> bool:
+        payload: Dict = self._get(f"{self.api_endpoint}/zones/{dns_zone_id}")
+        if "zone" not in payload:
+            # No DNS zone with given ID found
+            return True
+        if payload["zone"] != f"{self.domain}.":
+            # Provided DNS zone ID does not match the domain
+            return False
+        return True
 
     def _get_cloud_id(self) -> str:
         """Gets Cloud ID from Resource Manager API

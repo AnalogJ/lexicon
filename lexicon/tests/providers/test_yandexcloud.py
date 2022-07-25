@@ -12,8 +12,7 @@ class YandexCloudProviderTests(TestCase, IntegrationTestsV2):
 
     Required following environment variables to run:
     LEXICON_YANDEXCLOUD_AUTH_TOKEN
-    LEXICON_YANDEXCLOUD_CLOUD_ID
-    LEXICON_YANDEXCLOUD_FOLDER_ID
+    LEXICON_YANDEXCLOUD_DNS_ZONE_ID
     """
 
     provider_name = "yandexcloud"
@@ -37,4 +36,7 @@ class YandexCloudProviderTests(TestCase, IntegrationTestsV2):
         return response
 
     def _test_parameters_overrides(self):
-        return {"folder_id": "b1gm2f812hg4h5s5jsgn"}
+        # folder_id only used in test_provider_authenticate_with_unmanaged_domain_should_fail
+        # as in other tests, domain id is provided in the environment variable
+        # but in case of failure we fall back to retrieving domain ID by cloud ID and folder ID
+        return {"folder_id": "b1gm2f812hg4h5s5jsgn", "dns_zone_id": "dns3a9nospukjt4jlqdm"}
