@@ -349,7 +349,7 @@ def _build_recordset_from_values(rtype, values):
     if rtype == "SOA":
         recordset = {"SOARecord": {"email": values[0]} if values else {}}
     if rtype == "TXT":
-        recordset = {"TXTRecords": [{"value": values}]}
+        recordset = {"TXTRecords": [{"value": [value]} for value in values]}
     if rtype == "SRV":
         recordset = {"SRVRecords": [{"target": value} for value in values]}
 
