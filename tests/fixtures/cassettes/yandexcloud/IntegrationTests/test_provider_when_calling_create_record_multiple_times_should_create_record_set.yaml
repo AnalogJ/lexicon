@@ -13,22 +13,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones?folderId=b1gm2f812hg4h5s5jsgn&filter=zone%3D%27example.com.%27
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm
   response:
     body:
-      string: "{\n \"dnsZones\": [\n  {\n   \"privateVisibility\": {},\n   \"id\"\
-        : \"dns3a9nospukjt4jlqdm\",\n   \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n\
-        \   \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n   \"zone\": \"example.com.\"\
-        \n  }\n ]\n}\n"
+      string: "{\n \"privateVisibility\": {},\n \"id\": \"dns3a9nospukjt4jlqdm\",\n
+        \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n
+        \"zone\": \"example.com.\"\n}\n"
     headers:
       content-length:
-      - '200'
+      - '164'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:34 GMT
+      - Mon, 25 Jul 2022 13:41:47 GMT
       server:
       - envoy
     status:
@@ -48,21 +47,92 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=_acme-challenge.createrecordset.example.com.&type=TXT
   response:
     body:
-      string: "{\n \"data\": [\n  \"challengetoken1\",\n  \"challengetoken2\"\n ],\n\
-        \ \"name\": \"_acme-challenge.createrecordset.example.com.\",\n \"type\":\
-        \ \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+      string: "{\n \"code\": 5,\n \"message\": \"RecordSet not found: RecordSet.Id(dnsZoneId=DnsZone.Id(id=dns3a9nospukjt4jlqdm),
+        name=_acme-challenge.createrecordset.example.com., rrType=TXT)\",\n \"details\":
+        [\n  {\n   \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n   \"requestId\":
+        \"ca533953-e060-4b97-9935-757914e068e5\"\n  }\n ]\n}\n"
     headers:
       content-length:
-      - '148'
+      - '313'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:35 GMT
+      - Mon, 25 Jul 2022 13:41:47 GMT
+      server:
+      - envoy
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{"replacements": [{"name": "_acme-challenge.createrecordset.example.com.",
+      "type": "TXT", "ttl": 3600, "data": ["challengetoken1"]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '133'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.0
+    method: POST
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+  response:
+    body:
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
+        },\n \"id\": \"dnsvpicqi1qpfq3i0550\",\n \"description\": \"Upsert DNS RecordSets\",\n
+        \"createdAt\": \"2022-07-25T13:41:48.132209242Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
+        \"modifiedAt\": \"2022-07-25T13:41:48.132287142Z\"\n}\n"
+    headers:
+      content-length:
+      - '396'
+      content-type:
+      - application/json
+      date:
+      - Mon, 25 Jul 2022 13:41:47 GMT
+      server:
+      - envoy
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.0
+    method: GET
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=_acme-challenge.createrecordset.example.com.&type=TXT
+  response:
+    body:
+      string: "{\n \"data\": [\n  \"challengetoken1\"\n ],\n \"name\": \"_acme-challenge.createrecordset.example.com.\",\n
+        \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+    headers:
+      content-length:
+      - '127'
+      content-type:
+      - application/json
+      date:
+      - Mon, 25 Jul 2022 13:41:48 GMT
       server:
       - envoy
     status:
@@ -83,96 +153,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: POST
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
   response:
     body:
-      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
-        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
-        \n },\n \"id\": \"dns46e613tom29lgsn6i\",\n \"description\": \"Upsert DNS\
-        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:23:35.923908708Z\",\n \"\
-        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:23:35.923965645Z\"\
-        \n}\n"
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
+        },\n \"id\": \"dns6nbutb6rsmvvslfj9\",\n \"description\": \"Upsert DNS RecordSets\",\n
+        \"createdAt\": \"2022-07-25T13:41:48.938805607Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
+        \"modifiedAt\": \"2022-07-25T13:41:48.938898189Z\"\n}\n"
     headers:
       content-length:
       - '396'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:35 GMT
-      server:
-      - envoy
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.27.1
-    method: GET
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=_acme-challenge.createrecordset.example.com.&type=TXT
-  response:
-    body:
-      string: "{\n \"data\": [\n  \"challengetoken1\",\n  \"challengetoken2\"\n ],\n\
-        \ \"name\": \"_acme-challenge.createrecordset.example.com.\",\n \"type\":\
-        \ \"TXT\",\n \"ttl\": \"3600\"\n}\n"
-    headers:
-      content-length:
-      - '148'
-      content-type:
-      - application/json
-      date:
-      - Sat, 30 Apr 2022 16:23:36 GMT
-      server:
-      - envoy
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"replacements": [{"name": "_acme-challenge.createrecordset.example.com.",
-      "type": "TXT", "ttl": 3600, "data": ["challengetoken1", "challengetoken2"]}]}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '152'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.27.1
-    method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
-  response:
-    body:
-      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
-        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
-        \n },\n \"id\": \"dnsoera6mhanhiclm2rj\",\n \"description\": \"Upsert DNS\
-        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:23:37.329233327Z\",\n \"\
-        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:23:37.329317636Z\"\
-        \n}\n"
-    headers:
-      content-length:
-      - '396'
-      content-type:
-      - application/json
-      date:
-      - Sat, 30 Apr 2022 16:23:37 GMT
+      - Mon, 25 Jul 2022 13:41:49 GMT
       server:
       - envoy
     status:

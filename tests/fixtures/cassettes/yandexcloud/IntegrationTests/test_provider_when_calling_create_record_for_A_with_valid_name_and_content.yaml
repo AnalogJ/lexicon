@@ -13,22 +13,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones?folderId=b1gm2f812hg4h5s5jsgn&filter=zone%3D%27example.com.%27
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm
   response:
     body:
-      string: "{\n \"dnsZones\": [\n  {\n   \"privateVisibility\": {},\n   \"id\"\
-        : \"dns3a9nospukjt4jlqdm\",\n   \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n\
-        \   \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n   \"zone\": \"example.com.\"\
-        \n  }\n ]\n}\n"
+      string: "{\n \"privateVisibility\": {},\n \"id\": \"dns3a9nospukjt4jlqdm\",\n
+        \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n
+        \"zone\": \"example.com.\"\n}\n"
     headers:
       content-length:
-      - '200'
+      - '164'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:23 GMT
+      - Mon, 25 Jul 2022 13:41:41 GMT
       server:
       - envoy
     status:
@@ -48,25 +47,27 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=localhost.example.com.&type=A
   response:
     body:
-      string: "{\n \"data\": [\n  \"127.0.0.1\"\n ],\n \"name\": \"localhost.example.com.\"\
-        ,\n \"type\": \"A\",\n \"ttl\": \"3600\"\n}\n"
+      string: "{\n \"code\": 5,\n \"message\": \"RecordSet not found: RecordSet.Id(dnsZoneId=DnsZone.Id(id=dns3a9nospukjt4jlqdm),
+        name=localhost.example.com., rrType=A)\",\n \"details\": [\n  {\n   \"@type\":
+        \"type.googleapis.com/google.rpc.RequestInfo\",\n   \"requestId\": \"10764218-d3e2-4a56-a1e3-d21fecb3406b\"\n
+        \ }\n ]\n}\n"
     headers:
       content-length:
-      - '97'
+      - '289'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:24 GMT
+      - Mon, 25 Jul 2022 13:41:41 GMT
       server:
       - envoy
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
 - request:
     body: '{"replacements": [{"name": "localhost.example.com.", "type": "A", "ttl":
       3600, "data": ["127.0.0.1"]}]}'
@@ -82,24 +83,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: POST
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
   response:
     body:
-      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
-        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
-        \n },\n \"id\": \"dns36r6j5glh5ni705pg\",\n \"description\": \"Upsert DNS\
-        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:23:25.478419363Z\",\n \"\
-        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:23:25.478475606Z\"\
-        \n}\n"
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
+        },\n \"id\": \"dnssp8kbn6pbetgllqtc\",\n \"description\": \"Upsert DNS RecordSets\",\n
+        \"createdAt\": \"2022-07-25T13:41:42.686146128Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
+        \"modifiedAt\": \"2022-07-25T13:41:42.686231498Z\"\n}\n"
     headers:
       content-length:
       - '396'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:23:25 GMT
+      - Mon, 25 Jul 2022 13:41:42 GMT
       server:
       - envoy
     status:

@@ -13,22 +13,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones?folderId=b1gm2f812hg4h5s5jsgn&filter=zone%3D%27example.com.%27
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm
   response:
     body:
-      string: "{\n \"dnsZones\": [\n  {\n   \"privateVisibility\": {},\n   \"id\"\
-        : \"dns3a9nospukjt4jlqdm\",\n   \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n\
-        \   \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n   \"zone\": \"example.com.\"\
-        \n  }\n ]\n}\n"
+      string: "{\n \"privateVisibility\": {},\n \"id\": \"dns3a9nospukjt4jlqdm\",\n
+        \"folderId\": \"b1gm2f812hg4h5s5jsgn\",\n \"createdAt\": \"2022-04-30T09:55:06.586Z\",\n
+        \"zone\": \"example.com.\"\n}\n"
     headers:
       content-length:
-      - '200'
+      - '164'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:34 GMT
+      - Mon, 25 Jul 2022 13:42:14 GMT
       server:
       - envoy
     status:
@@ -48,25 +47,27 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=orig.test.example.com.&type=TXT
   response:
     body:
-      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"orig.test.example.com.\"\
-        ,\n \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+      string: "{\n \"code\": 5,\n \"message\": \"RecordSet not found: RecordSet.Id(dnsZoneId=DnsZone.Id(id=dns3a9nospukjt4jlqdm),
+        name=orig.test.example.com., rrType=TXT)\",\n \"details\": [\n  {\n   \"@type\":
+        \"type.googleapis.com/google.rpc.RequestInfo\",\n   \"requestId\": \"c4e57f42-81d9-4358-86b5-f4b7d3815f75\"\n
+        \ }\n ]\n}\n"
     headers:
       content-length:
-      - '104'
+      - '291'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:35 GMT
+      - Mon, 25 Jul 2022 13:42:14 GMT
       server:
       - envoy
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
 - request:
     body: '{"replacements": [{"name": "orig.test.example.com.", "type": "TXT", "ttl":
       3600, "data": ["challengetoken"]}]}'
@@ -82,24 +83,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: POST
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
   response:
     body:
-      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
-        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
-        \n },\n \"id\": \"dnsh3v1r5vgcub74qf72\",\n \"description\": \"Upsert DNS\
-        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:24:36.464780587Z\",\n \"\
-        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:24:36.464898173Z\"\
-        \n}\n"
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
+        },\n \"id\": \"dnsnc0jc9eosfi6phj71\",\n \"description\": \"Upsert DNS RecordSets\",\n
+        \"createdAt\": \"2022-07-25T13:42:15.334639597Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
+        \"modifiedAt\": \"2022-07-25T13:42:15.334776729Z\"\n}\n"
     headers:
       content-length:
       - '396'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:36 GMT
+      - Mon, 25 Jul 2022 13:42:15 GMT
       server:
       - envoy
     status:
@@ -119,21 +119,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:listRecordSets?filter=type%3D%27TXT%27%20AND%20name%3D%27orig.test.example.com.%27
   response:
     body:
-      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken\"\n\
-        \   ],\n   \"name\": \"orig.test.example.com.\",\n   \"type\": \"TXT\",\n\
-        \   \"ttl\": \"3600\"\n  }\n ]\n}\n"
+      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"orig.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\":
+        \"3600\"\n  }\n ]\n}\n"
     headers:
       content-length:
       - '144'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:37 GMT
+      - Mon, 25 Jul 2022 13:42:15 GMT
       server:
       - envoy
     status:
@@ -153,59 +153,46 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:listRecordSets?filter=
   response:
     body:
-      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken1\"\
-        ,\n    \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.createrecordset.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.deleterecordinset.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken\"\n   ],\n   \"name\": \"_acme-challenge.fqdn.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken\"\n   ],\n   \"name\": \"_acme-challenge.full.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken1\",\n    \"challengetoken2\"\n   ],\n   \"name\": \"\
-        _acme-challenge.listrecordset.example.com.\",\n   \"type\": \"TXT\",\n   \"\
-        ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n\
-        \   \"name\": \"_acme-challenge.noop.example.com.\",\n   \"type\": \"TXT\"\
-        ,\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\
-        \n   ],\n   \"name\": \"_acme-challenge.test.example.com.\",\n   \"type\"\
-        : \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"docs.example.com\"\
-        \n   ],\n   \"name\": \"docs.example.com.\",\n   \"type\": \"CNAME\",\n  \
-        \ \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"127.0.0.1\"\n   ],\n\
-        \   \"name\": \"localhost.example.com.\",\n   \"type\": \"A\",\n   \"ttl\"\
-        : \"3600\"\n  },\n  {\n   \"data\": [\n    \"updated\"\n   ],\n   \"name\"\
-        : \"orig.nameonly.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\"\
-        : \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"\
-        name\": \"orig.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"\
-        3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\"\
-        : \"orig.testfqdn.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
-        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
-        orig.testfull.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
-        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
-        random.fqdntest.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
-        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
-        random.fulltest.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\
-        \n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"\
-        random.test.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n\
-        \  },\n  {\n   \"data\": [\n    \"ttlshouldbe3600\"\n   ],\n   \"name\": \"\
-        ttl.fqdn.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n\
-        \  {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"updated.test.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken\"\n   ],\n   \"name\": \"updated.testfqdn.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n\
-        \    \"challengetoken\"\n   ],\n   \"name\": \"updated.testfull.example.com.example.com.\"\
-        ,\n   \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  }\n ]\n}\n"
+      string: "{\n \"recordSets\": [\n  {\n   \"data\": [\n    \"challengetoken1\",\n
+        \   \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.createrecordset.example.com.\",\n
+        \  \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken2\"\n
+        \  ],\n   \"name\": \"_acme-challenge.deleterecordinset.example.com.\",\n
+        \  \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"_acme-challenge.fqdn.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"_acme-challenge.full.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken1\",\n
+        \   \"challengetoken2\"\n   ],\n   \"name\": \"_acme-challenge.listrecordset.example.com.\",\n
+        \  \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"_acme-challenge.noop.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"_acme-challenge.test.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"docs.example.com\"\n
+        \  ],\n   \"name\": \"docs.example.com.\",\n   \"type\": \"CNAME\",\n   \"ttl\":
+        \"3600\"\n  },\n  {\n   \"data\": [\n    \"127.0.0.1\"\n   ],\n   \"name\":
+        \"localhost.example.com.\",\n   \"type\": \"A\",\n   \"ttl\": \"3600\"\n  },\n
+        \ {\n   \"data\": [\n    \"challengetoken\"\n   ],\n   \"name\": \"orig.test.example.com.\",\n
+        \  \"type\": \"TXT\",\n   \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"random.fqdntest.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"random.fulltest.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"challengetoken\"\n
+        \  ],\n   \"name\": \"random.test.example.com.\",\n   \"type\": \"TXT\",\n
+        \  \"ttl\": \"3600\"\n  },\n  {\n   \"data\": [\n    \"ttlshouldbe3600\"\n
+        \  ],\n   \"name\": \"ttl.fqdn.example.com.\",\n   \"type\": \"TXT\",\n   \"ttl\":
+        \"3600\"\n  }\n ]\n}\n"
     headers:
       content-length:
-      - '2647'
+      - '1882'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:37 GMT
+      - Mon, 25 Jul 2022 13:42:15 GMT
       server:
       - envoy
     status:
@@ -225,20 +212,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: GET
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:getRecordSet?name=orig.test.example.com.&type=TXT
   response:
     body:
-      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"orig.test.example.com.\"\
-        ,\n \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
+      string: "{\n \"data\": [\n  \"challengetoken\"\n ],\n \"name\": \"orig.test.example.com.\",\n
+        \"type\": \"TXT\",\n \"ttl\": \"3600\"\n}\n"
     headers:
       content-length:
       - '104'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:38 GMT
+      - Mon, 25 Jul 2022 13:42:16 GMT
       server:
       - envoy
     status:
@@ -259,24 +246,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.28.0
     method: POST
     uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
   response:
     body:
-      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\
-        \n },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\
-        \n },\n \"id\": \"dnsna80mk2a7002hbs97\",\n \"description\": \"Upsert DNS\
-        \ RecordSets\",\n \"createdAt\": \"2022-04-30T16:24:39.217038328Z\",\n \"\
-        createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-04-30T16:24:39.217098933Z\"\
-        \n}\n"
+      string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
+        },\n \"id\": \"dnsgbvvgnp16hl4ijjgm\",\n \"description\": \"Upsert DNS RecordSets\",\n
+        \"createdAt\": \"2022-07-25T13:42:16.811601309Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
+        \"modifiedAt\": \"2022-07-25T13:42:16.811677983Z\"\n}\n"
     headers:
       content-length:
       - '396'
       content-type:
       - application/json
       date:
-      - Sat, 30 Apr 2022 16:24:39 GMT
+      - Mon, 25 Jul 2022 13:42:16 GMT
       server:
       - envoy
     status:
