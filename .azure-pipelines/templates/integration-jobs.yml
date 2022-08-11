@@ -81,6 +81,8 @@ jobs:
           poetry install
           poetry run pyoxidizer build --release
         displayName: Build Lexicon executable
+      - publish: $(System.DefaultWorkingDirectory)/build/x86_64-unknown-linux-gnu/release/install/lexicon
+        artifact: linux-executable
   - job: trigger_readthedoc
     pool:
       vmImage: ubuntu-20.04
