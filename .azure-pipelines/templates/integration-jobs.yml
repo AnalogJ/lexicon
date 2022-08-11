@@ -76,7 +76,10 @@ jobs:
         displayName: Enable the targeted python version
       - script: python -m pip install -U tox poetry
         displayName: Install required runtime dependencies
-      - script: poetry run pyoxidizer build --release
+      - script: |
+          set -e
+          poetry install
+          poetry run pyoxidizer build --release
         displayName: Build Lexicon executable
   - job: trigger_readthedoc
     pool:
