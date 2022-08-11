@@ -1,7 +1,7 @@
 jobs:
   - job: pypi
     pool:
-      vmImage: ubuntu-18.04
+      vmImage: ubuntu-20.04
     steps:
       - task: UsePythonVersion@0
         inputs:
@@ -17,7 +17,7 @@ jobs:
 
   - job: github
     pool:
-      vmImage: ubuntu-18.04
+      vmImage: ubuntu-20.04
     dependsOn:
       - pypi
     steps:
