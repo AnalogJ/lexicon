@@ -66,8 +66,16 @@ jobs:
           testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
         displayName: Publish tests reports
   - job: package
+    strategy:
+      matrix:
+        linux:
+          IMAGE: ubuntu-20.04
+        macos:
+          IMAGE: macos-11
+        windows:
+          IMAGE: windows-2019
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: $(IMAGE)
     steps:
       - task: UsePythonVersion@0
         inputs:
