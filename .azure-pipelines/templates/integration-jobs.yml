@@ -71,7 +71,7 @@ jobs:
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: $(PYTHON_VERSION)
+          versionSpec: 3.10
           addToPath: true
         displayName: Enable the targeted python version
       - script: python -m pip install -U tox poetry
