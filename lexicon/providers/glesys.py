@@ -44,7 +44,7 @@ class Provider(BaseProvider):
 
         request_data = {
             "domainname": self.domain,
-            "host": self._full_name(name),
+            "host": name,
             "type": rtype,
             "data": content,
         }
