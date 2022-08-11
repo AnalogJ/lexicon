@@ -70,10 +70,13 @@ jobs:
       matrix:
         linux:
           IMAGE: ubuntu-20.04
+          TARGET_TRIPLE: x86_64-unknown-linux-gnu
         macos:
           IMAGE: macos-11
+          TARGET_TRIPLE: x86_64-apple-darwin
         windows:
           IMAGE: windows-2019
+          TARGET_TRIPLE: x86_64-pc-windows-msvc
     pool:
       vmImage: $(IMAGE)
     steps:
@@ -89,8 +92,8 @@ jobs:
           poetry install
           poetry run pyoxidizer build --release
         displayName: Build Lexicon executable
-      - publish: $(System.DefaultWorkingDirectory)/build/x86_64-unknown-linux-gnu/release/install/lexicon
-        artifact: linux-executable
+      - publish: $(System.DefaultWorkingDirectory)/build/$(TARGET_TRIPLE)/release/install/lexicon
+        artifact: executable-$(TARGET_TRIPLE)
   - job: trigger_readthedoc
     pool:
       vmImage: ubuntu-20.04
