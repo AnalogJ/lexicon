@@ -130,7 +130,7 @@ def provider_parser(subparser):
 
     # Explore and load the arguments available for every provider into the 'auto' provider.
     for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-        parser = argparse.ArgumentParser(add_help=False, prog="auto")
+        parser = argparse.ArgumentParser(add_help=False, prog="provider")
         provider_module.provider_parser(parser)
 
         for action in parser._actions:

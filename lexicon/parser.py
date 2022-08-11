@@ -2,6 +2,7 @@
 import argparse
 import importlib
 import os
+import sys
 
 from lexicon import discovery
 
@@ -54,7 +55,7 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
 def generate_cli_main_parser() -> argparse.ArgumentParser:
     """Using all providers available, generate a parser that will be used by Lexicon CLI"""
     parser = argparse.ArgumentParser(
-        description="Create, Update, Delete, List DNS entries", prog="lexicon"
+        description="Create, Update, Delete, List DNS entries", prog=sys.argv[0] if sys.argv[0] else "lexicon"
     )
 
     parser.add_argument(

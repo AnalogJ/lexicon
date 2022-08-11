@@ -65,6 +65,19 @@ jobs:
           testResultsFiles: '**/test-*.xml'
           testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
         displayName: Publish tests reports
+  - job: package
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: python -m pip install -U tox poetry
+        displayName: Install required runtime dependencies
+      - script: poetry run pyoxidizer build --release
+        displayName: Build Lexicon executable
   - job: trigger_readthedoc
     pool:
       vmImage: ubuntu-20.04
