@@ -39,4 +39,7 @@ class YandexCloudProviderTests(TestCase, IntegrationTestsV2):
         # folder_id only used in test_provider_authenticate_with_unmanaged_domain_should_fail
         # as in other tests, domain id is provided in the environment variable
         # but in case of failure we fall back to retrieving domain ID by cloud ID and folder ID
-        return {"folder_id": "b1gm2f812hg4h5s5jsgn", "dns_zone_id": "dns3a9nospukjt4jlqdm"}
+        return {
+            "folder_id": "b1gm2f812hg4h5s5jsgn",
+            "dns_zone_id": "dns3a9nospukjt4jlqdm",
+        }

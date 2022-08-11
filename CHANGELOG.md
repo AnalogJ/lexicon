@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.11.4 - 11/08/2022
 ### Modified
 * Better management of domain zone id in `yandex` provider (#1338)
 * Fix create record action on `glesys` provider (#1356)
