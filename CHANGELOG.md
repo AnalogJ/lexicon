@@ -1,6 +1,10 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Better management of domain zone id in `yandex` provider (#1338)
+* Fix create record action on `glesys` provider (#1356)
+* Fix create multiple TXT records for the same name in `azure` provider (#1359)
 
 ## 3.11.3 - 21/06/2022
 ### Added
