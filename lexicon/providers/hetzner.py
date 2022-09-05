@@ -73,7 +73,7 @@ class Provider(BaseProvider):
         :rtype: list
         :returns: list of records, might be empty
         """
-        filter_obj = {"per_page": 100, "zone_id": self.domain_id}
+        filter_obj = {"zone_id": self.domain_id}
         payload = self._get("/records", filter_obj)
         records = map(self._hetzner_record_to_lexicon_record, payload["records"])
         filtered_records = self._filter_records(
