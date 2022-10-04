@@ -85,21 +85,23 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dnsa927f632bgoqip1p5\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:41:57.930015687Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:41:57.930105574Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"additions\": [\n   {\n    \"data\": [\n     \"challengetoken\"\n    ],\n
+        \   \"name\": \"delete.testid.example.com.\",\n    \"type\": \"TXT\",\n    \"ttl\":
+        \"3600\"\n   }\n  ]\n },\n \"id\": \"dnsf42p6ednb66v5vgo0\",\n \"description\":
+        \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:40:01.820468352Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:40:01.820590497Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '562'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:41:57 GMT
+      - Tue, 04 Oct 2022 22:40:01 GMT
       server:
       - envoy
     status:
@@ -237,21 +239,23 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dns26a9ki1h1tb1gs5k8\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:41:59.097875138Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:41:59.097947877Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"deletions\": [\n   {\n    \"data\": [\n     \"challengetoken\"\n    ],\n
+        \   \"name\": \"delete.testid.example.com.\",\n    \"type\": \"TXT\",\n    \"ttl\":
+        \"3600\"\n   }\n  ]\n },\n \"id\": \"dnsqjd8mj71u2cl29ml6\",\n \"description\":
+        \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:40:03.246208111Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:40:03.246308970Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '562'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:41:59 GMT
+      - Tue, 04 Oct 2022 22:40:02 GMT
       server:
       - envoy
     status:
