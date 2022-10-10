@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.11.5 - 10/10/2022
 ### Modified
 * Fix upsertRecordSet in `yandex` provider (#1423)
 
