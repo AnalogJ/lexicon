@@ -14,7 +14,6 @@ jobs:
       - script: |
           poetry publish --build --username "$(twine.username)" --password "$(twine.password)"
         displayName: Build & Upload dist to PyPI
-
   - job: github
     pool:
       vmImage: ubuntu-20.04
