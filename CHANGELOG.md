@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix `hetzner` provider with large list of entries (#1389)
 
 ## 3.11.5 - 10/10/2022
 ### Modified
