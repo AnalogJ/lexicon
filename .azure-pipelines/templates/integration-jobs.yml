@@ -93,7 +93,7 @@ jobs:
           poetry run pyoxidizer build --release
           ls -ali $(System.DefaultWorkingDirectory)/build/
         displayName: Build Lexicon executable
-      - publish: $(System.DefaultWorkingDirectory)/build/$(TARGET_TRIPLE)/release/install/lexicon
+      - publish: $(System.DefaultWorkingDirectory)/build/$(TARGET_TRIPLE)/release/install/*
         artifact: executable-$(TARGET_TRIPLE)
   - job: trigger_readthedoc
     pool:
