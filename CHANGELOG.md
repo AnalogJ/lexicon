@@ -2,6 +2,10 @@
 
 ## master - CURRENT
 
+## 3.11.5 - 10/10/2022
+### Modified
+* Fix upsertRecordSet in `yandex` provider (#1423)
+
 ## 3.11.4 - 11/08/2022
 ### Modified
 * Better management of domain zone id in `yandex` provider (#1338)

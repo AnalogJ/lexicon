@@ -85,21 +85,23 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dnsdoqeakg45985kmssj\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:41:44.654735906Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:41:44.654818419Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"additions\": [\n   {\n    \"data\": [\n     \"challengetoken\"\n    ],\n
+        \   \"name\": \"_acme-challenge.fqdn.example.com.\",\n    \"type\": \"TXT\",\n
+        \   \"ttl\": \"3600\"\n   }\n  ]\n },\n \"id\": \"dns27ldf4me99m3bc25c\",\n
+        \"description\": \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:39:48.563142832Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:39:48.563248852Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '569'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:41:44 GMT
+      - Tue, 04 Oct 2022 22:39:48 GMT
       server:
       - envoy
     status:

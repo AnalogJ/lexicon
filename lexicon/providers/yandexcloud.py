@@ -245,7 +245,7 @@ class Provider(BaseProvider):
                 raise error
 
         payload = self._post(
-            f"/zones/{self.domain_id}/upsertRecordSets",
+            f"/zones/{self.domain_id}:upsertRecordSets",
             {
                 "replacements": [
                     {
@@ -294,7 +294,7 @@ class Provider(BaseProvider):
             raise error
 
         payload = self._post(
-            f"/zones/{self.domain_id}/upsertRecordSets", {"replacements": [record]}
+            f"/zones/{self.domain_id}:upsertRecordSets", {"replacements": [record]}
         )
         return self._check_request_success(payload, "update_record")
 
@@ -325,7 +325,7 @@ class Provider(BaseProvider):
 
         # deletion requires full match on also TTL and data, which would require us to find such entry first
         payload = self._post(
-            f"/zones/{self.domain_id}/upsertRecordSets", {action: [record]}
+            f"/zones/{self.domain_id}:upsertRecordSets", {action: [record]}
         )
 
         return self._check_request_success(payload, "delete_record")

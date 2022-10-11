@@ -85,21 +85,23 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dnsc6tfjb2cc88dhmgj8\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:42:07.862013058Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:42:07.862109342Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"additions\": [\n   {\n    \"data\": [\n     \"challengetoken1\"\n    ],\n
+        \   \"name\": \"_acme-challenge.listrecordset.example.com.\",\n    \"type\":
+        \"TXT\",\n    \"ttl\": \"3600\"\n   }\n  ]\n },\n \"id\": \"dnsll08p4q6vetjf5bmg\",\n
+        \"description\": \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:40:11.367706825Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:40:11.367807334Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '579'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:42:07 GMT
+      - Tue, 04 Oct 2022 22:40:11 GMT
       server:
       - envoy
     status:
@@ -155,21 +157,25 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dns4dij8raf9s077kfn8\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:42:08.725570162Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:42:08.725684217Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"additions\": [\n   {\n    \"data\": [\n     \"challengetoken1\",\n     \"challengetoken2\"\n
+        \   ],\n    \"name\": \"_acme-challenge.listrecordset.example.com.\",\n    \"type\":
+        \"TXT\",\n    \"ttl\": \"3600\"\n   }\n  ],\n  \"deletions\": [\n   {\n    \"data\":
+        [\n     \"challengetoken1\"\n    ],\n    \"name\": \"_acme-challenge.listrecordset.example.com.\",\n
+        \   \"type\": \"TXT\",\n    \"ttl\": \"3600\"\n   }\n  ]\n },\n \"id\": \"dnsgp8g0b1utdp7e0351\",\n
+        \"description\": \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:40:11.965916625Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:40:11.966009993Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '774'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:42:08 GMT
+      - Tue, 04 Oct 2022 22:40:11 GMT
       server:
       - envoy
     status:

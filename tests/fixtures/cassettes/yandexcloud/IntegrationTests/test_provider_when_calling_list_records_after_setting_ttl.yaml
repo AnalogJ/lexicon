@@ -85,21 +85,23 @@ interactions:
       User-Agent:
       - python-requests/2.28.0
     method: POST
-    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm/upsertRecordSets
+    uri: https://dns.api.cloud.yandex.net/dns/v1/zones/dns3a9nospukjt4jlqdm:upsertRecordSets
   response:
     body:
       string: "{\n \"done\": true,\n \"metadata\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.UpsertRecordSetsMetadata\"\n
-        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/google.protobuf.Empty\"\n
-        },\n \"id\": \"dns9358d1u4k7nof6ns7\",\n \"description\": \"Upsert DNS RecordSets\",\n
-        \"createdAt\": \"2022-07-25T13:42:06.571340099Z\",\n \"createdBy\": \"ajesjg85676uboegshq0\",\n
-        \"modifiedAt\": \"2022-07-25T13:42:06.571434269Z\"\n}\n"
+        },\n \"response\": {\n  \"@type\": \"type.googleapis.com/yandex.cloud.dns.v1.RecordSetDiff\",\n
+        \ \"additions\": [\n   {\n    \"data\": [\n     \"ttlshouldbe3600\"\n    ],\n
+        \   \"name\": \"ttl.fqdn.example.com.\",\n    \"type\": \"TXT\",\n    \"ttl\":
+        \"3600\"\n   }\n  ]\n },\n \"id\": \"dnsg4seti5gb7lo1cd5a\",\n \"description\":
+        \"Upsert DNS RecordSets\",\n \"createdAt\": \"2022-10-04T22:40:10.237470211Z\",\n
+        \"createdBy\": \"ajesjg85676uboegshq0\",\n \"modifiedAt\": \"2022-10-04T22:40:10.237554294Z\"\n}\n"
     headers:
       content-length:
-      - '396'
+      - '558'
       content-type:
       - application/json
       date:
-      - Mon, 25 Jul 2022 13:42:06 GMT
+      - Tue, 04 Oct 2022 22:40:09 GMT
       server:
       - envoy
     status:
