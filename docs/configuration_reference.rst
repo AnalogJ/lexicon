@@ -45,7 +45,7 @@ provider option is named ``auth_token``):
         .. code-block:: yaml
 
             # /path/to/config/lexicon.yml
-            clouflare:
+            cloudflare:
               auth_token: YOUR_TOKEN
 
         For a provider-specific configuration file, provider options need to be set at the root:
