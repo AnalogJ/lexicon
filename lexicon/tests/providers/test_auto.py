@@ -1,4 +1,5 @@
 """Integration tests for auto"""
+from shutil import which
 import socket
 from unittest import TestCase, mock
 
@@ -56,6 +57,9 @@ class AutoProviderTests(TestCase, IntegrationTestsV2):
     # to effectively test the nslookup call and processing.\
     @pytest.mark.skipif(
         _there_is_no_network(), reason="No network, no nslookup call possible."
+    )
+    @pytest.mark.skipif(
+        which("nslookup") is None, reason="nslookup command is not available."
     )
     def test_nslookup_resolution(self):
         """Ensure that nameservers can be resolved through os nslookup call."""
