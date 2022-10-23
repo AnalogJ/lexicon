@@ -264,7 +264,7 @@ class Provider(BaseProvider):
                     rec["ttl"] = (columns[4].contents[1].string or "").strip()
                     rec["id"] = ""
                     for a in columns[5].findAll(
-                        "a", class_="button--naked vers--compact theme--tolerance"
+                        "a", class_="button button--transparent"
                     ):
                         rec["id"] = int(a["href"].rsplit("/", 1)[-1])
                     if rec["priority"]:
