@@ -257,14 +257,16 @@ class Provider(BaseProvider):
                 try:
                     rec = {}
                     columns = row.find_all("td")
-                    rec["name"] = (columns[0].contents[0].string or "").strip()
+                    remove_span_from_name = columns[0].text.replace('<span style="color: var(--color-grey-500);">', '')
+                    columns[0].replace_with(remove_span_from_name)
+                    rec["name"] = (remove_span_from_name or "").strip()
                     rec["type"] = (columns[1].contents[1].text or "").strip()
                     rec["content"] = (columns[2].contents[1].string or "").strip()
                     rec["priority"] = (columns[3].contents[1].string or "").strip()
                     rec["ttl"] = (columns[4].contents[1].string or "").strip()
                     rec["id"] = ""
                     for a in columns[5].findAll(
-                        "a", class_="button--naked vers--compact theme--tolerance"
+                        "a", class_="button button--transparent"
                     ):
                         rec["id"] = int(a["href"].rsplit("/", 1)[-1])
                     if rec["priority"]:
@@ -379,7 +381,11 @@ class Provider(BaseProvider):
             LOGGER.debug("Filtering %d records by name: %s", len(records), name)
             if name.endswith("."):
                 name = name[:-1]
-            records = [record for record in records if name == record["name"]]
+            if rtype.lower() != "txt":
+                name = name.split('.')[0]
+                records = [record for record in records if name == record["name"].split('.')[0]]
+            else:
+                records = [record for record in records if name == record["name"]]
         if content is not None:
             LOGGER.debug(
                 "Filtering %d records by content: %s", len(records), content.lower()
