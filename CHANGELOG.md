@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix `easyname` provider (update action) (#1442)
 
 ## 3.11.6 - 11/10/2022
 ### Modified
