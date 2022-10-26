@@ -257,7 +257,9 @@ class Provider(BaseProvider):
                 try:
                     rec = {}
                     columns = row.find_all("td")
-                    remove_span_from_name = columns[0].text.replace('<span style="color: var(--color-grey-500);">', '')
+                    remove_span_from_name = columns[0].text.replace(
+                        '<span style="color: var(--color-grey-500);">', ""
+                    )
                     columns[0].replace_with(remove_span_from_name)
                     rec["name"] = (remove_span_from_name or "").strip()
                     rec["type"] = (columns[1].contents[1].text or "").strip()
@@ -382,8 +384,10 @@ class Provider(BaseProvider):
             if name.endswith("."):
                 name = name[:-1]
             if rtype.lower() != "txt":
-                name = name.split('.')[0]
-                records = [record for record in records if name == record["name"].split('.')[0]]
+                name = name.split(".")[0]
+                records = [
+                    record for record in records if name == record["name"].split(".")[0]
+                ]
             else:
                 records = [record for record in records if name == record["name"]]
         if content is not None:

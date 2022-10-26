@@ -1,6 +1,6 @@
 """Integration tests for auto"""
-from shutil import which
 import socket
+from shutil import which
 from unittest import TestCase, mock
 
 import pytest
