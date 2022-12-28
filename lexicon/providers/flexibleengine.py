@@ -31,6 +31,7 @@ class Provider(BaseProvider):
 
     def _authenticate(self):
         zone_id = self._get_provider_option("zone_id")
+
         if not zone_id:
             payload = self._get("/zones", {"name": self.domain})
 
@@ -42,10 +43,9 @@ class Provider(BaseProvider):
                 )
             self.domain_id = payload["zones"][0]["id"]
         else:
-            payload = self._get(f"/zones/{zone_id}")
-            if not payload["id"]:
-                raise AuthenticationError(f"No domain found for Zone ID {zone_id}")
+            payload = self._get(f"/zones/{zone_id}/recordsets")
             self.domain_id = zone_id
+
 
     def _create_record(self, rtype, name, content):
         ttl = self._get_lexicon_option("ttl")
@@ -63,7 +63,6 @@ class Provider(BaseProvider):
                 "records": content,
                 "ttl": ttl,
             }
-            print("records====="+str(record))
             
             if rtype == "TXT":
                 # Convert "String" to "\"STRING\"" 
@@ -84,7 +83,6 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
         url = f"/zones/{self.domain_id}/recordsets"
-        print("ZONEE ID===="+self.domain_id)
         records = []
         payload = {}
 
@@ -115,17 +113,14 @@ class Provider(BaseProvider):
                     "id": record["id"],
                 }
                 records.append(processed_record)
-        print("records========="+str(record))
 
         if rtype:
             records = [record for record in records if record["type"] == rtype]
-            print("records=============="+str(records))
 
         if name:
             records = [
                 record for record in records if record["name"].rstrip('.') == name.rstrip('.')
             ]
-            print("records========================"+str(records))
 
         if content:
             if len(content)>1:
@@ -182,7 +177,6 @@ class Provider(BaseProvider):
         if delete_record_id:
             LOGGER.debug("delete_records: %s", delete_record_id)
 
-            print("deleteinggggg "+str(delete_record_id))
             for record_id in delete_record_id:
                 self._delete(f"/zones/{self.domain_id}/recordsets/{record_id}")
 
@@ -208,11 +202,6 @@ class Provider(BaseProvider):
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
 
-        print(action)
-        print(url)
-        print(query_params)
-        print(json.dumps(data))
-        print(default_headers)
         response = requests.request(
             action,
             url,
@@ -220,8 +209,6 @@ class Provider(BaseProvider):
             data=json.dumps(data),
             headers=default_headers,
         )
-        print(response.text)
-        print(response.headers)
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if action == "DELETE":
