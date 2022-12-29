@@ -1,0 +1,41 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e0184dd40d08643e2/recordsets
+  response:
+    body:
+      string: '{"error_msg":"Incorrect IAM authentication information: decrypt token
+        fail","error_code":"APIGW.0301","request_id":"520f8af2a46f7d24016b8efaf0dde7f2"}
+
+        '
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 28 Dec 2022 09:45:07 GMT
+      Server:
+      - api-gateway
+      Transfer-Encoding:
+      - chunked
+      X-Request-Id:
+      - 520f8af2a46f7d24016b8efaf0dde7f2
+    status:
+      code: 401
+      message: Unauthorized
+version: 1
