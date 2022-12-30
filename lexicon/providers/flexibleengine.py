@@ -7,7 +7,7 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-NAMESERVER_DOMAINS = ["flexibleengine.com"]
+NAMESERVER_DOMAINS = ["orange-business.com"]
 
 def provider_parser(subparser):
     """Configure provider parser for Flexible Engine Cloud"""
@@ -34,7 +34,7 @@ class Provider(BaseProvider):
 
         if not zone_id:
             payload = self._get("/zones", {"name": self.domain})
-
+            
             if not payload["zones"]:
                 raise AuthenticationError("No domain found")
             if len(payload["zones"]) > 1:
@@ -43,40 +43,48 @@ class Provider(BaseProvider):
                 )
             self.domain_id = payload["zones"][0]["id"]
         else:
-            payload = self._get(f"/zones/{zone_id}/recordsets")
             self.domain_id = zone_id
-
+            payload = self._get(f"/zones/{zone_id}/recordsets")
+        
 
     def _create_record(self, rtype, name, content):
-        ttl = self._get_lexicon_option("ttl")
-
         # put string in array
         tmp=content
         content=[]
         content.append(tmp)
 
-        # check if record already exists
-        if not self._list_records(rtype, name, content):
-            record = {
-                "type": rtype,
-                "name": name,
-                "records": content,
-                "ttl": ttl,
-            }
-            
-            if rtype == "TXT":
-                # Convert "String" to "\"STRING\"" 
-                tmp = []
-                tmp.append( '\"'+record["records"][0]+'\"' )
-                record["records"] = tmp
+        record = {
+            "type": rtype,
+            "name": self._full_name(name),
+            "records": content
+        }
+        if self._get_lexicon_option("ttl"):
+            record["ttl"] = self._get_lexicon_option("ttl")
 
+        if rtype == "TXT":
+            # Convert "String" to "\"STRING\"" 
+            tmp = []
+            tmp.append( '\"'+record["records"][0]+'\"' )
+            record["records"] = tmp
+        try:
             self._post(f"/zones/{self.domain_id}/recordsets", record)
-            LOGGER.debug("create_record: %s", True)
-            return True
-        else:
-            LOGGER.debug("create_record: %s", False)
-            LOGGER.debug("record already exist.")
-            return False
+        except requests.exceptions.HTTPError as err:
+            print("errrrrrrrrrrrrrrrrrrr:"+str(err.response.json()['code']))
+            already_exists = next(
+                (
+                    True
+                    for error in err.response.json()
+                    if err.response.json()['code'] == 'DNS.0312'
+                ),
+                False,
+            )
+            print("alreadyyyyy:"+str(already_exists))
+            if not already_exists:
+                raise
+
+        LOGGER.debug("create_record: %s", True)
+        return True
+
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -107,7 +115,7 @@ class Provider(BaseProvider):
             for record in payload["recordsets"]:
                 processed_record = {
                     "type": record["type"],
-                    "name": record["name"],
+                    "name": f"{record['name']}",
                     "ttl": record["ttl"],
                     "content": record["records"],
                     "id": record["id"],
@@ -119,7 +127,7 @@ class Provider(BaseProvider):
 
         if name:
             records = [
-                record for record in records if record["name"].rstrip('.') == name.rstrip('.')
+                record for record in records if record["name"].rstrip('.') == self._full_name(name)
             ]
 
         if content:
@@ -133,8 +141,22 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
+
     # update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
+        if identifier is None:
+            records = self._list_records(rtype, name)
+            if len(records) == 1:
+                identifier = records[0]["id"]
+            elif len(records) < 1:
+                raise Exception(
+                    "No records found matching type and name - won't update"
+                )
+            else:
+                raise Exception(
+                    "Multiple records found matching type and name - won't update"
+                )
+                
         data = {}
 
         if name:
@@ -143,9 +165,8 @@ class Provider(BaseProvider):
         if rtype:
             data["type"] = rtype
 
-        ttl = self._get_lexicon_option("ttl")
-        if ttl:
-            data["ttl"] = ttl
+        if self._get_lexicon_option("ttl"):
+            data["ttl"] = self._get_lexicon_option("ttl")
 
         if content:
             if rtype == "TXT":
@@ -174,19 +195,13 @@ class Provider(BaseProvider):
         else:
             delete_record_id.append(identifier)
 
-        if delete_record_id:
-            LOGGER.debug("delete_records: %s", delete_record_id)
+        LOGGER.debug("delete_records: %s", delete_record_id)
 
-            for record_id in delete_record_id:
-                self._delete(f"/zones/{self.domain_id}/recordsets/{record_id}")
+        for record_id in delete_record_id:
+            self._delete(f"/zones/{self.domain_id}/recordsets/{record_id}")
 
-            # Is always True at this point, if a non 200 response is returned an error is raised.
-            LOGGER.debug("delete_record: %s", True)
-            return True
-        else:
-            LOGGER.debug("delete_record: %s", False)
-            LOGGER.debug("No found record to delete.")
-            return False
+        LOGGER.debug("delete_record: %s", True)
+        return True
 
     # API requests
     def _request(self, action="GET", url="/", data=None, query_params=None):
@@ -209,7 +224,6 @@ class Provider(BaseProvider):
             data=json.dumps(data),
             headers=default_headers,
         )
-        # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if action == "DELETE":
             return ""
