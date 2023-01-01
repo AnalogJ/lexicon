@@ -15,27 +15,34 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e0184dd40d08643e2/recordsets
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=thisisadomainidonotown.com
   response:
     body:
-      string: '{"error_msg":"Incorrect IAM authentication information: decrypt token
-        fail","error_code":"APIGW.0301","request_id":"2ef4e09d146a5b1251a0e8e6f07a61d7"}
-
-        '
+      string: '{"zones":[],"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=thisisadomainidonotown.com"},"metadata":{"total_count":0}}'
     headers:
       Connection:
       - keep-alive
+      Content-Length:
+      - '148'
       Content-Type:
       - application/json
       Date:
-      - Wed, 28 Dec 2022 09:45:07 GMT
+      - Sun, 01 Jan 2023 13:01:48 GMT
       Server:
       - api-gateway
-      Transfer-Encoding:
-      - chunked
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
       X-Request-Id:
-      - 2ef4e09d146a5b1251a0e8e6f07a61d7
+      - 4ec302742d377ba9826865e23a9e8632
+      X-XSS-Protection:
+      - 1; mode=block;
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
 version: 1

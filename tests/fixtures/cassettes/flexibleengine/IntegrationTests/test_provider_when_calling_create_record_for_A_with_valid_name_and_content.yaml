@@ -15,27 +15,72 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e0184dd40d08643e2/recordsets
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test
   response:
     body:
-      string: '{"error_msg":"Incorrect IAM authentication information: decrypt token
-        fail","error_code":"APIGW.0301","request_id":"520f8af2a46f7d24016b8efaf0dde7f2"}
-
-        '
+      string: '{"zones":[{"id":"ff8080827274f00e018563dcecb527d3","name":"flexibleengine.test.","description":"This
+        zone is for test purposes only.","email":"hostmaster@example.com","ttl":300,"serial":1,"masters":[],"status":"ACTIVE","pool_id":"ff80808261568dfe016156c446410001","project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","zone_type":"public","created_at":"2022-12-30T16:28:21.021","updated_at":"2022-12-30T16:28:42.022","record_num":2,"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3"}}],"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test"},"metadata":{"total_count":1}}'
     headers:
       Connection:
       - keep-alive
+      Content-Length:
+      - '665'
       Content-Type:
       - application/json
       Date:
-      - Wed, 28 Dec 2022 09:45:07 GMT
+      - Sun, 01 Jan 2023 13:01:48 GMT
       Server:
       - api-gateway
-      Transfer-Encoding:
-      - chunked
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
       X-Request-Id:
-      - 520f8af2a46f7d24016b8efaf0dde7f2
+      - b1569a2ff678fd229e3b43b137b99a93
+      X-XSS-Protection:
+      - 1; mode=block;
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "A", "name": "localhost.flexibleengine.test", "records": ["127.0.0.1"],
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '93'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
+  response:
+    body:
+      string: '{"id":"ff8080827274ef7d01856d6c8cff1258","name":"localhost.flexibleengine.test.","description":null,"type":"A","ttl":3600,"records":["127.0.0.1"],"status":"PENDING_CREATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:48.659","update_at":null,"default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8cff1258"}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '523'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 01 Jan 2023 13:01:48 GMT
+      Server:
+      - api-gateway
+      X-Request-Id:
+      - d69e091edd58af6f942d09a6cb150e9b
+    status:
+      code: 202
+      message: Accepted
 version: 1

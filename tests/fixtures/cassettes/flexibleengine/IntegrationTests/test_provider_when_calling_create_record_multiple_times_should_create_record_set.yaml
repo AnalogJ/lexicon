@@ -15,27 +15,111 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e0184dd40d08643e2/recordsets
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test
   response:
     body:
-      string: '{"error_msg":"Incorrect IAM authentication information: decrypt token
-        fail","error_code":"APIGW.0301","request_id":"5c5fdd4c5e93c7d525224e87e56a1a1d"}
-
-        '
+      string: '{"zones":[{"id":"ff8080827274f00e018563dcecb527d3","name":"flexibleengine.test.","description":"This
+        zone is for test purposes only.","email":"hostmaster@example.com","ttl":300,"serial":1,"masters":[],"status":"ACTIVE","pool_id":"ff80808261568dfe016156c446410001","project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","zone_type":"public","created_at":"2022-12-30T16:28:21.021","updated_at":"2022-12-30T16:28:42.022","record_num":7,"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3"}}],"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test"},"metadata":{"total_count":1}}'
     headers:
       Connection:
       - keep-alive
+      Content-Length:
+      - '665'
       Content-Type:
       - application/json
       Date:
-      - Wed, 28 Dec 2022 09:45:07 GMT
+      - Sun, 01 Jan 2023 13:01:49 GMT
       Server:
       - api-gateway
-      Transfer-Encoding:
-      - chunked
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
       X-Request-Id:
-      - 5c5fdd4c5e93c7d525224e87e56a1a1d
+      - d9dd18fff91852cb00401823ec1407fc
+      X-XSS-Protection:
+      - 1; mode=block;
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset.flexibleengine.test",
+      "records": ["\"challengetoken1\""], "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
+  response:
+    body:
+      string: '{"id":"ff8080827274ef7d01856d6c8f24125e","name":"_acme-challenge.createrecordset.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken1\""],"status":"PENDING_CREATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:49.211","update_at":null,"default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8f24125e"}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '557'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 01 Jan 2023 13:01:49 GMT
+      Server:
+      - api-gateway
+      X-Request-Id:
+      - ccb941e31f1ddd50d227395cd674a751
+    status:
+      code: 202
+      message: Accepted
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset.flexibleengine.test",
+      "records": ["\"challengetoken2\""], "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
+  response:
+    body:
+      string: '{"code":"DNS.0312","message":"Attribute ''name'' conflicts with Record
+        Set ''_acme-challenge.createrecordset.flexibleengine.test.'' type ''TXT''
+        in line ''default_view''."}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '164'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 01 Jan 2023 13:01:49 GMT
+      Server:
+      - api-gateway
+      X-Request-Id:
+      - 20afa5f3f204b0d45636ee7be9ba5373
+    status:
+      code: 400
+      message: Bad Request
 version: 1
