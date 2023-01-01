@@ -114,7 +114,7 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | vercel_         | vultr_          | webgo_          | yandex_         | yandexcloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| zeit_           | zilore_         | zonomi_         | flexibleengine_ |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -198,7 +198,7 @@ The current supported providers are:
 .. _zeit:
 .. _zilore: https://zilore.com/en/help/api
 .. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
-
+.. _flexibleengine: https://docs.prod-cloud-ocb.orange-business.com/en-us/api/dns/en-us_topic_0132421998.html
 .. tag: intro-end
 
 Documentation
