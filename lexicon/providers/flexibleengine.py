@@ -25,16 +25,10 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://dns.prod-cloud-ocb.orange-business.com/v2"
         self.domain_id = None
 
-        # Handling missing required parameters
-        if not self._get_provider_option("token"):
-            raise Exception("Error, Token is not defined")
-
     def _authenticate(self):
         zone_id = self._get_provider_option("zone_id")
-
+        payload = self._get("/zones", {"name": self.domain})
         if not zone_id:
-            payload = self._get("/zones", {"name": self.domain})
-            
             if not payload["zones"]:
                 raise AuthenticationError("No domain found")
             if len(payload["zones"]) > 1:
@@ -42,10 +36,10 @@ class Provider(BaseProvider):
                     "Too many domains found. This should not happen"
                 )
             self.domain_id = payload["zones"][0]["id"]
+            self.domain = payload["zones"][0]["name"].rstrip('.')
         else:
             self.domain_id = zone_id
-            payload = self._get(f"/zones/{zone_id}/recordsets")
-        
+            self.domain = payload["zones"][0]["name"].rstrip('.')
 
     def _create_record(self, rtype, name, content):
         # put string in array
@@ -69,7 +63,6 @@ class Provider(BaseProvider):
         try:
             self._post(f"/zones/{self.domain_id}/recordsets", record)
         except requests.exceptions.HTTPError as err:
-            print("errrrrrrrrrrrrrrrrrrr:"+str(err.response.json()['code']))
             already_exists = next(
                 (
                     True
@@ -78,7 +71,6 @@ class Provider(BaseProvider):
                 ),
                 False,
             )
-            print("alreadyyyyy:"+str(already_exists))
             if not already_exists:
                 raise
 
@@ -196,7 +188,6 @@ class Provider(BaseProvider):
             delete_record_id.append(identifier)
 
         LOGGER.debug("delete_records: %s", delete_record_id)
-
         for record_id in delete_record_id:
             self._delete(f"/zones/{self.domain_id}/recordsets/{record_id}")
 
