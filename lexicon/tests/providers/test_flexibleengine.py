@@ -21,7 +21,7 @@ class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
     def _test_fallback_fn(self):
         return (
             lambda x: "placeholder_" + x
-            if x not in ("auth_token","zone_id")
+            if x not in ("zone_id")
             else ""
         )
     
