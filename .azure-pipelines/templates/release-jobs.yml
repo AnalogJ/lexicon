@@ -1,11 +1,11 @@
 jobs:
   - job: pypi
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-22.04
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: 3.10
+          versionSpec: 3.11
           addToPath: true
         displayName: Install Python
       - script: |
@@ -17,13 +17,13 @@ jobs:
 
   - job: github
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-22.04
     dependsOn:
       - pypi
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: 3.10
+          versionSpec: 3.11
           addToPath: true
         displayName: Install Python
       - script: |
