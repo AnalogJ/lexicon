@@ -29,7 +29,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://pointhq.com"
 
     def _authenticate(self):
-
         payload = self._get(f"/zones/{self.domain}")
 
         if not payload["zone"]:
@@ -90,7 +89,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {}
         if rtype:
             data["record_type"] = rtype

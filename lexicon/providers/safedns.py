@@ -97,7 +97,6 @@ class Provider(BaseProvider):
         return records
 
     def _create_record(self, rtype, name, content):
-
         # Check whether the record already exists with the same  rtype, name & content.
         # If so, claim to have added the record, but dont't do anything.
         records = self._list_records(rtype, name, content)
@@ -118,7 +117,6 @@ class Provider(BaseProvider):
         return True
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         # Make sure the update won't cause a duplicate entry. If it will, fail silently
         records = self._list_records(rtype, name, content)
 
@@ -154,7 +152,6 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
         delete_record_ids = []
 
         # If we've not been given an identifier, search for matching records.

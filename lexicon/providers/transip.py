@@ -15,7 +15,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 try:
     from simplejson import JSONDecodeError
 except ImportError:
-    from json import JSONDecodeError  # type: ignore[misc]
+    from json import JSONDecodeError  # type: ignore[assignment]
 
 from lexicon.exceptions import LexiconError
 from lexicon.providers.base import Provider as BaseProvider

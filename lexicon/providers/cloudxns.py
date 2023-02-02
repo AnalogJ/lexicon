@@ -30,7 +30,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://www.cloudxns.net/api2"
 
     def _authenticate(self):
-
         payload = self._get("/domain")
         for record in payload["data"]:
             if record["domain"] == self.domain + ".":
@@ -41,7 +40,6 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
     def _create_record(self, rtype, name, content):
-
         record = {
             "domain_id": self.domain_id,
             "host": self._relative_name(name),
@@ -104,7 +102,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         if not identifier:
             records = self._list_records(name=name)
             if len(records) == 1:

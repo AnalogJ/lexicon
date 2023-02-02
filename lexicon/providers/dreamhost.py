@@ -138,7 +138,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-
         payload = self._get("dns-list_records")
 
         resource_list = payload.get("data", None)
