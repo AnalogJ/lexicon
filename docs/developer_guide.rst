@@ -16,6 +16,7 @@ current document instructions and open a pull request.
 - `AHNames <https://ahnames.com/en/resellers?tab=2>`_
 - `DurableDNS <https://durabledns.com/wiki/doku.php/ddns>`_ (?? Can't set TXT records ??)
 - cyon.ch
+- `deSEC.io <https://desec.io/>`_ (free of charge, non-commercial foundation, DNSSEC, global anycast network)
 - `Dyn <https://help.dyn.com/dns-api-knowledge-base/>`_ ($$ requires paid account $$)
 - `EntryDNS <https://entrydns.net/help>`_ ($$ requires paid account $$)
 - `FreeDNS <https://freedns.afraid.org/scripts/freedns.clients.php>`_
