@@ -44,7 +44,8 @@ jobs:
       - script: |
           python3 -m pip install --user pipx
           python3 -m pipx ensurepath
-          python3 -m pipx install tox poetry
+          python3 -m pipx install tox
+          python3 -m pipx install poetry
         displayName: Install required runtime dependencies
       - script: tox
         displayName: Execute tests through tox
