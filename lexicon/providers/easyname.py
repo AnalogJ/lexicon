@@ -86,7 +86,6 @@ class Provider(BaseProvider):
         )
 
     def _authenticate(self):
-
         csrf_token = self._get_csrf_token()
         self._login(csrf_token)
 

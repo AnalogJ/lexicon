@@ -62,7 +62,6 @@ class Provider(BaseProvider):
             )
 
     def _authenticate(self):
-
         payload = self._get(
             "/dns/dyndns.jsp",
             {"action": "QUERY", "name": "**." + self.domain, "type": "SOA"},
