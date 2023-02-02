@@ -9,12 +9,13 @@ jobs:
           addToPath: true
         displayName: Install Python
       - script: |
-          python -m pip install -U poetry
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          python3 -m pipx install poetry
         displayName: Prepare environment
       - script: |
           poetry publish --build --username "$(twine.username)" --password "$(twine.password)"
         displayName: Build & Upload dist to PyPI
-
   - job: github
     pool:
       vmImage: ubuntu-22.04
@@ -27,7 +28,9 @@ jobs:
           addToPath: true
         displayName: Install Python
       - script: |
-          python -m pip install -U poetry
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          python3 -m pipx install poetry
         displayName: Prepare environment
       - script: |
           set -e
