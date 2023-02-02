@@ -183,14 +183,14 @@ TLD cache
 The tldextract_ library is used by Lexicon to find the actual domain name from the provided FQDN
 (eg. ``domain.net`` is the actual domain in ``www.domain.net``). Lexicon stores ``tldextract`` cache
 by default in ``~/.lexicon_tld_set`` where ``~`` is the current user's home directory. You can change
-this path using the ``LEXICON_TLDEXTRACT_CACHE`` environment variable.
+this path using the ``TLDEXTRACT_CACHE_PATH`` environment variable.
 
 For instance, to store ``tldextract`` cache in ``/my/path/to/tld_cache``, you can invoke Lexicon
 like this from a Linux shell:
 
 .. code-block:: bash
 
-    LEXICON_TLDEXTRACT_CACHE=/my/path/to/tld_cache lexicon myprovider create www.example.net TXT ...
+    TLDEXTRACT_CACHE_PATH=/my/path/to/tld_cache lexicon myprovider create www.example.net TXT ...
 
 .. _tldextract: https://pypi.org/project/tldextract/
 
