@@ -42,13 +42,14 @@ jobs:
           addToPath: true
         displayName: Enable the targeted python version
       - script: |
-          curl -sSL https://install.python-poetry.org | python -
-          python -m pip install -U tox
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          python3 -m pipx install tox poetry
         displayName: Install required runtime dependencies
-      - script: python -m tox
+      - script: tox
         displayName: Execute tests through tox
       - script: |
-          python -m pip install coveralls
+          python3 -m pipx install coveralls
           coveralls
         condition: and(eq(variables['TOXENV'], 'cover'), eq(variables['Build.DefinitionName'], 'main'))
         env:
