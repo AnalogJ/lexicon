@@ -39,7 +39,6 @@ class Provider(BaseProvider):
         )
 
     def _authenticate(self):
-
         payload = self._get("/accounts")
 
         if not payload[0]["id"]:
@@ -122,7 +121,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {}
 
         if identifier is None:

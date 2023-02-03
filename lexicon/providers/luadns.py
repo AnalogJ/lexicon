@@ -93,7 +93,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {"ttl": self._get_lexicon_option("ttl")}
         if rtype:
             data["type"] = rtype

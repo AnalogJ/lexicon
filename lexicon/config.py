@@ -41,7 +41,7 @@ class EnvironmentConfigSource(ConfigSource):
     def __init__(self):
         super(EnvironmentConfigSource, self).__init__()
         self._parameters = {}
-        for (key, value) in os.environ.items():
+        for key, value in os.environ.items():
             if key.startswith("LEXICON_"):
                 self._parameters[key] = value
 
@@ -160,7 +160,7 @@ class LegacyDictConfigSource(DictConfigSource):
         refactor_dict_object = {}
         refactor_dict_object[provider_name] = provider_options
 
-        for (key, value) in dict_object.items():
+        for key, value in dict_object.items():
             if key not in generic_parameters:
                 provider_options[key] = value
             else:

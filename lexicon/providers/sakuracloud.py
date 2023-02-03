@@ -32,7 +32,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1"
 
     def _authenticate(self):
-
         query_params = {"Filter": {"Provider.Class": "dns", "Name": self.domain}}
         payload = self._get("/commonserviceitem", query_params=query_params)
 
@@ -97,7 +96,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier=None, rtype=None, name=None, content=None):
-
         if not (rtype and name and content):
             raise Exception("rtype ,name and content must be specified.")
 

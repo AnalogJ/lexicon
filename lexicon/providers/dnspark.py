@@ -27,7 +27,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.dnspark.com/v2"
 
     def _authenticate(self):
-
         payload = self._get(f"/dns/{self.domain}")
 
         if not payload["additional"]["domain_id"]:

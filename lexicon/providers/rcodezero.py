@@ -118,7 +118,6 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
         LOGGER.debug("delete %s %s %s %s", identifier, rtype, name, content)
         if identifier is None and (rtype is None or name is None):
             raise Exception("Must specify at least id or  both rtype and name")
@@ -193,7 +192,6 @@ class Provider(BaseProvider):
         return sha256.hexdigest()[0:7]
 
     def _parse_identifier(self, identifier, payload):
-
         for rrset in payload["data"]:
             for record in rrset["records"]:
                 if (

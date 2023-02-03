@@ -174,7 +174,6 @@ class Provider(BaseProvider):
         return True
 
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
         data = self.zone_data()
 
         if identifier is not None:

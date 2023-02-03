@@ -80,7 +80,6 @@ class Provider(BaseProvider):
 
         response = self._get(f"/dns_zones/{self.domain_id}/records.json")
         for record_type in response["dns_zone"]["records"]:
-
             # For now we do not support other RR types so we ignore them, also see
             # _key_for_record_type
             if record_type not in ("A", "AAAA", "CNAME", "TXT"):

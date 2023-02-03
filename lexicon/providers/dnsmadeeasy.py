@@ -61,7 +61,6 @@ class Provider(BaseProvider):
         )
 
     def _authenticate(self):
-
         try:
             payload = self._get("/dns/managed/name", {"domainname": self.domain})
         except requests.exceptions.HTTPError as error:
@@ -131,7 +130,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {"id": identifier, "ttl": self._get_lexicon_option("ttl")}
 
         if name:

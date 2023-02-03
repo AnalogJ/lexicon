@@ -26,7 +26,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://dnsapi.cn"
 
     def _authenticate(self):
-
         payload = self._post("/Domain.Info", {"domain": self.domain})
 
         if payload["status"]["code"] != "1":
@@ -87,7 +86,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {
             "domain_id": self.domain_id,
             "record_id": identifier,

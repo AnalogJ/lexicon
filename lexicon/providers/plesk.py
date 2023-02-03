@@ -59,7 +59,6 @@ class Provider(BaseProvider):
         assert self.password is not None
 
     def __simple_request(self, rtype, operation, req):
-
         response = self.__plesk_request({rtype: {operation: req}})[rtype][operation]
 
         result = response["result"]
@@ -78,7 +77,6 @@ class Provider(BaseProvider):
         return response
 
     def __plesk_request(self, request):
-
         headers = {
             "Content-type": "text/xml",
             "HTTP_PRETTY_PRINT": "TRUE",
@@ -143,7 +141,6 @@ class Provider(BaseProvider):
             self.__delete_dns_records_by_id(ids)
 
         else:
-
             entry = self.__get_dns_entry(identifier)
             self.__delete_dns_records_by_id([identifier])
 
@@ -217,7 +214,6 @@ class Provider(BaseProvider):
         entries = []
 
         for record in result["result"]:
-
             LOGGER.debug("Record: %s", record)
 
             if (rtype is not None) and (record["data"]["type"] != rtype):

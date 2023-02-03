@@ -170,7 +170,6 @@ class Provider(BaseProvider):
         LOGGER.debug(f"Activated OCI provider with endpoint: {self.endpoint}")
 
     def _authenticate(self):
-
         try:
             zone = self._get(f"/zones/{self.domain}")
             self.domain_id = zone["id"]
@@ -183,7 +182,6 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
     def _create_record(self, rtype, name, content):
-
         name = self._full_name(name)
         patchset = {
             "items": [
@@ -211,7 +209,6 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def _list_records(self, rtype=None, name=None, content=None):
-
         query_params = {"limit": 100, "rtype": rtype}
         name = self._full_name(name) if name else None
 
@@ -243,7 +240,6 @@ class Provider(BaseProvider):
 
     # Update a record. Identifier must be specified.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         name = self._full_name(name) if name else None
         if identifier:
             records = [
@@ -288,7 +284,6 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-
         name = self._full_name(name) if name else None
         if not identifier and not content:
             try:
@@ -326,7 +321,6 @@ class Provider(BaseProvider):
         return True
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
-
         if not data and action != "DELETE":
             data = {}
 

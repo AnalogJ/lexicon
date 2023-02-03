@@ -139,7 +139,6 @@ class Provider(BaseProvider):
         return record
 
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         records = self._list_records(rtype, name)
 
         if not identifier:
