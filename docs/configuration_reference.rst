@@ -32,7 +32,7 @@ provider option is named ``auth_token``):
         $ cat /path/to/config/lexicon.yml
         cloudflare:
           auth_token: YOUR_TOKEN
-        $ lexicon cloudflare create domain.net TXT --name foo --content bar --config-dir /path/to/config
+        $ lexicon --config-dir /path/to/config cloudflare create domain.net TXT --name foo --content bar
 
   .. note::
 
