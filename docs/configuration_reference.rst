@@ -23,7 +23,7 @@ provider option is named ``auth_token``):
 
   .. code-block:: bash
 
-        $ LEXICON_CLOUDFLARE_AUTH_TOKEN=YOUR_TOKEN cloudflare create domain.net TXT --name foo --content bar
+        $ LEXICON_CLOUDFLARE_AUTH_TOKEN=YOUR_TOKEN lexicon cloudflare create domain.net TXT --name foo --content bar
 
 * by **configuration file**: construct a configuration file containing the provider options, for instance:
 
