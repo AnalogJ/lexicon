@@ -62,6 +62,9 @@ List of options
 .. _dreamhost:
 .. include:: providers/dreamhost.rst
 
+.. _duckdns:
+.. include:: providers/duckdns.rst
+
 .. _dynu:
 .. include:: providers/dynu.rst
 
