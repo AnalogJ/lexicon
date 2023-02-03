@@ -369,7 +369,9 @@ class _Api:
             extra_payload = {}
         return payload, extra_payload
 
-    def _fetch_xml(self, payload: Dict, extra_payload: Dict = None) -> Element:
+    def _fetch_xml(
+        self, payload: Dict, extra_payload: Optional[Dict] = None
+    ) -> Element:
         if extra_payload:
             response = requests.post(self.endpoint, params=payload, data=extra_payload)
         else:

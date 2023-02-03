@@ -122,7 +122,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier=None, rtype=None, name=None, content=None):
-
         if name:
             name = self._full_name(name)
 

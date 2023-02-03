@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def generate_list_table_result(
     lexicon_logger: logging.Logger,
-    output: Union[bool, List[Dict]] = None,
+    output: Optional[Union[bool, List[Dict]]] = None,
     without_header: Optional[bool] = None,
 ) -> Optional[str]:
     """Convert returned data from list actions into a nice table for command line usage"""
@@ -68,7 +68,8 @@ def generate_list_table_result(
 
 
 def generate_table_results(
-    output: Union[bool, List[Dict]] = None, without_header: Optional[bool] = None
+    output: Optional[Union[bool, List[Dict]]] = None,
+    without_header: Optional[bool] = None,
 ) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []

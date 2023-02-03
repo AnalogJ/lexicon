@@ -680,7 +680,6 @@ if __name__ == "__main__":
         def test_update_record(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-
                 provider = self._create_provide(domainname)
                 provider._authenticate()
 

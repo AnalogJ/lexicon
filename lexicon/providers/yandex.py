@@ -117,7 +117,6 @@ class Provider(BaseProvider):
 
     # Just update existing record. If Identifier is not provided, update the latest entry with matching name and rtype.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         if not identifier:
             # get existing entries, and pick the last one for update
             records = self._list_records(rtype=rtype, name=name)

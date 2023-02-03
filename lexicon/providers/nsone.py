@@ -26,7 +26,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.nsone.net/v1"
 
     def _authenticate(self):
-
         payload = self._get(f"/zones/{self.domain}")
 
         if not payload["id"]:
@@ -141,7 +140,6 @@ class Provider(BaseProvider):
         payload = self._get(f"/zones/{self.domain_id}")
         records = []
         for record in payload["records"]:
-
             if rtype and record["type"] != rtype:
                 continue
 

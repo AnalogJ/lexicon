@@ -29,7 +29,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://secure.hosting.de/api/dns/v1/json"
 
     def _authenticate(self):
-
         response = self._get_zone_config()
 
         LOGGER.debug("authenticate debug: %s", response)
@@ -40,7 +39,6 @@ class Provider(BaseProvider):
 
     # Helper
     def _get_zone_config(self):
-
         data = {"filter": {"field": "ZoneName", "value": self.domain}}
         response = self._request(action="POST", url="/zoneConfigsFind", data=data)
         if response != []:
