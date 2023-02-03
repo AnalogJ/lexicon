@@ -29,7 +29,6 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://rage4.com/rapi"
 
     def _authenticate(self):
-
         payload = self._get("/getdomainbyname/", {"name": self.domain})
 
         if not payload["id"]:
@@ -94,7 +93,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {"id": identifier}
 
         if name:

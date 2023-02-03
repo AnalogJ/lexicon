@@ -218,7 +218,7 @@ class Provider(object):
                 # ArgsConfigSource needs to be reprocessed to rescope the provided
                 # args to the delegate provider
                 new_dict = {}
-                for (key, value) in config_source._parameters.items():
+                for key, value in config_source._parameters.items():
                     if key.startswith(target_prefix):
                         new_param_name = re.sub(f"^{target_prefix}", "", key)
                         if provider_name not in new_dict:

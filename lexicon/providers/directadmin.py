@@ -202,7 +202,7 @@ class Provider(BaseProvider):
 
         existing_records = self.list_records(rtype)
         existing_record_index = 0
-        for (index, record) in enumerate(existing_records):
+        for index, record in enumerate(existing_records):
             if record["id"] == identifier:
                 existing_record_index = index
 

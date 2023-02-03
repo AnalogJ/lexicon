@@ -31,7 +31,6 @@ class Provider(BaseProvider):
         )
 
     def _authenticate(self):
-
         payload = self._get(f"/domain/{self.domain}")
 
         if payload["data"]["exists"] == "N":
@@ -94,7 +93,6 @@ class Provider(BaseProvider):
 
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
-
         data = {"ttl": self._get_lexicon_option("ttl")}
         if rtype:
             data["type"] = rtype

@@ -1,7 +1,7 @@
 jobs:
   - job: test
     variables:
-      IMAGE: ubuntu-20.04
+      IMAGE: ubuntu-22.04
       TOXENV: py
       PYTEST_ADDOPTS: --numprocesses 4
       BRANCH_NAME: $(Build.SourceBranch)
@@ -9,30 +9,30 @@ jobs:
       matrix:
         linux-python-3.7:
           PYTHON_VERSION: 3.7
-        linux-python-3.10-light:
-          PYTHON_VERSION: 3.10
+        linux-python-3.11-light:
+          PYTHON_VERSION: 3.11
           TOXENV: light
-        linux-python-3.10-cover:
-          PYTHON_VERSION: 3.10
+        linux-python-3.11-cover:
+          PYTHON_VERSION: 3.11
           TOXENV: cover
         linux-lint:
-          PYTHON_VERSION: 3.10
+          PYTHON_VERSION: 3.11
           TOXENV: lint
         linux-mypy:
-          PYTHON_VERSION: 3.10
+          PYTHON_VERSION: 3.11
           TOXENV: mypy
         macos-python-3.7:
           IMAGE: macos-11
           PYTHON_VERSION: 3.7
-        macos-python-3.10:
+        macos-python-3.11:
           IMAGE: macos-11
-          PYTHON_VERSION: 3.10
+          PYTHON_VERSION: 3.11
         windows-python-3.7:
           IMAGE: windows-2019
           PYTHON_VERSION: 3.7
-        windows-python-3.10:
+        windows-python-3.11:
           IMAGE: windows-2019
-          PYTHON_VERSION: 3.10
+          PYTHON_VERSION: 3.11
     pool:
       vmImage: $(IMAGE)
     steps:
@@ -41,12 +41,16 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           addToPath: true
         displayName: Enable the targeted python version
-      - script: python -m pip install -U tox poetry
+      - script: |
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          python3 -m pipx install tox
+          python3 -m pipx install poetry
         displayName: Install required runtime dependencies
-      - script: python -m tox
+      - script: tox
         displayName: Execute tests through tox
       - script: |
-          python -m pip install coveralls
+          python3 -m pipx install coveralls
           coveralls
         condition: and(eq(variables['TOXENV'], 'cover'), eq(variables['Build.DefinitionName'], 'main'))
         env:
@@ -67,7 +71,7 @@ jobs:
         displayName: Publish tests reports
   - job: trigger_readthedoc
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-22.04
     steps:
       - bash: curl -X POST -d "branches=`echo "refs/tags/$(Build.SourceBranchName)" | sed 's|refs/.*/||g'`" -d "token=$(RTD_TOKEN)" $(RTD_URL)
     condition: or(and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'main')), eq(variables['Build.DefinitionName'], 'release'))

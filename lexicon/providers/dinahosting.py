@@ -195,7 +195,6 @@ class Provider(BaseProvider):
                 data["text"] = delete_record["content"]
 
             try:
-
                 self._post("", data)
             except requests.exceptions.HTTPError as err:
                 not_exists = err.response.json()["responseCode"] == RC_OBJECT_NOT_EXISTS

@@ -36,7 +36,6 @@ def test_mock_signer(monkeypatch):
     """Enable the mock signer when not testing live."""
 
     if os.environ.get("LEXICON_LIVE_TESTS", "false") == "false":
-
         monkeypatch.setattr(
             InstancePrincipalsSecurityTokenSigner, "__init__", MockSigner.__init__
         )
@@ -89,7 +88,6 @@ class OciProviderTests(TestCase, IntegrationTestsV2):
         return ["authorization", "x-content-sha256"]
 
     def _filter_response(self, response):
-
         response["body"]["string"] = re.sub(
             rb'"compartmentId":"[\w.-]+"',
             b'"compartmentId":"OCI-COMPARTMENT-ID"',

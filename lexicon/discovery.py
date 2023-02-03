@@ -10,7 +10,7 @@ from typing import Dict
 try:
     from importlib.metadata import Distribution, PackageNotFoundError
 except ModuleNotFoundError:
-    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[misc]
+    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
 
 from lexicon import providers
 
