@@ -115,7 +115,7 @@ class Client(object):
             if not available:
                 raise ProviderNotAvailableError(
                     f"This provider ({provider_name}) has required extra dependencies that are missing. "
-                    f"Please run `pip install lexicon[{provider_name}]` first before using it."
+                    f"Please run `pip install dns-lexicon[{provider_name}]` first before using it."
                 )
 
         if not self.config.resolve("lexicon:action"):
