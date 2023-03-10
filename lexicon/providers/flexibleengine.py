@@ -9,13 +9,16 @@ from lexicon.providers.base import Provider as BaseProvider
 LOGGER = logging.getLogger(__name__)
 NAMESERVER_DOMAINS = ["orange-business.com"]
 
+
 def provider_parser(subparser):
     """Configure provider parser for Flexible Engine Cloud"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify token for authentication")
     subparser.add_argument(
         "--zone-id",
         help="specify the zone id",
     )
+
 
 class Provider(BaseProvider):
     """Provider class for Flexible Engine Cloud"""
@@ -28,6 +31,7 @@ class Provider(BaseProvider):
     def _authenticate(self):
         zone_id = self._get_provider_option("zone_id")
         payload = self._get("/zones", {"name": self.domain})
+
         if not zone_id:
             if not payload["zones"]:
                 raise AuthenticationError("No domain found")
@@ -43,8 +47,8 @@ class Provider(BaseProvider):
 
     def _create_record(self, rtype, name, content):
         # put string in array
-        tmp=content
-        content=[]
+        tmp = content
+        content = []
         content.append(tmp)
 
         record = {
@@ -52,13 +56,14 @@ class Provider(BaseProvider):
             "name": self._full_name(name),
             "records": content
         }
+
         if self._get_lexicon_option("ttl"):
             record["ttl"] = self._get_lexicon_option("ttl")
 
         if rtype == "TXT":
-            # Convert "String" to "\"STRING\"" 
+            # Convert "String" to "\"STRING\""
             tmp = []
-            tmp.append( '\"'+record["records"][0]+'\"' )
+            tmp.append('\"' + record["records"][0] + '\"')
             record["records"] = tmp
         try:
             self._post(f"/zones/{self.domain_id}/recordsets", record)
@@ -77,10 +82,10 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", True)
         return True
 
-
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
+
     def _list_records(self, rtype=None, name=None, content=None):
         url = f"/zones/{self.domain_id}/recordsets"
         records = []
@@ -88,8 +93,8 @@ class Provider(BaseProvider):
 
         # Convert it to Array if it is not converted yet.
         if isinstance(content, str):
-            tmp=content
-            content=[]
+            tmp = content
+            content = []
             content.append(tmp)
 
         # Iterating recordsets
@@ -123,7 +128,7 @@ class Provider(BaseProvider):
             ]
 
         if content:
-            if len(content)>1:
+            if len(content) > 1:
                 records = [
                     record
                     for record in records
@@ -133,8 +138,8 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-
     # update a record.
+
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
             records = self._list_records(rtype, name)
@@ -148,7 +153,7 @@ class Provider(BaseProvider):
                 raise Exception(
                     "Multiple records found matching type and name - won't update"
                 )
-                
+
         data = {}
 
         if name:
@@ -162,9 +167,9 @@ class Provider(BaseProvider):
 
         if content:
             if rtype == "TXT":
-                content = '\"'+content+'\"'
-            tmp=content
-            content=[]
+                content = '\"' + content + '\"'
+            tmp = content
+            content = []
             content.append(tmp)
             data["records"] = content
 
@@ -176,9 +181,9 @@ class Provider(BaseProvider):
     # If record does not exist, do nothing.
     def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
-        
-        tmp=content
-        content=[]
+
+        tmp = content
+        content = []
         content.append(tmp)
 
         if not identifier:

@@ -9,6 +9,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 
+
 class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for FlexibleEngine"""
 
@@ -17,14 +18,14 @@ class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
 
     def _filter_headers(self):
         return ["X-Auth-Token"]
-    
+
     def _test_fallback_fn(self):
         return (
             lambda x: "placeholder_" + x
             if x not in ("zone_id")
             else ""
         )
-    
+
     @pytest.mark.skip(reason="Content returned is an Array not a String")
     def test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(
         self,
