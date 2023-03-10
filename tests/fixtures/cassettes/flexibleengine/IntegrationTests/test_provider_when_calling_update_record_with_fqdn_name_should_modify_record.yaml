@@ -1,0 +1,171 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: GET
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test
+  response:
+    body:
+      string: '{"zones":[{"id":"ff8080827274f00e018563dcecb527d3","name":"flexibleengine.test.","description":"This
+        zone is for test purposes only.","email":"hostmaster@example.com","ttl":300,"serial":1,"masters":[],"status":"ACTIVE","pool_id":"ff80808261568dfe016156c446410001","project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","zone_type":"public","created_at":"2022-12-30T16:28:21.021","updated_at":"2022-12-30T16:28:42.022","record_num":14,"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3"}}],"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test"},"metadata":{"total_count":1}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '666'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 10 Mar 2023 11:09:36 GMT
+      Server:
+      - api-gateway
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 48048baa6a9d88825065dcea56f8c96e
+      X-XSS-Protection:
+      - 1; mode=block;
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "orig.testfqdn.flexibleengine.test", "records":
+      ["\"challengetoken\""], "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '108'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
+  response:
+    body:
+      string: '{"code":"DNS.0312","message":"Attribute ''name'' conflicts with Record
+        Set ''orig.testfqdn.flexibleengine.test.'' type ''TXT'' in line ''default_view''."}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '146'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 10 Mar 2023 11:09:37 GMT
+      Server:
+      - api-gateway
+      X-Request-Id:
+      - 3d380a491d0e284171d4ff191f386d77
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: GET
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
+  response:
+    body:
+      string: '{"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets"},"recordsets":[{"id":"ff8080827274ef7d0186cafb743f1ae7","name":"docs.flexibleengine.test.","description":null,"type":"CNAME","ttl":3600,"records":["docs.example.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.355","update_at":"2023-03-10T10:05:22.375","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb743f1ae7"}},{"id":"ff8080827274ef7d0186cafb75181ae9","name":"_acme-challenge.full.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.576","update_at":"2023-03-10T10:05:22.593","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb75181ae9"}},{"id":"ff8080827274ef7d0186cafb7c371af3","name":"ttl.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"ttlshouldbe3600\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.394","update_at":"2023-03-10T10:05:24.431","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7c371af3"}},{"id":"ff8080827274ef7d0186cafb7e751af6","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"updated\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.966","update_at":"2023-03-10T11:09:36.940","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7e751af6"}},{"id":"ff8080827274ef7d0186cafb80151afc","name":"orig.testfull.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:25.387","update_at":"2023-03-10T10:05:25.490","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb80151afc"}},{"id":"ff8080827274f00e018563dcecb527d4","name":"flexibleengine.test.","description":null,"type":"SOA","ttl":300,"records":["ns1.prod-cloud-ocb.orange-business.com.
+        hostmaster.example.com. (1 7200 900 1209600 300)"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.051","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d4"}},{"id":"ff8080827274f00e018563dcecb527d6","name":"flexibleengine.test.","description":null,"type":"NS","ttl":172800,"records":["ns2.prod-cloud-ocb.orange-business.com.","ns1.prod-cloud-ocb.orange-business.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.050","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d6"}},{"id":"ff8080827274f00e0186cafb73cc16ff","name":"localhost.flexibleengine.test.","description":null,"type":"A","ttl":3600,"records":["127.0.0.1"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.235","update_at":"2023-03-10T10:05:22.268","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb73cc16ff"}},{"id":"ff8080827274f00e0186cafb74b11701","name":"_acme-challenge.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.470","update_at":"2023-03-10T10:05:22.495","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb74b11701"}},{"id":"ff8080827274f00e0186cafb75821703","name":"_acme-challenge.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.680","update_at":"2023-03-10T10:05:22.700","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb75821703"}},{"id":"ff8080827274f00e0186cafb75ed1705","name":"_acme-challenge.createrecordset.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken1\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.787","update_at":"2023-03-10T10:05:22.805","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb75ed1705"}},{"id":"ff8080827274f00e0186cafb76851707","name":"_acme-challenge.noop.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.938","update_at":"2023-03-10T10:05:22.960","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb76851707"}},{"id":"ff8080827274f00e0186cafb7da1170d","name":"orig.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.757","update_at":"2023-03-10T11:09:36.762","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb7da1170d"}},{"id":"ff8080827274f00e0186cafb7f4a170f","name":"orig.testfqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:25.179","update_at":"2023-03-10T10:05:25.285","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb7f4a170f"}}],"metadata":{"total_count":14}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '8010'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 10 Mar 2023 11:09:37 GMT
+      Server:
+      - api-gateway
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains;
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 23a0a04ac79238472d28f19441d78d79
+      X-XSS-Protection:
+      - 1; mode=block;
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "updated.testfqdn.flexibleengine.test.", "type": "TXT", "ttl":
+      3600, "records": ["\"challengetoken\""]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '112'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: PUT
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb7f4a170f
+  response:
+    body:
+      string: '{"id":"ff8080827274f00e0186cafb7f4a170f","name":"orig.testfqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"PENDING_UPDATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:25.179","update_at":"2023-03-10T11:09:37.132","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb7f4a170f"}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '559'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 10 Mar 2023 11:09:37 GMT
+      Server:
+      - api-gateway
+      X-Request-Id:
+      - c1f0d917b11422f23cabec577feef36d
+    status:
+      code: 202
+      message: Accepted
+version: 1
