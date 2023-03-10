@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.1
+      - python-requests/2.28.2
     method: GET
     uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones?name=flexibleengine.test
   response:
@@ -28,7 +28,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 01 Jan 2023 13:01:51 GMT
+      - Fri, 10 Mar 2023 10:05:24 GMT
       Server:
       - api-gateway
       Strict-Transport-Security:
@@ -40,7 +40,7 @@ interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 6a968962e86b5e0b35e44177a794cb77
+      - acf191232e0fbe9849901ea005eb1753
       X-XSS-Protection:
       - 1; mode=block;
     status:
@@ -61,12 +61,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.1
+      - python-requests/2.28.2
     method: POST
     uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
   response:
     body:
-      string: '{"id":"ff8080827274f00e01856d6c97091db4","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"PENDING_CREATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:51.232","update_at":null,"default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c97091db4"}}'
+      string: '{"id":"ff8080827274ef7d0186cafb7e751af6","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"PENDING_CREATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.966","update_at":null,"default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7e751af6"}}'
     headers:
       Connection:
       - keep-alive
@@ -75,11 +75,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 01 Jan 2023 13:01:51 GMT
+      - Fri, 10 Mar 2023 10:05:24 GMT
       Server:
       - api-gateway
       X-Request-Id:
-      - 37f1ee285f58d47d9fc0678e676f0f08
+      - 7597cc177ee28b15477a2aba04335eb1
     status:
       code: 202
       message: Accepted
@@ -97,13 +97,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.1
+      - python-requests/2.28.2
     method: GET
     uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets
   response:
     body:
-      string: '{"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets"},"recordsets":[{"id":"ff8080827274ef7d01856d6c8cff1258","name":"localhost.flexibleengine.test.","description":null,"type":"A","ttl":3600,"records":["127.0.0.1"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:48.659","update_at":"2023-01-01T13:01:48.683","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8cff1258"}},{"id":"ff8080827274ef7d01856d6c8e4f125a","name":"_acme-challenge.full.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:48.996","update_at":"2023-01-01T13:01:49.026","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8e4f125a"}},{"id":"ff8080827274ef7d01856d6c8ec0125c","name":"_acme-challenge.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:49.110","update_at":"2023-01-01T13:01:49.131","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8ec0125c"}},{"id":"ff8080827274ef7d01856d6c8f24125e","name":"_acme-challenge.createrecordset.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken1\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:49.211","update_at":"2023-01-01T13:01:49.230","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8f24125e"}},{"id":"ff8080827274ef7d01856d6c8fbe1260","name":"_acme-challenge.noop.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:49.358","update_at":"2023-01-01T13:01:49.388","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c8fbe1260"}},{"id":"ff8080827274ef7d01856d6c95231266","name":"ttl.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"ttlshouldbe3600\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:50.745","update_at":"2023-01-01T13:01:50.765","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d01856d6c95231266"}},{"id":"ff8080827274f00e018563dcecb527d4","name":"flexibleengine.test.","description":null,"type":"SOA","ttl":300,"records":["ns1.prod-cloud-ocb.orange-business.com.
-        hostmaster.example.com. (1 7200 900 1209600 300)"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.051","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d4"}},{"id":"ff8080827274f00e018563dcecb527d6","name":"flexibleengine.test.","description":null,"type":"NS","ttl":172800,"records":["ns2.prod-cloud-ocb.orange-business.com.","ns1.prod-cloud-ocb.orange-business.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.050","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d6"}},{"id":"ff8080827274f00e01856d6c8d741da8","name":"docs.flexibleengine.test.","description":null,"type":"CNAME","ttl":3600,"records":["docs.example.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:48.772","update_at":"2023-01-01T13:01:48.798","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c8d741da8"}},{"id":"ff8080827274f00e01856d6c8de61daa","name":"_acme-challenge.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:48.890","update_at":"2023-01-01T13:01:48.912","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c8de61daa"}},{"id":"ff8080827274f00e01856d6c965c1db2","name":"orig.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:51.057","update_at":"2023-01-01T13:01:51.151","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c965c1db2"}},{"id":"ff8080827274f00e01856d6c97091db4","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:51.232","update_at":"2023-01-01T13:01:51.249","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c97091db4"}}],"metadata":{"total_count":12}}'
+      string: '{"links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets"},"recordsets":[{"id":"ff8080827274ef7d0186cafb743f1ae7","name":"docs.flexibleengine.test.","description":null,"type":"CNAME","ttl":3600,"records":["docs.example.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.355","update_at":"2023-03-10T10:05:22.375","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb743f1ae7"}},{"id":"ff8080827274ef7d0186cafb75181ae9","name":"_acme-challenge.full.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.576","update_at":"2023-03-10T10:05:22.593","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb75181ae9"}},{"id":"ff8080827274ef7d0186cafb7c371af3","name":"ttl.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"ttlshouldbe3600\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.394","update_at":"2023-03-10T10:05:24.431","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7c371af3"}},{"id":"ff8080827274ef7d0186cafb7e751af6","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.966","update_at":"2023-03-10T10:05:24.999","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7e751af6"}},{"id":"ff8080827274f00e018563dcecb527d4","name":"flexibleengine.test.","description":null,"type":"SOA","ttl":300,"records":["ns1.prod-cloud-ocb.orange-business.com.
+        hostmaster.example.com. (1 7200 900 1209600 300)"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.051","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d4"}},{"id":"ff8080827274f00e018563dcecb527d6","name":"flexibleengine.test.","description":null,"type":"NS","ttl":172800,"records":["ns2.prod-cloud-ocb.orange-business.com.","ns1.prod-cloud-ocb.orange-business.com."],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2022-12-30T16:28:21.021","update_at":"2022-12-30T16:28:42.050","default":true,"project_id":"5374cb5cb9a1450f947a9ff0b60b0b5f","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e018563dcecb527d6"}},{"id":"ff8080827274f00e0186cafb73cc16ff","name":"localhost.flexibleengine.test.","description":null,"type":"A","ttl":3600,"records":["127.0.0.1"],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.235","update_at":"2023-03-10T10:05:22.268","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb73cc16ff"}},{"id":"ff8080827274f00e0186cafb74b11701","name":"_acme-challenge.fqdn.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.470","update_at":"2023-03-10T10:05:22.495","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb74b11701"}},{"id":"ff8080827274f00e0186cafb75821703","name":"_acme-challenge.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.680","update_at":"2023-03-10T10:05:22.700","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb75821703"}},{"id":"ff8080827274f00e0186cafb75ed1705","name":"_acme-challenge.createrecordset.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken1\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.787","update_at":"2023-03-10T10:05:22.805","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb75ed1705"}},{"id":"ff8080827274f00e0186cafb76851707","name":"_acme-challenge.noop.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:22.938","update_at":"2023-03-10T10:05:22.960","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb76851707"}},{"id":"ff8080827274f00e0186cafb7da1170d","name":"orig.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"challengetoken\""],"status":"ACTIVE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.757","update_at":"2023-03-10T10:05:24.877","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e0186cafb7da1170d"}}],"metadata":{"total_count":12}}'
     headers:
       Connection:
       - keep-alive
@@ -112,7 +112,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 01 Jan 2023 13:01:51 GMT
+      - Fri, 10 Mar 2023 10:05:25 GMT
       Server:
       - api-gateway
       Strict-Transport-Security:
@@ -124,7 +124,7 @@ interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 571545b10aef53d77e03907b31d3c693
+      - ae6293324a6d8e61941d67d1d2521cbf
       X-XSS-Protection:
       - 1; mode=block;
     status:
@@ -144,12 +144,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.1
+      - python-requests/2.28.2
     method: PUT
-    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c97091db4
+    uri: https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7e751af6
   response:
     body:
-      string: '{"id":"ff8080827274f00e01856d6c97091db4","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"updated\""],"status":"PENDING_UPDATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-01-01T13:01:51.232","update_at":"2023-01-01T13:01:51.312","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274f00e01856d6c97091db4"}}'
+      string: '{"id":"ff8080827274ef7d0186cafb7e751af6","name":"orig.nameonly.test.flexibleengine.test.","description":null,"type":"TXT","ttl":3600,"records":["\"updated\""],"status":"PENDING_UPDATE","zone_id":"ff8080827274f00e018563dcecb527d3","zone_name":"flexibleengine.test.","create_at":"2023-03-10T10:05:24.966","update_at":"2023-03-10T10:05:25.073","default":false,"project_id":"b0293a0756e94bff84b625b9402a6918","links":{"self":"https://dns.prod-cloud-ocb.orange-business.com/v2/zones/ff8080827274f00e018563dcecb527d3/recordsets/ff8080827274ef7d0186cafb7e751af6"}}'
     headers:
       Connection:
       - keep-alive
@@ -158,11 +158,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 01 Jan 2023 13:01:51 GMT
+      - Fri, 10 Mar 2023 10:05:25 GMT
       Server:
       - api-gateway
       X-Request-Id:
-      - 41f78142d6d439fdac7d0916d2c30ad0
+      - 67419d5f10c1b7c7ceb809abd21f18f5
     status:
       code: 202
       message: Accepted
