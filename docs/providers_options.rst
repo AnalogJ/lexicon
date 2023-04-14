@@ -59,6 +59,9 @@ List of options
 .. _dnspod:
 .. include:: providers/dnspod.rst
 
+.. _dnsservices:
+.. include:: providers/dnsservices.rst
+
 .. _dreamhost:
 .. include:: providers/dreamhost.rst
 
