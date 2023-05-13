@@ -127,7 +127,7 @@ The current supported providers are:
 .. _cloudxns: https://www.cloudxns.net/support/lists/cid/17.html
 .. _conoha: https://www.conoha.jp/docs/
 .. _constellix: https://api-docs.constellix.com/?version=latest
-.. _ddns:
+.. _ddns: https://www.rfc-editor.org/rfc/rfc2136
 .. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
 .. _dinahosting: https://en.dinahosting.com/api
 .. _directadmin: https://www.directadmin.com/features.php?id=504
@@ -182,7 +182,6 @@ The current supported providers are:
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
-.. _rfc2136: https://en.wikipedia.org/wiki/dynamic_dns
 .. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
