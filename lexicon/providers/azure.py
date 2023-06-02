@@ -23,7 +23,7 @@ LOGGER = logging.getLogger(__name__)
 
 AZURE_AD_URL = "https://login.microsoftonline.com"
 MANAGEMENT_URL = "https://management.azure.com"
-API_VERSION = "2018-03-01-preview"
+API_VERSION = "2018-05-01"
 NAMESERVER_DOMAINS = [
     "azure-dns.com",
     "azure-dns.net",
