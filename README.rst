@@ -139,11 +139,13 @@ The current supported providers are:
 .. _dnspod: https://support.dnspod.cn/support/api
 .. _dnsservices: https://dns.services/userapi
 .. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
+.. _duckdns: https://www.duckdns.org/spec.jsp
 .. _dynu: https://www.dynu.com/support/api
 .. _easydns: http://docs.sandbox.rest.easydns.net/
 .. _easyname: https://www.easyname.com/en
 .. _euserv: https://support.euserv.com/api-doc/
 .. _exoscale: https://community.exoscale.com/documentation/dns/api/
+.. _flexibleengine: https://registry.terraform.io/providers/FlexibleEngineCloud/flexibleengine/latest/docs/data-sources/dns_zone_v2
 .. _gandi: http://doc.livedns.gandi.net/
 .. _gehirn: https://support.gehirn.jp/apidocs/gis/dns/index.html
 .. _glesys: https://github.com/glesys/api/wiki/
