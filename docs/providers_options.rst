@@ -77,6 +77,9 @@ List of options
 .. _exoscale:
 .. include:: providers/exoscale.rst
 
+.. _flexibleengine:
+.. include:: providers/flexibleengine.rst
+
 .. _gandi:
 .. include:: providers/gandi.rst
 
