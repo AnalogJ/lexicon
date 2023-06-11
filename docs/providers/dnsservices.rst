@@ -1,4 +1,4 @@
 dnsservices
-    * ``auth_username`` Specify email address for authentication
+    * ``auth_username`` Specify username for authentication
 
     * ``auth_password`` Specify password for authentication

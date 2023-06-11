@@ -1,2 +1,2 @@
 duckdns
-    * ``auth_token`` specify the account token for authentication
+    * ``auth_token`` Specify the account token for authentication

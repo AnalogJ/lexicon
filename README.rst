@@ -90,31 +90,33 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | dinahosting_    | directadmin_    | dnsimple_       | dnsmadeeasy_    | dnspark_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| dnspod_         | dreamhost_      | dynu_           | easydns_        | easyname_       |
+| dnspod_         | dnsservices_    | dreamhost_      | duckdns_        | dynu_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| euserv_         | exoscale_       | gandi_          | gehirn_         | glesys_         |
+| easydns_        | easyname_       | euserv_         | exoscale_       | flexibleengine_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      | henet_          |
+| gandi_          | gehirn_         | glesys_         | godaddy_        | googleclouddns_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| hetzner_        | hostingde_      | hover_          | infoblox_       | infomaniak_     |
+| gransy_         | gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| internetbs_     | inwx_           | joker_          | linode_         | linode4_        |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     | inwx_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| localzone_      | luadns_         | memset_         | misaka_         | mythicbeasts_   |
+| joker_          | linode_         | linode4_        | localzone_      | luadns_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namecom_        | namesilo_       | netcup_         | nfsn_           |
+| memset_         | misaka_         | mythicbeasts_   | namecheap_      | namecom_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | oci_            | onapp_          | online_         |
+| namesilo_       | netcup_         | nfsn_           | njalla_         | nsone_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | porkbun_        | powerdns_       |
+| oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        | safedns_        |
+| pointhq_        | porkbun_        | powerdns_       | rackspace_      | rage4_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| sakuracloud_    | softlayer_      | transip_        | ultradns_       | valuedomain_    |
+| rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vercel_         | vultr_          | webgo_          | yandex_         | yandexcloud_    |
+| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| webgo_          | yandex_         | yandexcloud_    | zeit_           | zilore_         |
++-----------------+-----------------+-----------------+-----------------+-----------------+
+| zonomi_         |                 |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
