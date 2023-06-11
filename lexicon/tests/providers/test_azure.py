@@ -10,7 +10,7 @@ from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
 class AzureTests(TestCase, IntegrationTestsV2):
-    """TestCase for Google Cloud DNS"""
+    """TestCase for Azure Cloud DNS"""
 
     provider_name = "azure"
     domain = "full4ir.tk"
