@@ -49,7 +49,7 @@ boto3 = { version = ">=1", optional = true }  # route53
 localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
-dnspython = { version = ">=2", optional = true }  # ddns
+dnspython = { version = ">=2", optional = true }  # ddns, duckdns
 oci = {version = ">=2", optional = true}  # oci
 
 [tool.poetry.extras]
@@ -58,6 +58,7 @@ localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 ddns = ["dnspython"]
+duckdns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
 full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
