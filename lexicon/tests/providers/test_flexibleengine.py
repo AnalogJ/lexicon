@@ -20,11 +20,7 @@ class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
         return ["X-Auth-Token"]
 
     def _test_fallback_fn(self):
-        return (
-            lambda x: "placeholder_" + x
-            if x not in ("zone_id")
-            else ""
-        )
+        return lambda x: "placeholder_" + x if x not in ("zone_id") else ""
 
     @pytest.mark.skip(reason="Content returned is an Array not a String")
     def test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record(
@@ -44,13 +40,17 @@ class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
     ):
         return
 
-    @pytest.mark.skip(reason="Creating Multiple records matching type and name is not accepted by FlexibleEngine DNS Provider")
+    @pytest.mark.skip(
+        reason="Creating Multiple records matching type and name is not accepted by FlexibleEngine DNS Provider"
+    )
     def test_provider_when_calling_list_records_should_handle_record_sets(
         self,
     ):
         return
 
-    @pytest.mark.skip(reason="Creating Multiple records matching type and name is not accepted by FlexibleEngine DNS Provider")
+    @pytest.mark.skip(
+        reason="Creating Multiple records matching type and name is not accepted by FlexibleEngine DNS Provider"
+    )
     def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(
         self,
     ):

@@ -41,7 +41,9 @@ NAMESERVER_DOMAINS = ["ca-central-1.compute.amazonaws.com"]
 
 def provider_parser(subparser):
     """Module provider for Duck DNS"""
-    subparser.add_argument("--auth-token", help="specify the account token for authentication")
+    subparser.add_argument(
+        "--auth-token", help="specify the account token for authentication"
+    )
 
 
 class Provider(BaseProvider):
@@ -121,7 +123,11 @@ class Provider(BaseProvider):
     # Create record. If the record already exists with the same content, do nothing"
     def _create_record(self, rtype, name, content):
         if self._get_lexicon_option("ttl"):
-            LOGGER.warning("create_record: Duck DNS does not support modifying the TTL, ignoring {}".format(self._get_lexicon_option("ttl")))
+            LOGGER.warning(
+                "create_record: Duck DNS does not support modifying the TTL, ignoring {}".format(
+                    self._get_lexicon_option("ttl")
+                )
+            )
 
         if rtype not in ["A", "AAAA", "TXT"]:
             raise Exception("Duck DNS only supports A, AAAA and TXT records.")
@@ -133,7 +139,7 @@ class Provider(BaseProvider):
 
         params = {
             "domains": Provider._get_duckdns_domain(self.domain),
-            Provider._get_duckdns_rtype_param(rtype): duckdns_content
+            Provider._get_duckdns_rtype_param(rtype): duckdns_content,
         }
 
         result = self._api_call(params)
@@ -148,7 +154,10 @@ class Provider(BaseProvider):
         duckdns_domain = Provider._get_duckdns_domain(self.domain)
         full_duckdns_domain = duckdns_domain + ".duckdns.org"
 
-        records = [Provider._get_dns_record(full_duckdns_domain, rtype) for rtype in ["A", "AAAA", "TXT"]]
+        records = [
+            Provider._get_dns_record(full_duckdns_domain, rtype)
+            for rtype in ["A", "AAAA", "TXT"]
+        ]
         processed_records = [
             {
                 "id": record["id"],
@@ -176,7 +185,11 @@ class Provider(BaseProvider):
     # Create or update a record.
     def _update_record(self, identifier, rtype=None, name=None, content=None):
         if self._get_lexicon_option("ttl"):
-            LOGGER.warning("update_record: Duck DNS does not support modifying the TTL, ignoring {}".format(self._get_lexicon_option("ttl")))
+            LOGGER.warning(
+                "update_record: Duck DNS does not support modifying the TTL, ignoring {}".format(
+                    self._get_lexicon_option("ttl")
+                )
+            )
 
         if not identifier:
             identifier = self._get_record_identifier(rtype=rtype, name=name)
@@ -188,7 +201,7 @@ class Provider(BaseProvider):
 
         params = {
             "domains": Provider._get_duckdns_domain(self.domain),
-            Provider._get_duckdns_rtype_param(identifier): duckdns_content
+            Provider._get_duckdns_rtype_param(identifier): duckdns_content,
         }
 
         result = self._api_call(params)
@@ -210,7 +223,7 @@ class Provider(BaseProvider):
         params = {
             "domains": Provider._get_duckdns_domain(self.domain),
             Provider._get_duckdns_rtype_param(identifier): "",
-            "clear": "true"
+            "clear": "true",
         }
         result = self._api_call(params)
 

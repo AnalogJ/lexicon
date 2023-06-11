@@ -4,8 +4,8 @@ import logging
 
 import requests
 
-from lexicon.providers.base import Provider as BaseProvider
 from lexicon.exceptions import AuthenticationError
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -14,8 +14,12 @@ NAMESERVER_DOMAINS = ["dns.services"]
 
 def provider_parser(subparser):
     """Configure provider parser for DNS.services"""
-    subparser.add_argument("--auth-username", help="specify username for authentication")
-    subparser.add_argument("--auth-password", help="specify password for authentication")
+    subparser.add_argument(
+        "--auth-username", help="specify username for authentication"
+    )
+    subparser.add_argument(
+        "--auth-password", help="specify password for authentication"
+    )
 
 
 class Provider(BaseProvider):
@@ -77,7 +81,7 @@ class Provider(BaseProvider):
         for _, record in payload["records"].items():
             processed_record = {
                 "type": record["type"],
-                "name": record['name'],
+                "name": record["name"],
                 "ttl": record["ttl"],
                 "content": record["content"],
                 "id": record["id"],
@@ -116,7 +120,10 @@ class Provider(BaseProvider):
         if priority:
             data["priority"] = str(priority)
         LOGGER.debug("update_record: %s", data)
-        self._put(f"/service/{self.service_id}/dns/{self.domain_id}/records/{identifier}", data)
+        self._put(
+            f"/service/{self.service_id}/dns/{self.domain_id}/records/{identifier}",
+            data,
+        )
         return True
 
     # Delete an existing record.
@@ -132,7 +139,9 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_record_id)
 
         for record_id in delete_record_id:
-            self._delete(f"/service/{self.service_id}/dns/{self.domain_id}/records/{record_id}")
+            self._delete(
+                f"/service/{self.service_id}/dns/{self.domain_id}/records/{record_id}"
+            )
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)

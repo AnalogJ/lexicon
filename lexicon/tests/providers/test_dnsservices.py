@@ -1,6 +1,7 @@
 """Integration tests for DNS.services"""
 import re
 from unittest import TestCase
+
 from lexicon.tests.providers.integration_tests import IntegrationTestsV2
 
 
@@ -20,6 +21,10 @@ class DNSservicesProviderTests(TestCase, IntegrationTestsV2):
         return [("username", "USERNAME"), ("password", "PASSWORD")]
 
     def _filter_response(self, response):
-        response["body"]["string"] = re.sub(b'"token":"[^"]+"', b'"token":"TOKEN"', response["body"]["string"])
-        response["body"]["string"] = re.sub(b'"refresh":"[^"]+"', b'"refresh":"REFRESH"', response["body"]["string"])
+        response["body"]["string"] = re.sub(
+            b'"token":"[^"]+"', b'"token":"TOKEN"', response["body"]["string"]
+        )
+        response["body"]["string"] = re.sub(
+            b'"refresh":"[^"]+"', b'"refresh":"REFRESH"', response["body"]["string"]
+        )
         return response

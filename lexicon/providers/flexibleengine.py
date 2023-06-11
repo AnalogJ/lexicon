@@ -3,6 +3,7 @@ import json
 import logging
 
 import requests
+
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
@@ -12,8 +13,7 @@ NAMESERVER_DOMAINS = ["orange-business.com"]
 
 def provider_parser(subparser):
     """Configure provider parser for Flexible Engine Cloud"""
-    subparser.add_argument(
-        "--auth-token", help="specify token for authentication")
+    subparser.add_argument("--auth-token", help="specify token for authentication")
     subparser.add_argument(
         "--zone-id",
         help="specify the zone id",
@@ -40,10 +40,10 @@ class Provider(BaseProvider):
                     "Too many domains found. This should not happen"
                 )
             self.domain_id = payload["zones"][0]["id"]
-            self.domain = payload["zones"][0]["name"].rstrip('.')
+            self.domain = payload["zones"][0]["name"].rstrip(".")
         else:
             self.domain_id = zone_id
-            self.domain = payload["zones"][0]["name"].rstrip('.')
+            self.domain = payload["zones"][0]["name"].rstrip(".")
 
     def _create_record(self, rtype, name, content):
         # put string in array
@@ -51,11 +51,7 @@ class Provider(BaseProvider):
         content = []
         content.append(tmp)
 
-        record = {
-            "type": rtype,
-            "name": self._full_name(name),
-            "records": content
-        }
+        record = {"type": rtype, "name": self._full_name(name), "records": content}
 
         if self._get_lexicon_option("ttl"):
             record["ttl"] = self._get_lexicon_option("ttl")
@@ -63,7 +59,7 @@ class Provider(BaseProvider):
         if rtype == "TXT":
             # Convert "String" to "\"STRING\""
             tmp = []
-            tmp.append('\"' + record["records"][0] + '\"')
+            tmp.append('"' + record["records"][0] + '"')
             record["records"] = tmp
         try:
             self._post(f"/zones/{self.domain_id}/recordsets", record)
@@ -72,7 +68,7 @@ class Provider(BaseProvider):
                 (
                     True
                     for error in err.response.json()
-                    if err.response.json()['code'] == 'DNS.0312'
+                    if err.response.json()["code"] == "DNS.0312"
                 ),
                 False,
             )
@@ -101,10 +97,7 @@ class Provider(BaseProvider):
         next_url = url
         while next_url is not None:
             payload = self._get(next_url)
-            if (
-                "links" in payload
-                and "next" in payload["links"]
-            ):
+            if "links" in payload and "next" in payload["links"]:
                 next_url = payload["links"]["next"]
             else:
                 next_url = None
@@ -124,16 +117,14 @@ class Provider(BaseProvider):
 
         if name:
             records = [
-                record for record in records if record["name"].rstrip('.') == self._full_name(name)
+                record
+                for record in records
+                if record["name"].rstrip(".") == self._full_name(name)
             ]
 
         if content:
             if len(content) > 1:
-                records = [
-                    record
-                    for record in records
-                    if record["content"] == content
-                ]
+                records = [record for record in records if record["content"] == content]
 
         LOGGER.debug("list_records: %s", records)
         return records
@@ -167,7 +158,7 @@ class Provider(BaseProvider):
 
         if content:
             if rtype == "TXT":
-                content = '\"' + content + '\"'
+                content = '"' + content + '"'
             tmp = content
             content = []
             content.append(tmp)

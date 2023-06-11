@@ -1,9 +1,10 @@
 # Test for one implementation of the interface
-import pytest
-from lexicon.tests.providers import integration_tests
 from unittest import TestCase, mock
 
+import pytest
+
 from lexicon.providers.duckdns import Provider
+from lexicon.tests.providers import integration_tests
 
 try:
     import dns.resolver
@@ -16,6 +17,7 @@ except ImportError:
 # pass, by inheritance from integration_tests.IntegrationTests
 class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     """Integration tests for Duck DNS"""
+
     provider_name = "duckdns"
     domain = "testlexicon.duckdns.org"
 
@@ -35,7 +37,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support CNAME records")
-    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
+    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support altering the TTL")
@@ -43,7 +47,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support record sets")
-    def test_provider_when_calling_create_record_multiple_times_should_create_record_set(self):
+    def test_provider_when_calling_create_record_multiple_times_should_create_record_set(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support record sets")
@@ -55,7 +61,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support record sets")
-    def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(self):
+    def test_provider_when_calling_delete_record_with_record_set_by_content_should_leave_others_untouched(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support multiple TXT records")
@@ -63,11 +71,15 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support multiple TXT records")
-    def test_provider_when_calling_update_record_with_full_name_should_modify_record(self):
+    def test_provider_when_calling_update_record_with_full_name_should_modify_record(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="The Duck DNS API does not support multiple TXT records")
-    def test_provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
+    def test_provider_when_calling_update_record_with_fqdn_name_should_modify_record(
+        self,
+    ):
         return
 
     # mock DNS queries
@@ -80,7 +92,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # list records, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
         ]
         super().test_provider_when_calling_create_record_with_duplicate_records_should_be_noop()
 
@@ -106,7 +120,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # list records, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
         ]
         super().test_provider_when_calling_list_records_with_fqdn_name_filter_should_return_record()
 
@@ -119,7 +135,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # list records, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
         ]
         super().test_provider_when_calling_list_records_with_full_name_filter_should_return_record()
 
@@ -132,7 +150,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # list records, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
         ]
         super().test_provider_when_calling_list_records_with_name_filter_should_return_record()
 
@@ -145,7 +165,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # update record with a list, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
         ]
         super().test_provider_when_calling_update_record_should_modify_record_name_specified()
 
@@ -158,7 +180,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # delete record with a list, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
             # list records after delete, no A no AAAA no TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
@@ -175,7 +199,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # delete record with a list, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
             # list records after delete, no A no AAAA no TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
@@ -192,7 +218,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # delete record with a list, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
             # list records after delete, no A no AAAA no TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
@@ -209,7 +237,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
             # first list, no A no AAAA one TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
-            dns.rrset.from_text("testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"),
+            dns.rrset.from_text(
+                "testlexicon.duckdns.org", 60, "IN", "TXT", "challengetoken"
+            ),
             # second list, no A no AAAA no TXT
             dns.resolver.NoAnswer,
             dns.resolver.NoAnswer,
@@ -229,6 +259,9 @@ class DuckdnsProviderTests(TestCase, integration_tests.IntegrationTestsV2):
     def test_duckdns_domain_logic(self):
         assert Provider._get_duckdns_domain("testlexicon") == "testlexicon"
         assert Provider._get_duckdns_domain("testlexicon.duckdns.org") == "testlexicon"
-        assert Provider._get_duckdns_domain("test.testlexicon.duckdns.org") == "testlexicon"
+        assert (
+            Provider._get_duckdns_domain("test.testlexicon.duckdns.org")
+            == "testlexicon"
+        )
         with pytest.raises(Exception):
             Provider._get_duckdns_domain("test.testlexicon")

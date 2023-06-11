@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.12.0 - 11/06/2023
 ### Added
 * Add `duckdns` provider (experimental support) (#1533)
 * Add `dnsservices` provider (#1603)
