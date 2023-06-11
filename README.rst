@@ -135,6 +135,7 @@ The current supported providers are:
 .. _dnsmadeeasy: https://api-docs.dnsmadeeasy.com/?version=latest
 .. _dnspark: https://dnspark.zendesk.com/entries/31210577-rest-api-dns-documentation
 .. _dnspod: https://support.dnspod.cn/support/api
+.. _dnsservices: https://dns.services/userapi
 .. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
 .. _dynu: https://www.dynu.com/support/api
 .. _easydns: http://docs.sandbox.rest.easydns.net/
