@@ -332,6 +332,16 @@ files = [
 ]
 
 [[package]]
+name = "circuitbreaker"
+version = "1.4.0"
+description = "Python Circuit Breaker pattern implementation"
+optional = true
+python-versions = "*"
+files = [
+    {file = "circuitbreaker-1.4.0.tar.gz", hash = "sha256:80b7bda803d9a20e568453eb26f3530cd9bf602d6414f6ff6a74c611603396d2"},
+]
+
+[[package]]
 name = "click"
 version = "8.1.3"
 description = "Composable command line interface toolkit"
@@ -356,21 +366,6 @@ files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
-
-[[package]]
-name = "configparser"
-version = "5.3.0"
-description = "Updated configparser from stdlib for earlier Pythons."
-optional = true
-python-versions = ">=3.7"
-files = [
-    {file = "configparser-5.3.0-py3-none-any.whl", hash = "sha256:b065779fd93c6bf4cee42202fa4351b4bb842e96a3fb469440e484517a49b9fa"},
-    {file = "configparser-5.3.0.tar.gz", hash = "sha256:8be267824b541c09b08db124917f48ab525a6c3e837011f3130781a224c57090"},
-]
-
-[package.extras]
-docs = ["jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx"]
-testing = ["flake8 (<5)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "types-backports"]
 
 [[package]]
 name = "coverage"
@@ -959,20 +954,20 @@ files = [
 
 [[package]]
 name = "oci"
-version = "2.9.0"
+version = "2.106.0"
 description = "Oracle Cloud Infrastructure Python SDK"
 optional = true
 python-versions = "*"
 files = [
-    {file = "oci-2.9.0-py2.py3-none-any.whl", hash = "sha256:4fead2296d18679b52c5d6b5e0081772281e482b425990e38322c7fc65db6e64"},
-    {file = "oci-2.9.0.tar.gz", hash = "sha256:82be4b64456de3b0f7f8051e52d48c0c8b6c499c9c22661b454df459ab7a5632"},
+    {file = "oci-2.106.0-py3-none-any.whl", hash = "sha256:8a1f90a3ffd9939b47d16563d85a3bbc0786b1bf0e38acb1472f3b960e0b3c1a"},
+    {file = "oci-2.106.0.tar.gz", hash = "sha256:1dae425d05e81055f75723c897431327076016d4faed1670a6f267d3c59a24f4"},
 ]
 
 [package.dependencies]
 certifi = "*"
-configparser = ">=3.5.0b1"
-cryptography = ">=2.1.4"
-pyOpenSSL = ">=17.5.0"
+circuitbreaker = ">=1.3.1,<2.0.0"
+cryptography = ">=3.2.1,<42.0.0"
+pyOpenSSL = ">=17.5.0,<24.0.0"
 python-dateutil = ">=2.5.3,<3.0.0"
 pytz = ">=2016.10"
 
