@@ -45,7 +45,7 @@ class Provider(BaseProvider):
     def _authenticate(self):
         zone_id = self._get_provider_option("zone_id")
         if not zone_id:
-            payload = self._get("/zones", {"name": self.domain, "status": "active"})
+            payload = self._get("/zones", {"name": self.domain})
 
             if not payload["result"]:
                 raise AuthenticationError("No domain found")
