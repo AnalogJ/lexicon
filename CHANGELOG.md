@@ -2,6 +2,18 @@
 
 ## master - CURRENT
 
+## 3.12.0 - 11/06/2023
+### Added
+* Add `duckdns` provider (experimental support) (#1533)
+* Add `dnsservices` provider (#1603)
+* Add `flexibleengine` provider (#1600)
+* Official support for Python 3.11
+
+### Modified
+* Upgrade API version used for `azure` provider (#1606)
+* Various fixes for documentation (#1488 #1458 #1601 #1605)
+* Fix check for extra dependencies (#1568)
+
 ## 3.11.7 - 26/10/2022
 ### Modified
 * Fix `easyname` provider (update action) (#1442)

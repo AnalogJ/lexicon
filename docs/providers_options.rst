@@ -59,8 +59,14 @@ List of options
 .. _dnspod:
 .. include:: providers/dnspod.rst
 
+.. _dnsservices:
+.. include:: providers/dnsservices.rst
+
 .. _dreamhost:
 .. include:: providers/dreamhost.rst
+
+.. _duckdns:
+.. include:: providers/duckdns.rst
 
 .. _dynu:
 .. include:: providers/dynu.rst
@@ -76,6 +82,9 @@ List of options
 
 .. _exoscale:
 .. include:: providers/exoscale.rst
+
+.. _flexibleengine:
+.. include:: providers/flexibleengine.rst
 
 .. _gandi:
 .. include:: providers/gandi.rst

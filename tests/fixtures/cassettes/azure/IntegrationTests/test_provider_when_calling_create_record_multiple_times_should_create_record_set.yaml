@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode 'client_secret=CLIENT_SECRET&grant_type=client_credentials&resource=https%3A%2F%2Fmanagement.azure.com&client_id=CLIENT_ID'
+    body: grant_type=client_credentials&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&resource=https%3A%2F%2Fmanagement.azure.com
     headers:
       Accept:
       - '*/*'
@@ -9,42 +9,46 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '179'
+      - '175'
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: POST
     uri: https://login.microsoftonline.com/TENANT_ID/oauth2/token
   response:
     body:
-      string: !!python/unicode '{"token_type":"Bearer","expires_in":"3600","ext_expires_in":"3600","expires_on":"1557007361","not_before":"1557003461","resource":"https://management.azure.com","access_token":"TOKEN"}'
+      string: '{"token_type":"Bearer","expires_in":"3599","ext_expires_in":"3599","expires_on":"1685704065","not_before":"1685700165","resource":"https://management.azure.com","access_token":"TOKEN"}'
     headers:
-      cache-control:
-      - no-cache, no-store
-      content-length:
-      - '1335'
-      content-type:
+      Cache-Control:
+      - no-store, no-cache
+      Content-Length:
+      - '1466'
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:40 GMT
-      expires:
+      Date:
+      - Fri, 02 Jun 2023 10:07:45 GMT
+      Expires:
       - '-1'
-      p3p:
+      P3P:
       - CP="DSP CUR OTPi IND OTRi ONL FIN"
-      pragma:
+      Pragma:
       - no-cache
-      set-cookie:
-      - fpc=AiApiSTVPCVJizKdF83fYFSPpLAkAQAAAPD0X9QOAAAA; expires=Mon, 03-Jun-2019
-        21:02:41 GMT; path=/; secure; HttpOnly
-      - x-ms-gateway-slice=prod; path=/; secure; HttpOnly
-      - stsservicecookie=ests; path=/; secure; HttpOnly
-      strict-transport-security:
+      Set-Cookie:
+      - fpc=AlNucxTnmnhKgAsfiAONxl6aZoqtAQAAAHC2C9wOAAAA; expires=Sun, 02-Jul-2023
+        10:07:45 GMT; path=/; secure; HttpOnly; SameSite=None
+      - x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly
+      - stsservicecookie=estsfd; path=/; secure; samesite=none; httponly
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
+      X-XSS-Protection:
+      - '0'
+      x-ms-ests-server:
+      - 2.1.15427.11 - NEULR1 ProdSlices
       x-ms-request-id:
-      - d4edca14-c455-4d62-9671-1fa1804a1800
+      - d572b1a6-0c67-497b-99af-7920a4896300
     status:
       code: 200
       message: OK
@@ -60,43 +64,43 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: GET
-    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnsZones?api-version=2018-03-01-preview
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnsZones?api-version=2018-05-01
   response:
     body:
-      string: !!python/unicode '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk","name":"full4ir.tk","type":"Microsoft.Network\/dnszones","etag":"00000002-0000-0000-a2fa-8fbbededd401","location":"global","tags":{},"properties":{"maxNumberOfRecordSets":10000,"maxNumberOfRecordsPerRecordSet":null,"nameServers":["ns1-07.azure-dns.com.","ns2-07.azure-dns.net.","ns3-07.azure-dns.org.","ns4-07.azure-dns.info."],"numberOfRecordSets":7,"zoneType":"Public"}}]}'
+      string: '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk","name":"full4ir.tk","type":"Microsoft.Network\/dnszones","etag":"29c4b592-50a9-4135-a768-8b1b7e35b36a","location":"global","tags":{},"properties":{"maxNumberOfRecordSets":10000,"maxNumberOfRecordsPerRecordSet":null,"nameServers":["ns1-05.azure-dns.com.","ns2-05.azure-dns.net.","ns3-05.azure-dns.org.","ns4-05.azure-dns.info."],"numberOfRecordSets":7,"zoneType":"Public"}}]}'
     headers:
-      cache-control:
+      Cache-Control:
       - private
-      content-length:
-      - '524'
-      content-type:
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:41 GMT
-      server:
+      Date:
+      - Fri, 02 Jun 2023 10:07:44 GMT
+      Server:
       - Microsoft-IIS/10.0
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      transfer-encoding:
+      Transfer-Encoding:
       - chunked
-      vary:
+      Vary:
       - Accept-Encoding
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-ms-correlation-request-id:
-      - 51c66161-f922-432d-8ebd-336db7bcf12e
-      x-ms-ratelimit-remaining-subscription-resource-entities-read:
-      - '59995'
-      x-ms-ratelimit-remaining-subscription-resource-requests:
-      - '495'
-      x-ms-request-id:
-      - 0cbe3895-24da-46e9-8f89-b67581db50bf
-      x-ms-routing-request-id:
-      - FRANCECENTRAL:20190504T210242Z:51c66161-f922-432d-8ebd-336db7bcf12e
-      x-powered-by:
+      X-Powered-By:
       - ASP.NET
+      content-length:
+      - '566'
+      x-ms-correlation-request-id:
+      - 2a870482-26ac-406a-b8d6-31ae04ee819e
+      x-ms-ratelimit-remaining-subscription-resource-entities-read:
+      - '59999'
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '499'
+      x-ms-request-id:
+      - 8558ad1a-38d2-4606-8ae2-496f717acb7e
+      x-ms-routing-request-id:
+      - GERMANYWESTCENTRAL:20230602T100745Z:2a870482-26ac-406a-b8d6-31ae04ee819e
     status:
       code: 200
       message: OK
@@ -112,49 +116,49 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: GET
-    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT?api-version=2018-03-01-preview
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT?api-version=2018-05-01
   response:
     body:
-      string: !!python/unicode '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.fqdn","name":"_acme-challenge.fqdn","type":"Microsoft.Network\/dnszones\/TXT","etag":"8ab8aee6-d933-4b1c-9111-1af9218f8fb3","properties":{"fqdn":"_acme-challenge.fqdn.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.full","name":"_acme-challenge.full","type":"Microsoft.Network\/dnszones\/TXT","etag":"6eb3d9c1-2b55-4b34-97eb-dbbd37f525f9","properties":{"fqdn":"_acme-challenge.full.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.test","name":"_acme-challenge.test","type":"Microsoft.Network\/dnszones\/TXT","etag":"7633f2cc-078b-4b00-a760-8d9862aafc2f","properties":{"fqdn":"_acme-challenge.test.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}}]}'
+      string: '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.fqdn","name":"_acme-challenge.fqdn","type":"Microsoft.Network\/dnszones\/TXT","etag":"99f7f257-2cb7-4a6b-8f3e-eb15a7aa5390","properties":{"fqdn":"_acme-challenge.fqdn.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.full","name":"_acme-challenge.full","type":"Microsoft.Network\/dnszones\/TXT","etag":"84e17243-b6f5-4385-bdbd-950c8b2da0db","properties":{"fqdn":"_acme-challenge.full.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.test","name":"_acme-challenge.test","type":"Microsoft.Network\/dnszones\/TXT","etag":"d264f5b6-342c-40f4-92e2-91ecdf07a17e","properties":{"fqdn":"_acme-challenge.test.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}}]}'
     headers:
-      cache-control:
+      Cache-Control:
       - private
-      content-length:
-      - '1205'
-      content-type:
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:42 GMT
-      server:
+      Date:
+      - Fri, 02 Jun 2023 10:07:52 GMT
+      Server:
       - Microsoft-IIS/10.0
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      transfer-encoding:
+      Transfer-Encoding:
       - chunked
-      vary:
+      Vary:
       - Accept-Encoding
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-ms-correlation-request-id:
-      - 10b35611-3b93-4a48-a4e9-e988d29d5f57
-      x-ms-ratelimit-remaining-subscription-resource-entities-read:
-      - '59959'
-      x-ms-ratelimit-remaining-subscription-resource-requests:
-      - '495'
-      x-ms-request-id:
-      - 3dddeb29-7b11-4f52-a87b-3e8f368a48e4
-      x-ms-routing-request-id:
-      - FRANCECENTRAL:20190504T210243Z:10b35611-3b93-4a48-a4e9-e988d29d5f57
-      x-powered-by:
+      X-Powered-By:
       - ASP.NET
+      content-length:
+      - '1361'
+      x-ms-correlation-request-id:
+      - 960532db-399f-4bcc-a081-fde97ebea77e
+      x-ms-ratelimit-remaining-subscription-resource-entities-read:
+      - '59997'
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '499'
+      x-ms-request-id:
+      - b1c4adeb-3baf-4f4e-9362-460e4c2d237d
+      x-ms-routing-request-id:
+      - GERMANYWESTCENTRAL:20230602T100753Z:960532db-399f-4bcc-a081-fde97ebea77e
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{"properties": {"TXTRecords": [{"value": ["challengetoken1"]}],
-      "TTL": 3600}}'
+    body: '{"properties": {"TXTRecords": [{"value": ["challengetoken1"]}], "TTL":
+      3600}}'
     headers:
       Accept:
       - '*/*'
@@ -169,39 +173,39 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: PUT
-    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT/_acme-challenge.createrecordset?api-version=2018-03-01-preview
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT/_acme-challenge.createrecordset?api-version=2018-05-01
   response:
     body:
-      string: !!python/unicode '{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"56eda8bf-9236-4554-8bdd-0697e3738164","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1"]}]}}'
+      string: '{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"1873c626-bfa2-4b66-afcc-b7007c675883","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1"]}],"targetResource":{},"provisioningState":"Succeeded"}}'
     headers:
-      cache-control:
+      Cache-Control:
       - private
-      content-length:
-      - '431'
-      content-type:
+      Content-Length:
+      - '483'
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:43 GMT
-      etag:
-      - 56eda8bf-9236-4554-8bdd-0697e3738164
-      server:
+      Date:
+      - Fri, 02 Jun 2023 10:07:54 GMT
+      ETag:
+      - 1873c626-bfa2-4b66-afcc-b7007c675883
+      Server:
       - Microsoft-IIS/10.0
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-ms-correlation-request-id:
-      - 8fb7850a-519f-4a84-99fa-551f6da86ba0
-      x-ms-ratelimit-remaining-subscription-resource-requests:
-      - '11990'
-      x-ms-request-id:
-      - 52fd331b-58fc-4d29-b5a9-6fc094510a91
-      x-ms-routing-request-id:
-      - FRANCECENTRAL:20190504T210244Z:8fb7850a-519f-4a84-99fa-551f6da86ba0
-      x-powered-by:
+      X-Powered-By:
       - ASP.NET
+      x-ms-correlation-request-id:
+      - b337db22-ac0b-42f1-ba55-1cb7081dbb29
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '11999'
+      x-ms-request-id:
+      - 4fb2fb5d-402a-4289-ac00-b6debc43d173
+      x-ms-routing-request-id:
+      - GERMANYWESTCENTRAL:20230602T100754Z:b337db22-ac0b-42f1-ba55-1cb7081dbb29
     status:
       code: 201
       message: Created
@@ -217,49 +221,49 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: GET
-    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT?api-version=2018-03-01-preview
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT?api-version=2018-05-01
   response:
     body:
-      string: !!python/unicode '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"56eda8bf-9236-4554-8bdd-0697e3738164","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1"]}]}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.fqdn","name":"_acme-challenge.fqdn","type":"Microsoft.Network\/dnszones\/TXT","etag":"8ab8aee6-d933-4b1c-9111-1af9218f8fb3","properties":{"fqdn":"_acme-challenge.fqdn.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.full","name":"_acme-challenge.full","type":"Microsoft.Network\/dnszones\/TXT","etag":"6eb3d9c1-2b55-4b34-97eb-dbbd37f525f9","properties":{"fqdn":"_acme-challenge.full.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.test","name":"_acme-challenge.test","type":"Microsoft.Network\/dnszones\/TXT","etag":"7633f2cc-078b-4b00-a760-8d9862aafc2f","properties":{"fqdn":"_acme-challenge.test.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}]}}]}'
+      string: '{"value":[{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"1873c626-bfa2-4b66-afcc-b7007c675883","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1"]}],"targetResource":{},"provisioningState":"Succeeded"}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.fqdn","name":"_acme-challenge.fqdn","type":"Microsoft.Network\/dnszones\/TXT","etag":"99f7f257-2cb7-4a6b-8f3e-eb15a7aa5390","properties":{"fqdn":"_acme-challenge.fqdn.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.full","name":"_acme-challenge.full","type":"Microsoft.Network\/dnszones\/TXT","etag":"84e17243-b6f5-4385-bdbd-950c8b2da0db","properties":{"fqdn":"_acme-challenge.full.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}},{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.test","name":"_acme-challenge.test","type":"Microsoft.Network\/dnszones\/TXT","etag":"d264f5b6-342c-40f4-92e2-91ecdf07a17e","properties":{"fqdn":"_acme-challenge.test.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken"]}],"targetResource":{},"provisioningState":"Succeeded"}}]}'
     headers:
-      cache-control:
+      Cache-Control:
       - private
-      content-length:
-      - '1637'
-      content-type:
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:44 GMT
-      server:
+      Date:
+      - Fri, 02 Jun 2023 10:07:54 GMT
+      Server:
       - Microsoft-IIS/10.0
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      transfer-encoding:
+      Transfer-Encoding:
       - chunked
-      vary:
+      Vary:
       - Accept-Encoding
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-ms-correlation-request-id:
-      - a9398f82-e809-445b-b589-addd537995b9
-      x-ms-ratelimit-remaining-subscription-resource-entities-read:
-      - '59956'
-      x-ms-ratelimit-remaining-subscription-resource-requests:
-      - '496'
-      x-ms-request-id:
-      - 6a12aa7b-8cff-4529-97d9-ae65bd565ca3
-      x-ms-routing-request-id:
-      - FRANCECENTRAL:20190504T210245Z:a9398f82-e809-445b-b589-addd537995b9
-      x-powered-by:
+      X-Powered-By:
       - ASP.NET
+      content-length:
+      - '1845'
+      x-ms-correlation-request-id:
+      - d1d540a3-827c-4b54-bf3e-e90fa0ff53ff
+      x-ms-ratelimit-remaining-subscription-resource-entities-read:
+      - '59996'
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '499'
+      x-ms-request-id:
+      - f3ea4b98-43a1-48a8-ad5a-8e2553b81998
+      x-ms-routing-request-id:
+      - GERMANYWESTCENTRAL:20230602T100754Z:d1d540a3-827c-4b54-bf3e-e90fa0ff53ff
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{"properties": {"TXTRecords": [{"value": ["challengetoken1",
-      "challengetoken2"]}], "TTL": 3600}}'
+    body: '{"properties": {"TXTRecords": [{"value": ["challengetoken1"]}, {"value":
+      ["challengetoken2"]}], "TTL": 3600}}'
     headers:
       Accept:
       - '*/*'
@@ -270,47 +274,47 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '96'
+      - '109'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.21.0
+      - python-requests/2.28.2
     method: PUT
-    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT/_acme-challenge.createrecordset?api-version=2018-03-01-preview
+    uri: https://management.azure.com/subscriptions/SUBSCRIPTION_ID/resourceGroups/dns-test/providers/Microsoft.Network/dnszones/full4ir.tk/TXT/_acme-challenge.createrecordset?api-version=2018-05-01
   response:
     body:
-      string: !!python/unicode '{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"c386a803-9600-4422-964d-26a15587a26d","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1","challengetoken2"]}]}}'
+      string: '{"id":"\/subscriptions\/SUBSCRIPTION_ID\/resourceGroups\/dns-test\/providers\/Microsoft.Network\/dnszones\/full4ir.tk\/TXT\/_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset","type":"Microsoft.Network\/dnszones\/TXT","etag":"a7d3b7b0-babb-4a30-99c4-8cd147202318","properties":{"fqdn":"_acme-challenge.createrecordset.full4ir.tk.","TTL":3600,"TXTRecords":[{"value":["challengetoken1"]},{"value":["challengetoken2"]}],"targetResource":{},"provisioningState":"Succeeded"}}'
     headers:
-      cache-control:
+      Cache-Control:
       - private
-      content-length:
-      - '449'
-      content-type:
+      Content-Type:
       - application/json; charset=utf-8
-      date:
-      - Sat, 04 May 2019 21:02:45 GMT
-      etag:
-      - c386a803-9600-4422-964d-26a15587a26d
-      server:
+      Date:
+      - Fri, 02 Jun 2023 10:07:55 GMT
+      ETag:
+      - a7d3b7b0-babb-4a30-99c4-8cd147202318
+      Server:
       - Microsoft-IIS/10.0
-      strict-transport-security:
+      Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      transfer-encoding:
+      Transfer-Encoding:
       - chunked
-      vary:
+      Vary:
       - Accept-Encoding
-      x-content-type-options:
+      X-Content-Type-Options:
       - nosniff
-      x-ms-correlation-request-id:
-      - 072e9b71-12df-4267-b3e0-f04b0deeeca6
-      x-ms-ratelimit-remaining-subscription-resource-requests:
-      - '11992'
-      x-ms-request-id:
-      - fbe4b6a0-6bb5-4e1e-98a7-afec947caa0e
-      x-ms-routing-request-id:
-      - FRANCECENTRAL:20190504T210246Z:072e9b71-12df-4267-b3e0-f04b0deeeca6
-      x-powered-by:
+      X-Powered-By:
       - ASP.NET
+      content-length:
+      - '513'
+      x-ms-correlation-request-id:
+      - ea0d3adb-9255-41eb-a126-4a5e2ca822fc
+      x-ms-ratelimit-remaining-subscription-resource-requests:
+      - '11998'
+      x-ms-request-id:
+      - deb30e9d-72fb-4ba2-90d7-bce05b55aa71
+      x-ms-routing-request-id:
+      - GERMANYWESTCENTRAL:20230602T100756Z:ea0d3adb-9255-41eb-a126-4a5e2ca822fc
     status:
       code: 200
       message: OK

@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.11.7"
+version = "3.12.0"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -24,6 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 authors = [
     "Jason Kulatunga", "Adrien Ferrand"
@@ -44,11 +45,11 @@ requests = ">=2"
 beautifulsoup4 = ">=4"
 importlib-metadata = ">=4"
 # Optional dependencies required by some providers
-boto3 = { version = ">=1", optional = true }  # route53
+boto3 = { version = ">=1.25", optional = true }  # route53
 localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
-dnspython = { version = ">=2", optional = true }  # ddns
+dnspython = { version = ">=2", optional = true }  # ddns, duckdns
 oci = {version = ">=2", optional = true}  # oci
 
 [tool.poetry.extras]
@@ -57,6 +58,7 @@ localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 ddns = ["dnspython"]
+duckdns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
 full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]

@@ -90,31 +90,33 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | dinahosting_    | directadmin_    | dnsimple_       | dnsmadeeasy_    | dnspark_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| dnspod_         | dreamhost_      | dynu_           | easydns_        | easyname_       |
+| dnspod_         | dnsservices_    | dreamhost_      | duckdns_        | dynu_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| euserv_         | exoscale_       | gandi_          | gehirn_         | glesys_         |
+| easydns_        | easyname_       | euserv_         | exoscale_       | flexibleengine_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      | henet_          |
+| gandi_          | gehirn_         | glesys_         | godaddy_        | googleclouddns_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| hetzner_        | hostingde_      | hover_          | infoblox_       | infomaniak_     |
+| gransy_         | gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| internetbs_     | inwx_           | joker_          | linode_         | linode4_        |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     | inwx_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| localzone_      | luadns_         | memset_         | misaka_         | mythicbeasts_   |
+| joker_          | linode_         | linode4_        | localzone_      | luadns_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namecom_        | namesilo_       | netcup_         | nfsn_           |
+| memset_         | misaka_         | mythicbeasts_   | namecheap_      | namecom_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | oci_            | onapp_          | online_         |
+| namesilo_       | netcup_         | nfsn_           | njalla_         | nsone_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | porkbun_        | powerdns_       |
+| oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        | safedns_        |
+| pointhq_        | porkbun_        | powerdns_       | rackspace_      | rage4_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| sakuracloud_    | softlayer_      | transip_        | ultradns_       | valuedomain_    |
+| rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vercel_         | vultr_          | webgo_          | yandex_         | yandexcloud_    |
+| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| webgo_          | yandex_         | yandexcloud_    | zeit_           | zilore_         |
++-----------------+-----------------+-----------------+-----------------+-----------------+
+| zonomi_         |                 |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -127,7 +129,7 @@ The current supported providers are:
 .. _cloudxns: https://www.cloudxns.net/support/lists/cid/17.html
 .. _conoha: https://www.conoha.jp/docs/
 .. _constellix: https://api-docs.constellix.com/?version=latest
-.. _ddns:
+.. _ddns: https://www.rfc-editor.org/rfc/rfc2136
 .. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
 .. _dinahosting: https://en.dinahosting.com/api
 .. _directadmin: https://www.directadmin.com/features.php?id=504
@@ -135,12 +137,15 @@ The current supported providers are:
 .. _dnsmadeeasy: https://api-docs.dnsmadeeasy.com/?version=latest
 .. _dnspark: https://dnspark.zendesk.com/entries/31210577-rest-api-dns-documentation
 .. _dnspod: https://support.dnspod.cn/support/api
+.. _dnsservices: https://dns.services/userapi
 .. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
+.. _duckdns: https://www.duckdns.org/spec.jsp
 .. _dynu: https://www.dynu.com/support/api
 .. _easydns: http://docs.sandbox.rest.easydns.net/
 .. _easyname: https://www.easyname.com/en
 .. _euserv: https://support.euserv.com/api-doc/
 .. _exoscale: https://community.exoscale.com/documentation/dns/api/
+.. _flexibleengine: https://registry.terraform.io/providers/FlexibleEngineCloud/flexibleengine/latest/docs/data-sources/dns_zone_v2
 .. _gandi: http://doc.livedns.gandi.net/
 .. _gehirn: https://support.gehirn.jp/apidocs/gis/dns/index.html
 .. _glesys: https://github.com/glesys/api/wiki/
@@ -182,7 +187,6 @@ The current supported providers are:
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
-.. _rfc2136: https://en.wikipedia.org/wiki/dynamic_dns
 .. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/

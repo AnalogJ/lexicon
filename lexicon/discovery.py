@@ -50,7 +50,7 @@ def _resolve_requirements(provider: str, distribution: Distribution) -> bool:
         raise ValueError("Error while trying finding requirements.")
 
     requirements = [
-        re.sub(r"^(.*)\s\(.*\)(?:;.*|)$", r"\1", requirement)
+        re.sub(r"^(.*)\s\(.*\)(?:\s*;.*|)$", r"\1", requirement)
         for requirement in requires
         if f'extra == "{provider}"' in requirement
     ]
