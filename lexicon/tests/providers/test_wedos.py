@@ -29,7 +29,7 @@ class WedosProviderTests(TestCase, IntegrationTestsV2):
         else:
             data['request']['user'] = 'username'
             data['request']['auth'] = 'password'
-            body = request_start_string+json.dumps(data)
+            body = request_start_string + json.dumps(data)
             body = urllib.parse.quote(urllib.parse.quote_plus(body.encode()))
             request.body = body
 
