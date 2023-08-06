@@ -29,19 +29,19 @@ def provider_parser(subparser):
     )
 
 
-def filter_rtype(rtype, rec):
+def _filter_rtype(rtype: str, rec) -> bool:
     if rec["type"] == rtype:
         return True
     return False
 
 
-def filter_name(name, rec):
+def _filter_name(name: str, rec) -> bool:
     if rec["name"] == name:
         return True
     return False
 
 
-def filter_content(content, rec):
+def _filter_content(content: str, rec) -> bool:
     if rec["content"] == content:
         return True
     return False
@@ -121,11 +121,11 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
         if rtype is not None:
-            records = list(filter(lambda rec: filter_rtype(rtype, rec), records))
+            records = list(filter(lambda rec: _filter_rtype(rtype, rec), records))
         if name is not None:
-            records = list(filter(lambda rec: filter_name(self._full_name(name), rec), records))
+            records = list(filter(lambda rec: _filter_name(self._full_name(name), rec), records))
         if content is not None:
-            records = list(filter(lambda rec: filter_content(content, rec), records))
+            records = list(filter(lambda rec: _filter_content(content, rec), records))
 
         return records
 
@@ -143,11 +143,13 @@ class Provider(BaseProvider):
         for record_id in identifiers:
             data = {
                 'type': rtype,
-                'name': self._full_name(name),
+
                 'rdata': content,
                 'domain': self.domain_id,
                 'row_id': record_id
             }
+            if name:
+                data['name'] = self._full_name(name)
             if self._get_lexicon_option("ttl"):
                 data["ttl"] = self._get_lexicon_option("ttl")
             payloads.append(self._post(data=self._create_payload('dns-row-update', data)))
