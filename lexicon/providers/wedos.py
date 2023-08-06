@@ -41,6 +41,12 @@ def filter_name(name, rec):
     return False
 
 
+def filter_content(content, rec):
+    if rec["content"] == content:
+        return True
+    return False
+
+
 class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -76,6 +82,9 @@ class Provider(BaseProvider):
         return {'request': json.dumps(data)}
 
     def _create_record(self, rtype: str, name: str, content: str) -> bool:
+        records = self._list_records(rtype, name, content)
+        if len(records) == 1:
+            return True
         data = {
             'type': rtype,
             'name': self._full_name(name),
@@ -98,13 +107,14 @@ class Provider(BaseProvider):
 
     def _list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> \
             List[Dict]:
-        payload = self._post(data=self._create_payload('dns-rows-list', {'domain': self.domain_id}))
+        data = self._create_payload('dns-rows-list', {'domain': self.domain_id})
+        payload = self._post(data=data)
         records = []
         dns_records = payload["response"]["data"]["row"]
         for record in dns_records:
             processed_record = {
                 "type": record["rdtype"],
-                "name": record["name"],
+                "name": self._full_name(record["name"]),
                 "ttl": record["ttl"],
                 "content": record["rdata"],
                 "id": record["ID"],
@@ -113,38 +123,36 @@ class Provider(BaseProvider):
         if rtype is not None:
             records = list(filter(lambda rec: filter_rtype(rtype, rec), records))
         if name is not None:
-            records = list(filter(lambda rec: filter_name(name, rec), records))
+            records = list(filter(lambda rec: filter_name(self._full_name(name), rec), records))
+        if content is not None:
+            records = list(filter(lambda rec: filter_content(content, rec), records))
 
         return records
 
     def _update_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None,
                        content: Optional[str] = None) -> bool:
-        if identifier is None:
-            records = self._list_records(rtype, name)
-            if len(records) == 1:
-                identifier = records[0]["id"]
-            elif len(records) < 1:
-                raise Exception(
-                    "No records found matching type and name - won't update"
-                )
-            else:
-                raise Exception(
-                    "Multiple records found matching type and name - won't update"
-                )
+        if not identifier:
+            records = self._list_records(rtype, name, content)
+            identifiers = [record["id"] for record in records]
+        else:
+            identifiers = [identifier]
 
-        data = {
-            'type': rtype,
-            'name': self._full_name(name),
-            'rdata': content,
-            'domain': self.domain_id,
-            'row_id': identifier
-        }
-        if self._get_lexicon_option("ttl"):
-            data["ttl"] = self._get_lexicon_option("ttl")
+        if len(identifiers) == 0:
+            return True
+        payloads = []
+        for record_id in identifiers:
+            data = {
+                'type': rtype,
+                'name': self._full_name(name),
+                'rdata': content,
+                'domain': self.domain_id,
+                'row_id': record_id
+            }
+            if self._get_lexicon_option("ttl"):
+                data["ttl"] = self._get_lexicon_option("ttl")
+            payloads.append(self._post(data=self._create_payload('dns-row-update', data)))
 
-        payload = self._post(data=self._create_payload('dns-row-update', data))
-        code = payload["response"]["code"]
-        if code == 1000:
+        if all(payload["response"]["code"] == 1000 for payload in payloads):
             validation = self._validate_changes()
             if validation:
                 return True
@@ -155,29 +163,23 @@ class Provider(BaseProvider):
 
     def _delete_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None,
                        content: Optional[str] = None) -> bool:
-        if identifier is None:
-            records = self._list_records(rtype, name)
-            if len(records) == 1:
-                identifier = records[0]["id"]
-            elif len(records) < 1:
-                raise Exception(
-                    "No records found matching type and name - won't update"
-                )
-            else:
-                raise Exception(
-                    "Multiple records found matching type and name - won't update"
-                )
+        if not identifier:
+            records = self._list_records(rtype, name, content)
+            identifiers = [record["id"] for record in records]
+        else:
+            identifiers = [identifier]
 
-        data = {
-            'domain': self.domain_id,
-            'row_id': identifier
-        }
-        if self._get_lexicon_option("ttl"):
-            data["ttl"] = self._get_lexicon_option("ttl")
+        if len(identifiers) == 0:
+            return True
+        payloads = []
+        for record_id in identifiers:
+            data = {
+                'domain': self.domain_id,
+                'row_id': record_id
+            }
+            payloads.append(self._post(data=self._create_payload('dns-row-delete', data)))
 
-        payload = self._post(data=self._create_payload('dns-row-delete', data))
-        code = payload["response"]["code"]
-        if code == 1000:
+        if all(payload["response"]["code"] == 1000 for payload in payloads):
             validation = self._validate_changes()
             if validation:
                 return True
