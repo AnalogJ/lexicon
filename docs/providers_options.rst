@@ -239,6 +239,9 @@ List of options
 .. _webgo:
 .. include:: providers/webgo.rst
 
+.. _wedos:
+.. include:: providers/wedos.rst
+
 .. _yandex:
 .. include:: providers/yandex.rst
 

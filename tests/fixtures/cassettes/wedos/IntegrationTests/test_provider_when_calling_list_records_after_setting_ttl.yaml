@@ -1,0 +1,188 @@
+interactions:
+- request:
+    body: request%253D%257B%2522request%2522%253A%2B%257B%2522user%2522%253A%2B%2522username%2522%252C%2B%2522auth%2522%253A%2B%2522password%2522%252C%2B%2522command%2522%253A%2B%2522dns-domains-list%2522%252C%2B%2522data%2522%253A%2B%2522%2522%257D%257D
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '212'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://api.wedos.com/wapi/json
+  response:
+    body:
+      string: '{"response":{"code":1000,"result":"OK","timestamp":1691331821,"svTRID":"1691331821.8965.19900.1","command":"dns-domains-list","data":{"domain":[{"name":"kaniok.com","type":"primary","status":"active"}]}}}'
+    headers:
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Sun, 06 Aug 2023 14:23:41 GMT
+      Expires:
+      - Sun, 06 Aug 2023 14:23:41 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - ALLOW-FROM https://blog.wedos.cz
+      content-length:
+      - '204'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: request%253D%257B%2522request%2522%253A%2B%257B%2522user%2522%253A%2B%2522username%2522%252C%2B%2522auth%2522%253A%2B%2522password%2522%252C%2B%2522command%2522%253A%2B%2522dns-rows-list%2522%252C%2B%2522data%2522%253A%2B%257B%2522domain%2522%253A%2B%2522kaniok.com%2522%257D%257D%257D
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '241'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://api.wedos.com/wapi/json
+  response:
+    body:
+      string: '{"response":{"code":1000,"result":"OK","timestamp":1691331822,"svTRID":"1691331822.0288.19993.1","command":"dns-rows-list","data":{"row":[{"ID":"24569","name":"","ttl":"1800","rdtype":"MX","rdata":"10
+        mx.zohomail.com","changed_date":"2014-07-01 18:01:26","author_comment":""},{"ID":"24570","name":"","ttl":"1800","rdtype":"MX","rdata":"20
+        mx2.zohomail.com","changed_date":"2014-07-01 18:01:32","author_comment":""},{"ID":"156455","name":"","ttl":"300","rdtype":"TXT","rdata":"v=spf1
+        include:zoho.com ~all","changed_date":"2023-08-03 17:58:48","author_comment":""},{"ID":"156857","name":"docs.kaniok.com","ttl":"3600","rdtype":"CNAME","rdata":"docs.example.com","changed_date":"2023-08-06
+        15:47:39","author_comment":""},{"ID":"156856","name":"localhost.kaniok.com","ttl":"3600","rdtype":"A","rdata":"127.0.0.1","changed_date":"2023-08-06
+        15:47:38","author_comment":""},{"ID":"156879","name":"orig.nameonly.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:59","author_comment":""},{"ID":"156878","name":"orig.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:58","author_comment":""},{"ID":"156880","name":"orig.testfqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:59","author_comment":""},{"ID":"156881","name":"orig.testfull.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:48:01","author_comment":""},{"ID":"156875","name":"random.fqdntest.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:54","author_comment":""},{"ID":"156876","name":"random.fulltest.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:55","author_comment":""},{"ID":"156877","name":"random.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:56","author_comment":""},{"ID":"156872","name":"ttl.fqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"ttlshouldbe3600","changed_date":"2023-08-06
+        15:47:52","author_comment":""},{"ID":"156454","name":"zoho._domainkey","ttl":"300","rdtype":"TXT","rdata":"v=DKIM1;
+        k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWhjQdWWVh0Ip6tAaanPvQJxPjZDFjwqX6Lvk98dHdGj+KtoCXBBESgfplHtUrgCHZMVpuUVAWxehhrlzLlJw7u6hHI\/M3oygK9NyT8a8VXX30tUUkPDdKmhIqpmFyg1EHiEhci1U2Acox5j1cPWPrDnd9oGlRwbxcvexXN4lAiQIDAQAB","changed_date":"2023-08-03
+        17:58:31","author_comment":""},{"ID":"156861","name":"_acme-challenge.createrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken1","changed_date":"2023-08-06
+        15:47:41","author_comment":""},{"ID":"156862","name":"_acme-challenge.createrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:42","author_comment":""},{"ID":"156869","name":"_acme-challenge.deleterecordinset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:49","author_comment":""},{"ID":"156858","name":"_acme-challenge.fqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:39","author_comment":""},{"ID":"156859","name":"_acme-challenge.full.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:40","author_comment":""},{"ID":"156873","name":"_acme-challenge.listrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken1","changed_date":"2023-08-06
+        15:47:53","author_comment":""},{"ID":"156874","name":"_acme-challenge.listrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:54","author_comment":""},{"ID":"156863","name":"_acme-challenge.noop.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:42","author_comment":""},{"ID":"156860","name":"_acme-challenge.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:41","author_comment":""}]}}}'
+    headers:
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Sun, 06 Aug 2023 14:23:42 GMT
+      Expires:
+      - Sun, 06 Aug 2023 14:23:42 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - ALLOW-FROM https://blog.wedos.cz
+      content-length:
+      - '4082'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: request%253D%257B%2522request%2522%253A%2B%257B%2522user%2522%253A%2B%2522username%2522%252C%2B%2522auth%2522%253A%2B%2522password%2522%252C%2B%2522command%2522%253A%2B%2522dns-rows-list%2522%252C%2B%2522data%2522%253A%2B%257B%2522domain%2522%253A%2B%2522kaniok.com%2522%257D%257D%257D
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '241'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://api.wedos.com/wapi/json
+  response:
+    body:
+      string: '{"response":{"code":1000,"result":"OK","timestamp":1691331822,"svTRID":"1691331822.1771.20092.1","command":"dns-rows-list","data":{"row":[{"ID":"24569","name":"","ttl":"1800","rdtype":"MX","rdata":"10
+        mx.zohomail.com","changed_date":"2014-07-01 18:01:26","author_comment":""},{"ID":"24570","name":"","ttl":"1800","rdtype":"MX","rdata":"20
+        mx2.zohomail.com","changed_date":"2014-07-01 18:01:32","author_comment":""},{"ID":"156455","name":"","ttl":"300","rdtype":"TXT","rdata":"v=spf1
+        include:zoho.com ~all","changed_date":"2023-08-03 17:58:48","author_comment":""},{"ID":"156857","name":"docs.kaniok.com","ttl":"3600","rdtype":"CNAME","rdata":"docs.example.com","changed_date":"2023-08-06
+        15:47:39","author_comment":""},{"ID":"156856","name":"localhost.kaniok.com","ttl":"3600","rdtype":"A","rdata":"127.0.0.1","changed_date":"2023-08-06
+        15:47:38","author_comment":""},{"ID":"156879","name":"orig.nameonly.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:59","author_comment":""},{"ID":"156878","name":"orig.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:58","author_comment":""},{"ID":"156880","name":"orig.testfqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:59","author_comment":""},{"ID":"156881","name":"orig.testfull.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:48:01","author_comment":""},{"ID":"156875","name":"random.fqdntest.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:54","author_comment":""},{"ID":"156876","name":"random.fulltest.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:55","author_comment":""},{"ID":"156877","name":"random.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:56","author_comment":""},{"ID":"156872","name":"ttl.fqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"ttlshouldbe3600","changed_date":"2023-08-06
+        15:47:52","author_comment":""},{"ID":"156454","name":"zoho._domainkey","ttl":"300","rdtype":"TXT","rdata":"v=DKIM1;
+        k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWhjQdWWVh0Ip6tAaanPvQJxPjZDFjwqX6Lvk98dHdGj+KtoCXBBESgfplHtUrgCHZMVpuUVAWxehhrlzLlJw7u6hHI\/M3oygK9NyT8a8VXX30tUUkPDdKmhIqpmFyg1EHiEhci1U2Acox5j1cPWPrDnd9oGlRwbxcvexXN4lAiQIDAQAB","changed_date":"2023-08-03
+        17:58:31","author_comment":""},{"ID":"156861","name":"_acme-challenge.createrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken1","changed_date":"2023-08-06
+        15:47:41","author_comment":""},{"ID":"156862","name":"_acme-challenge.createrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:42","author_comment":""},{"ID":"156869","name":"_acme-challenge.deleterecordinset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:49","author_comment":""},{"ID":"156858","name":"_acme-challenge.fqdn.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:39","author_comment":""},{"ID":"156859","name":"_acme-challenge.full.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:40","author_comment":""},{"ID":"156873","name":"_acme-challenge.listrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken1","changed_date":"2023-08-06
+        15:47:53","author_comment":""},{"ID":"156874","name":"_acme-challenge.listrecordset.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken2","changed_date":"2023-08-06
+        15:47:54","author_comment":""},{"ID":"156863","name":"_acme-challenge.noop.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:42","author_comment":""},{"ID":"156860","name":"_acme-challenge.test.kaniok.com","ttl":"3600","rdtype":"TXT","rdata":"challengetoken","changed_date":"2023-08-06
+        15:47:41","author_comment":""}]}}}'
+    headers:
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Sun, 06 Aug 2023 14:23:42 GMT
+      Expires:
+      - Sun, 06 Aug 2023 14:23:42 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - ALLOW-FROM https://blog.wedos.cz
+      content-length:
+      - '4082'
+    status:
+      code: 200
+      message: OK
+version: 1
