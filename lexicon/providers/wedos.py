@@ -121,11 +121,11 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
         if rtype is not None:
-            records = list(filter(lambda rec: _filter_rtype(rtype, rec), records))
+            records = list(rec for rec in records if _filter_rtype(rtype, rec))
         if name is not None:
-            records = list(filter(lambda rec: _filter_name(self._full_name(name), rec), records))
+            records = list(rec for rec in records if _filter_name(self._full_name(name), rec))
         if content is not None:
-            records = list(filter(lambda rec: _filter_content(content, rec), records))
+            records = list(rec for rec in records if _filter_content(content, rec))
 
         return records
 
