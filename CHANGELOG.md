@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `wedos` provider (#1675)
+
+### Modified
+* Proper handling off authentication errors on `easydns` provider (#1674)
+* Allow management of pending (non-active) domains in `cloudflare` provider (#1659)
 
 ## 3.12.0 - 11/06/2023
 ### Added
