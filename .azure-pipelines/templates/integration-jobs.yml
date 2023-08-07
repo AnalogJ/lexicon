@@ -7,8 +7,8 @@ jobs:
       BRANCH_NAME: $(Build.SourceBranch)
     strategy:
       matrix:
-        linux-python-3.7:
-          PYTHON_VERSION: 3.7
+        linux-python-3.8:
+          PYTHON_VERSION: 3.8
         linux-python-3.11-light:
           PYTHON_VERSION: 3.11
           TOXENV: light
@@ -21,15 +21,15 @@ jobs:
         linux-mypy:
           PYTHON_VERSION: 3.11
           TOXENV: mypy
-        macos-python-3.7:
+        macos-python-3.8:
           IMAGE: macos-11
-          PYTHON_VERSION: 3.7
+          PYTHON_VERSION: 3.8
         macos-python-3.11:
           IMAGE: macos-11
           PYTHON_VERSION: 3.11
-        windows-python-3.7:
+        windows-python-3.8:
           IMAGE: windows-2019
-          PYTHON_VERSION: 3.7
+          PYTHON_VERSION: 3.8
         windows-python-3.11:
           IMAGE: windows-2019
           PYTHON_VERSION: 3.11
