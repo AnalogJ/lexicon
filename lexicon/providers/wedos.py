@@ -5,7 +5,7 @@ from typing import Optional, Dict, List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.providers.base import Provider as BaseProvider
 
 NAMESERVER_DOMAINS = [
@@ -97,13 +97,13 @@ class Provider(BaseProvider):
         payload = self._post(data=self._create_payload('dns-row-add', data))
         code = payload["response"]["code"]
         if code == 1000:
-            validation = self._validate_changes()
+            validation = self._commit_changes()
             if validation:
                 return True
             else:
-                return False
+                raise LexiconError("Cannot commit changes")
         else:
-            return False
+            raise LexiconError("Cannot create records")
 
     def _list_records(self, rtype: Optional[str] = None, name: Optional[str] = None, content: Optional[str] = None) -> \
             List[Dict]:
@@ -155,13 +155,13 @@ class Provider(BaseProvider):
             payloads.append(self._post(data=self._create_payload('dns-row-update', data)))
 
         if all(payload["response"]["code"] == 1000 for payload in payloads):
-            validation = self._validate_changes()
+            validation = self._commit_changes()
             if validation:
                 return True
             else:
-                return False
+                raise LexiconError("Cannot commit changes")
         else:
-            return False
+            raise LexiconError("Cannot update records")
 
     def _delete_record(self, identifier: Optional[str] = None, rtype: Optional[str] = None, name: Optional[str] = None,
                        content: Optional[str] = None) -> bool:
@@ -182,15 +182,15 @@ class Provider(BaseProvider):
             payloads.append(self._post(data=self._create_payload('dns-row-delete', data)))
 
         if all(payload["response"]["code"] == 1000 for payload in payloads):
-            validation = self._validate_changes()
+            validation = self._commit_changes()
             if validation:
                 return True
             else:
-                return False
+                raise LexiconError("Cannot commit changes")
         else:
-            return False
+            raise LexiconError("Cannot delete records")
 
-    def _validate_changes(self) -> bool:
+    def _commit_changes(self) -> bool:
         data = {
             'name': self.domain_id
         }
