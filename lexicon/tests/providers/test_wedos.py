@@ -15,9 +15,6 @@ class WedosProviderTests(TestCase, IntegrationTestsV2):
     provider_name = 'wedos'
     domain = 'kaniok.com'
 
-    def _filter_post_data_parameters(self):
-        return ['login_token']
-
     def _filter_request(self, request):
         request_start_string = 'request='
         try:
@@ -34,15 +31,3 @@ class WedosProviderTests(TestCase, IntegrationTestsV2):
             request.body = body
 
         return request
-
-    def _filter_headers(self):
-        return ['Authorization']
-
-    def _filter_query_parameters(self):
-        return ['secret_key']
-
-    def _filter_response(self, response):
-        """See `IntegrationTests._filter_response` for more information on how
-        to filter the provider response."""
-
-        return response
