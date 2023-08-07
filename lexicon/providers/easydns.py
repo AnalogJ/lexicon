@@ -33,7 +33,9 @@ class Provider(BaseProvider):
     def _authenticate(self):
         payload = self._get(f"/domain/{self.domain}")
         if "error" in payload:
-            raise AuthenticationError(f'{payload["error"]["code"]} {payload["error"]["message"]}')
+            raise AuthenticationError(
+                f'{payload["error"]["code"]} {payload["error"]["message"]}'
+            )
 
         if payload["data"]["exists"] == "N":
             raise AuthenticationError("No domain found")

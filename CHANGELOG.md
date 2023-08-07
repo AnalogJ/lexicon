@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.13.0 - 07/08/2023
 ### Added
 * Add `wedos` provider (#1675)
 
