@@ -17,15 +17,19 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for CloudXNS"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["cloudxns.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        parser.add_argument("--auth-username", help="specify API-KEY for authentication")
-        parser.add_argument("--auth-token", help="specify SECRET-KEY for authentication")
+        parser.add_argument(
+            "--auth-username", help="specify API-KEY for authentication"
+        )
+        parser.add_argument(
+            "--auth-token", help="specify SECRET-KEY for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

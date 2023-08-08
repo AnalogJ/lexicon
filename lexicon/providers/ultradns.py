@@ -34,11 +34,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for UltraDNS"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ultradns.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

@@ -14,11 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Flexible Engine Cloud"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["orange-business.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify token for authentication")

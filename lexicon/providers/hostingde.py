@@ -17,11 +17,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Hosting"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["hosting.de"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify api key for authentication")

@@ -24,11 +24,11 @@ def _async_request_completed(payload):
 
 class Provider(BaseProvider):
     """Provider class for Rackspace"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["rackspacecloud.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

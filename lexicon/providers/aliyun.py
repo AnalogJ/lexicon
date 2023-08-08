@@ -22,11 +22,11 @@ ALIYUN_DNS_API_ENDPOINT = "https://alidns.aliyuncs.com"
 
 class Provider(BaseProvider):
     """Provider class for Aliyun"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["hichina.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

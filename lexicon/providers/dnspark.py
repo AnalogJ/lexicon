@@ -14,14 +14,16 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for DNSPark"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dnspark.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        parser.add_argument("--auth-username", help="specify api key for authentication")
+        parser.add_argument(
+            "--auth-username", help="specify api key for authentication"
+        )
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):

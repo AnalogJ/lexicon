@@ -22,11 +22,11 @@ class Provider(BaseProvider):
 
     Authentication is done by passing the API key specific to a user in the X-Auth-Key header.
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["zilore.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

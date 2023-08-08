@@ -49,11 +49,11 @@ class Provider(BaseProvider):
     in base64, which is a suitable portable way in particular for Docker containers.
     In both cases the content is loaded as bytes, on loaded in a private instance variable.
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["googledomains.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

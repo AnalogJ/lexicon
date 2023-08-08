@@ -41,11 +41,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Duck DNS"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ca-central-1.compute.amazonaws.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

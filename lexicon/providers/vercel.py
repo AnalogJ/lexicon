@@ -23,11 +23,11 @@ class Provider(BaseProvider):
         - update uses list + delete + add: we get the list of all records,
           find record for given identifier, then insert a new record and delete the old record.
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["vercel-dns.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

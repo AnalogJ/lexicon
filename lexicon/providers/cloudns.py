@@ -12,15 +12,17 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for CloudNS"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["cloudns.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         identity_group = parser.add_mutually_exclusive_group()
-        identity_group.add_argument("--auth-id", help="specify user id for authentication")
+        identity_group.add_argument(
+            "--auth-id", help="specify user id for authentication"
+        )
         identity_group.add_argument(
             "--auth-subid", help="specify subuser id for authentication"
         )

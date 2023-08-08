@@ -42,11 +42,10 @@ class _Response:
 
 
 class Provider(BaseProvider):
-    
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ns.joker.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
@@ -57,7 +56,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
             "--auth-token",
             help="specify the API Key to connect to the Joker.com API",
         )
-    
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

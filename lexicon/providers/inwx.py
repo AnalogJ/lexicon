@@ -19,7 +19,7 @@ class Provider(BaseProvider):
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return [
@@ -34,7 +34,7 @@ class Provider(BaseProvider):
             "ns.domrobot.info",
             "ns.domrobot.biz",
         ]
-        
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

@@ -14,11 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["cloudflare.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

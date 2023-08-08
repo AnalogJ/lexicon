@@ -17,12 +17,12 @@ LOGGER = logging.getLogger(__name__)
 # the URIs for the different operations
 class Provider(BaseProvider):
     """Provider class for DirectAdmin"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
         return []
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

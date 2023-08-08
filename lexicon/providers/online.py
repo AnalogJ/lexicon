@@ -19,11 +19,11 @@ def _to_data(rtype, content):
 
 class Provider(BaseProvider):
     """Provider class for Online.net"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["online.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify private api token")

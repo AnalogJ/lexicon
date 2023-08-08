@@ -16,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for GratisDNS"""
 
     # XXX: Identifiers change on updates
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["gratisdns.dk"]

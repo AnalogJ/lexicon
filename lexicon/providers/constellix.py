@@ -34,11 +34,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider clss for Constellix"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["constellix.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

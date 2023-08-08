@@ -31,11 +31,11 @@ class Provider(BaseProvider):
     If you have SRV record, it may get lost. Also records configured as
     `A + DDNS` on their control panel will be downgrated to `A` records.
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["namecheap.com", "registrar-servers.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify api token for authentication")
@@ -56,7 +56,9 @@ class Provider(BaseProvider):
             default="127.0.0.1",
         )
         parser.add_argument(
-            "--auth-sandbox", help="Whether to use the sandbox server", action="store_true"
+            "--auth-sandbox",
+            help="Whether to use the sandbox server",
+            action="store_true",
         )
 
     def __init__(self, config):

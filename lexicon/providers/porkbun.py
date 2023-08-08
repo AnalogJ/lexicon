@@ -13,11 +13,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Porkbun"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["porkbun.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

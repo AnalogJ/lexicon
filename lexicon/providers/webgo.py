@@ -16,11 +16,11 @@ class Provider(BaseProvider):
     """
     webgo.de provider
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["webgo.de"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """A provider for Webgo."""

@@ -11,11 +11,11 @@ from lexicon.providers.base import Provider as BaseProvider
 
 class Provider(BaseProvider):
     """Provider class for Glesys"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["glesys.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-username", help="specify username (CL12345)")

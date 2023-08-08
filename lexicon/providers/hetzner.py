@@ -24,7 +24,7 @@ class Provider(BaseProvider):
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ns.hetzner.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="Specify Hetzner DNS API token")

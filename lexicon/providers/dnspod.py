@@ -13,11 +13,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for DNSPod"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dnsapi.cn"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-username", help="specify api id for authentication")

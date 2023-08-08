@@ -32,7 +32,7 @@ SUPPORTED_RECORDS = {"A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV"}
 
 class Provider(BaseProvider):
     """Provider for Azure DNS"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return [
@@ -41,7 +41,7 @@ class Provider(BaseProvider):
             "azure-dns.org",
             "azure-dns.info",
         ]
-        
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
@@ -52,7 +52,8 @@ class Provider(BaseProvider):
         """
         parser.add_argument(
             "--auth-client-id",
-            help="specify the client ID (aka application ID) " "of the App registration",
+            help="specify the client ID (aka application ID) "
+            "of the App registration",
         )
         parser.add_argument(
             "--auth-client-secret",

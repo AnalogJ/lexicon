@@ -14,11 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider SafeDNS implementation of Lexicon Provider interface."""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ukfast.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

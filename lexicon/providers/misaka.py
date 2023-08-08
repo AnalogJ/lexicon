@@ -23,7 +23,7 @@ def _recordset_has_record(record_set, value):
 
 class Provider(BaseProvider):
     """Provider class for Misaka.IO"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return [
@@ -48,7 +48,7 @@ class Provider(BaseProvider):
             # legacy domains
             "ns53.net",
         ]
-        
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify token for authentication")

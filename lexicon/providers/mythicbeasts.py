@@ -19,11 +19,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Mythic Beasts"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["mythic-beasts.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

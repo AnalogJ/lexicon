@@ -15,11 +15,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for OnApp"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return []
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
@@ -29,7 +29,9 @@ class Provider(BaseProvider):
         parser.add_argument(
             "--auth-username", help="specify email address of the OnApp account"
         )
-        parser.add_argument("--auth-token", help="specify API Key for the OnApp account")
+        parser.add_argument(
+            "--auth-token", help="specify API Key for the OnApp account"
+        )
         parser.add_argument(
             "--auth-server", help="specify URL to the OnApp Control Panel Server"
         )

@@ -14,11 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Hover"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["hover.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

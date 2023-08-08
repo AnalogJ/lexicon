@@ -17,11 +17,11 @@ MEMBERSHIP_DETAILS = "https://www.dynu.com/en-US/Membership"
 
 class Provider(BaseProvider):
     """Provider class for Dynu.com"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dynu.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify api key for authentication")

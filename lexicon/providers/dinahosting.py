@@ -41,11 +41,11 @@ RC_COMMAND_TIMEOUT = 2501
 
 class Provider(BaseProvider):
     """Provider class for Dinahosting"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dinahosting.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

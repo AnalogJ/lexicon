@@ -37,11 +37,11 @@ APIENTRYPOINT = {
 
 class Provider(BaseProvider):
     """Provider class for Zonomi"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["zonomi.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify token for authentication")

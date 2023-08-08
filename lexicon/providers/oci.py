@@ -62,11 +62,11 @@ class Provider(BaseProvider):
     """
     Provider class for Oracle Cloud Infrastructure DNS
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dns.oraclecloud.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

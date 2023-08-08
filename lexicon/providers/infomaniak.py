@@ -16,11 +16,11 @@ ENDPOINT = "https://api.infomaniak.com"
 
 class Provider(BaseProvider):
     """Provider class for Infomaniak"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["infomaniak.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

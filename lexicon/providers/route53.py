@@ -66,11 +66,11 @@ class RecordSetPaginator(object):
 
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
-    
+
     @staticmethod
     def get_nameservers() -> List[re.Pattern[str]]:
         return [re.compile(r"^awsdns-\d+\.\w+$")]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

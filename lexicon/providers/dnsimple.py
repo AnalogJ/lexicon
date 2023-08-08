@@ -14,11 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for DNS Simple"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dnsimple.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify api token for authentication")

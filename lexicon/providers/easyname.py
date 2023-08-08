@@ -29,11 +29,11 @@ class Provider(BaseProvider):
         "dns_delete_entry": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}",
         "dns_delete_entry_confirm": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}/confirm/1",
     }
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["easyname.eu"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """A provider for Easyname DNS."""

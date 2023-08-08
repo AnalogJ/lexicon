@@ -24,11 +24,11 @@ PLEX_URL_SUFFIX = "/enterprise/control/agent.php"
 
 class Provider(BaseProvider):
     """Provider class for Plesk"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return []
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

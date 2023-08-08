@@ -39,11 +39,11 @@ def _patch_zone(zone):
 
 class Provider(BaseProvider):
     """Provider class for a localzone"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return []
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--filename", help="specify location of zone master file")

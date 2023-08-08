@@ -64,7 +64,7 @@ class Provider(ABC):
         self.domain_id = None
 
     # Provider API
-    
+
     def authenticate(self) -> None:
         """
         Authenticate against provider,
@@ -121,21 +121,21 @@ class Provider(ABC):
         return self._delete_record(
             identifier=identifier, rtype=rtype, name=name, content=content
         )
-        
+
     # Public abstract methods
-    
+
     @staticmethod
     @abstractmethod
     def get_nameservers() -> Union[List[str], List[Pattern[str]]]:
         """Return the list of nameservers for this DNS provider"""
-        
+
     @staticmethod
     @abstractmethod
     def configure_parser(parser: ArgumentParser) -> None:
         """Configure the given parser for the provider needs (eg. specific CLI flags for auth)"""
 
     # Internal abstract methods
-    
+
     @abstractmethod
     def _authenticate(self) -> None:
         """Authenticate against the DNS provider API"""
@@ -174,7 +174,7 @@ class Provider(ABC):
         """Delete an existing record in the DNS zone"""
 
     # Helpers
-    
+
     @abstractmethod
     def _request(
         self,

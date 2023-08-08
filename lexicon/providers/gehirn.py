@@ -39,11 +39,11 @@ FORMAT_RE = {
 
 class Provider(BaseProvider):
     """Provider class for Gehirn"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["gehirn.jp"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

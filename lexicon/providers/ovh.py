@@ -26,11 +26,11 @@ ENDPOINTS = {
 
 class Provider(BaseProvider):
     """Provider class for OVH"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ovh.net", "anycast.me"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
@@ -49,7 +49,9 @@ class Provider(BaseProvider):
                 "kimsufi-ca",
             ],
         )
-        parser.add_argument("--auth-application-key", help="specify the application key")
+        parser.add_argument(
+            "--auth-application-key", help="specify the application key"
+        )
         parser.add_argument(
             "--auth-application-secret", help="specify the application secret"
         )

@@ -21,7 +21,7 @@ class Provider(BaseProvider):
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["he.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """A provider for Hurricane Electric DNS.

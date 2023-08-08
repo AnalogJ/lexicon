@@ -14,15 +14,16 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Conoha"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["conoha.io"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(
-            "--auth-region", help="specify region. If empty, region `tyo1` will be used."
+            "--auth-region",
+            help="specify region. If empty, region `tyo1` will be used.",
         )
         parser.add_argument(
             "--auth-token",

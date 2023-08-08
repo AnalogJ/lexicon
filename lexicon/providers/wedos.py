@@ -29,11 +29,10 @@ def _filter_content(content: str, rec) -> bool:
 
 
 class Provider(BaseProvider):
-    
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["wedos.net", "wedos.eu", "wedos.cz", "wedos.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
@@ -46,7 +45,7 @@ class Provider(BaseProvider):
             "--auth-pass",
             help="specify password for WAPI",
         )
-    
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

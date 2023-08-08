@@ -49,11 +49,11 @@ _NAMESERVER_DOMAINS = ["test.local."]
 
 class Provider(BaseProvider):
     """Provider class for Infoblox"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return _NAMESERVER_DOMAINS
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

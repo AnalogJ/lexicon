@@ -13,11 +13,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Njalla"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["1-you.njalla.no", "2-can.njalla.in", "3-get.njalla.fo"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify API token for authentication")

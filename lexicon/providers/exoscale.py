@@ -14,11 +14,11 @@ HOUR = 3600
 
 class Provider(BaseProvider):
     """Provider class for exoscale"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["exoscale.ch"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-key", help="specify API key for authentication")

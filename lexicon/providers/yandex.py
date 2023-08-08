@@ -21,11 +21,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for Yandex PDD"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["yandex.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

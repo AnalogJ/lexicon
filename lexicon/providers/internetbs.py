@@ -28,11 +28,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider class for internetbs"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["topdns.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-key", help="specify API key for authentication")

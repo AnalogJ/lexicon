@@ -2,13 +2,12 @@
 import os
 from functools import wraps
 from importlib import import_module
-from typing import Optional, Type
+from typing import Optional
 
 import pytest
 import vcr  # type: ignore
 
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
-from lexicon.providers.base import Provider as BaseProvider
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
 RECORD_MODE = "none"

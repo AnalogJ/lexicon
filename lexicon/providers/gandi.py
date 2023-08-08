@@ -50,11 +50,11 @@ class Provider(BaseProvider):
     Note that this implementation will delegates its call to GandiRPCSubProvider
     if RPC protocol is used.
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["gandi.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify Gandi API key")

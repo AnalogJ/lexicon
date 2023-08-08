@@ -28,11 +28,11 @@ PRODUCT_ID_DOMAIN = 1
 
 class Provider(BaseProvider):
     """Provider class for Euserv"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["euserv.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

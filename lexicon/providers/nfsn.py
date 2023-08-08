@@ -20,11 +20,11 @@ SALT_SHAKER = string.ascii_letters + string.digits
 
 class Provider(BaseProvider):
     """Provider class for nfsn"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["nearlyfreespeech.net"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

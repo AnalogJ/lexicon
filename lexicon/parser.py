@@ -87,7 +87,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
             help=f"{provider} provider",
             parents=[generate_base_provider_parser()],
         )
-        
+
         provider_class.configure_parser(subparser)
 
         if not available:

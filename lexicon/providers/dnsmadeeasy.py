@@ -43,11 +43,11 @@ class _RetryRateLimit(Retry):
 
 class Provider(BaseProvider):
     """Provider class for DNSMadeEasy"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dnsmadeeasy"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument(

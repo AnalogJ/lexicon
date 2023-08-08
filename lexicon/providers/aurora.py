@@ -18,11 +18,11 @@ LOGGER = logging.getLogger(__name__)
 
 class Provider(BaseProvider):
     """Provider for Aurora"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["auroradns.eu"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-api-key", help="specify API key for authentication")

@@ -39,11 +39,11 @@ class NamecomLoader(
 
 class NamecomProvider(BaseProvider):
     """Provider implementation for Name.com."""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["name.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-username", help="specify a username")

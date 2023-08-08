@@ -330,11 +330,11 @@ def vdapi_set_domain_data(
 
 class Provider(BaseProvider):
     """Provider class for Value Domain"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["value-domain.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """

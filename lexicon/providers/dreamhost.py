@@ -40,11 +40,11 @@ class AlreadyExistError(Exception):
 
 class Provider(BaseProvider):
     """Provider class for Dreamhost"""
-    
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["dreamhost.com"]
-    
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify api key for authentication")
