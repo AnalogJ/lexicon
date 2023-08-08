@@ -1,19 +1,14 @@
 """Module provider for Online.net"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["online.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Online.net"""
-    subparser.add_argument("--auth-token", help="specify private api token")
 
 
 def _to_data(rtype, content):
@@ -24,6 +19,14 @@ def _to_data(rtype, content):
 
 class Provider(BaseProvider):
     """Provider class for Online.net"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["online.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify private api token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

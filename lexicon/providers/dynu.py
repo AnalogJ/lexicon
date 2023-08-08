@@ -1,6 +1,8 @@
 """Module provider for Dynu.com"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,18 +11,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["dynu.com"]
 FREE_SERVICE_LIMIT = 4
 MEMBERSHIP_DETAILS = "https://www.dynu.com/en-US/Membership"
 
 
-def provider_parser(subparser):
-    """Module provider for Dynu.com"""
-    subparser.add_argument("--auth-token", help="specify api key for authentication")
-
-
 class Provider(BaseProvider):
     """Provider class for Dynu.com"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dynu.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

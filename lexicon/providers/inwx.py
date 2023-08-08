@@ -1,5 +1,7 @@
 """Module provider for INWX"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
@@ -11,35 +13,36 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = [
-    "ns.inwx.de",
-    "ns2.inwx.de",
-    "ns3.inwx.eu",
-    "ns4.inwx.com",
-    "ns5.inwx.net",
-    "ns.domrobot.com",
-    "ns.domrobot.net",
-    "ns.domrobot.org",
-    "ns.domrobot.info",
-    "ns.domrobot.biz",
-]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for INWX"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """
     INWX offers a free testing system on https://ote.inwx.com
     see https://www.inwx.de/en/offer/api for details about ote and the api
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return [
+            "ns.inwx.de",
+            "ns2.inwx.de",
+            "ns3.inwx.eu",
+            "ns4.inwx.com",
+            "ns5.inwx.net",
+            "ns.domrobot.com",
+            "ns.domrobot.net",
+            "ns.domrobot.org",
+            "ns.domrobot.info",
+            "ns.domrobot.biz",
+        ]
+        
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         """

@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 import datetime
 import hashlib
 import json
@@ -7,22 +8,6 @@ import requests
 
 from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.providers.base import Provider as BaseProvider
-
-NAMESERVER_DOMAINS = ["wedos.net", "wedos.eu", "wedos.cz", "wedos.com"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.description = """
-    """
-    subparser.add_argument(
-        "--auth-username",
-        help="specify email address for authentication",
-    )
-    subparser.add_argument(
-        "--auth-pass",
-        help="specify password for WAPI",
-    )
 
 
 def _filter_rtype(rtype: str, rec) -> bool:
@@ -44,6 +29,24 @@ def _filter_content(content: str, rec) -> bool:
 
 
 class Provider(BaseProvider):
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["wedos.net", "wedos.eu", "wedos.cz", "wedos.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+        """
+        parser.add_argument(
+            "--auth-username",
+            help="specify email address for authentication",
+        )
+        parser.add_argument(
+            "--auth-pass",
+            help="specify password for WAPI",
+        )
+    
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

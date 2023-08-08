@@ -1,5 +1,7 @@
 """Implement a provider for Zilore (https://zilore.com)"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 import requests
 
@@ -7,17 +9,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["zilore.net"]
-
-
-def provider_parser(subparser):
-    """Construct a subparser for Zilore provider"""
-    subparser.description = """
-    Zilore API requires an API key that can be found in your Zilore profile, at the API tab.
-    The API access is available only for paid plans.
-    """
-    subparser.add_argument("--auth-key", help="specify the Zilore API key to use")
 
 
 class Provider(BaseProvider):
@@ -31,6 +22,18 @@ class Provider(BaseProvider):
 
     Authentication is done by passing the API key specific to a user in the X-Auth-Key header.
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["zilore.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+        Zilore API requires an API key that can be found in your Zilore profile, at the API tab.
+        The API access is available only for paid plans.
+        """
+        parser.add_argument("--auth-key", help="specify the Zilore API key to use")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

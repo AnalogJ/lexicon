@@ -1,8 +1,10 @@
 """Module provider for OVH"""
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
 import time
+from typing import List
 
 import requests
 
@@ -21,36 +23,37 @@ ENDPOINTS = {
     "soyoustart-ca": "https://ca.api.soyoustart.com/1.0",
 }
 
-NAMESERVER_DOMAINS = ["ovh.net", "anycast.me"]
-
-
-def provider_parser(subparser):
-    """Generate provider parser for OVH"""
-    subparser.description = """
-        OVH Provider requires a token with full rights on /domain/*.
-        It can be generated for your OVH account on the following URL:
-        https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*"""
-    subparser.add_argument(
-        "--auth-entrypoint",
-        help="specify the OVH entrypoint",
-        choices=[
-            "ovh-eu",
-            "ovh-ca",
-            "soyoustart-eu",
-            "soyoustart-ca",
-            "kimsufi-eu",
-            "kimsufi-ca",
-        ],
-    )
-    subparser.add_argument("--auth-application-key", help="specify the application key")
-    subparser.add_argument(
-        "--auth-application-secret", help="specify the application secret"
-    )
-    subparser.add_argument("--auth-consumer-key", help="specify the consumer key")
-
 
 class Provider(BaseProvider):
     """Provider class for OVH"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ovh.net", "anycast.me"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            OVH Provider requires a token with full rights on /domain/*.
+            It can be generated for your OVH account on the following URL:
+            https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*"""
+        parser.add_argument(
+            "--auth-entrypoint",
+            help="specify the OVH entrypoint",
+            choices=[
+                "ovh-eu",
+                "ovh-ca",
+                "soyoustart-eu",
+                "soyoustart-ca",
+                "kimsufi-eu",
+                "kimsufi-ca",
+            ],
+        )
+        parser.add_argument("--auth-application-key", help="specify the application key")
+        parser.add_argument(
+            "--auth-application-secret", help="specify the application secret"
+        )
+        parser.add_argument("--auth-consumer-key", help="specify the consumer key")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

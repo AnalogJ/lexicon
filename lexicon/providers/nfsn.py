@@ -1,9 +1,11 @@
 """Module provider for nfsn"""
+from argparse import ArgumentParser
 import hashlib
 import logging
 import random
 import string
 import time
+from typing import List
 from urllib.parse import urlencode
 
 import requests
@@ -13,22 +15,22 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["nearlyfreespeech.net"]
-
-
-def provider_parser(subparser):
-    """Generate subparser for nfsn"""
-    subparser.add_argument(
-        "--auth-username", help="specify username used to authenticate"
-    )
-    subparser.add_argument("--auth-token", help="specify token used to authenticate")
-
-
 SALT_SHAKER = string.ascii_letters + string.digits
 
 
 class Provider(BaseProvider):
     """Provider class for nfsn"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["nearlyfreespeech.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username used to authenticate"
+        )
+        parser.add_argument("--auth-token", help="specify token used to authenticate")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -1,6 +1,8 @@
 """Module provider for Vercel"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -8,17 +10,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["vercel-dns.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Vercel"""
-    subparser.description = """
-        Vercel provider requires a token to access its API.
-        You can generate one for your account on the following URL:
-        https://vercel.com/account/tokens"""
-    subparser.add_argument("--auth-token", help="specify your API token")
 
 
 class Provider(BaseProvider):
@@ -32,6 +23,18 @@ class Provider(BaseProvider):
         - update uses list + delete + add: we get the list of all records,
           find record for given identifier, then insert a new record and delete the old record.
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["vercel-dns.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            Vercel provider requires a token to access its API.
+            You can generate one for your account on the following URL:
+            https://vercel.com/account/tokens"""
+        parser.add_argument("--auth-token", help="specify your API token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

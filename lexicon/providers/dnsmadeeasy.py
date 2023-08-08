@@ -1,10 +1,12 @@
 """Module provider for DNSMadeEasy"""
+from argparse import ArgumentParser
 import hmac
 import json
 import logging
 from builtins import bytes
 from email.utils import formatdate
 from hashlib import sha1
+from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -14,8 +16,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["dnsmadeeasy"]
 
 
 class _RetryRateLimit(Retry):
@@ -41,16 +41,19 @@ class _RetryRateLimit(Retry):
         raise RuntimeError(f"URL {url} returned a HTTP 400 status code.")
 
 
-def provider_parser(subparser):
-    """Configure provider parser for DNSMadeEasy"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
-
 class Provider(BaseProvider):
     """Provider class for DNSMadeEasy"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dnsmadeeasy"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

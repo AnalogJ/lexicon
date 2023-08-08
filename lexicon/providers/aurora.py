@@ -1,10 +1,12 @@
 """Module provider for Aurora"""
+from argparse import ArgumentParser
 import base64
 import datetime
 import hashlib
 import hmac
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -13,19 +15,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["auroradns.eu"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Aurora"""
-    subparser.add_argument("--auth-api-key", help="specify API key for authentication")
-    subparser.add_argument(
-        "--auth-secret-key", help="specify the secret key for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider for Aurora"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["auroradns.eu"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-api-key", help="specify API key for authentication")
+        parser.add_argument(
+            "--auth-secret-key", help="specify the secret key for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -1,5 +1,7 @@
 """Module provider for DNSPod"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 import requests
 
@@ -8,17 +10,18 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["dnsapi.cn"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for DNSPod"""
-    subparser.add_argument("--auth-username", help="specify api id for authentication")
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for DNSPod"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dnsapi.cn"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-username", help="specify api id for authentication")
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

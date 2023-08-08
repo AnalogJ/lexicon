@@ -5,6 +5,7 @@ Author: Jens Reimann, 2018
 
 API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 """
+from argparse import ArgumentParser
 import logging
 from collections import defaultdict
 from typing import Dict, List, Optional
@@ -20,24 +21,25 @@ LOGGER = logging.getLogger(__name__)
 
 PLEX_URL_SUFFIX = "/enterprise/control/agent.php"
 
-NAMESERVER_DOMAINS: List[str] = []
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Plesk"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-    subparser.add_argument(
-        "--plesk-server", help="specify URL to the Plesk Web UI, including the port"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Plesk"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
+        parser.add_argument(
+            "--plesk-server", help="specify URL to the Plesk Web UI, including the port"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

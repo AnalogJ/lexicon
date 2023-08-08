@@ -21,7 +21,9 @@ the other is also deleted.
 you delete it will still be present with the value "". The implementation of
 _list_records and _delete_record does not handle this special case.\
 """
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 import requests
 
@@ -36,18 +38,19 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["ca-central-1.compute.amazonaws.com"]
-
-
-def provider_parser(subparser):
-    """Module provider for Duck DNS"""
-    subparser.add_argument(
-        "--auth-token", help="specify the account token for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Duck DNS"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ca-central-1.compute.amazonaws.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token", help="specify the account token for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -8,6 +8,7 @@ and dns.editor for editing them.
 If Cloud ID and Folder ID are not specified,
 resource-manager.clouds.member and resource-manager.viewer are needed as well.
 """
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
@@ -25,33 +26,34 @@ __contact__ = "https://github.com/paskal"
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["yandexcloud.net"]
-
-
-def provider_parser(subparser):
-    """Generate parser provider for Yandex"""
-    subparser.add_argument(
-        "--auth-token",
-        help="specify the IAM token (https://cloud.yandex.com/en/docs/dns/api-ref/authentication)",
-    )
-    subparser.add_argument(
-        "--dns-zone-id",
-        help="specify the DNS Zone ID (can be obtained from web interface)",
-    )
-    subparser.add_argument(
-        "--cloud-id",
-        help="specify the Cloud ID (visible in the cloud selector in the web interface), might be needed"
-        " if DNS zone ID is not set",
-    )
-    subparser.add_argument(
-        "--folder-id",
-        help="specify the Folder ID (https://cloud.yandex.com/en/docs/resource-manager/operations/folder/get-id) "
-        "might be needed if DNS zone ID is not set",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Yandex Cloud"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["yandexcloud.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token",
+            help="specify the IAM token (https://cloud.yandex.com/en/docs/dns/api-ref/authentication)",
+        )
+        parser.add_argument(
+            "--dns-zone-id",
+            help="specify the DNS Zone ID (can be obtained from web interface)",
+        )
+        parser.add_argument(
+            "--cloud-id",
+            help="specify the Cloud ID (visible in the cloud selector in the web interface), might be needed"
+            " if DNS zone ID is not set",
+        )
+        parser.add_argument(
+            "--folder-id",
+            help="specify the Folder ID (https://cloud.yandex.com/en/docs/resource-manager/operations/folder/get-id) "
+            "might be needed if DNS zone ID is not set",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

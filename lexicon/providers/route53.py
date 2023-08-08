@@ -1,7 +1,9 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
+from argparse import ArgumentParser
 import hashlib
 import logging
 import re
+from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
@@ -13,42 +15,6 @@ except ImportError:
     pass
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = [re.compile(r"^awsdns-\d+\.\w+$")]
-
-
-def provider_parser(subparser):
-    """Specify arguments for AWS Route 53 Lexicon Provider."""
-    subparser.add_argument(
-        "--auth-access-key", help="specify ACCESS_KEY for authentication"
-    )
-    subparser.add_argument(
-        "--auth-access-secret", help="specify ACCESS_SECRET for authentication"
-    )
-    subparser.add_argument(
-        "--private-zone",
-        help=(
-            "indicates what kind of hosted zone to use. If true, use "
-            "only private zones. If false, use only public zones"
-        ),
-    )
-
-    # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
-    subparser.add_argument(
-        "--zone-id", help="the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'"
-    )
-
-    # TODO: these are only required for testing, we should figure out
-    # a way to remove them & update the integration tests
-    # to dynamically populate the auth credentials that are required.
-    subparser.add_argument(
-        "--auth-username",
-        help="alternative way to specify the ACCESS_KEY for authentication",
-    )
-    subparser.add_argument(
-        "--auth-token",
-        help="alternative way to specify the ACCESS_SECRET for authentication",
-    )
 
 
 class RecordSetPaginator(object):
@@ -100,6 +66,43 @@ class RecordSetPaginator(object):
 
 class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
+    
+    @staticmethod
+    def get_nameservers() -> List[re.Pattern[str]]:
+        return [re.compile(r"^awsdns-\d+\.\w+$")]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-access-key", help="specify ACCESS_KEY for authentication"
+        )
+        parser.add_argument(
+            "--auth-access-secret", help="specify ACCESS_SECRET for authentication"
+        )
+        parser.add_argument(
+            "--private-zone",
+            help=(
+                "indicates what kind of hosted zone to use. If true, use "
+                "only private zones. If false, use only public zones"
+            ),
+        )
+
+        # Allow bypassing the zone-id lookup for complex use cases like delegated subdomain
+        parser.add_argument(
+            "--zone-id", help="the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'"
+        )
+
+        # TODO: these are only required for testing, we should figure out
+        # a way to remove them & update the integration tests
+        # to dynamically populate the auth credentials that are required.
+        parser.add_argument(
+            "--auth-username",
+            help="alternative way to specify the ACCESS_KEY for authentication",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help="alternative way to specify the ACCESS_SECRET for authentication",
+        )
 
     def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""

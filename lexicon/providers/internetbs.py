@@ -12,9 +12,11 @@ the limits. Here are the limits:
 Where N is the number of registered domains in your account (so excluding pending
 transfers/trades)."
 """
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -23,19 +25,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["topdns.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for internetbs"""
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for internetbs"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["topdns.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-key", help="specify API key for authentication")
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -1,6 +1,8 @@
 """Module provider for luadns"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,19 +11,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["luadns.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for luadns"""
-    subparser.add_argument(
-        "--auth-username", help="specify email address for authentication"
-    )
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for luadns"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["luadns.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify email address for authentication"
+        )
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

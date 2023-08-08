@@ -15,12 +15,14 @@ but here's what you need to be aware of:
     This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 """
+from argparse import ArgumentParser
 import base64
 import hashlib
 import hmac
 import json
 import logging
 import time
+from typing import List
 
 import requests
 
@@ -29,19 +31,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["constellix.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Constellix"""
-    subparser.add_argument(
-        "--auth-username", help="specify the API key username for authentication"
-    )
-    subparser.add_argument("--auth-token", help="specify secret key for authenticate=")
-
 
 class Provider(BaseProvider):
     """Provider clss for Constellix"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["constellix.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify the API key username for authentication"
+        )
+        parser.add_argument("--auth-token", help="specify secret key for authenticate=")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

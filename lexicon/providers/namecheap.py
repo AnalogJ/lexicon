@@ -1,7 +1,8 @@
 """Module provider for Namecheap"""
+from argparse import ArgumentParser
 import logging
 import sys
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 
 import requests
@@ -12,33 +13,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["namecheap.com", "registrar-servers.com"]
-
 _NAMESPACE = "http://api.namecheap.com/xml.response"
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Namecheap"""
-    subparser.add_argument("--auth-token", help="specify api token for authentication")
-
-    # earlier versions of the API expected the email address here
-    # now they appear to want the username.
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-
-    # FIXME What is the client IP used for?
-    # this doesn't seem to be used for anything, but is required by their API
-    # namecheap requires API requests to come from whitelisted domains, and this
-    # is probably updated with the actual IP on their end.
-    subparser.add_argument(
-        "--auth-client-ip",
-        help="Client IP address to send to Namecheap API calls",
-        default="127.0.0.1",
-    )
-    subparser.add_argument(
-        "--auth-sandbox", help="Whether to use the sandbox server", action="store_true"
-    )
 
 
 class Provider(BaseProvider):
@@ -56,6 +31,33 @@ class Provider(BaseProvider):
     If you have SRV record, it may get lost. Also records configured as
     `A + DDNS` on their control panel will be downgrated to `A` records.
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["namecheap.com", "registrar-servers.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api token for authentication")
+
+        # earlier versions of the API expected the email address here
+        # now they appear to want the username.
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+
+        # FIXME What is the client IP used for?
+        # this doesn't seem to be used for anything, but is required by their API
+        # namecheap requires API requests to come from whitelisted domains, and this
+        # is probably updated with the actual IP on their end.
+        parser.add_argument(
+            "--auth-client-ip",
+            help="Client IP address to send to Namecheap API calls",
+            default="127.0.0.1",
+        )
+        parser.add_argument(
+            "--auth-sandbox", help="Whether to use the sandbox server", action="store_true"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

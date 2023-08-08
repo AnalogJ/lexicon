@@ -1,4 +1,5 @@
 """Module provider for DDNS"""
+from argparse import ArgumentParser
 import binascii
 import logging
 from typing import List
@@ -22,20 +23,21 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS: List[str] = []
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument(
-        "--auth-token",
-        help="specify the key used in format <alg>:<key_id>:<secret>",
-    )
-    subparser.add_argument("--ddns-server", help="specify IP of the DDNS server")
-
 
 class Provider(BaseProvider):
     """Provider class for DDNS"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token",
+            help="specify the key used in format <alg>:<key_id>:<secret>",
+        )
+        parser.add_argument("--ddns-server", help="specify IP of the DDNS server")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

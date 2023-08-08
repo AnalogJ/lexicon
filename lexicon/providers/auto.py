@@ -5,11 +5,13 @@ import logging
 import pkgutil
 import re
 import subprocess
+from typing import Type
 
 import tldextract  # type: ignore
 
 from lexicon import config as helper_config
 from lexicon import providers
+from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
@@ -73,7 +75,8 @@ def _relevant_provider_for_domain(domain):
     relevant_providers = []
 
     for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-        ns_domains = provider_module.NAMESERVER_DOMAINS
+        provider_class: Type[BaseProvider] = getattr(provider_module, "Provider")
+        ns_domains = provider_class.get_nameservers()
 
         # Test plain domain string comparison
         if {

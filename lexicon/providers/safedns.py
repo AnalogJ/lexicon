@@ -1,6 +1,8 @@
 """Module provider for UKFast's SafeDNS"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,22 +11,23 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["ukfast.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for SafeDNS"""
-    subparser.description = """
-        SafeDNS provider requires an API key in all interactions.
-        You can generate one for your account on the following URL:
-        https://my.ukfast.co.uk/applications/index.php"""
-    subparser.add_argument(
-        "--auth-token", help="specify the API key to authenticate with"
-    )
-
 
 class Provider(BaseProvider):
     """Provider SafeDNS implementation of Lexicon Provider interface."""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ukfast.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            SafeDNS provider requires an API key in all interactions.
+            You can generate one for your account on the following URL:
+            https://my.ukfast.co.uk/applications/index.php"""
+        parser.add_argument(
+            "--auth-token", help="specify the API key to authenticate with"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

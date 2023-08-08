@@ -2,12 +2,13 @@
 import os
 from functools import wraps
 from importlib import import_module
-from typing import Optional
+from typing import Optional, Type
 
 import pytest
 import vcr  # type: ignore
 
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
+from lexicon.providers.base import Provider as BaseProvider
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
 RECORD_MODE = "none"
@@ -96,22 +97,6 @@ class IntegrationTestsV1(object):
 
     def setup_method(self, _):
         self.provider_module = import_module(f"lexicon.providers.{self.provider_name}")
-
-    ###########################################################################
-    # Provider module shape
-    ###########################################################################
-    def test_provider_module_shape(self):
-        module = import_module(f"lexicon.providers.{self.provider_name}")
-
-        assert hasattr(module, "provider_parser")
-        assert hasattr(module, "Provider")
-        if self.provider_name != "auto":
-            assert hasattr(module, "NAMESERVER_DOMAINS")
-
-        assert callable(module.provider_parser)
-        assert callable(module.Provider)
-        if self.provider_name != "auto":
-            assert isinstance(module.NAMESERVER_DOMAINS, list)
 
     ###########################################################################
     # Provider.authenticate()

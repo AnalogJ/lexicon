@@ -1,5 +1,7 @@
 """Module provider for Webgo"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
@@ -9,24 +11,25 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["webgo.de"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Webgo."""
-    subparser.description = """A provider for Webgo."""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """
     webgo.de provider
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["webgo.de"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """A provider for Webgo."""
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

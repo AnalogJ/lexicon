@@ -14,8 +14,10 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
     --content 10.10.10.11 --name lexicon1
 
 """
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -24,7 +26,6 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["test.local."]
 # SOA and NS are not record types itself, but rather auto created depending on the Zone settings.
 # Either Primary Grid Member directly assigned to the zone, or through a ns_group
 # skipping for now
@@ -43,32 +44,37 @@ IB_TYPE2CONTENT = {
     "SRV": ["target", "record:srv", ",ttl,use_ttl"],
 }
 
-
-def provider_parser(subparser):
-    """Configure provider parser for Infoblox"""
-    subparser.add_argument(
-        "--auth-user", help="specify the user to access the Infoblox WAPI"
-    )
-    subparser.add_argument(
-        "--auth-psw", help="specify the password to access the Infoblox WAPI"
-    )
-    subparser.add_argument(
-        "--ib-view",
-        default="default",
-        help="specify DNS View to manage at the Infoblox",
-    )
-    subparser.add_argument("--ib-host", help="specify Infoblox Host exposing the WAPI")
+_NAMESERVER_DOMAINS = ["test.local."]
 
 
 class Provider(BaseProvider):
     """Provider class for Infoblox"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return _NAMESERVER_DOMAINS
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-user", help="specify the user to access the Infoblox WAPI"
+        )
+        parser.add_argument(
+            "--auth-psw", help="specify the password to access the Infoblox WAPI"
+        )
+        parser.add_argument(
+            "--ib-view",
+            default="default",
+            help="specify DNS View to manage at the Infoblox",
+        )
+        parser.add_argument("--ib-host", help="specify Infoblox Host exposing the WAPI")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
         # In Case .local. Domains are used, ignore the tldextract in client.py
         # this will be used in test_infoblox.py as well
-        if self.config.resolve("lexicon:domain") in NAMESERVER_DOMAINS[0]:
-            self.domain = NAMESERVER_DOMAINS[0].rstrip(".")
+        if self.config.resolve("lexicon:domain") in _NAMESERVER_DOMAINS[0]:
+            self.domain = _NAMESERVER_DOMAINS[0].rstrip(".")
         self.domain_id = None
         self.version_id = None
         self.view = self._get_provider_option("ib_view")

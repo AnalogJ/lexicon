@@ -1,42 +1,45 @@
 """Module provider for Aliyun"""
+from argparse import ArgumentParser
 import base64
 import datetime
 import hmac
 import logging
 import sys
+from typing import List
+from urllib.parse import urlencode, quote_plus
 import uuid
 from hashlib import sha1
 
 import requests
-from six.moves import urllib
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["hichina.com"]
-
 ALIYUN_DNS_API_ENDPOINT = "https://alidns.aliyuncs.com"
-
-
-def provider_parser(subparser):
-    """Module provider for Aliyun"""
-    subparser.description = """
-        Aliyun Provider requires an access key id and access secret with full rights on dns.
-        Better to use RAM on Aliyun cloud to create a specified user for the dns operation.
-        The referrence for Aliyun DNS production:
-        https://help.aliyun.com/product/29697.html"""
-    subparser.add_argument(
-        "--auth-key-id", help="specify access key id for authentication"
-    )
-    subparser.add_argument(
-        "--auth-secret", help="specify access secret for authentication"
-    )
 
 
 class Provider(BaseProvider):
     """Provider class for Aliyun"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["hichina.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            Aliyun Provider requires an access key id and access secret with full rights on dns.
+            Better to use RAM on Aliyun cloud to create a specified user for the dns operation.
+            The referrence for Aliyun DNS production:
+            https://help.aliyun.com/product/29697.html"""
+        parser.add_argument(
+            "--auth-key-id", help="specify access key id for authentication"
+        )
+        parser.add_argument(
+            "--auth-secret", help="specify access secret for authentication"
+        )
 
     def _authenticate(self):
         response = self._request_aliyun("DescribeDomainInfo")
@@ -197,13 +200,13 @@ class Provider(BaseProvider):
         query_list = list(query_params.items())
         query_list.sort(key=lambda t: t[0])
 
-        canonicalized_query_string = urllib.parse.urlencode(query_list)
+        canonicalized_query_string = urlencode(query_list)
 
         string_to_sign = "&".join(
             [
                 http_method,
-                urllib.parse.quote_plus("/"),
-                urllib.parse.quote_plus(canonicalized_query_string),
+                quote_plus("/"),
+                quote_plus(canonicalized_query_string),
             ]
         )
 

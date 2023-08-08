@@ -1,5 +1,7 @@
 """Base provider module for all Lexicon providers"""
 from abc import ABC, abstractmethod
+from argparse import ArgumentParser
+from re import Pattern
 from typing import Any, Dict, List, Optional, Union
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
@@ -62,6 +64,7 @@ class Provider(ABC):
         self.domain_id = None
 
     # Provider API
+    
     def authenticate(self) -> None:
         """
         Authenticate against provider,
@@ -118,15 +121,28 @@ class Provider(ABC):
         return self._delete_record(
             identifier=identifier, rtype=rtype, name=name, content=content
         )
+        
+    # Public abstract methods
+    
+    @staticmethod
+    @abstractmethod
+    def get_nameservers() -> Union[List[str], List[Pattern[str]]]:
+        """Return the list of nameservers for this DNS provider"""
+        
+    @staticmethod
+    @abstractmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        """Configure the given parser for the provider needs (eg. specific CLI flags for auth)"""
 
-    # Internal abstract implementations
+    # Internal abstract methods
+    
     @abstractmethod
     def _authenticate(self) -> None:
-        ...
+        """Authenticate against the DNS provider API"""
 
     @abstractmethod
     def _create_record(self, rtype: str, name: str, content: str) -> bool:
-        ...
+        """Create a new record in the DNS zone"""
 
     @abstractmethod
     def _list_records(
@@ -135,7 +151,7 @@ class Provider(ABC):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> List[Dict]:
-        ...
+        """List all records matching the provided filters in the DNS zone"""
 
     @abstractmethod
     def _update_record(
@@ -145,7 +161,7 @@ class Provider(ABC):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        ...
+        """Update an existing record in the DNS zone"""
 
     @abstractmethod
     def _delete_record(
@@ -155,9 +171,10 @@ class Provider(ABC):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        ...
+        """Delete an existing record in the DNS zone"""
 
     # Helpers
+    
     @abstractmethod
     def _request(
         self,
@@ -166,9 +183,8 @@ class Provider(ABC):
         data: Optional[Dict] = None,
         query_params: Optional[Dict] = None,
     ) -> Any:
-        ...
+        """Execute an HTTP request against the DNS provider API"""
 
-    # Helpers
     def _get(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
         return self._request("GET", url, query_params=query_params)
 

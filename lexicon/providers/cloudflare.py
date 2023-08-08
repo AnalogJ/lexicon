@@ -1,6 +1,8 @@
 """Module provider for Cloudflare"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,33 +11,34 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["cloudflare.com"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.description = """
-        There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
-        1 - A Global API key, with --auth-username and --auth-token flags.
-        2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with --auth-token flag.
-        3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
-    """
-    subparser.add_argument(
-        "--auth-username",
-        help="specify email address for authentication (for Global API key only)",
-    )
-    subparser.add_argument(
-        "--auth-token",
-        help="specify token for authentication (Global API key or API token)",
-    )
-    subparser.add_argument(
-        "--zone-id",
-        help="specify the zone id (if set, API token can be scoped to the target zone)",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["cloudflare.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+            1 - A Global API key, with --auth-username and --auth-token flags.
+            2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with --auth-token flag.
+            3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
+        """
+        parser.add_argument(
+            "--auth-username",
+            help="specify email address for authentication (for Global API key only)",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help="specify token for authentication (Global API key or API token)",
+        )
+        parser.add_argument(
+            "--zone-id",
+            help="specify the zone id (if set, API token can be scoped to the target zone)",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

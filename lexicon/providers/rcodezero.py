@@ -1,7 +1,9 @@
 """Module provider for RcodeZero"""
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,16 +11,17 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["rcode0.net"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for RcodeZero"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["rcode0.net"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

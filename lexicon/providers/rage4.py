@@ -1,6 +1,8 @@
 """Module provider for rage4"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,19 +11,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["rage4.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for rage4"""
-    subparser.add_argument(
-        "--auth-username", help="specify email address for authentication"
-    )
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for rage4"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["rage4.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify email address for authentication"
+        )
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

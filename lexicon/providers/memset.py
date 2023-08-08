@@ -1,6 +1,8 @@
 """Module provider for memset"""
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -9,16 +11,17 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["memset.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for memset"""
-    subparser.add_argument("--auth-token", help="specify API key for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for memset"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["memset.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify API key for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

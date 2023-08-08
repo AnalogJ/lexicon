@@ -2,8 +2,10 @@
 
 API doc: https://yandex.com/dev/domain/doc/reference/dns-add.html
 """
+from argparse import ArgumentParser
 import json
 import logging
+from typing import List
 
 import requests
 
@@ -16,19 +18,20 @@ __contact__ = "https://github.com/kharkevich"
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["yandex.com"]
-
-
-def provider_parser(subparser):
-    """Generate parser provider for Yandex PDD"""
-    subparser.add_argument(
-        "--auth-token",
-        help="specify PDD token (https://yandex.com/dev/domain/doc/concepts/access.html)",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Yandex PDD"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["yandex.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token",
+            help="specify PDD token (https://yandex.com/dev/domain/doc/concepts/access.html)",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

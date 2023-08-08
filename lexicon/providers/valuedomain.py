@@ -66,6 +66,7 @@ Reference: https://www.value-domain.com/moddnsfree.php
   - srv _smtp._tcp 1 2 25 server1.your.domain   : SRV record for _smtp._tcp.<YOUR-DOMAIN> (Priority:1, Weight:2, Port:25)
 """
 
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
@@ -82,7 +83,6 @@ from lexicon.providers.base import Provider as BaseProvider
 T = TypeVar("T")
 
 LOGGER = logging.getLogger(__name__)
-NAMESERVER_DOMAINS = ["value-domain.com"]
 
 DEFAULT_TTL = 3600
 
@@ -328,17 +328,20 @@ def vdapi_set_domain_data(
 ########################################################################
 
 
-def provider_parser(subparser):
-    """Configure provider parser for Value Domain"""
-    subparser.description = """
-        Value Domain requires a token to access its API.
-        You can generate one for your account on the following URL:
-        https://www.value-domain.com/vdapi/"""
-    subparser.add_argument("--auth-token", help="specify youyr API token")
-
-
 class Provider(BaseProvider):
     """Provider class for Value Domain"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["value-domain.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            Value Domain requires a token to access its API.
+            You can generate one for your account on the following URL:
+            https://www.value-domain.com/vdapi/"""
+        parser.add_argument("--auth-token", help="specify youyr API token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

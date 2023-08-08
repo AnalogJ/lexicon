@@ -1,4 +1,5 @@
 """Module provider for Godaddy"""
+from argparse import ArgumentParser
 import hashlib
 import json
 import logging
@@ -12,14 +13,6 @@ from lexicon.exceptions import LexiconError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["godaddy.com", "domaincontrol.com"]
-
-
-def provider_parser(subparser):
-    """Generate a subparser for Godaddy"""
-    subparser.add_argument("--auth-key", help="specify the key to access the API")
-    subparser.add_argument("--auth-secret", help="specify the secret to access the API")
 
 
 class Provider(BaseProvider):
@@ -46,6 +39,15 @@ class Provider(BaseProvider):
     because identifier value is tied to the content of the record, and will change anytime
     something is changed in the record.
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["godaddy.com", "domaincontrol.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-key", help="specify the key to access the API")
+        parser.add_argument("--auth-secret", help="specify the secret to access the API")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

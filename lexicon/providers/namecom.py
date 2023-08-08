@@ -1,7 +1,9 @@
 """Module provider for Name.com"""
 from __future__ import absolute_import
+from argparse import ArgumentParser
 
 import logging
+from typing import List
 
 from requests import HTTPError, Session
 from requests.auth import HTTPBasicAuth
@@ -10,19 +12,10 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["name.com"]
-
 DUPLICATE_ERROR = {
     "message": "Invalid Argument",
     "details": "Parameter Value Error - Duplicate Record",
 }
-
-
-def provider_parser(subparser):
-    """Configure a subparser for Name.com."""
-
-    subparser.add_argument("--auth-username", help="specify a username")
-    subparser.add_argument("--auth-token", help="specify an API token")
 
 
 class NamecomLoader(
@@ -46,6 +39,15 @@ class NamecomLoader(
 
 class NamecomProvider(BaseProvider):
     """Provider implementation for Name.com."""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["name.com"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-username", help="specify a username")
+        parser.add_argument("--auth-token", help="specify an API token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

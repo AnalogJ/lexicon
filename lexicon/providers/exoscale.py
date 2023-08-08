@@ -1,5 +1,7 @@
 """Module provider for exoscale"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 import requests
 
@@ -9,19 +11,20 @@ LOGGER = logging.getLogger(__name__)
 
 HOUR = 3600
 
-NAMESERVER_DOMAINS = ["exoscale.ch"]
-
-
-def provider_parser(subparser):
-    """Generate subparser for exoscale"""
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
-    subparser.add_argument(
-        "--auth-secret", help="specify API secret for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for exoscale"""
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["exoscale.ch"]
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-key", help="specify API key for authentication")
+        parser.add_argument(
+            "--auth-secret", help="specify API secret for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

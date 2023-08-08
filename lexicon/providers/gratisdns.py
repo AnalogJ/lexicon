@@ -1,5 +1,7 @@
 """Module provider for GratisDNS"""
+from argparse import ArgumentParser
 import logging
+from typing import List
 
 import requests
 from bs4 import BeautifulSoup  # type: ignore
@@ -9,23 +11,24 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["gratisdns.dk"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument(
-        "--auth-username", help="specify email address for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for GratisDNS"""
 
     # XXX: Identifiers change on updates
+    
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["gratisdns.dk"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify email address for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
