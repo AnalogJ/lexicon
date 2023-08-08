@@ -34,7 +34,6 @@ Configure the virtual environment with full providers support:
 
     cd lexicon
     poetry install -E full
-    source .venv/bin/activate
 
 Activate the virtual environment
 
@@ -48,7 +47,7 @@ Activate the virtual environment
     # On Windows (powershell)
     ./.venv/Scripts/activate
 
-Make sure the tests pass:
+Make sure all tests pass:
 
 .. code-block:: bash
 
@@ -111,11 +110,11 @@ the proper conventions.
 
     - ``lexicon`` is designed to work with multiple versions of python. That means
       your code will be tested against python 3.8 and 3.11 on Windows, Linux and Mac OS X.
-    - any provider specific dependencies need a particular configuration in the ``pyproject:toml``
+    - any provider specific dependencies need a particular configuration in the ``pyproject.toml``
       file:
 
-    Add the specific dependency as an optional dependency under
-    the ``[tool.poetry.dependencies]`` block.
+    Under the ``[tool.poetry.dependencies]`` block, add the specific dependency
+    as an optional dependency.
 
     .. code-block:: toml
 
@@ -123,19 +122,13 @@ the proper conventions.
         # Optional dependencies required by some providers
         additionalpackage = { version = "*", optional = true }  # mycustomprovider
 
-    Define an extra group named after the provider name requiring the optional dependency
-    under the ``[tool.poetry.extras]`` block.
+    Under the ``[tool.poetry.extras]`` block, define a new extra group named after the provider name
+    requiring the optional dependency, then add this extra group inside the ``full`` group.
 
     .. code-block:: toml
 
         [tool.poetry.extras]
         mycustomprovider = ["additionalpackage"]
-
-    Add the new extra group in the ``full`` group under the ``[tool.poetry.extras]`` block.
-    
-    .. code-block:: toml
-
-        [tool.poetry.extras]
         full = [..., "mycustomprovider"]
 
 .. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
@@ -146,6 +139,17 @@ the proper conventions.
 Testing your provider
 =====================
 
+Static code analysis
+--------------------
+
+The project codebase is checked by a linter (flake8) and against types declaration (mypy). Both
+analysis must pass. You can run them with the following command:
+
+.. code-block:: bash
+
+    tox -e lint
+    tox -e mypy
+
 Test against the live API
 -------------------------
 
@@ -153,7 +157,7 @@ First let's validate that your provider shows up in the CLI.
 
 .. code-block:: bash
 
-    $ lexicon foo --help
+    lexicon foo --help
 
 If everything worked correctly, you should get a help page that's specific
 to your provider, including your custom optional arguments.
@@ -163,8 +167,8 @@ everything works as you expect.
 
 .. code-block:: bash
 
-    $ lexicon foo list example.com TXT
-    $ lexicon foo create example.com TXT --name demo --content "fake content"
+    lexicon foo list example.com TXT
+    lexicon foo create example.com TXT --name demo --content "fake content"
 
 Once you're satisfied that your provider is working correctly, we'll run the
 integration test suite against it, and verify that your provider responds the
@@ -227,8 +231,8 @@ Notice also that you should pass any required non-secrets arguments programmatic
 .. _tests/fixtures/cassettes/: https://github.com/AnalogJ/lexicon/tree/master/tests/fixtures/cassettes
 .. _test_powerdns.py: https://github.com/AnalogJ/lexicon/blob/5ee4d16f9d6206e212c2197f2e53a1db248f5eb9/lexicon/tests/providers/test_powerdns.py#L19
 
-Test recordings
----------------
+Add new tests recordings
+------------------------
 
 Now you need to run the ``py.test`` suite again, but in a different mode: the live tests mode.
 In default test mode, tests are replayed from existing recordings. In live mode, tests are executed
@@ -257,8 +261,8 @@ Once all your tests pass, you'll want to double check that there is no sensitive
 
 Finally, push your changes to your Github fork, and open a PR.
 
-Skipping Tests/Suites
----------------------
+Skipping some tests
+-------------------
 
 Neither of the snippets below should be used unless necessary. They are only included
 in the interest of documentation.
