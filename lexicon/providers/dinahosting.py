@@ -1,8 +1,8 @@
 """Module provider for Dinahosting"""
 # import re
-from argparse import ArgumentParser
 import hashlib
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

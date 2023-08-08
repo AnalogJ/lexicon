@@ -1,9 +1,9 @@
 """Module provider for Gehirn"""
-from argparse import ArgumentParser
 import base64
 import json
 import logging
 import re
+from argparse import ArgumentParser
 from typing import List
 
 import requests

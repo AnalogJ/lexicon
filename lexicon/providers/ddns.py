@@ -1,7 +1,7 @@
 """Module provider for DDNS"""
-from argparse import ArgumentParser
 import binascii
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 from cryptography.hazmat.backends import default_backend

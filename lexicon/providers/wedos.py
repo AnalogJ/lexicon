@@ -1,7 +1,7 @@
-from argparse import ArgumentParser
 import datetime
 import hashlib
 import json
+from argparse import ArgumentParser
 from typing import Dict, List, Optional
 
 import requests

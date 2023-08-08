@@ -1,8 +1,8 @@
 """Module provider for RcodeZero"""
-from argparse import ArgumentParser
 import hashlib
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

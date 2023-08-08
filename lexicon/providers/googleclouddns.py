@@ -19,11 +19,11 @@ So all the hard work in this provider, apart from the authentication process, is
 Lexicon monovalued entries representation to/from the Google multivalued and stacked representation
 through create/update/list/delete processes.
 """
-from argparse import ArgumentParser
 import binascii
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from base64 import b64decode, urlsafe_b64encode
 from typing import List
 

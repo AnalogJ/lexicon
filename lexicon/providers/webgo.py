@@ -1,6 +1,6 @@
 """Module provider for Webgo"""
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 from bs4 import BeautifulSoup  # type: ignore

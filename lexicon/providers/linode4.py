@@ -1,7 +1,7 @@
 """Module provider for Linode V4"""
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

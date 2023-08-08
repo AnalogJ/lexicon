@@ -66,14 +66,15 @@ Reference: https://www.value-domain.com/moddnsfree.php
   - srv _smtp._tcp 1 2 25 server1.your.domain   : SRV record for _smtp._tcp.<YOUR-DOMAIN> (Priority:1, Weight:2, Port:25)
 """
 
-from argparse import ArgumentParser
 import hashlib
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from http import cookiejar
 from http.client import HTTPResponse
-from typing import Any, Callable, Dict, List, NamedTuple, Optional, TypeVar, Union
+from typing import (Any, Callable, Dict, List, NamedTuple, Optional, TypeVar,
+                    Union)
 from urllib import request
 from urllib.error import HTTPError
 from urllib.request import OpenerDirector

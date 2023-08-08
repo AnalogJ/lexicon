@@ -23,9 +23,9 @@ dynamic group that includes the compute instance.
 See https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm
 for in-depth documentation on managing DNS via the OCI console, SDK or API.
 """
-from argparse import ArgumentParser
 import logging
 import os
+from argparse import ArgumentParser
 from pathlib import Path
 from typing import List
 

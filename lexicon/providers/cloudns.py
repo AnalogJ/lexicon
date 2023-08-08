@@ -1,6 +1,6 @@
 """Provider module for CloudNS"""
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

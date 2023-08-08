@@ -1,7 +1,7 @@
 """Module provider for Henet"""
-from argparse import ArgumentParser
 import logging
 import re
+from argparse import ArgumentParser
 from typing import List
 
 from bs4 import BeautifulSoup  # type: ignore

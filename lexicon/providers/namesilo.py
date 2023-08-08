@@ -1,6 +1,6 @@
 """Module provider for Namesilo"""
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from typing import List
 from xml.etree import ElementTree
 

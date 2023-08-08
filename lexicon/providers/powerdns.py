@@ -20,9 +20,9 @@ type and content.
 This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

@@ -15,13 +15,13 @@ but here's what you need to be aware of:
     This is unlikely to be a problem in most scenarios, but the possilbity is there.  I've reached
     out to the Constellix folks to see if they have plans to clean up the API to resolve this.
 """
-from argparse import ArgumentParser
 import base64
 import hashlib
 import hmac
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from typing import List
 
 import requests

@@ -4,10 +4,8 @@ from unittest import TestCase
 
 import pytest
 
-from lexicon.tests.providers.integration_tests import (
-    IntegrationTestsV2,
-    vcr_integration_test,
-)
+from lexicon.tests.providers.integration_tests import (IntegrationTestsV2,
+                                                       vcr_integration_test)
 
 FAKE_KEY = """
 -----BEGIN RSA PRIVATE KEY-----

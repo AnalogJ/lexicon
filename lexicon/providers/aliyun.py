@@ -1,14 +1,14 @@
 """Module provider for Aliyun"""
-from argparse import ArgumentParser
 import base64
 import datetime
 import hmac
 import logging
 import sys
-from typing import List
-from urllib.parse import urlencode, quote_plus
 import uuid
+from argparse import ArgumentParser
 from hashlib import sha1
+from typing import List
+from urllib.parse import quote_plus, urlencode
 
 import requests
 

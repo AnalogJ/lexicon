@@ -1,8 +1,8 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
-from argparse import ArgumentParser
 import hashlib
 import logging
 import re
+from argparse import ArgumentParser
 from typing import List
 
 from lexicon.exceptions import AuthenticationError

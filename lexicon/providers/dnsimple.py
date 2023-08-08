@@ -1,7 +1,7 @@
 """Module provider for DNS Simple"""
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

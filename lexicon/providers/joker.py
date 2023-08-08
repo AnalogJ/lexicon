@@ -10,11 +10,11 @@
 #   - all headers and data are contained in the response body; then this kind of body is composed
 #     of several lines of type key: value containing the headers (including errors), then a blank
 #     line makes the separation with the data itself (see _process_response for the body parsing).
-from argparse import ArgumentParser
 import binascii
 import json
 import logging
 import re
+from argparse import ArgumentParser
 from typing import List
 
 import requests

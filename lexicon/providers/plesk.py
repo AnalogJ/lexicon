@@ -5,8 +5,8 @@ Author: Jens Reimann, 2018
 
 API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 """
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from collections import defaultdict
 from typing import Dict, List, Optional
 from xml.etree import cElementTree

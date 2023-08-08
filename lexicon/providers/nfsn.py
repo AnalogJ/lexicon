@@ -1,10 +1,10 @@
 """Module provider for nfsn"""
-from argparse import ArgumentParser
 import hashlib
 import logging
 import random
 import string
 import time
+from argparse import ArgumentParser
 from typing import List
 from urllib.parse import urlencode
 

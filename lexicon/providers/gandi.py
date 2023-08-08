@@ -25,9 +25,9 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from builtins import object
 from typing import List
 

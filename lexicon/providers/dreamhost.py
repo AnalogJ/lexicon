@@ -1,9 +1,9 @@
 """Module provider for Dreamhost"""
-from argparse import ArgumentParser
 import base64
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from typing import List
 
 import requests

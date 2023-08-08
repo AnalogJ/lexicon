@@ -5,9 +5,9 @@ Author: Matthias Schoettle (@mschoettle), 2019
 
 EUserv API Docs: https://support.euserv.com/api-doc/
 """
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

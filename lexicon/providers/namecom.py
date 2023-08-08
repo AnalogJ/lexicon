@@ -1,8 +1,8 @@
 """Module provider for Name.com"""
 from __future__ import absolute_import
-from argparse import ArgumentParser
 
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 from requests import HTTPError, Session

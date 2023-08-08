@@ -1,6 +1,6 @@
 """Module provider for INWX"""
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 from lexicon.exceptions import AuthenticationError

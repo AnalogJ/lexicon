@@ -1,8 +1,8 @@
 """Provide support to Lexicon for DNS changes for Gransy sites subreg.cz, regtons.com and \
 regnames.eu."""
-from argparse import ArgumentParser
 import collections
 import logging
+from argparse import ArgumentParser
 from builtins import staticmethod
 from typing import List
 

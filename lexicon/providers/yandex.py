@@ -2,9 +2,9 @@
 
 API doc: https://yandex.com/dev/domain/doc/reference/dns-add.html
 """
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

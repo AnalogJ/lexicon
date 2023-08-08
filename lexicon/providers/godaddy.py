@@ -1,8 +1,8 @@
 """Module provider for Godaddy"""
-from argparse import ArgumentParser
 import hashlib
 import json
 import logging
+from argparse import ArgumentParser
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests

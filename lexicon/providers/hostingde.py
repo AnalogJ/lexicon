@@ -1,8 +1,8 @@
 """Module provider for hostingde (Hosting.de)"""
-from argparse import ArgumentParser
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from typing import List
 
 import requests

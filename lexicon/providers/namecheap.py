@@ -1,7 +1,7 @@
 """Module provider for Namecheap"""
-from argparse import ArgumentParser
 import logging
 import sys
+from argparse import ArgumentParser
 from typing import Dict, List, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 

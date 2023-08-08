@@ -21,8 +21,8 @@ the other is also deleted.
 you delete it will still be present with the value "". The implementation of
 _list_records and _delete_record does not handle this special case.\
 """
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

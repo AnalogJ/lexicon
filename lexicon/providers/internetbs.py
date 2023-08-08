@@ -12,10 +12,10 @@ the limits. Here are the limits:
 Where N is the number of registered domains in your account (so excluding pending
 transfers/trades)."
 """
-from argparse import ArgumentParser
 import hashlib
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

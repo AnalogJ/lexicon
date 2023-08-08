@@ -1,7 +1,7 @@
 """Module provider for a localzone"""
-from argparse import ArgumentParser
 import logging
 import types
+from argparse import ArgumentParser
 from time import localtime, strftime, time
 from typing import List
 

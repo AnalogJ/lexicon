@@ -14,9 +14,9 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
     --content 10.10.10.11 --name lexicon1
 
 """
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

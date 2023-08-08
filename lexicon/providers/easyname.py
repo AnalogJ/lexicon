@@ -1,7 +1,7 @@
 """Module provider for Easyname DNS"""
-from argparse import ArgumentParser
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 from bs4 import BeautifulSoup, Tag  # type: ignore

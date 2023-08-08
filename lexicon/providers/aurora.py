@@ -1,11 +1,11 @@
 """Module provider for Aurora"""
-from argparse import ArgumentParser
 import base64
 import datetime
 import hashlib
 import hmac
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests

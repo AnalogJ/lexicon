@@ -1,10 +1,10 @@
 """Module provider for Misaka.IO"""
 from __future__ import absolute_import
-from argparse import ArgumentParser
 
 import base64
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List, Tuple
 
 import requests

@@ -1,6 +1,6 @@
 """Module provider for Glesys"""
-from argparse import ArgumentParser
 import json
+from argparse import ArgumentParser
 from typing import List
 
 import requests

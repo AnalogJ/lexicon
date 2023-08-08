@@ -1,9 +1,9 @@
 """Module provider for CloudXNS"""
-from argparse import ArgumentParser
 import hashlib
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from typing import List
 from urllib.parse import urlencode
 
