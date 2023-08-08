@@ -116,6 +116,7 @@ the proper conventions.
 
     Add the specific dependency as an optional dependency under
     the ``[tool.poetry.dependencies]`` block.
+
     .. code-block:: toml
 
         [tool.poetry.dependencies]
@@ -124,12 +125,14 @@ the proper conventions.
 
     Define an extra group named after the provider name requiring the optional dependency
     under the ``[tool.poetry.extras]`` block.
+
     .. code-block:: toml
 
         [tool.poetry.extras]
         mycustomprovider = ["additionalpackage"]
 
     Add the new extra group in the ``full`` group under the ``[tool.poetry.extras]`` block.
+    
     .. code-block:: toml
 
         [tool.poetry.extras]
