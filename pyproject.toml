@@ -70,6 +70,7 @@ pytest-cov = "*"
 pytest-xdist = "*"
 vcrpy = "*"
 flake8 = "*"
+flake8-pyproject = "*"
 isort = "*"
 tox = ">=4"
 black = { version = "*", allow-prereleases = true }
@@ -92,3 +93,8 @@ show_error_codes = true
 
 [tool.isort]
 profile = "black"
+
+[tool.flake8]
+max-line-length = 30
+select = ["C", "E", "F", "W", "B", "B950"]
+ignore = ["E203", "E501", "W503"]
