@@ -200,7 +200,7 @@ Integration
 Lexicon can be integrated with various tools and process to help handling DNS records.
 
 Let's Encrypt instructions
--------------------------
+--------------------------
 
 Lexicon has an example `dehydrated hook file`_ that you can use for any supported provider.
 All you need to do is set the PROVIDER env variable.

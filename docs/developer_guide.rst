@@ -7,41 +7,6 @@ paid accounts, which makes it hard for us to develop ``lexicon`` providers on ou
 it as easy as possible to contribute to ``lexicon``, so that you can automate your favorite DNS service.
 There are a few guidelines that we need contributors to follow so that we can keep on top of things.
 
-Potential providers
-===================
-
-Potential providers are as follows. If you would like to contribute one, please follow the
-current document instructions and open a pull request.
-
-- `AHNames <https://ahnames.com/en/resellers?tab=2>`_
-- `DurableDNS <https://durabledns.com/wiki/doku.php/ddns>`_ (?? Can't set TXT records ??)
-- cyon.ch
-- `deSEC.io <https://desec.io/>`_ (free of charge, non-commercial foundation, DNSSEC, global anycast network)
-- `Dyn <https://help.dyn.com/dns-api-knowledge-base/>`_ ($$ requires paid account $$)
-- `EntryDNS <https://entrydns.net/help>`_ ($$ requires paid account $$)
-- `FreeDNS <https://freedns.afraid.org/scripts/freedns.clients.php>`_
-- `Host Virtual DNS <https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py>`_ ($$ requires paid account $$)
-- HostEurope
-- Infoblox NIOS
-- `ironDNS <https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0>`_ ($$ requires paid account $$)
-- ISPConfig
-- `InternetX autoDNS <https://internetx.com>`_
-- KingHost
-- `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
-- `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
-- `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
-- `Porkbun <https://porkbun.com/api/json/v3/documentation/>`
-- `Servercow <https://servercow.de>`_
-- selectel.com
-- `TELE3 <https://www.tele3.cz>`_
-- `UltraDNS <https://restapi.ultradns.com/v1/docs>`_ ($$ requires paid account $$)
-- UnoEuro API
-- VSCALE
-- `WorldWideDns <https://www.worldwidedns.net/dns_api_protocol.asp>`_ ($$ requires paid account $$)
-- `Zerigo <https://www.zerigo.com/managed-dns/rest-api>`_ ($$ requires paid account $$)
-- `Zoneedit <http://forum.zoneedit.com/index.php?threads/dns-update-api.419/>`_
-- **Any others I missed**
-
 Setup a development environment
 ===============================
 
@@ -49,33 +14,51 @@ Fork, then clone the repo:
 
 .. code-block:: bash
 
-    $ git clone git@github.com:your-username/lexicon.git
+    git clone git@github.com:your-username/lexicon.git
 
 Install Poetry if you not have it already:
 
 .. code-block:: bash
 
-    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+    # On Linux / WSL2
+    curl -sSL https://install.python-poetry.org | python3 -
 
-Configure the virtual environment with full providers support and activate it:
+.. code-block:: powershell
+
+    # On Windows (powershell)
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+Configure the virtual environment with full providers support:
 
 .. code-block:: bash
 
-    $ cd lexicon
-    $ poetry install -E full
-    $ source .venv/bin/activate
+    cd lexicon
+    poetry install -E full
+    source .venv/bin/activate
+
+Activate the virtual environment
+
+.. code-block:: bash
+
+    # On Linux / WSL2
+    source .venv/bin/activate
+
+.. code-block:: powershell
+
+    # On Windows (powershell)
+    ./.venv/Scripts/activate
 
 Make sure the tests pass:
 
 .. code-block:: bash
 
-    $ tox -e py
+    tox -e py
 
 You can test a specific provider using:
 
 .. code-block:: bash
 
-    $ pytest lexicon/tests/providers/test_foo.py
+    pytest lexicon/tests/providers/test_foo.py
 
 .. note::
 
@@ -105,7 +88,7 @@ Your provider file should contain 3 things:
   those values will be available to your provider via ``self._get_provider_option('auth_username')``
   or ``self._get_provider_option('auth_token')`` respectively
 
-- a ``Provider`` class which inherits from BaseProvider_, which is in the ``base.py`` file.
+- a ``Provider`` class inheriting from BaseProvider_ (defined in  ``base.py`` file).
   The BaseProvider_ defines the following functions, which must be overridden in your
   provider implementation:
 
@@ -119,24 +102,38 @@ Your provider file should contain 3 things:
   It also provides a few helper functions which you can use to simplify your implementation.
   See the `cloudflare.py`_ file, or any provider in the `lexicon/providers/`_ folder for examples
 
-It's a good idea to review the `provider specification`_ to ensure that your interface follows
+Finally you must review the `provider specification`_ to ensure that your interface follows
 the proper conventions.
 
 .. note::
 
-    Please keep in mind the following:
+    Several import notes:
 
     - ``lexicon`` is designed to work with multiple versions of python. That means
-      your code will be tested against python 3.6 and 3.8 on Windows, Linux and Mac OS X.
-    - any provider specific dependencies should be added to the ``setup.py`` file,
-      under the ``extra_requires`` heading. The group name should be the name of the
-      provider. eg:
+      your code will be tested against python 3.8 and 3.11 on Windows, Linux and Mac OS X.
+    - any provider specific dependencies need a particular configuration in the ``pyproject:toml``
+      file:
 
-    .. code-block:: python
+    Add the specific dependency as an optional dependency under
+    the ``[tool.poetry.dependencies]`` block.
+    .. code-block:: toml
 
-        extras_require={
-            'route53': ['boto3']
-        }
+        [tool.poetry.dependencies]
+        # Optional dependencies required by some providers
+        additionalpackage = { version = "*", optional = true }  # mycustomprovider
+
+    Define an extra group named after the provider name requiring the optional dependency
+    under the ``[tool.poetry.extras]`` block.
+    .. code-block:: toml
+
+        [tool.poetry.extras]
+        mycustomprovider = ["additionalpackage"]
+
+    Add the new extra group in the ``full`` group under the ``[tool.poetry.extras]`` block.
+    .. code-block:: toml
+
+        [tool.poetry.extras]
+        full = [..., "mycustomprovider"]
 
 .. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
 .. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py
