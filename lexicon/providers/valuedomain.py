@@ -73,8 +73,7 @@ import time
 from argparse import ArgumentParser
 from http import cookiejar
 from http.client import HTTPResponse
-from typing import (Any, Callable, Dict, List, NamedTuple, Optional, TypeVar,
-                    Union)
+from typing import Any, Callable, Dict, List, NamedTuple, Optional, TypeVar, Union
 from urllib import request
 from urllib.error import HTTPError
 from urllib.request import OpenerDirector
