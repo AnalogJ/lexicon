@@ -126,7 +126,7 @@ class Provider(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_nameservers() -> Union[List[str], List[Pattern[str]]]:
+    def get_nameservers() -> Union[List[str], List[Pattern]]:
         """Return the list of nameservers for this DNS provider"""
 
     @staticmethod

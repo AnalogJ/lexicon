@@ -68,7 +68,7 @@ class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
     @staticmethod
-    def get_nameservers() -> List[re.Pattern[str]]:
+    def get_nameservers() -> List[re.Pattern]:
         return [re.compile(r"^awsdns-\d+\.\w+$")]
 
     @staticmethod
