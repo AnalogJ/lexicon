@@ -11,7 +11,7 @@ import pkgutil
 from argparse import ArgumentParser
 from re import Pattern
 from types import ModuleType
-from typing import List, cast
+from typing import List, Union, cast
 from unittest import mock
 
 import pytest
@@ -28,7 +28,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str] | List[Pattern]:
+    def get_nameservers() -> Union[List[str], List[Pattern]]:
         return cast(List[str], [])
 
     @staticmethod
