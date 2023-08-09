@@ -5,10 +5,13 @@ In particular:
     - config should be passed correctly to provider,
     - relevant provider method should be invoked for a given config.
 """
+from argparse import ArgumentParser
 import contextlib
 import importlib
 import pkgutil
+from re import Pattern
 from types import ModuleType
+from typing import List, Union
 from unittest import mock
 
 import pytest
@@ -23,6 +26,14 @@ class Provider(BaseProvider):
     Fake provider to simulate the provider resolution from configuration,
     and to have execution traces when lexicon client is invoked
     """
+    
+    @staticmethod
+    def get_nameservers() -> List[str] | List[Pattern]:
+        return []
+    
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        pass
 
     def _authenticate(self):
         print("Authenticate action")
