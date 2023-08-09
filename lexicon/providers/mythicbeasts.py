@@ -2,6 +2,8 @@
 import binascii
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -14,33 +16,34 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["mythic-beasts.com"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.description = """
-        There are two ways to provide an authentication granting access to the Mythic Beasts API
-        1 - With your API credentials (user/password), using --auth-username and --auth-password flags.
-        2 - With an API token, using --auth-token flags.
-        These credentials and tokens must be generated using the Mythic Beasts API v2.
-    """
-    subparser.add_argument(
-        "--auth-username",
-        help="specify API credentials username",
-    )
-    subparser.add_argument(
-        "--auth-password",
-        help="specify API credentials password",
-    )
-    subparser.add_argument(
-        "--auth-token",
-        help="specify API token for authentication",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Mythic Beasts"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["mythic-beasts.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            There are two ways to provide an authentication granting access to the Mythic Beasts API
+            1 - With your API credentials (user/password), using --auth-username and --auth-password flags.
+            2 - With an API token, using --auth-token flags.
+            These credentials and tokens must be generated using the Mythic Beasts API v2.
+        """
+        parser.add_argument(
+            "--auth-username",
+            help="specify API credentials username",
+        )
+        parser.add_argument(
+            "--auth-password",
+            help="specify API credentials password",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help="specify API token for authentication",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

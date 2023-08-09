@@ -1,6 +1,8 @@
 """Module provider for DNS Simple"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,26 +11,27 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["dnsimple.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for DNS Simple"""
-    subparser.add_argument("--auth-token", help="specify api token for authentication")
-    subparser.add_argument(
-        "--auth-username", help="specify email address for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-    subparser.add_argument(
-        "--auth-2fa",
-        help="specify two-factor auth token (OTP) to use with email/password authentication",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for DNS Simple"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dnsimple.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api token for authentication")
+        parser.add_argument(
+            "--auth-username", help="specify email address for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
+        parser.add_argument(
+            "--auth-2fa",
+            help="specify two-factor auth token (OTP) to use with email/password authentication",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -22,6 +22,7 @@ back and forth between the format PowerDNS expects, and the format Lexicon uses
 """
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests
@@ -30,18 +31,6 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS: List[str] = []
-
-
-def provider_parser(subparser):
-    """Configure provider parser for powerdns"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-    subparser.add_argument("--pdns-server", help="URI for PowerDNS server")
-    subparser.add_argument("--pdns-server-id", help="Server ID to interact with")
-    subparser.add_argument(
-        "--pdns-disable-notify", help="Disable slave notifications from master"
-    )
-
 
 class PowerDNSProviderError(Exception):
     """Generic PowerDNS exception"""
@@ -49,6 +38,19 @@ class PowerDNSProviderError(Exception):
 
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify token for authentication")
+        parser.add_argument("--pdns-server", help="URI for PowerDNS server")
+        parser.add_argument("--pdns-server-id", help="Server ID to interact with")
+        parser.add_argument(
+            "--pdns-disable-notify", help="Disable slave notifications from master"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

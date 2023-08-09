@@ -2,7 +2,9 @@
 regnames.eu."""
 import collections
 import logging
+from argparse import ArgumentParser
 from builtins import staticmethod
+from typing import List
 
 try:
     import zeep  # type: ignore
@@ -14,31 +16,26 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["gransy.com"]
-
-
-def gransy_provider_parser(subparser):
-    """Gransy provider parser"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
-
-def provider_parser(subparser):
-    """Configure provider parser"""
-    gransy_provider_parser(subparser)
-
-    subparser.description = (
-        "DNS manipulation provider for Gransy sites "
-        + "subreg.cz, regtons.com and regnames.eu."
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Gransy"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["gransy.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = (
+            "DNS manipulation provider for Gransy sites "
+            + "subreg.cz, regtons.com and regnames.eu."
+        )
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

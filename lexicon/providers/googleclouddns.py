@@ -23,7 +23,9 @@ import binascii
 import json
 import logging
 import time
+from argparse import ArgumentParser
 from base64 import b64decode, urlsafe_b64encode
+from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -34,25 +36,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["googledomains.com"]
-
-
-def provider_parser(subparser):
-    """Generate a subparser for Google Cloud DNS"""
-    subparser.description = """
-        The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
-        This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
-        You can create a new service account, associate a private key, and download its info through this url:
-        https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2"""
-    subparser.add_argument(
-        "--auth-service-account-info",
-        help="""
-        specify the service account info in the Google JSON format:
-        can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
-        or the base64 encoded content of this file prefixed by 'base64::'
-        (eg. base64::eyJhbGciOyJ...)""",
-    )
 
 
 class Provider(BaseProvider):
@@ -66,6 +49,26 @@ class Provider(BaseProvider):
     in base64, which is a suitable portable way in particular for Docker containers.
     In both cases the content is loaded as bytes, on loaded in a private instance variable.
     """
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["googledomains.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            The Google Cloud DNS provider requires the JSON file which contains the service account info to connect to the API.
+            This service account must own the project role DNS > DNS administrator for the project associated to the DNS zone.
+            You can create a new service account, associate a private key, and download its info through this url:
+            https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=2"""
+        parser.add_argument(
+            "--auth-service-account-info",
+            help="""
+            specify the service account info in the Google JSON format:
+            can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
+            or the base64 encoded content of this file prefixed by 'base64::'
+            (eg. base64::eyJhbGciOyJ...)""",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

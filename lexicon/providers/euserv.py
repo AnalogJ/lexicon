@@ -7,6 +7,8 @@ EUserv API Docs: https://support.euserv.com/api-doc/
 """
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -14,8 +16,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["euserv.com"]
 
 # Success response code
 RC_SUCCESS = 100
@@ -26,18 +26,21 @@ API_ENDPOINT = "https://support.euserv.com/"
 PRODUCT_ID_DOMAIN = 1
 
 
-def provider_parser(subparser):
-    """Configure provider parser for Euserv"""
-    subparser.add_argument(
-        "--auth-username", help="specify email address for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
-
 class Provider(BaseProvider):
     """Provider class for Euserv"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["euserv.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify email address for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

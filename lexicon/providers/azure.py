@@ -11,6 +11,8 @@ support id on records (as they are hold in a recordset) so an id is generated on
 """
 import binascii
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -24,48 +26,51 @@ LOGGER = logging.getLogger(__name__)
 AZURE_AD_URL = "https://login.microsoftonline.com"
 MANAGEMENT_URL = "https://management.azure.com"
 API_VERSION = "2018-05-01"
-NAMESERVER_DOMAINS = [
-    "azure-dns.com",
-    "azure-dns.net",
-    "azure-dns.org",
-    "azure-dns.info",
-]
 
 SUPPORTED_RECORDS = {"A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV"}
 
 
-def provider_parser(subparser):
-    """Generate a subparser for Azure DNS"""
-    subparser.description = """
-        The Azure provider orchestrates the DNS zones hosted in a resource group for a subscription
-        in Microsoft Azure Cloud. To authenticate, an App registration must be created in an Azure
-        Active Directory. This App registration must be granted Admin for API permissions to
-        Domain.ReadWrite.All" to this Active Directory, and must have a usable Client secret.
-    """
-    subparser.add_argument(
-        "--auth-client-id",
-        help="specify the client ID (aka application ID) " "of the App registration",
-    )
-    subparser.add_argument(
-        "--auth-client-secret",
-        help="specify the client secret of the App " "registration",
-    )
-    subparser.add_argument(
-        "--auth-tenant-id",
-        help="specify the tenant ID (aka directory ID) of " "the App registration",
-    )
-    subparser.add_argument(
-        "--auth-subscription-id",
-        help="specify the subscription ID attached " "to the resource group",
-    )
-    subparser.add_argument(
-        "--resource-group",
-        help="specify the resource group hosting the DNS " "zone to edit",
-    )
-
-
 class Provider(BaseProvider):
     """Provider for Azure DNS"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return [
+            "azure-dns.com",
+            "azure-dns.net",
+            "azure-dns.org",
+            "azure-dns.info",
+        ]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            The Azure provider orchestrates the DNS zones hosted in a resource group for a subscription
+            in Microsoft Azure Cloud. To authenticate, an App registration must be created in an Azure
+            Active Directory. This App registration must be granted Admin for API permissions to
+            Domain.ReadWrite.All" to this Active Directory, and must have a usable Client secret.
+        """
+        parser.add_argument(
+            "--auth-client-id",
+            help="specify the client ID (aka application ID) "
+            "of the App registration",
+        )
+        parser.add_argument(
+            "--auth-client-secret",
+            help="specify the client secret of the App " "registration",
+        )
+        parser.add_argument(
+            "--auth-tenant-id",
+            help="specify the tenant ID (aka directory ID) of " "the App registration",
+        )
+        parser.add_argument(
+            "--auth-subscription-id",
+            help="specify the subscription ID attached " "to the resource group",
+        )
+        parser.add_argument(
+            "--resource-group",
+            help="specify the resource group hosting the DNS " "zone to edit",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

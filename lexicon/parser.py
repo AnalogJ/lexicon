@@ -2,8 +2,10 @@
 import argparse
 import importlib
 import os
+from typing import Type
 
 from lexicon import discovery
+from lexicon.providers.base import Provider
 
 
 def generate_base_provider_parser() -> argparse.ArgumentParser:
@@ -78,14 +80,15 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
 
     for provider, available in discovery.find_providers().items():
         provider_module = importlib.import_module("lexicon.providers." + provider)
-        provider_parser = getattr(provider_module, "provider_parser")
+        provider_class: Type[Provider] = getattr(provider_module, "Provider")
 
         subparser = subparsers.add_parser(
             provider,
             help=f"{provider} provider",
             parents=[generate_base_provider_parser()],
         )
-        provider_parser(subparser)
+
+        provider_class.configure_parser(subparser)
 
         if not available:
             subparser.epilog = (

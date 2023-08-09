@@ -18,6 +18,8 @@ Implementation notes:
   type and content.
 """
 import logging
+from argparse import ArgumentParser
+from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -32,21 +34,22 @@ APIENTRYPOINT = {
     "rimuhosting": "https://rimuhosting.com",
 }
 
-NAMESERVER_DOMAINS = ["zonomi.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Zonomi"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-    subparser.add_argument(
-        "--auth-entrypoint",
-        help="use Zonomi or Rimuhosting API",
-        choices=["zonomi", "rimuhosting"],
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Zonomi"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["zonomi.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify token for authentication")
+        parser.add_argument(
+            "--auth-entrypoint",
+            help="use Zonomi or Rimuhosting API",
+            choices=["zonomi", "rimuhosting"],
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

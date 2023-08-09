@@ -1,5 +1,7 @@
 """Module provider for Njalla"""
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -8,16 +10,17 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["1-you.njalla.no", "2-can.njalla.in", "3-get.njalla.fo"]
-
-
-def provider_parser(subparser):
-    """Module provider for Njalla"""
-    subparser.add_argument("--auth-token", help="specify API token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for Njalla"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["1-you.njalla.no", "2-can.njalla.in", "3-get.njalla.fo"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify API token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

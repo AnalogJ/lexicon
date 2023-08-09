@@ -1,6 +1,8 @@
 """Module provider for Linode V4"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,16 +11,17 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["linode.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Linode V4"""
-    subparser.add_argument("--auth-token", help="specify api key for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for Linode V4"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["linode.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

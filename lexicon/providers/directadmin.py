@@ -1,6 +1,7 @@
 """Module provider for DirectAdmin hosts"""
 import logging
 import warnings
+from argparse import ArgumentParser
 from typing import List
 
 import requests
@@ -11,28 +12,27 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-# DirectAdmin is not tied to a specific domain, so there is nothing to specify here
-NAMESERVER_DOMAINS: List[str] = []
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument(
-        "--auth-password",
-        help="specify password for authentication (or login key for two-factor authentication)",
-    )
-
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-
-    subparser.add_argument("--endpoint", help="specify the DirectAdmin endpoint")
-
 
 # See https://www.directadmin.com/features.php?id=504 for the specification of
 # the URIs for the different operations
 class Provider(BaseProvider):
     """Provider class for DirectAdmin"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
+        return []
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-password",
+            help="specify password for authentication (or login key for two-factor authentication)",
+        )
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument("--endpoint", help="specify the DirectAdmin endpoint")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

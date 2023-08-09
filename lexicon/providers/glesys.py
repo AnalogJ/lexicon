@@ -1,22 +1,25 @@
 """Module provider for Glesys"""
 import json
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
-NAMESERVER_DOMAINS = ["glesys.com"]
-
-
-def provider_parser(subparser):
-    """Generate a subparser for Glesys"""
-    subparser.add_argument("--auth-username", help="specify username (CL12345)")
-    subparser.add_argument("--auth-token", help="specify API key")
-
 
 class Provider(BaseProvider):
     """Provider class for Glesys"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["glesys.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-username", help="specify username (CL12345)")
+        parser.add_argument("--auth-token", help="specify API key")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -2,6 +2,8 @@
 # import re
 import hashlib
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,8 +11,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["dinahosting.com"]
 
 # These record types are either not supported by the API or are non-compliant
 UNSUPPORTED_TYPES = ["MX", "SRV", "NS", "SOA", "LOC"]
@@ -39,18 +39,21 @@ RC_COMMAND_FAILED_FATAL = 2500
 RC_COMMAND_TIMEOUT = 2501
 
 
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
-
 class Provider(BaseProvider):
     """Provider class for Dinahosting"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dinahosting.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

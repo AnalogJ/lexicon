@@ -14,6 +14,8 @@ import binascii
 import json
 import logging
 import re
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -24,24 +26,10 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["ns.joker.com"]
-
 API_BASE_URL = "https://dmapi.joker.com/request"
 DNSZONE_ENTRY_PATTERN = re.compile(
     r"^(.+?)\s+(\w+)\s+(.+?)\s+((?:\\\"(?:.+?)\\\")|(?:.+?))\s+(\d+)(?:\s+(\d+)\s+(\d+)\s+(.+?)|\s+(.+?)|)$"
 )
-
-
-def provider_parser(subparser):
-    """Generate a subparser for Joker"""
-    subparser.description = """
-The Joker.com provider requires a valid token for authentication.
-You can create one in the section 'Manage Joker.com API access keys' of 'My Profile' in your Joker.com account.
-"""
-    subparser.add_argument(
-        "--auth-token",
-        help="specify the API Key to connect to the Joker.com API",
-    )
 
 
 class _Response:
@@ -54,6 +42,21 @@ class _Response:
 
 
 class Provider(BaseProvider):
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ns.joker.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+The Joker.com provider requires a valid token for authentication.
+You can create one in the section 'Manage Joker.com API access keys' of 'My Profile' in your Joker.com account.
+"""
+        parser.add_argument(
+            "--auth-token",
+            help="specify the API Key to connect to the Joker.com API",
+        )
+
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None

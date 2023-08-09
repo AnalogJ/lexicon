@@ -1,6 +1,8 @@
 """Module provider for Henet"""
 import logging
 import re
+from argparse import ArgumentParser
+from typing import List
 
 from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
@@ -10,27 +12,28 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["he.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Henet."""
-    subparser.description = """A provider for Hurricane Electric DNS.
-        NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
-              YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
-        """
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """
     he.net provider
     """
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["he.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """A provider for Hurricane Electric DNS.
+            NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
+                YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
+            """
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

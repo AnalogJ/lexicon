@@ -3,6 +3,8 @@ import base64
 import json
 import logging
 import re
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -11,19 +13,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["gehirn.jp"]
-
-
-def provider_parser(subparser):
-    """Construct subparser for Gehirn"""
-    subparser.add_argument(
-        "--auth-token", help="specify access token for authentication"
-    )
-    subparser.add_argument(
-        "--auth-secret", help="specify access secret for authentication"
-    )
-
 
 BUILD_FORMATS = {
     "A": "{address}",
@@ -50,6 +39,19 @@ FORMAT_RE = {
 
 class Provider(BaseProvider):
     """Provider class for Gehirn"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["gehirn.jp"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token", help="specify access token for authentication"
+        )
+        parser.add_argument(
+            "--auth-secret", help="specify access secret for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

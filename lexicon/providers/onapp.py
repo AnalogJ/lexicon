@@ -1,6 +1,7 @@
 """Module provider for OnApp"""
 import json
 import logging
+from argparse import ArgumentParser
 from typing import List
 
 import requests
@@ -11,26 +12,29 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS: List[str] = []
-
-
-def provider_parser(subparser):
-    """Configure provider parser for OnApp"""
-    subparser.description = """
-        The OnApp provider requires your OnApp account\'s email address and
-        API token, which can be found on your /profile page on the Control Panel interface.
-        The server is your dashboard URL, with format like https://dashboard.youronapphost.org"""
-    subparser.add_argument(
-        "--auth-username", help="specify email address of the OnApp account"
-    )
-    subparser.add_argument("--auth-token", help="specify API Key for the OnApp account")
-    subparser.add_argument(
-        "--auth-server", help="specify URL to the OnApp Control Panel Server"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for OnApp"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            The OnApp provider requires your OnApp account\'s email address and
+            API token, which can be found on your /profile page on the Control Panel interface.
+            The server is your dashboard URL, with format like https://dashboard.youronapphost.org"""
+        parser.add_argument(
+            "--auth-username", help="specify email address of the OnApp account"
+        )
+        parser.add_argument(
+            "--auth-token", help="specify API Key for the OnApp account"
+        )
+        parser.add_argument(
+            "--auth-server", help="specify URL to the OnApp Control Panel Server"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

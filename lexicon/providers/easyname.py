@@ -1,6 +1,8 @@
 """Module provider for Easyname DNS"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 from bs4 import BeautifulSoup, Tag  # type: ignore
 from requests import Response, Session
@@ -8,20 +10,6 @@ from requests import Response, Session
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["easyname.eu"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Easyname DNS"""
-    subparser.description = """A provider for Easyname DNS."""
-    subparser.add_argument(
-        "--auth-username", help="Specify username used to authenticate"
-    )
-    subparser.add_argument(
-        "--auth-password",
-        help="Specify password used to authenticate",
-    )
 
 
 class Provider(BaseProvider):
@@ -41,6 +29,21 @@ class Provider(BaseProvider):
         "dns_delete_entry": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}",
         "dns_delete_entry_confirm": "https://my.easyname.com/en/domain/dns/delete/domain/{}/id/{}/confirm/1",
     }
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["easyname.eu"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """A provider for Easyname DNS."""
+        parser.add_argument(
+            "--auth-username", help="Specify username used to authenticate"
+        )
+        parser.add_argument(
+            "--auth-password",
+            help="Specify password used to authenticate",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

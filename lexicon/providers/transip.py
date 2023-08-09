@@ -3,6 +3,7 @@ import binascii
 import json
 import logging
 import uuid
+from argparse import ArgumentParser
 from base64 import b64decode, b64encode
 from typing import Any, Dict, List, Optional
 
@@ -22,27 +23,7 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS: List[str] = []
-
 API_BASE_URL = "https://api.transip.nl/v6"
-
-
-def provider_parser(subparser):
-    """Configure provider parser for TransIP"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-api-key",
-        help="specify the private key to use for API authentication, in PEM format: can be either "
-        "the path of the key file (eg. /tmp/key.pem) or the base64 encoded content of this "
-        "file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)",
-    )
-    subparser.add_argument(
-        "--auth-key-is-global",
-        action="store_true",
-        help="set this flag is the private key used is a global key with no IP whitelist restriction",
-    )
 
 
 class Provider(BaseProvider):
@@ -54,6 +35,27 @@ class Provider(BaseProvider):
     order is:
 
     """
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-api-key",
+            help="specify the private key to use for API authentication, in PEM format: can be either "
+            "the path of the key file (eg. /tmp/key.pem) or the base64 encoded content of this "
+            "file prefixed by 'base64::' (eg. base64::eyJhbGciOyJ...)",
+        )
+        parser.add_argument(
+            "--auth-key-is-global",
+            action="store_true",
+            help="set this flag is the private key used is a global key with no IP whitelist restriction",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

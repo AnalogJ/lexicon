@@ -22,6 +22,8 @@ back and forth between the format UltraDNS expects, and the format Lexicon uses
 import hashlib
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -29,26 +31,27 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["ultradns.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for ultradns"""
-    subparser.add_argument(
-        "--auth-token",
-        help="specify token for authentication;"
-        + " if not set --auth-token, --auth-password are used",
-    )
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for UltraDNS"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ultradns.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-token",
+            help="specify token for authentication;"
+            + " if not set --auth-token, --auth-password are used",
+        )
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

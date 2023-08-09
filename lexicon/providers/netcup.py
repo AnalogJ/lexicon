@@ -1,6 +1,8 @@
 """Module provider for Netcup"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,22 +11,23 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["netcup.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Netcup"""
-    subparser.add_argument(
-        "--auth-customer-id", help="specify customer number for authentication"
-    )
-    subparser.add_argument("--auth-api-key", help="specify API key for authentication")
-    subparser.add_argument(
-        "--auth-api-password", help="specify API password for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Netcup"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["netcup.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-customer-id", help="specify customer number for authentication"
+        )
+        parser.add_argument("--auth-api-key", help="specify API key for authentication")
+        parser.add_argument(
+            "--auth-api-password", help="specify API password for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

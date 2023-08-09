@@ -25,7 +25,9 @@ for in-depth documentation on managing DNS via the OCI console, SDK or API.
 """
 import logging
 import os
+from argparse import ArgumentParser
 from pathlib import Path
+from typing import List
 
 import requests
 
@@ -46,8 +48,6 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["dns.oraclecloud.net"]
-
 CONFIG_VARS = {
     "user",
     "tenancy",
@@ -58,57 +58,60 @@ CONFIG_VARS = {
 }
 
 
-def provider_parser(subparser):
-    """Generate a subparser for Oracle Cloud Infrastructure DNS"""
-    subparser.description = """
-    Oracle Cloud Infrastructure (OCI) DNS provider
-    """
-    subparser.add_argument(
-        "--auth-config-file",
-        help="The full path including filename to an OCI configuration file.",
-    )
-    subparser.add_argument(
-        "--auth-profile",
-        help="The name of the profile to use (case-sensitive).",
-    )
-    subparser.add_argument(
-        "--auth-user",
-        help="The OCID of the user calling the API.",
-    )
-    subparser.add_argument(
-        "--auth-tenancy",
-        help="The OCID of your tenancy.",
-    )
-    subparser.add_argument(
-        "--auth-fingerprint",
-        help="The fingerprint for the public key that was added to the calling user.",
-    )
-    subparser.add_argument(
-        "--auth-key-content",
-        help="The full content of the calling user's private signing key in PEM format.",
-    )
-    subparser.add_argument(
-        "--auth-key-file",
-        help="The full path including filename to the calling user's private signing key in PEM format.",
-    )
-    subparser.add_argument(
-        "--auth-pass-phrase",
-        help="If the private key is encrypted, the pass phrase must be provided.",
-    )
-    subparser.add_argument(
-        "--auth-region",
-        help="An OCI region identifier. Select the closest region for best performance.",
-    )
-    subparser.add_argument(
-        "--auth-type",
-        help="Valid options are 'api_key' (default) or 'instance_principal'.",
-    )
-
-
 class Provider(BaseProvider):
     """
     Provider class for Oracle Cloud Infrastructure DNS
     """
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dns.oraclecloud.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+        Oracle Cloud Infrastructure (OCI) DNS provider
+        """
+        parser.add_argument(
+            "--auth-config-file",
+            help="The full path including filename to an OCI configuration file.",
+        )
+        parser.add_argument(
+            "--auth-profile",
+            help="The name of the profile to use (case-sensitive).",
+        )
+        parser.add_argument(
+            "--auth-user",
+            help="The OCID of the user calling the API.",
+        )
+        parser.add_argument(
+            "--auth-tenancy",
+            help="The OCID of your tenancy.",
+        )
+        parser.add_argument(
+            "--auth-fingerprint",
+            help="The fingerprint for the public key that was added to the calling user.",
+        )
+        parser.add_argument(
+            "--auth-key-content",
+            help="The full content of the calling user's private signing key in PEM format.",
+        )
+        parser.add_argument(
+            "--auth-key-file",
+            help="The full path including filename to the calling user's private signing key in PEM format.",
+        )
+        parser.add_argument(
+            "--auth-pass-phrase",
+            help="If the private key is encrypted, the pass phrase must be provided.",
+        )
+        parser.add_argument(
+            "--auth-region",
+            help="An OCI region identifier. Select the closest region for best performance.",
+        )
+        parser.add_argument(
+            "--auth-type",
+            help="Valid options are 'api_key' (default) or 'instance_principal'.",
+        )
 
     def __init__(self, config):
         """Initialize OCI DNS client."""

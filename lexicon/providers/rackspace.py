@@ -2,6 +2,8 @@
 import json
 import logging
 import time
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,8 +11,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["rackspacecloud.com"]
 
 
 def _async_request_completed(payload):
@@ -22,36 +22,39 @@ def _async_request_completed(payload):
     return False
 
 
-def provider_parser(subparser):
-    """Configure provider parser for Rackspace"""
-    subparser.add_argument(
-        "--auth-account", help="specify account number for authentication"
-    )
-    subparser.add_argument(
-        "--auth-username",
-        help="specify username for authentication. Only used if --auth-token is empty.",
-    )
-    subparser.add_argument(
-        "--auth-api-key",
-        help="specify api key for authentication. Only used if --auth-token is empty.",
-    )
-    subparser.add_argument(
-        "--auth-token",
-        help=(
-            "specify token for authentication. "
-            "If empty, the username and api key will be used to create a token."
-        ),
-    )
-    subparser.add_argument(
-        "--sleep-time",
-        type=float,
-        default=1,
-        help="number of seconds to wait between update requests.",
-    )
-
-
 class Provider(BaseProvider):
     """Provider class for Rackspace"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["rackspacecloud.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-account", help="specify account number for authentication"
+        )
+        parser.add_argument(
+            "--auth-username",
+            help="specify username for authentication. Only used if --auth-token is empty.",
+        )
+        parser.add_argument(
+            "--auth-api-key",
+            help="specify api key for authentication. Only used if --auth-token is empty.",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help=(
+                "specify token for authentication. "
+                "If empty, the username and api key will be used to create a token."
+            ),
+        )
+        parser.add_argument(
+            "--sleep-time",
+            type=float,
+            default=1,
+            help="number of seconds to wait between update requests.",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -98,22 +98,6 @@ class IntegrationTestsV1(object):
         self.provider_module = import_module(f"lexicon.providers.{self.provider_name}")
 
     ###########################################################################
-    # Provider module shape
-    ###########################################################################
-    def test_provider_module_shape(self):
-        module = import_module(f"lexicon.providers.{self.provider_name}")
-
-        assert hasattr(module, "provider_parser")
-        assert hasattr(module, "Provider")
-        if self.provider_name != "auto":
-            assert hasattr(module, "NAMESERVER_DOMAINS")
-
-        assert callable(module.provider_parser)
-        assert callable(module.Provider)
-        if self.provider_name != "auto":
-            assert isinstance(module.NAMESERVER_DOMAINS, list)
-
-    ###########################################################################
     # Provider.authenticate()
     ###########################################################################
     @vcr_integration_test

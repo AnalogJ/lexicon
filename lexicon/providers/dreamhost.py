@@ -3,6 +3,8 @@ import base64
 import json
 import logging
 import time
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -10,8 +12,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = ["dreamhost.com"]
 
 _DATA_NON_EXIST_ERROR_LIST = [
     "no_record",
@@ -38,13 +38,16 @@ class AlreadyExistError(Exception):
     """AlreadyExistError"""
 
 
-def provider_parser(subparser):
-    """Module provider for Dreamhost"""
-    subparser.add_argument("--auth-token", help="specify api key for authentication")
-
-
 class Provider(BaseProvider):
     """Provider class for Dreamhost"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["dreamhost.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -1,6 +1,7 @@
 """Module provider for a localzone"""
 import logging
 import types
+from argparse import ArgumentParser
 from time import localtime, strftime, time
 from typing import List
 
@@ -15,8 +16,6 @@ except ImportError:
 
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS: List[str] = []
 
 
 # Monkeypatch localzone.models.Zone._increment_serial to make it compatible with dnspython 2.x
@@ -38,13 +37,16 @@ def _patch_zone(zone):
     zone._increment_serial = types.MethodType(_increment_serial, zone)
 
 
-def provider_parser(subparser):
-    """Configure provider parserfor a localzone"""
-    subparser.add_argument("--filename", help="specify location of zone master file")
-
-
 class Provider(BaseProvider):
     """Provider class for a localzone"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return []
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--filename", help="specify location of zone master file")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

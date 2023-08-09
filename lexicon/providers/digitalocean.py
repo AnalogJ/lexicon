@@ -1,6 +1,8 @@
 """Module provider for Digital Ocean"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -8,16 +10,17 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["digitalocean.com"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Digital Ocean"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
 
 class Provider(BaseProvider):
     """Provider class for Digital Ocean"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["digitalocean.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

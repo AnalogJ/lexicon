@@ -1,5 +1,7 @@
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -8,24 +10,25 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["porkbun.com"]
-
-
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.description = """
-        To authenticate with Porkbun, you need both an API key and a
-        secret API key. These can be created at porkbun.com/account/api .
-    """
-
-    subparser.add_argument("--auth-key", help="specify API key for authentication")
-    subparser.add_argument(
-        "--auth-secret", help="specify secret API key for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Porkbun"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["porkbun.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            To authenticate with Porkbun, you need both an API key and a
+            secret API key. These can be created at porkbun.com/account/api .
+        """
+
+        parser.add_argument("--auth-key", help="specify API key for authentication")
+        parser.add_argument(
+            "--auth-secret", help="specify secret API key for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

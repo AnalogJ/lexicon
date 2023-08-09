@@ -1,6 +1,8 @@
 """Module provider for Hetzner"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -8,12 +10,6 @@ from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-NAMESERVER_DOMAINS = ["ns.hetzner.com"]
-
-
-def provider_parser(subparser):
-    """Configure a provider parser for Hetzner"""
-    subparser.add_argument("--auth-token", help="Specify Hetzner DNS API token")
 
 
 class Provider(BaseProvider):
@@ -25,7 +21,13 @@ class Provider(BaseProvider):
 
     API_VERSION = "1.0"
 
-    """Provider class for Cloudflare"""
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["ns.hetzner.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="Specify Hetzner DNS API token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

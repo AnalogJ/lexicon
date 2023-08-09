@@ -2,6 +2,8 @@
 import json
 import logging
 import time
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,19 +11,20 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["hosting.de"]
-
 # be aware to provide an auth_token
 # LEXICON_HOSTINGDE_AUTH_TOKEN
 
 
-def provider_parser(subparser):
-    """Return the parser for this provider"""
-    subparser.add_argument("--auth-token", help="specify api key for authentication")
-
-
 class Provider(BaseProvider):
     """Provider class for Hosting"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["hosting.de"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

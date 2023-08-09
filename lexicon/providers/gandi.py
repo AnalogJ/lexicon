@@ -27,7 +27,9 @@ attempt to detect and account for that.
 """
 import json
 import logging
+from argparse import ArgumentParser
 from builtins import object
+from typing import List
 
 import requests
 
@@ -41,17 +43,6 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["gandi.net"]
-
-
-def provider_parser(subparser):
-    """Specify arguments for Gandi Lexicon Provider."""
-    subparser.add_argument("--auth-token", help="specify Gandi API key")
-    subparser.add_argument(
-        "--api-protocol",
-        help="(optional) specify Gandi API protocol to use: rpc (default) or rest",
-    )
-
 
 class Provider(BaseProvider):
     """Provide Gandi LiveDNS API implementation of Lexicon Provider interface.
@@ -59,6 +50,18 @@ class Provider(BaseProvider):
     Note that this implementation will delegates its call to GandiRPCSubProvider
     if RPC protocol is used.
     """
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["gandi.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify Gandi API key")
+        parser.add_argument(
+            "--api-protocol",
+            help="(optional) specify Gandi API protocol to use: rpc (default) or rest",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

@@ -1,6 +1,8 @@
 """Module provider for Conoha"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -9,37 +11,39 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["conoha.io"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for Conoha"""
-    subparser.add_argument(
-        "--auth-region", help="specify region. If empty, region `tyo1` will be used."
-    )
-    subparser.add_argument(
-        "--auth-token",
-        help=(
-            "specify token for authentication. If empty, the username "
-            "and password will be used to create a token."
-        ),
-    )
-    subparser.add_argument(
-        "--auth-username",
-        help="specify api username for authentication. Only used if --auth-token is empty.",
-    )
-    subparser.add_argument(
-        "--auth-password",
-        help="specify api user password for authentication. Only used if --auth-token is empty.",
-    )
-    subparser.add_argument(
-        "--auth-tenant-id",
-        help="specify tenand id for authentication. Only used if --auth-token is empty.",
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Conoha"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["conoha.io"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-region",
+            help="specify region. If empty, region `tyo1` will be used.",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help=(
+                "specify token for authentication. If empty, the username "
+                "and password will be used to create a token."
+            ),
+        )
+        parser.add_argument(
+            "--auth-username",
+            help="specify api username for authentication. Only used if --auth-token is empty.",
+        )
+        parser.add_argument(
+            "--auth-password",
+            help="specify api user password for authentication. Only used if --auth-token is empty.",
+        )
+        parser.add_argument(
+            "--auth-tenant-id",
+            help="specify tenand id for authentication. Only used if --auth-token is empty.",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

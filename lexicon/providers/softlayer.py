@@ -1,5 +1,7 @@
 """Module provider for Softlayer"""
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
@@ -11,21 +13,22 @@ except ImportError:
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["softlayer.com"]
-
-
-def provider_parser(subparser):
-    """Generate a provider parser for Softlayer"""
-    subparser.add_argument(
-        "--auth-username", help="specify username for authentication"
-    )
-    subparser.add_argument(
-        "--auth-api-key", help="specify API private key for authentication"
-    )
-
 
 class Provider(BaseProvider):
     """Provider class for Softlayer"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["softlayer.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument(
+            "--auth-username", help="specify username for authentication"
+        )
+        parser.add_argument(
+            "--auth-api-key", help="specify API private key for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

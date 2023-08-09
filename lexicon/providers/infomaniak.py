@@ -1,6 +1,8 @@
 """Module provider for Infomaniak"""
 import json
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -11,21 +13,22 @@ LOGGER = logging.getLogger(__name__)
 
 ENDPOINT = "https://api.infomaniak.com"
 
-NAMESERVER_DOMAINS = ["infomaniak.com"]
-
-
-def provider_parser(subparser):
-    """Generate provider parser for Infomaniak"""
-    subparser.description = """
-        Infomaniak Provider requires a token with domain scope.
-        It can be generated for your Infomaniak account on the following URL:
-        https://manager.infomaniak.com/v3/infomaniak-api"""
-
-    subparser.add_argument("--auth-token", help="specify the token")
-
 
 class Provider(BaseProvider):
     """Provider class for Infomaniak"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["infomaniak.com"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.description = """
+            Infomaniak Provider requires a token with domain scope.
+            It can be generated for your Infomaniak account on the following URL:
+            https://manager.infomaniak.com/v3/infomaniak-api"""
+
+        parser.add_argument("--auth-token", help="specify the token")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

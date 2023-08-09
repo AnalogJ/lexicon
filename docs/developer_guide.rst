@@ -67,29 +67,18 @@ You can test a specific provider using:
 Adding a new DNS provider
 =========================
 
-Now that you have a working development environment, lets add a new provider.
-Internally lexicon does a bit of magic to wire everything together, so the only
-thing you'll really need to do is is create the following file.
+Now that you have a working development environment, let's add a new provider.
+Internally lexicon does a bit of magic to wire everything together, so you need to create
+the following Python module where all the code for your provider will settle.
 
  - ``lexicon/providers/foo.py``
 
 Where ``foo`` should be replaced with the name of the DNS service in lowercase
-and without spaces or special characters (eg. ``cloudflare``)
+and without spaces or special characters (eg. ``cloudflare``).
 
-Your provider file should contain 3 things:
-
-- a ``NAMESERVER_DOMAINS`` which contains the domain(s) used by the DNS provider nameservers FQDNs
-  (eg. Google Cloud DNS uses nameservers that have the FQDN pattern ``ns-cloud-cX-googledomains.com``,
-  so ``NAMESERVER_DOMAINS`` will be ``['googledomains.com']``).
-
-- a ``provider_parser`` which is used to add provider specific commandline arguments.
-  eg. If you define two cli arguments: ``--auth-username`` and ``--auth-token``,
-  those values will be available to your provider via ``self._get_provider_option('auth_username')``
-  or ``self._get_provider_option('auth_token')`` respectively
-
-- a ``Provider`` class inheriting from BaseProvider_ (defined in  ``base.py`` file).
-  The BaseProvider_ defines the following functions, which must be overridden in your
-  provider implementation:
+Your provider module **must** contain a class named ``Provider`` inheriting from BaseProvider_
+(defined in  ``base.py`` file). This class **must** implements the following abstract methods
+defined by BaseProvider_:
 
   - ``_authenticate``
   - ``_create_record``
@@ -97,16 +86,25 @@ Your provider file should contain 3 things:
   - ``_update_record``
   - ``_delete_record``
   - ``_request``
+  - ``get_nameservers`` (static method)
+  - ``configure_parser`` (static method)
 
-  It also provides a few helper functions which you can use to simplify your implementation.
-  See the `cloudflare.py`_ file, or any provider in the `lexicon/providers/`_ folder for examples
+You should review the `provider conventions`_ to ensure that ``_authenticate`` and ``*_records``
+methods follow the proper behavior and API contracts.
 
-Finally you must review the `provider specification`_ to ensure that your interface follows
-the proper conventions.
+The static method ``get_nameservers`` returns the list of FQDNs of the nameservers used by
+the DNS provider. For instance, Google Cloud DNS uses nameservers that have the FQDN pattern
+``ns-cloud-cX-googledomains.com``, so ``get_nameservers`` will return ``['googledomains.com']``
+in this case.
+
+The static method ``configure_parser`` is called to add the provider specific commandline arguments.
+For instance, if you define two cli arguments: ``--auth-username`` and ``--auth-token``, those
+values will be available to your provider via ``self._get_provider_option('auth_username')``
+or ``self._get_provider_option('auth_token')`` respectively.
 
 .. note::
 
-    Several import notes:
+    Several important notes:
 
     - ``lexicon`` is designed to work with multiple versions of python. That means
       your code will be tested against python 3.8 and 3.11 on Windows, Linux and Mac OS X.
@@ -134,7 +132,7 @@ the proper conventions.
 .. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
 .. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py
 .. _lexicon/providers/: https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers
-.. _provider specification: https://dns-lexicon.readthedocs.io/en/latest/provider_specification.html
+.. _provider conventions: https://dns-lexicon.readthedocs.io/en/latest/provider_conventions.html
 
 Testing your provider
 =====================

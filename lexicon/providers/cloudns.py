@@ -1,5 +1,7 @@
 """Provider module for CloudNS"""
 import logging
+from argparse import ArgumentParser
+from typing import List
 
 import requests
 
@@ -7,28 +9,31 @@ from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-NAMESERVER_DOMAINS = ["cloudns.net"]
-
-
-def provider_parser(subparser):
-    """Configure provider parser for CloudNS"""
-    identity_group = subparser.add_mutually_exclusive_group()
-    identity_group.add_argument("--auth-id", help="specify user id for authentication")
-    identity_group.add_argument(
-        "--auth-subid", help="specify subuser id for authentication"
-    )
-    identity_group.add_argument(
-        "--auth-subuser", help="specify subuser name for authentication"
-    )
-    subparser.add_argument(
-        "--auth-password", help="specify password for authentication"
-    )
-    subparser.add_argument("--weight", help="specify the SRV record weight")
-    subparser.add_argument("--port", help="specify the SRV record port")
-
 
 class Provider(BaseProvider):
     """Provider class for CloudNS"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return ["cloudns.net"]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        identity_group = parser.add_mutually_exclusive_group()
+        identity_group.add_argument(
+            "--auth-id", help="specify user id for authentication"
+        )
+        identity_group.add_argument(
+            "--auth-subid", help="specify subuser id for authentication"
+        )
+        identity_group.add_argument(
+            "--auth-subuser", help="specify subuser name for authentication"
+        )
+        parser.add_argument(
+            "--auth-password", help="specify password for authentication"
+        )
+        parser.add_argument("--weight", help="specify the SRV record weight")
+        parser.add_argument("--port", help="specify the SRV record port")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

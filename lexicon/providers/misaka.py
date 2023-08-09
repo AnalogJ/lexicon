@@ -4,36 +4,14 @@ from __future__ import absolute_import
 import base64
 import json
 import logging
-from typing import Tuple
+from argparse import ArgumentParser
+from typing import List, Tuple
 
 import requests
 
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
-NAMESERVER_DOMAINS = [
-    # gTLDs
-    "m1ns.com",
-    "m1ns.net",
-    "m1ns.org",
-    # new gTLDs
-    "m1ns.one",
-    "m1ns.moe",
-    "m1ns.xyz",
-    "m1ns.fyi",
-    "m1ns.app",
-    # ccTLDs
-    "m1ns.be",
-    "m1ns.io",
-    "m1ns.uk",
-    "m1ns.us",
-    "m1ns.im",
-    # for PTR zones only
-    "reversedns.org",
-    # legacy domains
-    "ns53.net",
-]
 
 
 def _recordset_has_record(record_set, value):
@@ -43,13 +21,37 @@ def _recordset_has_record(record_set, value):
     return False
 
 
-def provider_parser(subparser):
-    """Configure provider parser for Misaka.IO"""
-    subparser.add_argument("--auth-token", help="specify token for authentication")
-
-
 class Provider(BaseProvider):
     """Provider class for Misaka.IO"""
+
+    @staticmethod
+    def get_nameservers() -> List[str]:
+        return [
+            # gTLDs
+            "m1ns.com",
+            "m1ns.net",
+            "m1ns.org",
+            # new gTLDs
+            "m1ns.one",
+            "m1ns.moe",
+            "m1ns.xyz",
+            "m1ns.fyi",
+            "m1ns.app",
+            # ccTLDs
+            "m1ns.be",
+            "m1ns.io",
+            "m1ns.uk",
+            "m1ns.us",
+            "m1ns.im",
+            # for PTR zones only
+            "reversedns.org",
+            # legacy domains
+            "ns53.net",
+        ]
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
         super(Provider, self).__init__(config)

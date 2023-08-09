@@ -7,7 +7,7 @@ import pytest
 from requests import HTTPError
 
 from lexicon.config import DictConfigSource
-from lexicon.providers.namecom import provider_parser
+from lexicon.providers.namecom import Provider
 from lexicon.tests.providers.integration_tests import (
     IntegrationTestsV2,
     vcr_integration_test,
@@ -163,6 +163,6 @@ def test_subparser_configuration():
     """Tests the provider_parser method."""
 
     subparser = Mock()
-    provider_parser(subparser)
+    Provider.configure_parser(subparser)
     subparser.add_argument.assert_any_call("--auth-username", help=ANY)
     subparser.add_argument.assert_any_call("--auth-token", help=ANY)

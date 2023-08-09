@@ -1,6 +1,6 @@
-======================
-Provider specification
-======================
+====================
+Provider conventions
+====================
 
 General
 =======
@@ -31,8 +31,17 @@ General
 API Operations
 ==============
 
-create_record
+_authenticate
 -------------
+
+- **Normal Behavior** Execute all required operations to authenticate against the provider API, then
+  retrieves the identifier of the domain and assign it to the ``self.domain_id`` property of the
+  ``Provider`` instance.
+- **Authentication failure** In case of authentication failure, the method **must** raise a
+  ``lexicon.exceptions.AuthenticationError`` exception and break the flow.
+
+_create_record
+--------------
 
 -  **Normal Behavior** Create a new DNS record. Return a boolean
    ``True`` if successful.
@@ -41,8 +50,8 @@ create_record
 -  **Record Sets** If service supports record sets, create new record
    set or append value to existing record set as required.
 
-list_record
------------
+_list_record
+------------
 
 -  **Normal Behaviour** List all records. If filters are provided, send
    to the API if possible, else apply filter locally. Return value
@@ -53,8 +62,8 @@ list_record
 -  **Linked Records** For services that support some form of linked
    record, do not resolve, treat as CNAME.
 
-update_record
--------------
+_update_record
+--------------
 
 -  **Normal Behaviour** Update a record. Record to be updated can be
    specified by providing id OR name, type and content. Return a boolean
@@ -69,8 +78,8 @@ update_record
 
 -  **No Match** Throw exception?
 
-delete_record
--------------
+_delete_record
+--------------
 
 -  **Normal Behaviour** Remove a record. Record to be deleted can be
    specified by providing id OR name, type and content. Return a boolean

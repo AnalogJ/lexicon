@@ -8,7 +8,10 @@ In particular:
 import contextlib
 import importlib
 import pkgutil
+from argparse import ArgumentParser
+from re import Pattern
 from types import ModuleType
+from typing import List, Union, cast
 from unittest import mock
 
 import pytest
@@ -23,6 +26,14 @@ class Provider(BaseProvider):
     Fake provider to simulate the provider resolution from configuration,
     and to have execution traces when lexicon client is invoked
     """
+
+    @staticmethod
+    def get_nameservers() -> Union[List[str], List[Pattern]]:
+        return cast(List[str], [])
+
+    @staticmethod
+    def configure_parser(parser: ArgumentParser) -> None:
+        pass
 
     def _authenticate(self):
         print("Authenticate action")
