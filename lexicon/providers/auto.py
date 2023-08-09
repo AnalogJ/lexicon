@@ -113,38 +113,6 @@ def _relevant_provider_for_domain(domain):
     return relevant_providers[0]
 
 
-def provider_parser(subparser):
-    """Configure provider parser for auto provider"""
-    subparser.description = """
-        Provider 'auto' enables the Lexicon provider auto-discovery.
-        Based on the nameservers declared for the given domain,
-        Lexicon will try to find the DNS provider holding the DNS zone if it is supported.
-        Actual DNS zone read/write operations will be delegated to the provider found:
-        every environment variable or command line specific to this provider
-        can be passed to Lexicon and will be processed accordingly.
-        """
-    subparser.add_argument(
-        "--mapping-override",
-        metavar="[DOMAIN]:[PROVIDER], ...",
-        help="comma separated list of elements in the form of "
-        "[DOMAIN]:[PROVIDER] to authoritatively map a "
-        "particular domain to a particular provider",
-    )
-
-    # Explore and load the arguments available for every provider into the 'auto' provider.
-    for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-        parser = argparse.ArgumentParser(add_help=False)
-        provider_module.provider_parser(parser)
-
-        for action in parser._actions:
-            action.option_strings = [
-                re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
-                for option in action.option_strings
-            ]
-            action.dest = f"auto_{provider_name}_{action.dest}"
-            subparser._add_action(action)
-
-
 # Take care of the fact that this provider extends object, not BaseProvider !
 # Indeed we want to delegate every parameter/method call to the delegate provider
 # but __getattr__ is called only if the parameter/method cannot be found in the
@@ -161,6 +129,38 @@ class Provider(object):
     the resolved provider if it respect the naming convention: --[provider]-[parameter_name] for a
     command line parameter, or LEXICON_[PROVIDER]_PARAMETER_NAME for a environment variable.
     """
+    
+    @staticmethod
+    def configure_parser(parser: argparse.ArgumentParser) -> None:
+        parser.description = """
+            Provider 'auto' enables the Lexicon provider auto-discovery.
+            Based on the nameservers declared for the given domain,
+            Lexicon will try to find the DNS provider holding the DNS zone if it is supported.
+            Actual DNS zone read/write operations will be delegated to the provider found:
+            every environment variable or command line specific to this provider
+            can be passed to Lexicon and will be processed accordingly.
+            """
+        parser.add_argument(
+            "--mapping-override",
+            metavar="[DOMAIN]:[PROVIDER], ...",
+            help="comma separated list of elements in the form of "
+            "[DOMAIN]:[PROVIDER] to authoritatively map a "
+            "particular domain to a particular provider",
+        )
+
+        # Explore and load the arguments available for every provider into the 'auto' provider.
+        for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
+            subparser = argparse.ArgumentParser(add_help=False)
+            provider: Type[BaseProvider] = getattr(provider_module, 'Provider')
+            provider.configure_parser(subparser)
+            
+            for action in subparser._actions:
+                action.option_strings = [
+                    re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
+                    for option in action.option_strings
+                ]
+                action.dest = f"auto_{provider_name}_{action.dest}"
+                parser._add_action(action)
 
     def __init__(self, config):
         if not isinstance(config, helper_config.ConfigResolver):
