@@ -89,7 +89,7 @@ defined by BaseProvider_:
   - ``get_nameservers`` (static method)
   - ``configure_parser`` (static method)
 
-You should review the `provider conventions`_ to ensure that ``_authenticate`` and ``*_records``
+You should review the `provider conventions`_ to ensure that ``_authenticate`` and ``*_record(s)``
 methods follow the proper behavior and API contracts.
 
 The static method ``get_nameservers`` returns the list of FQDNs of the nameservers used by
