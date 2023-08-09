@@ -5,10 +5,10 @@ In particular:
     - config should be passed correctly to provider,
     - relevant provider method should be invoked for a given config.
 """
-from argparse import ArgumentParser
 import contextlib
 import importlib
 import pkgutil
+from argparse import ArgumentParser
 from re import Pattern
 from types import ModuleType
 from typing import List, cast

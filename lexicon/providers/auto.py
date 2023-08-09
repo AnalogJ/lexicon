@@ -1,10 +1,10 @@
 """Module provider for auto"""
-import argparse
 import importlib
 import logging
 import pkgutil
 import re
 import subprocess
+from argparse import ArgumentParser
 from typing import Type
 
 import tldextract  # type: ignore
@@ -129,9 +129,9 @@ class Provider(object):
     the resolved provider if it respect the naming convention: --[provider]-[parameter_name] for a
     command line parameter, or LEXICON_[PROVIDER]_PARAMETER_NAME for a environment variable.
     """
-    
+
     @staticmethod
-    def configure_parser(parser: argparse.ArgumentParser) -> None:
+    def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
             Provider 'auto' enables the Lexicon provider auto-discovery.
             Based on the nameservers declared for the given domain,
@@ -150,10 +150,10 @@ class Provider(object):
 
         # Explore and load the arguments available for every provider into the 'auto' provider.
         for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-            subparser = argparse.ArgumentParser(add_help=False)
-            provider: Type[BaseProvider] = getattr(provider_module, 'Provider')
+            subparser = ArgumentParser(add_help=False)
+            provider: Type[BaseProvider] = getattr(provider_module, "Provider")
             provider.configure_parser(subparser)
-            
+
             for action in subparser._actions:
                 action.option_strings = [
                     re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
