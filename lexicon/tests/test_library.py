@@ -11,7 +11,7 @@ import importlib
 import pkgutil
 from re import Pattern
 from types import ModuleType
-from typing import List, Union
+from typing import List, cast
 from unittest import mock
 
 import pytest
@@ -26,11 +26,11 @@ class Provider(BaseProvider):
     Fake provider to simulate the provider resolution from configuration,
     and to have execution traces when lexicon client is invoked
     """
-    
+
     @staticmethod
     def get_nameservers() -> List[str] | List[Pattern]:
-        return []
-    
+        return cast(List[str], [])
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         pass
