@@ -31,9 +31,8 @@ authors = [
 readme = "README.rst"
 repository = "https://github.com/AnalogJ/lexicon"
 packages = [
-    { include = "lexicon" },
+    { include = "lexicon", from = "src" }
 ]
-exclude = [ "lexicon/tests/providers/" ]
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -183,7 +183,7 @@ Then you'll need to populate it with the following template:
 .. code-block:: python
 
     # Test for one implementation of the interface
-    from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+    from integration_tests import IntegrationTestsV2
     from unittest import TestCase
 
     # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -279,7 +279,7 @@ instead of ``IntegrationTestsV2``:
 
 .. code-block:: python
 
-    from lexicon.tests.providers.integration_tests import IntegrationTestsV1
+    from integration_tests import IntegrationTestsV1
     from unittest import TestCase
 
     class FooProviderTests(TestCase, IntegrationTestsV1):
