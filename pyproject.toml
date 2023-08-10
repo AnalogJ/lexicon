@@ -31,9 +31,8 @@ authors = [
 readme = "README.rst"
 repository = "https://github.com/AnalogJ/lexicon"
 packages = [
-    { include = "lexicon" },
+    { include = "lexicon", from = "src" }
 ]
-exclude = [ "lexicon/tests/providers/" ]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -62,7 +61,7 @@ oci = ["oci"]
 # Extra "full" list must contain all other extras
 full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 esbonio = "*"
 packaging = "*"
 pytest = "*"
