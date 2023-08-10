@@ -51,13 +51,13 @@ Make sure all tests pass:
 
 .. code-block:: bash
 
-    tox -e py
+    tox
 
 You can test a specific provider using:
 
 .. code-block:: bash
 
-    pytest lexicon/tests/providers/test_foo.py
+    pytest tests/providers/test_foo.py
 
 .. note::
 
@@ -71,7 +71,7 @@ Now that you have a working development environment, let's add a new provider.
 Internally lexicon does a bit of magic to wire everything together, so you need to create
 the following Python module where all the code for your provider will settle.
 
- - ``lexicon/providers/foo.py``
+ - ``src/lexicon/providers/foo.py``
 
 Where ``foo`` should be replaced with the name of the DNS service in lowercase
 and without spaces or special characters (eg. ``cloudflare``).
@@ -129,9 +129,8 @@ or ``self._get_provider_option('auth_token')`` respectively.
         mycustomprovider = ["additionalpackage"]
         full = [..., "mycustomprovider"]
 
-.. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
-.. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py
-.. _lexicon/providers/: https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers
+.. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/base.py
+.. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/cloudflare.py
 .. _provider conventions: https://dns-lexicon.readthedocs.io/en/latest/provider_conventions.html
 
 Testing your provider
@@ -176,23 +175,26 @@ recordings during testing.
 
 The only thing you need to do is create the following file:
 
- - ``lexicon/tests/providers/test_foo.py``
+ - ``tests/providers/test_foo.py``
 
 Then you'll need to populate it with the following template:
 
 .. code-block:: python
 
-    # Test for one implementation of the interface
-    from integration_tests import IntegrationTestsV2
+    """Integration tests for Foo"""
     from unittest import TestCase
+
+    from integration_tests import IntegrationTestsV2
 
     # Hook into testing framework by inheriting unittest.TestCase and reuse
     # the tests which *each and every* implementation of the interface must
-    # pass, by inheritance from integration_tests.IntegrationTests
+    # pass, by inheritance from integration_tests.IntegrationTestsV2
     class FooProviderTests(TestCase, IntegrationTestsV2):
         """Integration tests for Foo provider"""
+
         provider_name = 'foo'
         domain = 'example.com'
+
         def _filter_post_data_parameters(self):
             return ['login_token']
 
@@ -265,7 +267,7 @@ Skipping some tests
 Neither of the snippets below should be used unless necessary. They are only included
 in the interest of documentation.
 
-In your ``lexicon/tests/providers/test_foo.py`` file, you can use ``@pytest.mark.skip`` to skip
+In your ``tests/providers/test_foo.py`` file, you can use ``@pytest.mark.skip`` to skip
 any individual test that does not apply (and will never pass)
 
 .. code-block:: python
@@ -279,11 +281,14 @@ instead of ``IntegrationTestsV2``:
 
 .. code-block:: python
 
-    from integration_tests import IntegrationTestsV1
     from unittest import TestCase
-
+    
+    from integration_tests import IntegrationTestsV1
+    
     class FooProviderTests(TestCase, IntegrationTestsV1):
         """Integration tests for Foo provider"""
+
+        ...
 
 CODEOWNERS file
 ===============
