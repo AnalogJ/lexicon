@@ -55,11 +55,11 @@ class Provider(BaseProvider):
         self.origin = self.domain + "."
         self.filename = self._get_provider_option("filename")
 
-    def _authenticate(self):
+    def authenticate(self):
         # Authentication is not required for localzone.
         pass
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """
         Create a resource record. If a record already exists with the same
         content, do nothing.
@@ -81,7 +81,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", result)
         return result
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """
         Return a list of records matching the supplied params. If no params are
         provided, then return all zone records. If no records are found, return
@@ -117,7 +117,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", result)
         return result
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """
         Update a record. Returns `False` if no matching record is found.
         """
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
         # ID, and therefore `identifier` is here optional. If we don't receive
         # an ID, look it up.
         if not identifier and rtype and name:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]["id"]
 
@@ -141,7 +141,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", result)
         return result
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Delete record(s) matching the provided params. If there is no match, do
         nothing.
@@ -151,7 +151,7 @@ class Provider(BaseProvider):
         if identifier:
             ids.append(identifier)
         elif not identifier and rtype and name:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             if records:
                 ids = [record["id"] for record in records]
 

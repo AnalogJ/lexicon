@@ -105,7 +105,7 @@ class Provider(BaseProvider):
             ).json()
         return self._zone_data
 
-    def _authenticate(self):
+    def authenticate(self):
         self.zone_data()
         self.domain_id = self.domain
 
@@ -120,7 +120,7 @@ class Provider(BaseProvider):
         content = "=".join(parts[1:])
         return rtype, name, content
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
         for rrset in self.zone_data()["rrsets"]:
             if (
@@ -163,7 +163,7 @@ class Provider(BaseProvider):
             content = self._full_name(content)
         return content
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         rname = self._fqdn_name(name)
         newcontent = self._clean_content(rtype, content)
 
@@ -199,7 +199,7 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is not None:
             rtype, name, content = self._parse_identifier(identifier)
 
@@ -241,9 +241,9 @@ class Provider(BaseProvider):
         self._zone_data = None
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        self._delete_record(identifier)
-        return self._create_record(rtype, name, content)
+    def update_record(self, identifier, rtype=None, name=None, content=None):
+        self.delete_record(identifier)
+        return self.create_record(rtype, name, content)
 
     def _patch(self, url="/", data=None, query_params=None):
         return self._request("PATCH", url, data=data, query_params=query_params)

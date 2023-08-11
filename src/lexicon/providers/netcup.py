@@ -41,7 +41,7 @@ class Provider(BaseProvider):
 
     # lexicon.provider.Provider overrides:
 
-    def _authenticate(self):
+    def authenticate(self):
         """Authenticate with netcup server. Must be called first."""
         login_info = self._apicall("login")
         self.api_session_id = login_info["apisessionid"]
@@ -51,9 +51,9 @@ class Provider(BaseProvider):
         zone_info = self._apicall("infoDnsZone", domainname=self.domain)
         self.zone_ttl = zone_info["ttl"]
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """Create record. If it already exists, do nothing."""
-        if not self._list_records(rtype, name, content):
+        if not self.list_records(rtype, name, content):
             self._update_records(
                 [{}],
                 {
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", True)
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """List all records. Return an empty list if no records found.
         ``rtype``, ``name`` and ``content`` are used to filter records."""
         records = [
@@ -83,7 +83,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Create or update a record."""
         records = self._raw_records(identifier, rtype, name, content)
         self._update_records(
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", True)
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete an existing record. If record does not exist, do nothing."""
         records = self._raw_records(identifier, rtype, name, content)
         LOGGER.debug("delete_records: %s", [rec["id"] for rec in records])

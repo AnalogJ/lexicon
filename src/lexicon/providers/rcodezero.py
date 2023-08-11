@@ -29,7 +29,7 @@ class Provider(BaseProvider):
         self._zone_data = None
         self.api_endpoint = "https://my.rcodezero.at/api/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         if self._zone_data is None:
             self._zone_data = self._get("/zones/" + self.domain)
 
@@ -37,7 +37,7 @@ class Provider(BaseProvider):
 
     # Create record.
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         rname = self._fqdn_name(name)
         newcontent = self._clean_content(rtype, content)
 
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         filter_obj = {"per_page": 100}
         if rtype:
             filter_obj["type"] = rtype
@@ -114,13 +114,13 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        self._delete_record(identifier, rtype, name, None)
-        return self._create_record(rtype, name, content)
+    def update_record(self, identifier, rtype=None, name=None, content=None):
+        self.delete_record(identifier, rtype, name, None)
+        return self.create_record(rtype, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         LOGGER.debug("delete %s %s %s %s", identifier, rtype, name, content)
         if identifier is None and (rtype is None or name is None):
             raise Exception("Must specify at least id or  both rtype and name")

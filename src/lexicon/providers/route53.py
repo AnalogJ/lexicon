@@ -135,7 +135,7 @@ class Provider(BaseProvider):
         """Convert a string to boolean"""
         return input_string.lower() in ("true", "yes")
 
-    def _authenticate(self):
+    def authenticate(self):
         """Authenticate the credentials early in the process"""
 
         # if this was set via the command-line argument, we don't need to look it up
@@ -214,7 +214,7 @@ class Provider(BaseProvider):
             LOGGER.error(str(error), exc_info=True)
             return False
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """Create a record in the hosted zone."""
         existing_records = self._list_record_sets(rtype, name)
         if existing_records:
@@ -231,12 +231,12 @@ class Provider(BaseProvider):
             )
         return self._change_record_sets("CREATE", rtype, name, content)
 
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         """Update a record from the hosted zone."""
         if identifier:
             records = [
                 record
-                for record in self._list_records()
+                for record in self.list_records()
                 if identifier == _identifier(record)
             ]
             if not records:
@@ -268,12 +268,12 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete a record from the hosted zone."""
         if identifier:
             matching_records = [
                 record
-                for record in self._list_records()
+                for record in self.list_records()
                 if identifier == _identifier(record)
             ]
             if not matching_records:
@@ -308,7 +308,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """List all records for the hosted zone."""
         records = self._list_record_sets(rtype, name, content)
 

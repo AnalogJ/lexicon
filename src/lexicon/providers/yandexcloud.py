@@ -75,7 +75,7 @@ class Provider(BaseProvider):
         sha256.update(("data=" + content).encode("utf-8"))
         return sha256.hexdigest()[0:7]
 
-    def _authenticate(self):
+    def authenticate(self):
         dns_zone_id = self._get_provider_option("dns_zone_id")
         if dns_zone_id and self._cloud_id_matches_domain(dns_zone_id):
             self.domain_id = dns_zone_id
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
 
         return payload["dnsZones"][0]["id"]
 
-    def _list_records(self, rtype=None, name=None, content=None) -> List[Dict]:
+    def list_records(self, rtype=None, name=None, content=None) -> List[Dict]:
         """List all records. Return an empty list if no records found.
         type, name and content are used to filter records.
         https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/listRecordSets
@@ -210,7 +210,7 @@ class Provider(BaseProvider):
         # so it's necessary to find an entry in _list_records and then
         # re-request it in this function
         if identifier:
-            for record in self._list_records():
+            for record in self.list_records():
                 if record["id"] == identifier:
                     rtype = record["type"]
                     name = record["name"]
@@ -224,7 +224,7 @@ class Provider(BaseProvider):
 
         return self._get(url, query_params)
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """Create a record. Return True if record was created, or already the same precise record exists,
         False if record already exists or there is another problem.
         All params are required.
@@ -262,7 +262,7 @@ class Provider(BaseProvider):
 
         return self._check_request_success(payload, "create_record")
 
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         """Update existing record."""
 
         record = {
@@ -300,7 +300,7 @@ class Provider(BaseProvider):
         )
         return self._check_request_success(payload, "update_record")
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete an existing record. Do nothing if record does not exist."""
         # name should be in full form, transform it in case it's not
         if name is not None:

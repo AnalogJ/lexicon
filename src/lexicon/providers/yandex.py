@@ -38,13 +38,13 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://pddimp.yandex.ru/api2/admin/dns"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get(f"/list?domain={self.domain}")
         if payload["success"] != "ok":
             raise AuthenticationError("No domain found")
         self.domain_id = self.domain
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if rtype in ("CNAME", "MX", "NS"):
             # make sure a the data is always a FQDN for CNAMe.
             content = content.rstrip(".") + "."
@@ -60,7 +60,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         url = f"/list?domain={self.domain_id}"
         records = []
         payload = {}
@@ -119,10 +119,10 @@ class Provider(BaseProvider):
         return records
 
     # Just update existing record. If Identifier is not provided, update the latest entry with matching name and rtype.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
             # get existing entries, and pick the last one for update
-            records = self._list_records(rtype=rtype, name=name)
+            records = self.list_records(rtype=rtype, name=name)
             if not records:
                 return False
             identifier = records[-1]["id"]
@@ -143,10 +143,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist (I'll hope), do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

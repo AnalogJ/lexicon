@@ -51,7 +51,7 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.mythic-beasts.com/dns/v2"
         self.auth_token = None
 
-    def _authenticate(self):
+    def authenticate(self):
         # may need to get auth token
         if self.auth_token is None and self._get_provider_option("auth_token") is None:
             auth_request = requests.request(
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         LOGGER.debug("type %s", rtype)
         LOGGER.debug("name %s", name)
         LOGGER.debug("content %s", content)
@@ -146,7 +146,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         filter_obj = {}
         if rtype:
             filter_obj["type"] = rtype
@@ -181,9 +181,9 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
-            records = self._list_records(rtype, self._full_name(name))
+            records = self.list_records(rtype, self._full_name(name))
             if len(records) == 1:
                 matching_record = records[0]
                 filter_obj = {}
@@ -199,7 +199,7 @@ class Provider(BaseProvider):
                     "Multiple records found matching type and name - won't update"
                 )
         else:
-            records = self._list_records()
+            records = self.list_records()
             for record in records:
                 if record["id"] == identifier:
                     matching_record = record
@@ -235,7 +235,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         filter_obj = {}
         if rtype:
             filter_obj["type"] = rtype
@@ -244,7 +244,7 @@ class Provider(BaseProvider):
         if content:
             filter_obj["data"] = content
 
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
 
         for record in records:
             LOGGER.debug("delete_records: %s", record)

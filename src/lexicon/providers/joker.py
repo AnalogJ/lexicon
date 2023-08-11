@@ -62,7 +62,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         self.domain_id = None
         self._session_id = None
 
-    def _authenticate(self):
+    def authenticate(self):
         auth_token = self._get_provider_option("auth_token")
 
         response = requests.post(API_BASE_URL + "/login", data={"api-key": auth_token})
@@ -99,7 +99,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         response = requests.post(API_BASE_URL + url, data=data)
         return _process_response(response)
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         response = self._post("/dns-zone-get", data={"domain": self.domain_id})
         zone_data = _extract_zonedata(response.data)
 
@@ -133,7 +133,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
             raise Exception(
                 "Error, rtype, name and content are mandatory to create a record."
@@ -169,7 +169,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and not (rtype and name):
             raise Exception(
                 "Error, either identifier or rtype + name are mandatory to update a record."
@@ -216,7 +216,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier and not rtype:
             raise Exception(
                 "Error, either rtype or identifier are mandatory to delete a record."

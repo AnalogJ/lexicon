@@ -34,7 +34,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1"
 
-    def _authenticate(self):
+    def authenticate(self):
         query_params = {"Filter": {"Provider.Class": "dns", "Name": self.domain}}
         payload = self._get("/commonserviceitem", query_params=query_params)
 
@@ -46,7 +46,7 @@ class Provider(BaseProvider):
         raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
         index = self._find_resource_record_set(
@@ -72,7 +72,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
 
         for record in self._get_resource_record_sets():
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if not (rtype and name and content):
             raise Exception("rtype ,name and content must be specified.")
 
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         resource_record_sets = self._get_resource_record_sets()
 
         if name is not None:

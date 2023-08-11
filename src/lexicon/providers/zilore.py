@@ -39,7 +39,7 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
         self.domain_id = None
 
-    def _authenticate(self):
+    def authenticate(self):
         result = self._get("/domains")
 
         target_domain = [
@@ -53,7 +53,7 @@ class Provider(BaseProvider):
 
         self.domain_id = target_domain[0]["domain_id"]
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         result = self._get(f"/domains/{self.domain}/records", {})
 
         records = [
@@ -82,13 +82,13 @@ class Provider(BaseProvider):
 
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
             raise Exception(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
 
         if records:
             LOGGER.debug("not creating a duplicate record: %s", records[0])
@@ -109,17 +109,17 @@ class Provider(BaseProvider):
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype and not name):
             raise Exception("Error, identifier or rtype+name parameters are required.")
 
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records_to_update = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            records_to_update = self._list_records(rtype=rtype, name=name)
+            records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception("Error, could not find a record matching the request.")
@@ -151,14 +151,14 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records_to_delete = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            records_to_delete = self._list_records(
+            records_to_delete = self.list_records(
                 rtype=rtype, name=name, content=content
             )
 

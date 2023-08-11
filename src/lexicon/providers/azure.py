@@ -77,7 +77,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self._access_token = None
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         result = self._get(f"/{(rtype if rtype else 'recordsets')}")
 
         records = []
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         identifier = self._create_record_internal(rtype, name, content)
 
         LOGGER.debug("create_record: %s", identifier)
@@ -123,7 +123,7 @@ class Provider(BaseProvider):
             {"type": rtype, "name": self._full_name(name), "content": content}
         )
 
-        records = self._list_records(rtype, name)
+        records = self.list_records(rtype, name)
 
         if [record for record in records if record["id"] == identifier]:
             LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
@@ -144,17 +144,17 @@ class Provider(BaseProvider):
 
         return identifier
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
             raise Exception("Error, identifier or rtype+name parameters are required.")
 
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records_to_update = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            records_to_update = self._list_records(rtype=rtype, name=name)
+            records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception(
@@ -184,7 +184,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         self._delete_record_internal(identifier, rtype, name, content)
 
         LOGGER.debug("delete_records: %s %s %s %s", identifier, rtype, name, content)
@@ -243,7 +243,7 @@ class Provider(BaseProvider):
                 data={"properties": record["properties"]},
             )
 
-    def _authenticate(self):
+    def authenticate(self):
         tenant_id = self._get_provider_option("auth_tenant_id")
         client_id = self._get_provider_option("auth_client_id")
         client_secret = self._get_provider_option("auth_client_secret")

@@ -35,7 +35,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.auroradns.eu"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get("/zones")
 
         for item in payload:
@@ -46,7 +46,7 @@ class Provider(BaseProvider):
             raise AuthenticationError("No domain found")
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         data = {"type": rtype, "name": self._relative_name(name), "content": content}
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         payload = self._get(f"/zones/{self.domain_id}/records")
 
         # Apply filtering first.
@@ -96,7 +96,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
             identifier = self._find_record_identifier(rtype, name, None)
@@ -118,11 +118,11 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -190,7 +190,7 @@ class Provider(BaseProvider):
         return f"AuroraDNSv1 {auth_b64.decode('utf-8')}"
 
     def _find_record_identifier(self, rtype, name, content):
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         LOGGER.debug("records: %s", records)
         if len(records) == 1:
             return records[0]["id"]

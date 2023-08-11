@@ -84,7 +84,7 @@ class Provider(BaseProvider):
         else:
             self.api_endpoint = "https://api.gandi.net/v5/livedns"
 
-    def _authenticate(self):
+    def authenticate(self):
         if self.protocol == "rpc":
             domain_id = self.rpc_helper.authenticate()
             self.domain_id = domain_id
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
             self._get(f"/domains/{self.domain}")
             self.domain_id = self.domain.lower()
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if self.protocol == "rpc":
             return self.rpc_helper.create_record(
                 rtype,
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
             )
 
         current_values = [
-            record["content"] for record in self._list_records(rtype=rtype, name=name)
+            record["content"] for record in self.list_records(rtype=rtype, name=name)
         ]
         if current_values != [content]:
             # a change is necessary
@@ -134,7 +134,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """List all record for the domain in the active Gandi zone."""
         if self.protocol == "rpc":
             return self.rpc_helper.list_records(rtype, name, content)
@@ -184,7 +184,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates the specified record in a new Gandi zone
 
         'content' should be a string or a list of strings
@@ -217,14 +217,14 @@ class Provider(BaseProvider):
 
     # Delete existings records.
     # If records do not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if self.protocol == "rpc":
             return self.rpc_helper.delete_record(identifier, rtype, name, content)
 
         if not identifier:
             remove_count = 0
             # get all matching (by rtype and name) records - ignore 'content' for now
-            records = self._list_records(rtype=rtype, name=name)
+            records = self.list_records(rtype=rtype, name=name)
             for current_type in set(record["type"] for record in records):
                 matching_records = [
                     record for record in records if record["type"] == current_type

@@ -138,7 +138,7 @@ class Provider(BaseProvider):
     #     the managed zone id, which will also be used on future requests.
     # This access token has a default lifetime of 10 minutes,
     # but is used only for the current Lexicon operation, so it should be sufficient.
-    def _authenticate(self):
+    def authenticate(self):
         jwt_header_bytes = urlsafe_b64encode(
             json.dumps({"alg": "RS256", "typ": "JWT"}).encode("utf-8")
         )
@@ -208,7 +208,7 @@ class Provider(BaseProvider):
     # name is not always available (we can ask for every TXT record for example). So to stick to
     # the most general case, its preferable to always get all records and be free to filter
     # the way we want afterwards.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         records = []
@@ -243,7 +243,7 @@ class Provider(BaseProvider):
     # Indeed we need to know if there is already a RecordSet for the type/name pair, and update
     # or create accordingly the RecordSet. Furthermore, we need first to delete the old RecordSet
     # if it exists, to replace it with the RecordSet containing the new content we want.
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
             raise Exception(
                 "Error, rtype, name and content are mandatory to create a record."
@@ -305,17 +305,17 @@ class Provider(BaseProvider):
     # Even if this make the operation very costly regarding the number of requests to do, it allows
     # the implementation to be way more readable (without that, it would take grossly the size of
     # he three quoted methods).
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
             raise Exception("Error, identifier or rtype+name parameters are required.")
 
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records_to_update = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            records_to_update = self._list_records(rtype=rtype, name=name)
+            records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception(
@@ -333,7 +333,7 @@ class Provider(BaseProvider):
 
         original_level = LOGGER.getEffectiveLevel()
         LOGGER.setLevel(logging.WARNING)
-        self._delete_record(record_identifier)
+        self.delete_record(record_identifier)
 
         new_record = {
             "type": rtype if rtype else records_to_update[0]["type"],
@@ -341,7 +341,7 @@ class Provider(BaseProvider):
             "content": content if content else records_to_update[0]["content"],
         }
 
-        self._create_record(
+        self.create_record(
             new_record["type"], new_record["name"], new_record["content"]
         )
         LOGGER.setLevel(original_level)
@@ -368,7 +368,7 @@ class Provider(BaseProvider):
     #   - mark as addition the update RecordSet with the subset of rrdatas if rrdatas is not empty
     #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #     for this type/name pair, all RecordSet needs to go away.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         results = self._get(f"/managedZones/{self.domain_id}/rrsets")
 
         if identifier:

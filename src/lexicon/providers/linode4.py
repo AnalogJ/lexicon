@@ -28,7 +28,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.linode.com/v4/"
 
-    def _authenticate(self):
+    def authenticate(self):
         self.domain_id = None
         payload = self._get(
             "domains", query_params={"filter": {"domain": self.domain.lower()}}
@@ -38,8 +38,8 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("Domain not found")
 
-    def _create_record(self, rtype, name, content):
-        if not self._list_records(rtype, name, content):
+    def create_record(self, rtype, name, content):
+        if not self.list_records(rtype, name, content):
             if name:
                 name = self._relative_name(name).lower()
 
@@ -53,7 +53,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         resources_url = f"domains/{self.domain_id}/records"
 
         if name:
@@ -99,9 +99,9 @@ class Provider(BaseProvider):
         return processed_records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
-            resources = self._list_records(rtype, name, None)
+            resources = self.list_records(rtype, name, None)
             identifier = resources[0]["id"] if resources else None
 
         LOGGER.debug("update_record: %s", identifier)
@@ -123,10 +123,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_resource_id = []
         if not identifier:
-            resources = self._list_records(rtype, name, content)
+            resources = self.list_records(rtype, name, content)
             delete_resource_id = [resource["id"] for resource in resources]
         else:
             delete_resource_id.append(identifier)

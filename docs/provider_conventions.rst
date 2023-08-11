@@ -31,7 +31,7 @@ General
 API Operations
 ==============
 
-_authenticate
+authenticate
 -------------
 
 - **Normal Behavior** Execute all required operations to authenticate against the provider API, then
@@ -40,7 +40,7 @@ _authenticate
 - **Authentication failure** In case of authentication failure, the method **must** raise a
   ``lexicon.exceptions.AuthenticationError`` exception and break the flow.
 
-_create_record
+create_record
 --------------
 
 -  **Normal Behavior** Create a new DNS record. Return a boolean
@@ -50,7 +50,7 @@ _create_record
 -  **Record Sets** If service supports record sets, create new record
    set or append value to existing record set as required.
 
-_list_record
+list_record
 ------------
 
 -  **Normal Behaviour** List all records. If filters are provided, send
@@ -62,7 +62,7 @@ _list_record
 -  **Linked Records** For services that support some form of linked
    record, do not resolve, treat as CNAME.
 
-_update_record
+update_record
 --------------
 
 -  **Normal Behaviour** Update a record. Record to be updated can be
@@ -78,7 +78,7 @@ _update_record
 
 -  **No Match** Throw exception?
 
-_delete_record
+delete_record
 --------------
 
 -  **Normal Behaviour** Remove a record. Record to be deleted can be

@@ -50,7 +50,7 @@ class Provider(BaseProvider):
 
         self.session = requests.Session()
 
-    def _authenticate(self):
+    def authenticate(self):
         domain = self.domain
 
         zones = self._get("/dns_zones.json")
@@ -61,7 +61,7 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError(f"Could not find {domain} in OnApp DNS Zones")
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         data = {
             "name": self._relative_name(name),
             "type": rtype,
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
 
         response = self._get(f"/dns_zones/{self.domain_id}/records.json")
@@ -116,7 +116,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
             existing = self._guess_record(rtype, name)
             identifier = existing["id"]
@@ -147,11 +147,11 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         deletion_ids = []
 
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             deletion_ids = [record["id"] for record in records]
         else:
             deletion_ids.append(identifier)
@@ -202,7 +202,7 @@ class Provider(BaseProvider):
         raise Exception(f"{record_type} record type is unknown")
 
     def _guess_record(self, rtype, name=None, content=None):
-        records = self._list_records(rtype=rtype, name=name, content=content)
+        records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
         if len(records) > 1:

@@ -34,7 +34,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.ukfast.io/safedns/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         try:
             self._get(f"/zones/{self.domain}")
             self.domain_id = self.domain
@@ -45,7 +45,7 @@ class Provider(BaseProvider):
 
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         url = f"/zones/{self.domain_id}/records"
         records = []
         payload = {}
@@ -99,10 +99,10 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # Check whether the record already exists with the same  rtype, name & content.
         # If so, claim to have added the record, but dont't do anything.
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         if records:
             LOGGER.debug(
                 "create_record: (ignored, duplicate record): %s", records[0]["id"]
@@ -119,12 +119,12 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", True)
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Make sure the update won't cause a duplicate entry. If it will, fail silently
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
 
         if not identifier:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) > 1:
@@ -154,13 +154,13 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", True)
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
 
         # If we've not been given an identifier, search for matching records.
         # NOTE, this could cause multiple records to be removed.
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)

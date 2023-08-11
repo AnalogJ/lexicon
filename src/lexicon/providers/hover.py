@@ -34,7 +34,7 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}
 
-    def _authenticate(self):
+    def authenticate(self):
         # Getting required cookies "hover_session" and "hoverauth"
         response = requests.get("https://www.hover.com/signin")
         self.cookies["hover_session"] = response.cookies["hover_session"]
@@ -81,7 +81,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         payload = self._get(f"/domains/{self.domain_id}/dns")
 
         # payload['domains'] should be a list of len 1
@@ -120,9 +120,9 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", processed_records)
         return processed_records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._relative_name(name)
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         if records:
             LOGGER.debug("not creating duplicate record: %s", records[0])
             return True
@@ -136,12 +136,12 @@ class Provider(BaseProvider):
         return payload["succeeded"]
 
     # Update a record. Hover cannot update name so we delete and recreate.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records = [r for r in records if r["id"] == identifier]
         else:
-            records = self._list_records(rtype, name, None)
+            records = self.list_records(rtype, name, None)
 
         if not records:
             raise Exception("Record not found")
@@ -154,15 +154,15 @@ class Provider(BaseProvider):
         new_name = name if name else orig_record["name"]
         new_content = content if content else orig_record["content"]
 
-        self._delete_record(orig_id)
-        return self._create_record(new_rtype, new_name, new_content)
+        self.delete_record(orig_id)
+        return self.create_record(new_rtype, new_name, new_content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)

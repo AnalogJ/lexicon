@@ -34,11 +34,11 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://dns.hetzner.com/api/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         provider = self._get_zone_by_domain(self.domain)
         self.domain_id = provider["id"]
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """
         Creates a DNS record, if a record with type, name and content exits, do nothing
         :returns: A json string containing the resulting record
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
-        records = self._list_records(rtype=rtype, name=name, content=content)
+        records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) >= 1:
             for record in records:
                 LOGGER.warning(
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
         self._post("/records", data)
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """
         List all records, filterable by type, name and content
         :rtype: list
@@ -93,7 +93,7 @@ class Provider(BaseProvider):
             and (content is None or record["content"] == content)
         ]
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """
         Create or update a record.
         :rtype: bool
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
             data["ttl"] = self._get_lexicon_option("ttl")
         update_identifier = identifier
         if update_identifier is None:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 update_identifier = records[0]["id"]
             elif len(records) < 1:
@@ -123,7 +123,7 @@ class Provider(BaseProvider):
         self._put(f"/records/{update_identifier}", data)
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Delete an existing record. If record does not exist, do nothing.
         :rtype: bool
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
         """
         delete_record_ids = []
         if identifier is None:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)

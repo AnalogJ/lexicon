@@ -50,13 +50,13 @@ class Provider(BaseProvider):
     def _run_query(self, message):
         return dns.query.tcp(message, self.endpoint, timeout=10)
 
-    def _authenticate(self):
+    def authenticate(self):
         if not self.endpoint:
             raise AuthenticationError("No DDNS server provided, use --ddns-server")
         pass
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if self._get_lexicon_option("ttl"):
             ttl = self._get_lexicon_option("ttl")
         else:
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         if rtype and name:  # doing a simple query is enough if we have type and name
             query = dns.message.make_query(name, rtype)
         else:  # if not, perform a zone transfert to get all records
@@ -109,13 +109,13 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if self._get_lexicon_option("ttl"):
             ttl = self._get_lexicon_option("ttl")
         else:
             ttl = 300
         if not identifier:
-            rrset = self._list_records(rtype, name)
+            rrset = self.list_records(rtype, name)
             if len(rrset) == 1:
                 identifier = rrset[0]["id"]
             elif len(rrset) < 1:
@@ -144,7 +144,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             rtype, name, content = self._resolve_identifier(identifier)
 
@@ -160,7 +160,7 @@ class Provider(BaseProvider):
 
     def _resolve_identifier(self, ident):
         if not self.cached_zone_content.get(ident):
-            self._list_records()  # if cache miss, reload cache
+            self.list_records()  # if cache miss, reload cache
         return self.cached_zone_content[ident]
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

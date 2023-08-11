@@ -50,7 +50,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.session_id = None
 
-    def _authenticate(self):
+    def authenticate(self):
         if not (
             self._get_provider_option("auth_username")
             and self._get_provider_option("auth_password")
@@ -103,8 +103,8 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("Domain not found in DNS records")
 
-    def _create_record(self, rtype, name, content):
-        records = self._list_records(rtype, name, content)
+    def create_record(self, rtype, name, content):
+        records = self.list_records(rtype, name, content)
 
         if records:
             LOGGER.debug("record already exists: %s", records[0])
@@ -128,7 +128,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         LOGGER.info(
             "Listing records for type=%s, name=%s, content=%s", rtype, name, content
         )
@@ -170,7 +170,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is None:
             LOGGER.info("No identifier for record provided, trying to find it...")
             identifier = self._find_record_identifier(rtype, name, None)
@@ -194,12 +194,12 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         record_ids = []
 
         if identifier is None:
             LOGGER.info("No identifier for record provided, trying to find it...")
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)
@@ -260,7 +260,7 @@ class Provider(BaseProvider):
 
     # Find identifier of a record with the given properties.
     def _find_record_identifier(self, rtype, name, content):
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
 
         LOGGER.debug("records: %s", records)
 

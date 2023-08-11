@@ -70,7 +70,7 @@ class Provider(BaseProvider):
             data["rrSets"][i]["rrtype"] = self._clean_rrtype(rrset["rrtype"])
         return data
 
-    def _authenticate(self):
+    def authenticate(self):
         if self.api_key is None:
             username = self._get_provider_option("auth_username")
             password = self._get_provider_option("auth_password")
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
         sha256.update(("data=" + content + ",").encode("utf-8"))
         return sha256.hexdigest()[0:7]
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
         for rrset in self.zone_data()["rrSets"]:
             if (
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
             content = self._full_name(content)
         return content
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         rname = self._fqdn_name(name)
         newcontent = self._clean_content(rtype, content)
 
@@ -176,7 +176,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         data = self.zone_data()
 
         if identifier is not None:
@@ -242,9 +242,9 @@ class Provider(BaseProvider):
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        self._delete_record(identifier, rtype, name, content)
-        return self._create_record(rtype, name, content)
+    def update_record(self, identifier, rtype=None, name=None, content=None):
+        self.delete_record(identifier, rtype, name, content)
+        return self.create_record(rtype, name, content)
 
     def _patch(self, url="/", data=None, query_params=None):
         return self._request("PATCH", url, data=data, query_params=query_params)

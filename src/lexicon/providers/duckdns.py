@@ -119,12 +119,12 @@ class Provider(BaseProvider):
         resolver.timeout = 70
         return resolver.resolve(name, rtype).rrset
 
-    def _authenticate(self):
+    def authenticate(self):
         if self._get_provider_option("auth_token") is None:
             raise AuthenticationError("Must provide account token")
 
     # Create record. If the record already exists with the same content, do nothing"
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if self._get_lexicon_option("ttl"):
             LOGGER.warning(
                 "create_record: Duck DNS does not support modifying the TTL, ignoring {}".format(
@@ -153,7 +153,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         duckdns_domain = Provider._get_duckdns_domain(self.domain)
         full_duckdns_domain = duckdns_domain + ".duckdns.org"
 
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
         return filtered_records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if self._get_lexicon_option("ttl"):
             LOGGER.warning(
                 "update_record: Duck DNS does not support modifying the TTL, ignoring {}".format(
@@ -214,7 +214,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
             identifier = self._get_record_identifier(
                 rtype=rtype, name=name, content=content, delete=True
@@ -253,7 +253,7 @@ class Provider(BaseProvider):
         return record_name
 
     def _get_record_identifier(self, rtype=None, name=None, content=None, delete=False):
-        records = self._list_records(rtype=rtype, name=name, content=content)
+        records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]["id"]
 
