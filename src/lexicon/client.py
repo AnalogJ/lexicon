@@ -17,6 +17,7 @@ class _ClientExecutor:
     Represents one set of commands against the Client
     for a given resolved Provider already authenticated.
     """
+
     def __init__(self, provider: Provider):
         self.provider = provider
 
@@ -134,7 +135,7 @@ class Client:
         self._provider = self.provider_class(self.config)
         self._provider.authenticate()
         return _ClientExecutor(self._provider)
-    
+
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         self._provider.cleanup()
         self._provider = None
@@ -145,12 +146,12 @@ class Client:
             raise AttributeError("action")
         if not self.config.resolve("lexicon:type"):
             raise AttributeError("type")
-        
+
         identifier = self.config.resolve("lexicon:identifier")
         record_type = self.config.resolve("lexicon:type")
         name = self.config.resolve("lexicon:name")
         content = self.config.resolve("lexicon:content")
-        
+
         try:
             executor = self.__enter__()
 

@@ -31,7 +31,9 @@ def test_unknown_provider_raises_error_on_instantiation(lexicon_client):
         )
 
 
-def test_missing_required_client_config_parameter_raises_error_on_instantiation(lexicon_client, mock_provider):
+def test_missing_required_client_config_parameter_raises_error_on_instantiation(
+    lexicon_client, mock_provider
+):
     with pytest.raises(AttributeError):
         lexicon_client.Client(
             ConfigResolver().with_dict(
@@ -79,7 +81,7 @@ def test_missing_required_client_config_parameter_raises_error_on_execute(
         ).execute()
 
 
-def test_missing_optional_client_config_parameter_does_not_raise_error(
+def test_missing_optional_client_config_parameter_does_not_raise_error_on_execute(
     lexicon_client, mock_provider
 ):
     lexicon_client.Client(
@@ -93,10 +95,10 @@ def test_missing_optional_client_config_parameter_does_not_raise_error(
                 "no-content": "fake",
             }
         )
-    )
+    ).execute()
 
 
-def test_list_action_is_correctly_handled_by_provider(
+def test_list_action_is_correctly_handled_by_provider_on_execute(
     capsys, lexicon_client, mock_provider
 ):
     client = lexicon_client.Client(
@@ -123,7 +125,30 @@ def test_list_action_is_correctly_handled_by_provider(
     assert results["content"] == "fake-content"
 
 
-def test_create_action_is_correctly_handled_by_provider(
+def test_list_action_is_correctly_handled_by_provider_on_context_manager(
+    capsys, lexicon_client, mock_provider
+):
+    with lexicon_client.Client(
+        ConfigResolver().with_dict(
+            {
+                "provider_name": "fakeprovider",
+                "domain": "example.com",
+            }
+        )
+    ) as client:
+        results = client.list_records("TXT", "fake", "fake-content")
+
+    out, _ = capsys.readouterr()
+
+    assert "Authenticate action" in out
+    assert results["action"] == "list"
+    assert results["domain"] == "example.com"
+    assert results["type"] == "TXT"
+    assert results["name"] == "fake"
+    assert results["content"] == "fake-content"
+
+
+def test_create_action_is_correctly_handled_by_provider_on_execute(
     capsys, lexicon_client, mock_provider
 ):
     client = lexicon_client.Client(
@@ -150,7 +175,30 @@ def test_create_action_is_correctly_handled_by_provider(
     assert results["content"] == "fake-content"
 
 
-def test_update_action_is_correctly_handled_by_provider(
+def test_create_action_is_correctly_handled_by_provider_on_context_manager(
+    capsys, lexicon_client, mock_provider
+):
+    with lexicon_client.Client(
+        ConfigResolver().with_dict(
+            {
+                "provider_name": "fakeprovider",
+                "domain": "example.com",
+            }
+        )
+    ) as client:
+        results = client.create_record("TXT", "fake", "fake-content")
+
+    out, _ = capsys.readouterr()
+
+    assert "Authenticate action" in out
+    assert results["action"] == "create"
+    assert results["domain"] == "example.com"
+    assert results["type"] == "TXT"
+    assert results["name"] == "fake"
+    assert results["content"] == "fake-content"
+
+
+def test_update_action_is_correctly_handled_by_provider_on_execute(
     capsys, lexicon_client, mock_provider
 ):
     client = lexicon_client.Client(
@@ -179,7 +227,31 @@ def test_update_action_is_correctly_handled_by_provider(
     assert results["content"] == "fake-content"
 
 
-def test_delete_action_is_correctly_handled_by_provider(
+def test_update_action_is_correctly_handled_by_provider_on_context_manager(
+    capsys, lexicon_client, mock_provider
+):
+    with lexicon_client.Client(
+        ConfigResolver().with_dict(
+            {
+                "provider_name": "fakeprovider",
+                "domain": "example.com",
+            }
+        )
+    ) as client:
+        results = client.update_record("fake-id", "TXT", "fake", "fake-content")
+
+    out, _ = capsys.readouterr()
+
+    assert "Authenticate action" in out
+    assert results["action"] == "update"
+    assert results["domain"] == "example.com"
+    assert results["identifier"] == "fake-id"
+    assert results["type"] == "TXT"
+    assert results["name"] == "fake"
+    assert results["content"] == "fake-content"
+
+
+def test_delete_action_is_correctly_handled_by_provider_on_execute(
     capsys, lexicon_client, mock_provider
 ):
     client = lexicon_client.Client(
@@ -196,6 +268,30 @@ def test_delete_action_is_correctly_handled_by_provider(
         )
     )
     results = client.execute()
+
+    out, _ = capsys.readouterr()
+
+    assert "Authenticate action" in out
+    assert results["action"] == "delete"
+    assert results["domain"] == "example.com"
+    assert results["identifier"] == "fake-id"
+    assert results["type"] == "TXT"
+    assert results["name"] == "fake"
+    assert results["content"] == "fake-content"
+
+
+def test_delete_action_is_correctly_handled_by_provider_on_context_manager(
+    capsys, lexicon_client, mock_provider
+):
+    with lexicon_client.Client(
+        ConfigResolver().with_dict(
+            {
+                "provider_name": "fakeprovider",
+                "domain": "example.com",
+            }
+        )
+    ) as client:
+        results = client.delete_record("fake-id", "TXT", "fake", "fake-content")
 
     out, _ = capsys.readouterr()
 
