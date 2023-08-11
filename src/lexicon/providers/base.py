@@ -75,6 +75,9 @@ class Provider(ABC):
         of if the domain does not exist.
         """
 
+    def cleanup(self) -> None:
+        pass
+
     @abstractmethod
     def create_record(self, rtype: str, name: str, content: str) -> bool:
         """

@@ -112,7 +112,7 @@ def test_client_init_when_missing_provider_should_fail():
 def test_client_init_when_missing_action_should_fail():
     options = {"provider_name": "fakeprovider", "domain": "example.com", "type": "TXT"}
     with pytest.raises(AttributeError):
-        lexicon.client.Client(ConfigResolver().with_dict(options))
+        lexicon.client.Client(ConfigResolver().with_dict(options)).execute()
 
 
 def test_client_init_when_missing_domain_should_fail():
@@ -128,7 +128,7 @@ def test_client_init_when_missing_type_should_fail(mock_provider):
         "domain": "example.com",
     }
     with pytest.raises(AttributeError):
-        lexicon.client.Client(ConfigResolver().with_dict(options))
+        lexicon.client.Client(ConfigResolver().with_dict(options)).execute()
 
 
 def test_client_parse_env_with_no_keys_should_do_nothing(monkeypatch, mock_provider):

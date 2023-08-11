@@ -19,23 +19,40 @@ def lexicon_client():
     return importlib.import_module("lexicon.client")
 
 
-def test_unknown_provider_raises_error(lexicon_client):
+def test_unknown_provider_raises_error_on_instantiation(lexicon_client):
     with pytest.raises(ProviderNotAvailableError):
         lexicon_client.Client(
             ConfigResolver().with_dict(
                 {
-                    "action": "list",
                     "provider_name": "unknownprovider",
                     "domain": "example.com",
-                    "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
                 }
             )
         )
 
 
-def test_missing_required_client_config_parameter_raises_error(
+def test_missing_required_client_config_parameter_raises_error_on_instantiation(lexicon_client, mock_provider):
+    with pytest.raises(AttributeError):
+        lexicon_client.Client(
+            ConfigResolver().with_dict(
+                {
+                    "provider_name": "fakeprovider",
+                    "no-domain": "example.com",
+                }
+            )
+        )
+    with pytest.raises(AttributeError):
+        lexicon_client.Client(
+            ConfigResolver().with_dict(
+                {
+                    "no-provider_name": "fakeprovider",
+                    "domain": "example.com",
+                }
+            )
+        )
+
+
+def test_missing_required_client_config_parameter_raises_error_on_execute(
     lexicon_client, mock_provider
 ):
     with pytest.raises(AttributeError):
@@ -46,37 +63,9 @@ def test_missing_required_client_config_parameter_raises_error(
                     "provider_name": "fakeprovider",
                     "domain": "example.com",
                     "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
                 }
             )
-        )
-    with pytest.raises(AttributeError):
-        lexicon_client.Client(
-            ConfigResolver().with_dict(
-                {
-                    "action": "list",
-                    "no-provider_name": "fakeprovider",
-                    "domain": "example.com",
-                    "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
-                }
-            )
-        )
-    with pytest.raises(AttributeError):
-        lexicon_client.Client(
-            ConfigResolver().with_dict(
-                {
-                    "action": "list",
-                    "provider_name": "fakeprovider",
-                    "no-domain": "example.com",
-                    "type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
-                }
-            )
-        )
+        ).execute()
     with pytest.raises(AttributeError):
         lexicon_client.Client(
             ConfigResolver().with_dict(
@@ -85,11 +74,9 @@ def test_missing_required_client_config_parameter_raises_error(
                     "provider_name": "fakeprovider",
                     "domain": "example.com",
                     "no-type": "TXT",
-                    "name": "fake",
-                    "content": "fake",
                 }
             )
-        )
+        ).execute()
 
 
 def test_missing_optional_client_config_parameter_does_not_raise_error(

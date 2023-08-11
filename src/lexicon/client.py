@@ -12,7 +12,61 @@ from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.providers.base import Provider
 
 
-class Client(object):
+class _ClientExecutor:
+    """
+    Represents one set of commands against the Client
+    for a given resolved Provider already authenticated.
+    """
+    def __init__(self, provider: Provider):
+        self.provider = provider
+
+    def create_record(self, rtype: str, name: str, content: str) -> bool:
+        """
+        Create record. If record already exists with the same content, do nothing.
+        """
+        return self.provider.create_record(rtype, name, content)
+
+    def list_records(
+        self,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> List[Dict]:
+        """
+        List all records. Return an empty list if no records found
+        type, name and content are used to filter records.
+        If possible filter during the query, otherwise filter after response is received.
+        """
+        return self.provider.list_records(rtype, name, content)
+
+    def update_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
+        """
+        Update a record. Identifier must be specified.
+        """
+        return self.provider.update_record(identifier, rtype, name, content)
+
+    def delete_record(
+        self,
+        identifier: Optional[str] = None,
+        rtype: Optional[str] = None,
+        name: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> bool:
+        """
+        Delete an existing record.
+        If record does not exist, do nothing.
+        If an identifier is specified, use it, otherwise do a lookup using type, name and content.
+        """
+        return self.provider.delete_record(identifier, rtype, name, content)
+
+
+class Client:
     """This is the Lexicon client, that will execute all the logic."""
 
     def __init__(
@@ -73,32 +127,50 @@ class Client(object):
         provider_module = importlib.import_module(
             "lexicon.providers." + self.provider_name
         )
-        provider_class: Type[Provider] = getattr(provider_module, "Provider")
-        self.provider = provider_class(self.config)
+        self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
+        self._provider: Provider
+
+    def __enter__(self) -> "_ClientExecutor":
+        self._provider = self.provider_class(self.config)
+        self._provider.authenticate()
+        return _ClientExecutor(self._provider)
+    
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        self._provider.cleanup()
+        self._provider = None
 
     def execute(self) -> Union[bool, List[Dict]]:
         """Execute provided configuration in class constructor to the DNS records"""
-        self.provider.authenticate()
+        if not self.config.resolve("lexicon:action"):
+            raise AttributeError("action")
+        if not self.config.resolve("lexicon:type"):
+            raise AttributeError("type")
+        
         identifier = self.config.resolve("lexicon:identifier")
         record_type = self.config.resolve("lexicon:type")
         name = self.config.resolve("lexicon:name")
         content = self.config.resolve("lexicon:content")
+        
+        try:
+            executor = self.__enter__()
 
-        if self.action == "create":
-            if not record_type or not name or not content:
-                raise ValueError("Missing record_type, name or content parameters.")
-            return self.provider.create_record(record_type, name, content)
+            if self.action == "create":
+                if not name or not content:
+                    raise ValueError("Missing record_type, name or content parameters.")
+                return executor.create_record(record_type, name, content)
 
-        if self.action == "list":
-            return self.provider.list_records(record_type, name, content)
+            if self.action == "list":
+                return executor.list_records(record_type, name, content)
 
-        if self.action == "update":
-            return self.provider.update_record(identifier, record_type, name, content)
+            if self.action == "update":
+                return executor.update_record(identifier, record_type, name, content)
 
-        if self.action == "delete":
-            return self.provider.delete_record(identifier, record_type, name, content)
+            if self.action == "delete":
+                return executor.delete_record(identifier, record_type, name, content)
 
-        raise ValueError(f"Invalid action statement: {self.action}")
+            raise ValueError(f"Invalid action statement: {self.action}")
+        finally:
+            self.__exit__(None, None, None)
 
     def _validate_config(self) -> None:
         provider_name = self.config.resolve("lexicon:provider_name")
@@ -118,12 +190,8 @@ class Client(object):
                     f"Please run `pip install dns-lexicon[{provider_name}]` first before using it."
                 )
 
-        if not self.config.resolve("lexicon:action"):
-            raise AttributeError("action")
         if not self.config.resolve("lexicon:domain"):
             raise AttributeError("domain")
-        if not self.config.resolve("lexicon:type"):
-            raise AttributeError("type")
 
 
 def _get_tldextract_cache_path() -> str:
