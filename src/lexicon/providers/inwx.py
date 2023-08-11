@@ -80,7 +80,7 @@ class Provider(BaseProvider):
             raise Exception(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
-    def _authenticate(self):
+    def authenticate(self):
         """
         run any request against the API just to make sure the credentials
         are valid
@@ -102,7 +102,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """
         create a record
         does nothing if the record already exists
@@ -130,7 +130,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """
         list all records
 
@@ -166,7 +166,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """
         update a record
 
@@ -179,7 +179,7 @@ class Provider(BaseProvider):
         """
         record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)
@@ -201,7 +201,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         delete a record
         filter selection to delete by identifier or rtype/name/content
@@ -215,7 +215,7 @@ class Provider(BaseProvider):
         """
         record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)

@@ -56,13 +56,13 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.godaddy.com/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         domain = self.domain
 
         result = self._get(f"/domains/{domain}")
         self.domain_id = result["domainId"]
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
 
         url = f"/domains/{domain}/records"
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         domain = self.domain
         relative_name = self._relative_name(name)
         ttl = self._get_lexicon_option("ttl")
@@ -172,7 +172,7 @@ class Provider(BaseProvider):
 
         return matching_records, records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # No identifier is used with GoDaddy.
         # We can rely either:
         #   - only on rtype/name to get the relevant records, both of them are required
@@ -234,7 +234,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Get the list of records to evict and the list of all current records in the DNS zone.
         matching_records, records = self._find_matching_records(
             identifier, rtype, name, content

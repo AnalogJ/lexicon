@@ -63,8 +63,9 @@ class Provider(ABC):
         self.domain = str(self.config.resolve("lexicon:domain"))
         self.domain_id = None
 
-    # Provider API
+    # Provider API: instance methods
 
+    @abstractmethod
     def authenticate(self) -> None:
         """
         Authenticate against provider,
@@ -73,14 +74,14 @@ class Provider(ABC):
         Should throw AuthenticationError or requests.HTTPError if authentication fails for any reason,
         of if the domain does not exist.
         """
-        self._authenticate()
 
+    @abstractmethod
     def create_record(self, rtype: str, name: str, content: str) -> bool:
         """
         Create record. If record already exists with the same content, do nothing.
         """
-        return self._create_record(rtype, name, content)
 
+    @abstractmethod
     def list_records(
         self,
         rtype: Optional[str] = None,
@@ -92,8 +93,8 @@ class Provider(ABC):
         type, name and content are used to filter records.
         If possible filter during the query, otherwise filter after response is received.
         """
-        return self._list_records(rtype=rtype, name=name, content=content)
 
+    @abstractmethod
     def update_record(
         self,
         identifier: Optional[str] = None,
@@ -104,8 +105,8 @@ class Provider(ABC):
         """
         Update a record. Identifier must be specified.
         """
-        return self._update_record(identifier, rtype=rtype, name=name, content=content)
 
+    @abstractmethod
     def delete_record(
         self,
         identifier: Optional[str] = None,
@@ -118,64 +119,26 @@ class Provider(ABC):
         If record does not exist, do nothing.
         If an identifier is specified, use it, otherwise do a lookup using type, name and content.
         """
-        return self._delete_record(
-            identifier=identifier, rtype=rtype, name=name, content=content
-        )
 
-    # Public abstract methods
+    # Provider API: static methods
 
     @staticmethod
     @abstractmethod
     def get_nameservers() -> Union[List[str], List[Pattern]]:
-        """Return the list of nameservers for this DNS provider"""
+        """
+        Return the list of nameservers for this DNS provider
+        """
 
     @staticmethod
     @abstractmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        """Configure the given parser for the provider needs (eg. specific CLI flags for auth)"""
-
-    # Internal abstract methods
-
-    @abstractmethod
-    def _authenticate(self) -> None:
-        """Authenticate against the DNS provider API"""
-
-    @abstractmethod
-    def _create_record(self, rtype: str, name: str, content: str) -> bool:
-        """Create a new record in the DNS zone"""
-
-    @abstractmethod
-    def _list_records(
-        self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> List[Dict]:
-        """List all records matching the provided filters in the DNS zone"""
-
-    @abstractmethod
-    def _update_record(
-        self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> bool:
-        """Update an existing record in the DNS zone"""
-
-    @abstractmethod
-    def _delete_record(
-        self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> bool:
-        """Delete an existing record in the DNS zone"""
+        """
+        Configure the given parser for the provider needs
+        (eg. specific CLI flags for auth)
+        """
 
     # Helpers
 
-    @abstractmethod
     def _request(
         self,
         action: str = "GET",
@@ -184,6 +147,9 @@ class Provider(ABC):
         query_params: Optional[Dict] = None,
     ) -> Any:
         """Execute an HTTP request against the DNS provider API"""
+        raise NotImplementedError(
+            "You must implement _request() to use _get()/_post()/_put()/_patch()/_delete() methods."
+        )
 
     def _get(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
         return self._request("GET", url, query_params=query_params)

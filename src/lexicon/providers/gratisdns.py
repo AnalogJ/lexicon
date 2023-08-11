@@ -36,7 +36,7 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://admin.gratisdns.com"
         self.cookies = {}
 
-    def _authenticate(self):
+    def authenticate(self):
         # Getting required cookie "ORGID"
         payload = {
             "action": "logmein",
@@ -75,7 +75,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         query_params = {
             "action": "dns_primary_changeDNSsetup",
             "user_domain": self.domain_id,
@@ -149,7 +149,7 @@ class Provider(BaseProvider):
         return None
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # Figure out TTL
         ttl = 43200
         if self._get_lexicon_option("ttl"):
@@ -184,13 +184,13 @@ class Provider(BaseProvider):
 
     def _lookup_record(self, identifier):
         # Pull all the records we know
-        records = self._list_records()
+        records = self.list_records()
         # Find the one with the provided identifier
         record = next((x for x in records if x["id"] == identifier), None)
         return record
 
     # Create or update a record.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         record = None
         # Try to find, either by identifier or by searching
         if identifier:
@@ -198,13 +198,13 @@ class Provider(BaseProvider):
             record = self._lookup_record(identifier)
         else:
             # Find the relevant record by rtype and name
-            records = self._list_records(rtype=rtype, name=name)
+            records = self.list_records(rtype=rtype, name=name)
             if len(records) == 1:
                 record = records[0]
                 identifier = record["id"]
         # If none is found, create it
         if record is None:
-            return self._create_record(rtype, name, content)
+            return self.create_record(rtype, name, content)
 
         # Update ttl if provided
         if self._get_lexicon_option("ttl"):
@@ -243,10 +243,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

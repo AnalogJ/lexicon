@@ -75,7 +75,7 @@ class Provider(BaseProvider):
         self.private_key = load_pem_private_key(private_key_bytes, password=None)
         self.token: str
 
-    def _authenticate(self):
+    def authenticate(self):
         request_body = {
             "login": self._get_provider_option("auth_username"),
             "nonce": uuid.uuid4().hex,
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
 
         self.domain_id = data["domain"]["authCode"]
 
-    def _create_record(self, rtype: str, name: str, content: str) -> bool:
+    def create_record(self, rtype: str, name: str, content: str) -> bool:
         if not rtype or not name or not content:
             raise Exception(
                 "Error, rtype, name and content are mandatory to create a record."
@@ -115,7 +115,7 @@ class Provider(BaseProvider):
 
         if any(
             record
-            for record in self._list_records(rtype=rtype, name=name, content=content)
+            for record in self.list_records(rtype=rtype, name=name, content=content)
             if record["id"] == identifier
         ):
             LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
@@ -136,7 +136,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(
+    def list_records(
         self,
         rtype: Optional[str] = None,
         name: Optional[str] = None,
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(
+    def update_record(
         self,
         identifier: Optional[str] = None,
         rtype: Optional[str] = None,
@@ -179,12 +179,12 @@ class Provider(BaseProvider):
             raise Exception("Error, identifier or rtype+name parameters are required.")
 
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records_to_update = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            records_to_update = self._list_records(rtype=rtype, name=name)
+            records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
             raise Exception(
@@ -224,7 +224,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(
+    def delete_record(
         self,
         identifier: Optional[str] = None,
         rtype: Optional[str] = None,
@@ -232,7 +232,7 @@ class Provider(BaseProvider):
         content: Optional[str] = None,
     ) -> bool:
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records = [record for record in records if record["id"] == identifier]
 
             if not records:
@@ -240,7 +240,7 @@ class Provider(BaseProvider):
                     f"Could not find a record matching the identifier provider: {identifier}"
                 )
         else:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
 
         for record in records:
             data = {

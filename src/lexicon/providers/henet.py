@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.session = None
 
-    def _authenticate(self):
+    def authenticate(self):
         # Create the session GET the login page to retrieve a session cookie
         self.session = Session()
         self.session.get("https://dns.he.net/")
@@ -77,10 +77,10 @@ class Provider(BaseProvider):
         return True
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         LOGGER.debug("Creating record for zone %s", name)
         # Pull a list of records and check for ours
-        records = self._list_records(rtype=rtype, name=name, content=content)
+        records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) >= 1:
             LOGGER.warning("Duplicate record %s %s %s, NOOP", rtype, name, content)
             return True
@@ -111,7 +111,7 @@ class Provider(BaseProvider):
                 data["Priority"] = str(prio)
         self.session.post("https://dns.he.net/index.cgi", data=data)
         # Pull a list of records and check for ours
-        records = self._list_records(name=name)
+        records = self.list_records(name=name)
         if len(records) >= 1:
             LOGGER.info("Successfully added record %s", name)
             return True
@@ -122,7 +122,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(
@@ -191,17 +191,17 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Delete record if it exists
-        self._delete_record(identifier, rtype, name, content)
-        return self._create_record(rtype, name, content)
+        self.delete_record(identifier, rtype, name, content)
+        return self.create_record(rtype, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)

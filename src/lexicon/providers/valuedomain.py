@@ -357,7 +357,7 @@ class Provider(BaseProvider):
     # so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason,
     # of if the domain does not exist.
-    def _authenticate(self):
+    def authenticate(self):
         self.domain_id = vdapi_get_domain_list(self.caller)
 
         assert len(self.domain_id) > 0, "Failed to get domain names"
@@ -365,7 +365,7 @@ class Provider(BaseProvider):
             raise Exception(f"{self.domain} not managed")
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype: str, name: str, content: str):
+    def create_record(self, rtype: str, name: str, content: str):
         self._assert_initialized()
         ttl_option = self._get_lexicon_option("ttl")
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
@@ -403,7 +403,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(
+    def list_records(
         self,
         rtype: Optional[str] = None,
         name: Optional[str] = None,
@@ -434,7 +434,7 @@ class Provider(BaseProvider):
         )
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         self._assert_initialized()
         ttl_option = self._get_lexicon_option("ttl")
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
@@ -470,7 +470,7 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         self._assert_initialized()
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
         if domain_data is not None and identifier is not None:
@@ -516,7 +516,7 @@ class Provider(BaseProvider):
 
     def _assert_initialized(self):
         if self.caller is None or self.domain_id is None:
-            self._authenticate()
+            self.authenticate()
 
         assert self.caller is not None, "HTTP caller not defined"
         assert self.domain_id is not None or len(
@@ -590,35 +590,35 @@ if __name__ == "__main__":
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
                 provider = self._create_provide(domainname)
-                provider._authenticate()
+                provider.authenticate()
 
-                records = provider._list_records()
+                records = provider.list_records()
                 self.assertGreater(len(records), 0)
 
-                records = provider._list_records(rtype="A")
+                records = provider.list_records(rtype="A")
                 self.assertGreater(len(records), 0)
 
-                records = provider._list_records(rtype="B")
+                records = provider.list_records(rtype="B")
                 self.assertEqual(len(records), 0)
 
         def test_create_records(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
                 provider = self._create_provide(domainname)
-                provider._authenticate()
+                provider.authenticate()
 
-                provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                records = provider._list_records(
+                provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                records = provider.list_records(
                     rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                 )
                 self.assertGreater(len(records), 0)
 
-                provider._create_record(
+                provider.create_record(
                     DUMMY_TYPE, f"{DUMMY_NAME}.{domainname}.", DUMMY_CONTENT
                 )
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE,
                             name=f"DUMMY_NAME.{domainname}.",
                             content=DUMMY_CONTENT,
@@ -628,10 +628,10 @@ if __name__ == "__main__":
                 )
 
                 # cleanup
-                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                provider.delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                         )
                     ),
@@ -642,17 +642,17 @@ if __name__ == "__main__":
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
                 provider = self._create_provide(domainname)
-                provider._authenticate()
+                provider.authenticate()
 
-                provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                recl = provider._list_records(
+                provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                recl = provider.list_records(
                     rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                 )
                 self.assertGreater(len(recl), 0)
-                provider._delete_record(identifier=recl[0].get("id"))
+                provider.delete_record(identifier=recl[0].get("id"))
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                         )
                     ),
@@ -663,17 +663,17 @@ if __name__ == "__main__":
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
                 provider = self._create_provide(domainname)
-                provider._authenticate()
+                provider.authenticate()
 
-                provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                recl = provider._list_records(
+                provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                recl = provider.list_records(
                     rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                 )
                 self.assertGreater(len(recl), 0)
-                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                provider.delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                         )
                     ),
@@ -684,19 +684,19 @@ if __name__ == "__main__":
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
                 provider = self._create_provide(domainname)
-                provider._authenticate()
+                provider.authenticate()
 
-                provider._create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
-                recl = provider._list_records(
+                provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
+                recl = provider.list_records(
                     rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                 )
                 self.assertGreater(len(recl), 0)
-                provider._update_record(
+                provider.update_record(
                     identifier=recl[0].get("id"), content=DUMMY_CONTENT2
                 )
                 self.assertGreater(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2
                         )
                     ),
@@ -704,10 +704,10 @@ if __name__ == "__main__":
                 )
 
                 # cleanup
-                provider._delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT2)
+                provider.delete_record(None, DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT2)
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT
                         )
                     ),
@@ -715,7 +715,7 @@ if __name__ == "__main__":
                 )
                 self.assertEqual(
                     len(
-                        provider._list_records(
+                        provider.list_records(
                             rtype=DUMMY_TYPE, name=DUMMY_NAME, content=DUMMY_CONTENT2
                         )
                     ),

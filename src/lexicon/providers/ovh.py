@@ -76,7 +76,7 @@ class Provider(BaseProvider):
         self.session = None
         self.time_delta = None
 
-    def _authenticate(self):
+    def authenticate(self):
         # All requests will be done in one HTTPS session
         self.session = requests.Session()
 
@@ -97,11 +97,11 @@ class Provider(BaseProvider):
 
         self.domain_id = domain
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         domain = self.domain
         ttl = self._get_lexicon_option("ttl")
 
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         for record in records:
             if (
                 record["type"] == rtype
@@ -129,7 +129,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
         records = []
 
@@ -164,11 +164,11 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         domain = self.domain
 
         if not identifier:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) > 1:
@@ -189,12 +189,12 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         domain = self.domain
 
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

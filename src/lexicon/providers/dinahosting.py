@@ -60,7 +60,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://dinahosting.com/special/api.php"
 
-    def _authenticate(self):
+    def authenticate(self):
         data = {"command": "Services_GetDomains"}
         payload = self._post("", data)
 
@@ -75,7 +75,7 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         Provider._check_unsupported_type(rtype)
 
         rel_name = self._relative_name(name)
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", True)
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         if rtype:
             formatted_rtype = "Cname" if rtype == "CNAME" else rtype
             data = {
@@ -144,14 +144,14 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             matching_records = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            matching_records = self._list_records(rtype, name)
+            matching_records = self.list_records(rtype, name)
 
         # Check if record exists, otherwise raise an error
         if not matching_records:
@@ -161,22 +161,22 @@ class Provider(BaseProvider):
 
         record = matching_records[0]
         # The API does not offer update functions for most of the record types
-        delete_result = self._delete_record(
+        delete_result = self.delete_record(
             identifier, record["type"], record["name"], record["content"]
         )
-        create_result = self._create_record(rtype, name, content)
+        create_result = self.create_record(rtype, name, content)
 
         LOGGER.debug("update_record: %s", (delete_result and create_result))
         return delete_result and create_result
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             delete_records = [
                 record for record in records if record["id"] == identifier
             ]
         else:
-            delete_records = self._list_records(rtype, name, content)
+            delete_records = self.list_records(rtype, name, content)
 
         for delete_record in delete_records:
             ptype = rtype if rtype else delete_record["type"]

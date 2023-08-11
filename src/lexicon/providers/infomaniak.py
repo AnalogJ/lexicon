@@ -42,7 +42,7 @@ class Provider(BaseProvider):
         self.endpoint_api = ENDPOINT
         self.session = None
 
-    def _authenticate(self):
+    def authenticate(self):
         domains = self._get(
             "/1/product", {"service_name": "domain", "customer_name": self.domain}
         )
@@ -56,7 +56,7 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError(f"Domain {self.domain} not found")
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         ttl = self._get_lexicon_option("ttl")
 
         records = list(
@@ -64,7 +64,7 @@ class Provider(BaseProvider):
                 lambda x: x["content"] == content
                 and x["type"] == rtype
                 and self._relative_name(x["name"]) == self._relative_name(name),
-                self._list_records(rtype, name, content),
+                self.list_records(rtype, name, content),
             )
         )
 
@@ -89,7 +89,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
 
         record_data = self._get(f"/1/domain/{self.domain_id}/dns/record")
@@ -141,8 +141,8 @@ class Provider(BaseProvider):
 
         return record
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        records = self._list_records(rtype, name)
+    def update_record(self, identifier, rtype=None, name=None, content=None):
+        records = self.list_records(rtype, name)
 
         if not identifier:
             if len(records) == 1:
@@ -167,10 +167,10 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

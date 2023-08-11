@@ -35,7 +35,9 @@ def test_unknown_provider_raises_error(lexicon_client):
         )
 
 
-def test_missing_required_client_config_parameter_raises_error(lexicon_client, mock_provider):
+def test_missing_required_client_config_parameter_raises_error(
+    lexicon_client, mock_provider
+):
     with pytest.raises(AttributeError):
         lexicon_client.Client(
             ConfigResolver().with_dict(
@@ -90,7 +92,9 @@ def test_missing_required_client_config_parameter_raises_error(lexicon_client, m
         )
 
 
-def test_missing_optional_client_config_parameter_does_not_raise_error(lexicon_client, mock_provider):
+def test_missing_optional_client_config_parameter_does_not_raise_error(
+    lexicon_client, mock_provider
+):
     lexicon_client.Client(
         ConfigResolver().with_dict(
             {
@@ -105,7 +109,9 @@ def test_missing_optional_client_config_parameter_does_not_raise_error(lexicon_c
     )
 
 
-def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client, mock_provider):
+def test_list_action_is_correctly_handled_by_provider(
+    capsys, lexicon_client, mock_provider
+):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {
@@ -130,7 +136,9 @@ def test_list_action_is_correctly_handled_by_provider(capsys, lexicon_client, mo
     assert results["content"] == "fake-content"
 
 
-def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client, mock_provider):
+def test_create_action_is_correctly_handled_by_provider(
+    capsys, lexicon_client, mock_provider
+):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {
@@ -155,7 +163,9 @@ def test_create_action_is_correctly_handled_by_provider(capsys, lexicon_client, 
     assert results["content"] == "fake-content"
 
 
-def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client, mock_provider):
+def test_update_action_is_correctly_handled_by_provider(
+    capsys, lexicon_client, mock_provider
+):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {
@@ -182,7 +192,9 @@ def test_update_action_is_correctly_handled_by_provider(capsys, lexicon_client, 
     assert results["content"] == "fake-content"
 
 
-def test_delete_action_is_correctly_handled_by_provider(capsys, lexicon_client, mock_provider):
+def test_delete_action_is_correctly_handled_by_provider(
+    capsys, lexicon_client, mock_provider
+):
     client = lexicon_client.Client(
         ConfigResolver().with_dict(
             {

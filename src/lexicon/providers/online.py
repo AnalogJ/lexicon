@@ -36,7 +36,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
         self.api_endpoint = "https://api.online.net/api/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         self._init_zones()
 
     def _list_zones(self):
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
         self._update_passive_zone()
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         try:
             record = self._find_record(rtype, name, content)
             if record is not None:
@@ -150,17 +150,17 @@ class Provider(BaseProvider):
     def _list_zone_records(self, zone_id):
         return self._get(f"/domain/{self.domain_id}/version/{zone_id}/zone")
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._find_zone_records(self.passive_zone, rtype, name, content)
 
     def _find_record(self, rtype=None, name=None, content=None):
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         if not records:
             return None
         return records[0]
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         record = self._find_record(rtype, name)
         if record is None:
             LOGGER.debug(
@@ -201,8 +201,8 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        records = self._list_records(rtype, name, content)
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        records = self.list_records(rtype, name, content)
         if not records:
             LOGGER.debug("Cannot find records %s %s %s", rtype, name, content)
             return False

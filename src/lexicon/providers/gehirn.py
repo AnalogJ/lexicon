@@ -59,7 +59,7 @@ class Provider(BaseProvider):
         self.version_id = None
         self.api_endpoint = "https://api.gis.gehirn.jp/dns/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get("/zones")
 
         domains = [item for item in payload if item["name"] == self.domain]
@@ -70,7 +70,7 @@ class Provider(BaseProvider):
         self.version_id = domains[0]["current_version_id"]
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._full_name(name)
         a_record = self._parse_content(rtype, content)
 
@@ -99,7 +99,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         records = []
         if name:
             name = self._full_name(name)
@@ -123,7 +123,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if name:
             name = self._full_name(name)
 
@@ -134,7 +134,7 @@ class Provider(BaseProvider):
             records = self._get_records(rtype=rtype, name=name)
 
             if not records:
-                self._create_record(rtype=rtype, name=name, content=content)
+                self.create_record(rtype=rtype, name=name, content=content)
                 LOGGER.debug("update_record: %s", True)
                 return True
 
@@ -157,8 +157,8 @@ class Provider(BaseProvider):
 
             if "." in identifier:
                 # modify single record
-                self._delete_record(identifier=identifier)
-                self._create_record(
+                self.delete_record(identifier=identifier)
+                self.create_record(
                     rtype=rtype or record["type"],
                     name=name or record["name"],
                     content=content,
@@ -180,7 +180,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             if "." not in identifier:
                 # delete entire record

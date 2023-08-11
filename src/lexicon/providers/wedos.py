@@ -57,7 +57,7 @@ class Provider(BaseProvider):
         phrase = login + passhash + datetime.datetime.now().strftime("%H")
         return hashlib.sha1(phrase.encode("utf8")).hexdigest()
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._post(data=self._create_payload("dns-domains-list", ""))
         domains = payload["response"]["data"]["domain"]
         for record in domains:
@@ -83,8 +83,8 @@ class Provider(BaseProvider):
         }
         return {"request": json.dumps(data)}
 
-    def _create_record(self, rtype: str, name: str, content: str) -> bool:
-        records = self._list_records(rtype, name, content)
+    def create_record(self, rtype: str, name: str, content: str) -> bool:
+        records = self.list_records(rtype, name, content)
         if len(records) == 1:
             return True
         data = {
@@ -107,7 +107,7 @@ class Provider(BaseProvider):
         else:
             raise LexiconError("Cannot create records")
 
-    def _list_records(
+    def list_records(
         self,
         rtype: Optional[str] = None,
         name: Optional[str] = None,
@@ -137,7 +137,7 @@ class Provider(BaseProvider):
 
         return records
 
-    def _update_record(
+    def update_record(
         self,
         identifier: Optional[str] = None,
         rtype: Optional[str] = None,
@@ -145,7 +145,7 @@ class Provider(BaseProvider):
         content: Optional[str] = None,
     ) -> bool:
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             identifiers = [record["id"] for record in records]
         else:
             identifiers = [identifier]
@@ -177,7 +177,7 @@ class Provider(BaseProvider):
         else:
             raise LexiconError("Cannot update records")
 
-    def _delete_record(
+    def delete_record(
         self,
         identifier: Optional[str] = None,
         rtype: Optional[str] = None,
@@ -185,7 +185,7 @@ class Provider(BaseProvider):
         content: Optional[str] = None,
     ) -> bool:
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             identifiers = [record["id"] for record in records]
         else:
             identifiers = [identifier]

@@ -88,7 +88,7 @@ class Provider(BaseProvider):
             % login_response.url
         )
 
-    def _authenticate(self):
+    def authenticate(self):
         csrf_token = self._get_csrf_token()
         self._login(csrf_token)
 
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         return self._create_record_internal(rtype=rtype, name=name, content=content)
 
     def _create_record_internal(self, rtype, name, content, identifier=None):
@@ -140,7 +140,7 @@ class Provider(BaseProvider):
         self._invalidate_records_cache()
 
         # Pull a list of records and check for ours
-        was_success = len(self._list_records(rtype, name, content)) > 0
+        was_success = len(self.list_records(rtype, name, content)) > 0
         if identifier != "" and was_success:
             msg = "Successfully updated record {}".format(name)
         elif was_success:
@@ -150,7 +150,7 @@ class Provider(BaseProvider):
         LOGGER.info(msg, name)
         return was_success
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """
         Delete one or more DNS entries in the domain zone that match the given
         criteria.
@@ -184,7 +184,7 @@ class Provider(BaseProvider):
 
         return success
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """
         Update a DNS entry identified by identifier or name in the domain zone.
         Any non given argument will leave the current value of the DNS entry.
@@ -221,7 +221,7 @@ class Provider(BaseProvider):
             )
         return success
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(
@@ -329,7 +329,7 @@ class Provider(BaseProvider):
 
     def _is_duplicate_record(self, rtype, name, content):
         """Check if DNS entry already exists."""
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         is_duplicate = len(records) >= 1
         if is_duplicate:
             LOGGER.info("Duplicate record %s %s %s, NOOP", rtype, name, content)
@@ -341,7 +341,7 @@ class Provider(BaseProvider):
         """Return a list of DNS entries that match the given criteria."""
         record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             record_ids = [record["id"] for record in records]
         else:
             record_ids.append(identifier)

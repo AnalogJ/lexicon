@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.dynu.com/v2"
 
-    def _authenticate(self):
+    def authenticate(self):
         data = self._get("/dns")
         domains = data["domains"]
         for domain in domains:
@@ -42,7 +42,7 @@ class Provider(BaseProvider):
             raise AuthenticationError("No matching domain found")
 
     # Create record. If record already exists with the same content, do nothing.
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         record = self._to_dynu_record(rtype, name, content)
 
         if self._get_lexicon_option("ttl"):
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         payload = self._get(f"/dns/{self.domain_id}/record")
 
         records = []
@@ -94,10 +94,10 @@ class Provider(BaseProvider):
         return records
 
     # Update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         records = {}
         if identifier is None:
-            records = self._list_records(rtype, name, None)
+            records = self.list_records(rtype, name, None)
             records = {rec["id"]: rec for rec in records}
         else:
             if name is not None:
@@ -114,8 +114,8 @@ class Provider(BaseProvider):
                         new_name,
                         identifier,
                     )
-                    self._delete_record(identifier)
-                    return self._create_record(rtype, name, content)
+                    self.delete_record(identifier)
+                    return self.create_record(rtype, name, content)
 
             records = {identifier: self._to_dynu_record(rtype, None, content)}
 
@@ -130,10 +130,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

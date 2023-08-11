@@ -34,7 +34,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://dns.services/api"
 
-    def _authenticate(self):
+    def authenticate(self):
         if self.auth_token is None:
             username = self._get_provider_option("auth_username")
             password = self._get_provider_option("auth_password")
@@ -55,10 +55,10 @@ class Provider(BaseProvider):
                 return
         raise AuthenticationError("No domain found")
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         print("create_record")
         # check if record already exists
-        if not self._list_records(rtype, name, content):
+        if not self.list_records(rtype, name, content):
             data = {
                 "type": rtype,
                 "name": self._relative_name(name),
@@ -77,7 +77,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         print("list_records")
         payload = self._get(f"/service/{self.service_id}/dns/{self.domain_id}")
         records = []
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
         return records
 
     # Update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         print("update_record")
         data = {
             "type": rtype,
@@ -131,10 +131,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

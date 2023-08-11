@@ -33,7 +33,7 @@ class Provider(BaseProvider):
             self._get_provider_option("api_endpoint") or "https://rest.easydns.net"
         )
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get(f"/domain/{self.domain}")
         if "error" in payload:
             raise AuthenticationError(
@@ -47,7 +47,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         record = {
             "type": rtype,
             "domain": self.domain_id,
@@ -73,7 +73,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         payload = self._get(f"/zones/records/all/{self.domain_id}")
         records = []
         for record in payload["data"]:
@@ -99,7 +99,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         data = {"ttl": self._get_lexicon_option("ttl")}
         if rtype:
             data["type"] = rtype
@@ -115,10 +115,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)

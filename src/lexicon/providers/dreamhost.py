@@ -101,7 +101,7 @@ class Provider(BaseProvider):
         }
         return dreamhost_record
 
-    def _authenticate(self):
+    def authenticate(self):
         self.domain_id = None
         payload = self._get("dns-list_records")
         data = payload.get("data", None)
@@ -124,7 +124,7 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise AuthenticationError("Domain not found")
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._full_name(name)
 
         try:
@@ -140,7 +140,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         payload = self._get("dns-list_records")
 
         resource_list = payload.get("data", None)
@@ -178,24 +178,24 @@ class Provider(BaseProvider):
         return processed_records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
             try:
-                self._delete_record(identifier)
+                self.delete_record(identifier)
             except NonExistError:
                 pass
 
-        return self._create_record(rtype=rtype, name=name, content=content)
+        return self.create_record(rtype=rtype, name=name, content=content)
 
     # Delete existing records.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         to_deletes = []
         if identifier:
             record = Provider._id_to_record(identifier)
             to_deletes.append(record)
         else:
-            records = self._list_records(rtype=rtype, name=name, content=content)
+            records = self.list_records(rtype=rtype, name=name, content=content)
             to_deletes = records
 
         # for-loop to delete deletes.

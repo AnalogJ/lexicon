@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://secure.hosting.de/api/dns/v1/json"
 
-    def _authenticate(self):
+    def authenticate(self):
         response = self._get_zone_config()
 
         LOGGER.debug("authenticate debug: %s", response)
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # caused the fact, that provider will enclose TXT values with ""
     # we have filter content afterwords
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         data = {}
         subfilter = []  # used by API to filter
         subfilter.append({"field": "zoneConfigId", "value": self.domain_id})
@@ -100,8 +100,8 @@ class Provider(BaseProvider):
     # Normal Behavior Create a new DNS record. Return a boolean True if successful.
     # If Record Already Exists Do nothing. DO NOT throw exception.
     # TTL If not specified or set to 0, use reasonable default.
-    def _create_record(self, rtype, name, content):
-        records = self._list_records(rtype, name, content)
+    def create_record(self, rtype, name, content):
+        records = self.list_records(rtype, name, content)
         if records:
             LOGGER.debug("not creating duplicate record: %s", records[0])
             return True
@@ -133,12 +133,12 @@ class Provider(BaseProvider):
     #    If set to 0, reset to reasonable default.
     # No Match Throw exception?
     # Update a record. use delete & create cause there is no API update call
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records = [r for r in records if r["id"] == identifier]
         else:
-            records = self._list_records(rtype, name, None)
+            records = self.list_records(rtype, name, None)
 
         if not records:
             raise Exception("Record not found")
@@ -151,17 +151,17 @@ class Provider(BaseProvider):
         new_name = name if name else orig_record["name"]
         new_content = content if content else orig_record["content"]
 
-        self._delete_record(orig_id)
-        return self._create_record(new_rtype, new_name, new_content)
+        self.delete_record(orig_id)
+        return self.create_record(new_rtype, new_name, new_content)
 
     # Normal Behaviour Remove a record. Record to be deleted can be
     # specified by providing id OR name, type and content.
     # Return a boolean True if successful.
     # No Match Do nothing. DO NOT throw exception
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)
@@ -182,7 +182,7 @@ class Provider(BaseProvider):
         retries = 30
         for record_id in delete_record_ids:
             while True:
-                if self._list_records(record_id):
+                if self.list_records(record_id):
                     if retries < 1:
                         break
                     retries = retries - 1

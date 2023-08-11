@@ -94,7 +94,7 @@ class Provider(BaseProvider):
     # so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason,
     # of if the domain does not exist.
-    def _authenticate(self):
+    def authenticate(self):
         response = self.session.get(
             f"{self.api_endpoint}zone_auth?fqdn={self.domain}&view={self.view}"
         )
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
             raise AuthenticationError(f"Domain {self.domain} not found in view")
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         if name:
             name = self._fqdn_name(name)
         else:
@@ -114,7 +114,7 @@ class Provider(BaseProvider):
         # Find existing records for all types
         existing = []
         for rrtype in IB_TYPE2CONTENT:
-            existing = existing + self._list_records(rtype=rrtype, name=name)
+            existing = existing + self.list_records(rtype=rrtype, name=name)
         # we don't want to delete all existing A,AAAA,TXT,SRV,MX,NS records
         # which can not co-exist with CNAMEs
         if any(d["type"] == rtype for d in existing):
@@ -130,7 +130,7 @@ class Provider(BaseProvider):
             return self._create_record_internal(rtype, name, content)
         if any(d["type"] == "CNAME" and rtype != "CNAME" for d in existing):
             # we found a CNAME entry; we can delete it and create the requested type
-            if self._delete_record(identifier=existing[0]["id"]):
+            if self.delete_record(identifier=existing[0]["id"]):
                 return self._create_record_internal(rtype, name, content)
             LOGGER.error("Deleting record failed for:%s", existing[0]["id"])
             return False
@@ -160,7 +160,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         # Infoblox stores entries based on their type, if type is not specified look up all types
         if not rtype:
             records = []
@@ -240,13 +240,13 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier:
             return self._update_record_internal(
                 identifier=identifier, rtype=rtype, name=name, content=content
             )
         success = []
-        for record in self._list_records(rtype, name, content):
+        for record in self.list_records(rtype, name, content):
             success.append(
                 self._update_record_internal(
                     identifier=record["id"], rtype=rtype, name=name, content=content
@@ -274,13 +274,13 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Infoblox Object Identifier example:
         # record:cname/ZG5zLmJpbmRfY25hbWUkLjIzLmRlLm1naS5sZXhpY29uNA:lexicon.domain.tld/view
         if identifier:
             return self._delete_record_internal(identifier)
         success = []
-        for record in self._list_records(rtype, name, content):
+        for record in self.list_records(rtype, name, content):
             success.append(self._delete_record_internal(record["id"]))
         if False in success:
             return False

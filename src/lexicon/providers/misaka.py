@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.misaka.io/dns"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get(f"/zones/{self.domain}/settings")
         if not payload["id"]:
             raise Exception("No domain found")
@@ -66,7 +66,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     # Create or update a record.
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._relative_name(name)
 
         identifier = self._identifier_encode(rtype, name)
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
 
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         params = {}
         if name:
             name = self._relative_name(name)
@@ -132,7 +132,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # use relative_name only
         if name:
             name = self._relative_name(name)
@@ -167,7 +167,7 @@ class Provider(BaseProvider):
         return True
 
     # Delete an existing record.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         should_call_delete_api = True
         if not identifier:
             if name:

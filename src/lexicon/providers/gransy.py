@@ -50,7 +50,7 @@ class Provider(BaseProvider):
     # this provider, so it can be used in subsequent calls.
     # Should throw an error if authentication fails for any reason,
     # of if the domain does not exist.
-    def _authenticate(self):
+    def authenticate(self):
         """Logs-in the user and checks the domain name"""
         if not self._get_provider_option(
             "auth_username"
@@ -73,9 +73,9 @@ class Provider(BaseProvider):
             raise AuthenticationError("No SSID provided by server")
 
     # Create record. If record already exists with the same content, do nothing.
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """Creates a new unique record"""
-        found = self._list_records(rtype=rtype, name=name, content=content)
+        found = self.list_records(rtype=rtype, name=name, content=content)
         if found:
             return True
 
@@ -92,7 +92,7 @@ class Provider(BaseProvider):
         return True
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Updates a record. Name changes are allowed, but the record identifier will change"""
         if identifier is not None:
             if name is not None:
@@ -151,13 +151,13 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Deletes an existing record"""
         to_delete_ids = list()
         if identifier:
             to_delete_ids.append(identifier)
         else:
-            for record in self._list_records(rtype=rtype, name=name, content=content):
+            for record in self.list_records(rtype=rtype, name=name, content=content):
                 to_delete_ids.append(record["id"])
 
         for to_delete_id in to_delete_ids:
@@ -225,7 +225,7 @@ class Provider(BaseProvider):
 
     # List all records. Return an empty list if no records found
     # identifier, type, name and content are used to filter records.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(

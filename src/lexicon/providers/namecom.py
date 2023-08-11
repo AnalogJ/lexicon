@@ -54,7 +54,7 @@ class NamecomProvider(BaseProvider):
         self.api_endpoint = "https://api.name.com/v4"
         self.session = Session()
 
-    def _authenticate(self):
+    def authenticate(self):
         self.session.auth = HTTPBasicAuth(
             username=self._get_provider_option("auth_username"),
             password=self._get_provider_option("auth_token"),
@@ -69,7 +69,7 @@ class NamecomProvider(BaseProvider):
 
         raise Exception("{} domain does not exist".format(domain_name))
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         data = {
             "type": rtype,
             "host": self._relative_name(name),
@@ -98,7 +98,7 @@ class NamecomProvider(BaseProvider):
 
         return record_id
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         url = "/domains/{}/records".format(self.domain)
         records = []
 
@@ -126,11 +126,11 @@ class NamecomProvider(BaseProvider):
 
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier:
             if not (rtype and name):
                 raise ValueError("Record identifier or rtype+name must be specified")
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if not records:
                 raise Exception("There is no record to update")
 
@@ -169,11 +169,11 @@ class NamecomProvider(BaseProvider):
 
         return record_id
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
             if not (rtype and name):
                 raise ValueError("Record identifier or rtype+name must be specified")
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             if not records:
                 LOGGER.warning("delete_record: there is no record to delete")
                 return False

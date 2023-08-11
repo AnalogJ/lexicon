@@ -42,17 +42,17 @@ class Provider(BaseProvider):
 
         self.domain = self._get_lexicon_option("domain")
 
-    def _authenticate(self):
+    def authenticate(self):
         # more of a test that the authentication works
         response = self._post("/ping")
 
         if response["status"] != "SUCCESS":
             raise AuthenticationError("Incorrect API keys")
         self.domain_id = self.domain
-        self._list_records()
+        self.list_records()
 
-    def _create_record(self, rtype, name, content):
-        active_records = self._list_records(rtype, name, content)
+    def create_record(self, rtype, name, content):
+        active_records = self.list_records(rtype, name, content)
         # if the record already exists: early exit, return success
         if active_records:
             LOGGER.debug("create_record: record already exists")
@@ -75,7 +75,7 @@ class Provider(BaseProvider):
         LOGGER.debug(f"create_record: {response}")
         return response["status"] == "SUCCESS"
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         # porkbun has some weird behavior on the retrieveByNameType endpoint
         # related to how it handles subdomains.
         # so we ignore it and filter locally instead
@@ -104,9 +104,9 @@ class Provider(BaseProvider):
         LOGGER.debug(f"Number of records retrieved: {len(records)}")
         return records
 
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is None:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) == 0:
@@ -134,9 +134,9 @@ class Provider(BaseProvider):
         LOGGER.debug(f"update_record: {result}")
         return result["status"] == "SUCCESS"
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is None:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids = [identifier]

@@ -30,16 +30,16 @@ class Provider(BaseProvider):
         super(Provider, self).__init__(config)
         self.api_endpoint = "https://api.exoscale.com/dns"
 
-    def _authenticate(self):
+    def authenticate(self):
         """An innocent call to check that the credentials are okay."""
         response = self._get(f"/v1/domains/{self.domain}")
 
         self.domain_id = response["domain"]["id"]
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         """Create record if doesnt already exist with same content"""
         # check if record already exists
-        existing_records = self._list_records(rtype, name, content)
+        existing_records = self.list_records(rtype, name, content)
         if len(existing_records) >= 1:
             return True
 
@@ -59,7 +59,7 @@ class Provider(BaseProvider):
         LOGGER.debug("create_record: %s", status)
         return status
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         """List all records.
 
         record_type, name and content are used to filter the records.
@@ -103,12 +103,12 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         """Create or update a record."""
         record = {}
 
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             identifiers = [r["id"] for r in records]
         else:
             identifiers = [identifier]
@@ -131,13 +131,13 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record: %s", True)
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         """Delete an existing record.
 
         If the record doesn't exist, does nothing.
         """
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             identifiers = [record["id"] for record in records]
         else:
             identifiers = [identifier]

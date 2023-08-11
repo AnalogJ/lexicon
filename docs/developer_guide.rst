@@ -80,14 +80,18 @@ Your provider module **must** contain a class named ``Provider`` inheriting from
 (defined in  ``base.py`` file). This class **must** implements the following abstract methods
 defined by BaseProvider_:
 
-  - ``_authenticate``
-  - ``_create_record``
-  - ``_list_records``
-  - ``_update_record``
-  - ``_delete_record``
-  - ``_request``
+  - ``authenticate``
+  - ``create_record``
+  - ``list_records``
+  - ``update_record``
+  - ``delete_record``
   - ``get_nameservers`` (static method)
   - ``configure_parser`` (static method)
+
+Additionally you should implement the following optional method if you plan to do
+HTTP requests to the provider API:
+
+  - ``_request``
 
 You should review the `provider conventions`_ to ensure that ``_authenticate`` and ``*_record(s)``
 methods follow the proper behavior and API contracts.

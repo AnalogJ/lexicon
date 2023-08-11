@@ -52,7 +52,7 @@ class Provider(BaseProvider):
         self.domain_details = None
         self.api_endpoint = "https://api.dns.constellix.com/v1"
 
-    def _authenticate(self):
+    def authenticate(self):
         try:
             payload = self._get("/domains/")
         except requests.exceptions.HTTPError as error:
@@ -71,7 +71,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing'
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         record = {
             "name": self._relative_name(name),
             "ttl": self._get_lexicon_option("ttl"),
@@ -84,14 +84,14 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as error:
             # If there is already a record with that name, we need to do an update.
             if error.response.status_code == 400:
-                existing_records = self._list_records(rtype=rtype, name=name)
+                existing_records = self.list_records(rtype=rtype, name=name)
                 new_content = [r["content"] for r in existing_records]
 
                 # Only do the update if we are creating a record that doesn't already exist,
                 # otherwise Constellix will throw an error.
                 if content not in new_content:
                     new_content.append(content)
-                    self._update_record(
+                    self.update_record(
                         existing_records[0]["id"],
                         rtype=rtype,
                         name=name,
@@ -104,7 +104,7 @@ class Provider(BaseProvider):
 
     # Currently returns the first value for hosts where there may be multiple
     # values.  Need to check to see how this is handled for other providers.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(
@@ -143,7 +143,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         self._check_type(rtype)
 
         if content and not isinstance(content, (list)):
@@ -154,7 +154,7 @@ class Provider(BaseProvider):
             rtype = record[0]["type"]
             name = record[0]["name"]
         elif not identifier:
-            record = self._list_records(rtype, name)
+            record = self.list_records(rtype, name)
             identifier = record[0]["id"]
 
         if not identifier:
@@ -178,7 +178,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         self._check_type(rtype)
 
         records = self._list_records_internal(
@@ -192,7 +192,7 @@ class Provider(BaseProvider):
             current_content = set(r["content"] for r in records)
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
-                self._update_record(
+                self.update_record(
                     records[0]["id"],
                     rtype=rtype,
                     name=name,

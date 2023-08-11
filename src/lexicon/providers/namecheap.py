@@ -73,7 +73,7 @@ class Provider(BaseProvider):
         self.domain = self.domain
         self.domain_id = None
 
-    def _authenticate(self):
+    def authenticate(self):
         """
         The Namecheap API is a little difficult to work with.
         Originally this method called PyNamecheap's `domains_getList`, which is
@@ -188,7 +188,7 @@ class Provider(BaseProvider):
         return self._get_lexicon_option("ttl")
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         record = {
             # required
             "Type": rtype,
@@ -215,7 +215,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(
@@ -245,14 +245,14 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Delete record if it exists
-        self._delete_record(identifier, rtype, name, content)
-        return self._create_record(rtype, name, content)
+        self.delete_record(identifier, rtype, name, content)
+        return self.create_record(rtype, name, content)
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         records = self._list_records_internal(
             rtype=rtype, name=name, content=content, identifier=identifier
         )

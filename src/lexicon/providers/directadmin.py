@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         if self.endpoint is None:
             raise Exception("Specify endpoint of DirectAdmin")
 
-    def _authenticate(self):
+    def authenticate(self):
         try:
             response = self._get("/CMD_API_SHOW_DOMAINS")
         except requests.exceptions.HTTPError as err:
@@ -56,9 +56,9 @@ class Provider(BaseProvider):
         except ValueError:
             raise AuthenticationError(f"Domain {self.domain} not found")
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # Refuse to create duplicate records
-        existing_records = self._list_records(rtype, name, content)
+        existing_records = self.list_records(rtype, name, content)
         if existing_records:
             return True
 
@@ -82,7 +82,7 @@ class Provider(BaseProvider):
 
         return response["success"].lower().find("added") >= 0
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         response = {"records": []}
         try:
             response = self._get("/CMD_API_DNS_CONTROL", {"json": "yes"})
@@ -118,7 +118,7 @@ class Provider(BaseProvider):
             "type": response_record["type"],
         }
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Editing a record is a combination of removing the old record and
         # adding a new one, but specifying 'edit' as the action while passing
         # all parameters necessary for both deletion and creation
@@ -157,10 +157,10 @@ class Provider(BaseProvider):
 
         return response["success"].lower().find("added") > 0
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier:
             identifiers = [
-                record["id"] for record in self._list_records(rtype, name, content)
+                record["id"] for record in self.list_records(rtype, name, content)
             ]
         else:
             identifiers = [identifier]

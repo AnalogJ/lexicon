@@ -37,7 +37,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.session = None
 
-    def _authenticate(self):
+    def authenticate(self):
         # Create the session GET the login page to retrieve a session cookie
         self.session = Session()
         self.session.get("https://login.webgo.de/")
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
         return True
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         LOGGER.debug("Creating record for zone %s", name)
         # Pull a list of records and check for ours
         if name:
@@ -98,7 +98,7 @@ class Provider(BaseProvider):
             name = self._relative_name(name)
         if rtype == "CNAME" and not content.endswith("."):
             content += "."
-        records = self._list_records(rtype=rtype, name=name, content=content)
+        records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) >= 1:
             LOGGER.warning("Duplicate record %s %s %s, NOOP", rtype, name, content)
             return True
@@ -131,7 +131,7 @@ class Provider(BaseProvider):
             f"https://login.webgo.de/dnsSettings/domainDnsDo/{self.domain_id}/ok"
         )
         # Pull a list of records and check for ours
-        records = self._list_records(name=name)
+        records = self.list_records(name=name)
         if len(records) >= 1:
             LOGGER.info("Successfully added record %s", name)
             return True
@@ -142,7 +142,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is
     # received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         return self._list_records_internal(rtype=rtype, name=name, content=content)
 
     def _list_records_internal(
@@ -225,7 +225,7 @@ class Provider(BaseProvider):
         return records
 
     # Create or update a record.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         maindata = None
         sub_update = None
         if identifier is not None:
@@ -244,8 +244,8 @@ class Provider(BaseProvider):
             else:
                 # Delete record if it exists
                 # Record ID is changed after Update from main!
-                self._delete_record(identifier=record["id"])
-                self._create_record(record["type"], record["name"], content)
+                self.delete_record(identifier=record["id"])
+                self.create_record(record["type"], record["name"], content)
                 sub_update = True
         # Check whether we need to update main
         if maindata is not None:
@@ -275,7 +275,7 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         records = self._list_records_internal(rtype, name, content, identifier)
         if "main" in [record["option"] for record in records]:

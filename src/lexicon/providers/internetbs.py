@@ -45,7 +45,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.internet.bs"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get("/Domain/List", {"searchTermFilter": self.domain})
 
         LOGGER.debug("authenticate debug: %s", payload)
@@ -58,9 +58,9 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
-        existing_records = self._list_records(rtype, name, content)
+        existing_records = self.list_records(rtype, name, content)
         if existing_records:
             return True
 
@@ -86,7 +86,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         query = {"Domain": self.domain}
         if rtype:
             query["FilterType"] = rtype
@@ -130,9 +130,9 @@ class Provider(BaseProvider):
         return records
 
     # Update a record.
-    def _update_record(self, identifier=None, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             to_update = next((r for r in records if r["id"] == identifier), None)
             query = {
                 "Type": to_update["type"],
@@ -157,9 +157,9 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             to_update = next((r for r in records if r["id"] == identifier), None)
             if not to_update:
                 return True
@@ -172,10 +172,10 @@ class Provider(BaseProvider):
             query = {"Type": rtype, "FullRecordName": self._full_name(name)}
             if content:
                 query["Value"] = content
-                if not self._list_records(rtype, name, content):
+                if not self.list_records(rtype, name, content):
                     return True
             else:
-                if not self._list_records(rtype, name):
+                if not self.list_records(rtype, name):
                     return True
 
         LOGGER.debug("delete_record query: %s", query)

@@ -40,14 +40,14 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.cloudns.net"
 
-    def _authenticate(self):
+    def authenticate(self):
         payload = self._get("/dns/get-zone-info.json", {"domain-name": self.domain})
         self.domain_id = payload["name"]
         LOGGER.debug("authenticate: %s", payload)
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
-        existing_records = self._list_records(rtype, name, content)
+        existing_records = self.list_records(rtype, name, content)
         if existing_records:
             return True
 
@@ -74,7 +74,7 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         # Build parameters to make use of the built-in API filtering
         params = {"domain-name": self.domain_id}
         if rtype:
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         if not identifier:
             identifier = self._find_record_identifier(rtype, name, None)
@@ -132,11 +132,11 @@ class Provider(BaseProvider):
         # Error handling is already covered by self._request
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         # Try to find record if no identifier was specified
         delete_record_id = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -188,7 +188,7 @@ class Provider(BaseProvider):
         )
 
     def _find_record_identifier(self, rtype, name, content):
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         LOGGER.debug("records: %s", records)
         if len(records) == 1:
             return records[0]["id"]

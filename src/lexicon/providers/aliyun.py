@@ -41,7 +41,7 @@ class Provider(BaseProvider):
             "--auth-secret", help="specify access secret for authentication"
         )
 
-    def _authenticate(self):
+    def authenticate(self):
         response = self._request_aliyun("DescribeDomainInfo")
 
         if "DomainId" not in response:
@@ -53,8 +53,8 @@ class Provider(BaseProvider):
 
         return self
 
-    def _create_record(self, rtype, name, content):
-        if not self._list_records(rtype, name, content):
+    def create_record(self, rtype, name, content):
+        if not self.list_records(rtype, name, content):
             query_params = {
                 "Value": content,
                 "Type": rtype,
@@ -68,7 +68,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         query_params = {}
 
         if rtype:
@@ -101,8 +101,8 @@ class Provider(BaseProvider):
         return processed_records
 
     # Create or update a record.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
-        resources = self._list_records(rtype, name, None)
+    def update_record(self, identifier, rtype=None, name=None, content=None):
+        resources = self.list_records(rtype, name, None)
 
         for record in resources:
             if (
@@ -145,10 +145,10 @@ class Provider(BaseProvider):
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_resource_id = []
         if not identifier:
-            resources = self._list_records(rtype, name, content)
+            resources = self.list_records(rtype, name, content)
             delete_resource_id = [resource["id"] for resource in resources]
         else:
             delete_resource_id.append(identifier)

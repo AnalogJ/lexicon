@@ -38,7 +38,7 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.nearlyfreespeech.net"
         self.shortname = None
 
-    def _authenticate(self):
+    def authenticate(self):
         try:
             self._post(f"/dns/{self.domain}/listRRs")
         except Exception as e:
@@ -46,7 +46,7 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
 
     # Create record. If record already exists with the same content, do nothing'
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         existing_records = self.list_records(rtype, name, content)
         if existing_records:
             # Do nothing if the record already exists.
@@ -61,7 +61,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         params = {}
         if rtype is not None:
             params["type"] = rtype
@@ -90,15 +90,15 @@ class Provider(BaseProvider):
 
     # Create or update a record.
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         if identifier is not None:
-            records = self._list_records()
+            records = self.list_records()
             to_delete = next((r for r in records if r["id"] == identifier), None)
             if to_delete is None:
                 raise ValueError("No record with that identifier.")
         else:
             # Check name and rtype
-            matching_records = self._list_records(rtype=rtype, name=name)
+            matching_records = self.list_records(rtype=rtype, name=name)
             if len(matching_records) > 1:
                 raise ValueError(
                     "More than one record exists with that type and name. "
@@ -113,8 +113,8 @@ class Provider(BaseProvider):
 
     # Delete an existing record
     # If record does not exist, do nothing.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        matching_records = self._list_records(rtype, name, content)
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        matching_records = self.list_records(rtype, name, content)
         if identifier is not None:
             to_delete = next(
                 (r for r in matching_records if r["id"] == identifier), None

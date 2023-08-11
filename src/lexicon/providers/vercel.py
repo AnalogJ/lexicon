@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://api.vercel.com"
 
-    def _authenticate(self):
+    def authenticate(self):
         result = self._get(f"/v5/domains/{self.domain}")
 
         identifier = result.get("domain", {}).get("id")
@@ -51,7 +51,7 @@ class Provider(BaseProvider):
 
         self.domain_id = identifier
 
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         result = self._get(f"/v4/domains/{self.domain}/records")
 
         raw_records = result["records"]
@@ -88,9 +88,9 @@ class Provider(BaseProvider):
 
         return records
 
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         # We ignore creation if a record already exists for given rtype/name/content
-        records = self._list_records(rtype, name, content)
+        records = self.list_records(rtype, name, content)
         if records:
             LOGGER.debug("create_record (ignored, duplicate): %s", records[0]["id"])
             return True
@@ -109,17 +109,17 @@ class Provider(BaseProvider):
 
         return True
 
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         # Vercel do not allow to update a record, only add or remove.
         # So we get the corresponding record, dump or update
         # its content and insert it as a new record.
         # Then we remove the old record.
         records = []
         if identifier:
-            records = self._list_records()
+            records = self.list_records()
             records = [record for record in records if record["id"] == identifier]
         else:
-            records = self._list_records(rtype, name)
+            records = self.list_records(rtype, name)
 
         if not records:
             raise Exception(f"No record found for identifer: {identifier}")
@@ -149,10 +149,10 @@ class Provider(BaseProvider):
 
         return True
 
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         delete_record_ids = []
         if not identifier:
-            records = self._list_records(rtype, name, content)
+            records = self.list_records(rtype, name, content)
             delete_record_ids = [record["id"] for record in records]
         else:
             delete_record_ids.append(identifier)

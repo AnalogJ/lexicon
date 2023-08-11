@@ -65,10 +65,10 @@ def mock_provider():
         def configure_parser(parser: ArgumentParser) -> None:
             pass
 
-        def _authenticate(self):
+        def authenticate(self):
             print("Authenticate action")
 
-        def _create_record(self, rtype, name, content):
+        def create_record(self, rtype, name, content):
             return {
                 "action": "create",
                 "domain": self.domain,
@@ -77,7 +77,7 @@ def mock_provider():
                 "content": content,
             }
 
-        def _list_records(self, rtype=None, name=None, content=None):
+        def list_records(self, rtype=None, name=None, content=None):
             return {
                 "action": "list",
                 "domain": self.domain,
@@ -86,7 +86,7 @@ def mock_provider():
                 "content": content,
             }
 
-        def _update_record(self, identifier, rtype=None, name=None, content=None):
+        def update_record(self, identifier, rtype=None, name=None, content=None):
             return {
                 "action": "update",
                 "domain": self.domain,
@@ -96,7 +96,7 @@ def mock_provider():
                 "content": content,
             }
 
-        def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+        def delete_record(self, identifier=None, rtype=None, name=None, content=None):
             return {
                 "action": "delete",
                 "domain": self.domain,

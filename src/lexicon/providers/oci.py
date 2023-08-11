@@ -172,7 +172,7 @@ class Provider(BaseProvider):
         self.endpoint = f"https://dns.{region}.oraclecloud.com/20180115"
         LOGGER.debug(f"Activated OCI provider with endpoint: {self.endpoint}")
 
-    def _authenticate(self):
+    def authenticate(self):
         try:
             zone = self._get(f"/zones/{self.domain}")
             self.domain_id = zone["id"]
@@ -184,7 +184,7 @@ class Provider(BaseProvider):
             raise
 
     # Create record. If record already exists with the same content, do nothing
-    def _create_record(self, rtype, name, content):
+    def create_record(self, rtype, name, content):
         name = self._full_name(name)
         patchset = {
             "items": [
@@ -211,7 +211,7 @@ class Provider(BaseProvider):
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
-    def _list_records(self, rtype=None, name=None, content=None):
+    def list_records(self, rtype=None, name=None, content=None):
         query_params = {"limit": 100, "rtype": rtype}
         name = self._full_name(name) if name else None
 
@@ -242,16 +242,16 @@ class Provider(BaseProvider):
         return records
 
     # Update a record. Identifier must be specified.
-    def _update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier, rtype=None, name=None, content=None):
         name = self._full_name(name) if name else None
         if identifier:
             records = [
                 record
-                for record in self._list_records(rtype=rtype)
+                for record in self.list_records(rtype=rtype)
                 if identifier == record["id"]
             ]
         else:
-            records = self._list_records(rtype=rtype, name=name)
+            records = self.list_records(rtype=rtype, name=name)
 
         if not records:
             raise LexiconError(
@@ -286,11 +286,11 @@ class Provider(BaseProvider):
     # Delete an existing record.
     # If record does not exist, do nothing.
     # If an identifier is specified, use it, otherwise do a lookup using type, name and content.
-    def _delete_record(self, identifier=None, rtype=None, name=None, content=None):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         name = self._full_name(name) if name else None
         if not identifier and not content:
             try:
-                records = self._list_records(rtype, name)
+                records = self.list_records(rtype, name)
                 if len(records) > 0:
                     self._delete(f"/zones/{self.zone_name}/records/{name}/{rtype}")
                     LOGGER.debug(f"OCI: deleted {rtype} recordset for {name}.")
@@ -300,7 +300,7 @@ class Provider(BaseProvider):
                 raise LexiconError(f"OCI Error deleting {rtype} recordset for {name}")
 
         else:
-            records = self._list_records(rtype=rtype, name=name, content=content)
+            records = self.list_records(rtype=rtype, name=name, content=content)
 
             if identifier:
                 records = [record for record in records if record["id"] == identifier]
