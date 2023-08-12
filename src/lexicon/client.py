@@ -6,6 +6,8 @@ import os
 from contextlib import AbstractContextManager
 from types import TracebackType
 from typing import Type, Any
+from warnings import warn
+from threading import local
 
 import tldextract  # type: ignore
 
@@ -132,21 +134,36 @@ class Client(AbstractContextManager):
             "lexicon.providers." + self.provider_name
         )
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
-        self._provider: Provider | None
+
+        self._state = local()
+        self._state.stack = []
 
     def __enter__(self) -> _ClientOperations:
-        self._provider = self.provider_class(self.config)
-        self._provider.authenticate()
+        provider = self.provider_class(self.config)
+        provider.authenticate()
 
-        return _ClientOperations(self._provider)
+        self._state.stack.append(provider)
+
+        return _ClientOperations(provider)
 
     def __exit__(self, __exc_type: type[BaseException] | None, __exc_value: BaseException | None,
                  __traceback: TracebackType | None) -> bool | None:
-        if self._provider:
-            self._provider.cleanup()
-        self._provider = None
+        provider: Provider = self._state.stack.pop(-1)
+        provider.cleanup()
 
         return None
+
+    @staticmethod
+    def test():
+        warn("""
+Method execute() is deprecated. Please remove action/type/name/content from the
+config, and use the dedicated action methods in the context manager itself.
+
+Example for creating a record:
+
+with Client(config) as operations:
+    operations.create_record("TXT", "foo", "bar")
+""")
 
     def execute(self) -> bool | list[dict[str, Any]]:
         """Execute provided configuration in class constructor to the DNS records"""
