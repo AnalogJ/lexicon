@@ -1,8 +1,11 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
+from __future__ import annotations
 import importlib
 import logging
 import os
-from typing import Dict, List, Optional, Type, Union, cast
+from contextlib import AbstractContextManager
+from types import TracebackType
+from typing import Type, Any
 
 import tldextract  # type: ignore
 
@@ -29,10 +32,10 @@ class _ClientExecutor:
 
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> List[Dict]:
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
+    ) -> list[dict[str, Any]]:
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
@@ -42,10 +45,10 @@ class _ClientExecutor:
 
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         """
         Update a record. Identifier must be specified.
@@ -54,10 +57,10 @@ class _ClientExecutor:
 
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         """
         Delete an existing record.
@@ -67,14 +70,14 @@ class _ClientExecutor:
         return self.provider.delete_record(identifier, rtype, name, content)
 
 
-class Client:
+class Client(AbstractContextManager):
     """This is the Lexicon client, that will execute all the logic."""
 
     def __init__(
-        self, config: Optional[Union[helper_config.ConfigResolver, Dict]] = None
+        self, config: helper_config.ConfigResolver | dict[str, Any] | None = None
     ):
         if not config:
-            # If there is not config specified, we load a non-interactive configuration.
+            # If there is no config specified, we load a non-interactive configuration.
             self.config = helper_config.non_interactive_config_resolver()
         elif not isinstance(config, helper_config.ConfigResolver):
             # If config is not a ConfigResolver, we are in a legacy situation.
@@ -83,8 +86,11 @@ class Client:
         else:
             self.config = config
 
-        # Validate configuration
-        self._validate_config()
+        domain = self.config.resolve("lexicon:domain")
+        if not domain:
+            raise AttributeError("domain")
+
+        self._validate_provider()
 
         runtime_config = {}
 
@@ -97,9 +103,7 @@ class Client:
             domain_extractor = tldextract.TLDExtract(
                 cache_file=_resolve_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
             )
-        domain_parts = domain_extractor(
-            cast(str, self.config.resolve("lexicon:domain"))
-        )
+        domain_parts = domain_extractor(domain)
         runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
 
         delegated = self.config.resolve("lexicon:delegated")
@@ -128,19 +132,23 @@ class Client:
             "lexicon.providers." + self.provider_name
         )
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
-        self._provider: Optional[Provider]
+        self._provider: Provider | None
 
-    def __enter__(self) -> "_ClientExecutor":
+    def __enter__(self) -> _ClientExecutor:
         self._provider = self.provider_class(self.config)
         self._provider.authenticate()
+
         return _ClientExecutor(self._provider)
 
-    def __exit__(self, exc_type, exc_value, traceback) -> None:
+    def __exit__(self, __exc_type: type[BaseException] | None, __exc_value: BaseException | None,
+                 __traceback: TracebackType | None) -> bool | None:
         if self._provider:
             self._provider.cleanup()
         self._provider = None
 
-    def execute(self) -> Union[bool, List[Dict]]:
+        return None
+
+    def execute(self) -> bool | list[dict[str, Any]]:
         """Execute provided configuration in class constructor to the DNS records"""
         action = self.config.resolve("lexicon:action")
         identifier = self.config.resolve("lexicon:identifier")
@@ -174,7 +182,7 @@ class Client:
         finally:
             self.__exit__(None, None, None)
 
-    def _validate_config(self) -> None:
+    def _validate_provider(self) -> None:
         provider_name = self.config.resolve("lexicon:provider_name")
         if not provider_name:
             raise AttributeError("provider_name")
@@ -191,9 +199,6 @@ class Client:
                     f"This provider ({provider_name}) has required extra dependencies that are missing. "
                     f"Please run `pip install dns-lexicon[{provider_name}]` first before using it."
                 )
-
-        if not self.config.resolve("lexicon:domain"):
-            raise AttributeError("domain")
 
 
 def _resolve_tldextract_cache_path() -> str:
