@@ -130,7 +130,8 @@ def main() -> None:
 
     client = Client(config)
 
-    with warnings.simplefilter("ignore", category=DeprecationWarning):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=DeprecationWarning)
         results = client.execute()
 
     action = config.resolve("lexicon:action")
