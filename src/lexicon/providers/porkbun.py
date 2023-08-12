@@ -51,6 +51,9 @@ class Provider(BaseProvider):
         self.domain_id = self.domain
         self.list_records()
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         active_records = self.list_records(rtype, name, content)
         # if the record already exists: early exit, return success

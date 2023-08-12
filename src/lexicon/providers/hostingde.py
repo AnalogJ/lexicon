@@ -40,6 +40,9 @@ class Provider(BaseProvider):
 
         self.domain_id = response.get("id", None)
 
+    def cleanup(self) -> None:
+        pass
+
     # Helper
     def _get_zone_config(self):
         data = {"filter": {"field": "ZoneName", "value": self.domain}}

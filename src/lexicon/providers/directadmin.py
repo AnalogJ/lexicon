@@ -56,6 +56,9 @@ class Provider(BaseProvider):
         except ValueError:
             raise AuthenticationError(f"Domain {self.domain} not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         # Refuse to create duplicate records
         existing_records = self.list_records(rtype, name, content)

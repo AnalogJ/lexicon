@@ -9,6 +9,7 @@ from typing import List, Tuple
 
 import requests
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -61,9 +62,12 @@ class Provider(BaseProvider):
     def authenticate(self):
         payload = self._get(f"/zones/{self.domain}/settings")
         if not payload["id"]:
-            raise Exception("No domain found")
+            raise AuthenticationError("No domain found")
 
         self.domain_id = self.domain
+
+    def cleanup(self) -> None:
+        pass
 
     # Create or update a record.
     def create_record(self, rtype, name, content):

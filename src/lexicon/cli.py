@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 from typing import Dict, List, Optional, Union
+import warnings
 
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
@@ -129,7 +130,9 @@ def main() -> None:
 
     client = Client(config)
 
-    results = client.execute()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=DeprecationWarning)
+        results = client.execute()
 
     action = config.resolve("lexicon:action")
     if not action:

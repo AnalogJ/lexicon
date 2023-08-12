@@ -56,6 +56,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError(f"Domain {self.domain} not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         ttl = self._get_lexicon_option("ttl")
 
