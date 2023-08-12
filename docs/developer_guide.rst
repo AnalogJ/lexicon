@@ -76,9 +76,9 @@ the following Python module where all the code for your provider will settle.
 Where ``foo`` should be replaced with the name of the DNS service in lowercase
 and without spaces or special characters (eg. ``cloudflare``).
 
-Your provider module **must** contain a class named ``Provider`` inheriting from BaseProvider_
-(defined in  ``base.py`` file). This class **must** implements the following abstract methods
-defined by BaseProvider_:
+Your provider module **must** contain a class named ``Provider`` inheriting from the Provider_
+interface (defined in ``interfaces.py`` file). This class **must** implements the following abstract
+methods defined by the interface:
 
   - ``authenticate``
   - ``create_record``
@@ -133,7 +133,7 @@ or ``self._get_provider_option('auth_token')`` respectively.
         mycustomprovider = ["additionalpackage"]
         full = [..., "mycustomprovider"]
 
-.. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/base.py
+.. _Provider: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/interfaces.py
 .. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/cloudflare.py
 .. _provider conventions: https://dns-lexicon.readthedocs.io/en/latest/provider_conventions.html
 
