@@ -4,12 +4,12 @@ import json
 import logging
 import os
 import sys
-from typing import Dict, List, Optional, Union
 import warnings
+from typing import Dict, List, Optional, Union
 
+from lexicon._private.parser import generate_cli_main_parser
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
-from lexicon.parser import generate_cli_main_parser
 
 logger = logging.getLogger(__name__)
 

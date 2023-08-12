@@ -13,7 +13,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry  # type: ignore
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 import requests
 
 from lexicon.exceptions import AuthenticationError, LexiconError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 
 def _filter_rtype(rtype: str, rec) -> bool:

@@ -28,7 +28,7 @@ def pytest_runtest_setup(item):
         pass
     else:
         if skip_providers_with_optdeps:
-            from lexicon.discovery import find_providers
+            from lexicon._private.discovery import find_providers
 
             providers = find_providers()
             skip = [
@@ -49,7 +49,7 @@ def mock_provider():
     Create a fake provider module, and mock relevant
     functions to make it appear as a real module.
     """
-    from lexicon._private.providers.base import Provider as BaseProvider
+    from lexicon.interfaces import Provider as BaseProvider
 
     class Provider(BaseProvider):
         """
@@ -115,6 +115,7 @@ def mock_provider():
 
     with mock.patch("lexicon.discovery.pkgutil.iter_modules") as mock_iter:
         with mock.patch("lexicon.discovery.importlib.import_module") as mock_import:
+
             def return_iter(path):
                 """
                 This will include an adhoc fakeprovider module

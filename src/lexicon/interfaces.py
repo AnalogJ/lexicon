@@ -9,7 +9,7 @@ from lexicon.config import ConfigResolver, legacy_config_resolver
 
 class Provider(ABC):
     """
-    This is the base class for all lexicon Providers.
+    This is the abstract class for all lexicon Providers.
     It provides common functionality and ensures that all implemented
     Providers follow a standard ducktype.
     All standardized options will be provided here as defaults, but can be overwritten
@@ -44,7 +44,7 @@ class Provider(ABC):
             # correctly defined ConfigResolver.
             # Also, there may be some situation where `provider` key is not set in the config.
             # It should not happen when Lexicon is called from Client, as it will set itself
-            # this key. However there were no automated logic if the Provider is used directly.
+            # this key. However, there were no automated logic if the Provider is used directly.
             # So we provide this logic here.
             if not config.get("provider_name") and not config.get("provider"):
                 config[
@@ -139,7 +139,7 @@ class Provider(ABC):
     def configure_parser(parser: ArgumentParser) -> None:
         """
         Configure the given parser for the provider needs
-        (eg. specific CLI flags for auth)
+        (e.g. specific CLI flags for auth)
         """
 
     # Helpers

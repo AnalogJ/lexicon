@@ -18,7 +18,7 @@ from typing import Dict, List
 import requests
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 __author__ = "Dmitry Verkhoturov"
 __license__ = "MIT"

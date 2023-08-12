@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from typing import List
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 try:
     import boto3  # type: ignore

@@ -3,9 +3,12 @@ import argparse
 import os
 from typing import Type
 
-from lexicon import discovery
-from lexicon._private.providers.base import Provider
-from lexicon.discovery import load_provider_module
+from lexicon._private.discovery import (
+    find_providers,
+    lexicon_version,
+    load_provider_module,
+)
+from lexicon.interfaces import Provider
 
 
 def generate_base_provider_parser() -> argparse.ArgumentParser:
@@ -63,7 +66,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
         "--version",
         help="show the current version of lexicon",
         action="version",
-        version=f"%(prog)s {discovery.lexicon_version()}",
+        version=f"%(prog)s {lexicon_version()}",
     )
     parser.add_argument("--delegated", help="specify the delegated domain")
     parser.add_argument(
@@ -78,7 +81,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
     )
     subparsers.required = True
 
-    for provider, available in discovery.find_providers().items():
+    for provider, available in find_providers().items():
         provider_module = load_provider_module(provider)
         provider_class: Type[Provider] = getattr(provider_module, "Provider")
 

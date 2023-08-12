@@ -6,8 +6,8 @@ from typing import Optional
 import pytest
 import vcr  # type: ignore
 
+from lexicon._private.discovery import load_provider_module
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
-from lexicon.discovery import load_provider_module
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
 RECORD_MODE = "none"
@@ -344,7 +344,7 @@ class IntegrationTestsV1:
             * parameters that matches existing environment variables at the time of test execution
             * parameters processed throught the lambda provided by _test_fallback_fn.
 
-        See lexicon/providers/base.py for a full list of parameters available.
+        See lexicon/providers/interfaces.py for a full list of parameters available.
         You should not override this method. Just override `self.domain`,
         or use _test_parameters_overrides() to configure specific parameters for the tests.
 

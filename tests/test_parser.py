@@ -1,7 +1,7 @@
 """Unit tests for the Lexicon CLI parser"""
 import pytest
 
-from lexicon import parser
+from lexicon._private import parser
 
 
 def test_base_provider_parser():

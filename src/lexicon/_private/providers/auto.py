@@ -10,8 +10,8 @@ import tldextract  # type: ignore
 
 from lexicon import config as helper_config
 from lexicon._private import providers
-from lexicon._private.providers.base import Provider as BaseProvider
-from lexicon.discovery import load_provider_module
+from lexicon._private.discovery import load_provider_module
+from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

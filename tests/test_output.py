@@ -1,7 +1,7 @@
 """ Ensure that stdout corresponds to the given reference output """
 import json
 
-from lexicon import cli
+from lexicon._private import cli
 
 DATA = [
     {

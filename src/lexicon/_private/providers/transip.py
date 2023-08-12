@@ -19,7 +19,7 @@ except ImportError:
     from json import JSONDecodeError  # type: ignore[assignment]
 
 from lexicon.exceptions import LexiconError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

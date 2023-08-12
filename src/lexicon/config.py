@@ -121,7 +121,7 @@ class FileConfigSource(DictConfigSource):
 
 
 class ProviderFileConfigSource(FileConfigSource):
-    """ConfigSource that resolve configuration against an provider config file."""
+    """ConfigSource that resolve configuration against a provider config file."""
 
     def __init__(self, provider_name, file_path):
         super(ProviderFileConfigSource, self).__init__(file_path)
@@ -157,8 +157,7 @@ class LegacyDictConfigSource(DictConfigSource):
         ]
 
         provider_options = {}
-        refactor_dict_object = {}
-        refactor_dict_object[provider_name] = provider_options
+        refactor_dict_object = {provider_name: provider_options}
 
         for key, value in dict_object.items():
             if key not in generic_parameters:
@@ -184,11 +183,13 @@ class ConfigResolver(object):
     Example:
         # This will resolve configuration parameters from environment variables,
         # then from a configuration file named '/my/path/to/lexicon.yml'.
-        $ from lexicon.config import ConfigResolver
-        $ config = ConfigResolver()
-        $ config.with_env().with_config_file()
-        $ print(config.resolve('lexicon:delegated'))
-        $ print(config.resolve('lexicon:cloudflare:auth_token))
+        from lexicon.config import ConfigResolver
+
+        config = ConfigResolver()
+        config.with_env().with_config_file()
+
+        print(config.resolve('lexicon:delegated'))
+        print(config.resolve('lexicon:cloudflare:auth_token))
 
     Config can resolve parameters for Lexicon and providers from:
         * environment variables
@@ -197,7 +198,7 @@ class ConfigResolver(object):
         * any object implementing the underlying ConfigSource class
 
     Each parameter will be resolved against each source, and value from the higher priority source
-    is returned. If a parameter could not be resolve by any source, then None will be returned.
+    is returned. If a parameter could not be resolved by any source, then None will be returned.
     """
 
     def __init__(self):
@@ -364,8 +365,8 @@ class ConfigResolver(object):
 
 def non_interactive_config_resolver() -> ConfigResolver:
     """
-    Create a typical config resolver in a non-interactive context (eg. lexicon used as a library).
-    Configuration will be resolved againts env variables and lexicon config files in working dir.
+    Create a typical config resolver in a non-interactive context (e.g. lexicon used as a library).
+    Configuration will be resolved against env variables and lexicon config files in working dir.
     """
     return ConfigResolver().with_env().with_config_dir(os.getcwd())
 

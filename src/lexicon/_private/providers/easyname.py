@@ -7,7 +7,7 @@ from typing import List
 from bs4 import BeautifulSoup, Tag  # type: ignore
 from requests import Response, Session
 
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

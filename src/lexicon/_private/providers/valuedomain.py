@@ -79,7 +79,7 @@ from urllib.error import HTTPError
 from urllib.request import OpenerDirector
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 T = TypeVar("T")
 

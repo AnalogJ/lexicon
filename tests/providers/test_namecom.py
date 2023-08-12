@@ -7,8 +7,8 @@ import pytest
 from integration_tests import IntegrationTestsV2, vcr_integration_test
 from requests import HTTPError
 
-from lexicon.config import DictConfigSource
 from lexicon._private.providers.namecom import Provider
+from lexicon.config import DictConfigSource
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

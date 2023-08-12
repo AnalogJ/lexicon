@@ -6,8 +6,8 @@ import shutil
 from os.path import dirname, join
 from typing import List
 
-from lexicon import discovery
-from lexicon.discovery import load_provider_module
+from lexicon._private import discovery
+from lexicon._private.discovery import load_provider_module
 
 _ROOT = dirname(dirname(__file__))
 _DOCS = os.path.join(_ROOT, "docs")

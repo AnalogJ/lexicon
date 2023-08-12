@@ -14,7 +14,7 @@ try:
 except ModuleNotFoundError:
     from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
 
-from lexicon._private import providers
+from lexicon._private import providers as _providers
 
 
 def find_providers() -> Dict[str, bool]:
@@ -22,7 +22,7 @@ def find_providers() -> Dict[str, bool]:
     providers_list = sorted(
         {
             modname
-            for (_, modname, _) in pkgutil.iter_modules(providers.__path__)  # type: ignore
+            for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)  # type: ignore
             if modname != "base"
         }
     )
@@ -39,7 +39,7 @@ def find_providers() -> Dict[str, bool]:
 
 
 def load_provider_module(provider_name: str) -> ModuleType:
-    return importlib.import_module(f"{providers.__name__}.{provider_name}")
+    return importlib.import_module(f"{_providers.__name__}.{provider_name}")
 
 
 def lexicon_version() -> str:

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup  # type: ignore
 from requests import Session
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 

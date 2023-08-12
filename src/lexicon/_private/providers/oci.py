@@ -31,8 +31,8 @@ from typing import List
 
 import requests
 
-from lexicon.exceptions import LexiconError, AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.exceptions import AuthenticationError, LexiconError
+from lexicon.interfaces import Provider as BaseProvider
 
 # oci is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.

@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from time import localtime, strftime, time
 from typing import List
 
-from .base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 # localzone is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.

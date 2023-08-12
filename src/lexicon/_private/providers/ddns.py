@@ -8,7 +8,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 
 from lexicon.exceptions import AuthenticationError
-from lexicon._private.providers.base import Provider as BaseProvider
+from lexicon.interfaces import Provider as BaseProvider
 
 # dnspython is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
