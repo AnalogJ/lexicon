@@ -54,16 +54,13 @@ Lexicon can be used as:
     from lexicon.client import Client
     from lexicon.config import ConfigResolver
 
-    action = {
+    config = ConfigResolver().with_env().with_dict({
         "provider_name" : "cloudflare",
-        "action": "create",
         "domain": "domain.net",
-        "type": "TXT",
-        "name": "foo",
-        "content": "bar",
-    }
-    config = ConfigResolver().with_env().with_dict(action)
-    Client(config).execute()
+    })
+
+    with Client(config) as operations:
+        operations.create_record("TXT", "foo", "bar")
 
 Lexicon was designed to be used in automation, specifically letsencrypt.
 

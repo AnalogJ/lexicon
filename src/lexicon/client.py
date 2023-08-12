@@ -15,9 +15,9 @@ from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.providers.base import Provider
 
 
-class _ClientExecutor:
+class _ClientOperations:
     """
-    Represents one set of commands against the Client
+    Represents the entrypoint to execute several operations against the Client
     for a given resolved Provider already authenticated.
     """
 
@@ -134,11 +134,11 @@ class Client(AbstractContextManager):
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
         self._provider: Provider | None
 
-    def __enter__(self) -> _ClientExecutor:
+    def __enter__(self) -> _ClientOperations:
         self._provider = self.provider_class(self.config)
         self._provider.authenticate()
 
-        return _ClientExecutor(self._provider)
+        return _ClientOperations(self._provider)
 
     def __exit__(self, __exc_type: type[BaseException] | None, __exc_value: BaseException | None,
                  __traceback: TracebackType | None) -> bool | None:
