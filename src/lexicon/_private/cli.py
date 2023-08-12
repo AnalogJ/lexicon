@@ -6,6 +6,7 @@ import os
 import sys
 import warnings
 from typing import Dict, List, Optional, Union
+import warnings
 
 from lexicon._private.parser import generate_cli_main_parser
 from lexicon.client import Client
