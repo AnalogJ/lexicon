@@ -91,11 +91,11 @@ class Client:
         # Process domain, strip subdomain
         try:
             domain_extractor = tldextract.TLDExtract(
-                cache_dir=_get_tldextract_cache_path(), include_psl_private_domains=True
+                cache_dir=_resolve_tldextract_cache_path(), include_psl_private_domains=True
             )
         except TypeError:
             domain_extractor = tldextract.TLDExtract(
-                cache_file=_get_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
+                cache_file=_resolve_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
             )
         domain_parts = domain_extractor(
             cast(str, self.config.resolve("lexicon:domain"))
@@ -115,7 +115,6 @@ class Client:
                 # update domain
                 runtime_config["domain"] = f"{delegated}.{initial_domain}"
 
-        self.action = self.config.resolve("lexicon:action")
         self.provider_name = self.config.resolve(
             "lexicon:provider_name"
         ) or self.config.resolve("lexicon:provider")
@@ -129,7 +128,7 @@ class Client:
             "lexicon.providers." + self.provider_name
         )
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
-        self._provider: Provider
+        self._provider: Optional[Provider]
 
     def __enter__(self) -> "_ClientExecutor":
         self._provider = self.provider_class(self.config)
@@ -137,39 +136,41 @@ class Client:
         return _ClientExecutor(self._provider)
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
-        self._provider.cleanup()
+        if self._provider:
+            self._provider.cleanup()
         self._provider = None
 
     def execute(self) -> Union[bool, List[Dict]]:
         """Execute provided configuration in class constructor to the DNS records"""
-        if not self.config.resolve("lexicon:action"):
-            raise AttributeError("action")
-        if not self.config.resolve("lexicon:type"):
-            raise AttributeError("type")
-
+        action = self.config.resolve("lexicon:action")
         identifier = self.config.resolve("lexicon:identifier")
-        record_type = self.config.resolve("lexicon:type")
+        rtype = self.config.resolve("lexicon:type")
         name = self.config.resolve("lexicon:name")
         content = self.config.resolve("lexicon:content")
+
+        if not action:
+            raise AttributeError("action")
+        if not rtype:
+            raise AttributeError("type")
 
         try:
             executor = self.__enter__()
 
-            if self.action == "create":
+            if action == "create":
                 if not name or not content:
                     raise ValueError("Missing record_type, name or content parameters.")
-                return executor.create_record(record_type, name, content)
+                return executor.create_record(rtype, name, content)
 
-            if self.action == "list":
-                return executor.list_records(record_type, name, content)
+            if action == "list":
+                return executor.list_records(rtype, name, content)
 
-            if self.action == "update":
-                return executor.update_record(identifier, record_type, name, content)
+            if action == "update":
+                return executor.update_record(identifier, rtype, name, content)
 
-            if self.action == "delete":
-                return executor.delete_record(identifier, record_type, name, content)
+            if action == "delete":
+                return executor.delete_record(identifier, rtype, name, content)
 
-            raise ValueError(f"Invalid action statement: {self.action}")
+            raise ValueError(f"Invalid action statement: {action}")
         finally:
             self.__exit__(None, None, None)
 
@@ -195,7 +196,7 @@ class Client:
             raise AttributeError("domain")
 
 
-def _get_tldextract_cache_path() -> str:
+def _resolve_tldextract_cache_path() -> str:
     if os.environ.get("TLDEXTRACT_CACHE_FILE"):
         logging.warning(
             "TLD_EXTRACT_CACHE_FILE environment variable is deprecated, please use TLDEXTRACT_CACHE_PATH instead."
