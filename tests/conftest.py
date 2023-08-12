@@ -114,7 +114,9 @@ def mock_provider():
     original_import = importlib.import_module
 
     with mock.patch("lexicon._private.discovery.pkgutil.iter_modules") as mock_iter:
-        with mock.patch("lexicon._private.discovery.importlib.import_module") as mock_import:
+        with mock.patch(
+            "lexicon._private.discovery.importlib.import_module"
+        ) as mock_import:
 
             def return_iter(path):
                 """
