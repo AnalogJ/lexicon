@@ -76,6 +76,9 @@ class Provider(BaseProvider):
         LOGGER.debug("HENET domain ID: %s", self.domain_id)
         return True
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, rtype, name, content):
         LOGGER.debug("Creating record for zone %s", name)

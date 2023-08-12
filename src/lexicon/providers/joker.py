@@ -90,6 +90,9 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def _request(self, action="POST", url="/", data=None, query_params=None):
         if not data:
             data = {}

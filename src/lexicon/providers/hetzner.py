@@ -38,6 +38,9 @@ class Provider(BaseProvider):
         provider = self._get_zone_by_domain(self.domain)
         self.domain_id = provider["id"]
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         """
         Creates a DNS record, if a record with type, name and content exits, do nothing

@@ -31,7 +31,7 @@ from typing import List
 
 import requests
 
-from lexicon.exceptions import LexiconError
+from lexicon.exceptions import LexiconError, AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 # oci is an optional dependency of lexicon; do not throw an ImportError if
@@ -177,11 +177,14 @@ class Provider(BaseProvider):
             zone = self._get(f"/zones/{self.domain}")
             self.domain_id = zone["id"]
             self.zone_name = zone["name"]
-        except requests.exceptions.HTTPError:
+        except requests.exceptions.HTTPError as e:
             LOGGER.error(
                 f"Error: invalid zone or permission denied accessing {self.domain}"
             )
-            raise
+            raise AuthenticationError(e)
+
+    def cleanup(self) -> None:
+        pass
 
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, rtype, name, content):

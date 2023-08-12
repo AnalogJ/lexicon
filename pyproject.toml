@@ -87,6 +87,10 @@ lexicon = "lexicon.cli:main"
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
+filterwarnings = [
+    "error",
+    "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
+]
 
 [tool.mypy]
 show_error_codes = true

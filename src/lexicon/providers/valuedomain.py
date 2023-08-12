@@ -78,6 +78,7 @@ from urllib import request
 from urllib.error import HTTPError
 from urllib.request import OpenerDirector
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 T = TypeVar("T")
@@ -362,7 +363,10 @@ class Provider(BaseProvider):
 
         assert len(self.domain_id) > 0, "Failed to get domain names"
         if self.domain not in self.domain_id:
-            raise Exception(f"{self.domain} not managed")
+            raise AuthenticationError(f"{self.domain} not managed")
+
+    def cleanup(self) -> None:
+        pass
 
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype: str, name: str, content: str):

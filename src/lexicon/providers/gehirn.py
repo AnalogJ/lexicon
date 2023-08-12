@@ -69,6 +69,9 @@ class Provider(BaseProvider):
         self.domain_id = domains[0]["id"]
         self.version_id = domains[0]["current_version_id"]
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype, name, content):
         name = self._full_name(name)

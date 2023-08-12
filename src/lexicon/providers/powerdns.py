@@ -109,6 +109,9 @@ class Provider(BaseProvider):
         self.zone_data()
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def _make_identifier(self, rtype, name, content):
         return f"{rtype}/{name}={content}"
 

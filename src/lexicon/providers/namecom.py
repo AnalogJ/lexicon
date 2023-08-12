@@ -8,6 +8,7 @@ from typing import List
 from requests import HTTPError, Session
 from requests.auth import HTTPBasicAuth
 
+from lexicon.exceptions import AuthenticationError
 from lexicon.providers.base import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -67,7 +68,10 @@ class NamecomProvider(BaseProvider):
                 self.domain_id = domain_name
                 return
 
-        raise Exception("{} domain does not exist".format(domain_name))
+        raise AuthenticationError("{} domain does not exist".format(domain_name))
+
+    def cleanup(self) -> None:
+        pass
 
     def create_record(self, rtype, name, content):
         data = {

@@ -69,6 +69,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("No domain found")
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
 
     def create_record(self, rtype, name, content):

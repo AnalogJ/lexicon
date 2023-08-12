@@ -31,6 +31,9 @@ class Provider(BaseProvider):
         self._get(f"/domains/{self.domain}")
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         # check if record already exists
         ttl = self._get_lexicon_option("ttl")

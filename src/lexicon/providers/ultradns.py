@@ -90,6 +90,9 @@ class Provider(BaseProvider):
         # Test auth works
         self.zone_data()
 
+    def cleanup(self) -> None:
+        pass
+
     def _make_identifier(self, rtype, name, content):
         sha256 = hashlib.sha256()
         sha256.update(("type=" + rtype + ",").encode("utf-8"))
