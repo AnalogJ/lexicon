@@ -88,8 +88,12 @@ lexicon = "lexicon.cli:main"
 [tool.pytest.ini_options]
 junit_family = "xunit2"
 filterwarnings = [
+    # Fail for any warning, except...
     "error",
+    # CGI, a transitive dependency for zeep (used by Gransy provider)
+    # is deprecated. Let zeep manage that by Python 3.13.
     "ignore:'cgi' is deprecated:DeprecationWarning",
+    # Ignore our own deprecation warnings.
     "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
 ]
 
