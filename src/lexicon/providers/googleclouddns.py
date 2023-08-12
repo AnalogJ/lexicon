@@ -200,6 +200,9 @@ class Provider(BaseProvider):
 
         self.domain_id = targeted_managed_zone_ids[0]
 
+    def cleanup(self) -> None:
+        pass
+
     # List all records for the given type/name/content.
     # It is quite straight forward to request data, the biggest operation is to convert
     # the stacked multivalued RecordSets into Lexicon monovalued entries.

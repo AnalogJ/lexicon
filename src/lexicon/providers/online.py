@@ -39,6 +39,9 @@ class Provider(BaseProvider):
     def authenticate(self):
         self._init_zones()
 
+    def cleanup(self) -> None:
+        pass
+
     def _list_zones(self):
         return self._get(f"/domain/{self.domain_id}/version")
 

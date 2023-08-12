@@ -45,6 +45,9 @@ class Provider(BaseProvider):
         self.domain_id = payload["name"]
         LOGGER.debug("authenticate: %s", payload)
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         # Skip execution if such a record already exists
         existing_records = self.list_records(rtype, name, content)

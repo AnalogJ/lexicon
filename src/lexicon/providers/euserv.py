@@ -103,6 +103,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("Domain not found in DNS records")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         records = self.list_records(rtype, name, content)
 

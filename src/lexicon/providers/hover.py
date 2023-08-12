@@ -63,6 +63,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError(f"Domain {self.domain} not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def _list_domains(self):
         response = self._get("/domains")
 

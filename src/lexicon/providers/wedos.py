@@ -69,6 +69,9 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def _create_payload(self, command, payload_data):
         data = {
             "request": {

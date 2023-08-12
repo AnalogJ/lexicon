@@ -36,6 +36,9 @@ class Provider(BaseProvider):
 
         self.domain_id = response["domain"]["id"]
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         """Create record if doesnt already exist with same content"""
         # check if record already exists

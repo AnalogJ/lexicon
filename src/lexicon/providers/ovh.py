@@ -97,6 +97,9 @@ class Provider(BaseProvider):
 
         self.domain_id = domain
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         domain = self.domain
         ttl = self._get_lexicon_option("ttl")

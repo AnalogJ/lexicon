@@ -75,6 +75,9 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def _make_identifier(self, rtype, name, content):
         return f"{rtype}/{self._full_name(name)}={content}"
 

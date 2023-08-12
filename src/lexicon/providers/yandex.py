@@ -44,6 +44,9 @@ class Provider(BaseProvider):
             raise AuthenticationError("No domain found")
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         if rtype in ("CNAME", "MX", "NS"):
             # make sure a the data is always a FQDN for CNAMe.

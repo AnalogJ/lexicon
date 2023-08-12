@@ -34,6 +34,9 @@ class Provider(BaseProvider):
             raise AuthenticationError("No domain found")
         self.domain_id = payload["zone_id"]
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype, name, content):
         data = {"type": rtype, "record": self._relative_name(name), "address": content}

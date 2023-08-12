@@ -76,7 +76,9 @@ class Provider(ABC):
         """
 
     def cleanup(self) -> None:
-        pass
+        """
+        Clean any relevant resource before this provider instance is closed.
+        """
 
     @abstractmethod
     def create_record(self, rtype: str, name: str, content: str) -> bool:

@@ -6,7 +6,7 @@ import os
 from contextlib import AbstractContextManager
 from types import TracebackType
 from typing import Type, Any
-from warnings import warn
+import warnings
 from threading import local
 
 import tldextract  # type: ignore
@@ -153,20 +153,23 @@ class Client(AbstractContextManager):
 
         return None
 
-    @staticmethod
-    def test():
-        warn("""
-Method execute() is deprecated. Please remove action/type/name/content from the
-config, and use the dedicated action methods in the context manager itself.
+    def execute(self) -> bool | list[dict[str, Any]]:
+        """(deprecated) Execute provided configuration in class constructor to the DNS records"""
+        message = """\
+Method execute() is deprecated and will be removed in Lexicon 4>=.
+
+Please remove action/type/name/content fields from Lexicon config,
+and use the methods dedicated for each action (*_record()/list_records()).
+These methods are available within the Lexicon client context manager.
 
 Example for creating a record:
 
 with Client(config) as operations:
     operations.create_record("TXT", "foo", "bar")
-""")
+        """
 
-    def execute(self) -> bool | list[dict[str, Any]]:
-        """Execute provided configuration in class constructor to the DNS records"""
+        warnings.warn(message, DeprecationWarning, stacklevel=2)
+
         action = self.config.resolve("lexicon:action")
         identifier = self.config.resolve("lexicon:identifier")
         rtype = self.config.resolve("lexicon:type")

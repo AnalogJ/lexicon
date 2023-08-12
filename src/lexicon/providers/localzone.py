@@ -59,6 +59,9 @@ class Provider(BaseProvider):
         # Authentication is not required for localzone.
         pass
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         """
         Create a resource record. If a record already exists with the same

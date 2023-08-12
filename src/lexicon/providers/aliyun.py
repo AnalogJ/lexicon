@@ -53,6 +53,9 @@ class Provider(BaseProvider):
 
         return self
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         if not self.list_records(rtype, name, content):
             query_params = {

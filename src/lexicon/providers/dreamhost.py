@@ -124,6 +124,9 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise AuthenticationError("Domain not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         name = self._full_name(name)
 
