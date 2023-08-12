@@ -4,7 +4,7 @@ from unittest import TestCase
 import pytest
 from integration_tests import IntegrationTestsV2
 
-from lexicon.providers.dreamhost import Provider
+from lexicon._private.providers.dreamhost import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

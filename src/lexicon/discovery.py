@@ -3,8 +3,10 @@ This module takes care of finding information about the runtime of Lexicon:
 * what are the providers installed, and available
 * what is the version of Lexicon
 """
+import importlib
 import pkgutil
 import re
+from types import ModuleType
 from typing import Dict
 
 try:
@@ -12,7 +14,7 @@ try:
 except ModuleNotFoundError:
     from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
 
-from lexicon import providers
+from lexicon._private import providers
 
 
 def find_providers() -> Dict[str, bool]:
@@ -34,6 +36,10 @@ def find_providers() -> Dict[str, bool]:
             provider: _resolve_requirements(provider, distribution)
             for provider in providers_list
         }
+
+
+def load_provider_module(provider_name: str) -> ModuleType:
+    return importlib.import_module(f"{providers.__name__}.{provider_name}")
 
 
 def lexicon_version() -> str:

@@ -6,7 +6,7 @@ from unittest import TestCase, mock
 import pytest
 from integration_tests import IntegrationTestsV2
 
-from lexicon.providers.auto import _get_ns_records_domains_for_domain
+from lexicon._private.providers.auto import _get_ns_records_domains_for_domain
 
 
 # This fixture ensures to mock _get_ns_records_domains_for_domain, in order to not rely
@@ -19,7 +19,7 @@ def _nslookup_mock(request):
         yield
     else:
         with mock.patch(
-            "lexicon.providers.auto._get_ns_records_for_domain",
+            "lexicon._private.providers.auto._get_ns_records_for_domain",
             return_value=["ns.ovh.net"],
         ) as fixture:
             yield fixture

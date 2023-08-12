@@ -1,13 +1,13 @@
 """Base class for provider integration tests"""
 import os
 from functools import wraps
-from importlib import import_module
 from typing import Optional
 
 import pytest
 import vcr  # type: ignore
 
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
+from lexicon.discovery import load_provider_module
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
 RECORD_MODE = "none"
@@ -95,7 +95,7 @@ class IntegrationTestsV1:
         self.provider_module = None
 
     def setup_method(self, _):
-        self.provider_module = import_module(f"lexicon.providers.{self.provider_name}")
+        self.provider_module = load_provider_module(self.provider_name)
 
     ###########################################################################
     # Provider.authenticate()

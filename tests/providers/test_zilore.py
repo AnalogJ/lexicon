@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2, vcr_integration_test
 
-from lexicon.providers.zilore import Provider
+from lexicon._private.providers.zilore import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

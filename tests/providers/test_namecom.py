@@ -8,7 +8,7 @@ from integration_tests import IntegrationTestsV2, vcr_integration_test
 from requests import HTTPError
 
 from lexicon.config import DictConfigSource
-from lexicon.providers.namecom import Provider
+from lexicon._private.providers.namecom import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -146,7 +146,7 @@ class NamecomProviderTests(TestCase, IntegrationTestsV2):
             provider.delete_record()
 
     @vcr_integration_test
-    @patch("lexicon.providers.namecom.LOGGER.warning")
+    @patch("lexicon._private.providers.namecom.LOGGER.warning")
     def test_provider_when_calling_delete_record_should_pass_if_no_record_to_delete(
         self, warning
     ):

@@ -1,11 +1,11 @@
 """Parsers definition for the Lexicon command-line interface"""
 import argparse
-import importlib
 import os
 from typing import Type
 
 from lexicon import discovery
-from lexicon.providers.base import Provider
+from lexicon._private.providers.base import Provider
+from lexicon.discovery import load_provider_module
 
 
 def generate_base_provider_parser() -> argparse.ArgumentParser:
@@ -79,7 +79,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
     subparsers.required = True
 
     for provider, available in discovery.find_providers().items():
-        provider_module = importlib.import_module("lexicon.providers." + provider)
+        provider_module = load_provider_module(provider)
         provider_class: Type[Provider] = getattr(provider_module, "Provider")
 
         subparser = subparsers.add_parser(

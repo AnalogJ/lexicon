@@ -1,5 +1,4 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
-import importlib
 import logging
 import os
 from typing import Dict, List, Optional, Type, Union, cast
@@ -8,8 +7,9 @@ import tldextract  # type: ignore
 
 from lexicon import config as helper_config
 from lexicon import discovery
+from lexicon.discovery import load_provider_module
 from lexicon.exceptions import ProviderNotAvailableError
-from lexicon.providers.base import Provider
+from lexicon._private.providers.base import Provider
 
 
 class _ClientExecutor:
@@ -125,11 +125,9 @@ class Client:
 
         self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
-        provider_module = importlib.import_module(
-            "lexicon.providers." + self.provider_name
-        )
+        provider_module = load_provider_module(self.provider_name)
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
-        self._provider: Provider
+        self._provider: Optional[Provider]
 
     def __enter__(self) -> "_ClientExecutor":
         self._provider = self.provider_class(self.config)
