@@ -1,20 +1,21 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
 from __future__ import annotations
-import importlib
+
 import logging
 import os
-from contextlib import AbstractContextManager
-from types import TracebackType
-from typing import Type, Any
 import warnings
+from contextlib import AbstractContextManager
 from threading import local
+from types import TracebackType
+from typing import Any, Type
 
 import tldextract  # type: ignore
 
 from lexicon import config as helper_config
-from lexicon import discovery
+from lexicon._private.discovery import find_providers as _find_providers
+from lexicon._private.discovery import load_provider_module as _load_provider_module
 from lexicon.exceptions import ProviderNotAvailableError
-from lexicon.providers.base import Provider
+from lexicon.interfaces import Provider
 
 
 class _ClientOperations:
@@ -99,7 +100,8 @@ class Client(AbstractContextManager):
         # Process domain, strip subdomain
         try:
             domain_extractor = tldextract.TLDExtract(
-                cache_dir=_resolve_tldextract_cache_path(), include_psl_private_domains=True
+                cache_dir=_resolve_tldextract_cache_path(),
+                include_psl_private_domains=True,
             )
         except TypeError:
             domain_extractor = tldextract.TLDExtract(
@@ -130,9 +132,7 @@ class Client(AbstractContextManager):
 
         self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
-        provider_module = importlib.import_module(
-            "lexicon.providers." + self.provider_name
-        )
+        provider_module = _load_provider_module(self.provider_name)
         self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
 
         self._state = local()
@@ -146,8 +146,12 @@ class Client(AbstractContextManager):
 
         return _ClientOperations(provider)
 
-    def __exit__(self, __exc_type: type[BaseException] | None, __exc_value: BaseException | None,
-                 __traceback: TracebackType | None) -> bool | None:
+    def __exit__(
+        self,
+        __exc_type: type[BaseException] | None,
+        __exc_value: BaseException | None,
+        __traceback: TracebackType | None,
+    ) -> bool | None:
         provider: Provider = self._state.stack.pop(-1)
         provider.cleanup()
 
@@ -208,7 +212,7 @@ with Client(config) as operations:
             raise AttributeError("provider_name")
 
         try:
-            available = discovery.find_providers()[provider_name]
+            available = _find_providers()[provider_name]
         except KeyError:
             raise ProviderNotAvailableError(
                 f"This provider ({provider_name}) is not supported by Lexicon."

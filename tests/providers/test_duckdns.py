@@ -4,7 +4,7 @@ from unittest import TestCase, mock
 import pytest
 from integration_tests import IntegrationTestsV2
 
-from lexicon.providers.duckdns import Provider
+from lexicon._private.providers.duckdns import Provider
 
 try:
     import dns.resolver

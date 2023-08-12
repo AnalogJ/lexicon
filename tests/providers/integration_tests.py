@@ -1,12 +1,12 @@
 """Base class for provider integration tests"""
 import os
 from functools import wraps
-from importlib import import_module
 from typing import Optional
 
 import pytest
 import vcr  # type: ignore
 
+from lexicon._private.discovery import load_provider_module
 from lexicon.config import ConfigResolver, ConfigSource, DictConfigSource
 
 # Configure VCR. Parameter record_mode depends on the LEXICON_LIVE_TESTS environment variable value.
@@ -95,7 +95,7 @@ class IntegrationTestsV1:
         self.provider_module = None
 
     def setup_method(self, _):
-        self.provider_module = import_module(f"lexicon.providers.{self.provider_name}")
+        self.provider_module = load_provider_module(self.provider_name)
 
     ###########################################################################
     # Provider.authenticate()
@@ -344,7 +344,7 @@ class IntegrationTestsV1:
             * parameters that matches existing environment variables at the time of test execution
             * parameters processed throught the lambda provided by _test_fallback_fn.
 
-        See lexicon/providers/base.py for a full list of parameters available.
+        See lexicon/providers/interfaces.py for a full list of parameters available.
         You should not override this method. Just override `self.domain`,
         or use _test_parameters_overrides() to configure specific parameters for the tests.
 

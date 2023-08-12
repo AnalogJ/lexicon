@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
 
-from lexicon.providers.gratisdns import Provider
+from lexicon._private.providers.gratisdns import Provider
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse

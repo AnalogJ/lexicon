@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import argparse
-import importlib
 import os
 import re
 import shutil
 from os.path import dirname, join
 from typing import List
 
-from lexicon import discovery
+from lexicon._private import discovery
+from lexicon._private.discovery import load_provider_module
 
 _ROOT = dirname(dirname(__file__))
 _DOCS = os.path.join(_ROOT, "docs")
@@ -89,7 +89,7 @@ def _generate_table(providers: List[str]) -> None:
 
 
 def _generate_provider_details(provider: str) -> None:
-    provider_module = importlib.import_module("lexicon.providers." + provider)
+    provider_module = load_provider_module(provider)
     parser = argparse.ArgumentParser()
     provider_module.provider_parser(parser)
 

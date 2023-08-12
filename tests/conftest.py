@@ -28,7 +28,7 @@ def pytest_runtest_setup(item):
         pass
     else:
         if skip_providers_with_optdeps:
-            from lexicon.discovery import find_providers
+            from lexicon._private.discovery import find_providers
 
             providers = find_providers()
             skip = [
@@ -49,7 +49,7 @@ def mock_provider():
     Create a fake provider module, and mock relevant
     functions to make it appear as a real module.
     """
-    from lexicon.providers.base import Provider as BaseProvider
+    from lexicon.interfaces import Provider as BaseProvider
 
     class Provider(BaseProvider):
         """
@@ -86,7 +86,7 @@ def mock_provider():
                 "content": content,
             }
 
-        def update_record(self, identifier, rtype=None, name=None, content=None):
+        def update_record(self, identifier=None, rtype=None, name=None, content=None):
             return {
                 "action": "update",
                 "domain": self.domain,
@@ -112,32 +112,34 @@ def mock_provider():
 
     original_iter = pkgutil.iter_modules
     original_import = importlib.import_module
-    with mock.patch("lexicon.discovery.pkgutil.iter_modules") as mock_iter, mock.patch(
-        "lexicon.client.importlib.import_module"
-    ) as mock_import:
 
-        def return_iter(path):
-            """
-            This will include an adhoc fakeprovider module
-            to the normal return of pkgutil.iter_modules.
-            """
-            modules = list(original_iter(path))
-            modules.append((None, "fakeprovider", None))
-            return modules
+    with mock.patch("lexicon._private.discovery.pkgutil.iter_modules") as mock_iter:
+        with mock.patch(
+            "lexicon._private.discovery.importlib.import_module"
+        ) as mock_import:
 
-        mock_iter.side_effect = return_iter
+            def return_iter(path):
+                """
+                This will include an adhoc fakeprovider module
+                to the normal return of pkgutil.iter_modules.
+                """
+                modules = list(original_iter(path))
+                modules.append((None, "fakeprovider", None))
+                return modules
 
-        def return_import(module_name):
-            """
-            This will return a adhoc fakeprovider module if necessary,
-            or fallback to the normal return of importlib.import_module.
-            """
-            if module_name == "lexicon.providers.fakeprovider":
-                module = ModuleType("lexicon.providers.fakeprovider")
-                setattr(module, "Provider", Provider)
-                return module
-            return original_import(module_name)
+            mock_iter.side_effect = return_iter
 
-        mock_import.side_effect = return_import
+            def return_import(module_name):
+                """
+                This will return a adhoc fakeprovider module if necessary,
+                or fallback to the normal return of importlib.import_module.
+                """
+                if module_name == "lexicon._private.providers.fakeprovider":
+                    module = ModuleType("lexicon._private.providers.fakeprovider")
+                    setattr(module, "Provider", Provider)
+                    return module
+                return original_import(module_name)
 
-        yield
+            mock_import.side_effect = return_import
+
+            yield

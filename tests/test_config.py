@@ -1,8 +1,8 @@
 """Unit tests for the Lexicon config mechanism"""
 import pytest
 
+from lexicon._private.parser import generate_cli_main_parser
 from lexicon.config import ConfigResolver, ConfigSource
-from lexicon.parser import generate_cli_main_parser
 
 
 def test_environment_resolution(monkeypatch):
