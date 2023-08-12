@@ -61,6 +61,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError(f"Could not find {domain} in OnApp DNS Zones")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         data = {
             "name": self._relative_name(name),

@@ -105,6 +105,9 @@ class Provider(BaseProvider):
             LOGGER.error("Domain %s not found in view", self.domain)
             raise AuthenticationError(f"Domain {self.domain} not found in view")
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype, name, content):
         if name:

@@ -294,6 +294,9 @@ class Provider(BaseProvider):
 
         self.domain_id = our_data[0]["id"]
 
+    def cleanup(self) -> None:
+        pass
+
     def _request(self, action="GET", url="/", data=None, query_params=None):
         query_params = {} if not query_params else query_params.copy()
         query_params["api-version"] = API_VERSION

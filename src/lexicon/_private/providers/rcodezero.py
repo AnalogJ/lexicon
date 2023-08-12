@@ -35,6 +35,9 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record.
 
     def create_record(self, rtype, name, content):

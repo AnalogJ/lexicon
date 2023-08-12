@@ -38,6 +38,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("Domain not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         if not self.list_records(rtype, name, content):
             if name:

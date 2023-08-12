@@ -62,6 +62,9 @@ class Provider(BaseProvider):
         result = self._get(f"/domains/{domain}")
         self.domain_id = result["domainId"]
 
+    def cleanup(self) -> None:
+        pass
+
     def list_records(self, rtype=None, name=None, content=None):
         domain = self.domain
 

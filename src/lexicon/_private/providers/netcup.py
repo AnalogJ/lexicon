@@ -51,6 +51,9 @@ class Provider(BaseProvider):
         zone_info = self._apicall("infoDnsZone", domainname=self.domain)
         self.zone_ttl = zone_info["ttl"]
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         """Create record. If it already exists, do nothing."""
         if not self.list_records(rtype, name, content):

@@ -37,6 +37,9 @@ class Provider(BaseProvider):
             raise AuthenticationError(str(e))
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
 
     def create_record(self, rtype, name, content):

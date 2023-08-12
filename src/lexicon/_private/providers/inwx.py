@@ -102,6 +102,9 @@ class Provider(BaseProvider):
 
         return True
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         """
         create a record

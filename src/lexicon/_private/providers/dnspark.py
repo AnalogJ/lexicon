@@ -39,7 +39,10 @@ class Provider(BaseProvider):
 
         self.domain_id = payload["additional"]["domain_id"]
 
-    # Create record. If record already exists with the same content, do nothing'
+    def cleanup(self) -> None:
+        pass
+
+    # Create record. If record already exists with the same content, do nothing.
 
     def create_record(self, rtype, name, content):
         record = {"rname": self._relative_name(name), "rtype": rtype, "rdata": content}

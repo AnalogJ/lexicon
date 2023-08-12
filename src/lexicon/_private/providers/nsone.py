@@ -36,6 +36,9 @@ class Provider(BaseProvider):
 
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def _get_record_set(self, name, rtype):
         try:
             payload = self._get(f"/zones/{self.domain_id}/{name}/{rtype}")

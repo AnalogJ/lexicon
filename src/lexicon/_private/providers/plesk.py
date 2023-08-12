@@ -117,6 +117,9 @@ class Provider(BaseProvider):
         if self.domain_id is None:
             raise AuthenticationError("Domain not found")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         return self.__create_entry(rtype, name, content, None)
 
@@ -125,7 +128,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", entries)
         return entries
 
-    def update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier is None:
             entries = self.__find_dns_entries(rtype, name, None)
             LOGGER.debug("Entries found: %s", entries)

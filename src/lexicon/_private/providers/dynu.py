@@ -41,6 +41,9 @@ class Provider(BaseProvider):
         else:
             raise AuthenticationError("No matching domain found")
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing.
     def create_record(self, rtype, name, content):
         record = self._to_dynu_record(rtype, name, content)

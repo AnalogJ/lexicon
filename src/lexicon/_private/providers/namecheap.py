@@ -168,6 +168,9 @@ class Provider(BaseProvider):
         # FIXME What is this for?
         self.domain_id = self.domain
 
+    def cleanup(self) -> None:
+        pass
+
     def option_ttl(self):
         """
         Parse the `options` for a TTL.

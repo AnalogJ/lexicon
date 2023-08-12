@@ -49,6 +49,9 @@ class Provider(BaseProvider):
             self.domain_id = zone_id
             self.domain = payload["zones"][0]["name"].rstrip(".")
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype, name, content):
         # put string in array
         tmp = content

@@ -43,6 +43,9 @@ class Provider(BaseProvider):
                 raise AuthenticationError("No domain found")
             raise err
 
+    def cleanup(self) -> None:
+        pass
+
     # List all records. Return an empty list if no records found.
     # type, name and content are used to filter records.
     def list_records(self, rtype=None, name=None, content=None):

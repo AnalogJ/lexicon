@@ -17,7 +17,7 @@ except ImportError:
 LOGGER = logging.getLogger(__name__)
 
 
-class RecordSetPaginator(object):
+class RecordSetPaginator:
     """Paginate through complete list of record sets."""
 
     def __init__(self, r53_client, hosted_zone_id, max_items=None):
@@ -148,6 +148,9 @@ class Provider(BaseProvider):
         # ZoneID, since this may break existing user IAM roles.
         else:
             self.r53_client.get_hosted_zone(Id=self.domain_id)
+
+    def cleanup(self) -> None:
+        pass
 
     def _lookup_hosted_zone(self):
         """Determine the hosted zone id for the domain."""

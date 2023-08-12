@@ -103,6 +103,9 @@ class Provider(BaseProvider):
 
         self.domain_id = data["domain"]["authCode"]
 
+    def cleanup(self) -> None:
+        pass
+
     def create_record(self, rtype: str, name: str, content: str) -> bool:
         if not rtype or not name or not content:
             raise Exception(

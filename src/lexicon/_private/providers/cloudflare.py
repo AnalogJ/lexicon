@@ -66,6 +66,9 @@ class Provider(BaseProvider):
 
             self.domain_id = zone_id
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype, name, content):
         content, cf_data = self._format_content(rtype, content)

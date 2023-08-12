@@ -123,6 +123,9 @@ class Provider(BaseProvider):
         if self._get_provider_option("auth_token") is None:
             raise AuthenticationError("Must provide account token")
 
+    def cleanup(self) -> None:
+        pass
+
     # Create record. If the record already exists with the same content, do nothing"
     def create_record(self, rtype, name, content):
         if self._get_lexicon_option("ttl"):
