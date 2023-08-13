@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.14.0 - 13/08/2023
 ### Added
 * New way to invoke Lexicon as a library: ``lexicon.client.Client`` becomes a context manager.
   When invoked with the `with` keyword, it will provide an operation object that embeds the
