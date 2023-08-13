@@ -64,10 +64,10 @@ class Provider(BaseProvider):
         parser.add_argument(
             "--auth-service-account-info",
             help="""
-            specify the service account info in the Google JSON format:
-            can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
-            or the base64 encoded content of this file prefixed by 'base64::'
-            (eg. base64::eyJhbGciOyJ...)""",
+        specify the service account info in the Google JSON format:
+        can be either the path of a file prefixed by 'file::' (eg. file::/tmp/service_account_info.json)
+        or the base64 encoded content of this file prefixed by 'base64::'
+        (eg. base64::eyJhbGciOyJ...)""",
         )
 
     def __init__(self, config):

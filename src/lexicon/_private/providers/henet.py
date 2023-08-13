@@ -25,9 +25,9 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """A provider for Hurricane Electric DNS.
-            NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
-                YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
-            """
+        NOTE: THIS DOES NOT WORK WITH 2-FACTOR AUTHENTICATION.
+              YOU MUST DISABLE IT IF YOU'D LIKE TO USE THIS PROVIDER.
+        """
         parser.add_argument(
             "--auth-username", help="specify username for authentication"
         )

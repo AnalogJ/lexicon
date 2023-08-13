@@ -35,8 +35,6 @@ class Provider(BaseProvider):
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        parser.description = """
-        """
         parser.add_argument(
             "--auth-username",
             help="specify email address for authentication",
