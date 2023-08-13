@@ -10,8 +10,8 @@
   ``execute`` method to execute a specific action on the DNS zone. In this case, ``type``,
   ``name``, ``content`` fields do not need to be set in the config anymore, since they are
   passed directly as arguments to the new methods. Upon context manager closing, the ``cleanup``
-  method defined in the Provider is ensured to be called. See the README.md file for an
-  example of how to use this new approach.
+  method defined in the Provider is ensured to be called. See the README file of the project
+  for an example of how to use this new approach.
 * Python warnings are emitted from the code to alert about the deprecations listed below.
 
 ### Modified
