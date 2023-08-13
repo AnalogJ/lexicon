@@ -51,8 +51,8 @@ def main():
             file_h.write(changelog)
 
         subprocess.check_call("poetry version {0}".format(new_version), shell=True)
-        subprocess.check_call("poetry run isort lexicon utils setup.py", shell=True)
-        subprocess.check_call("poetry run black lexicon utils setup.py", shell=True)
+        subprocess.check_call("poetry run isort src tests", shell=True)
+        subprocess.check_call("poetry run black src tests", shell=True)
 
         subprocess.check_call(
             'git commit -a -m "Version {0}"'.format(new_version), shell=True
