@@ -28,7 +28,7 @@
   path, but it is deprecated and will be removed in Lexicon 4.
 * Module ``lexicon.providers.base``, that contains the Provider interface to implement, is
   migrated to module ``lexicon.interfaces``. Module ``lexicon.providers.base`` stubs
-  to ``lexicon.interfaces`` to ease the migraiton path, but it is deprecated and will be removed
+  to ``lexicon.interfaces`` to ease the migration path, but it is deprecated and will be removed
   in Lexicon 4.
 * Modules ``lexicon.cli``, ``lexicon.parser`` and ``lexicon.discovery`` are migrated to the
   private package ``lexicon._private`` as they are not part of the public API. Old modules
