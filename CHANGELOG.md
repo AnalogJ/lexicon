@@ -3,12 +3,15 @@
 ## master - CURRENT
 ### Added
 * New way to invoke Lexicon as a library: ``lexicon.client.Client`` becomes a context manager.
-  When invoked with the `with` keyword, it will provide an operation object with the
-  target provider already authenticated. This operation object gives access to four methods:
-  ``create_record``, ``update_record``, ``delete_record`` and ``list_records``. These methods
-  can be invoked instead of the old ``execute`` method to execute a specific action on the DNS
-  zone. In this case, ``type``, ``name``, ``content`` fields do not need to be set in the config
-  anymore, since they are passed directly as arguments to the new methods.
+  When invoked with the `with` keyword, it will provide an operation object that embeds the
+  target provider fully authenticated (``authenticate`` method called on the Provider).
+  This operation object gives access to four methods: ``create_record``, ``update_record``,
+  ``delete_record`` and ``list_records``. These methods can be invoked instead of the old
+  ``execute`` method to execute a specific action on the DNS zone. In this case, ``type``,
+  ``name``, ``content`` fields do not need to be set in the config anymore, since they are
+  passed directly as arguments to the new methods. Upon context manager closing, the ``cleanup``
+  method defined in the Provider is ensured to be called. See the Readme.md file for an
+  example to use this new approach.
 * Python warnings are emitted from the code to alert about the deprecations listed below.
 
 ### Modified
