@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.14.1 - 13/08/2023
 ### Added
 * Add back declared support to Python 3.7 for few cycles
 
