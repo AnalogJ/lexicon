@@ -1,6 +1,46 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* New way to invoke Lexicon as a library: ``lexicon.client.Client`` becomes a context manager.
+  When invoked with the `with` keyword, it will provide an operation object with the
+  target provider already authenticated. This operation object gives access to four methods:
+  ``create_record``, ``update_record``, ``delete_record`` and ``list_records``. These methods
+  can be invoked instead of the old ``execute`` method to execute a specific action on the DNS
+  zone. In this case, ``type``, ``name``, ``content`` fields do not need to be set in the config
+  anymore, since they are passed directly as arguments to the new methods.
+* Python warnings are emitted from the code to alert about the deprecations listed below.
+
+### Modified
+* Former ``NAMESERVER_DOMAIN`` variable and ``provider_parser`` function that had to be defined
+  in each provider module are respectively migrated to ``get_nameservers``
+  and ``configure_parser`` static methods in each Provider class. They are defined as abstract
+  in the interface and must be implemented in the concrete classes.
+* Former private methods ``_create_record``, ``_modify_record``, ``_delete_record``
+  and ``_list_records`` are migrated to their public counterpart ``create_record``,
+  ``modify_record``, ``delete_record`` and ``list_records`` in each Provider class. These are
+  the new abstract methods for each action that need to be implemented.
+* Method ``lexicon.client.Client.execute`` is deprecated and will be removed in Lexicon 4.
+* Package ``lexicon.providers``, containing the actual provider implementations, is migrated to
+  ``lexicon._private.providers``. The provider implementations are not supposed to be used
+  directly, please use ``lexicon.client.Client`` instead with the new methods described above.
+  Package ``lexicon.providers`` stubs to ``lexicon._private.providers`` to ease the migration
+  path, but it is deprecated and will be removed in Lexicon 4.
+* Module ``lexicon.providers.base``, that contains the Provider interface to implement, is
+  migrated to module ``lexicon.interfaces``. Module ``lexicon.providers.base`` stubs
+  to ``lexicon.interfaces`` to ease the migraiton path, but it is deprecated and will be removed
+  in Lexicon 4.
+* Modules ``lexicon.cli``, ``lexicon.parser`` and ``lexicon.discovery`` are migrated to the
+  private package ``lexicon._private`` as they are not part of the public API. Old modules
+  stubs to the new modules in the private package ``lexicon._private`` to ease the migration path,
+  but it is deprecated and will be removed in Lexicon 4.
+* Update documentation, in particular the developer guide, to take into account the new
+  architecture of the code to implement a new Provider.
+* Functional codebase in ``/lexicon`` folder is moved in ``/src/lexicon`` folder to comply with
+  modern Python project layouts. Tests are migrated to ``/tests`` folder.
+
+### Removed
+* Drop support for Python 3.7
 
 ## 3.13.0 - 07/08/2023
 ### Added
