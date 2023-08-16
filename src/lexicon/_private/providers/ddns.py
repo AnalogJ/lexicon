@@ -1,6 +1,6 @@
 """Module provider for DDNS"""
-import logging
 import hashlib
+import logging
 from argparse import ArgumentParser
 from typing import List
 
@@ -169,8 +169,8 @@ class Provider(BaseProvider):
 
 def _identifier(record):
     m = hashlib.sha256()
-    m.update(("type=" + record.get("type", "") + ",").encode('utf-8'))
-    m.update(("name=" + record.get("name", "") + ",").encode('utf-8'))
-    m.update(("content=" + record.get("content", "") + ",").encode('utf-8'))
+    m.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+    m.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+    m.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
     return m.hexdigest()[0:7]

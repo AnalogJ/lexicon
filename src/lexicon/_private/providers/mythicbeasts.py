@@ -297,8 +297,8 @@ class Provider(BaseProvider):
 # Return hash id for record
 def _identifier(record):
     m = hashlib.sha256()
-    m.update(("type=" + record.get("type", "") + ",").encode('utf-8'))
-    m.update(("name=" + record.get("name", "") + ",").encode('utf-8'))
-    m.update(("content=" + record.get("content", "") + ",").encode('utf-8'))
+    m.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+    m.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+    m.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
     return m.hexdigest()[0:7]
