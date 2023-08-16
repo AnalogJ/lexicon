@@ -19,7 +19,7 @@ So all the hard work in this provider, apart from the authentication process, is
 Lexicon monovalued entries representation to/from the Google multivalued and stacked representation
 through create/update/list/delete processes.
 """
-import binascii
+import hashlib
 import json
 import logging
 import time
@@ -492,12 +492,12 @@ class Provider(BaseProvider):
     # multivalued RecordSet, to make it usable during Lexicon calls to updates and deletions.
     @staticmethod
     def _identifier(record):
-        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-        digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
-        digest.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
-        digest.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
+        m = hashlib.sha256()
+        m.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+        m.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+        m.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
-        return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
+        return m.hexdigest()[0:7]
 
     # The request, when authenticated, is really standard:
     #   - the request body is encoded as application/json for POST

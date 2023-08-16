@@ -1,11 +1,8 @@
 """Module provider for DDNS"""
-import binascii
+import hashlib
 import logging
 from argparse import ArgumentParser
 from typing import List
-
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -170,10 +167,10 @@ class Provider(BaseProvider):
         pass
 
 
-def _identifier(rtype, name, content):
-    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-    digest.update(("type=" + rtype + ",").encode("utf-8"))
-    digest.update(("name=" + name + ",").encode("utf-8"))
-    digest.update(("content=" + content + ",").encode("utf-8"))
+def _identifier(record):
+    m = hashlib.sha256()
+    m.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+    m.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
+    m.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
 
-    return binascii.hexlify(digest.finalize()).decode("utf-8")[0:12]
+    return m.hexdigest()[0:7]

@@ -5,6 +5,7 @@ import logging
 import uuid
 from argparse import ArgumentParser
 from base64 import b64decode, b64encode
+from json import JSONDecodeError
 from typing import Any, Dict, List, Optional
 
 import requests
@@ -12,11 +13,6 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
-
-try:
-    from simplejson import JSONDecodeError
-except ImportError:
-    from json import JSONDecodeError  # type: ignore[assignment]
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
