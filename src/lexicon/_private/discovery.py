@@ -6,15 +6,16 @@ This module takes care of finding information about the runtime of Lexicon:
 import importlib
 import pkgutil
 import re
+import sys
 from types import ModuleType
 from typing import Dict
 
-try:
-    from importlib.metadata import Distribution, PackageNotFoundError
-except ModuleNotFoundError:
-    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
-
 from lexicon._private import providers as _providers
+
+if sys.version_info >= (3, 10):  # pragma: no cover
+    from importlib.metadata import Distribution, PackageNotFoundError
+else:
+    from importlib_metadata import Distribution, PackageNotFoundError
 
 
 def find_providers() -> Dict[str, bool]:

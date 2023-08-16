@@ -139,12 +139,16 @@ class Client(AbstractContextManager):
         self._state.stack = []
 
     def __enter__(self) -> _ClientOperations:
-        provider = self.provider_class(self.config)
-        provider.authenticate()
+        try:
+            provider = self.provider_class(self.config)
+            provider.authenticate()
 
-        self._state.stack.append(provider)
+            self._state.stack.append(provider)
 
-        return _ClientOperations(provider)
+            return _ClientOperations(provider)
+        except Exception as e:
+            self._state.stack.append(None)
+            raise e
 
     def __exit__(
         self,
@@ -152,8 +156,9 @@ class Client(AbstractContextManager):
         __exc_value: BaseException | None,
         __traceback: TracebackType | None,
     ) -> bool | None:
-        provider: Provider = self._state.stack.pop(-1)
-        provider.cleanup()
+        provider: Provider | None = self._state.stack.pop(-1)
+        if provider:
+            provider.cleanup()
 
         return None
 
