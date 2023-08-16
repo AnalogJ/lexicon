@@ -10,7 +10,7 @@
 #   - all headers and data are contained in the response body; then this kind of body is composed
 #     of several lines of type key: value containing the headers (including errors), then a blank
 #     line makes the separation with the data itself (see _process_response for the body parsing).
-import binascii
+import hashlib
 import json
 import logging
 import re
@@ -18,8 +18,6 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -282,14 +280,14 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         if "raw" in record:
             return None
 
-        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-        digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
-        digest.update(
+        m = hashlib.sha256()
+        m.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
+        m.update(
             ("name=" + self._full_name(record.get("label", "")) + ",").encode("utf-8")
         )
-        digest.update(("content=" + record.get("target", "") + ",").encode("utf-8"))
+        m.update(("content=" + record.get("target", "") + ",").encode("utf-8"))
 
-        return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
+        return m.hexdigest()[0:7]
 
     def _relative_name(self, record_name):
         if record_name == self.domain_id:

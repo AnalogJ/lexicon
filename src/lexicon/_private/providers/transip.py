@@ -13,10 +13,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
-try:
-    from simplejson import JSONDecodeError
-except ImportError:
-    from json import JSONDecodeError  # type: ignore[assignment]
+from json import JSONDecodeError
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider

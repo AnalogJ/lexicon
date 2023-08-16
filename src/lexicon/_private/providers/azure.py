@@ -9,14 +9,12 @@ actions are managed using the create and delete actions: updating a record consi
 old record, then creating a new record with updated parameters. Note also that Azure DNS does not
 support id on records (as they are hold in a recordset) so an id is generated on the fly.
 """
-import binascii
+import hashlib
 import logging
 from argparse import ArgumentParser
 from typing import List
 
 import requests
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -368,9 +366,9 @@ def _build_recordset_from_values(rtype, values):
 
 
 def _identifier(record):
-    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-    digest.update(("type=" + record.get("type", "") + ",").encode("utf-8"))
-    digest.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
-    digest.update(("content=" + record.get("content", "") + ",").encode("utf-8"))
+    m = hashlib.sha256()
+    m.update(("type=" + record.get("type", "") + ",").encode('utf-8'))
+    m.update(("name=" + record.get("name", "") + ",").encode('utf-8'))
+    m.update(("content=" + record.get("content", "") + ",").encode('utf-8'))
 
-    return binascii.hexlify(digest.finalize()).decode("utf-8")[0:7]
+    return m.hexdigest()[0:7]
