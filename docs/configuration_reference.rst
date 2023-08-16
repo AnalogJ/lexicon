@@ -23,7 +23,7 @@ provider option is named ``auth_token``):
 
   .. code-block:: bash
 
-        $ LEXICON_CLOUDFLARE_AUTH_TOKEN=YOUR_TOKEN cloudflare create domain.net TXT --name foo --content bar
+        $ LEXICON_CLOUDFLARE_AUTH_TOKEN=YOUR_TOKEN lexicon cloudflare create domain.net TXT --name foo --content bar
 
 * by **configuration file**: construct a configuration file containing the provider options, for instance:
 
@@ -32,7 +32,7 @@ provider option is named ``auth_token``):
         $ cat /path/to/config/lexicon.yml
         cloudflare:
           auth_token: YOUR_TOKEN
-        $ lexicon cloudflare create domain.net TXT --name foo --content bar --config-dir /path/to/config
+        $ lexicon --config-dir /path/to/config cloudflare create domain.net TXT --name foo --content bar
 
   .. note::
 
@@ -45,7 +45,7 @@ provider option is named ``auth_token``):
         .. code-block:: yaml
 
             # /path/to/config/lexicon.yml
-            clouflare:
+            cloudflare:
               auth_token: YOUR_TOKEN
 
         For a provider-specific configuration file, provider options need to be set at the root:

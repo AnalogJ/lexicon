@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.11.5"
+version = "3.14.1"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -20,20 +20,20 @@ classifiers = [
     "Topic :: Utilities",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 authors = [
-    "Jason Kulatunga", "Adrien Ferrand"
+    "Jason Kulatunga <jason@thesparktree.com>",
+    "Adrien Ferrand <ferrand.ad@gmail.com>",
 ]
 readme = "README.rst"
 repository = "https://github.com/AnalogJ/lexicon"
 packages = [
-    { include = "lexicon" },
+    { include = "lexicon", from = "src" },
 ]
-exclude = [ "lexicon/tests/providers/" ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -45,11 +45,11 @@ beautifulsoup4 = ">=4"
 importlib-metadata = ">=4"
 pyoxidizer = "*"
 # Optional dependencies required by some providers
-boto3 = { version = ">=1", optional = true }  # route53
+boto3 = { version = ">=1.28", optional = true }  # route53
 localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
-dnspython = { version = ">=2", optional = true }  # ddns
+dnspython = { version = ">=2", optional = true }  # ddns, duckdns
 oci = {version = ">=2", optional = true}  # oci
 
 [tool.poetry.extras]
@@ -58,32 +58,52 @@ localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 ddns = ["dnspython"]
+duckdns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
 full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+esbonio = "*"
+packaging = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-xdist = "*"
 vcrpy = "*"
 flake8 = "*"
+flake8-pyproject = "*"
 isort = "*"
-tox = "*"
-black = { version = "*", allow-prereleases = true }
+tox = ">=4"
+black = "*"
 mypy = "*"
+toml = "*"
 types-PyYAML = "*"
 types-pytz = "*"
 types-requests = "*"
-types-six = "*"
 types-toml = "*"
 types-simplejson = "*"
 
 [tool.poetry.scripts]
-lexicon = "lexicon.cli:main"
+lexicon = "lexicon._private.cli:main"
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
+filterwarnings = [
+    # Fail for any warning, except...
+    "error",
+    # CGI, a transitive dependency for zeep (used by Gransy provider)
+    # is deprecated. Let zeep manage that by Python 3.13.
+    "ignore:'cgi' is deprecated:DeprecationWarning",
+    # Ignore our own deprecation warnings.
+    "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
+]
 
 [tool.mypy]
 show_error_codes = true
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E501"]

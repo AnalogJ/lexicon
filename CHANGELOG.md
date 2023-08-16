@@ -2,6 +2,83 @@
 
 ## master - CURRENT
 
+## 3.14.1 - 13/08/2023
+### Added
+* Add back declared support to Python 3.7 for few cycles
+
+## 3.14.0 - 13/08/2023
+### Added
+* New way to invoke Lexicon as a library: ``lexicon.client.Client`` becomes a context manager.
+  When invoked with the `with` keyword, it will provide an operation object that embeds the
+  target provider fully authenticated (``authenticate`` method called on the Provider).
+  This operation object gives access to four methods: ``create_record``, ``update_record``,
+  ``delete_record`` and ``list_records``. These methods can be invoked instead of the old
+  ``execute`` method to execute a specific action on the DNS zone. In this case, ``type``,
+  ``name``, ``content`` fields do not need to be set in the config anymore, since they are
+  passed directly as arguments to the new methods. Upon context manager closing, the ``cleanup``
+  method defined in the Provider is ensured to be called. See the README file of the project
+  for an example of how to use this new approach.
+* Python warnings are emitted from the code to alert about the deprecations listed below.
+
+### Modified
+* Former ``NAMESERVER_DOMAIN`` variable and ``provider_parser`` function that had to be defined
+  in each provider module are respectively migrated to ``get_nameservers``
+  and ``configure_parser`` static methods in each Provider class. They are defined as abstract
+  in the interface and must be implemented in the concrete classes.
+* Former private methods ``_create_record``, ``_modify_record``, ``_delete_record``
+  and ``_list_records`` are migrated to their public counterpart ``create_record``,
+  ``modify_record``, ``delete_record`` and ``list_records`` in each Provider class. These are
+  the new abstract methods for each action that need to be implemented.
+* Method ``lexicon.client.Client.execute`` is deprecated and will be removed in Lexicon 4.
+* Package ``lexicon.providers``, containing the actual provider implementations, is migrated to
+  ``lexicon._private.providers``. The provider implementations are not supposed to be used
+  directly, please use ``lexicon.client.Client`` instead with the new methods described above.
+  Package ``lexicon.providers`` stubs to ``lexicon._private.providers`` to ease the migration
+  path, but it is deprecated and will be removed in Lexicon 4.
+* Module ``lexicon.providers.base``, that contains the Provider interface to implement, is
+  migrated to module ``lexicon.interfaces``. Module ``lexicon.providers.base`` stubs
+  to ``lexicon.interfaces`` to ease the migration path, but it is deprecated and will be removed
+  in Lexicon 4.
+* Modules ``lexicon.cli``, ``lexicon.parser`` and ``lexicon.discovery`` are migrated to the
+  private package ``lexicon._private`` as they are not part of the public API. Old modules
+  stubs to the new modules in the private package ``lexicon._private`` to ease the migration path,
+  but it is deprecated and will be removed in Lexicon 4.
+* Update documentation, in particular the developer guide, to take into account the new
+  architecture of the code to implement a new Provider.
+* Functional codebase in ``/lexicon`` folder is moved in ``/src/lexicon`` folder to comply with
+  modern Python project layouts. Tests are migrated to ``/tests`` folder.
+
+### Removed
+* Drop support for Python 3.7
+
+## 3.13.0 - 07/08/2023
+### Added
+* Add `wedos` provider (#1675)
+
+### Modified
+* Proper handling off authentication errors on `easydns` provider (#1674)
+* Allow management of pending (non-active) domains in `cloudflare` provider (#1659)
+
+## 3.12.0 - 11/06/2023
+### Added
+* Add `duckdns` provider (experimental support) (#1533)
+* Add `dnsservices` provider (#1603)
+* Add `flexibleengine` provider (#1600)
+* Official support for Python 3.11
+
+### Modified
+* Upgrade API version used for `azure` provider (#1606)
+* Various fixes for documentation (#1488 #1458 #1601 #1605)
+* Fix check for extra dependencies (#1568)
+
+## 3.11.7 - 26/10/2022
+### Modified
+* Fix `easyname` provider (update action) (#1442)
+
+## 3.11.6 - 11/10/2022
+### Modified
+* Fix `hetzner` provider with large list of entries (#1389)
+
 ## 3.11.5 - 10/10/2022
 ### Modified
 * Fix upsertRecordSet in `yandex` provider (#1423)
