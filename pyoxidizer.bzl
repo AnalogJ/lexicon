@@ -193,7 +193,7 @@ def make_exe():
     # python_config.run_command = "<code>"
 
     # Run a Python module as __main__ when the interpreter starts.
-    python_config.run_module = "lexicon.cli"
+    python_config.run_module = "lexicon._private.cli"
 
     # Run a Python file when the interpreter starts.
     # python_config.run_filename = "/path/to/file"
