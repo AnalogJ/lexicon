@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
+import pyotp
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -27,34 +28,49 @@ class Provider(BaseProvider):
         parser.add_argument(
             "--auth-password", help="specify password for authentication"
         )
+        parser.add_argument(
+            "--auth-totp-secret", help="specify base32-encoded shared secret to generate an OTP for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}
+        self.totp = pyotp.TOTP(self._get_provider_option("auth_totp_secret"))
 
-    def authenticate(self):
+    def _authenticate(self) -> None:
         # Getting required cookies "hover_session" and "hoverauth"
         response = requests.get("https://www.hover.com/signin")
         self.cookies["hover_session"] = response.cookies["hover_session"]
-
+    
+        # Part one, login credentials
         payload = {
             "username": self._get_provider_option("auth_username"),
+            "token": None,
             "password": self._get_provider_option("auth_password"),
         }
         response = requests.post(
-            "https://www.hover.com/api/login/", json=payload, cookies=self.cookies
+            "https://www.hover.com/signin/auth.json", json=payload, cookies=self.cookies
         )
         response.raise_for_status()
-
+    
+        # Part two, 2fa
+        payload = {
+            "code": self.totp.now()
+        }
+        response = requests.post(
+            "https://www.hover.com/signin/auth2.json", json=payload, cookies=self.cookies
+        )
+        response.raise_for_status()
+    
         if "hoverauth" not in response.cookies:
             raise Exception("Unexpected auth response")
         self.cookies["hoverauth"] = response.cookies["hoverauth"]
-
+    
         # Make sure domain exists
         # domain is stored in self.domain from BaseProvider
-
+    
         domains = self._list_domains()
         for domain in domains:
             if domain["name"] == self.domain:
@@ -139,7 +155,7 @@ class Provider(BaseProvider):
         return payload["succeeded"]
 
     # Update a record. Hover cannot update name so we delete and recreate.
-    def update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             records = self.list_records()
             records = [r for r in records if r["id"] == identifier]
