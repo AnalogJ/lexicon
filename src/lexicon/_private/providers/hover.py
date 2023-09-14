@@ -4,8 +4,8 @@ import logging
 from argparse import ArgumentParser
 from typing import List
 
-import requests
 import pyotp
+import requests
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -29,7 +29,8 @@ class Provider(BaseProvider):
             "--auth-password", help="specify password for authentication"
         )
         parser.add_argument(
-            "--auth-totp-secret", help="specify base32-encoded shared secret to generate an OTP for authentication"
+            "--auth-totp-secret",
+            help="specify base32-encoded shared secret to generate an OTP for authentication",
         )
 
     def __init__(self, config):
@@ -43,7 +44,7 @@ class Provider(BaseProvider):
         # Getting required cookies "hover_session" and "hoverauth"
         response = requests.get("https://www.hover.com/signin")
         self.cookies["hover_session"] = response.cookies["hover_session"]
-    
+
         # Part one, login credentials
         payload = {
             "username": self._get_provider_option("auth_username"),
@@ -54,23 +55,23 @@ class Provider(BaseProvider):
             "https://www.hover.com/signin/auth.json", json=payload, cookies=self.cookies
         )
         response.raise_for_status()
-    
+
         # Part two, 2fa
-        payload = {
-            "code": self.totp.now()
-        }
+        payload = {"code": self.totp.now()}
         response = requests.post(
-            "https://www.hover.com/signin/auth2.json", json=payload, cookies=self.cookies
+            "https://www.hover.com/signin/auth2.json",
+            json=payload,
+            cookies=self.cookies,
         )
         response.raise_for_status()
-    
+
         if "hoverauth" not in response.cookies:
             raise Exception("Unexpected auth response")
         self.cookies["hoverauth"] = response.cookies["hoverauth"]
-    
+
         # Make sure domain exists
         # domain is stored in self.domain from BaseProvider
-    
+
         domains = self._list_domains()
         for domain in domains:
             if domain["name"] == self.domain:
