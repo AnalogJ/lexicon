@@ -40,7 +40,7 @@ class Provider(BaseProvider):
         self.cookies = {}
         self.totp = pyotp.TOTP(self._get_provider_option("auth_totp_secret"))
 
-    def _authenticate(self) -> None:
+    def authenticate(self) -> None:
         # Getting required cookies "hover_session" and "hoverauth"
         response = requests.get("https://www.hover.com/signin")
         self.cookies["hover_session"] = response.cookies["hover_session"]
@@ -48,7 +48,6 @@ class Provider(BaseProvider):
         # Part one, login credentials
         payload = {
             "username": self._get_provider_option("auth_username"),
-            "token": None,
             "password": self._get_provider_option("auth_password"),
         }
         response = requests.post(

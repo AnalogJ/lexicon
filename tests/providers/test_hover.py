@@ -16,7 +16,7 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
     hover_session = "0123456789abcdef0123456789abcdef"
 
     def _filter_post_data_parameters(self):
-        return ["username", "password"]
+        return ["username", "password", "code"]
 
     def _filter_headers(self):
         return ["Cookie"]
@@ -32,11 +32,8 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
         return cookie
 
     def _filter_response(self, response):
-        if "basestring" not in globals():
-            basestring = str
-
         if "set-cookie" in response["headers"]:
-            if isinstance(response["headers"]["set-cookie"], basestring):
+            if isinstance(response["headers"]["set-cookie"], str):
                 response["headers"]["set-cookie"] = self._replace_auth(
                     response["headers"]["set-cookie"]
                 )
