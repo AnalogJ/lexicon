@@ -1,6 +1,7 @@
 """Module provider for Hover"""
 import json
 import logging
+import re
 from argparse import ArgumentParser
 from typing import List
 
@@ -38,7 +39,8 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}
-        self.totp = pyotp.TOTP(self._get_provider_option("auth_totp_secret"))
+        shared_secret = re.sub(r"\s*", "", self._get_provider_option("auth_totp_secret") or "")
+        self.totp = pyotp.TOTP(shared_secret)
 
     def authenticate(self) -> None:
         # Getting required cookies "hover_session" and "hoverauth"
