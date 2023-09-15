@@ -1,4 +1,6 @@
 """Module provider for TransIP"""
+from __future__ import annotations
+
 import binascii
 import json
 import logging
@@ -14,6 +16,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
+from lexicon.config import ConfigResolver
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
@@ -53,12 +56,11 @@ class Provider(BaseProvider):
             help="set this flag is the private key used is a global key with no IP whitelist restriction",
         )
 
-    def __init__(self, config):
+    def __init__(self, config: ConfigResolver):
         super(Provider, self).__init__(config)
         self.provider_name = "transip"
-        self.domain_id = None
 
-        private_key_conf = self._get_provider_option("auth_api_key")
+        private_key_conf = self._get_provider_option("auth_api_key") or ""
         if private_key_conf.startswith("base64::"):
             private_key_bytes = b64decode(private_key_conf.replace("base64::", ""))
         else:
@@ -69,7 +71,7 @@ class Provider(BaseProvider):
                 private_key_bytes = file.read()
 
         self.private_key = load_pem_private_key(private_key_bytes, password=None)
-        self.token: str
+        self.token: str | None = None
 
     def authenticate(self):
         request_body = {
