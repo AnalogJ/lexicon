@@ -103,8 +103,9 @@ class Provider(BaseProvider):
     def _get_cloud_id(self) -> str:
         """Gets Cloud ID from Resource Manager API
         https://cloud.yandex.com/en/docs/resource-manager/api-ref/Cloud/list"""
-        if self._get_provider_option("cloud_id"):
-            return self._get_provider_option("cloud_id")
+        cloud_id = self._get_provider_option("cloud_id")
+        if cloud_id:
+            return cloud_id
 
         payload: Dict = self._get(f"{self.resources_api_endpoint}/clouds")
 
@@ -121,8 +122,9 @@ class Provider(BaseProvider):
         """Gets Folder ID from Resource Manager API
         https://cloud.yandex.com/en/docs/resource-manager/api-ref/Folder/list
         """
-        if self._get_provider_option("folder_id"):
-            return self._get_provider_option("folder_id")
+        folder_id = self._get_provider_option("folder_id")
+        if folder_id:
+            return folder_id
 
         payload: Dict = self._get(
             f"{self.resources_api_endpoint}/folders", {"cloudId": cloud_id}

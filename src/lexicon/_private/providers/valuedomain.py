@@ -381,8 +381,8 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     domain_data.records + [rec],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
+                    int(ttl_option)
+                    if ttl_option is not None and int(ttl_option) > 0
                     else DEFAULT_TTL
                     if ttl_option is not None
                     else domain_data.ttl,
@@ -396,8 +396,8 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     [rec],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
+                    int(ttl_option)
+                    if ttl_option is not None and int(ttl_option) > 0
                     else DEFAULT_TTL,
                 ),
             )

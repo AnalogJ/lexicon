@@ -220,8 +220,8 @@ class Provider(ABC):
             record["content"] = record["content"][1:-1]
         return record
 
-    def _get_lexicon_option(self, option: str) -> Any:
+    def _get_lexicon_option(self, option: str) -> str | None:
         return self.config.resolve(f"lexicon:{option}")
 
-    def _get_provider_option(self, option: str) -> Any:
+    def _get_provider_option(self, option: str) -> str | None:
         return self.config.resolve(f"lexicon:{self.provider_name}:{option}")
