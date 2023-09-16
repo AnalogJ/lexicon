@@ -86,10 +86,10 @@ class Provider(BaseProvider):
 
             for record in payload["data"]:
                 processed_record = {
-                    "type": record["type"],
-                    "name": record["name"],
+                    "type": record["type"].upper(),
+                    "name": self._full_name(record["name"]),
                     "ttl": record["ttl"],
-                    "value": record["value"],
+                    "content": record["value"]["text"],
                     "id": record["id"],
                 }
                 records.append(processed_record)
