@@ -14,6 +14,9 @@ List of options
 .. _aliyun:
 .. include:: providers/aliyun.rst
 
+.. _arvancloud:
+.. include:: providers/arvancloud.rst
+
 .. _aurora:
 .. include:: providers/aurora.rst
 
