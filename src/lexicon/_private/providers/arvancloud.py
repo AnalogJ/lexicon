@@ -89,10 +89,15 @@ class Provider(BaseProvider):
                     "type": record["type"].upper(),
                     "name": self._full_name(record["name"]),
                     "ttl": record["ttl"],
-                    "content": record["value"]["text"],
+                    "content": self._parse_r1c_response(record["type"].upper(), record["value"]),
                     "id": record["id"],
                 }
-                records.append(processed_record)
+
+                if content:
+                    if content in processed_record['content']:
+                        records.append(processed_record)
+                else:
+                    records.append(processed_record)
 
             pages = payload["meta"]["total"]
             page = payload["meta"]["current_page"]
@@ -193,14 +198,27 @@ class Provider(BaseProvider):
             output["name"] = self._relative_name(name)
 
         content_split = content.split(" ")
+
+        if rtype in ["A", "AAAA"]:
+            if len(content_split) == 1:
+                output.update(
+                    {
+                        "value": [{'ip': content_split[0]}],
+                    }
+                )
+            else:
+                output.update(
+                    {
+                        "value": [{'ip': ip, 'port': int(port), 'weight': int(weight)} for ip, port, weight in content_split],
+                    }
+                )
+
         output.update(
             {
-                "A": (lambda: {"value": [{'ip': ip, 'port': int(port), 'weight': int(weight)} for ip, port, weight in (entry.split() for entry in content.split(','))]}),
-                "AAAA": (lambda: {"value": [{'ip': ip, 'port': int(port), 'weight': int(weight)} for ip, port, weight in (entry.split() for entry in content.split(','))]}),
                 "CNAME": (lambda: {
                     "value": {
                         "host": content_split[0],
-                        "host_header": content_split[1],
+                        "host_header": content_split[1] if len(content_split) == 2 else "source",
                     }}),
                 "ANAME": (lambda: {
                     "value": {
@@ -232,3 +250,18 @@ class Provider(BaseProvider):
         )
 
         return output
+
+    # Takes record's value and puts it into a format the lexicon supports
+    def _parse_r1c_response(self, rtype: str, input: str):
+        output = {}
+
+        output.update(
+            {
+                "A": (lambda: {"value": ", ".join([" ".join(str(value) if value is not None and value != "" else "" for value in item.values()) for item in input])}),
+                "CNAME": (lambda: {"value": input['host']}),
+                "NS": (lambda: {"value": input['host']}),
+                "TXT": (lambda: {"value": input['text']}),
+            }.get(rtype, lambda: {})()
+        )
+
+        return output['value']
