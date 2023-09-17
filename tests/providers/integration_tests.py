@@ -1,5 +1,6 @@
 """Base class for provider integration tests"""
 import os
+import warnings
 from functools import wraps
 from typing import Optional
 
@@ -95,6 +96,8 @@ class IntegrationTestsV1:
         self.provider_module = None
 
     def setup_method(self, _):
+        warnings.filterwarnings("ignore", category=ResourceWarning,
+                                message="unclosed.*<ssl.SSLSocket.*>")
         self.provider_module = load_provider_module(self.provider_name)
 
     ###########################################################################
