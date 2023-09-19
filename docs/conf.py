@@ -6,4 +6,10 @@ metadata = toml.load(join(dirname(dirname(abspath(__file__))), "pyproject.toml")
 
 master_doc = 'index'
 project = "DNS-Lexicon"
-release = metadata["version"]
+version = release = metadata["version"]
+
+extensions = [
+    "sphinx_rtd_theme",
+]
+
+html_theme = "sphinx_rtd_theme"
