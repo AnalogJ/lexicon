@@ -249,6 +249,11 @@ variable ``LEXICON_LIVE_TESTS`` set to ``true`` like below:
 
 	LEXICON_LIVE_TESTS=true pytest lexicon/tests/providers/test_foo.py
 
+.. note::
+
+    Like during the previous section, you will need to feed the relevant authentication parameters
+    as environment variables to the shell running the integration tests.
+
 If any of the integration tests fail on your provider, you'll need to delete the recordings that
 were created, make your changes and then try again.
 
