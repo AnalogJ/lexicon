@@ -3,12 +3,15 @@ import json
 import re
 from unittest import TestCase
 
+import pyotp
+
 from integration_tests import IntegrationTestsV2
 
 
 _FAKE_DOMAIN_ID = "dom1127777"
 _FAKE_HOVERAUTH = "0123456789abcdef0123456789abcdef"
 _FAKE_HOVER_SESSION = "0123456789abcdef0123456789abcdef"
+_FAKE_TOTP_SECRET = pyotp.random_base32()
 
 
 class HoverProviderTests(TestCase, IntegrationTestsV2):
@@ -25,6 +28,9 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
 
     def _filter_query_parameters(self):
         return ["hover_session", "hoverauth"]
+    
+    def _test_parameters_overrides(self):
+        return {'auth_totp_secret': _FAKE_TOTP_SECRET}
 
     def _replace_auth(self, cookie):
         cookie = re.sub(
