@@ -28,7 +28,7 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
 
     def _filter_query_parameters(self):
         return ["hover_session", "hoverauth"]
-    
+
     def _test_parameters_overrides(self):
         return {'auth_totp_secret': _FAKE_TOTP_SECRET}
 
