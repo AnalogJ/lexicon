@@ -103,11 +103,11 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, rtype=None, name=None, content=None):
-        payload = self._get(f"/domains/{self.domain_id}/dns")
+        payload = self._get(f"/control_panel/dns/{self.domain}")
 
         # payload['domains'] should be a list of len 1
         try:
-            raw_records = payload["domains"][0]["entries"]
+            raw_records = payload["domain"]["dns"]
         except (KeyError, IndexError):
             raise Exception("Unexpected response")
 
@@ -150,11 +150,13 @@ class Provider(BaseProvider):
 
         record = {"name": name, "type": rtype, "content": content}
         if self._get_lexicon_option("ttl"):
-            record["ttl"] = self._get_lexicon_option("ttl")
+            record["ttl"] = str(self._get_lexicon_option("ttl"))
 
         LOGGER.debug("create_record: %s", record)
-        payload = self._post(f"/domains/{self.domain_id}/dns", record)
-        return payload["succeeded"]
+        payload = {"id": f"domain-{self.domain}", "dns_record": record}
+        response = self._post("/control_panel/dns", payload)
+
+        return response["succeeded"]
 
     # Update a record. Hover cannot update name so we delete and recreate.
     def update_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -189,10 +191,9 @@ class Provider(BaseProvider):
             delete_record_ids.append(identifier)
 
         LOGGER.debug("delete_records: %s", delete_record_ids)
+        payload = {"domains": [{"id": f"domain-{self.domain}", "dns_records": delete_record_ids}]}
+        self._request("DELETE", "/control_panel/dns", payload)
 
-        for record_id in delete_record_ids:
-            self._delete(f"/dns/{record_id}")
-            LOGGER.debug("delete_record: %s", record_id)
         return True
 
     # Helpers
