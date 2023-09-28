@@ -6,14 +6,16 @@ from unittest import TestCase
 from integration_tests import IntegrationTestsV2
 
 
+_FAKE_DOMAIN_ID = "dom1127777"
+_FAKE_HOVERAUTH = "0123456789abcdef0123456789abcdef"
+_FAKE_HOVER_SESSION = "0123456789abcdef0123456789abcdef"
+
+
 class HoverProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Hover"""
 
     provider_name = "hover"
-    domain = "novuslex.com"
-    domain_id = "dom1127777"
-    hoverauth = "0123456789abcdef0123456789abcdef"
-    hover_session = "0123456789abcdef0123456789abcdef"
+    domain = "sudrien.work"
 
     def _filter_post_data_parameters(self):
         return ["username", "password", "code"]
@@ -26,9 +28,9 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
 
     def _replace_auth(self, cookie):
         cookie = re.sub(
-            "hover_session=.*;", f"hover_session={self.hover_session};", cookie
+            "hover_session=.*;", f"hover_session={_FAKE_HOVER_SESSION};", cookie
         )
-        cookie = re.sub("hoverauth=.*;", f"hoverauth={self.hoverauth};", cookie)
+        cookie = re.sub("hoverauth=.*;", f"hoverauth={_FAKE_HOVERAUTH};", cookie)
         return cookie
 
     def _filter_response(self, response):
@@ -57,7 +59,7 @@ class HoverProviderTests(TestCase, IntegrationTestsV2):
             if "domains" in filtered_body and len(filtered_body["domains"]) > 1:
                 filtered_body["domains"] = [
                     {
-                        "id": self.domain_id,
+                        "id": _FAKE_DOMAIN_ID,
                         "domain_name": self.domain,
                         "status": "active",
                     }
