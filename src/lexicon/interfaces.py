@@ -185,7 +185,9 @@ class Provider(ABC):
     ) -> Any:
         return self._request("PATCH", url, data=data, query_params=query_params)
 
-    def _delete(self, url: str = "/", query_params: dict[str, Any] | None = None) -> Any:
+    def _delete(
+        self, url: str = "/", query_params: dict[str, Any] | None = None
+    ) -> Any:
         return self._request("DELETE", url, query_params=query_params)
 
     def _fqdn_name(self, record_name: str) -> str:
