@@ -1,12 +1,13 @@
 """Module provider for auto"""
 from __future__ import annotations
+
 import logging
 import pkgutil
 import re
 import subprocess
 from argparse import ArgumentParser
 from types import ModuleType
-from typing import Type, Any
+from typing import Any, Type
 
 import tldextract  # type: ignore
 

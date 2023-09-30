@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.15.0 - 30/09/2023
 ### Added
 * Add `pyotp` Python dependency in Lexicon to help implementing OTP (one-time password)
   on providers whose API supports this kind of authentication.

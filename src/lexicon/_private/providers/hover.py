@@ -39,7 +39,9 @@ class Provider(BaseProvider):
         self.domain_id = None
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}
-        shared_secret = re.sub(r"\s*", "", self._get_provider_option("auth_totp_secret") or "")
+        shared_secret = re.sub(
+            r"\s*", "", self._get_provider_option("auth_totp_secret") or ""
+        )
         self.totp = pyotp.TOTP(shared_secret)
 
     def authenticate(self) -> None:
@@ -191,7 +193,11 @@ class Provider(BaseProvider):
             delete_record_ids.append(identifier)
 
         LOGGER.debug("delete_records: %s", delete_record_ids)
-        payload = {"domains": [{"id": f"domain-{self.domain}", "dns_records": delete_record_ids}]}
+        payload = {
+            "domains": [
+                {"id": f"domain-{self.domain}", "dns_records": delete_record_ids}
+            ]
+        }
         self._request("DELETE", "/control_panel/dns", payload)
 
         return True

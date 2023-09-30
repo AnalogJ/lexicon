@@ -553,11 +553,13 @@ if __name__ == "__main__":
             pass
 
         def _create_provider(self, domainname: str):
-            config = ConfigResolver().with_dict({
+            config = ConfigResolver().with_dict(
+                {
                     "provider_name": "valuedomain",
                     "domain": domainname,
                     "valuedomain": {"auth_token": self.auth_token},
-            })
+                }
+            )
             return Provider(config)
 
         def test_vdapi_get_domain_list(self):
