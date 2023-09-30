@@ -1,6 +1,19 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `pyotp` Python dependency in Lexicon to help implementing OTP (one-time password)
+  on providers whose API supports this kind of authentication.
+* Add OTP support on `hover` provider, with a new flag named `--auth-totp-secret`.
+* Add type marker `py.typed` to inform types checkers about availability of type
+  annotations in Lexicon codebase.
+
+### Modified
+* Fix and modernize ReadTheDoc documentation build.
+* Better error management and resource cleanup when `Client` is used as a context manager.
+
+### Removed
+* Stop using `cryptography` in providers where only hashing is needed.
 
 ## 3.14.1 - 13/08/2023
 ### Added
