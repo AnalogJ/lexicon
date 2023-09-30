@@ -147,7 +147,7 @@ The current supported providers are:
 .. _henet: https://dns.he.net/
 .. _hetzner: https://dns.hetzner.com/api-docs/
 .. _hostingde:
-.. _hover: https://hoverapi.docs.apiary.io/
+.. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
 .. _infomaniak: https://www.infomaniak.com
 .. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
