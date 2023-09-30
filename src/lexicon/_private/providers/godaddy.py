@@ -89,7 +89,7 @@ class Provider(BaseProvider):
             )
 
         if content:
-            records = [record for record in records if record["data"] == content]
+            records = [record for record in records if record["content"] == content]
 
         LOGGER.debug("list_records: %s", records)
 
