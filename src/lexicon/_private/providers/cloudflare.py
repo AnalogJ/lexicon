@@ -80,6 +80,9 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            if self._get_lexicon_option("priority").isnumeric():
+                data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:
