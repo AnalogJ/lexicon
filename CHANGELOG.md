@@ -2,8 +2,6 @@
 
 ## master - CURRENT
 
-## 3.15.1 - 11/10/2023
-
 ### Added
 * Add support to Python 3.12.
 
