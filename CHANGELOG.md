@@ -2,12 +2,6 @@
 
 ## master - CURRENT
 
-### Added
-* Add support to Python 3.12.
-
-### Modified
-* Fix filtering by record content in `godaddy` provider.
-
 ## 3.15.0 - 30/09/2023
 ### Added
 * Add `pyotp` Python dependency in Lexicon to help implementing OTP (one-time password)
