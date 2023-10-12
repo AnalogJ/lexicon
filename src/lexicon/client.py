@@ -9,7 +9,7 @@ from threading import local
 from types import TracebackType
 from typing import Any, Type
 
-import tldextract  # type: ignore
+import tldextract
 
 from lexicon import config as helper_config
 from lexicon._private.discovery import find_providers as _find_providers

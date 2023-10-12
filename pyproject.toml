@@ -103,10 +103,14 @@ filterwarnings = [
     # Ignore deprecation warnings from datetime used by our third-party libraries.
     "ignore:.*datetime\\.utcnow\\(\\) is deprecated:DeprecationWarning",
     "ignore:.*datetime\\.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
+    # Ignore deprecation usages of urllib3 in boto
+    "ignore:The 'strict' parameter is no longer needed on Python 3+:DeprecationWarning",
 ]
 
 [tool.mypy]
 show_error_codes = true
+warn_redundant_casts = true
+warn_unused_ignores = true
 
 [tool.isort]
 profile = "black"

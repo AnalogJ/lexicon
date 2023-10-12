@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry  # type: ignore
+from urllib3.util.retry import Retry
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
