@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 from types import ModuleType
 from typing import Any, Type
 
-import tldextract  # type: ignore
+import tldextract
 
 from lexicon import config as helper_config
 from lexicon._private import providers

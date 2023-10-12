@@ -23,7 +23,7 @@ def find_providers() -> Dict[str, bool]:
     providers_list = sorted(
         {
             modname
-            for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)  # type: ignore
+            for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)
             if modname != "base"
         }
     )
