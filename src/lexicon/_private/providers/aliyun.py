@@ -238,7 +238,7 @@ class Provider(BaseProvider):
             "SignatureMethod": "HMAC-SHA1",
             "SignatureVersion": "1.0",
             "SignatureNonce": signature_nonce,
-            "Timestamp": datetime.datetime.now(datetime.UTC)
+            "Timestamp": datetime.datetime.now(datetime.timezone.utc)
             .replace(microsecond=0)
             .isoformat()
             + "Z",
