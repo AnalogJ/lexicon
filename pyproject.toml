@@ -99,6 +99,8 @@ filterwarnings = [
     "ignore:'cgi' is deprecated:DeprecationWarning",
     # Ignore our own deprecation warnings.
     "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
+    # Ignore deprecation usages of urllib3 in boto
+    "ignore:The 'strict' parameter is no longer needed on Python 3+:DeprecationWarning",
 ]
 
 [tool.mypy]
