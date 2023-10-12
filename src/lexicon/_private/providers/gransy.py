@@ -7,7 +7,7 @@ from builtins import staticmethod
 from typing import List
 
 try:
-    import zeep  # type: ignore
+    import zeep
 except BaseException:
     pass
 
