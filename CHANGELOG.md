@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.15.1 - 13/10/2023
 ### Modified
 * Protect `ovh` provider against invalid response bodies
   that are returned sometimes by OVH APIs.

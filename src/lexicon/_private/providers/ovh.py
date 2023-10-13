@@ -260,5 +260,7 @@ class Provider(BaseProvider):
         try:
             return result.json()
         except requests.exceptions.JSONDecodeError:
-            LOGGER.warning(f"Unexpected response from OVH APIs for {action} {url} (response dumped as plain text):\n{result.text}")
+            LOGGER.warning(
+                f"Unexpected response from OVH APIs for {action} {url} (response dumped as plain text):\n{result.text}"
+            )
             return None
