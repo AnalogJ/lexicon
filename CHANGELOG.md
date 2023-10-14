@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.16.0 - 14/10/2023
 ### Removed
 * Drop support for Python 3.7
 
