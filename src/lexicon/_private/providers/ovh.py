@@ -11,6 +11,11 @@ import requests
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
 
+try:
+    from simplejson import JSONDecodeError  # type: ignore
+except ImportError:
+    from json import JSONDecodeError
+
 LOGGER = logging.getLogger(__name__)
 
 ENDPOINTS = {
@@ -259,7 +264,7 @@ class Provider(BaseProvider):
 
         try:
             return result.json()
-        except requests.exceptions.JSONDecodeError:
+        except JSONDecodeError:
             LOGGER.warning(
                 f"Unexpected response from OVH APIs for {action} {url} (response dumped as plain text):\n{result.text}"
             )
