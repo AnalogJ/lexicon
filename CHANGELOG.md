@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.16.1 - 18/10/2023
 ### Added
 * Add support to Python 3.12.
 
