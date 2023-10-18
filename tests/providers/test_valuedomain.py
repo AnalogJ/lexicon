@@ -1,5 +1,6 @@
 """Test for valuedomain implementation of the interface."""
-from unittest import TestCase
+import sys
+from unittest import TestCase, skipIf
 
 from integration_tests import IntegrationTestsV2
 
@@ -8,6 +9,14 @@ from integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 
 
+# TODO: Re-enable tests when vcrpy is fully compatible with Python 3.12,
+#   in particular concerning the instrumention of recent versions of urrlib3.
+# fmt: off
+@skipIf(
+    sys.version_info >= (3, 12,),
+    "Tests for valuedomain are not supported on Python 3.12+.",
+)
+# fmt: on
 class ValueDomainProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for value-domain provider"""
 

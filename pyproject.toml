@@ -23,6 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 authors = [
     "Jason Kulatunga <jason@thesparktree.com>",
@@ -69,7 +70,10 @@ pytest = "*"
 pytest-cov = "*"
 pytest-xdist = "*"
 vcrpy = "*"
-flake8 = "*"
+# We add flake8 conditionally to recent Python version to get modern versions
+# of flake8 cleaned of several issues. It just means that linting cannot be done
+# on the initial release of Python 3.8 (version 3.8.0). This is a decent constraint.
+flake8 = { version = "*", python = ">=3.8.1" }
 isort = "*"
 tox = ">=4"
 black = "*"
@@ -98,6 +102,9 @@ filterwarnings = [
     "ignore:'cgi' is deprecated:DeprecationWarning",
     # Ignore our own deprecation warnings.
     "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
+    # Ignore deprecation warnings from datetime used by our third-party libraries.
+    "ignore:.*datetime\\.utcnow\\(\\) is deprecated:DeprecationWarning",
+    "ignore:.*datetime\\.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
     # Ignore deprecation usages of urllib3 in boto
     "ignore:The 'strict' parameter is no longer needed on Python 3+:DeprecationWarning",
 ]

@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add support to Python 3.12.
 
 ## 3.16.0 - 14/10/2023
 ### Removed
@@ -10,6 +12,7 @@
 ### Modified
 * Protect `ovh` provider against invalid response bodies
   that are returned sometimes by OVH APIs.
+* Fix filtering by record content in `godaddy` provider.
 
 ## 3.15.0 - 30/09/2023
 ### Added
