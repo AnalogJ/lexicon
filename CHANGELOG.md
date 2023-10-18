@@ -4,6 +4,9 @@
 ### Added
 * Add support to Python 3.12.
 
+### Modified
+* Support older versions of requests (<2.27.0) in `ovh` provider.
+
 ## 3.16.0 - 14/10/2023
 ### Removed
 * Drop support for Python 3.7
