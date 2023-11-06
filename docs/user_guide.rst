@@ -55,75 +55,27 @@ Usage
 .. code-block:: bash
 
     $ lexicon -h
-      usage: lexicon [-h] [--version] [--delegated DELEGATED]
-                     {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,yandexcloud,zonomi}
-                     ...
+    usage: lexicon [-h] [--version] [--delegated DELEGATED] [--config-dir CONFIG_DIR] [--resolve-zone-name]
+                  {aliyun,...,zonomi}
+                  ...
 
-      Create, Update, Delete, List DNS entries
+    Create, Update, Delete, List DNS entries
 
-      positional arguments:
-        {cloudflare,cloudxns,digitalocean,dnsimple,dnsmadeeasy,dnspark,dnspod,easydns,luadns,namesilo,nsone,pointhq,rage4,route53,vultr,yandex,yandexcloud,zonomi}
-                              specify the DNS provider to use
-          cloudflare          cloudflare provider
-          cloudxns            cloudxns provider
-          digitalocean        digitalocean provider
+    positional arguments:
+      {aliyun,...,zonomi}
+                            specify the DNS provider to use
+        aliyun              aliyun provider
         ...
-          rage4               rage4 provider
-          route53             route53 provider
-          vultr               vultr provider
-          yandex              yandex provider
-          yandexcloud         yandexcloud provider
-          zonomi              zonomi provider
+        zonomi              zonomi provider
 
-      optional arguments:
-        -h, --help            show this help message and exit
-        --version             show the current version of lexicon
-        --delegated DELEGATED
-                              specify the delegated domain
-
-
-      $ lexicon cloudflare -h
-      usage: lexicon cloudflare [-h] [--name NAME] [--content CONTENT] [--ttl TTL]
-                                [--priority PRIORITY] [--identifier IDENTIFIER]
-                                [--auth-username AUTH_USERNAME]
-                                [--auth-token AUTH_TOKEN]
-                                {create,list,update,delete} domain
-                                {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
-
-      positional arguments:
-        {create,list,update,delete}
-                              specify the action to take
-        domain                specify the domain, supports subdomains as well
-        {A,AAAA,CNAME,MX,NS,SPF,SOA,TXT,SRV,LOC}
-                              specify the entry type
-
-      optional arguments:
-        -h, --help            show this help message and exit
-        --name NAME           specify the record name
-        --content CONTENT     specify the record content
-        --ttl TTL             specify the record time-to-live
-        --priority PRIORITY   specify the record priority
-        --identifier IDENTIFIER
-                              specify the record for update or delete actions
-        --auth-username AUTH_USERNAME
-                              specify email address used to authenticate
-        --auth-token AUTH_TOKEN
-                              specify token used authenticate
-
-                              specify the entry type
-
-      optional arguments:
-        -h, --help            show this help message and exit
-        --name NAME           specify the record name
-        --content CONTENT     specify the record content
-        --ttl TTL             specify the record time-to-live
-        --priority PRIORITY   specify the record priority
-        --identifier IDENTIFIER
-                              specify the record for update or delete actions
-        --auth-username AUTH_USERNAME
-                              specify email address used to authenticate
-        --auth-token AUTH_TOKEN
-                              specify token used authenticate
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show the current version of lexicon
+      --delegated DELEGATED
+                            specify the delegated domain (may not needed if --resolve-zone-name is set)
+      --config-dir CONFIG_DIR
+                            specify the directory where to search lexicon.yml and lexicon_[provider].yml configuration files (default: current directory).
+      --resolve-zone-name   trigger an active resolution of the zone name for the given domain using DNS queries
 
 Using the lexicon CLI is pretty simple:
 
