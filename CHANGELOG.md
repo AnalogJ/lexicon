@@ -2,13 +2,15 @@
 
 ## master - CURRENT
 ### Added
-* New method to determine the actual zone name for a given domain. Historically it was an extraction
+* New method to determine the actual zone name for a given FQDN. Historically it was an extraction
   of the second-level domain given well-known TLDs (eg., `domain.net` for `www.domain.net`) using
-  `tldextract`, and usage of `--delegated` option to force a given zone name, useful for third-level
-  domains hosted on a specific zone (eg., sub-zone `sub.domain.net` delegated from zone `domain.net`).
+  `tldextract`, and usage of `--delegated` option to enforce a specific zone name that is useful for
+  third-level domains hosted on a specific zone (eg., sub-zone `sub.domain.net` delegated from zone
+  `domain.net`).
   It is now possible to use the `--resolve-zone-name` flag on Lexicon client to trigger an actual
-  resolution of the zone name from a given domain using live DNS servers, using `dnspython` utilities.
-  Most of the time this removes the need of `--delegated`, as Lexicon will guess the right zone name.
+  resolution of the zone name from a given FQDN using live DNS servers by leveraging `dnspython`
+  utilities. Most of the time this makes `--delegated` useless, since Lexicon will be able to guess
+  the correct zone name.
 
 ## 3.16.1 - 18/10/2023
 ### Added
