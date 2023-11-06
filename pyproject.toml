@@ -43,13 +43,13 @@ pyyaml = ">=3"
 requests = ">=2"
 beautifulsoup4 = ">=4"
 pyotp = ">=2"
+dnspython = ">=2"
 importlib-metadata = { version = ">=4.6", python = "<3.10" }
 # Optional dependencies required by some providers
 boto3 = { version = ">=1.28", optional = true }  # route53
 localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
-dnspython = { version = ">=2", optional = true }  # ddns, duckdns
 oci = {version = ">=2", optional = true}  # oci
 
 [tool.poetry.extras]
@@ -57,11 +57,9 @@ route53 = ["boto3"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
-ddns = ["dnspython"]
-duckdns = ["dnspython"]
 oci = ["oci"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "oci"]
 
 [tool.poetry.group.dev.dependencies]
 esbonio = "*"
