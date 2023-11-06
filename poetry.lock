@@ -108,17 +108,17 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.28.65"
+version = "1.28.78"
 description = "The AWS SDK for Python"
 optional = true
 python-versions = ">= 3.7"
 files = [
-    {file = "boto3-1.28.65-py3-none-any.whl", hash = "sha256:ff3d0116e0ca6c096547652390025780eace3a28f6c04c9ffbf38448f1e5a87b"},
-    {file = "boto3-1.28.65.tar.gz", hash = "sha256:9d52a1605657aeb5b19b09cfc01d9a92f88a616a5daf5479a59656d6341ea6b3"},
+    {file = "boto3-1.28.78-py3-none-any.whl", hash = "sha256:ff8df4bb5aeb69acc64959a74b31042bfc52d64ca77dbe845a72c8062c48d179"},
+    {file = "boto3-1.28.78.tar.gz", hash = "sha256:aa970b1571321846543a6e615848352fe7621f1cb96b4454e919421924af95f7"},
 ]
 
 [package.dependencies]
-botocore = ">=1.31.65,<1.32.0"
+botocore = ">=1.31.78,<1.32.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.7.0,<0.8.0"
 
@@ -127,13 +127,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.31.65"
+version = "1.31.78"
 description = "Low-level, data-driven core of boto 3."
 optional = true
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.31.65-py3-none-any.whl", hash = "sha256:f74e3da98dfcec17bc63ef58f82c643bf5bd7ec6cc11a26ede21cc4cd064917f"},
-    {file = "botocore-1.31.65.tar.gz", hash = "sha256:90716c6f1af97e5c2f516e9a3379767ebdddcc6cbed79b026fa5038ce4e5e43e"},
+    {file = "botocore-1.31.78-py3-none-any.whl", hash = "sha256:a9ca8deeb3f47a10a25637859fee8d81cac2db37ace819d24471279e44879547"},
+    {file = "botocore-1.31.78.tar.gz", hash = "sha256:320c70bc412157813c2cf60217a592b4b345f8e97e4bf3b1ce49b6be69ed8965"},
 ]
 
 [package.dependencies]
@@ -530,7 +530,7 @@ files = [
 name = "dnspython"
 version = "2.4.2"
 description = "DNS toolkit"
-optional = true
+optional = false
 python-versions = ">=3.8,<4.0"
 files = [
     {file = "dnspython-2.4.2-py3-none-any.whl", hash = "sha256:57c6fbaaeaaf39c891292012060beb141791735dbb4004798328fc2c467402d8"},
@@ -2241,9 +2241,7 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
 
 [extras]
-ddns = ["dnspython"]
-duckdns = ["dnspython"]
-full = ["boto3", "dnspython", "localzone", "oci", "softlayer", "zeep"]
+full = ["boto3", "localzone", "oci", "softlayer", "zeep"]
 gransy = ["zeep"]
 localzone = ["localzone"]
 oci = ["oci"]
@@ -2253,4 +2251,4 @@ softlayer = ["softlayer"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "2fa12653250582e0c394ce8994e91ac189af86b62c9c60fe0497808d077d9db6"
+content-hash = "960a27e6c27ae89f75ec1453825094b02674b9aed45bafb728ac147a7f90b94d"
