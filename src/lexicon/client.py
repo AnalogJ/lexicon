@@ -10,7 +10,6 @@ from types import TracebackType
 from typing import Any, Type
 
 import dns.resolver
-
 import tldextract
 
 from lexicon import config as helper_config

@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.17.0 - 06/11/2023
 ### Added
 * New method to determine the actual zone name for a given FQDN. Historically it was an extraction
   of the second-level domain given well-known TLDs (eg., `domain.net` for `www.domain.net`) using
