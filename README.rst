@@ -113,6 +113,7 @@ The current supported providers are:
 .. tag: providers-table-end
 
 .. _aliyun: https://help.aliyun.com/document_detail/29739.html
+.. _arvancloud: https://www.arvancloud.ir/api/cdn/4.0
 .. _aurora: https://www.pcextreme.com/aurora/dns
 .. _azure: https://docs.microsoft.com/en-us/rest/api/dns/
 .. _cloudflare: https://api.cloudflare.com/#endpoints
