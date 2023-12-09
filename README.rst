@@ -194,6 +194,7 @@ The current supported providers are:
 .. _zeit:
 .. _zilore: https://zilore.com/en/help/api
 .. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
+.. _qcloud: https://cloud.tencent.com/document/product/1427/56194
 
 .. tag: intro-end
 
