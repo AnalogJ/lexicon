@@ -41,10 +41,10 @@ class Provider(BaseProvider):
 
         if not secret_key:
             raise Exception("Error, application secret_key is not defined")
-        
+
         self.cred = credential.Credential(secret_id, secret_key)
         self.client = dnspod_client.DnspodClient(self.cred, "")
-        # todo: add support for other api entrypoints
+        # add support for other api entrypoints
 
     def authenticate(self):
         describe_domain_req = models.DescribeDomainListRequest()
@@ -56,7 +56,7 @@ class Provider(BaseProvider):
         if len(describe_domain_resp.DomainList) == 0:
             raise AuthenticationError(f"Authenticate failed, domain {self.domain} not found")
         self.domain_id = describe_domain_resp.DomainList[0].DomainId
-        
+
     def cleanup(self) -> None:
         pass
 
@@ -87,13 +87,12 @@ class Provider(BaseProvider):
         if name is not None:
             params["Subdomain"] = self._relative_name(name)
         # qcloud dns api not support filter by content, implement it by client filter
-        
-        
+
         list_record_req.from_json_string(json.dumps(params))
         LOGGER.debug("list_records req: %s", list_record_req.to_json_string())
         list_record_resp = self.client.DescribeRecordList(list_record_req)
         LOGGER.debug("list_records resp: %s", list_record_resp.to_json_string())
-        
+
         records = []
         for record in list_record_resp.RecordList:
             if content is not None and record.Value != content:
@@ -107,7 +106,7 @@ class Provider(BaseProvider):
             })
         return records
 
-    def delete_record(self, identifier=None, rtype=None, name=None, content=None): 
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         batch_delete_record_req = models.DeleteRecordBatchRequest()
         params = {}
         if not identifier:
@@ -118,7 +117,7 @@ class Provider(BaseProvider):
         else:
             params['RecordIdList'] = [identifier]
         batch_delete_record_req.from_json_string(json.dumps(params))
-        
+
         LOGGER.debug("delete_record req: %s", batch_delete_record_req.to_json_string())
         batch_delete_record_resp = self.client.DeleteRecordBatch(batch_delete_record_req)
         LOGGER.debug("delete_record resp: %s", batch_delete_record_resp.to_json_string())
@@ -136,12 +135,11 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             params["TTL"] = self._get_lexicon_option("ttl")
-        
+
         modify_record_req.from_json_string(json.dumps(params))
-        
+
         LOGGER.debug("update_record req: %s", modify_record_req.to_json_string())
         modify_record_resp = self.client.ModifyRecord(modify_record_req)
         LOGGER.debug("update_record resp: %s", modify_record_resp.to_json_string())
-    
-        return True
 
+        return True
