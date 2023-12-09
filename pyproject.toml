@@ -51,6 +51,7 @@ localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
 oci = {version = ">=2", optional = true}  # oci
+tencentcloud-sdk-python = {version = ">=3", optional = true} # qcloud
 
 [tool.poetry.extras]
 route53 = ["boto3"]
@@ -58,8 +59,9 @@ localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
 oci = ["oci"]
+qcloud = ["tencentcloud-sdk-python"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "localzone", "softlayer", "zeep", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "oci", "tencentcloud-sdk-python"]
 
 [tool.poetry.group.dev.dependencies]
 esbonio = "*"

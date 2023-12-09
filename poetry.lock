@@ -1828,6 +1828,20 @@ lint = ["docutils-stubs", "flake8", "mypy"]
 test = ["pytest"]
 
 [[package]]
+name = "tencentcloud-sdk-python"
+version = "3.0.1049"
+description = "Tencent Cloud SDK for Python"
+optional = true
+python-versions = "*"
+files = [
+    {file = "tencentcloud-sdk-python-3.0.1049.tar.gz", hash = "sha256:8175cb57986fd066850f95e58153635c23dfa05573353aedf572e08a5ca50031"},
+    {file = "tencentcloud_sdk_python-3.0.1049-py2.py3-none-any.whl", hash = "sha256:50d183e03704764c074b61bd1998feabb584ccf1ffb72134b65b89dfcf2d5a6a"},
+]
+
+[package.dependencies]
+requests = ">=2.16.0"
+
+[[package]]
 name = "tldextract"
 version = "5.1.1"
 description = "Accurately separates a URL's subdomain, domain, and public suffix, using the Public Suffix List (PSL). By default, this includes the public ICANN TLDs and their exceptions. You can optionally support the Public Suffix List's private domains as well."
@@ -2257,14 +2271,15 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
 
 [extras]
-full = ["boto3", "localzone", "oci", "softlayer", "zeep"]
+full = ["boto3", "localzone", "oci", "softlayer", "tencentcloud-sdk-python", "zeep"]
 gransy = ["zeep"]
 localzone = ["localzone"]
 oci = ["oci"]
+qcloud = ["tencentcloud-sdk-python"]
 route53 = ["boto3"]
 softlayer = ["softlayer"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "960a27e6c27ae89f75ec1453825094b02674b9aed45bafb728ac147a7f90b94d"
+content-hash = "570fa8cc6c0f5cecf0d32bc8b277a38f2cfe53f19b5575a66282ea2228e426a2"
