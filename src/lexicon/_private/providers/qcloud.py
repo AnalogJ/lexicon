@@ -3,11 +3,18 @@ from argparse import ArgumentParser
 from typing import List
 
 import json
-from tencentcloud.common import credential
-from tencentcloud.dnspod.v20210323 import dnspod_client, models
+
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
+
+# tencentcloud-sdk-python is an optional dependency of lexicon; do not throw an ImportError if
+# the dependency is unmet.
+try:
+    from tencentcloud.common import credential
+    from tencentcloud.dnspod.v20210323 import dnspod_client, models
+except ImportError:
+    pass
 
 LOGGER = logging.getLogger(__name__)
 
