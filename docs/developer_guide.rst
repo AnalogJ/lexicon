@@ -39,13 +39,7 @@ Activate the virtual environment
 
 .. code-block:: bash
 
-    # On Linux / WSL2
-    source .venv/bin/activate
-
-.. code-block:: powershell
-
-    # On Windows (powershell)
-    ./.venv/Scripts/activate
+    poetry shell
 
 Make sure all tests pass:
 
