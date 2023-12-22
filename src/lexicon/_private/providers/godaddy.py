@@ -6,11 +6,13 @@ from argparse import ArgumentParser
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
+import tldextract
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -299,10 +301,8 @@ class Provider(BaseProvider):
 
     def get_root_domain_name(self):
         # Remove the subdomains parts if any
-        domain = self.domain
-        domain_parts = domain.split(".")
-        n_parts = len(domain_parts)
-        return domain_parts[n_parts - 2] + "." + domain_parts[n_parts - 1]
+        extracted = tldextract.extract(self.domain)
+        return extracted.domain + "." + extracted.suffix
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # When editing DNS zone, API is unavailable for few seconds
