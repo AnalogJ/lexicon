@@ -31,7 +31,7 @@ class Provider(BaseProvider):
             3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
 
             Finding zone_id value is explained in CloudFlare `Doc <https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/>`_
-        """
+        """  # noqa: W293
         parser.add_argument(
             "--auth-username",
             help="specify email address for authentication (for Global API key only)",
