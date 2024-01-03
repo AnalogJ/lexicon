@@ -1,0 +1,618 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/
+  response:
+    body:
+      string: '[{"name":"fluchtkapsel.de","type":"master"},{"name":"larp-bb.de","type":"master"},{"name":"wiedner.berlin","type":"master"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:29 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken1&name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:29 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "_acme-challenge.deleterecordset", "data": "challengetoken1",
+      "type": "TXT", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '98'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:29 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:30 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken2&name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:34 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "_acme-challenge.deleterecordset", "data": "challengetoken2",
+      "type": "TXT", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '98'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:34 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:34 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[{"name":"_acme-challenge.deleterecordset","ttl":"3600","type":"TXT","data":"challengetoken1"},{"name":"_acme-challenge.deleterecordset","ttl":"3600","type":"TXT","data":"challengetoken2"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:39 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '189'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken1&name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[{"name":"_acme-challenge.deleterecordset","ttl":"3600","type":"TXT","data":"challengetoken1"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:39 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '95'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "_acme-challenge.deleterecordset", "data": "challengetoken1",
+      "type": "TXT"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '85'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/delete
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:39 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:39 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=challengetoken2&name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[{"name":"_acme-challenge.deleterecordset","ttl":"3600","type":"TXT","data":"challengetoken2"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:44 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '95'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "_acme-challenge.deleterecordset", "data": "challengetoken2",
+      "type": "TXT"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '85'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/delete
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:44 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:33:45 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?name=_acme-challenge.deleterecordset&type=TXT
+  response:
+    body:
+      string: '[]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:33:49 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2'
+    status:
+      code: 200
+      message: OK
+version: 1

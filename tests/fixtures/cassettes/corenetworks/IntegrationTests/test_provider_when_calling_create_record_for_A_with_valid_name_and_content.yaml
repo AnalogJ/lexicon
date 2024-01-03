@@ -1,0 +1,166 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/
+  response:
+    body:
+      string: '[{"name":"fluchtkapsel.de","type":"master"},{"name":"larp-bb.de","type":"master"},{"name":"wiedner.berlin","type":"master"}]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:31:58 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '124'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/?data=127.0.0.1&name=localhost&type=A
+  response:
+    body:
+      string: '[]'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Mar 2022 18:31:59 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "localhost", "data": "127.0.0.1", "type": "A", "ttl": 3600}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '68'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:31:59 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      User-Agent:
+      - python-requests/2.27.1
+    method: POST
+    uri: https://beta.api.core-networks.de/dnszones/fluchtkapsel.de/records/commit
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - Upgrade, Keep-Alive
+      Date:
+      - Wed, 30 Mar 2022 18:31:59 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=1, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache
+      Upgrade:
+      - h2,h2c
+    status:
+      code: 204
+      message: No Content
+version: 1
