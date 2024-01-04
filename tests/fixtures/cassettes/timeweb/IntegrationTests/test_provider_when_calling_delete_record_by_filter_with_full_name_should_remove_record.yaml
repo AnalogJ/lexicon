@@ -1,0 +1,236 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.timeweb.cloud/api/v1/domains/example.com
+  response:
+    body:
+      string: '{"domain":{"domain_status":"paid","expiration":"2024-07-01","fqdn":"example.com","id":13140253,"is_premium":false,"is_technical":false,"days_left":0,"linked_ip":null,"paid_till":null,"person_id":852321,"premium_prolong_cost":null,"provider":"PDR","request_status":null,"subdomains":[{"fqdn":"subdomain.example.com","id":13170019,"linked_ip":null}],"tld_id":24,"is_whois_privacy_enabled":null},"response_id":"86932730-8179-45a2-a44e-742f905e25aa"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1117'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 03 Jan 2024 16:05:42 GMT
+      Etag:
+      - W/"45d-8zO52gGftPZgIgR6W2tO/ArHDVs"
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"subdomain": "delete.testfull", "type": "TXT", "value": "challengetoken"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '74'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: POST
+    uri: https://api.timeweb.cloud/api/v1/domains/example.com/dns-records
+  response:
+    body:
+      string: '{"dns_record":{"data":{"subdomain":"delete.testfull","value":"challengetoken"},"id":55806369,"type":"TXT"},"response_id":"c18f107f-82e1-49a1-88bc-9b8e2cf00d5a"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '160'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 03 Jan 2024 16:05:42 GMT
+      Etag:
+      - W/"a0-E93zjINI5FpH45Nmb+uU38k/byU"
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.timeweb.cloud/api/v1/domains/example.com/dns-records?limit=100&offset=0
+  response:
+    body:
+      string: '{"meta":{"total":7},"dns_records":[{"data":{"subdomain":"delete.testfull","value":"challengetoken"},"id":55806369,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.noop","value":"challengetoken"},"id":55806363,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.createrecordset","value":"challengetoken2"},"id":55806361,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.createrecordset","value":"challengetoken1"},"id":55806359,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.test","value":"challengetoken"},"id":55806357,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.full","value":"challengetoken"},"id":55806355,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.fqdn","value":"challengetoken"},"id":55806353,"type":"TXT"}],"response_id":"f3a9a853-7fa3-4124-a962-09c37a337e99"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1865'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 03 Jan 2024 16:05:42 GMT
+      Etag:
+      - W/"749-+cMeGxH0SXu0maG8yII+dnHh7EQ"
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: DELETE
+    uri: https://api.timeweb.cloud/api/v1/domains/example.com/dns-records/55806369
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 03 Jan 2024 16:05:42 GMT
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.timeweb.cloud/api/v1/domains/example.com/dns-records?limit=100&offset=0
+  response:
+    body:
+      string: '{"meta":{"total":6},"dns_records":[{"data":{"subdomain":"_acme-challenge.noop","value":"challengetoken"},"id":55806363,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.createrecordset","value":"challengetoken2"},"id":55806361,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.createrecordset","value":"challengetoken1"},"id":55806359,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.test","value":"challengetoken"},"id":55806357,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.full","value":"challengetoken"},"id":55806355,"type":"TXT"},{"data":{"subdomain":"_acme-challenge.fqdn","value":"challengetoken"},"id":55806353,"type":"TXT"}],"response_id":"59916b5e-affb-4ac8-9aab-2ad5ae5a5523"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1772'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 03 Jan 2024 16:05:43 GMT
+      Etag:
+      - W/"6ec-WgJxEw8bitKgGrxnrt/ha26GfwE"
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 200
+      message: OK
+version: 1

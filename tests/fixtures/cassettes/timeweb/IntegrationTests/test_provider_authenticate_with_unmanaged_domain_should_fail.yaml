@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.timeweb.cloud/api/v1/domains/thisisadomainidonotown.com
+  response:
+    body:
+      string: '{"status_code":404,"error_code":"not_found","message":"Not found","response_id":"07b9450d-f806-4023-828e-9fd9f314543d"}'
+    headers:
+      Access-Control-Allow-Headers:
+      - '*'
+      Access-Control-Expose-Headers:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '119'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 03 Jan 2024 16:05:33 GMT
+      Etag:
+      - W/"77-pbzDs7QM1PWBWl/fBmBdpxS7aXA"
+      Keep-Alive:
+      - timeout=15
+      Server:
+      - QRATOR
+      Vary:
+      - Origin
+      X-Krakend:
+      - Version 2.4.3
+      X-Krakend-Completed:
+      - 'false'
+    status:
+      code: 404
+      message: Not Found
+version: 1

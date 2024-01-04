@@ -247,7 +247,7 @@ variable ``LEXICON_LIVE_TESTS`` set to ``true`` like below:
 
 .. code-block:: bash
 
-	LEXICON_LIVE_TESTS=true pytest lexicon/tests/providers/test_foo.py
+	LEXICON_LIVE_TESTS=true pytest tests/providers/test_foo.py
 
 .. note::
 
