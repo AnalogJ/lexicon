@@ -1,4 +1,5 @@
 """Module provider for Arvancloud"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -56,9 +57,13 @@ class Provider(BaseProvider):
             self._post(f"/domains/{self.domain_id}/dns-records", record)
         except requests.exceptions.HTTPError as err:
             # HTTP 422 is expected when a record with the same type and content is exists.
-            if err.response.status_code == 422 and \
-                    type(err.response.json()["errors"]) is dict and \
-                    err.response.json()["errors"].get('name') and err.response.json()["errors"]["name"][0] == "DNS Record Data is duplicate.":
+            if (
+                err.response.status_code == 422
+                and type(err.response.json()["errors"]) is dict
+                and err.response.json()["errors"].get("name")
+                and err.response.json()["errors"]["name"][0]
+                == "DNS Record Data is duplicate."
+            ):
                 created = True
             else:
                 raise Exception("create_record: %s", err.response.json()["errors"])
@@ -89,12 +94,14 @@ class Provider(BaseProvider):
                     "type": record["type"].upper(),
                     "name": self._full_name(record["name"]),
                     "ttl": record["ttl"],
-                    "content": self._parse_r1c_response(record["type"].upper(), record["value"]),
+                    "content": self._parse_r1c_response(
+                        record["type"].upper(), record["value"]
+                    ),
                     "id": record["id"],
                 }
 
                 if content:
-                    if content in processed_record['content']:
+                    if content in processed_record["content"]:
                         records.append(processed_record)
                 else:
                     records.append(processed_record)
@@ -133,9 +140,7 @@ class Provider(BaseProvider):
             record["ttl"] = self._get_lexicon_option("ttl")
 
         try:
-            self._put(
-                f"/domains/{self.domain_id}/dns-records/{identifier}", record
-            )
+            self._put(f"/domains/{self.domain_id}/dns-records/{identifier}", record)
         except requests.exceptions.HTTPError as err:
             raise Exception("update_record: %s", err.response.json()["errors"])
 
@@ -174,7 +179,7 @@ class Provider(BaseProvider):
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": f"{self._get_provider_option('auth_token')}"
+            "Authorization": f"{self._get_provider_option('auth_token')}",
         }
         response = requests.request(
             action,
@@ -203,34 +208,49 @@ class Provider(BaseProvider):
             if len(content_split) == 1:
                 output.update(
                     {
-                        "value": [{'ip': content_split[0]}],
+                        "value": [{"ip": content_split[0]}],
                     }
                 )
             else:
                 output.update(
                     {
-                        "value": [{'ip': ip, 'port': int(port), 'weight': int(weight)} for ip, port, weight in content_split],
+                        "value": [
+                            {"ip": ip, "port": int(port), "weight": int(weight)}
+                            for ip, port, weight in content_split
+                        ],
                     }
                 )
 
         output.update(
             {
-                "CNAME": (lambda: {
-                    "value": {
-                        "host": content_split[0],
-                        "host_header": content_split[1] if len(content_split) == 2 else "source",
-                    }}),
-                "ANAME": (lambda: {
-                    "value": {
-                        "location": content_split[0],
-                        "host_header": content_split[1],
-                    }}),
-                "MX": (lambda: {
-                    "value": {
-                        "host": content_split[0],
-                        "priority": content_split[1],
+                "CNAME": (
+                    lambda: {
+                        "value": {
+                            "host": content_split[0],
+                            "host_header": (
+                                content_split[1]
+                                if len(content_split) == 2
+                                else "source"
+                            ),
+                        }
                     }
-                }),
+                ),
+                "ANAME": (
+                    lambda: {
+                        "value": {
+                            "location": content_split[0],
+                            "host_header": content_split[1],
+                        }
+                    }
+                ),
+                "MX": (
+                    lambda: {
+                        "value": {
+                            "host": content_split[0],
+                            "priority": content_split[1],
+                        }
+                    }
+                ),
                 "NS": (lambda: {"value": {"host": content}}),
                 "PTR": (lambda: {"value": {"domain": content}}),
                 "SRV": (
@@ -257,11 +277,27 @@ class Provider(BaseProvider):
 
         output.update(
             {
-                "A": (lambda: {"value": ", ".join([" ".join(str(value) if value is not None and value != "" else "" for value in item.values()) for item in input])}),
-                "CNAME": (lambda: {"value": input['host']}),
-                "NS": (lambda: {"value": input['host']}),
-                "TXT": (lambda: {"value": input['text']}),
+                "A": (
+                    lambda: {
+                        "value": ", ".join(
+                            [
+                                " ".join(
+                                    (
+                                        str(value)
+                                        if value is not None and value != ""
+                                        else ""
+                                    )
+                                    for value in item.values()
+                                )
+                                for item in input
+                            ]
+                        )
+                    }
+                ),
+                "CNAME": (lambda: {"value": input["host"]}),
+                "NS": (lambda: {"value": input["host"]}),
+                "TXT": (lambda: {"value": input["text"]}),
             }.get(rtype, lambda: {})()
         )
 
-        return output['value']
+        return output["value"]
