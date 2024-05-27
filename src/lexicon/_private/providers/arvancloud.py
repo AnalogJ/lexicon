@@ -75,7 +75,7 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, rtype=None, name=None, content=None):
-        filter = {"per_page": 10}
+        filter = {"per_page": 20}
 
         if rtype:
             filter["type"] = rtype.lower()
