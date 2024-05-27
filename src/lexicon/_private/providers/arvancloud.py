@@ -59,7 +59,7 @@ class Provider(BaseProvider):
             # HTTP 422 is expected when a record with the same type and content is exists.
             if (
                 err.response.status_code == 422
-                and type(err.response.json()["errors"]) is dict
+                and isinstance(err.response.json()["errors"], dict)
                 and err.response.json()["errors"].get("name")
                 and err.response.json()["errors"]["name"][0]
                 == "DNS Record Data is duplicate."
