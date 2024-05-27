@@ -33,11 +33,10 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://napi.arvancloud.ir/cdn/4.0"
 
     def authenticate(self):
-        payload = self._get("/domains")
-        for record in payload["data"]:
-            if record["domain"] == self.domain:
-                self.domain_id = self.domain
-                break
+        payload = self._get(f"/domains/{self.domain}")
+
+        if payload["data"]["domain"] == self.domain:
+            self.domain_id = self.domain
         else:
             raise AuthenticationError("No matching domain found")
 
