@@ -69,7 +69,7 @@ class Provider(BaseProvider):
                 raise Exception("create_record: %s", err.response.json()["errors"])
 
         LOGGER.debug("create_record: %s", created)
-        return created
+        return True
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
