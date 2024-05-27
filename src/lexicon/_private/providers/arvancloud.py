@@ -100,9 +100,8 @@ class Provider(BaseProvider):
                     "id": record["id"],
                 }
 
-                if content:
-                    if content in processed_record["content"]:
-                        records.append(processed_record)
+                if content in processed_record["content"]:
+                    records.append(processed_record)
                 else:
                     records.append(processed_record)
 
