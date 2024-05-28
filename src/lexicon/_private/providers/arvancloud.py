@@ -98,11 +98,10 @@ class Provider(BaseProvider):
                     ),
                     "id": record["id"],
                 }
+                records.append(processed_record)
 
-                if content in processed_record["content"]:
-                    records.append(processed_record)
-                else:
-                    records.append(processed_record)
+            if content:
+                records = [record for record in records if record["content"] == content]
 
             pages = payload["meta"]["total"]
             page = payload["meta"]["current_page"]
