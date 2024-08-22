@@ -183,6 +183,7 @@ The current supported providers are:
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
 .. _softlayer: https://sldn.softlayer.com/article/rest#http_request_types
+.. _timeweb: https://timeweb.cloud/api-docs
 .. _transip: https://api.transip.nl/rest/docs.html
 .. _ultradns: https://ultra-portalstatic.ultradns.com/static/docs/rest-api_user_guide.pdf
 .. _valuedomain: https://www.value-domain.com/service/api/
