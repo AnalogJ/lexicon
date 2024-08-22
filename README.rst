@@ -99,15 +99,15 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| pointhq_        | porkbun_        | powerdns_       | rackspace_      | rage4_          |
+| pointhq_        | porkbun_        | powerdns_       | qcloud_         | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
+| rage4_          | rcodezero_      | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| timeweb_        | transip_        | ultradns_       | valuedomain_    | vercel_         |
+| softlayer_      | timeweb_        | transip_        | ultradns_       | valuedomain_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vultr_          | webgo_          | wedos_          | yandex_         | yandexcloud_    |
+| vercel_         | vultr_          | webgo_          | wedos_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| yandexcloud_    | zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -175,6 +175,7 @@ The current supported providers are:
 .. _pointhq: https://pointhq.com/api/docs
 .. _porkbun: https://kb.porkbun.com/article/190-getting-started-with-the-porkbun-dns-api
 .. _powerdns: https://doc.powerdns.com/md/httpapi/api_spec/
+.. _qcloud: https://cloud.tencent.com/document/product/1427/56194
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
@@ -194,7 +195,6 @@ The current supported providers are:
 .. _zeit:
 .. _zilore: https://zilore.com/en/help/api
 .. _zonomi: http://zonomi.com/app/dns/dyndns.jsp
-.. _qcloud: https://cloud.tencent.com/document/product/1427/56194
 
 .. tag: intro-end
 

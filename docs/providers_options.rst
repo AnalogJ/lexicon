@@ -200,6 +200,9 @@ List of options
 .. _powerdns:
 .. include:: providers/powerdns.rst
 
+.. _qcloud:
+.. include:: providers/qcloud.rst
+
 .. _rackspace:
 .. include:: providers/rackspace.rst
 

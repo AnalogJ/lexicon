@@ -1,9 +1,7 @@
+import json
 import logging
 from argparse import ArgumentParser
 from typing import List
-
-import json
-
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -29,7 +27,9 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--secret_id", help="specify secret_id for authentication")
-        parser.add_argument("--secret_key", help="specify secret_key for authentication")
+        parser.add_argument(
+            "--secret_key", help="specify secret_key for authentication"
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
@@ -54,7 +54,9 @@ class Provider(BaseProvider):
         describe_domain_req.from_json_string(json.dumps(params))
         describe_domain_resp = self.client.DescribeDomainList(describe_domain_req)
         if len(describe_domain_resp.DomainList) == 0:
-            raise AuthenticationError(f"Authenticate failed, domain {self.domain} not found")
+            raise AuthenticationError(
+                f"Authenticate failed, domain {self.domain} not found"
+            )
         self.domain_id = describe_domain_resp.DomainList[0].DomainId
 
     def cleanup(self) -> None:
@@ -97,13 +99,15 @@ class Provider(BaseProvider):
         for record in list_record_resp.RecordList:
             if content is not None and record.Value != content:
                 continue
-            records.append({
-                "type": record.Type,
-                "name": self._full_name(record.Name),
-                "ttl": record.TTL,
-                "content": record.Value,
-                "id": record.RecordId,
-            })
+            records.append(
+                {
+                    "type": record.Type,
+                    "name": self._full_name(record.Name),
+                    "ttl": record.TTL,
+                    "content": record.Value,
+                    "id": record.RecordId,
+                }
+            )
         return records
 
     def delete_record(self, identifier=None, rtype=None, name=None, content=None):
@@ -113,14 +117,18 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name, content)
             if len(records) == 0:
                 return True
-            params['RecordIdList'] = [record["id"] for record in records]
+            params["RecordIdList"] = [record["id"] for record in records]
         else:
-            params['RecordIdList'] = [identifier]
+            params["RecordIdList"] = [identifier]
         batch_delete_record_req.from_json_string(json.dumps(params))
 
         LOGGER.debug("delete_record req: %s", batch_delete_record_req.to_json_string())
-        batch_delete_record_resp = self.client.DeleteRecordBatch(batch_delete_record_req)
-        LOGGER.debug("delete_record resp: %s", batch_delete_record_resp.to_json_string())
+        batch_delete_record_resp = self.client.DeleteRecordBatch(
+            batch_delete_record_req
+        )
+        LOGGER.debug(
+            "delete_record resp: %s", batch_delete_record_resp.to_json_string()
+        )
         return True
 
     def update_record(self, identifier, rtype=None, name=None, content=None):
@@ -131,7 +139,7 @@ class Provider(BaseProvider):
             "RecordType": rtype,
             "RecordLine": "\u9ED8\u8BA4",
             "Value": content,
-            "RecordId": identifier
+            "RecordId": identifier,
         }
         if self._get_lexicon_option("ttl"):
             params["TTL"] = self._get_lexicon_option("ttl")
