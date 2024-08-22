@@ -1,4 +1,5 @@
 """Integration tests for Webgo"""
+
 import re
 from unittest import TestCase
 

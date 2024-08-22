@@ -1,4 +1,5 @@
 """Integration tests for auto"""
+
 import socket
 from shutil import which
 from unittest import TestCase, mock

@@ -1,9 +1,9 @@
 """Integration tests for Timeweb"""
+
 from unittest import TestCase
 
-from integration_tests import IntegrationTestsV2
-
 import pytest
+from integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -12,17 +12,17 @@ import pytest
 class TimewebProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for Timeweb provider"""
 
-    provider_name = 'timeweb'
-    domain = 'example.com'
+    provider_name = "timeweb"
+    domain = "example.com"
 
     def _filter_post_data_parameters(self):
-        return ['login_token']
+        return ["login_token"]
 
     def _filter_headers(self):
-        return ['Authorization']
+        return ["Authorization"]
 
     def _filter_query_parameters(self):
-        return ['secret_key']
+        return ["secret_key"]
 
     def _filter_response(self, response):
         """See `IntegrationTests._filter_response` for more information on how
@@ -30,11 +30,15 @@ class TimewebProviderTests(TestCase, IntegrationTestsV2):
         return response
 
     @pytest.mark.skip(reason="provider only supports TXT records without delegation")
-    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(self):
+    def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="provider only supports TXT records without delegation")
-    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(self):
+    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
+        self,
+    ):
         return
 
     @pytest.mark.skip(reason="provider does not support TTL")

@@ -5,6 +5,7 @@ In particular:
     - config should be passed correctly to provider,
     - relevant provider method should be invoked for a given config.
 """
+
 import importlib
 
 import pytest

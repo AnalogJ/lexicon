@@ -1,4 +1,5 @@
 """Integration tests for Namesilo"""
+
 from unittest import TestCase
 
 import pytest

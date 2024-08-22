@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.18.0 - 22/08/2024
 ### Added
 * Add `timeweb` provider (#1850)
 * Add `qcloud` provider (#1824)
