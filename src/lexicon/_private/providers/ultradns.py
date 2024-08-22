@@ -19,6 +19,7 @@ type and content.
 This is why the _clean_content and _unclean_content methods exist, to convert
 back and forth between the format UltraDNS expects, and the format Lexicon uses
 """
+
 import hashlib
 import json
 import logging

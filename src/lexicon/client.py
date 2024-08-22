@@ -1,4 +1,5 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
+
 from __future__ import annotations
 
 import logging

@@ -1,4 +1,5 @@
 """Module provider for Mythic Beasts"""
+
 import hashlib
 import json
 import logging

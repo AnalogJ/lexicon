@@ -1,4 +1,5 @@
 """Module provider for DNSMadeEasy"""
+
 import hmac
 import json
 import logging

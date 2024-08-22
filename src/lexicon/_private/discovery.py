@@ -3,6 +3,7 @@ This module takes care of finding information about the runtime of Lexicon:
 * what are the providers installed, and available
 * what is the version of Lexicon
 """
+
 import importlib
 import pkgutil
 import re

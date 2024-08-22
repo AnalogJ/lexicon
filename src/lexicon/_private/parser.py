@@ -1,4 +1,5 @@
 """Parsers definition for the Lexicon command-line interface"""
+
 import argparse
 import os
 from typing import Type

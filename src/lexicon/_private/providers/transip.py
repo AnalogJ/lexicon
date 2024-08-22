@@ -1,4 +1,5 @@
 """Module provider for TransIP"""
+
 from __future__ import annotations
 
 import binascii

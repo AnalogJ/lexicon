@@ -1,4 +1,5 @@
 """Module provider for Cloudflare"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -200,9 +201,9 @@ class Provider(BaseProvider):
             headers["X-Auth-Email"] = self._get_provider_option("auth_username")
             headers["X-Auth-Key"] = self._get_provider_option("auth_token")
         else:
-            headers[
-                "Authorization"
-            ] = f"Bearer {self._get_provider_option('auth_token')}"
+            headers["Authorization"] = (
+                f"Bearer {self._get_provider_option('auth_token')}"
+            )
         response = requests.request(
             action,
             self.api_endpoint + url,

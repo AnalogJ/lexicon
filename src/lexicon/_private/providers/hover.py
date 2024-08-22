@@ -1,4 +1,5 @@
 """Module provider for Hover"""
+
 import json
 import logging
 import re

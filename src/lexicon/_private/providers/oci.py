@@ -196,9 +196,11 @@ class Provider(BaseProvider):
                     "domain": name,
                     "rtype": rtype,
                     "rdata": content,
-                    "ttl": self._get_lexicon_option("ttl")
-                    if self._get_lexicon_option("ttl")
-                    else None,
+                    "ttl": (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl")
+                        else None
+                    ),
                 }
             ]
         }

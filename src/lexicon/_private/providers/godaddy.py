@@ -1,4 +1,5 @@
 """Module provider for Godaddy"""
+
 import hashlib
 import json
 import logging
@@ -12,7 +13,6 @@ from urllib3.util.retry import Retry
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -114,7 +114,7 @@ class Provider(BaseProvider):
         data = {"type": rtype, "name": relative_name, "data": content}
         if ttl:
             data["ttl"] = min([604800, max([int(ttl), 600])])
-            
+
         records.append(data)
 
         # Insert the record
@@ -352,7 +352,9 @@ class Provider(BaseProvider):
             # return any JSON, just an HTTP status without body.
             return None
 
-## Overwrite name utils to use root domain
+    #
+    # Overwrite name utils to use root domain
+    #
 
     def _fqdn_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present

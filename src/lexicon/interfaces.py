@@ -1,4 +1,5 @@
 """Base provider module for all Lexicon providers"""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -49,9 +50,9 @@ class Provider(ABC):
             # this key. However, there were no automated logic if the Provider is used directly.
             # So we provide this logic here.
             if not config.get("provider_name") and not config.get("provider"):
-                config[
-                    "provider_name"
-                ] = __name__  # Obviously we use the module name itself.
+                config["provider_name"] = (
+                    __name__  # Obviously we use the module name itself.
+                )
             self.config = legacy_config_resolver(config)
         else:
             self.config = config

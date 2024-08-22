@@ -25,6 +25,7 @@ will only apply to domain-a.com, as domain-b.com will continue using
 the previous version of the zone configuration. This module makes no
 attempt to detect and account for that.
 """
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -57,7 +58,9 @@ class Provider(BaseProvider):
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        parser.add_argument("--auth-token", help="specify Gandi API key or Personal Access Token")
+        parser.add_argument(
+            "--auth-token", help="specify Gandi API key or Personal Access Token"
+        )
         parser.add_argument(
             "--api-protocol",
             help="(optional) specify Gandi API protocol to use: rpc (default) or rest",
@@ -269,7 +272,11 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-        auth_method = "Apikey " if len(self._get_provider_option("auth_token")) <= 24 else "Bearer "
+        auth_method = (
+            "Apikey "
+            if len(self._get_provider_option("auth_token")) <= 24
+            else "Bearer "
+        )
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",

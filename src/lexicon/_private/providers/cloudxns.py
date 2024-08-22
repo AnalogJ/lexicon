@@ -1,4 +1,5 @@
 """Module provider for CloudXNS"""
+
 import hashlib
 import json
 import logging

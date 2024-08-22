@@ -1,4 +1,5 @@
 """Module provider for Dynu.com"""
+
 import json
 import logging
 from argparse import ArgumentParser

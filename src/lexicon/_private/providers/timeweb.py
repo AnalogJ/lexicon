@@ -1,12 +1,14 @@
 """Module provider for Timeweb"""
+
 import json
 import logging
 from argparse import ArgumentParser
 from typing import List
+
 import requests
+
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -101,7 +103,9 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as e:
             status_code = e.response.status_code
             if status_code == 409:
-                LOGGER.warning(f"Record {rtype} {name} returns {status_code} (already exists?)")
+                LOGGER.warning(
+                    f"Record {rtype} {name} returns {status_code} (already exists?)"
+                )
                 return True
             raise e
 
@@ -109,10 +113,7 @@ class Provider(BaseProvider):
         records = []
         processed_records = 0
         while True:
-            query_params = {
-                "limit": DEFAULT_PAGE_SIZE,
-                "offset": processed_records
-            }
+            query_params = {"limit": DEFAULT_PAGE_SIZE, "offset": processed_records}
             result = self._get(self.api_dns_records, query_params=query_params)
             if not self._check_ok(result):
                 break
@@ -127,9 +128,11 @@ class Provider(BaseProvider):
                     "content": r_content,
                     "id": record["id"],
                 }
-                if (rtype is None or r_rtype == rtype) \
-                        and (name is None or r_name == self._get_subdomain(name)) \
-                        and (content is None or r_content == content):
+                if (
+                    (rtype is None or r_rtype == rtype)
+                    and (name is None or r_name == self._get_subdomain(name))
+                    and (content is None or r_content == content)
+                ):
                     records.append(processed_record)
                 processed_records += 1
 
@@ -162,7 +165,7 @@ class Provider(BaseProvider):
         data = {
             "subdomain": self._get_subdomain(name) if name else record["name"],
             "type": rtype if rtype else record["type"],
-            "value": content if content else record["content"]
+            "value": content if content else record["content"],
         }
         result = self._patch(f"{self.api_dns_records}/{identifier}", data)
 

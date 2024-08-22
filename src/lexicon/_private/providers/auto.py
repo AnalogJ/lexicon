@@ -1,4 +1,5 @@
 """Module provider for auto"""
+
 from __future__ import annotations
 
 import logging
@@ -188,9 +189,9 @@ class Provider(object):
         if mapping_override:
             for one_mapping in mapping_override.split(","):
                 one_mapping_processed = one_mapping.split(":")
-                mapping_override_processed[
-                    one_mapping_processed[0]
-                ] = one_mapping_processed[1]
+                mapping_override_processed[one_mapping_processed[0]] = (
+                    one_mapping_processed[1]
+                )
 
         if not self.domain:
             raise AuthenticationError("Domain is not defined.")

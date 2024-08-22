@@ -1,4 +1,5 @@
 """Module provider for Aurora"""
+
 import base64
 import datetime
 import hashlib

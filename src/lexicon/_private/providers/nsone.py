@@ -1,4 +1,5 @@
 """Module provider for NSOne"""
+
 import json
 import logging
 from argparse import ArgumentParser

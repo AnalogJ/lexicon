@@ -1,4 +1,5 @@
 """Module provider for OVH"""
+
 import hashlib
 import json
 import logging
