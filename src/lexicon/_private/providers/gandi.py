@@ -57,7 +57,7 @@ class Provider(BaseProvider):
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
-        parser.add_argument("--auth-token", help="specify Gandi API key")
+        parser.add_argument("--auth-token", help="specify Gandi API key or Personal Access Token")
         parser.add_argument(
             "--api-protocol",
             help="(optional) specify Gandi API protocol to use: rpc (default) or rest",
@@ -269,10 +269,11 @@ class Provider(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
+        auth_method = "Apikey " if len(self._get_provider_option("auth_token")) <= 24 else "Bearer "
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "Apikey " + self._get_provider_option("auth_token"),
+            "Authorization": auth_method + self._get_provider_option("auth_token"),
         }
         if not url.startswith(self.api_endpoint):
             url = self.api_endpoint + url
