@@ -1,6 +1,14 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `timeweb` provider (#1850)
+* Add `qcloud` provider (#1824)
+
+### Modified
+* Update cloudflare documentation regarding the zoneID (#1783)
+* Add support of personal access tokens (PATs) in `gandi` provider (#1987)
+* Prevent invalid TTL values and proper behavior with subdomains in `godaddy` provider (#1834)
 
 ## 3.17.0 - 06/11/2023
 ### Added
