@@ -1,5 +1,4 @@
 """Integration tests for SakuraCloud"""
-
 from unittest import TestCase
 
 import pytest

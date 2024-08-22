@@ -1,5 +1,4 @@
 """Test for one implementation of the interface"""
-
 from unittest import TestCase
 
 import pytest

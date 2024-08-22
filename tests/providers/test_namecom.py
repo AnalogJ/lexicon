@@ -1,5 +1,4 @@
 """Integration tests for Name.com"""
-
 import json
 from unittest import TestCase
 from unittest.mock import ANY, Mock, call, patch

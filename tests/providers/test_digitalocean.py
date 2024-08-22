@@ -1,5 +1,4 @@
 """Integration tests for DigitalOcean"""
-
 from unittest import TestCase
 
 import pytest

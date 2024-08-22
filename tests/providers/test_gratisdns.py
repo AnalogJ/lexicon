@@ -1,5 +1,4 @@
 """Integration tests for GratisDNS"""
-
 import re
 from unittest import TestCase
 

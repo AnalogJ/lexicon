@@ -1,5 +1,4 @@
 """Integration tests for Memset"""
-
 from unittest import TestCase
 
 import pytest

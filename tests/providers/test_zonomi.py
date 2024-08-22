@@ -1,5 +1,4 @@
 """Integratoin tests for Zonomi"""
-
 from unittest import TestCase
 
 import pytest

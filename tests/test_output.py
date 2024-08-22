@@ -1,5 +1,4 @@
 """ Ensure that stdout corresponds to the given reference output """
-
 import json
 
 from lexicon._private import cli

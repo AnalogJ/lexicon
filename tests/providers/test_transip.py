@@ -1,5 +1,4 @@
 """Integration tests for Transip"""
-
 import re
 from unittest import TestCase
 

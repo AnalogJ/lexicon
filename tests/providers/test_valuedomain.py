@@ -1,5 +1,4 @@
 """Test for valuedomain implementation of the interface."""
-
 import sys
 from unittest import TestCase, skipIf
 

@@ -1,5 +1,4 @@
 """Unit tests for the Lexicon CLI parser"""
-
 import pytest
 
 from lexicon._private import parser

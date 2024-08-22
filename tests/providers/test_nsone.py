@@ -1,5 +1,4 @@
 """Integration tests for nsone"""
-
 from unittest import TestCase
 
 import pytest

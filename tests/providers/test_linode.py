@@ -1,5 +1,4 @@
 """Integration tests for Linode"""
-
 from unittest import TestCase
 
 import pytest

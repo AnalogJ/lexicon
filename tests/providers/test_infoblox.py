@@ -18,7 +18,6 @@ Both parameters are populated with:
 auth_user = placeholder_auth_user
 auth_psw = placeholder_auth_psw
 """
-
 import os
 from unittest import TestCase
 

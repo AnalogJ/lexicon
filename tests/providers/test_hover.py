@@ -1,5 +1,4 @@
 """Integration tests for Hover"""
-
 import json
 import re
 from unittest import TestCase

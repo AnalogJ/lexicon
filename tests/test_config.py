@@ -1,5 +1,4 @@
 """Unit tests for the Lexicon config mechanism"""
-
 import pytest
 
 from lexicon._private.parser import generate_cli_main_parser

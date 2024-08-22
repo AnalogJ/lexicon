@@ -1,5 +1,4 @@
 """Integration tests for Rage4"""
-
 from unittest import TestCase
 
 import pytest

@@ -1,5 +1,4 @@
 """"Test for rackspace implementation of the lexicon interface"""
-
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2

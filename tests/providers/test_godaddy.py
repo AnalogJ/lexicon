@@ -1,5 +1,4 @@
 """Integration tests for Goddady"""
-
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
