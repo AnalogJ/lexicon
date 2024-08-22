@@ -1,4 +1,5 @@
 """Base class for provider integration tests"""
+
 import os
 from functools import wraps
 from typing import Optional

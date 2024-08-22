@@ -1,4 +1,5 @@
 """Integration tests for PointHq"""
+
 from unittest import TestCase
 
 import pytest

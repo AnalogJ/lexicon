@@ -1,4 +1,5 @@
 """Integration tests for Online.net"""
+
 from unittest import TestCase
 
 import pytest

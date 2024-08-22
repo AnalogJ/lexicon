@@ -1,4 +1,5 @@
 """Integration tests for DNSPark"""
+
 from unittest import TestCase
 
 import pytest

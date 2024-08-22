@@ -1,4 +1,5 @@
 """Integration tests for Cloudflare"""
+
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
@@ -22,8 +23,6 @@ class CloudflareProviderTests(TestCase, IntegrationTestsV2):
     # Similarly for `--zone-id`, we want to control when its value is not empty, because
     # it will change the logic of the authentication process.
     def _test_fallback_fn(self):
-        return (
-            lambda x: "placeholder_" + x
-            if x not in ("auth_username", "zone_id")
-            else ""
+        return lambda x: (
+            "placeholder_" + x if x not in ("auth_username", "zone_id") else ""
         )

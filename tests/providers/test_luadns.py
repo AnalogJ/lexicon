@@ -1,4 +1,5 @@
 """Integration tests for LuaDNS"""
+
 from unittest import TestCase
 
 import pytest

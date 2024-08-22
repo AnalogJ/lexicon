@@ -40,6 +40,7 @@ The required Environment Variables for a live test are:
     export LEXICON_NAMECHEAP_DOMAIN={DOMAIN_1}
     export LEXICON_NAMECHEAP_DOMAINMANAGED={DOMAIN_2}
 """
+
 import os
 from unittest import TestCase
 

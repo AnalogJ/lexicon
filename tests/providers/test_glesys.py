@@ -1,4 +1,5 @@
 """Integration tests for Glesys"""
+
 from unittest import TestCase
 
 import pytest

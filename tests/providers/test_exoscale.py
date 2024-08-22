@@ -11,6 +11,7 @@ Set the following environment variables.
     export LEXICON_EXOSCALE_SECRET=xxx
 
 """
+
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
