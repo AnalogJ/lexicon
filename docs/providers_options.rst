@@ -221,6 +221,9 @@ List of options
 .. _softlayer:
 .. include:: providers/softlayer.rst
 
+.. _timeweb:
+.. include:: providers/timeweb.rst
+
 .. _transip:
 .. include:: providers/transip.rst
 

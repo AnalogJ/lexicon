@@ -103,11 +103,11 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
+| timeweb_        | transip_        | ultradns_       | valuedomain_    | vercel_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| webgo_          | wedos_          | yandex_         | yandexcloud_    | zeit_           |
+| vultr_          | webgo_          | wedos_          | yandex_         | yandexcloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zilore_         | zonomi_         |                 |                 |                 |
+| zeit_           | zilore_         | zonomi_         |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
