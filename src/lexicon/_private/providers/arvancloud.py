@@ -3,7 +3,7 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
+from typing import Any, List, Optional
 
 import requests
 
@@ -269,32 +269,22 @@ class Provider(BaseProvider):
         return output
 
     # Takes record's value and puts it into a format the lexicon supports
-    def _parse_r1c_response(self, rtype: str, input: str):
-        output = {}
+    def _parse_r1c_response(self, rtype: str, input: Any) -> Optional[str]:
+        if rtype == "CNAME" or rtype == "NS":
+            return input["host"]
 
-        output.update(
-            {
-                "A": (
-                    lambda: {
-                        "value": ", ".join(
-                            [
-                                " ".join(
-                                    (
-                                        str(value)
-                                        if value is not None and value != ""
-                                        else ""
-                                    )
-                                    for value in item.values()
-                                )
-                                for item in input
-                            ]
-                        )
-                    }
-                ),
-                "CNAME": (lambda: {"value": input["host"]}),
-                "NS": (lambda: {"value": input["host"]}),
-                "TXT": (lambda: {"value": input["text"]}),
-            }.get(rtype, lambda: {})()
-        )
+        if rtype == "TXT":
+            return input["text"]
 
-        return output["value"]
+        if rtype == "A":
+            return ", ".join(
+                [
+                    " ".join(
+                        (str(value) if value is not None and value != "" else "")
+                        for value in item.values()
+                    )
+                    for item in input
+                ]
+            )
+
+        return None
