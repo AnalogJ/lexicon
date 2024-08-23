@@ -1,6 +1,6 @@
 import sys
 
-if not getattr(sys, 'oxidized', False):
+if not getattr(sys, "oxidized", False):
     import warnings
 
     from lexicon._private.discovery import find_providers, load_provider_module
@@ -17,4 +17,6 @@ if not getattr(sys, 'oxidized', False):
     )
 
     for module_name, available in find_providers().items():
-        sys.modules[f"lexicon.providers.{module_name}"] = load_provider_module(module_name)
+        sys.modules[f"lexicon.providers.{module_name}"] = load_provider_module(
+            module_name
+        )
