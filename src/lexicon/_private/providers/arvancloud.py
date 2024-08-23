@@ -272,23 +272,19 @@ class Provider(BaseProvider):
     def _parse_r1c_response(self, rtype: str, input: Any) -> Optional[str]:
         if rtype == "CNAME" or rtype == "NS":
             return input["host"]
-        
+
         if rtype == "TXT":
             return input["text"]
-        
+
         if rtype == "A":
             return ", ".join(
-                            [
-                                " ".join(
-                                    (
-                                        str(value)
-                                        if value is not None and value != ""
-                                        else ""
-                                    )
-                                    for value in item.values()
-                                )
-                                for item in input
-                            ]
-                        )
-            
+                [
+                    " ".join(
+                        (str(value) if value is not None and value != "" else "")
+                        for value in item.values()
+                    )
+                    for item in input
+                ]
+            )
+
         return None

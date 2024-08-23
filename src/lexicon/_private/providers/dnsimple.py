@@ -10,7 +10,7 @@ import requests
 try:
     from importlib.metadata import Distribution, PackageNotFoundError
 except ModuleNotFoundError:
-    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
+    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[no-redef,import-not-found]
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
