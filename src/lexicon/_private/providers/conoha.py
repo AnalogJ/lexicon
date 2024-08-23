@@ -1,4 +1,5 @@
 """Module provider for Conoha"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -221,9 +222,11 @@ class Provider(BaseProvider):
         return {
             "name": self._fqdn_name(name) if name else None,
             "type": rtype,
-            "data": self._record_name(content)
-            if rtype in ("CNAME", "MX", "NS", "SRV")
-            else content,
+            "data": (
+                self._record_name(content)
+                if rtype in ("CNAME", "MX", "NS", "SRV")
+                else content
+            ),
             "priority": int(priority) if priority else None,
             "ttl": int(ttl) if ttl else None,
         }

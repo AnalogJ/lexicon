@@ -1,4 +1,5 @@
 """Module provider for Joker.com"""
+
 # The Joker.com API is well documented.
 # Several specificities compared to classic REST API in other providers:
 #   - everything is done with GET requests: all parameters (including actual records data

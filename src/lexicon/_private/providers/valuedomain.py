@@ -66,6 +66,8 @@ Reference: https://www.value-domain.com/moddnsfree.php
   - srv _smtp._tcp 1 2 25 server1.your.domain   : SRV record for _smtp._tcp.<YOUR-DOMAIN> (Priority:1, Weight:2, Port:25)
 """
 
+from __future__ import annotations
+
 import hashlib
 import json
 import logging
@@ -78,10 +80,9 @@ from urllib import request
 from urllib.error import HTTPError
 from urllib.request import OpenerDirector
 
+from lexicon.config import ConfigResolver
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
-
-T = TypeVar("T")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -124,14 +125,15 @@ class RestApiResponse(NamedTuple):
     data: bytes
 
 
-RESTAPI_CALLER_TYPE = Callable[[str, str, Optional[T]], RestApiResponse]
+T = TypeVar("T")
+RestAPICallable = Callable[[str, str, T], RestApiResponse]
 
 
 def reastapi_add_content_type(
-    _headers: Optional[Dict[str, str]],
-    content_type: Optional[str],
+    _headers: Optional[dict[str, str]],
+    content_type: str | None,
     content: Optional[bytes],
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Add 'Content-Type' header if exists"""
     headers = _headers.copy() if _headers is not None else {}
     if content_type is not None and content is not None and len(content) != 0:
@@ -142,9 +144,9 @@ def reastapi_add_content_type(
 def restapi_create_request(
     url: str,
     method: str,
-    headers: Optional[Dict[str, str]],
-    content_type: Optional[str],
-    content: Optional[bytes],
+    headers: dict[str, str] | None,
+    content_type: str | None,
+    content: bytes | None,
 ) -> request.Request:
     """Create Request instance including content if exists"""
     return request.Request(
@@ -159,9 +161,9 @@ def restapi_call(
     opener: OpenerDirector,
     url: str,
     method: str,
-    headers: Optional[Dict[str, str]],
-    content_type: Optional[str] = None,
-    content: Optional[bytes] = None,
+    headers: dict[str, str] | None,
+    content_type: str | None = None,
+    content: bytes | None = None,
 ) -> RestApiResponse:
     """Execute HTTP Request with OpenerDirector"""
     with opener.open(
@@ -197,21 +199,21 @@ class RecordData(NamedTuple):
     name: str
     content: str
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return (
             self.rtype.lower() == other.rtype.lower()
             and self.name.lower() == other.name.lower()
             and self.content == other.content
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.rtype.lower()} {self.name.lower()} {self.content}"
 
     def match(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         return (
             (rtype is None or rtype.lower() == self.rtype.lower())
@@ -231,9 +233,9 @@ class DomainData(NamedTuple):
 def vdapi_build_caller(
     opener: OpenerDirector,
     content_type: str,
-    headers: Optional[Dict[str, str]] = None,
+    headers: dict[str, str] | None = None,
     content_decoder=lambda x: x,
-) -> RESTAPI_CALLER_TYPE:
+) -> RestAPICallable:
     def _(
         url: str, method: str, content: Optional[T] = None, interval=1
     ) -> RestApiResponse:
@@ -256,7 +258,7 @@ def vdapi_build_caller(
     return _
 
 
-def vdapi_create_caller(auth_token: str):
+def vdapi_create_caller(auth_token: str) -> RestAPICallable:
     return vdapi_build_caller(
         restapi_build_opener(),
         "application/json",
@@ -270,7 +272,7 @@ def vdapi_create_caller(auth_token: str):
     )
 
 
-def vdapi_get_domain_list(caller: RESTAPI_CALLER_TYPE) -> List[str]:
+def vdapi_get_domain_list(caller: RestAPICallable) -> list[str]:
     resp: RestApiResponse = caller(f"{VDAPI_ENDPOINT}/domains", "GET", None)
     restapi_exception_not_200(resp.header)
     return list(
@@ -287,14 +289,14 @@ def vdapi_get_domain_list(caller: RESTAPI_CALLER_TYPE) -> List[str]:
 
 
 def vdapi_get_domain_data(
-    caller: RESTAPI_CALLER_TYPE, domainname: str
-) -> Optional[DomainData]:
+    caller: RestAPICallable, domainname: str
+) -> DomainData | None:
     resp: RestApiResponse = caller(
         f"{VDAPI_ENDPOINT}/domains/{domainname}/dns", "GET", None
     )
     restapi_exception_not_200(resp.header)
     domain_info: dict = json.loads(resp.data.decode("utf-8").strip())
-    domain_records: Optional[str] = domain_info.get("results", {}).get("records")
+    domain_records: str | None = domain_info.get("results", {}).get("records")
     return (
         DomainData(
             [
@@ -310,8 +312,8 @@ def vdapi_get_domain_data(
 
 
 def vdapi_set_domain_data(
-    caller: RESTAPI_CALLER_TYPE, domainname: str, data: DomainData
-):
+    caller: RestAPICallable, domainname: str, data: DomainData
+) -> None:
     resp = caller(
         f"{VDAPI_ENDPOINT}/domains/{domainname}/dns",
         "PUT",
@@ -333,7 +335,7 @@ class Provider(BaseProvider):
     """Provider class for Value Domain"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["value-domain.com"]
 
     @staticmethod
@@ -344,14 +346,13 @@ class Provider(BaseProvider):
             https://www.value-domain.com/vdapi/"""
         parser.add_argument("--auth-token", help="specify youyr API token")
 
-    def __init__(self, config):
+    def __init__(self, config: ConfigResolver):
         super(Provider, self).__init__(config)
-        self.domain_id: Optional[list[str]] = None
 
         auth_token = self._get_provider_option("auth_token")
         assert auth_token is not None, "No authenticaion token defined"
 
-        self.caller: RESTAPI_CALLER_TYPE = vdapi_create_caller(auth_token)
+        self.caller: RestAPICallable = vdapi_create_caller(auth_token)
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for this provider,
@@ -359,11 +360,13 @@ class Provider(BaseProvider):
     # Should throw an error if authentication fails for any reason,
     # of if the domain does not exist.
     def authenticate(self):
-        self.domain_id = vdapi_get_domain_list(self.caller)
+        domains = vdapi_get_domain_list(self.caller)
 
-        assert len(self.domain_id) > 0, "Failed to get domain names"
-        if self.domain not in self.domain_id:
+        assert len(domains) > 0, "Failed to get domain names"
+        if self.domain not in domains:
             raise AuthenticationError(f"{self.domain} not managed")
+
+        self.domain_id = self.domain
 
     def cleanup(self) -> None:
         pass
@@ -381,11 +384,11 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     domain_data.records + [rec],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
-                    else DEFAULT_TTL
-                    if ttl_option is not None
-                    else domain_data.ttl,
+                    (
+                        int(ttl_option)
+                        if ttl_option is not None and int(ttl_option) > 0
+                        else DEFAULT_TTL if ttl_option is not None else domain_data.ttl
+                    ),
                 ),
             )
         elif domain_data is not None:
@@ -396,9 +399,11 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     [rec],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
-                    else DEFAULT_TTL,
+                    (
+                        int(ttl_option)
+                        if ttl_option is not None and int(ttl_option) > 0
+                        else DEFAULT_TTL
+                    ),
                 ),
             )
 
@@ -409,9 +414,9 @@ class Provider(BaseProvider):
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ):
         self._assert_initialized()
         domain_data = vdapi_get_domain_data(self.caller, self.domain)
@@ -421,9 +426,11 @@ class Provider(BaseProvider):
                     "id": record_data.id(),
                     "ttl": domain_data.ttl,
                     "type": record_data.rtype.upper(),
-                    "name": self._fqdn_name(record_data.name)
-                    if record_data.rtype.lower() != "txt"
-                    else self._full_name(record_data.name),
+                    "name": (
+                        self._fqdn_name(record_data.name)
+                        if record_data.rtype.lower() != "txt"
+                        else self._full_name(record_data.name)
+                    ),
                     "content": record_data.content,
                 }
                 for record_data in domain_data.records
@@ -461,11 +468,11 @@ class Provider(BaseProvider):
                             content or target[0].content,
                         )
                     ],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
-                    else DEFAULT_TTL
-                    if ttl_option is not None
-                    else domain_data.ttl,
+                    (
+                        ttl_option
+                        if ttl_option is not None and ttl_option > 0
+                        else DEFAULT_TTL if ttl_option is not None else domain_data.ttl
+                    ),
                 ),
             )
 
@@ -550,14 +557,15 @@ if __name__ == "__main__":
         def tearDown(self):
             pass
 
-        def _create_provide(self, domainname: str):
-            return Provider(
+        def _create_provider(self, domainname: str):
+            config = ConfigResolver().with_dict(
                 {
                     "provider_name": "valuedomain",
                     "domain": domainname,
                     "valuedomain": {"auth_token": self.auth_token},
                 }
             )
+            return Provider(config)
 
         def test_vdapi_get_domain_list(self):
             domain_list = vdapi_get_domain_list(self.caller)
@@ -593,7 +601,7 @@ if __name__ == "__main__":
         def test_list_records(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-                provider = self._create_provide(domainname)
+                provider = self._create_provider(domainname)
                 provider.authenticate()
 
                 records = provider.list_records()
@@ -608,7 +616,7 @@ if __name__ == "__main__":
         def test_create_records(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-                provider = self._create_provide(domainname)
+                provider = self._create_provider(domainname)
                 provider.authenticate()
 
                 provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
@@ -645,7 +653,7 @@ if __name__ == "__main__":
         def test_delete_records_by_id(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-                provider = self._create_provide(domainname)
+                provider = self._create_provider(domainname)
                 provider.authenticate()
 
                 provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
@@ -666,7 +674,7 @@ if __name__ == "__main__":
         def test_delete_records_by_data(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-                provider = self._create_provide(domainname)
+                provider = self._create_provider(domainname)
                 provider.authenticate()
 
                 provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)
@@ -687,7 +695,7 @@ if __name__ == "__main__":
         def test_update_record(self):
             domain_list = vdapi_get_domain_list(self.caller)
             for domainname in domain_list:
-                provider = self._create_provide(domainname)
+                provider = self._create_provider(domainname)
                 provider.authenticate()
 
                 provider.create_record(DUMMY_TYPE, DUMMY_NAME, DUMMY_CONTENT)

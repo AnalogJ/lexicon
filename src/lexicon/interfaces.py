@@ -1,8 +1,11 @@
 """Base provider module for all Lexicon providers"""
+
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 from re import Pattern
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
@@ -37,7 +40,7 @@ class Provider(ABC):
     for this provider, merged from CLI and Env variables.
     """
 
-    def __init__(self, config: Union[ConfigResolver, Dict]):
+    def __init__(self, config: ConfigResolver | dict[str, Any]):
         if not isinstance(config, ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
@@ -47,9 +50,9 @@ class Provider(ABC):
             # this key. However, there were no automated logic if the Provider is used directly.
             # So we provide this logic here.
             if not config.get("provider_name") and not config.get("provider"):
-                config[
-                    "provider_name"
-                ] = __name__  # Obviously we use the module name itself.
+                config["provider_name"] = (
+                    __name__  # Obviously we use the module name itself.
+                )
             self.config = legacy_config_resolver(config)
         else:
             self.config = config
@@ -89,10 +92,10 @@ class Provider(ABC):
     @abstractmethod
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> List[Dict]:
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
+    ) -> list[dict[str, Any]]:
         """
         List all records. Return an empty list if no records found
         type, name and content are used to filter records.
@@ -102,10 +105,10 @@ class Provider(ABC):
     @abstractmethod
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         """
         Update a record. Identifier must be specified.
@@ -114,10 +117,10 @@ class Provider(ABC):
     @abstractmethod
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         """
         Delete an existing record.
@@ -129,7 +132,7 @@ class Provider(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_nameservers() -> Union[List[str], List[Pattern]]:
+    def get_nameservers() -> list[str] | list[Pattern]:
         """
         Return the list of nameservers for this DNS provider
         """
@@ -148,42 +151,44 @@ class Provider(ABC):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
+        data: dict[str, Any] | None = None,
+        query_params: dict[str, Any] | None = None,
     ) -> Any:
         """Execute an HTTP request against the DNS provider API"""
         raise NotImplementedError(
             "You must implement _request() to use _get()/_post()/_put()/_patch()/_delete() methods."
         )
 
-    def _get(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
+    def _get(self, url: str = "/", query_params: dict[str, Any] | None = None) -> Any:
         return self._request("GET", url, query_params=query_params)
 
     def _post(
         self,
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
+        data: dict[str, Any] | None = None,
+        query_params: dict[str, Any] | None = None,
     ) -> Any:
         return self._request("POST", url, data=data, query_params=query_params)
 
     def _put(
         self,
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
+        data: dict[str, Any] | None = None,
+        query_params: dict[str, Any] | None = None,
     ) -> Any:
         return self._request("PUT", url, data=data, query_params=query_params)
 
     def _patch(
         self,
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
+        data: dict[str, Any] | None = None,
+        query_params: dict[str, Any] | None = None,
     ) -> Any:
         return self._request("PATCH", url, data=data, query_params=query_params)
 
-    def _delete(self, url: str = "/", query_params: Optional[Dict] = None) -> Any:
+    def _delete(
+        self, url: str = "/", query_params: dict[str, Any] | None = None
+    ) -> Any:
         return self._request("DELETE", url, query_params=query_params)
 
     def _fqdn_name(self, record_name: str) -> str:
@@ -211,15 +216,15 @@ class Provider(ABC):
             record_name = record_name.rstrip(".")
         return record_name
 
-    def _clean_TXT_record(self, record: Dict) -> Dict:
+    def _clean_TXT_record(self, record: dict[str, Any]) -> dict[str, Any]:
         if record["type"] == "TXT":
             # Some providers have quotes around the TXT records,
             # so we're going to remove those extra quotes
             record["content"] = record["content"][1:-1]
         return record
 
-    def _get_lexicon_option(self, option: str) -> Any:
+    def _get_lexicon_option(self, option: str) -> str | None:
         return self.config.resolve(f"lexicon:{option}")
 
-    def _get_provider_option(self, option: str) -> Any:
+    def _get_provider_option(self, option: str) -> str | None:
         return self.config.resolve(f"lexicon:{self.provider_name}:{option}")

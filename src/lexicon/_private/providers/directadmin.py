@@ -1,4 +1,5 @@
 """Module provider for DirectAdmin hosts"""
+
 import logging
 import warnings
 from argparse import ArgumentParser

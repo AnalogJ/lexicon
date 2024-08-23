@@ -1,4 +1,5 @@
 """Module provider for Glesys"""
+
 import json
 from argparse import ArgumentParser
 from typing import List

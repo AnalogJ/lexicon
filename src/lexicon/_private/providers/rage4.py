@@ -1,4 +1,5 @@
 """Module provider for rage4"""
+
 import json
 import logging
 from argparse import ArgumentParser

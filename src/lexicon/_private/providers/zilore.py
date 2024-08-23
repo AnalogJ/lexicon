@@ -1,4 +1,5 @@
 """Implement a provider for Zilore (https://zilore.com)"""
+
 import logging
 from argparse import ArgumentParser
 from typing import List
@@ -138,9 +139,11 @@ class Provider(BaseProvider):
         update = {
             "record_type": rtype if rtype else record["type"],
             "record_name": self._full_name(name) if name else record["name"],
-            "record_ttl": self._get_lexicon_option("ttl")
-            if self._get_lexicon_option("ttl")
-            else record["ttl"],
+            "record_ttl": (
+                self._get_lexicon_option("ttl")
+                if self._get_lexicon_option("ttl")
+                else record["ttl"]
+            ),
         }
 
         if content:

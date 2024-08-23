@@ -1,22 +1,28 @@
 """Module provider for auto"""
+
+from __future__ import annotations
+
 import logging
 import pkgutil
 import re
 import subprocess
 from argparse import ArgumentParser
-from typing import Type
+from types import ModuleType
+from typing import Any, Type
 
-import tldextract  # type: ignore
+import tldextract
 
 from lexicon import config as helper_config
 from lexicon._private import providers
 from lexicon._private.discovery import load_provider_module
+from lexicon.config import ConfigResolver
+from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
 
-def _get_available_providers():
+def _get_available_providers() -> dict[str, ModuleType]:
     available_providers = {}
     for _, modname, _ in pkgutil.iter_modules(providers.__path__):
         if modname not in ("base", "auto"):
@@ -35,7 +41,7 @@ def _get_available_providers():
 AVAILABLE_PROVIDERS = _get_available_providers()
 
 
-def _get_ns_records_domains_for_domain(domain):
+def _get_ns_records_domains_for_domain(domain: str) -> set[str]:
     tlds = [
         tldextract.extract(ns_entry) for ns_entry in _get_ns_records_for_domain(domain)
     ]
@@ -43,7 +49,7 @@ def _get_ns_records_domains_for_domain(domain):
     return {f"{tld.domain}.{tld.suffix}" for tld in tlds}
 
 
-def _get_ns_records_for_domain(domain):
+def _get_ns_records_for_domain(domain: str) -> list[str]:
     # Available both for Windows and Linux (if dnsutils is installed for the latter)
     try:
         output = subprocess.check_output(
@@ -68,7 +74,7 @@ def _get_ns_records_for_domain(domain):
     return match
 
 
-def _relevant_provider_for_domain(domain):
+def _relevant_provider_for_domain(domain: str) -> tuple[str, ModuleType]:
     nameserver_domains = _get_ns_records_domains_for_domain(domain)
     relevant_providers = []
 
@@ -160,7 +166,7 @@ class Provider(object):
                 action.dest = f"auto_{provider_name}_{action.dest}"
                 parser._add_action(action)
 
-    def __init__(self, config):
+    def __init__(self, config: ConfigResolver | dict[str, Any]):
         if not isinstance(config, helper_config.ConfigResolver):
             # If config is a plain dict, we are in a legacy situation.
             # To protect the Provider API, the legacy dict is handled in a
@@ -169,10 +175,10 @@ class Provider(object):
         else:
             self.config = config
 
-        self.domain = config.resolve("lexicon:domain")
-        self.proxy_provider = None
+        self.domain = self.config.resolve("lexicon:domain")
+        self.proxy_provider: Provider | None = None
 
-    def authenticate(self):
+    def authenticate(self) -> None:
         """
         Launch the authentication process: for 'auto' provider, it means first to find the relevant
         provider, then call its authenticate() method. Almost every subsequent operation will then
@@ -183,9 +189,12 @@ class Provider(object):
         if mapping_override:
             for one_mapping in mapping_override.split(","):
                 one_mapping_processed = one_mapping.split(":")
-                mapping_override_processed[
-                    one_mapping_processed[0]
-                ] = one_mapping_processed[1]
+                mapping_override_processed[one_mapping_processed[0]] = (
+                    one_mapping_processed[1]
+                )
+
+        if not self.domain:
+            raise AuthenticationError("Domain is not defined.")
 
         override_provider = mapping_override_processed.get(self.domain)
         if override_provider:
@@ -197,7 +206,7 @@ class Provider(object):
             LOGGER.info(
                 "Provider authoritatively mapped for domain %s: %s.",
                 self.domain,
-                provider.__name__,
+                provider[0],
             )
             (provider_name, provider_module) = provider
         else:
@@ -218,7 +227,7 @@ class Provider(object):
             else:
                 # ArgsConfigSource needs to be reprocessed to rescope the provided
                 # args to the delegate provider
-                new_dict = {}
+                new_dict: dict[str, Any] = {}
                 for key, value in config_source._parameters.items():
                     if key.startswith(target_prefix):
                         new_param_name = re.sub(f"^{target_prefix}", "", key)
@@ -229,10 +238,12 @@ class Provider(object):
                         new_dict[key] = value
                 new_config.with_dict(new_dict)
 
-        self.proxy_provider = provider_module.Provider(new_config)
-        self.proxy_provider.authenticate()
+        proxy_provider = provider_module.Provider(new_config)
+        proxy_provider.authenticate()
 
-    def __getattr__(self, attr_name):
+        self.proxy_provider = proxy_provider
+
+    def __getattr__(self, attr_name: str) -> Any:
         """
         Delegate any call to any parameter/method to the underlying provider.
         Method authenticate() must have been called before.

@@ -9,6 +9,7 @@ actions are managed using the create and delete actions: updating a record consi
 old record, then creating a new record with updated parameters. Note also that Azure DNS does not
 support id on records (as they are hold in a recordset) so an id is generated on the fly.
 """
+
 import hashlib
 import logging
 from argparse import ArgumentParser

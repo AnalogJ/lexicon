@@ -1,4 +1,5 @@
 """Module provider for Digital Ocean"""
+
 import json
 import logging
 from argparse import ArgumentParser

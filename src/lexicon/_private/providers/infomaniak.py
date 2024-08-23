@@ -1,4 +1,5 @@
 """Module provider for Infomaniak"""
+
 import json
 import logging
 from argparse import ArgumentParser

@@ -1,4 +1,5 @@
 """Main module of Lexicon. Defines the Client class, that holds all Lexicon logic."""
+
 from __future__ import annotations
 
 import logging
@@ -9,7 +10,8 @@ from threading import local
 from types import TracebackType
 from typing import Any, Type
 
-import tldextract  # type: ignore
+import dns.resolver
+import tldextract
 
 from lexicon import config as helper_config
 from lexicon._private.discovery import find_providers as _find_providers
@@ -97,24 +99,37 @@ class Client(AbstractContextManager):
 
         runtime_config = {}
 
-        # Process domain, strip subdomain
-        try:
-            domain_extractor = tldextract.TLDExtract(
-                cache_dir=_resolve_tldextract_cache_path(),
-                include_psl_private_domains=True,
+        # Find the actual zone name for the domain
+        if self.config.resolve("lexicon:resolve_zone_name") is not None:
+            logging.debug(
+                "Parameter resolve_zone_name is set, use dnspython to resolve the actual zone name"
             )
-        except TypeError:
-            domain_extractor = tldextract.TLDExtract(
-                cache_file=_resolve_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
+            zone_name = dns.resolver.zone_for_name(domain)
+            runtime_config["domain"] = zone_name.to_text(omit_final_dot=True)
+        else:
+            logging.debug(
+                "Parameter resolve_zone_name is not set, use tldextract to guess the zone name from known TLDs"
             )
-        domain_parts = domain_extractor(domain)
-        runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
+            try:
+                domain_extractor = tldextract.TLDExtract(
+                    cache_dir=_resolve_tldextract_cache_path(),
+                    include_psl_private_domains=True,
+                )
+            except TypeError:
+                domain_extractor = tldextract.TLDExtract(
+                    cache_file=_resolve_tldextract_cache_path(), include_psl_private_domains=True  # type: ignore
+                )
+            domain_parts = domain_extractor(domain)
+            runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
+        logging.debug(
+            f"Actual zone name resolved for domain {domain}: {runtime_config['domain']}"
+        )
 
         delegated = self.config.resolve("lexicon:delegated")
         if delegated:
             # handle delegated domain
             delegated = str(delegated).rstrip(".")
-            initial_domain = str(runtime_config.get("domain"))
+            initial_domain = str(runtime_config["domain"])
             if delegated != initial_domain:
                 # convert to relative name
                 if delegated.endswith(initial_domain):
@@ -122,6 +137,9 @@ class Client(AbstractContextManager):
                     delegated = delegated.rstrip(".")
                 # update domain
                 runtime_config["domain"] = f"{delegated}.{initial_domain}"
+            logging.debug(
+                f"Override resolved zone name because --delegated option is set: {runtime_config['domain']}"
+            )
 
         self.provider_name = self.config.resolve(
             "lexicon:provider_name"

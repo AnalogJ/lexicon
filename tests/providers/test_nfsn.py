@@ -16,6 +16,7 @@ parameters must be provided:
 - LEXICON_NFSN_TOKEN -> Your API Key
 - LEXICON_NFSN_DOMAIN -> Domain you want to test with
 """
+
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2

@@ -1,4 +1,5 @@
 """Module provider for Easyname DNS"""
+
 import json
 import logging
 from argparse import ArgumentParser

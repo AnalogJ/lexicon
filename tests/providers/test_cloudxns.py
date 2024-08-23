@@ -1,4 +1,5 @@
 """Integration tests for CloudXNS"""
+
 from unittest import TestCase
 
 import pytest

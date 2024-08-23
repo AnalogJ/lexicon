@@ -1,4 +1,5 @@
 """Module provider for Godaddy"""
+
 import hashlib
 import json
 import logging
@@ -6,8 +7,9 @@ from argparse import ArgumentParser
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
+import tldextract
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry  # type: ignore
+from urllib3.util.retry import Retry
 
 from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
@@ -57,18 +59,15 @@ class Provider(BaseProvider):
         self.api_endpoint = "https://api.godaddy.com/v1"
 
     def authenticate(self):
-        domain = self.domain
-
-        result = self._get(f"/domains/{domain}")
+        result = self._get(f"/domains/{self.get_root_domain_name()}")
         self.domain_id = result["domainId"]
 
     def cleanup(self) -> None:
         pass
 
     def list_records(self, rtype=None, name=None, content=None):
-        domain = self.domain
 
-        url = f"/domains/{domain}/records"
+        url = f"/domains/{self.get_root_domain_name()}/records"
         if rtype:
             url += f"/{rtype}"
         if name:
@@ -89,19 +88,19 @@ class Provider(BaseProvider):
             )
 
         if content:
-            records = [record for record in records if record["data"] == content]
+            records = [record for record in records if record["content"] == content]
 
         LOGGER.debug("list_records: %s", records)
 
         return records
 
     def create_record(self, rtype, name, content):
-        domain = self.domain
+        root_domain = self.get_root_domain_name()
         relative_name = self._relative_name(name)
         ttl = self._get_lexicon_option("ttl")
 
         # Retrieve existing data in DNS zone.
-        records = self._get(f"/domains/{domain}/records/{rtype}/{relative_name}")
+        records = self._get(f"/domains/{root_domain}/records/{rtype}/{relative_name}")
 
         # Check if a record already matches given parameters
         for record in records:
@@ -114,12 +113,12 @@ class Provider(BaseProvider):
         # Append a new entry corresponding to given parameters.
         data = {"type": rtype, "name": relative_name, "data": content}
         if ttl:
-            data["ttl"] = int(ttl)
+            data["ttl"] = min([604800, max([int(ttl), 600])])
 
         records.append(data)
 
         # Insert the record
-        self._put(f"/domains/{domain}/records/{rtype}/{relative_name}", records)
+        self._put(f"/domains/{root_domain}/records/{rtype}/{relative_name}", records)
 
         LOGGER.debug("create_record: %s %s %s", rtype, name, content)
 
@@ -132,8 +131,9 @@ class Provider(BaseProvider):
         name: Optional[str],
         content: Optional[str],
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+        root_domain = self.get_root_domain_name()
         # Retrieve existing data in DNS zone.
-        records = self._get(f"/domains/{self.domain}/records")
+        records = self._get(f"/domains/{root_domain}/records")
 
         # Find matching record, either by identifier matching, or rtype + name + content matching
         if identifier:
@@ -216,6 +216,7 @@ class Provider(BaseProvider):
         matching_record["data"] = content
 
         # Actual update, with two possible strategies
+        root_domain = self.get_root_domain_name()
         if self._relative_name(matching_record["name"]) == relative_name:
             # If the name of the record stays the same, we use the scoped API on this name to
             # redefine specifically the records of this rtype and name, including the updated one.
@@ -225,13 +226,13 @@ class Provider(BaseProvider):
                 if self._relative_name(record["name"]) == relative_name
             ]
             self._put(
-                f"/domains/{self.domain}/records/{rtype}/{relative_name}",
+                f"/domains/{root_domain}/records/{rtype}/{relative_name}",
                 records,
             )
         else:
             # If the name of the record changes, we redefine the whole set to records of this rtype
             # using the list of records, including the updated one.
-            self._put(f"/domains/{self.domain}/records/{rtype}", records)
+            self._put(f"/domains/{root_domain}/records/{rtype}", records)
 
         LOGGER.debug("update_record: %s %s %s", rtype, name, content)
 
@@ -261,8 +262,9 @@ class Provider(BaseProvider):
 
         # Resynchronize the current set of records for the target type using the cleaned list,
         # which effectively deletes the records to evict.
+        root_domain = self.get_root_domain_name()
         if records:
-            self._put(f"/domains/{self.domain}/records/{rtype}", records)
+            self._put(f"/domains/{root_domain}/records/{rtype}", records)
         else:
             # List records is empty, the intention here is to delete all records of a given type.
             # Sadly GoDaddy API ignores empty arrays in a PUT request, so it is not possible to
@@ -270,9 +272,9 @@ class Provider(BaseProvider):
             # The trick here is to use PUT with one unique record remaining (matching_records[0]),
             # then use the endpoint `DELETE /domains/{domain}/records/{rtype}/{name}` to remove
             # the remaining record.
-            self._put(f"/domains/{self.domain}/records/{rtype}", [matching_records[0]])
+            self._put(f"/domains/{root_domain}/records/{rtype}", [matching_records[0]])
             self._delete(
-                f"/domains/{self.domain}/records/{rtype}/{matching_records[0]['name']}"
+                f"/domains/{root_domain}/records/{rtype}/{matching_records[0]['name']}"
             )
 
         LOGGER.debug("delete_records: %s %s %s", rtype, name, content)
@@ -296,6 +298,11 @@ class Provider(BaseProvider):
         sha256.update(("name=" + record.get("name", "") + ",").encode("utf-8"))
         sha256.update(("data=" + record.get("data", "") + ",").encode("utf-8"))
         return sha256.hexdigest()[0:7]
+
+    def get_root_domain_name(self):
+        # Remove the subdomains parts if any
+        extracted = tldextract.extract(self.domain)
+        return extracted.domain + "." + extracted.suffix
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # When editing DNS zone, API is unavailable for few seconds
@@ -344,3 +351,35 @@ class Provider(BaseProvider):
             # For some requests command (eg. PUT), GoDaddy will not
             # return any JSON, just an HTTP status without body.
             return None
+
+    #
+    # Overwrite name utils to use root domain
+    #
+
+    def _fqdn_name(self, record_name: str) -> str:
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip(".")
+        # check if the record_name is fully specified
+        root_domain = self.get_root_domain_name()
+        if not record_name.endswith(root_domain):
+            record_name = f"{record_name}.{root_domain}"
+        return f"{record_name}."  # return the fqdn name
+
+    def _full_name(self, record_name: str) -> str:
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip(".")
+        # check if the record_name is fully specified
+        root_domain = self.get_root_domain_name()
+        if not record_name.endswith(root_domain):
+            record_name = f"{record_name}.{root_domain}"
+        return record_name
+
+    def _relative_name(self, record_name: str) -> str:
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip(".")
+        # check if the record_name is fully specified
+        root_domain = self.get_root_domain_name()
+        if record_name.endswith(root_domain):
+            record_name = record_name[: -len(root_domain)]
+            record_name = record_name.rstrip(".")
+        return record_name

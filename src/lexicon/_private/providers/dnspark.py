@@ -1,4 +1,5 @@
 """Module provider for DNSPark"""
+
 import json
 import logging
 from argparse import ArgumentParser

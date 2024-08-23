@@ -1,4 +1,5 @@
 """Module provider for Namecheap"""
+
 import logging
 import sys
 from argparse import ArgumentParser
@@ -369,7 +370,7 @@ class _Api:
             "ClientIP": self.client_ip,
             "Command": command,
         }
-        # Namecheap recommends to use HTTPPOST method when setting more than 10 hostnames
+        # Namecheap recommends to use HTTP POST method when setting more than 10 hostnames
         # https://www.namecheap.com/support/api/methods/domains-dns/set-hosts.aspx
         if len(extra_payload) < 10:
             payload.update(extra_payload)
@@ -393,7 +394,7 @@ class _Api:
             # Response namespace must be prepended to tag names.
             xpath = ".//{%(ns)s}Errors/{%(ns)s}Error" % {"ns": _NAMESPACE}
             error = xml.find(xpath)
-            if error:
+            if error is not None:
                 raise _ApiError(error.attrib["Number"], error.text)
             else:
                 raise _ApiError(0, "Unknown exception")

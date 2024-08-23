@@ -1,4 +1,5 @@
 """Module provider for OnApp"""
+
 import json
 import logging
 from argparse import ArgumentParser

@@ -1,4 +1,5 @@
 """Integration tests for Azure Cloud DNS"""
+
 import re
 from unittest import TestCase
 

@@ -1,4 +1,5 @@
 """Module provider for Aurora"""
+
 import base64
 import datetime
 import hashlib
@@ -146,7 +147,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        time = datetime.datetime.utcnow()
+        time = datetime.datetime.now(datetime.timezone.utc)
         timestamp = time.strftime("%Y%m%dT%H%M%SZ")
         authorization_header = self._generate_auth_header(action, url, timestamp)
 

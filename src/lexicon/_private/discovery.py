@@ -3,6 +3,7 @@ This module takes care of finding information about the runtime of Lexicon:
 * what are the providers installed, and available
 * what is the version of Lexicon
 """
+
 import importlib
 import pkgutil
 import re
@@ -23,7 +24,7 @@ def find_providers() -> Dict[str, bool]:
     providers_list = sorted(
         {
             modname
-            for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)  # type: ignore
+            for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)
             if modname != "base"
         }
     )

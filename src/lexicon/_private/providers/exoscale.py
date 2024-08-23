@@ -1,4 +1,5 @@
 """Module provider for exoscale"""
+
 import logging
 from argparse import ArgumentParser
 from typing import List

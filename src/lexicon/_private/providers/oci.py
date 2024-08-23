@@ -41,7 +41,7 @@ try:
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
     from oci.config import from_file  # type: ignore
     from oci.exceptions import ConfigFileNotFound  # type: ignore
-    from oci.exceptions import InvalidConfig, ProfileNotFound  # type: ignore
+    from oci.exceptions import InvalidConfig, ProfileNotFound
     from oci.signer import Signer  # type: ignore
 except ImportError:
     pass
@@ -196,9 +196,11 @@ class Provider(BaseProvider):
                     "domain": name,
                     "rtype": rtype,
                     "rdata": content,
-                    "ttl": self._get_lexicon_option("ttl")
-                    if self._get_lexicon_option("ttl")
-                    else None,
+                    "ttl": (
+                        self._get_lexicon_option("ttl")
+                        if self._get_lexicon_option("ttl")
+                        else None
+                    ),
                 }
             ]
         }

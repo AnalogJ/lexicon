@@ -1,4 +1,5 @@
 """Module provider for Netcup"""
+
 import json
 import logging
 from argparse import ArgumentParser

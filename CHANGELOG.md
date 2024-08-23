@@ -2,6 +2,60 @@
 
 ## master - CURRENT
 
+## 3.18.0 - 22/08/2024
+### Added
+* Add `timeweb` provider (#1850)
+* Add `qcloud` provider (#1824)
+
+### Modified
+* Update cloudflare documentation regarding the zoneID (#1783)
+* Add support of personal access tokens (PATs) in `gandi` provider (#1987)
+* Prevent invalid TTL values and proper behavior with subdomains in `godaddy` provider (#1834)
+
+## 3.17.0 - 06/11/2023
+### Added
+* New method to determine the actual zone name for a given FQDN. Historically it was an extraction
+  of the second-level domain given well-known TLDs (eg., `domain.net` for `www.domain.net`) using
+  `tldextract`, and usage of `--delegated` option to enforce a specific zone name that is useful for
+  third-level domains hosted on a specific zone (eg., sub-zone `sub.domain.net` delegated from zone
+  `domain.net`).
+  It is now possible to use the `--resolve-zone-name` flag on Lexicon client to trigger an actual
+  resolution of the zone name from a given FQDN using live DNS servers by leveraging `dnspython`
+  utilities. Most of the time this makes `--delegated` useless, since Lexicon will be able to guess
+  the correct zone name.
+
+## 3.16.1 - 18/10/2023
+### Added
+* Add support to Python 3.12.
+
+### Modified
+* Support older versions of requests (<2.27.0) in `ovh` provider.
+
+## 3.16.0 - 14/10/2023
+### Removed
+* Drop support for Python 3.7
+
+## 3.15.1 - 13/10/2023
+### Modified
+* Protect `ovh` provider against invalid response bodies
+  that are returned sometimes by OVH APIs.
+* Fix filtering by record content in `godaddy` provider.
+
+## 3.15.0 - 30/09/2023
+### Added
+* Add `pyotp` Python dependency in Lexicon to help implementing OTP (one-time password)
+  on providers whose API supports this kind of authentication.
+* Add OTP support on `hover` provider, with a new flag named `--auth-totp-secret`.
+* Add type marker `py.typed` to inform types checkers about availability of type
+  annotations in Lexicon codebase.
+
+### Modified
+* Fix and modernize ReadTheDoc documentation build.
+* Better error management and resource cleanup when `Client` is used as a context manager.
+
+### Removed
+* Stop using `cryptography` in providers where only hashing is needed.
+
 ## 3.14.1 - 13/08/2023
 ### Added
 * Add back declared support to Python 3.7 for few cycles

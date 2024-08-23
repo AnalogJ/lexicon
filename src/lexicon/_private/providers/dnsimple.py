@@ -1,4 +1,5 @@
 """Module provider for DNS Simple"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -6,10 +7,23 @@ from typing import List
 
 import requests
 
+try:
+    from importlib.metadata import Distribution, PackageNotFoundError
+except ModuleNotFoundError:
+    from importlib_metadata import Distribution, PackageNotFoundError  # type: ignore[assignment]
+
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _fetch_lexicon_version() -> str:
+    """Retrieve current Lexicon version"""
+    try:
+        return Distribution.from_name("dns-lexicon").version
+    except PackageNotFoundError:
+        return "unknown"
 
 
 class Provider(BaseProvider):
@@ -40,6 +54,8 @@ class Provider(BaseProvider):
         self.api_endpoint = (
             self._get_provider_option("api_endpoint") or "https://api.dnsimple.com/v2"
         )
+        # Lexicon version
+        self._lexicon_version = _fetch_lexicon_version()
 
     def authenticate(self):
         payload = self._get("/accounts")
@@ -108,9 +124,11 @@ class Provider(BaseProvider):
         for record in payload:
             processed_record = {
                 "type": record["type"],
-                "name": f"{self.domain}"
-                if record["name"] == ""
-                else f"{record['name']}.{self.domain}",
+                "name": (
+                    f"{self.domain}"
+                    if record["name"] == ""
+                    else f"{record['name']}.{self.domain}"
+                ),
                 "ttl": record["ttl"],
                 "content": record["content"],
                 "id": record["id"],
@@ -184,13 +202,14 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
+            "User-Agent": f"lexicon/{self._lexicon_version} dnsimple",
         }
         default_auth = None
 
         if self._get_provider_option("auth_token"):
-            default_headers[
-                "Authorization"
-            ] = f"Bearer {self._get_provider_option('auth_token')}"
+            default_headers["Authorization"] = (
+                f"Bearer {self._get_provider_option('auth_token')}"
+            )
         elif self._get_provider_option("auth_username") and self._get_provider_option(
             "auth_password"
         ):

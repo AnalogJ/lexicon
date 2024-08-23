@@ -2,12 +2,15 @@
 Definition of the ConfigResolver to configure Lexicon, and convenient classes to build
 various configuration sources.
 """
+
+from __future__ import annotations
+
 import logging
 import os
 import re
 import warnings
 from argparse import Namespace
-from typing import Any, Dict, Optional
+from typing import Any
 
 import yaml
 
@@ -20,7 +23,7 @@ class ConfigSource(object):
     The relevant method to override is resolve(self, config_parameter).
     """
 
-    def resolve(self, config_key):
+    def resolve(self, config_key: str) -> str | None:
         """
         Using the given config_parameter value (in the form of 'lexicon:config_key' or
         'lexicon:[provider]:config_key'), try to get the associated value.
@@ -45,7 +48,7 @@ class EnvironmentConfigSource(ConfigSource):
             if key.startswith("LEXICON_"):
                 self._parameters[key] = value
 
-    def resolve(self, config_key):
+    def resolve(self, config_key: str) -> str | None:
         # First try, with a direct conversion of the config_parameter:
         #   * lexicon:provider:auth_my_config => LEXICON_PROVIDER_AUTH_MY_CONFIG
         #   * lexicon:provider:my_other_config => LEXICON_PROVIDER_AUTH_MY_OTHER_CONFIG
@@ -79,11 +82,11 @@ class EnvironmentConfigSource(ConfigSource):
 class ArgsConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against an argparse namespace."""
 
-    def __init__(self, namespace):
+    def __init__(self, namespace: Namespace):
         super(ArgsConfigSource, self).__init__()
         self._parameters = vars(namespace)
 
-    def resolve(self, config_key):
+    def resolve(self, config_key: str) -> str | None:
         # We assume here that the namespace provided has already done its job,
         # by validating that all given parameters are relevant for Lexicon or the current provider.
         # So we ignore the namespaces 'lexicon:' and 'lexicon:provider' in given config key.
@@ -95,11 +98,11 @@ class ArgsConfigSource(ConfigSource):
 class DictConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against a dict object."""
 
-    def __init__(self, dict_object):
+    def __init__(self, dict_object: dict[str, Any]):
         super(DictConfigSource, self).__init__()
         self._parameters = dict_object
 
-    def resolve(self, config_key):
+    def resolve(self, config_key: str) -> str | None:
         splitted_config_key = config_key.split(":")
         # Note that we ignore 'lexicon:' in the iteration,
         # as the dict object is already scoped to lexicon.
@@ -113,7 +116,7 @@ class DictConfigSource(ConfigSource):
 class FileConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a lexicon config file."""
 
-    def __init__(self, file_path):
+    def __init__(self, file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes]):
         with open(file_path, "r") as stream:
             yaml_object = yaml.load(stream, Loader=yaml.SafeLoader) or {}
 
@@ -123,7 +126,11 @@ class FileConfigSource(DictConfigSource):
 class ProviderFileConfigSource(FileConfigSource):
     """ConfigSource that resolve configuration against a provider config file."""
 
-    def __init__(self, provider_name, file_path):
+    def __init__(
+        self,
+        provider_name: str,
+        file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
+    ):
         super(ProviderFileConfigSource, self).__init__(file_path)
         # Scope the loaded config file into provider namespace
         self._parameters = {provider_name: self._parameters}
@@ -132,7 +139,7 @@ class ProviderFileConfigSource(FileConfigSource):
 class LegacyDictConfigSource(DictConfigSource):
     """ConfigSource that resolve configuration against a legacy Lexicon 2.x dict object."""
 
-    def __init__(self, dict_object):
+    def __init__(self, dict_object: dict[str, Any]):
         provider_name = dict_object.get("provider_name") or dict_object.get("provider")
         if not provider_name:
             raise AttributeError(
@@ -156,7 +163,7 @@ class LegacyDictConfigSource(DictConfigSource):
             "output",
         ]
 
-        provider_options = {}
+        provider_options: dict[str, Any] = {}
         refactor_dict_object = {provider_name: provider_options}
 
         for key, value in dict_object.items():
@@ -205,7 +212,7 @@ class ConfigResolver(object):
         super(ConfigResolver, self).__init__()
         self._config_sources = []
 
-    def resolve(self, config_key: str) -> Optional[Any]:
+    def resolve(self, config_key: str) -> str | None:
         """
         Resolve the value of the given config parameter key. Key must be correctly scoped for
         Lexicon, and optionally for the DNS provider for which the parameter is consumed.
@@ -226,7 +233,7 @@ class ConfigResolver(object):
         return None
 
     def add_config_source(
-        self, config_source: ConfigSource, position: Optional[int] = None
+        self, config_source: ConfigSource, position: int | None = None
     ) -> None:
         """
         Add a config source to the current ConfigResolver instance.
@@ -235,7 +242,7 @@ class ConfigResolver(object):
         rank = position if position is not None else len(self._config_sources)
         self._config_sources.insert(rank, config_source)
 
-    def with_config_source(self, config_source: ConfigSource) -> "ConfigResolver":
+    def with_config_source(self, config_source: ConfigSource) -> ConfigResolver:
         """
         Configure current resolver to use the provided ConfigSource instance to be used as a source.
         See documentation of ConfigSource to see how to implement correctly a ConfigSource.
@@ -243,7 +250,7 @@ class ConfigResolver(object):
         self.add_config_source(config_source)
         return self
 
-    def with_env(self) -> "ConfigResolver":
+    def with_env(self) -> ConfigResolver:
         """
         Configure current resolver to use available environment variables as a source.
         Only environment variables starting with 'LEXICON' or 'LEXICON_[PROVIDER]'
@@ -251,7 +258,7 @@ class ConfigResolver(object):
         """
         return self.with_config_source(EnvironmentConfigSource())
 
-    def with_args(self, argparse_namespace: Namespace) -> "ConfigResolver":
+    def with_args(self, argparse_namespace: Namespace) -> ConfigResolver:
         """
         Configure current resolver to use a Namespace object given by a ArgParse instance
         using arg_parse() as a source. This method is typically used to allow a ConfigResolver
@@ -264,7 +271,7 @@ class ConfigResolver(object):
         """
         return self.with_config_source(ArgsConfigSource(argparse_namespace))
 
-    def with_dict(self, dict_object: Dict) -> "ConfigResolver":
+    def with_dict(self, dict_object: dict[str, Any]) -> ConfigResolver:
         """
         Configure current resolver to use the given dict object, scoped to lexicon namespace.
         Example of valid dict object for lexicon:
@@ -278,7 +285,9 @@ class ConfigResolver(object):
         """
         return self.with_config_source(DictConfigSource(dict_object))
 
-    def with_config_file(self, file_path: str) -> "ConfigResolver":
+    def with_config_file(
+        self, file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes]
+    ) -> ConfigResolver:
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for Lexicon and any DNS provider.
@@ -293,8 +302,10 @@ class ConfigResolver(object):
         return self.with_config_source(FileConfigSource(file_path))
 
     def with_provider_config_file(
-        self, provider_name: str, file_path: str
-    ) -> "ConfigResolver":
+        self,
+        provider_name: str,
+        file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
+    ) -> ConfigResolver:
         """
         Configure current resolver to use a YAML configuration file specified on the given path.
         This file provides configuration parameters for a DNS provider exclusively.
@@ -313,7 +324,7 @@ class ConfigResolver(object):
             ProviderFileConfigSource(provider_name, file_path)
         )
 
-    def with_config_dir(self, dir_path: str) -> "ConfigResolver":
+    def with_config_dir(self, dir_path: str | os.PathLike[str]) -> ConfigResolver:
         """
         Configure current resolver to use every valid YAML configuration files available in the
         given directory path. To be taken into account, a configuration file must conform to the
@@ -352,7 +363,7 @@ class ConfigResolver(object):
 
         return self
 
-    def with_legacy_dict(self, legacy_dict_object: Dict) -> "ConfigResolver":
+    def with_legacy_dict(self, legacy_dict_object: dict[str, Any]) -> ConfigResolver:
         """Configure a source that consumes the dict that where used on Lexicon 2.x"""
         warnings.warn(
             DeprecationWarning(
@@ -371,7 +382,7 @@ def non_interactive_config_resolver() -> ConfigResolver:
     return ConfigResolver().with_env().with_config_dir(os.getcwd())
 
 
-def legacy_config_resolver(legacy_dict) -> ConfigResolver:
+def legacy_config_resolver(legacy_dict: dict[str, Any]) -> ConfigResolver:
     """
     With the old legacy approach, we juste got a plain configuration dict object.
     Custom logic was to enrich this configuration with env variables.
