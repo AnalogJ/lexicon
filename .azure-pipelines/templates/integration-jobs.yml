@@ -69,6 +69,35 @@ jobs:
           testResultsFiles: '**/test-*.xml'
           testRunTitle: 'Publish test results for Python $(PYTHON_VERSION) on $(IMAGE)'
         displayName: Publish tests reports
+  - job: package
+    strategy:
+      matrix:
+        linux:
+          IMAGE: ubuntu-20.04
+          TARGET_TRIPLE: x86_64-unknown-linux-gnu
+        macos:
+          IMAGE: macOS-12
+          TARGET_TRIPLE: x86_64-apple-darwin
+        windows:
+          IMAGE: windows-2019
+          TARGET_TRIPLE: x86_64-pc-windows-msvc
+    pool:
+      vmImage: $(IMAGE)
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.10
+          addToPath: true
+        displayName: Enable the targeted python version
+      - script: python -m pip install -U tox poetry
+        displayName: Install required runtime dependencies
+      - script: |
+          set -e
+          poetry install
+          poetry run pyoxidizer build --release
+        displayName: Build Lexicon executable
+      - publish: $(System.DefaultWorkingDirectory)/build/$(TARGET_TRIPLE)/release/install
+        artifact: executable-$(TARGET_TRIPLE)
   - job: trigger_readthedoc
     pool:
       vmImage: ubuntu-22.04

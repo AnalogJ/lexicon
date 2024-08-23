@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import sys
 from typing import Type
 
 from lexicon._private.discovery import (
@@ -14,7 +15,7 @@ from lexicon.interfaces import Provider
 
 def generate_base_provider_parser() -> argparse.ArgumentParser:
     """Function that generates the base provider to be used by all dns providers."""
-    parser = argparse.ArgumentParser(add_help=False)
+    parser = argparse.ArgumentParser(add_help=False, prog="base")
     parser.add_argument(
         "action",
         help="specify the action to take",
@@ -61,7 +62,8 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
 def generate_cli_main_parser() -> argparse.ArgumentParser:
     """Using all providers available, generate a parser that will be used by Lexicon CLI"""
     parser = argparse.ArgumentParser(
-        description="Create, Update, Delete, List DNS entries"
+        description="Create, Update, Delete, List DNS entries",
+        prog=sys.argv[0] if sys.argv[0] else "lexicon",
     )
 
     parser.add_argument(

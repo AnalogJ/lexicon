@@ -154,7 +154,7 @@ class Provider(object):
 
         # Explore and load the arguments available for every provider into the 'auto' provider.
         for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-            subparser = ArgumentParser(add_help=False)
+            subparser = ArgumentParser(add_help=False, prog="provider")
             provider: Type[BaseProvider] = getattr(provider_module, "Provider")
             provider.configure_parser(subparser)
 
