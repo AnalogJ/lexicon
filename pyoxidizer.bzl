@@ -94,7 +94,7 @@ def make_exe():
 
     # Attempt to add resources relative to the built binary when
     # `resources_location` fails.
-    policy.resources_location_fallback = "filesystem-relative:prefix"
+    policy.resources_location_fallback = None
 
     # Clear out a fallback resource location.
     # policy.resources_location_fallback = None
@@ -251,8 +251,8 @@ def make_exe():
     # to our binary.
     #exe.add_python_resources(exe.pip_install(["-r", "requirements.txt"]))
 
-    for resource in exe.pip_install([CWD]):
-        exe.add_python_resource(resource)
+    exe.add_python_resources(exe.pip_install([CWD]))
+    exe.add_python_resources(exe.pip_install(["chardet"]))
 
     # Read Python files from a local directory and add them to our embedded
     # context, taking just the resources belonging to the `foo` and `bar`
