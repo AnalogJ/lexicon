@@ -1,0 +1,1252 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir
+  response:
+    body:
+      string: '{"data":{"id":"0570750a-de45-4937-9612-b7d54c77bc10","user_id":"8f6b415c-0118-44c6-a358-86e3f05585c9","domain":"wkmag.ir","name":"wkmag.ir","dns_cloud":true,"plan_level":1,"features":{"email_forwarding":false},"ns_keys":["m.ns.arvancdn.ir","q.ns.arvancdn.ir"],"smart_routing_status":"off","email_forwarding_configured":false,"current_ns":["m.ns.arvancdn.ir","q.ns.arvancdn.ir"],"status":"active","restriction":[],"type":"full","cname_target":null,"custom_cname":"","transfer":null,"fingerprint_status":false,"created_at":"2020-02-03T16:06:42+00:00","updated_at":"2024-05-28T07:05:41+00:00"},"message":""}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:47 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=105
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 7252732563bdc142a0c8104fc76388af
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '604'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20
+  response:
+    body:
+      string: '{"data":[{"id":"056b8e0b-98b7-4394-b175-4d00421f9f1e","type":"a","name":"localhost","value":[{"ip":"127.0.0.1","port":null,"weight":100,"country":""}],"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:08+00:00","updated_at":"2024-05-28T07:28:08+00:00"},{"id":"e2c266f3-43d9-4b2a-83a0-816aa14c1f8b","type":"cname","name":"docs","value":{"host":"docs.example.com.","host_header":"source","port":-1},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:13+00:00","updated_at":"2024-05-28T07:28:13+00:00"},{"id":"5e85b67e-a0bb-4d00-bd3c-c2d66108f638","type":"ns","name":"@","value":{"host":"q.ns.arvancdn.ir."},"ttl":7200,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":true,"usage":[],"created_at":"2022-11-20T05:04:54+00:00","updated_at":"2022-11-20T05:04:54+00:00"},{"id":"b16272d0-11de-4f39-9d6d-099a0f293a68","type":"ns","name":"@","value":{"host":"m.ns.arvancdn.ir."},"ttl":7200,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":true,"usage":[],"created_at":"2022-11-20T05:04:54+00:00","updated_at":"2022-11-20T05:04:54+00:00"},{"id":"7eb7efd2-b15c-41fb-8eeb-31e804ec5a24","type":"txt","name":"_acme-challenge.fqdn","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:14+00:00","updated_at":"2024-05-28T07:28:14+00:00"},{"id":"41d42914-49c0-48ed-9feb-69fe71debf96","type":"txt","name":"_acme-challenge.full","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:17+00:00","updated_at":"2024-05-28T07:28:17+00:00"},{"id":"a05f7653-42da-4800-9265-bb7d4714f39c","type":"txt","name":"_acme-challenge.test","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:24+00:00","updated_at":"2024-05-28T07:28:24+00:00"},{"id":"da06a9a3-6144-4862-ab70-71c11173a495","type":"txt","name":"_acme-challenge.createrecordset","value":{"text":"challengetoken1"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:28+00:00","updated_at":"2024-05-28T07:28:28+00:00"},{"id":"4854142a-4601-4039-b357-dc3668732069","type":"txt","name":"_acme-challenge.createrecordset","value":{"text":"challengetoken2"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:30+00:00","updated_at":"2024-05-28T07:28:30+00:00"},{"id":"d16e2182-bcdd-4f6d-a7c8-b7c22a791941","type":"txt","name":"_acme-challenge.noop","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:28:33+00:00","updated_at":"2024-05-28T07:28:33+00:00"},{"id":"eb92d289-3950-4a33-89ae-26107aa9a16f","type":"txt","name":"_acme-challenge.deleterecordinset","value":{"text":"challengetoken2"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:06+00:00","updated_at":"2024-05-28T07:29:06+00:00"},{"id":"04c52111-5d9b-4ea4-946a-6d7422460c25","type":"txt","name":"ttl.fqdn","value":{"text":"ttlshouldbe3600"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:29+00:00","updated_at":"2024-05-28T07:29:29+00:00"},{"id":"5063a988-d15d-470a-8e66-ce9858a85830","type":"txt","name":"_acme-challenge.listrecordset","value":{"text":"challengetoken1"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:30+00:00","updated_at":"2024-05-28T07:29:30+00:00"},{"id":"22de086c-1301-4b37-ac58-ac29e2f0bfbe","type":"txt","name":"_acme-challenge.listrecordset","value":{"text":"challengetoken2"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:32+00:00","updated_at":"2024-05-28T07:29:32+00:00"},{"id":"94aa6a3e-ba6d-490c-be05-b7b42b506a5e","type":"txt","name":"random.fqdntest","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:35+00:00","updated_at":"2024-05-28T07:29:35+00:00"},{"id":"31bca9bf-b582-497b-95ab-e102fc273dfb","type":"txt","name":"random.fulltest","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:38+00:00","updated_at":"2024-05-28T07:29:38+00:00"},{"id":"c1155f9f-fed1-4c54-8327-000b7107c8c2","type":"txt","name":"random.test","value":{"text":"challengetoken"},"ttl":3600,"cloud":false,"upstream_https":"default","ip_filter_mode":{"count":"single","order":"none","geo_filter":"none"},"is_protected":false,"usage":[],"created_at":"2024-05-28T07:29:44+00:00","updated_at":"2024-05-28T07:29:44+00:00"}],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":true},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":17,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:47 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=102
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Canary:
+      - cdn
+      X-Request-ID:
+      - 59b30f8cffeb90d0d0d683089cdfdde4
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '6745'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=2
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","next":null},"meta":{"current_page":2,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:47 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=129
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 36ed7c42a7d3ed76af7f4abec00c2b9b
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=3
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=2","next":null},"meta":{"current_page":3,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=2","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:48 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=89
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - ab716e5168c4f8aa92c729128752e152
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=4
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=3","next":null},"meta":{"current_page":4,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=3","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:48 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=127
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 87f6f960993c19eb6cbc2045fddaf8ad
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=5
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=4","next":null},"meta":{"current_page":5,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=4","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:48 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=113
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 72df8f9d61834249387b55bad8d26891
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=6
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=5","next":null},"meta":{"current_page":6,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=5","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:49 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=766
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 44db0ff9a0138b4c5fff7eb0cec10ba9
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=7
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=6","next":null},"meta":{"current_page":7,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=6","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:49 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=102
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 243ecc50aad0ee7b8aad361a64229cdc
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=8
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=7","next":null},"meta":{"current_page":8,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=7","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:49 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=104
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Canary:
+      - cdn
+      X-Request-ID:
+      - 394c50c643a321c15483bab602c5490b
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=9
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=8","next":null},"meta":{"current_page":9,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=8","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:49 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=92
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Canary:
+      - cdn
+      X-Request-ID:
+      - 3c3c97b04d5965a2059b60e16412901d
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '738'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=10
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=9","next":null},"meta":{"current_page":10,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=9","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:49 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=86
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - af6d5425784accb3780752e31ad5f039
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '739'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=11
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=10","next":null},"meta":{"current_page":11,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=10","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:50 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=100
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Canary:
+      - cdn
+      X-Request-ID:
+      - bbf8ad39e91762424e18158e3864d31a
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=12
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=11","next":null},"meta":{"current_page":12,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=11","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:50 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=89
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 601c5e76be913a6a61957653df7c5137
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=13
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=12","next":null},"meta":{"current_page":13,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=12","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:50 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=90
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Canary:
+      - cdn
+      X-Request-ID:
+      - 0ce78805342d94c3615933b0e6ee77bf
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=14
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=13","next":null},"meta":{"current_page":14,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=13","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:50 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=94
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - a9174fffeb3597cf1beb704a4ec63390
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=15
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=14","next":null},"meta":{"current_page":15,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=14","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:50 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=90
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 138abbf94c0d422c12662390f5c81f6f
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=16
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=15","next":null},"meta":{"current_page":16,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=15","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:53 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=2459
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 4aec3c5d2c9d0f083ab888421c1f4d94
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://napi.arvancloud.ir/cdn/4.0/domains/wkmag.ir/dns-records?per_page=20&page=17
+  response:
+    body:
+      string: '{"data":[],"links":{"first":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","last":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","prev":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=16","next":null},"meta":{"current_page":17,"from":null,"last_page":1,"links":[{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=16","label":"&laquo;
+        Previous","active":false},{"url":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records?page=1","label":"1","active":false},{"url":null,"label":"Next
+        &raquo;","active":false}],"path":"https:\/\/napi.arvancloud.ir\/4.0\/domains\/wkmag.ir\/dns-records","per_page":20,"to":null,"total":17}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Request-Methods:
+      - POST, GET, OPTIONS, PUT, DELETE
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 28 May 2024 07:29:53 GMT
+      Keep-Alive:
+      - timeout=65
+      Server:
+      - ArvanCloud
+      Server-Timing:
+      - total;dur=96
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Authorization
+      X-App-Version:
+      - cdn-4.126.4
+      X-Cache:
+      - BYPASS
+      X-Request-ID:
+      - 8710b073cdd67f407a96105c5ddf9ade
+      X-SID:
+      - '2064'
+      X-XSS-Protection:
+      - 1; mode=block
+      content-length:
+      - '741'
+    status:
+      code: 200
+      message: OK
+version: 1
