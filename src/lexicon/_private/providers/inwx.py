@@ -1,4 +1,5 @@
 """Module provider for INWX"""
+
 import logging
 from argparse import ArgumentParser
 from typing import List
@@ -9,7 +10,7 @@ from lexicon.interfaces import Provider as BaseProvider
 try:
     import xmlrpclib  # type: ignore
 except ImportError:
-    import xmlrpc.client as xmlrpclib  # type: ignore
+    import xmlrpc.client as xmlrpclib
 
 LOGGER = logging.getLogger(__name__)
 

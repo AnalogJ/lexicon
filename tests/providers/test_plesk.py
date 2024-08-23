@@ -1,4 +1,5 @@
 """Integration tests for Plesk"""
+
 from unittest import TestCase
 
 import pytest

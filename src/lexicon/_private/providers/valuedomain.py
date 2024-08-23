@@ -65,6 +65,7 @@ Reference: https://www.value-domain.com/moddnsfree.php
 - SRV record
   - srv _smtp._tcp 1 2 25 server1.your.domain   : SRV record for _smtp._tcp.<YOUR-DOMAIN> (Priority:1, Weight:2, Port:25)
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -383,11 +384,11 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     domain_data.records + [rec],
-                    int(ttl_option)
-                    if ttl_option is not None and int(ttl_option) > 0
-                    else DEFAULT_TTL
-                    if ttl_option is not None
-                    else domain_data.ttl,
+                    (
+                        int(ttl_option)
+                        if ttl_option is not None and int(ttl_option) > 0
+                        else DEFAULT_TTL if ttl_option is not None else domain_data.ttl
+                    ),
                 ),
             )
         elif domain_data is not None:
@@ -398,9 +399,11 @@ class Provider(BaseProvider):
                 self.domain,
                 DomainData(
                     [rec],
-                    int(ttl_option)
-                    if ttl_option is not None and int(ttl_option) > 0
-                    else DEFAULT_TTL,
+                    (
+                        int(ttl_option)
+                        if ttl_option is not None and int(ttl_option) > 0
+                        else DEFAULT_TTL
+                    ),
                 ),
             )
 
@@ -423,9 +426,11 @@ class Provider(BaseProvider):
                     "id": record_data.id(),
                     "ttl": domain_data.ttl,
                     "type": record_data.rtype.upper(),
-                    "name": self._fqdn_name(record_data.name)
-                    if record_data.rtype.lower() != "txt"
-                    else self._full_name(record_data.name),
+                    "name": (
+                        self._fqdn_name(record_data.name)
+                        if record_data.rtype.lower() != "txt"
+                        else self._full_name(record_data.name)
+                    ),
                     "content": record_data.content,
                 }
                 for record_data in domain_data.records
@@ -463,11 +468,11 @@ class Provider(BaseProvider):
                             content or target[0].content,
                         )
                     ],
-                    ttl_option
-                    if ttl_option is not None and ttl_option > 0
-                    else DEFAULT_TTL
-                    if ttl_option is not None
-                    else domain_data.ttl,
+                    (
+                        ttl_option
+                        if ttl_option is not None and ttl_option > 0
+                        else DEFAULT_TTL if ttl_option is not None else domain_data.ttl
+                    ),
                 ),
             )
 
@@ -553,11 +558,13 @@ if __name__ == "__main__":
             pass
 
         def _create_provider(self, domainname: str):
-            config = ConfigResolver().with_dict({
+            config = ConfigResolver().with_dict(
+                {
                     "provider_name": "valuedomain",
                     "domain": domainname,
                     "valuedomain": {"auth_token": self.auth_token},
-            })
+                }
+            )
             return Provider(config)
 
         def test_vdapi_get_domain_list(self):

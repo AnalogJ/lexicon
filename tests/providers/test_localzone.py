@@ -1,4 +1,5 @@
 """Integration tests for Localzone"""
+
 import os
 from unittest import TestCase
 

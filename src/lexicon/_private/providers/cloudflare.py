@@ -1,4 +1,5 @@
 """Module provider for Cloudflare"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -23,9 +24,13 @@ class Provider(BaseProvider):
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
             There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+
             1 - A Global API key, with --auth-username and --auth-token flags.
+
             2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with --auth-token flag.
+
             3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
+            Finding zone_id value is explained in CloudFlare `Doc <https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/>`_
         """
         parser.add_argument(
             "--auth-username",
@@ -80,6 +85,9 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
+        if self._get_lexicon_option("priority"):
+            if self._get_lexicon_option("priority").isnumeric():
+                data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:
@@ -196,9 +204,9 @@ class Provider(BaseProvider):
             headers["X-Auth-Email"] = self._get_provider_option("auth_username")
             headers["X-Auth-Key"] = self._get_provider_option("auth_token")
         else:
-            headers[
-                "Authorization"
-            ] = f"Bearer {self._get_provider_option('auth_token')}"
+            headers["Authorization"] = (
+                f"Bearer {self._get_provider_option('auth_token')}"
+            )
         response = requests.request(
             action,
             self.api_endpoint + url,

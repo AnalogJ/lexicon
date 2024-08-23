@@ -1,4 +1,5 @@
 """Module provider for Aliyun"""
+
 import base64
 import datetime
 import hmac
@@ -238,7 +239,9 @@ class Provider(BaseProvider):
             "SignatureMethod": "HMAC-SHA1",
             "SignatureVersion": "1.0",
             "SignatureNonce": signature_nonce,
-            "Timestamp": datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+            "Timestamp": datetime.datetime.now(datetime.timezone.utc)
+            .replace(microsecond=0)
+            .isoformat()
             + "Z",
             "AccessKeyId": access_key_id,
         }

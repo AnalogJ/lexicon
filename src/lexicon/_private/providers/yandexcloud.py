@@ -8,6 +8,7 @@ and dns.editor for editing them.
 If Cloud ID and Folder ID are not specified,
 resource-manager.clouds.member and resource-manager.viewer are needed as well.
 """
+
 import hashlib
 import json
 import logging

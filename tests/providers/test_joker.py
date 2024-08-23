@@ -1,4 +1,5 @@
 """Integration tests for Joker.com provider"""
+
 import re
 from unittest import TestCase
 

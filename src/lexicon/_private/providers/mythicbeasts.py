@@ -1,4 +1,5 @@
 """Module provider for Mythic Beasts"""
+
 import hashlib
 import json
 import logging
@@ -7,7 +8,7 @@ from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry  # type: ignore
+from urllib3.util.retry import Retry
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider

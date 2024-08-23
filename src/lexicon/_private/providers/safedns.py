@@ -1,4 +1,5 @@
 """Module provider for UKFast's SafeDNS"""
+
 import json
 import logging
 from argparse import ArgumentParser

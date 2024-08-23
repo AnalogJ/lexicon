@@ -1,4 +1,5 @@
 """Module provider for Sakura Cloud"""
+
 import json
 import logging
 from argparse import ArgumentParser

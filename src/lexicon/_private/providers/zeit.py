@@ -1,4 +1,5 @@
 """Compatibility layer for Zeit (old name for Vercel)"""
+
 import logging
 
 from lexicon._private.providers.vercel import Provider as VercelProvider

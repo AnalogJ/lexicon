@@ -1,4 +1,5 @@
 """Module provider for a localzone"""
+
 import logging
 import types
 from argparse import ArgumentParser

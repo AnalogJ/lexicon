@@ -1,4 +1,5 @@
 """Module provider for OVH"""
+
 import hashlib
 import json
 import logging
@@ -10,6 +11,11 @@ import requests
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
+
+try:
+    from simplejson import JSONDecodeError  # type: ignore
+except ImportError:
+    from json import JSONDecodeError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -257,4 +263,10 @@ class Provider(BaseProvider):
         )
         result.raise_for_status()
 
-        return result.json()
+        try:
+            return result.json()
+        except JSONDecodeError:
+            LOGGER.warning(
+                f"Unexpected response from OVH APIs for {action} {url} (response dumped as plain text):\n{result.text}"
+            )
+            return None

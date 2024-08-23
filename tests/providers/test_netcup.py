@@ -1,4 +1,5 @@
 """Integration tests for netcup"""
+
 from unittest import TestCase
 
 import pytest

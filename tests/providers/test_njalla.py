@@ -1,4 +1,5 @@
 """Integration tests for Njalla provider"""
+
 from unittest import TestCase
 
 import pytest

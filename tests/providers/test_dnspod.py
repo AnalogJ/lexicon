@@ -1,4 +1,5 @@
 """Integration tests for DNSPod"""
+
 from unittest import TestCase
 
 import pytest

@@ -1,4 +1,5 @@
 """Integration tests for FlexibleEngine Cloud"""
+
 from unittest import TestCase
 
 import pytest

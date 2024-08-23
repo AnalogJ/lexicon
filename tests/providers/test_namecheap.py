@@ -40,6 +40,7 @@ The required Environment Variables for a live test are:
     export LEXICON_NAMECHEAP_DOMAIN={DOMAIN_1}
     export LEXICON_NAMECHEAP_DOMAINMANAGED={DOMAIN_2}
 """
+
 import os
 from unittest import TestCase
 
@@ -50,6 +51,7 @@ from integration_tests import IntegrationTestsV2
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
+@pytest.mark.skip(reason="Cassettes need to be recorded again from live API")
 class NamecheapProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Namecheap"""
 
@@ -75,6 +77,7 @@ class NamecheapProviderTests(TestCase, IntegrationTestsV2):
         return
 
 
+@pytest.mark.skip(reason="Cassettes need to be recorded again from live API")
 class NamecheapManagedProviderTests(NamecheapProviderTests):
     """
     The Namecheap API behaves differently for domains that are "Managed" by an

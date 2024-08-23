@@ -1,4 +1,5 @@
 """Module provider for Dinahosting"""
+
 # import re
 import hashlib
 import logging

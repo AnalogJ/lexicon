@@ -17,6 +17,7 @@ Implementation notes:
   'change the content of this record', because records are identified by their name,
   type and content.
 """
+
 import logging
 from argparse import ArgumentParser
 from typing import List

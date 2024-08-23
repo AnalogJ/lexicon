@@ -1,4 +1,5 @@
 """Integration tests for Yandex PDD"""
+
 from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2

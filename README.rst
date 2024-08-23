@@ -99,15 +99,15 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| pointhq_        | porkbun_        | powerdns_       | rackspace_      | rage4_          |
+| pointhq_        | porkbun_        | powerdns_       | qcloud_         | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rcodezero_      | route53_        | safedns_        | sakuracloud_    | softlayer_      |
+| rage4_          | rcodezero_      | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
+| softlayer_      | timeweb_        | transip_        | ultradns_       | valuedomain_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| webgo_          | wedos_          | yandex_         | yandexcloud_    | zeit_           |
+| vercel_         | vultr_          | webgo_          | wedos_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zilore_         | zonomi_         |                 |                 |                 |
+| yandexcloud_    | zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -148,7 +148,7 @@ The current supported providers are:
 .. _henet: https://dns.he.net/
 .. _hetzner: https://dns.hetzner.com/api-docs/
 .. _hostingde:
-.. _hover: https://hoverapi.docs.apiary.io/
+.. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
 .. _infomaniak: https://www.infomaniak.com
 .. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
@@ -176,6 +176,7 @@ The current supported providers are:
 .. _pointhq: https://pointhq.com/api/docs
 .. _porkbun: https://kb.porkbun.com/article/190-getting-started-with-the-porkbun-dns-api
 .. _powerdns: https://doc.powerdns.com/md/httpapi/api_spec/
+.. _qcloud: https://cloud.tencent.com/document/product/1427/56194
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
@@ -183,6 +184,7 @@ The current supported providers are:
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
 .. _softlayer: https://sldn.softlayer.com/article/rest#http_request_types
+.. _timeweb: https://timeweb.cloud/api-docs
 .. _transip: https://api.transip.nl/rest/docs.html
 .. _ultradns: https://ultra-portalstatic.ultradns.com/static/docs/rest-api_user_guide.pdf
 .. _valuedomain: https://www.value-domain.com/service/api/

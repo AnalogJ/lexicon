@@ -5,6 +5,7 @@ Author: Matthias Schoettle (@mschoettle), 2019
 
 EUserv API Docs: https://support.euserv.com/api-doc/
 """
+
 import json
 import logging
 from argparse import ArgumentParser

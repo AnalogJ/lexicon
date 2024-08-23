@@ -2,6 +2,7 @@
 Definition of the ConfigResolver to configure Lexicon, and convenient classes to build
 various configuration sources.
 """
+
 from __future__ import annotations
 
 import logging

@@ -1,4 +1,5 @@
 """Module provider for RcodeZero"""
+
 import hashlib
 import json
 import logging

@@ -1,9 +1,12 @@
 """Module provider for Hover"""
+
 import json
 import logging
+import re
 from argparse import ArgumentParser
 from typing import List
 
+import pyotp
 import requests
 
 from lexicon.exceptions import AuthenticationError
@@ -27,24 +30,42 @@ class Provider(BaseProvider):
         parser.add_argument(
             "--auth-password", help="specify password for authentication"
         )
+        parser.add_argument(
+            "--auth-totp-secret",
+            help="specify base32-encoded shared secret to generate an OTP for authentication",
+        )
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}
+        shared_secret = re.sub(
+            r"\s*", "", self._get_provider_option("auth_totp_secret") or ""
+        )
+        self.totp = pyotp.TOTP(shared_secret)
 
-    def authenticate(self):
+    def authenticate(self) -> None:
         # Getting required cookies "hover_session" and "hoverauth"
         response = requests.get("https://www.hover.com/signin")
         self.cookies["hover_session"] = response.cookies["hover_session"]
 
+        # Part one, login credentials
         payload = {
             "username": self._get_provider_option("auth_username"),
             "password": self._get_provider_option("auth_password"),
         }
         response = requests.post(
-            "https://www.hover.com/api/login/", json=payload, cookies=self.cookies
+            "https://www.hover.com/signin/auth.json", json=payload, cookies=self.cookies
+        )
+        response.raise_for_status()
+
+        # Part two, 2fa
+        payload = {"code": self.totp.now()}
+        response = requests.post(
+            "https://www.hover.com/signin/auth2.json",
+            json=payload,
+            cookies=self.cookies,
         )
         response.raise_for_status()
 
@@ -85,11 +106,11 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, rtype=None, name=None, content=None):
-        payload = self._get(f"/domains/{self.domain_id}/dns")
+        payload = self._get(f"/control_panel/dns/{self.domain}")
 
         # payload['domains'] should be a list of len 1
         try:
-            raw_records = payload["domains"][0]["entries"]
+            raw_records = payload["domain"]["dns"]
         except (KeyError, IndexError):
             raise Exception("Unexpected response")
 
@@ -132,14 +153,16 @@ class Provider(BaseProvider):
 
         record = {"name": name, "type": rtype, "content": content}
         if self._get_lexicon_option("ttl"):
-            record["ttl"] = self._get_lexicon_option("ttl")
+            record["ttl"] = str(self._get_lexicon_option("ttl"))
 
         LOGGER.debug("create_record: %s", record)
-        payload = self._post(f"/domains/{self.domain_id}/dns", record)
-        return payload["succeeded"]
+        payload = {"id": f"domain-{self.domain}", "dns_record": record}
+        response = self._post("/control_panel/dns", payload)
+
+        return response["succeeded"]
 
     # Update a record. Hover cannot update name so we delete and recreate.
-    def update_record(self, identifier, rtype=None, name=None, content=None):
+    def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             records = self.list_records()
             records = [r for r in records if r["id"] == identifier]
@@ -171,10 +194,13 @@ class Provider(BaseProvider):
             delete_record_ids.append(identifier)
 
         LOGGER.debug("delete_records: %s", delete_record_ids)
+        payload = {
+            "domains": [
+                {"id": f"domain-{self.domain}", "dns_records": delete_record_ids}
+            ]
+        }
+        self._request("DELETE", "/control_panel/dns", payload)
 
-        for record_id in delete_record_ids:
-            self._delete(f"/dns/{record_id}")
-            LOGGER.debug("delete_record: %s", record_id)
         return True
 
     # Helpers

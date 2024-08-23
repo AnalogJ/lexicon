@@ -1,4 +1,5 @@
 """Module provider for Online.net"""
+
 import json
 import logging
 from argparse import ArgumentParser
@@ -61,9 +62,11 @@ class Provider(BaseProvider):
             passive_row = self._post(
                 f"/domain/{self.domain_id}/version",
                 {
-                    "name": zone_name_b
-                    if active_row["name"] == zone_name_a
-                    else zone_name_a
+                    "name": (
+                        zone_name_b
+                        if active_row["name"] == zone_name_a
+                        else zone_name_a
+                    )
                 },
             )
 

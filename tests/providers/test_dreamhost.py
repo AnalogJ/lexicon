@@ -1,4 +1,5 @@
 """Integration tests for Dreamhost"""
+
 from unittest import TestCase
 
 import pytest

@@ -19,6 +19,7 @@ So all the hard work in this provider, apart from the authentication process, is
 Lexicon monovalued entries representation to/from the Google multivalued and stacked representation
 through create/update/list/delete processes.
 """
+
 import hashlib
 import json
 import logging

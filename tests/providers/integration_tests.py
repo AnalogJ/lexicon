@@ -1,4 +1,5 @@
 """Base class for provider integration tests"""
+
 import os
 import warnings
 from functools import wraps

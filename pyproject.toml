@@ -1,10 +1,10 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dns-lexicon"
-version = "3.14.1"
+version = "3.18.0"
 description = "Manipulate DNS records on various DNS providers in a standardized/agnostic way"
 license = "MIT"
 keywords = [
@@ -20,10 +20,10 @@ classifiers = [
     "Topic :: Utilities",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 authors = [
     "Jason Kulatunga <jason@thesparktree.com>",
@@ -36,31 +36,32 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 tldextract = ">=2"
 cryptography = ">=2"
 pyyaml = ">=3"
 requests = ">=2"
 beautifulsoup4 = ">=4"
+pyotp = ">=2"
+dnspython = ">=2"
 importlib-metadata = { version = ">=4.6", python = "<3.10" }
 # Optional dependencies required by some providers
 boto3 = { version = ">=1.28", optional = true }  # route53
 localzone = { version = ">=0.9.8", optional = true }  # localzone
 softlayer = {version = ">=5", optional = true}  # softlayer
 zeep = { version = ">=3", optional = true }  # gransy
-dnspython = { version = ">=2", optional = true }  # ddns, duckdns
 oci = {version = ">=2", optional = true}  # oci
+tencentcloud-sdk-python = {version = ">=3", optional = true} # qcloud
 
 [tool.poetry.extras]
 route53 = ["boto3"]
 localzone = ["localzone"]
 softlayer = ["softlayer"]
 gransy = ["zeep"]
-ddns = ["dnspython"]
-duckdns = ["dnspython"]
 oci = ["oci"]
+qcloud = ["tencentcloud-sdk-python"]
 # Extra "full" list must contain all other extras
-full = ["boto3", "localzone", "softlayer", "zeep", "dnspython", "oci"]
+full = ["boto3", "localzone", "softlayer", "zeep", "oci", "tencentcloud-sdk-python"]
 
 [tool.poetry.group.dev.dependencies]
 esbonio = "*"
@@ -69,7 +70,10 @@ pytest = "*"
 pytest-cov = "*"
 pytest-xdist = "*"
 vcrpy = "*"
-flake8 = "*"
+# We add flake8 conditionally to recent Python version to get modern versions
+# of flake8 cleaned of several issues. It just means that linting cannot be done
+# on the initial release of Python 3.8 (version 3.8.0). This is a decent constraint.
+flake8 = { version = "*", python = ">=3.8.1" }
 isort = "*"
 tox = ">=4"
 black = "*"
@@ -79,6 +83,11 @@ types-PyYAML = "*"
 types-pytz = "*"
 types-requests = "*"
 types-toml = "*"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "*"
+sphinx_rtd_theme = "*"
+toml = "*"
 
 [tool.poetry.scripts]
 lexicon = "lexicon._private.cli:main"
@@ -93,10 +102,17 @@ filterwarnings = [
     "ignore:'cgi' is deprecated:DeprecationWarning",
     # Ignore our own deprecation warnings.
     "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",
+    # Ignore deprecation warnings from datetime used by our third-party libraries.
+    "ignore:.*datetime\\.utcnow\\(\\) is deprecated:DeprecationWarning",
+    "ignore:.*datetime\\.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
+    # Ignore deprecation usages of urllib3 in boto
+    "ignore:The 'strict' parameter is no longer needed on Python 3+:DeprecationWarning",
 ]
 
 [tool.mypy]
 show_error_codes = true
+warn_redundant_casts = true
+warn_unused_ignores = true
 
 [tool.isort]
 profile = "black"

@@ -1,4 +1,5 @@
 """Module provider for nfsn"""
+
 import hashlib
 import logging
 import random

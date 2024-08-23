@@ -9,30 +9,30 @@ jobs:
       matrix:
         linux-python-3.8:
           PYTHON_VERSION: 3.8
-        linux-python-3.11-light:
-          PYTHON_VERSION: 3.11
+        linux-python-3.12-light:
+          PYTHON_VERSION: 3.12
           TOXENV: light
-        linux-python-3.11-cover:
-          PYTHON_VERSION: 3.11
+        linux-python-3.12-cover:
+          PYTHON_VERSION: 3.12
           TOXENV: cover
         linux-lint:
-          PYTHON_VERSION: 3.11
+          PYTHON_VERSION: 3.12
           TOXENV: lint
         linux-mypy:
-          PYTHON_VERSION: 3.11
+          PYTHON_VERSION: 3.12
           TOXENV: mypy
         macos-python-3.8:
-          IMAGE: macos-11
+          IMAGE: macOS-12
           PYTHON_VERSION: 3.8
-        macos-python-3.11:
-          IMAGE: macos-11
-          PYTHON_VERSION: 3.11
+        macos-python-3.12:
+          IMAGE: macOS-12
+          PYTHON_VERSION: 3.12
         windows-python-3.8:
           IMAGE: windows-2019
           PYTHON_VERSION: 3.8
-        windows-python-3.11:
+        windows-python-3.12:
           IMAGE: windows-2019
-          PYTHON_VERSION: 3.11
+          PYTHON_VERSION: 3.12
     pool:
       vmImage: $(IMAGE)
     steps:

@@ -1,4 +1,5 @@
 """Integration tests for PowerDNS"""
+
 from unittest import TestCase
 
 import pytest

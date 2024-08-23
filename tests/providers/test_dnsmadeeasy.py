@@ -1,4 +1,5 @@
 """Integration tests for DNSMadeEasy"""
+
 from unittest import TestCase
 
 import pytest

@@ -1,4 +1,5 @@
 """Parsers definition for the Lexicon command-line interface"""
+
 import argparse
 import os
 from typing import Type
@@ -38,6 +39,7 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
         "--identifier", help="specify the record for update or delete actions"
     )
     parser.add_argument(
+        "--log-level",
         "--log_level",
         help="specify the log level",
         default="ERROR",
@@ -68,13 +70,21 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
         action="version",
         version=f"%(prog)s {lexicon_version()}",
     )
-    parser.add_argument("--delegated", help="specify the delegated domain")
+    parser.add_argument(
+        "--delegated",
+        help="specify the delegated domain (may not needed if --resolve-zone-name is set)",
+    )
     parser.add_argument(
         "--config-dir",
         default=os.getcwd(),
         help="specify the directory where to search lexicon.yml and "
         "lexicon_[provider].yml configuration files "
         "(default: current directory).",
+    )
+    parser.add_argument(
+        "--resolve-zone-name",
+        action="store_true",
+        help="trigger an active resolution of the zone name for the given domain using DNS queries",
     )
     subparsers = parser.add_subparsers(
         dest="provider_name", help="specify the DNS provider to use"

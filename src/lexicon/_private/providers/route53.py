@@ -1,4 +1,5 @@
 """Provide support to Lexicon for AWS Route 53 DNS changes."""
+
 import hashlib
 import logging
 import re
@@ -356,9 +357,11 @@ class Provider(BaseProvider):
                     "type": record["Type"],
                     "name": self._full_name(record["Name"]),
                     "ttl": record.get("TTL", None),
-                    "content": record_content[0]
-                    if len(record_content) == 1
-                    else record_content,
+                    "content": (
+                        record_content[0]
+                        if len(record_content) == 1
+                        else record_content
+                    ),
                 }
             )
         return records

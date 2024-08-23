@@ -1,4 +1,5 @@
 """Module provider for DDNS"""
+
 import hashlib
 import logging
 from argparse import ArgumentParser

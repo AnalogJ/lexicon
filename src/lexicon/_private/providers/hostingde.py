@@ -1,4 +1,5 @@
 """Module provider for hostingde (Hosting.de)"""
+
 import json
 import logging
 import time
