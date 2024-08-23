@@ -1,0 +1,172 @@
+interactions:
+- request:
+    body: username=USERNAME&password=PASSWORD
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '53'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://dns.services/api/login
+  response:
+    body:
+      string: '{"token":"TOKEN","refresh":"REFRESH"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2060'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 14 Apr 2023 12:57:31 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - ': max-age=31536000'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-RateLimit-Limit:
+      - '25'
+      X-RateLimit-Remaining:
+      - '3'
+      X-RateLimit-Reset:
+      - '98'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: GET
+    uri: https://dns.services/api/dns
+  response:
+    body:
+      string: '{"service_ids":["292"],"zones":[{"domain_id":"1178","name":"astylos.dk","service_id":"292"}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '93'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 14 Apr 2023 12:57:31 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - ': max-age=31536000'
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: GET
+    uri: https://dns.services/api/service/292/dns/1178
+  response:
+    body:
+      string: '{"service_id":"292","name":"astylos.dk","records":{"0":{"id":"15257","domain_id":"1178","name":"astylos.dk","type":"SOA","content":["ns1.dns.services","post.dns.services","2022031025","10800","3600","1814400","7200"],"ttl":"60","prio":"0","change_date":"0","priority":"0"},"1":{"id":"15258","domain_id":"1178","name":"astylos.dk","type":"NS","content":"ns1.dns.services","ttl":"86400","prio":"0","change_date":"0","priority":"0"},"2":{"id":"15259","domain_id":"1178","name":"astylos.dk","type":"NS","content":"ns2.dns.services","ttl":"86400","prio":"0","change_date":"0","priority":"0"},"3":{"id":"15263","domain_id":"1178","name":"astylos.dk","type":"A","content":"85.184.142.35","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"4":{"id":"15264","domain_id":"1178","name":"astylos.dk","type":"CAA","content":"0
+        issue \"letsencrypt.org\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"5":{"id":"15265","domain_id":"1178","name":"googleffffffffa80f23e4.astylos.dk","type":"CNAME","content":"google.com","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"6":{"id":"15266","domain_id":"1178","name":"mail.astylos.dk","type":"CNAME","content":"ghs.google.com","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"7":{"id":"15267","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx.l.google.com","ttl":"43200","prio":"10","change_date":"0","priority":"10"},"8":{"id":"15268","domain_id":"1178","name":"astylos.dk","type":"MX","content":"alt1.aspmx.l.google.com","ttl":"43200","prio":"20","change_date":"0","priority":"20"},"9":{"id":"15269","domain_id":"1178","name":"astylos.dk","type":"MX","content":"alt2.aspmx.l.google.com","ttl":"43200","prio":"20","change_date":"0","priority":"20"},"10":{"id":"15270","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx2.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"11":{"id":"15271","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx3.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"12":{"id":"15272","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx4.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"13":{"id":"15273","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx5.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"14":{"id":"15279","domain_id":"1178","name":"astylos.dk","type":"TXT","content":"\"v=spf1
+        include:_spf.google.com ~all\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"15":{"id":"15280","domain_id":"1178","name":"google._domainkey.astylos.dk","type":"TXT","content":"\"v=DKIM1;
+        k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNz\/zlpkVI00coZI8LcdWTPaqLSvmK0mSpe3i4+HUwnHphM+sdEMnFdM1c4SYl6kC6vlCqlSnU0wN7tFyVH2Z4O6gfxgDn2aeH2niz\/0IBaSHeVrolgAwidp9F34yO5vnDliT8OVLdlHsXbVNc19+0pN4JaS\/fwXBjUTR2T2KtIwIDAQAB\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"17":{"id":"396179","domain_id":"1178","name":"hass.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"18":{"id":"396180","domain_id":"1178","name":"unifi.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"19":{"id":"396181","domain_id":"1178","name":"nuc.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"20":{"id":"404801","domain_id":"1178","name":"foobar.astylos.dk","type":"TXT","content":"\"fisk\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"21":{"id":"406217","domain_id":"1178","name":"localhost.astylos.dk","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"22":{"id":"406218","domain_id":"1178","name":"docs.astylos.dk","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"23":{"id":"406219","domain_id":"1178","name":"_acme-challenge.fqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"24":{"id":"406220","domain_id":"1178","name":"_acme-challenge.full.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"27":{"id":"406223","domain_id":"1178","name":"_acme-challenge.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"28":{"id":"406224","domain_id":"1178","name":"_acme-challenge.createrecordset.astylos.dk","type":"TXT","content":"\"challengetoken1\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"31":{"id":"406227","domain_id":"1178","name":"_acme-challenge.createrecordset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"32":{"id":"406228","domain_id":"1178","name":"_acme-challenge.noop.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"34":{"id":"406236","domain_id":"1178","name":"_acme-challenge.deleterecordinset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"36":{"id":"406241","domain_id":"1178","name":"ttl.fqdn.astylos.dk","type":"TXT","content":"\"ttlshouldbe3600\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"37":{"id":"406242","domain_id":"1178","name":"_acme-challenge.listrecordset.astylos.dk","type":"TXT","content":"\"challengetoken1\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"38":{"id":"406243","domain_id":"1178","name":"_acme-challenge.listrecordset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"40":{"id":"406245","domain_id":"1178","name":"random.fqdntest.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"42":{"id":"406247","domain_id":"1178","name":"random.fulltest.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"44":{"id":"406249","domain_id":"1178","name":"random.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"45":{"id":"406250","domain_id":"1178","name":"updated.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"46":{"id":"406251","domain_id":"1178","name":"orig.nameonly.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"48":{"id":"406253","domain_id":"1178","name":"updated.testfqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"49":{"id":"406254","domain_id":"1178","name":"updated.testfull.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"52":{"id":"406267","domain_id":"1178","name":"updated.testfqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"53":{"id":"406329","domain_id":"1178","name":"updated.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '7407'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 14 Apr 2023 12:57:32 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - ': max-age=31536000'
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: GET
+    uri: https://dns.services/api/service/292/dns/1178
+  response:
+    body:
+      string: '{"service_id":"292","name":"astylos.dk","records":{"0":{"id":"15257","domain_id":"1178","name":"astylos.dk","type":"SOA","content":["ns1.dns.services","post.dns.services","2022031025","10800","3600","1814400","7200"],"ttl":"60","prio":"0","change_date":"0","priority":"0"},"1":{"id":"15258","domain_id":"1178","name":"astylos.dk","type":"NS","content":"ns1.dns.services","ttl":"86400","prio":"0","change_date":"0","priority":"0"},"2":{"id":"15259","domain_id":"1178","name":"astylos.dk","type":"NS","content":"ns2.dns.services","ttl":"86400","prio":"0","change_date":"0","priority":"0"},"3":{"id":"15263","domain_id":"1178","name":"astylos.dk","type":"A","content":"85.184.142.35","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"4":{"id":"15264","domain_id":"1178","name":"astylos.dk","type":"CAA","content":"0
+        issue \"letsencrypt.org\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"5":{"id":"15265","domain_id":"1178","name":"googleffffffffa80f23e4.astylos.dk","type":"CNAME","content":"google.com","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"6":{"id":"15266","domain_id":"1178","name":"mail.astylos.dk","type":"CNAME","content":"ghs.google.com","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"7":{"id":"15267","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx.l.google.com","ttl":"43200","prio":"10","change_date":"0","priority":"10"},"8":{"id":"15268","domain_id":"1178","name":"astylos.dk","type":"MX","content":"alt1.aspmx.l.google.com","ttl":"43200","prio":"20","change_date":"0","priority":"20"},"9":{"id":"15269","domain_id":"1178","name":"astylos.dk","type":"MX","content":"alt2.aspmx.l.google.com","ttl":"43200","prio":"20","change_date":"0","priority":"20"},"10":{"id":"15270","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx2.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"11":{"id":"15271","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx3.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"12":{"id":"15272","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx4.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"13":{"id":"15273","domain_id":"1178","name":"astylos.dk","type":"MX","content":"aspmx5.googlemail.com","ttl":"43200","prio":"30","change_date":"0","priority":"30"},"14":{"id":"15279","domain_id":"1178","name":"astylos.dk","type":"TXT","content":"\"v=spf1
+        include:_spf.google.com ~all\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"15":{"id":"15280","domain_id":"1178","name":"google._domainkey.astylos.dk","type":"TXT","content":"\"v=DKIM1;
+        k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNz\/zlpkVI00coZI8LcdWTPaqLSvmK0mSpe3i4+HUwnHphM+sdEMnFdM1c4SYl6kC6vlCqlSnU0wN7tFyVH2Z4O6gfxgDn2aeH2niz\/0IBaSHeVrolgAwidp9F34yO5vnDliT8OVLdlHsXbVNc19+0pN4JaS\/fwXBjUTR2T2KtIwIDAQAB\"","ttl":"43200","prio":"0","change_date":"0","priority":"0"},"17":{"id":"396179","domain_id":"1178","name":"hass.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"18":{"id":"396180","domain_id":"1178","name":"unifi.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"19":{"id":"396181","domain_id":"1178","name":"nuc.astylos.dk","type":"CNAME","content":"astylos.dk","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"20":{"id":"404801","domain_id":"1178","name":"foobar.astylos.dk","type":"TXT","content":"\"fisk\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"21":{"id":"406217","domain_id":"1178","name":"localhost.astylos.dk","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"22":{"id":"406218","domain_id":"1178","name":"docs.astylos.dk","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"23":{"id":"406219","domain_id":"1178","name":"_acme-challenge.fqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"24":{"id":"406220","domain_id":"1178","name":"_acme-challenge.full.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"27":{"id":"406223","domain_id":"1178","name":"_acme-challenge.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"28":{"id":"406224","domain_id":"1178","name":"_acme-challenge.createrecordset.astylos.dk","type":"TXT","content":"\"challengetoken1\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"31":{"id":"406227","domain_id":"1178","name":"_acme-challenge.createrecordset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"32":{"id":"406228","domain_id":"1178","name":"_acme-challenge.noop.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"34":{"id":"406236","domain_id":"1178","name":"_acme-challenge.deleterecordinset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"36":{"id":"406241","domain_id":"1178","name":"ttl.fqdn.astylos.dk","type":"TXT","content":"\"ttlshouldbe3600\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"37":{"id":"406242","domain_id":"1178","name":"_acme-challenge.listrecordset.astylos.dk","type":"TXT","content":"\"challengetoken1\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"38":{"id":"406243","domain_id":"1178","name":"_acme-challenge.listrecordset.astylos.dk","type":"TXT","content":"\"challengetoken2\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"40":{"id":"406245","domain_id":"1178","name":"random.fqdntest.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"42":{"id":"406247","domain_id":"1178","name":"random.fulltest.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"44":{"id":"406249","domain_id":"1178","name":"random.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"45":{"id":"406250","domain_id":"1178","name":"updated.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"46":{"id":"406251","domain_id":"1178","name":"orig.nameonly.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"48":{"id":"406253","domain_id":"1178","name":"updated.testfqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"49":{"id":"406254","domain_id":"1178","name":"updated.testfull.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"52":{"id":"406267","domain_id":"1178","name":"updated.testfqdn.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"},"53":{"id":"406329","domain_id":"1178","name":"updated.test.astylos.dk","type":"TXT","content":"\"challengetoken\"","ttl":"3600","prio":"0","change_date":"0","priority":"0"}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '7407'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 14 Apr 2023 12:57:32 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - ': max-age=31536000'
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

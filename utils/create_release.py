@@ -2,7 +2,7 @@
 import datetime
 import os
 import subprocess
-from distutils.version import StrictVersion
+from packaging import version
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -24,7 +24,7 @@ def main():
     print("Please insert new version:")
     new_version = str(input())
 
-    if StrictVersion(new_version) <= StrictVersion(current_version):
+    if version.parse(new_version) <= version.parse(current_version):
         raise RuntimeError(
             "Error new version is below current version: {0} < {1}".format(
                 new_version, current_version
@@ -51,8 +51,8 @@ def main():
             file_h.write(changelog)
 
         subprocess.check_call("poetry version {0}".format(new_version), shell=True)
-        subprocess.check_call("poetry run isort lexicon utils setup.py", shell=True)
-        subprocess.check_call("poetry run black lexicon utils setup.py", shell=True)
+        subprocess.check_call("poetry run isort src tests", shell=True)
+        subprocess.check_call("poetry run black src tests", shell=True)
 
         subprocess.check_call(
             'git commit -a -m "Version {0}"'.format(new_version), shell=True

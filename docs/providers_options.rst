@@ -59,8 +59,14 @@ List of options
 .. _dnspod:
 .. include:: providers/dnspod.rst
 
+.. _dnsservices:
+.. include:: providers/dnsservices.rst
+
 .. _dreamhost:
 .. include:: providers/dreamhost.rst
+
+.. _duckdns:
+.. include:: providers/duckdns.rst
 
 .. _dynu:
 .. include:: providers/dynu.rst
@@ -76,6 +82,9 @@ List of options
 
 .. _exoscale:
 .. include:: providers/exoscale.rst
+
+.. _flexibleengine:
+.. include:: providers/flexibleengine.rst
 
 .. _gandi:
 .. include:: providers/gandi.rst
@@ -191,6 +200,9 @@ List of options
 .. _powerdns:
 .. include:: providers/powerdns.rst
 
+.. _qcloud:
+.. include:: providers/qcloud.rst
+
 .. _rackspace:
 .. include:: providers/rackspace.rst
 
@@ -212,6 +224,9 @@ List of options
 .. _softlayer:
 .. include:: providers/softlayer.rst
 
+.. _timeweb:
+.. include:: providers/timeweb.rst
+
 .. _transip:
 .. include:: providers/transip.rst
 
@@ -229,6 +244,9 @@ List of options
 
 .. _webgo:
 .. include:: providers/webgo.rst
+
+.. _wedos:
+.. include:: providers/wedos.rst
 
 .. _yandex:
 .. include:: providers/yandex.rst

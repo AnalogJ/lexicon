@@ -7,40 +7,6 @@ paid accounts, which makes it hard for us to develop ``lexicon`` providers on ou
 it as easy as possible to contribute to ``lexicon``, so that you can automate your favorite DNS service.
 There are a few guidelines that we need contributors to follow so that we can keep on top of things.
 
-Potential providers
-===================
-
-Potential providers are as follows. If you would like to contribute one, please follow the
-current document instructions and open a pull request.
-
-- `AHNames <https://ahnames.com/en/resellers?tab=2>`_
-- `DurableDNS <https://durabledns.com/wiki/doku.php/ddns>`_ (?? Can't set TXT records ??)
-- cyon.ch
-- `Dyn <https://help.dyn.com/dns-api-knowledge-base/>`_ ($$ requires paid account $$)
-- `EntryDNS <https://entrydns.net/help>`_ ($$ requires paid account $$)
-- `FreeDNS <https://freedns.afraid.org/scripts/freedns.clients.php>`_
-- `Host Virtual DNS <https://github.com/hostvirtual/hostvirtual-python-sdk/blob/master/hostvirtual.py>`_ ($$ requires paid account $$)
-- HostEurope
-- Infoblox NIOS
-- `ironDNS <https://www.irondns.net/download/soapapiguide.pdf;jsessionid=02A1029AA9FB8BACD2048A60F54668C0>`_ ($$ requires paid account $$)
-- ISPConfig
-- `InternetX autoDNS <https://internetx.com>`_
-- KingHost
-- `Liquidweb <https://www.liquidweb.com/storm/api/docs/v1/Network/DNS/Zone.html>`_ ($$ requires paid account $$)
-- `Loopia <https://www.loopia.com/api/>`_ ($$ requires paid account $$)
-- `NFSN (NearlyFreeSpeech) <https://api.nearlyfreespeech.net/>`_ ($$ requires paid account $$)
-- `Porkbun <https://porkbun.com/api/json/v3/documentation/>`
-- `Servercow <https://servercow.de>`_
-- selectel.com
-- `TELE3 <https://www.tele3.cz>`_
-- `UltraDNS <https://restapi.ultradns.com/v1/docs>`_ ($$ requires paid account $$)
-- UnoEuro API
-- VSCALE
-- `WorldWideDns <https://www.worldwidedns.net/dns_api_protocol.asp>`_ ($$ requires paid account $$)
-- `Zerigo <https://www.zerigo.com/managed-dns/rest-api>`_ ($$ requires paid account $$)
-- `Zoneedit <http://forum.zoneedit.com/index.php?threads/dns-update-api.419/>`_
-- **Any others I missed**
-
 Setup a development environment
 ===============================
 
@@ -48,33 +14,50 @@ Fork, then clone the repo:
 
 .. code-block:: bash
 
-    $ git clone git@github.com:your-username/lexicon.git
+    git clone git@github.com:your-username/lexicon.git
 
 Install Poetry if you not have it already:
 
 .. code-block:: bash
 
-    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+    # On Linux / WSL2
+    curl -sSL https://install.python-poetry.org | python3 -
 
-Configure the virtual environment with full providers support and activate it:
+.. code-block:: powershell
 
-.. code-block:: bash
+    # On Windows (powershell)
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
-    $ cd lexicon
-    $ poetry install -E full
-    $ source .venv/bin/activate
-
-Make sure the tests pass:
+Configure the virtual environment with full providers support:
 
 .. code-block:: bash
 
-    $ tox -e py
+    cd lexicon
+    poetry install -E full
+
+Activate the virtual environment
+
+.. code-block:: bash
+
+    # On Linux / WSL2
+    source .venv/bin/activate
+
+.. code-block:: powershell
+
+    # On Windows (powershell)
+    ./.venv/Scripts/activate
+
+Make sure all tests pass:
+
+.. code-block:: bash
+
+    tox
 
 You can test a specific provider using:
 
 .. code-block:: bash
 
-    $ pytest lexicon/tests/providers/test_foo.py
+    pytest tests/providers/test_foo.py
 
 .. note::
 
@@ -84,66 +67,89 @@ You can test a specific provider using:
 Adding a new DNS provider
 =========================
 
-Now that you have a working development environment, lets add a new provider.
-Internally lexicon does a bit of magic to wire everything together, so the only
-thing you'll really need to do is is create the following file.
+Now that you have a working development environment, let's add a new provider.
+Internally lexicon does a bit of magic to wire everything together, so you need to create
+the following Python module where all the code for your provider will settle.
 
- - ``lexicon/providers/foo.py``
+ - ``src/lexicon/providers/foo.py``
 
 Where ``foo`` should be replaced with the name of the DNS service in lowercase
-and without spaces or special characters (eg. ``cloudflare``)
+and without spaces or special characters (eg. ``cloudflare``).
 
-Your provider file should contain 3 things:
+Your provider module **must** contain a class named ``Provider`` inheriting from the Provider_
+interface (defined in ``interfaces.py`` file). This class **must** implements the following abstract
+methods defined by the interface:
 
-- a ``NAMESERVER_DOMAINS`` which contains the domain(s) used by the DNS provider nameservers FQDNs
-  (eg. Google Cloud DNS uses nameservers that have the FQDN pattern ``ns-cloud-cX-googledomains.com``,
-  so ``NAMESERVER_DOMAINS`` will be ``['googledomains.com']``).
+  - ``authenticate``
+  - ``create_record``
+  - ``list_records``
+  - ``update_record``
+  - ``delete_record``
+  - ``get_nameservers`` (static method)
+  - ``configure_parser`` (static method)
 
-- a ``provider_parser`` which is used to add provider specific commandline arguments.
-  eg. If you define two cli arguments: ``--auth-username`` and ``--auth-token``,
-  those values will be available to your provider via ``self._get_provider_option('auth_username')``
-  or ``self._get_provider_option('auth_token')`` respectively
+Additionally you should implement the following optional method if you plan to do
+HTTP requests to the provider API:
 
-- a ``Provider`` class which inherits from BaseProvider_, which is in the ``base.py`` file.
-  The BaseProvider_ defines the following functions, which must be overridden in your
-  provider implementation:
-
-  - ``_authenticate``
-  - ``_create_record``
-  - ``_list_records``
-  - ``_update_record``
-  - ``_delete_record``
   - ``_request``
 
-  It also provides a few helper functions which you can use to simplify your implementation.
-  See the `cloudflare.py`_ file, or any provider in the `lexicon/providers/`_ folder for examples
+You should review the `provider conventions`_ to ensure that ``_authenticate`` and ``*_record(s)``
+methods follow the proper behavior and API contracts.
 
-It's a good idea to review the `provider specification`_ to ensure that your interface follows
-the proper conventions.
+The static method ``get_nameservers`` returns the list of FQDNs of the nameservers used by
+the DNS provider. For instance, Google Cloud DNS uses nameservers that have the FQDN pattern
+``ns-cloud-cX-googledomains.com``, so ``get_nameservers`` will return ``['googledomains.com']``
+in this case.
+
+The static method ``configure_parser`` is called to add the provider specific commandline arguments.
+For instance, if you define two cli arguments: ``--auth-username`` and ``--auth-token``, those
+values will be available to your provider via ``self._get_provider_option('auth_username')``
+or ``self._get_provider_option('auth_token')`` respectively.
 
 .. note::
 
-    Please keep in mind the following:
+    Several important notes:
 
     - ``lexicon`` is designed to work with multiple versions of python. That means
-      your code will be tested against python 3.6 and 3.8 on Windows, Linux and Mac OS X.
-    - any provider specific dependencies should be added to the ``setup.py`` file,
-      under the ``extra_requires`` heading. The group name should be the name of the
-      provider. eg:
+      your code will be tested against python 3.8 and 3.11 on Windows, Linux and Mac OS X.
+    - any provider specific dependencies need a particular configuration in the ``pyproject.toml``
+      file:
 
-    .. code-block:: python
+    Under the ``[tool.poetry.dependencies]`` block, add the specific dependency
+    as an optional dependency.
 
-        extras_require={
-            'route53': ['boto3']
-        }
+    .. code-block:: toml
 
-.. _BaseProvider: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/base.py
-.. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/lexicon/providers/cloudflare.py
-.. _lexicon/providers/: https://github.com/AnalogJ/lexicon/tree/master/lexicon/providers
-.. _provider specification: https://dns-lexicon.readthedocs.io/en/latest/provider_specification.html
+        [tool.poetry.dependencies]
+        # Optional dependencies required by some providers
+        additionalpackage = { version = "*", optional = true }  # mycustomprovider
+
+    Under the ``[tool.poetry.extras]`` block, define a new extra group named after the provider name
+    requiring the optional dependency, then add this extra group inside the ``full`` group.
+
+    .. code-block:: toml
+
+        [tool.poetry.extras]
+        mycustomprovider = ["additionalpackage"]
+        full = [..., "mycustomprovider"]
+
+.. _Provider: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/interfaces.py
+.. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/cloudflare.py
+.. _provider conventions: https://dns-lexicon.readthedocs.io/en/latest/provider_conventions.html
 
 Testing your provider
 =====================
+
+Static code analysis
+--------------------
+
+The project codebase is checked by a linter (flake8) and against types declaration (mypy). Both
+analysis must pass. You can run them with the following command:
+
+.. code-block:: bash
+
+    tox -e lint
+    tox -e mypy
 
 Test against the live API
 -------------------------
@@ -152,7 +158,7 @@ First let's validate that your provider shows up in the CLI.
 
 .. code-block:: bash
 
-    $ lexicon foo --help
+    lexicon foo --help
 
 If everything worked correctly, you should get a help page that's specific
 to your provider, including your custom optional arguments.
@@ -162,8 +168,8 @@ everything works as you expect.
 
 .. code-block:: bash
 
-    $ lexicon foo list example.com TXT
-    $ lexicon foo create example.com TXT --name demo --content "fake content"
+    lexicon foo list example.com TXT
+    lexicon foo create example.com TXT --name demo --content "fake content"
 
 Once you're satisfied that your provider is working correctly, we'll run the
 integration test suite against it, and verify that your provider responds the
@@ -173,23 +179,26 @@ recordings during testing.
 
 The only thing you need to do is create the following file:
 
- - ``lexicon/tests/providers/test_foo.py``
+ - ``tests/providers/test_foo.py``
 
 Then you'll need to populate it with the following template:
 
 .. code-block:: python
 
-    # Test for one implementation of the interface
-    from lexicon.tests.providers.integration_tests import IntegrationTestsV2
+    """Integration tests for Foo"""
     from unittest import TestCase
+
+    from integration_tests import IntegrationTestsV2
 
     # Hook into testing framework by inheriting unittest.TestCase and reuse
     # the tests which *each and every* implementation of the interface must
-    # pass, by inheritance from integration_tests.IntegrationTests
+    # pass, by inheritance from integration_tests.IntegrationTestsV2
     class FooProviderTests(TestCase, IntegrationTestsV2):
         """Integration tests for Foo provider"""
+
         provider_name = 'foo'
         domain = 'example.com'
+
         def _filter_post_data_parameters(self):
             return ['login_token']
 
@@ -226,8 +235,8 @@ Notice also that you should pass any required non-secrets arguments programmatic
 .. _tests/fixtures/cassettes/: https://github.com/AnalogJ/lexicon/tree/master/tests/fixtures/cassettes
 .. _test_powerdns.py: https://github.com/AnalogJ/lexicon/blob/5ee4d16f9d6206e212c2197f2e53a1db248f5eb9/lexicon/tests/providers/test_powerdns.py#L19
 
-Test recordings
----------------
+Add new tests recordings
+------------------------
 
 Now you need to run the ``py.test`` suite again, but in a different mode: the live tests mode.
 In default test mode, tests are replayed from existing recordings. In live mode, tests are executed
@@ -238,7 +247,12 @@ variable ``LEXICON_LIVE_TESTS`` set to ``true`` like below:
 
 .. code-block:: bash
 
-	LEXICON_LIVE_TESTS=true pytest lexicon/tests/providers/test_foo.py
+	LEXICON_LIVE_TESTS=true pytest tests/providers/test_foo.py
+
+.. note::
+
+    Like during the previous section, you will need to feed the relevant authentication parameters
+    as environment variables to the shell running the integration tests.
 
 If any of the integration tests fail on your provider, you'll need to delete the recordings that
 were created, make your changes and then try again.
@@ -256,13 +270,13 @@ Once all your tests pass, you'll want to double check that there is no sensitive
 
 Finally, push your changes to your Github fork, and open a PR.
 
-Skipping Tests/Suites
----------------------
+Skipping some tests
+-------------------
 
 Neither of the snippets below should be used unless necessary. They are only included
 in the interest of documentation.
 
-In your ``lexicon/tests/providers/test_foo.py`` file, you can use ``@pytest.mark.skip`` to skip
+In your ``tests/providers/test_foo.py`` file, you can use ``@pytest.mark.skip`` to skip
 any individual test that does not apply (and will never pass)
 
 .. code-block:: python
@@ -276,11 +290,14 @@ instead of ``IntegrationTestsV2``:
 
 .. code-block:: python
 
-    from lexicon.tests.providers.integration_tests import IntegrationTestsV1
     from unittest import TestCase
-
+    
+    from integration_tests import IntegrationTestsV1
+    
     class FooProviderTests(TestCase, IntegrationTestsV1):
         """Integration tests for Foo provider"""
+
+        ...
 
 CODEOWNERS file
 ===============

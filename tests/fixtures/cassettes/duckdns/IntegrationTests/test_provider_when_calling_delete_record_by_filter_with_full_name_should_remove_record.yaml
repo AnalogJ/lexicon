@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://www.duckdns.org/update?domains=testlexicon&txt=challengetoken&verbose=true
+  response:
+    body:
+      string: 'OK
+
+        challengetoken
+
+        UPDATED'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 14 Jan 2023 09:43:40 GMT
+      Server:
+      - nginx/1.20.0
+      Set-Cookie:
+      - AWSALB=s4wshOGWWRjvpVppKnqKbgAMz2LycbuzvQXTXmMerXkpA1WXK0enE3UYk0AGZ3quMbLy9Vp99PJnpQbiFJtkr0rTX10v43OfGyGO9UmOFoT5x5l+rUF/jB6Cv1Qo;
+        Expires=Sat, 21 Jan 2023 09:43:38 GMT; Path=/
+      - AWSALBCORS=s4wshOGWWRjvpVppKnqKbgAMz2LycbuzvQXTXmMerXkpA1WXK0enE3UYk0AGZ3quMbLy9Vp99PJnpQbiFJtkr0rTX10v43OfGyGO9UmOFoT5x5l+rUF/jB6Cv1Qo;
+        Expires=Sat, 21 Jan 2023 09:43:38 GMT; Path=/; SameSite=None; Secure
+      Transfer-Encoding:
+      - chunked
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      X-Frame-Options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://www.duckdns.org/update?domains=testlexicon&txt=&clear=true&verbose=true
+  response:
+    body:
+      string: 'OK
+
+
+        UPDATED'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 14 Jan 2023 09:43:41 GMT
+      Server:
+      - nginx/1.20.0
+      Set-Cookie:
+      - AWSALB=CNuZ/Kg0LmnNipKhnOK2GArAoUCiXaUtMEPBKRbCLgxCixeESCvVa1vE9QAJW2c3MvoN3dgqhk0iv0TKL1TCr0tquf2zKQG3juMrPSAERf6P9PRn7lTNhiz/pYMU;
+        Expires=Sat, 21 Jan 2023 09:43:41 GMT; Path=/
+      - AWSALBCORS=CNuZ/Kg0LmnNipKhnOK2GArAoUCiXaUtMEPBKRbCLgxCixeESCvVa1vE9QAJW2c3MvoN3dgqhk0iv0TKL1TCr0tquf2zKQG3juMrPSAERf6P9PRn7lTNhiz/pYMU;
+        Expires=Sat, 21 Jan 2023 09:43:41 GMT; Path=/; SameSite=None; Secure
+      Transfer-Encoding:
+      - chunked
+      X-Clacks-Overhead:
+      - GNU Terry Pratchett
+      X-Frame-Options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

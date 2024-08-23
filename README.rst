@@ -8,23 +8,17 @@ Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
 .. |logo_named| image:: https://raw.githubusercontent.com/AnalogJ/lexicon/master/docs/images/logo_named.svg
     :alt: Lexicon
-
-.. |build_status| image:: https://dev.azure.com/AnalogJ/lexicon/_apis/build/status/AnalogJ.lexicon?branchName=master
+.. |build_status| image:: https://img.shields.io/azure-devops/build/AnalogJ/8425f0f5-0178-4d8c-b1fd-11db7e11b6a7/1/master
     :target: https://dev.azure.com/AnalogJ/lexicon/_build/latest?definitionId=1&branchName=master
-
-.. |coverage_status| image:: https://coveralls.io/repos/github/AnalogJ/lexicon/badge.svg
+.. |coverage_status| image:: https://img.shields.io/coverallsCoverage/github/AnalogJ/lexicon
     :target: https://coveralls.io/github/AnalogJ/lexicon?branch=master
-
-.. |docker_pulls| image:: https://img.shields.io/docker/pulls/analogj/lexicon.svg
+.. |docker_pulls| image:: https://img.shields.io/docker/pulls/analogj/lexicon
     :target: https://hub.docker.com/r/analogj/lexicon
-
-.. |pypy_version| image:: https://img.shields.io/pypi/v/dns-lexicon.svg
+.. |pypy_version| image:: https://img.shields.io/pypi/v/dns-lexicon
     :target: https://pypi.python.org/pypi/dns-lexicon
-
-.. |pypy_python_support| image:: https://img.shields.io/pypi/pyversions/dns-lexicon.svg
+.. |pypy_python_support| image:: https://img.shields.io/pypi/pyversions/dns-lexicon
     :target: https://pypi.python.org/pypi/dns-lexicon
-
-.. |github_license| image:: https://img.shields.io/github/license/AnalogJ/lexicon.svg
+.. |github_license| image:: https://img.shields.io/github/license/AnalogJ/lexicon
     :target: https://github.com/AnalogJ/lexicon/blob/master/LICENSE
 
 .. contents:: Table of Contents
@@ -54,16 +48,13 @@ Lexicon can be used as:
     from lexicon.client import Client
     from lexicon.config import ConfigResolver
 
-    action = {
+    config = ConfigResolver().with_env().with_dict({
         "provider_name" : "cloudflare",
-        "action": "create",
         "domain": "domain.net",
-        "type": "TXT",
-        "name": "foo",
-        "content": "bar",
-    }
-    config = ConfigResolver().with_env().with_dict(action)
-    Client(config).execute()
+    })
+
+    with Client(config) as operations:
+        operations.create_record("TXT", "foo", "bar")
 
 Lexicon was designed to be used in automation, specifically letsencrypt.
 
@@ -90,31 +81,33 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | dinahosting_    | directadmin_    | dnsimple_       | dnsmadeeasy_    | dnspark_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| dnspod_         | dreamhost_      | dynu_           | easydns_        | easyname_       |
+| dnspod_         | dnsservices_    | dreamhost_      | duckdns_        | dynu_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| euserv_         | exoscale_       | gandi_          | gehirn_         | glesys_         |
+| easydns_        | easyname_       | euserv_         | exoscale_       | flexibleengine_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      | henet_          |
+| gandi_          | gehirn_         | glesys_         | godaddy_        | googleclouddns_ |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| hetzner_        | hostingde_      | hover_          | infoblox_       | infomaniak_     |
+| gransy_         | gratisdns_      | henet_          | hetzner_        | hostingde_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| internetbs_     | inwx_           | joker_          | linode_         | linode4_        |
+| hover_          | infoblox_       | infomaniak_     | internetbs_     | inwx_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| localzone_      | luadns_         | memset_         | misaka_         | mythicbeasts_   |
+| joker_          | linode_         | linode4_        | localzone_      | luadns_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| namecheap_      | namecom_        | namesilo_       | netcup_         | nfsn_           |
+| memset_         | misaka_         | mythicbeasts_   | namecheap_      | namecom_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| njalla_         | nsone_          | oci_            | onapp_          | online_         |
+| namesilo_       | netcup_         | nfsn_           | njalla_         | nsone_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| ovh_            | plesk_          | pointhq_        | porkbun_        | powerdns_       |
+| oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rackspace_      | rage4_          | rcodezero_      | route53_        | safedns_        |
+| pointhq_        | porkbun_        | powerdns_       | qcloud_         | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| sakuracloud_    | softlayer_      | transip_        | ultradns_       | valuedomain_    |
+| rage4_          | rcodezero_      | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vercel_         | vultr_          | webgo_          | yandex_         | yandexcloud_    |
+| softlayer_      | timeweb_        | transip_        | ultradns_       | valuedomain_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| vercel_         | vultr_          | webgo_          | wedos_          | yandex_         |
++-----------------+-----------------+-----------------+-----------------+-----------------+
+| yandexcloud_    | zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -127,7 +120,7 @@ The current supported providers are:
 .. _cloudxns: https://www.cloudxns.net/support/lists/cid/17.html
 .. _conoha: https://www.conoha.jp/docs/
 .. _constellix: https://api-docs.constellix.com/?version=latest
-.. _ddns:
+.. _ddns: https://www.rfc-editor.org/rfc/rfc2136
 .. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
 .. _dinahosting: https://en.dinahosting.com/api
 .. _directadmin: https://www.directadmin.com/features.php?id=504
@@ -135,12 +128,15 @@ The current supported providers are:
 .. _dnsmadeeasy: https://api-docs.dnsmadeeasy.com/?version=latest
 .. _dnspark: https://dnspark.zendesk.com/entries/31210577-rest-api-dns-documentation
 .. _dnspod: https://support.dnspod.cn/support/api
+.. _dnsservices: https://dns.services/userapi
 .. _dreamhost: https://help.dreamhost.com/hc/en-us/articles/217560167-api_overview
+.. _duckdns: https://www.duckdns.org/spec.jsp
 .. _dynu: https://www.dynu.com/support/api
 .. _easydns: http://docs.sandbox.rest.easydns.net/
 .. _easyname: https://www.easyname.com/en
 .. _euserv: https://support.euserv.com/api-doc/
 .. _exoscale: https://community.exoscale.com/documentation/dns/api/
+.. _flexibleengine: https://registry.terraform.io/providers/FlexibleEngineCloud/flexibleengine/latest/docs/data-sources/dns_zone_v2
 .. _gandi: http://doc.livedns.gandi.net/
 .. _gehirn: https://support.gehirn.jp/apidocs/gis/dns/index.html
 .. _glesys: https://github.com/glesys/api/wiki/
@@ -151,7 +147,7 @@ The current supported providers are:
 .. _henet: https://dns.he.net/
 .. _hetzner: https://dns.hetzner.com/api-docs/
 .. _hostingde:
-.. _hover: https://hoverapi.docs.apiary.io/
+.. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
 .. _infomaniak: https://www.infomaniak.com
 .. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
@@ -179,20 +175,22 @@ The current supported providers are:
 .. _pointhq: https://pointhq.com/api/docs
 .. _porkbun: https://kb.porkbun.com/article/190-getting-started-with-the-porkbun-dns-api
 .. _powerdns: https://doc.powerdns.com/md/httpapi/api_spec/
+.. _qcloud: https://cloud.tencent.com/document/product/1427/56194
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
-.. _rfc2136: https://en.wikipedia.org/wiki/dynamic_dns
 .. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/
 .. _softlayer: https://sldn.softlayer.com/article/rest#http_request_types
+.. _timeweb: https://timeweb.cloud/api-docs
 .. _transip: https://api.transip.nl/rest/docs.html
 .. _ultradns: https://ultra-portalstatic.ultradns.com/static/docs/rest-api_user_guide.pdf
 .. _valuedomain: https://www.value-domain.com/service/api/
 .. _vercel: https://vercel.com/docs/api#endpoints/dns
 .. _vultr: https://www.vultr.com/api/#tag/dns
 .. _webgo: https://www.webgo.de/
+.. _wedos: https://www.wedos.com/cs/
 .. _yandex: https://yandex.com/dev/domain/doc/reference/dns-add.html
 .. _yandexcloud: https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/
 .. _zeit:
