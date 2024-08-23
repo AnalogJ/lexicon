@@ -1929,13 +1929,13 @@ test = ["pytest"]
 
 [[package]]
 name = "tencentcloud-sdk-python"
-version = "3.0.1216"
+version = "3.0.1217"
 description = "Tencent Cloud SDK for Python"
 optional = true
 python-versions = "*"
 files = [
-    {file = "tencentcloud-sdk-python-3.0.1216.tar.gz", hash = "sha256:146312ad6d97360460e5774ace6bea4df20f82ce294fdee10a3c69ca47cee6d9"},
-    {file = "tencentcloud_sdk_python-3.0.1216-py2.py3-none-any.whl", hash = "sha256:4a0b1e10fd35bb81a4dc962ec3ebff7bb30f7fe3bcfd49c53d58d7ef71051329"},
+    {file = "tencentcloud-sdk-python-3.0.1217.tar.gz", hash = "sha256:19b1b5e30120e62fe35ef5e56a88e7128b6dc72df3b0e49f8da16e6799d52ad8"},
+    {file = "tencentcloud_sdk_python-3.0.1217-py2.py3-none-any.whl", hash = "sha256:efa7821c5e9d0a8807d8c3482200a17ad2d9b4dbc0c162c826618b64b0e2e9ac"},
 ]
 
 [package.dependencies]
@@ -2010,17 +2010,6 @@ virtualenv = ">=20.26.3"
 [package.extras]
 docs = ["furo (>=2024.7.18)", "sphinx (>=7.4.7)", "sphinx-argparse-cli (>=1.16)", "sphinx-autodoc-typehints (>=2.2.3)", "sphinx-copybutton (>=0.5.2)", "sphinx-inline-tabs (>=2023.4.21)", "sphinxcontrib-towncrier (>=0.2.1a0)", "towncrier (>=23.11)"]
 testing = ["build[virtualenv] (>=1.2.1)", "covdefaults (>=2.3)", "detect-test-pollution (>=1.2)", "devpi-process (>=1)", "diff-cover (>=9.1.1)", "distlib (>=0.3.8)", "flaky (>=3.8.1)", "hatch-vcs (>=0.4)", "hatchling (>=1.25)", "psutil (>=6)", "pytest (>=8.3.2)", "pytest-cov (>=5)", "pytest-mock (>=3.14)", "pytest-xdist (>=3.6.1)", "re-assert (>=1.1)", "setuptools (>=70.3)", "time-machine (>=2.14.2)", "wheel (>=0.43)"]
-
-[[package]]
-name = "types-pytz"
-version = "2024.1.0.20240417"
-description = "Typing stubs for pytz"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "types-pytz-2024.1.0.20240417.tar.gz", hash = "sha256:6810c8a1f68f21fdf0f4f374a432487c77645a0ac0b31de4bf4690cf21ad3981"},
-    {file = "types_pytz-2024.1.0.20240417-py3-none-any.whl", hash = "sha256:8335d443310e2db7b74e007414e74c4f53b67452c0cb0d228ca359ccfba59659"},
-]
 
 [[package]]
 name = "types-pyyaml"
@@ -2126,6 +2115,23 @@ brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
 h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
+
+[[package]]
+name = "vcrpy"
+version = "4.3.0"
+description = "Automatically mock your HTTP interactions to simplify and speed up testing"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "vcrpy-4.3.0-py2.py3-none-any.whl", hash = "sha256:8fbd4be412e8a7f35f623dd61034e6380a1c8dbd0edf6e87277a3289f6e98093"},
+    {file = "vcrpy-4.3.0.tar.gz", hash = "sha256:49c270ce67e826dba027d83e20d25b67a5885487697e97bca6dbdf53d750a0ac"},
+]
+
+[package.dependencies]
+PyYAML = "*"
+six = ">=1.5"
+wrapt = "*"
+yarl = "*"
 
 [[package]]
 name = "vcrpy"
@@ -2414,4 +2420,4 @@ softlayer = ["softlayer"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "570fa8cc6c0f5cecf0d32bc8b277a38f2cfe53f19b5575a66282ea2228e426a2"
+content-hash = "50d7df792643c39c159426c61c3a4dea7f73361aae0dd52ee1703f00bd1183d8"
