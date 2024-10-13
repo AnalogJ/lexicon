@@ -32,7 +32,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         super(Provider, self).__init__(config)
-        self.api_endpoint = "https://porkbun.com/api/json/v3"
+        self.api_endpoint = "https://api.porkbun.com/api/json/v3"
         self._api_key = self._get_provider_option("auth_key")
         self._secret_api_key = self._get_provider_option("auth_secret")
         self._auth_data = {
