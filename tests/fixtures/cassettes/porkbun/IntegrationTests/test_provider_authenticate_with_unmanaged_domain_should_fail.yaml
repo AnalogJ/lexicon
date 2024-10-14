@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/ping
+    uri: https://api.porkbun.com/api/json/v3/ping
   response:
     body:
-      string: '{"status":"SUCCESS","yourIp":"8.8.8.8"}'
+      string: '{"status":"SUCCESS","yourIp":"8.8.8.8","xForwardedFor":"8.8.8.8"}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:19 GMT
+      - Mon, 14 Oct 2024 00:26:21 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -39,11 +39,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=eF9GZWfd/uxk8YIAqfcN0M+8eN90FVf7zHCf1ZMmeSEv0stBT0T8q01BJVSYIeQshRTX3DIMvgpB7GMzmoPrt9yjACgnnh1PN6STytJKRolHBbF5JQz4XdUFBAzf;
-        Expires=Sun, 19 Jun 2022 01:15:18 GMT; Path=/
-      - AWSALBCORS=eF9GZWfd/uxk8YIAqfcN0M+8eN90FVf7zHCf1ZMmeSEv0stBT0T8q01BJVSYIeQshRTX3DIMvgpB7GMzmoPrt9yjACgnnh1PN6STytJKRolHBbF5JQz4XdUFBAzf;
-        Expires=Sun, 19 Jun 2022 01:15:18 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=swiDvwW4GwvXQRAJFhYfPKUByp%2CwdSNPpqcgRIwYfhSJwOeQ; path=/; secure;
+      - BUNSESSION2=UmECuslV1lBNEeb-oFSBKdZ3EBz8JvUqlaH-BQcz6yi8E1j0; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -72,9 +68,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/retrieve/thisisadomainidonotown.com
+    uri: https://api.porkbun.com/api/json/v3/dns/retrieve/thisisadomainidonotown.com
   response:
     body:
       string: '{"status":"ERROR","message":"Invalid domain."}'
@@ -86,7 +82,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:19 GMT
+      - Mon, 14 Oct 2024 00:26:22 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -94,11 +90,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=3gWR2yb+gb8H/Hy2YZIbYoda7XtuUtQe48Ja+EPmowVmljwOybkbYCVPxNrXCh60i4Jz41VkDKE4EN7Yo59WynercV7iWe2Op90a57Nk2bd/70QthXg6g/NRW0QF;
-        Expires=Sun, 19 Jun 2022 01:15:19 GMT; Path=/
-      - AWSALBCORS=3gWR2yb+gb8H/Hy2YZIbYoda7XtuUtQe48Ja+EPmowVmljwOybkbYCVPxNrXCh60i4Jz41VkDKE4EN7Yo59WynercV7iWe2Op90a57Nk2bd/70QthXg6g/NRW0QF;
-        Expires=Sun, 19 Jun 2022 01:15:19 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=Ntx20ZtrP1ATOywF-gdOkn55xe9vOJgEzKG7iI9HouKufOHW; path=/; secure;
+      - BUNSESSION2=akshDnU7Cw7MDWntgdyjs9woUge3BCwAKpUszWzgCECZ721l; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload

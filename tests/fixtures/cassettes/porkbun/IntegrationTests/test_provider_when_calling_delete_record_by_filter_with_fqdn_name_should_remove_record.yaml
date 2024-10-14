@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/ping
+    uri: https://api.porkbun.com/api/json/v3/ping
   response:
     body:
-      string: '{"status":"SUCCESS","yourIp":"8.8.8.8"}'
+      string: '{"status":"SUCCESS","yourIp":"8.8.8.8","xForwardedFor":"8.8.8.8"}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:48 GMT
+      - Mon, 14 Oct 2024 00:27:03 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -39,11 +39,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=Z0UsV+W5Og0//n3BgjSGYnD8eI5Dqb9KqtOHhJnJbAxtTK6gnojza450Mnc5Pj+d15TvfGbgFjunST84sDfwW4XJvQJ4DOAULoGwLVB46oYvtwFqufwcYs/yN3gP;
-        Expires=Sun, 19 Jun 2022 01:15:48 GMT; Path=/
-      - AWSALBCORS=Z0UsV+W5Og0//n3BgjSGYnD8eI5Dqb9KqtOHhJnJbAxtTK6gnojza450Mnc5Pj+d15TvfGbgFjunST84sDfwW4XJvQJ4DOAULoGwLVB46oYvtwFqufwcYs/yN3gP;
-        Expires=Sun, 19 Jun 2022 01:15:48 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=i4-ssmQPToYiSvJuP-J1lJ2D0HbHCzF9VUPpKOg06nTAcBpn; path=/; secure;
+      - BUNSESSION2=da2HVsEfXKIeEXBNs49JKU0F3ycPJXBjHPOEKBEVnQSiFbLz; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -72,12 +68,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/retrieve/example.xyz
+    uri: https://api.porkbun.com/api/json/v3/dns/retrieve/example.xyz
   response:
     body:
-      string: '{"status":"SUCCESS","cloudflare":"disabled","records":[{"id":"236096065","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236238296","name":"www.example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236272619","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0"},{"id":"230514990","name":"example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514991","name":"www.example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514992","name":"*.example.xyz","type":"CNAME","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"236272623","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0"},{"id":"230514985","name":"example.xyz","type":"MX","content":"fwd1.porkbun.com","ttl":"600","prio":"10"},{"id":"230514986","name":"example.xyz","type":"MX","content":"fwd2.porkbun.com","ttl":"600","prio":"20"},{"id":"236272628","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272629","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272630","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272631","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0"},{"id":"236272632","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0"},{"id":"236272635","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"}]}'
+      string: '{"status":"SUCCESS","cloudflare":"enabled","records":[{"id":"432480875","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","notes":null},{"id":"421658077","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0","notes":null},{"id":"421671186","name":"*.example.xyz","type":"CNAME","content":"example.xyz","ttl":"600","prio":"0","notes":""},{"id":"432480882","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","notes":null},{"id":"421642428","name":"example.xyz","type":"NS","content":"maceio.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642429","name":"example.xyz","type":"NS","content":"salvador.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642430","name":"example.xyz","type":"NS","content":"fortaleza.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642431","name":"example.xyz","type":"NS","content":"curitiba.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"432480894","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480897","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480902","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480908","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0","notes":null},{"id":"432480912","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0","notes":null},{"id":"432480916","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null}]}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -88,7 +84,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:49 GMT
+      - Mon, 14 Oct 2024 00:27:06 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -98,11 +94,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=sh9MLY+rNkWFA/ebGqa6yrSqgy8PnhNSvDPmttt8YN9LdsIP7vti0s9pK41Eyy72UoWvvkO49tMmFNgF5Ukzmh6oXKMX8yS3zfKEbdziaQtFvvQvlvVud4UftWlH;
-        Expires=Sun, 19 Jun 2022 01:15:49 GMT; Path=/
-      - AWSALBCORS=sh9MLY+rNkWFA/ebGqa6yrSqgy8PnhNSvDPmttt8YN9LdsIP7vti0s9pK41Eyy72UoWvvkO49tMmFNgF5Ukzmh6oXKMX8yS3zfKEbdziaQtFvvQvlvVud4UftWlH;
-        Expires=Sun, 19 Jun 2022 01:15:49 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=v3YedZ8Nd2LRVpWhalFYjUbtaUml26EoNZkDWBG-lIGKRqqI; path=/; secure;
+      - BUNSESSION2=BfTH130laPJtl1m4RlmTNrGn9a3J5C0bxADyK3mchn%2CuNSZc; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -131,12 +123,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/retrieve/example.xyz
+    uri: https://api.porkbun.com/api/json/v3/dns/retrieve/example.xyz
   response:
     body:
-      string: '{"status":"SUCCESS","cloudflare":"disabled","records":[{"id":"236096065","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236238296","name":"www.example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236272619","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0"},{"id":"230514990","name":"example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514991","name":"www.example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514992","name":"*.example.xyz","type":"CNAME","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"236272623","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0"},{"id":"230514985","name":"example.xyz","type":"MX","content":"fwd1.porkbun.com","ttl":"600","prio":"10"},{"id":"230514986","name":"example.xyz","type":"MX","content":"fwd2.porkbun.com","ttl":"600","prio":"20"},{"id":"236272628","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272629","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272630","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272631","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0"},{"id":"236272632","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0"},{"id":"236272635","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"}]}'
+      string: '{"status":"SUCCESS","cloudflare":"enabled","records":[{"id":"432480875","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","notes":null},{"id":"421658077","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0","notes":null},{"id":"421671186","name":"*.example.xyz","type":"CNAME","content":"example.xyz","ttl":"600","prio":"0","notes":""},{"id":"432480882","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","notes":null},{"id":"421642428","name":"example.xyz","type":"NS","content":"maceio.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642429","name":"example.xyz","type":"NS","content":"salvador.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642430","name":"example.xyz","type":"NS","content":"fortaleza.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642431","name":"example.xyz","type":"NS","content":"curitiba.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"432480894","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480897","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480902","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480908","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0","notes":null},{"id":"432480912","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0","notes":null},{"id":"432480916","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null}]}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -147,7 +139,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:50 GMT
+      - Mon, 14 Oct 2024 00:27:08 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -157,11 +149,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=nV1Tgj4L9hLkDLqmSwJGdqI83DcOCNu37HCPbQ9ZFyHle2U/sYRylcdz/4LO+tKGeLCzgV1XSI0p6pSxb3bRu04l3QgMZNyCBXRdNTN3SRPEx4mxisCPHbwQRzYe;
-        Expires=Sun, 19 Jun 2022 01:15:49 GMT; Path=/
-      - AWSALBCORS=nV1Tgj4L9hLkDLqmSwJGdqI83DcOCNu37HCPbQ9ZFyHle2U/sYRylcdz/4LO+tKGeLCzgV1XSI0p6pSxb3bRu04l3QgMZNyCBXRdNTN3SRPEx4mxisCPHbwQRzYe;
-        Expires=Sun, 19 Jun 2022 01:15:49 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=HSiFPkhQ9nbyHZOYKdunTfqYPno6KWSWswDWmYx2lImtXNbo; path=/; secure;
+      - BUNSESSION2=zAYhSvnZd3QRpoZ0z0UNXauTE2DNlPSAtO4zGfRjCXde7djl; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -191,12 +179,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/create/example.xyz
+    uri: https://api.porkbun.com/api/json/v3/dns/create/example.xyz
   response:
     body:
-      string: '{"status":"SUCCESS","id":236272643}'
+      string: '{"status":"SUCCESS","id":432480944}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -207,7 +195,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:51 GMT
+      - Mon, 14 Oct 2024 00:27:10 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -217,11 +205,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=BcUsMiMXWjZlw38j4uTpSnF+ml0VumP+RZktJ4ki3LWQxZ5rhYu4KwHku/coWmCCacRVpLNYDCbUIRH+nEPz4bofdydrcpfsX4jxtyGUft12UfrWgyP7A3dLv8Fn;
-        Expires=Sun, 19 Jun 2022 01:15:50 GMT; Path=/
-      - AWSALBCORS=BcUsMiMXWjZlw38j4uTpSnF+ml0VumP+RZktJ4ki3LWQxZ5rhYu4KwHku/coWmCCacRVpLNYDCbUIRH+nEPz4bofdydrcpfsX4jxtyGUft12UfrWgyP7A3dLv8Fn;
-        Expires=Sun, 19 Jun 2022 01:15:50 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=DeiX5u66pYJ7b05gg7rq3e7vPq7X3mZKgobpz9k3wkrWsV2%2C; path=/; secure;
+      - BUNSESSION2=9mhgUAc4dB8OADQgXsw32fQ8OISMHwaIX%2CfLB5I9l0xBG7ua; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -250,12 +234,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/retrieve/example.xyz
+    uri: https://api.porkbun.com/api/json/v3/dns/retrieve/example.xyz
   response:
     body:
-      string: '{"status":"SUCCESS","cloudflare":"disabled","records":[{"id":"236096065","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236238296","name":"www.example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236272619","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0"},{"id":"230514990","name":"example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514991","name":"www.example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514992","name":"*.example.xyz","type":"CNAME","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"236272623","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0"},{"id":"230514985","name":"example.xyz","type":"MX","content":"fwd1.porkbun.com","ttl":"600","prio":"10"},{"id":"230514986","name":"example.xyz","type":"MX","content":"fwd2.porkbun.com","ttl":"600","prio":"20"},{"id":"236272643","name":"delete.testfqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272628","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272629","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272630","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272631","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0"},{"id":"236272632","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0"},{"id":"236272635","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"}]}'
+      string: '{"status":"SUCCESS","cloudflare":"enabled","records":[{"id":"432480875","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","notes":null},{"id":"421658077","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0","notes":null},{"id":"421671186","name":"*.example.xyz","type":"CNAME","content":"example.xyz","ttl":"600","prio":"0","notes":""},{"id":"432480882","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","notes":null},{"id":"421642428","name":"example.xyz","type":"NS","content":"maceio.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642429","name":"example.xyz","type":"NS","content":"salvador.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642430","name":"example.xyz","type":"NS","content":"fortaleza.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642431","name":"example.xyz","type":"NS","content":"curitiba.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"432480894","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480897","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480902","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480908","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0","notes":null},{"id":"432480912","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0","notes":null},{"id":"432480916","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480944","name":"delete.testfqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null}]}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -266,7 +250,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:52 GMT
+      - Mon, 14 Oct 2024 00:27:11 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -276,11 +260,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=7oRlmIzJ2zfNcFrk8MuPUvLbgdplRlusWG2mMkjxZkRW91+za3vEZ1QsMTWgHw1egRzvNl3kn7BJbbr9WeX9XmVeVjXUvITR+OyIcZiEkTtlmb3xPdc1BJ3J5krw;
-        Expires=Sun, 19 Jun 2022 01:15:51 GMT; Path=/
-      - AWSALBCORS=7oRlmIzJ2zfNcFrk8MuPUvLbgdplRlusWG2mMkjxZkRW91+za3vEZ1QsMTWgHw1egRzvNl3kn7BJbbr9WeX9XmVeVjXUvITR+OyIcZiEkTtlmb3xPdc1BJ3J5krw;
-        Expires=Sun, 19 Jun 2022 01:15:51 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=v0nowNc036vboNr3GeD%2C93zRindRN4yI2Z0Fhr5nIyOo-s2F; path=/; secure;
+      - BUNSESSION2=GmZh%2Cf7uCI3n-7tZoYUnZg2pR9RcbhzmjJmX2Pfamf2dXvTI; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -309,9 +289,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/delete/example.xyz/236272643
+    uri: https://api.porkbun.com/api/json/v3/dns/delete/example.xyz/432480944
   response:
     body:
       string: '{"status":"SUCCESS"}'
@@ -325,7 +305,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:53 GMT
+      - Mon, 14 Oct 2024 00:27:12 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -335,11 +315,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=fdV8PiX+WBMzb91dOWSHNh8cbvwGbikYAFYJnzXMeP07Nucgtdvz8Iw6zg48YOVHWhC4zecMUN9wZW/XJc7lN1JzitMeYHtfWV36f15tfJU+UyBhTxHPgyvcAB9I;
-        Expires=Sun, 19 Jun 2022 01:15:52 GMT; Path=/
-      - AWSALBCORS=fdV8PiX+WBMzb91dOWSHNh8cbvwGbikYAFYJnzXMeP07Nucgtdvz8Iw6zg48YOVHWhC4zecMUN9wZW/XJc7lN1JzitMeYHtfWV36f15tfJU+UyBhTxHPgyvcAB9I;
-        Expires=Sun, 19 Jun 2022 01:15:52 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=lb5rpI1gKt0NczVekRjykh87KF7CGBYjHxMELNmjJjD4%2CsfT; path=/; secure;
+      - BUNSESSION2=zgIqnMlc3MGZJ0IgSkKBCUs1tlBqEUnRGLJNwA5dSyeLSr3R; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -368,12 +344,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.27.1
+      - python-requests/2.32.3
     method: POST
-    uri: https://porkbun.com/api/json/v3/dns/retrieve/example.xyz
+    uri: https://api.porkbun.com/api/json/v3/dns/retrieve/example.xyz
   response:
     body:
-      string: '{"status":"SUCCESS","cloudflare":"disabled","records":[{"id":"236096065","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236238296","name":"www.example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0"},{"id":"236272619","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0"},{"id":"230514990","name":"example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514991","name":"www.example.xyz","type":"ALIAS","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"230514992","name":"*.example.xyz","type":"CNAME","content":"pixie.porkbun.com","ttl":"600","prio":null},{"id":"236272623","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0"},{"id":"230514985","name":"example.xyz","type":"MX","content":"fwd1.porkbun.com","ttl":"600","prio":"10"},{"id":"230514986","name":"example.xyz","type":"MX","content":"fwd2.porkbun.com","ttl":"600","prio":"20"},{"id":"236272628","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272629","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272630","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"},{"id":"236272631","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0"},{"id":"236272632","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0"},{"id":"236272635","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0"}]}'
+      string: '{"status":"SUCCESS","cloudflare":"enabled","records":[{"id":"432480875","name":"localhost.example.xyz","type":"A","content":"127.0.0.1","ttl":"3600","prio":"0","notes":null},{"id":"421658077","name":"example.xyz","type":"A","content":"8.8.8.8","ttl":"600","prio":"0","notes":null},{"id":"421671186","name":"*.example.xyz","type":"CNAME","content":"example.xyz","ttl":"600","prio":"0","notes":""},{"id":"432480882","name":"docs.example.xyz","type":"CNAME","content":"docs.example.com","ttl":"3600","prio":"0","notes":null},{"id":"421642428","name":"example.xyz","type":"NS","content":"maceio.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642429","name":"example.xyz","type":"NS","content":"salvador.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642430","name":"example.xyz","type":"NS","content":"fortaleza.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"421642431","name":"example.xyz","type":"NS","content":"curitiba.porkbun.com","ttl":"86400","prio":null,"notes":null},{"id":"432480894","name":"_acme-challenge.fqdn.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480897","name":"_acme-challenge.full.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480902","name":"_acme-challenge.test.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null},{"id":"432480908","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken1","ttl":"3600","prio":"0","notes":null},{"id":"432480912","name":"_acme-challenge.createrecordset.example.xyz","type":"TXT","content":"challengetoken2","ttl":"3600","prio":"0","notes":null},{"id":"432480916","name":"_acme-challenge.noop.example.xyz","type":"TXT","content":"challengetoken","ttl":"3600","prio":"0","notes":null}]}'
     headers:
       Cache-Control:
       - no-store, no-cache, must-revalidate
@@ -384,7 +360,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 12 Jun 2022 01:15:53 GMT
+      - Mon, 14 Oct 2024 00:27:13 GMT
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Pragma:
@@ -394,11 +370,7 @@ interactions:
       Server:
       - openresty
       Set-Cookie:
-      - AWSALB=zykWtj6ob5mp5il1To686ctmWEa+uoyaVAASWil9xFuJBW8aMG6K0KqfrTIB1aKmnLo7HjgqC2ZLMNQmx2FI5VNUqs/euP8jhWpdevCtkrpNDL+JUyLJCgDRazq/;
-        Expires=Sun, 19 Jun 2022 01:15:53 GMT; Path=/
-      - AWSALBCORS=zykWtj6ob5mp5il1To686ctmWEa+uoyaVAASWil9xFuJBW8aMG6K0KqfrTIB1aKmnLo7HjgqC2ZLMNQmx2FI5VNUqs/euP8jhWpdevCtkrpNDL+JUyLJCgDRazq/;
-        Expires=Sun, 19 Jun 2022 01:15:53 GMT; Path=/; SameSite=None; Secure
-      - BUNSESSION2=uNyKZnCYA2JfS4skZ25rnsWmxp2LFMGCPD-nAHrqF6go5qkQ; path=/; secure;
+      - BUNSESSION2=EUECjR2FniMFX2rCNb0YT5m7COyoA4X2fepdxJpUYog4hPcg; path=/; secure;
         HttpOnly; SameSite=Lax
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
