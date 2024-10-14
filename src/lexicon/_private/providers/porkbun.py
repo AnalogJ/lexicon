@@ -4,6 +4,8 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -159,16 +161,36 @@ class Provider(BaseProvider):
             query_params = {}
         headers = {"Content-Type": "application/json"}
 
-        response = requests.request(
-            action,
-            self.api_endpoint + url,
-            params=query_params,
-            data=json.dumps({**data, **self._auth_data}),
-            headers=headers,
-        )
+        # Porkbun has rate limits, but they don't seem to be officially documented anywhere.
+        # This comment includes a reply from Porkbun support providing some details on the limits:
+        # https://github.com/cullenmcdermott/terraform-provider-porkbun/issues/23#issuecomment-1366859999
+        #
+        # "About 60 / minute or 2 / second. There are some bursting capabilities up to 5 / second.
+        # The best bet would be to keep things to 1 / second if there are constant commands being
+        # issued and to wait / resend if a threshold is reached."
+        with requests.Session() as session:
+            # This Retry configuration attempts to follow the above advice. If requests fail with a 503,
+            # we will attempt retries with the following delays between attempts:
+            # 0s, 1s, 2s, 4s, 8s, 16s, 32s (for a total of ~63 seconds from the first failure)
+            # If we still get a 503 after waiting that long, something else is probably wrong.
+            session_retries = Retry(
+                total=7,
+                backoff_factor=0.5,
+                status_forcelist=[503], # indicates we hit the rate limit
+                allowed_methods=frozenset({"POST"}), # POST is all we ever do here
+            )
+            session_adapter = HTTPAdapter(max_retries=session_retries)
+            session.mount("https://", session_adapter)
+            response = session.request(
+                action,
+                self.api_endpoint + url,
+                params=query_params,
+                data=json.dumps({**data, **self._auth_data}),
+                headers=headers,
+            )
 
-        response.raise_for_status()
-        return response.json()
+            response.raise_for_status()
+            return response.json()
 
     def _format_records(self, records):
         for record in records:
