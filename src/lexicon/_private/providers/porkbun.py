@@ -176,8 +176,8 @@ class Provider(BaseProvider):
             session_retries = Retry(
                 total=7,
                 backoff_factor=0.5,
-                status_forcelist=[503], # indicates we hit the rate limit
-                allowed_methods=frozenset({"POST"}), # POST is all we ever do here
+                status_forcelist=[503],  # indicates we hit the rate limit
+                allowed_methods=frozenset({"POST"}),  # POST is all we ever do here
             )
             session_adapter = HTTPAdapter(max_retries=session_retries)
             session.mount("https://", session_adapter)

@@ -45,7 +45,7 @@ class PorkbunProviderTests(TestCase, IntegrationTestsV2):
         to filter the provider response."""
 
         # Filter out any 503's - they aren't important and just clutter the recordings
-        if response['status']['code'] == 503:
+        if response["status"]["code"] == 503:
             return None
 
         return response
