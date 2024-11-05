@@ -60,12 +60,12 @@ class Provider(BaseProvider):
             payload = self._post("/dns/rr", data)
         except requests.exceptions.HTTPError as err:
             json_res = err.response.json()
-            if not json_res["code"] if "code" in json_res else 0 != 15003: # ResourceRecordAlreadyExists
+            if not json_res["code"] if "code" in json_res else 0 != 15003:  # ResourceRecordAlreadyExists
                 raise
 
         if payload["code"] if "code" in payload else 0 != 0:
             return False
-        
+
         LOGGER.debug("create_record: %s", payload["success"])
         return payload["success"]
 
@@ -93,8 +93,8 @@ class Provider(BaseProvider):
             records = [
                 record for record in records
                 if (not rtype or record['type'] == rtype) and
-                    (not name or record['name'] == self._full_name(name)) and
-                    (not content or record['content'] == self._format_content(rtype, content))
+                (not name or record['name'] == self._full_name(name)) and
+                (not content or record['content'] == self._format_content(rtype, content))
             ]
 
         LOGGER.debug("list_records after filtering: %s", records)
@@ -134,8 +134,6 @@ class Provider(BaseProvider):
         delete_record_id = []
         if not identifier:
             records = self.list_records(rtype, name, content)
-            if len(records)==0:
-                raise Exception(f"wow: %s", records, rtype, name, content)
             delete_record_id = [record["id"] for record in records]
         else:
             delete_record_id.append(identifier)
@@ -168,7 +166,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         return response.json()
-    
+
     def _format_content(self, rtype, content):
         """
         Special case handling from some record types that Regfish needs
