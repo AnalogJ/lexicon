@@ -1,0 +1,81 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Acccept:
+      - application/json
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://api.regfish.de/dns/regfish-dev.de/rr
+  response:
+    body:
+      string: '{"success":true,"response":[{"id":3236253,"name":"localhost.regfish-dev.de.","type":"A","data":"127.0.0.1","ttl":3600,"auto":false,"active":true}],"code":0}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Content-Length:
+      - '156'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Nov 2024 13:46:19 GMT
+      Etag:
+      - W/"9c-BmT1mNF7QQ0W2/2ef3GceOQso0g"
+      Ratelimit-Policy:
+      - 500; w=60
+      Server:
+      - regfish
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "CNAME", "name": "docs.regfish-dev.de.", "data": "docs.example.com.",
+      "ttl": 3600}'
+    headers:
+      Acccept:
+      - application/json
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '91'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://api.regfish.de/dns/rr
+  response:
+    body:
+      string: '{"success":true,"response":{"id":3236254,"name":"docs.regfish-dev.de.","type":"CNAME","data":"docs.example.com.","ttl":3600,"auto":false,"active":true},"code":0}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Content-Length:
+      - '161'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Nov 2024 13:46:19 GMT
+      Etag:
+      - W/"a1-sXhAAgtj2CDMJ7t4bCNgNpBLTaI"
+      Ratelimit-Policy:
+      - 500; w=60
+      Server:
+      - regfish
+    status:
+      code: 200
+      message: OK
+version: 1
