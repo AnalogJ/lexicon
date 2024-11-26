@@ -1,2 +1,2 @@
 arvancloud
-    * ``auth_token`` Specify api key for authentication
+    * ``auth_token`` Specify key for authentication (api key)
