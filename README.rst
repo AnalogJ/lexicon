@@ -153,6 +153,7 @@ The current supported providers are:
 .. _infomaniak: https://www.infomaniak.com
 .. _internetbs: https://internetbs.net/resellerregistrardomainnameapi
 .. _inwx: https://www.inwx.de/en/offer/api
+.. _ionos: https://developer.hosting.ionos.de/docs/dns
 .. _joker: https://joker.com/faq/index.php?action=show&cat=39
 .. _linode: https://www.linode.com/api/dns
 .. _linode4: https://developers.linode.com/api/docs/v4#tag/domains
