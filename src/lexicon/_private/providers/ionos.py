@@ -27,7 +27,20 @@ class Provider(BaseProvider):
                 self.domain_id = zone['id']
 
     def create_record(self, rtype, name, content):
-        raise NotImplementedError()
+        for _ in self.list_records(rtype, name, content):
+            return False
+        self._post(
+            _ZONES_API + '/' + self.domain_id + '/records',
+            data=[{
+                'name': name,
+                'type': rtype,
+                'content': content,
+                'ttl': self._get_lexicon_option('ttl'),
+                'prio': 0,
+                'disabled': False,
+            }],
+        )
+        return True
 
     def list_records(self, rtype=None, name=None, content=None):
         query_params = {}
@@ -51,10 +64,33 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, rtype, name, content):
-        raise NotImplementedError()
+        url = _ZONES_API + '/' + self.domain_id + '/records/' + identifier
+        record = self._get(url)
+        if (rtype is None or rtype == record['type']) \
+                and (name is None or name == record['name']) \
+                and (content is None or content == record['content']) \
+                and self._get_lexicon_option('ttl') == record['ttl']:
+            return False
+        self.delete_record(identifier, None, None, None)
+        return self.create_record(
+            rtype or record['type'],
+            name or record['name'],
+            content or record['content'],
+        )
 
     def delete_record(self, identifier, rtype, name, content):
-        raise NotImplementedError()
+        if identifier:
+            identifiers = [identifier]
+        else:
+            identifiers = [
+                r['id']
+                for r in self.list_records(rtype, name, content)
+            ]
+        for identifier in identifiers:
+            self._delete(
+                _ZONES_API + '/' + self.domain_id + '/records/' + identifier
+            )
+        return True
 
     def _request(self, action='GET', url='/', data=None, query_params=None):
         response = requests.request(
@@ -68,4 +104,7 @@ class Provider(BaseProvider):
             },
         )
         response.raise_for_status()
-        return response.json()
+        try:
+            return response.json()
+        except requests.exceptions.JSONDecodeError:
+            return True
