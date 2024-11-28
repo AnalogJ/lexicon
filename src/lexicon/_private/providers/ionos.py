@@ -25,14 +25,14 @@ class Provider(BaseProvider):
         for zone in zones:
             if zone['name'] == self.domain:
                 self.domain_id = zone['id']
+                return
+        raise Exception('domain not found: ' + self.domain)
 
     def create_record(self, rtype, name, content):
-        for _ in self.list_records(rtype, name, content):
-            return False
         self._post(
             _ZONES_API + '/' + self.domain_id + '/records',
             data=[{
-                'name': name,
+                'name': self._full_name(name),
                 'type': rtype,
                 'content': content,
                 'ttl': self._get_lexicon_option('ttl'),
@@ -47,7 +47,7 @@ class Provider(BaseProvider):
         if rtype:
             query_params['recordType'] = rtype
         if name:
-            query_params['recordName'] = name
+            query_params['recordName'] = self._full_name(name)
         data = self._get(_ZONES_API + '/' + self.domain_id, query_params)
         records = data['records']
         records = [{
@@ -64,21 +64,10 @@ class Provider(BaseProvider):
         return records
 
     def update_record(self, identifier, rtype, name, content):
-        url = _ZONES_API + '/' + self.domain_id + '/records/' + identifier
-        record = self._get(url)
-        if (rtype is None or rtype == record['type']) \
-                and (name is None or name == record['name']) \
-                and (content is None or content == record['content']) \
-                and self._get_lexicon_option('ttl') == record['ttl']:
-            return False
-        self.delete_record(identifier, None, None, None)
-        return self.create_record(
-            rtype or record['type'],
-            name or record['name'],
-            content or record['content'],
-        )
+        self.delete_record(identifier, rtype, name, None)
+        return self.create_record(rtype, name, content)
 
-    def delete_record(self, identifier, rtype, name, content):
+    def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if identifier:
             identifiers = [identifier]
         else:
