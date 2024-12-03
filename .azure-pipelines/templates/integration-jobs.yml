@@ -7,51 +7,49 @@ jobs:
       BRANCH_NAME: $(Build.SourceBranch)
     strategy:
       matrix:
-        linux-python-3.8:
-          PYTHON_VERSION: 3.8
-        linux-python-3.12-light:
-          PYTHON_VERSION: 3.12
+        linux-python-3.9:
+          UV_PYTHON: 3.9
+        linux-python-3.13-light:
+          UV_PYTHON: 3.13
           TOXENV: light
-        linux-python-3.12-cover:
-          PYTHON_VERSION: 3.12
+        linux-python-3.13-cover:
+          UV_PYTHON: 3.13
           TOXENV: cover
         linux-lint:
-          PYTHON_VERSION: 3.12
+          UV_PYTHON: 3.13
           TOXENV: lint
         linux-mypy:
-          PYTHON_VERSION: 3.12
+          UV_PYTHON: 3.13
           TOXENV: mypy
-        macos-python-3.8:
+        macos-python-3.9:
           IMAGE: macOS-12
-          PYTHON_VERSION: 3.8
-        macos-python-3.12:
-          IMAGE: macOS-12
-          PYTHON_VERSION: 3.12
-        windows-python-3.8:
+          UV_PYTHON: 3.9
+        macos-python-3.13:
+          IMAGE: macOS-13
+          UV_PYTHON: 3.13
+        windows-python-3.9:
           IMAGE: windows-2019
-          PYTHON_VERSION: 3.8
-        windows-python-3.12:
+          UV_PYTHON: 3.9
+        windows-python-3.13:
           IMAGE: windows-2019
-          PYTHON_VERSION: 3.12
+          UV_PYTHON: 3.13
     pool:
       vmImage: $(IMAGE)
     steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: $(PYTHON_VERSION)
-          addToPath: true
-        displayName: Enable the targeted python version
       - script: |
-          python3 -m pip install --user pipx
-          python3 -m pipx ensurepath
-          python3 -m pipx install tox
-          python3 -m pipx install poetry
-        displayName: Install required runtime dependencies
-      - script: tox
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          uv sync
+        condition: ne(variables['Agent.OS'], 'Windows_NT')
+        displayName: Configure development environment (Linux/MacOS)
+      - script: |
+          powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.5.5/install.ps1 | iex"
+          uv sync
+        condition: eq(variables['Agent.OS'], 'Windows_NT')
+        displayName: Configure development environment (Windows)
+      - script: uv run tox
         displayName: Execute tests through tox
       - script: |
-          python3 -m pipx install coveralls
-          coveralls
+          uvx coveralls
         condition: and(eq(variables['TOXENV'], 'cover'), eq(variables['Build.DefinitionName'], 'main'))
         env:
           COVERALLS_SERVICE_NAME: azure-pipelines
