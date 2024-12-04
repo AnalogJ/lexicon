@@ -4,6 +4,7 @@ This module takes care of finding information about the runtime of Lexicon:
 * what is the version of Lexicon
 """
 
+from __future__ import annotations
 import importlib
 import pkgutil
 import re
@@ -57,11 +58,15 @@ def _resolve_requirements(provider: str, distribution: Distribution) -> bool:
     if requires is None:
         raise ValueError("Error while trying finding requirements.")
 
-    requirements = [
-        re.sub(r"^(.*)\s\(.*\)(?:\s*;.*|)$", r"\1", requirement)
-        for requirement in requires
-        if f'extra == "{provider}"' in requirement
-    ]
+    requirements: list[str] = []
+    for require in requires:
+        match = re.match(
+            rf"^([\w-]+)\s*[<>=]+\s*[\d\.-]+\s*;\s*extra\s*==\s*(?:\"|'){provider}(?:\"|')$",
+            require,
+        )
+
+        if match is not None:
+            requirements.append(match.group(1))
 
     if not requirements:
         # No extra for this provider
