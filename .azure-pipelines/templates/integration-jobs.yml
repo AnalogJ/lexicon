@@ -38,15 +38,9 @@ jobs:
     steps:
       - script: pipx install uv
         displayName: Install UV
-      - script: |
-          uv tool install tox --with tox-uv
-          uv tool update-shell
-          uv sync
-        displayName: Configure dev environment
-      - script: tox
+      - script: uvx --with tox-uv tox
         displayName: Execute tests through tox
-      - script: |
-          uvx coveralls
+      - script: uvx coveralls
         condition: and(eq(variables['TOXENV'], 'cover'), eq(variables['Build.DefinitionName'], 'main'))
         env:
           COVERALLS_SERVICE_NAME: azure-pipelines

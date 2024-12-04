@@ -3,15 +3,9 @@ jobs:
     pool:
       vmImage: ubuntu-24.04
     steps:
-      - script: |
-          set -e
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          uv sync -p 3.12
+      - script: pipx install uv
         displayName: Configure development environment
-      - script: |
-          set -e
-          uv build
-          uv publish --username "$(twine.username)" --password "$(twine.password)"
+      - script: uv build && uv publish --username "$(twine.username)" --password "$(twine.password)"
         displayName: Build & Upload dist to PyPI
   - job: github
     pool:
@@ -24,9 +18,7 @@ jobs:
           versionSpec: 3.12
           addToPath: true
         displayName: Install Python
-      - script: |
-          set -e
-          curl -LsSf https://astral.sh/uv/install.sh | sh
+      - script: pipx install uv
         displayName: Prepare environment
       - script: |
           set -e
