@@ -1,7 +1,7 @@
 jobs:
   - job: test
     variables:
-      IMAGE: ubuntu-22.04
+      IMAGE: ubuntu-latest
       TOXENV: py
       PYTEST_ADDOPTS: --numprocesses 4
       BRANCH_NAME: $(Build.SourceBranch)
@@ -22,16 +22,16 @@ jobs:
           UV_PYTHON: 3.13
           TOXENV: mypy
         macos-python-3.9:
-          IMAGE: macOS-12
+          IMAGE: macOS-latest
           UV_PYTHON: 3.9
         macos-python-3.13:
-          IMAGE: macOS-13
+          IMAGE: macOS-latest
           UV_PYTHON: 3.13
         windows-python-3.9:
-          IMAGE: windows-2019
+          IMAGE: windows-latest
           UV_PYTHON: 3.9
         windows-python-3.13:
-          IMAGE: windows-2019
+          IMAGE: windows-latest
           UV_PYTHON: 3.13
     pool:
       vmImage: $(IMAGE)
@@ -47,6 +47,7 @@ jobs:
         displayName: Install UV (Windows)
       - script: |
           uv tool install tox --with tox-uv
+          uv tool update-shell
           uv sync
         displayName: Configure dev environment
       - script: tox
