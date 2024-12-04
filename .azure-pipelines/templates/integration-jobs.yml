@@ -38,6 +38,7 @@ jobs:
     steps:
       - script: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+          uv tool install tox --with tox-uv
           uv sync
         condition: ne(variables['Agent.OS'], 'Windows_NT')
         displayName: Configure development environment (Linux/MacOS)
@@ -46,7 +47,7 @@ jobs:
           uv sync
         condition: eq(variables['Agent.OS'], 'Windows_NT')
         displayName: Configure development environment (Windows)
-      - script: uv run tox
+      - script: tox
         displayName: Execute tests through tox
       - script: |
           uvx coveralls
