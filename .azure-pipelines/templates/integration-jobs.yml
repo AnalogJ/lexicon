@@ -36,15 +36,8 @@ jobs:
     pool:
       vmImage: $(IMAGE)
     steps:
-      - script: curl -LsSf https://astral.sh/uv/install.sh | sh
-        condition: eq(variables['Agent.OS'], 'Linux')
-        displayName: Install UV (Linux)
-      - script: brew install uv
-        condition: eq(variables['Agent.OS'], 'Darwin')
-        displayName: Install UV (Linux)
-      - script: winget install --id=astral-sh.uv  -e
-        condition: eq(variables['Agent.OS'], 'Windows_NT')
-        displayName: Install UV (Windows)
+      - script: pipx install uv
+        displayName: Install UV
       - script: |
           uv tool install tox --with tox-uv
           uv tool update-shell
