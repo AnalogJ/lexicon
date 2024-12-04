@@ -5,6 +5,7 @@ This module takes care of finding information about the runtime of Lexicon:
 """
 
 from __future__ import annotations
+
 import importlib
 import pkgutil
 import re
