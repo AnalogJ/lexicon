@@ -13,7 +13,7 @@ class IONOSProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for IONOS provider"""
 
     provider_name = 'ionos'
-    domain = os.environ['LEXICON_IONOS_DOMAIN']
+    domain = os.environ.get('LEXICON_IONOS_DOMAIN', 'example.com')
 
     def _filter_request(self, request):
         request.uri = request.uri.replace(self.domain, 'example.com')
