@@ -1,24 +1,15 @@
 jobs:
   - job: pypi
     pool:
-      vmImage: ubuntu-22.04
+      vmImage: ubuntu-24.04
     steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: 3.12
-          addToPath: true
-        displayName: Install Python
-      - script: |
-          python3 -m pip install --user pipx
-          python3 -m pipx ensurepath
-          python3 -m pipx install poetry
-        displayName: Prepare environment
-      - script: |
-          poetry publish --build --username "$(twine.username)" --password "$(twine.password)"
+      - script: pipx install uv
+        displayName: Configure development environment
+      - script: uv build && uv publish --username "$(twine.username)" --password "$(twine.password)"
         displayName: Build & Upload dist to PyPI
   - job: github
     pool:
-      vmImage: ubuntu-22.04
+      vmImage: ubuntu-24.04
     dependsOn:
       - pypi
     steps:
@@ -27,14 +18,11 @@ jobs:
           versionSpec: 3.12
           addToPath: true
         displayName: Install Python
-      - script: |
-          python3 -m pip install --user pipx
-          python3 -m pipx ensurepath
-          python3 -m pipx install poetry
+      - script: pipx install uv
         displayName: Prepare environment
       - script: |
           set -e
-          version=`poetry version | awk '{print $2}'`
+          version=`uvx --from=toml-cli toml get --toml-path=pyproject.toml project.version`
           echo "Version is: ${version}"
           python utils/extract_changelog.py "${version}" > "release_${version}.md"
           echo "##vso[task.setvariable variable=ReleaseVersion;]${version}"
