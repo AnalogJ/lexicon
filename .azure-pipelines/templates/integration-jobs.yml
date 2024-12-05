@@ -46,7 +46,7 @@ jobs:
           COVERALLS_SERVICE_NAME: azure-pipelines
           COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
         displayName: Publish coverage reports (Coveralls)
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         condition: eq(variables['TOXENV'], 'cover')
         inputs:
           codeCoverageTool: Cobertura
