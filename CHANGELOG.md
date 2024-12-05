@@ -1,6 +1,7 @@
 # Changelog
 
 ## master - CURRENT
+### Modified migrate build tooling from poetry to uv
 
 ## 3.18.0 - 22/08/2024
 ### Added

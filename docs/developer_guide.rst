@@ -16,24 +16,24 @@ Fork, then clone the repo:
 
     git clone git@github.com:your-username/lexicon.git
 
-Install Poetry if you not have it already:
+Install UV if you not have it already:
 
 .. code-block:: bash
 
     # On Linux / WSL2
-    curl -sSL https://install.python-poetry.org | python3 -
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
 .. code-block:: powershell
 
     # On Windows (powershell)
-    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 Configure the virtual environment with full providers support:
 
 .. code-block:: bash
 
     cd lexicon
-    poetry install -E full
+    uv sync --extra full
 
 Activate the virtual environment
 
@@ -51,7 +51,7 @@ Make sure all tests pass:
 
 .. code-block:: bash
 
-    tox
+    uvx --with tox-uv tox
 
 You can test a specific provider using:
 
@@ -115,23 +115,19 @@ or ``self._get_provider_option('auth_token')`` respectively.
     - any provider specific dependencies need a particular configuration in the ``pyproject.toml``
       file:
 
-    Under the ``[tool.poetry.dependencies]`` block, add the specific dependency
-    as an optional dependency.
+    Under the ``[project.optional-dependencies]`` block: 
+    - create a new extra group for you provider with the list of its optional dependencies,
+    - also add these optional dependencies to the extra group ``full``.
 
     .. code-block:: toml
 
-        [tool.poetry.dependencies]
-        # Optional dependencies required by some providers
-        additionalpackage = { version = "*", optional = true }  # mycustomprovider
-
-    Under the ``[tool.poetry.extras]`` block, define a new extra group named after the provider name
-    requiring the optional dependency, then add this extra group inside the ``full`` group.
-
-    .. code-block:: toml
-
-        [tool.poetry.extras]
-        mycustomprovider = ["additionalpackage"]
-        full = [..., "mycustomprovider"]
+        [project.optional-dependencies]
+        mycustomprovider = ["additionalpackage >= 1"]
+        ...
+        full = [
+            ...,
+            "additionalpackage >= 1",
+        ]
 
 .. _Provider: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/interfaces.py
 .. _cloudflare.py: https://github.com/AnalogJ/lexicon/blob/master/src/lexicon/providers/cloudflare.py
