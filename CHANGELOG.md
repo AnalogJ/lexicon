@@ -1,7 +1,17 @@
 # Changelog
 
 ## master - CURRENT
-### Modified migrate build tooling from poetry to uv
+### Added
+* Add `regfish` provider (#2102)
+* Add `ionos` provider (#2127)
+* Add support of Python 3.13
+
+### Modified 
+* Migrate build tooling from poetry to uv
+* Provider `porkbun` now use the new API exposed by the DNS provider (#2069)
+
+# Removed
+* Drop support of Python 3.8
 
 ## 3.18.0 - 22/08/2024
 ### Added
