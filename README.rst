@@ -101,15 +101,15 @@ The current supported providers are:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | ovh_            | plesk_          | pointhq_        | porkbun_        | powerdns_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| qcloud_         | rackspace_      | rage4_          | rcodezero_      | route53_        |
+| qcloud_         | rackspace_      | rage4_          | rcodezero_      | regfish_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| safedns_        | sakuracloud_    | softlayer_      | timeweb_        | transip_        |
+| route53_        | safedns_        | sakuracloud_    | softlayer_      | timeweb_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| ultradns_       | valuedomain_    | vercel_         | vultr_          | webgo_          |
+| transip_        | ultradns_       | valuedomain_    | vercel_         | vultr_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| wedos_          | yandex_         | yandexcloud_    | zeit_           | zilore_         |
+| webgo_          | wedos_          | yandex_         | yandexcloud_    | zeit_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zonomi_         |                 |                 |                 |                 |
+| zilore_         | zonomi_         |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -183,6 +183,7 @@ The current supported providers are:
 .. _rackspace: https://developer.rackspace.com/docs/cloud-dns/v1/developer-guide/
 .. _rage4: https://gbshouse.uservoice.com/knowledgebase/articles/109834-rage4-dns-developers-api
 .. _rcodezero: https://my.rcodezero.at/api-doc
+.. _regfish: https://regfish.readme.io/
 .. _route53: https://docs.aws.amazon.com/route53/latest/apireference/welcome.html
 .. _safedns: https://developers.ukfast.io/documentation/safedns
 .. _sakuracloud: https://developer.sakura.ad.jp/cloud/api/1.1/

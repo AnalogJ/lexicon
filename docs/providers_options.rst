@@ -218,6 +218,9 @@ List of options
 .. _rcodezero:
 .. include:: providers/rcodezero.rst
 
+.. _regfish:
+.. include:: providers/regfish.rst
+
 .. _route53:
 .. include:: providers/route53.rst
 

@@ -20,7 +20,7 @@ def main():
         "uvx --from=toml-cli toml get --toml-path=pyproject.toml project.version",
         shell=True,
         universal_newlines=True,
-    ).replace("dns-lexicon ", "")
+    )
 
     print("Current version is: {0}".format(current_version))
     print("Please insert new version:")
