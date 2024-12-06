@@ -1,0 +1,119 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Acccept:
+      - application/json
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://api.regfish.de/dns/regfish-dev.de/rr
+  response:
+    body:
+      string: '{"success":true,"response":[{"id":3236253,"name":"localhost.regfish-dev.de.","type":"A","data":"127.0.0.1","ttl":3600,"auto":false,"active":true},{"id":3236254,"name":"docs.regfish-dev.de.","type":"CNAME","data":"docs.example.com.","ttl":3600,"auto":false,"active":true},{"id":3236255,"name":"_acme-challenge.fqdn.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236256,"name":"_acme-challenge.full.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236257,"name":"_acme-challenge.test.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236258,"name":"_acme-challenge.createrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken1","ttl":3600,"auto":false,"active":true},{"id":3236259,"name":"_acme-challenge.createrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236260,"name":"_acme-challenge.noop.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236266,"name":"_acme-challenge.deleterecordinset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236269,"name":"ttl.fqdn.regfish-dev.de.","type":"TXT","data":"ttlshouldbe3600","ttl":3600,"auto":false,"active":true},{"id":3236270,"name":"_acme-challenge.listrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken1","ttl":3600,"auto":false,"active":true},{"id":3236271,"name":"_acme-challenge.listrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236272,"name":"random.fqdntest.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true}],"code":0}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Content-Length:
+      - '1819'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Nov 2024 13:46:24 GMT
+      Etag:
+      - W/"71b-ErA3VhHhEEL9R8TECC1+9CKooTk"
+      Ratelimit-Policy:
+      - 500; w=60
+      Server:
+      - regfish
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "random.fulltest.regfish-dev.de.", "data": "challengetoken",
+      "ttl": 3600}'
+    headers:
+      Acccept:
+      - application/json
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '97'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://api.regfish.de/dns/rr
+  response:
+    body:
+      string: '{"success":true,"response":{"id":3236273,"name":"random.fulltest.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},"code":0}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Content-Length:
+      - '167'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Nov 2024 13:46:24 GMT
+      Etag:
+      - W/"a7-H3n9QWOXgiOhlnl9mTLFKPSxPRk"
+      Ratelimit-Policy:
+      - 500; w=60
+      Server:
+      - regfish
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Acccept:
+      - application/json
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://api.regfish.de/dns/regfish-dev.de/rr
+  response:
+    body:
+      string: '{"success":true,"response":[{"id":3236253,"name":"localhost.regfish-dev.de.","type":"A","data":"127.0.0.1","ttl":3600,"auto":false,"active":true},{"id":3236254,"name":"docs.regfish-dev.de.","type":"CNAME","data":"docs.example.com.","ttl":3600,"auto":false,"active":true},{"id":3236255,"name":"_acme-challenge.fqdn.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236256,"name":"_acme-challenge.full.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236257,"name":"_acme-challenge.test.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236258,"name":"_acme-challenge.createrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken1","ttl":3600,"auto":false,"active":true},{"id":3236259,"name":"_acme-challenge.createrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236260,"name":"_acme-challenge.noop.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236266,"name":"_acme-challenge.deleterecordinset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236269,"name":"ttl.fqdn.regfish-dev.de.","type":"TXT","data":"ttlshouldbe3600","ttl":3600,"auto":false,"active":true},{"id":3236270,"name":"_acme-challenge.listrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken1","ttl":3600,"auto":false,"active":true},{"id":3236271,"name":"_acme-challenge.listrecordset.regfish-dev.de.","type":"TXT","data":"challengetoken2","ttl":3600,"auto":false,"active":true},{"id":3236272,"name":"random.fqdntest.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true},{"id":3236273,"name":"random.fulltest.regfish-dev.de.","type":"TXT","data":"challengetoken","ttl":3600,"auto":false,"active":true}],"code":0}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Content-Length:
+      - '1950'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Nov 2024 13:46:24 GMT
+      Etag:
+      - W/"79e-s6nxKICSoUknzcURw+WSSMQtDpY"
+      Ratelimit-Policy:
+      - 500; w=60
+      Server:
+      - regfish
+    status:
+      code: 200
+      message: OK
+version: 1
