@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.19.0 - 06/12/2024
 ### Added
 * Add `regfish` provider (#2102)
 * Add `ionos` provider (#2127)

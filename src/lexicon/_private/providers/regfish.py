@@ -60,7 +60,9 @@ class Provider(BaseProvider):
             payload = self._post("/dns/rr", data)
         except requests.exceptions.HTTPError as err:
             json_res = err.response.json()
-            if not json_res["code"] if "code" in json_res else 0 != 15003:  # ResourceRecordAlreadyExists
+            if (
+                not json_res["code"] if "code" in json_res else 0 != 15003
+            ):  # ResourceRecordAlreadyExists
                 raise
 
         if payload["code"] if "code" in payload else 0 != 0:
@@ -91,10 +93,14 @@ class Provider(BaseProvider):
         # Apply filters on rtype, name, and content if they are provided
         if rtype or name or content:
             records = [
-                record for record in records
-                if (not rtype or record['type'] == rtype) and
-                (not name or record['name'] == self._full_name(name)) and
-                (not content or record['content'] == self._format_content(rtype, content))
+                record
+                for record in records
+                if (not rtype or record["type"] == rtype)
+                and (not name or record["name"] == self._full_name(name))
+                and (
+                    not content
+                    or record["content"] == self._format_content(rtype, content)
+                )
             ]
 
         LOGGER.debug("list_records after filtering: %s", records)
@@ -108,9 +114,13 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception("No records found matching type and name - won't update")
+                raise Exception(
+                    "No records found matching type and name - won't update"
+                )
             else:
-                raise Exception("Multiple records found matching type and name - won't update")
+                raise Exception(
+                    "Multiple records found matching type and name - won't update"
+                )
 
         content = self._format_content(rtype, content)
         data = {}
