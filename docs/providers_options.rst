@@ -134,6 +134,9 @@ List of options
 .. _inwx:
 .. include:: providers/inwx.rst
 
+.. _ionos:
+.. include:: providers/ionos.rst
+
 .. _joker:
 .. include:: providers/joker.rst
 

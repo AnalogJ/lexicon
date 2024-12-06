@@ -1,0 +1,307 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+      accept:
+      - application/json
+    method: GET
+    uri: https://api.hosting.ionos.com/dns/v1/zones
+  response:
+    body:
+      string: '[{"name": "example.com", "id": "4c9feb47-2a4d-11ec-bda4-0a5864441f49",
+        "type": "NATIVE"}]'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '582'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 28 Nov 2024 13:45:53 GMT
+      Keep-Alive:
+      - timeout=15
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Origin
+      via:
+      - kong/3.0.0
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-kong-proxy-latency:
+      - '1'
+      x-kong-upstream-latency:
+      - '7'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '[{"name": "delete.testid.example.com", "type": "TXT", "content": "challengetoken",
+      "ttl": 3600, "prio": 0, "disabled": false}]'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '130'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+      accept:
+      - application/json
+    method: POST
+    uri: https://api.hosting.ionos.com/dns/v1/zones/4c9feb47-2a4d-11ec-bda4-0a5864441f49/records
+  response:
+    body:
+      string: '[{"name": "delete.testid.example.com", "rootName": "example.com", "type":
+        "TXT", "content": "\"challengetoken\"", "changeDate": "2024-11-28T13:45:54.008Z",
+        "ttl": 3600, "disabled": false, "id": "5a5c0daa-a3c4-b806-ead0-a7a0cac4b295"}]'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '227'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 28 Nov 2024 13:45:54 GMT
+      Keep-Alive:
+      - timeout=15
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Origin
+      via:
+      - kong/3.0.0
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-kong-proxy-latency:
+      - '1'
+      x-kong-upstream-latency:
+      - '504'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+      accept:
+      - application/json
+    method: GET
+    uri: https://api.hosting.ionos.com/dns/v1/zones/4c9feb47-2a4d-11ec-bda4-0a5864441f49?recordType=TXT&recordName=delete.testid.example.com
+  response:
+    body:
+      string: '{"name":"example.com","id":"4c9feb47-2a4d-11ec-bda4-0a5864441f49","type":"NATIVE","records":[{"name":"delete.testid.example.com","rootName":"example.com","type":"TXT","content":"\"challengetoken\"","changeDate":"2024-11-28T13:45:54.008Z","ttl":3600,"disabled":false,"id":"5a5c0daa-a3c4-b806-ead0-a7a0cac4b295"}]}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '324'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 28 Nov 2024 13:45:54 GMT
+      Keep-Alive:
+      - timeout=15
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      endpoint:
+      - getZone
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      server:
+      - nginx/1.22.1
+      status-code:
+      - '200'
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Origin
+      via:
+      - kong/3.0.0
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-kong-proxy-latency:
+      - '0'
+      x-kong-upstream-latency:
+      - '26'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.32.3
+      accept:
+      - application/json
+    method: DELETE
+    uri: https://api.hosting.ionos.com/dns/v1/zones/4c9feb47-2a4d-11ec-bda4-0a5864441f49/records/5a5c0daa-a3c4-b806-ead0-a7a0cac4b295
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Thu, 28 Nov 2024 13:45:54 GMT
+      Keep-Alive:
+      - timeout=15
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Origin
+      via:
+      - kong/3.0.0
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-kong-proxy-latency:
+      - '0'
+      x-kong-upstream-latency:
+      - '406'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+      accept:
+      - application/json
+    method: GET
+    uri: https://api.hosting.ionos.com/dns/v1/zones/4c9feb47-2a4d-11ec-bda4-0a5864441f49?recordType=TXT&recordName=delete.testid.example.com
+  response:
+    body:
+      string: '{"name":"example.com","id":"4c9feb47-2a4d-11ec-bda4-0a5864441f49","type":"NATIVE","records":[]}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '99'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 28 Nov 2024 13:45:54 GMT
+      Keep-Alive:
+      - timeout=15
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      endpoint:
+      - getZone
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      server:
+      - nginx/1.22.1
+      status-code:
+      - '200'
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      - Origin
+      via:
+      - kong/3.0.0
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-kong-proxy-latency:
+      - '0'
+      x-kong-upstream-latency:
+      - '29'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1
