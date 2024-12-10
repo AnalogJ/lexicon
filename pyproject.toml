@@ -75,7 +75,7 @@ dev = [
     "flake8-pyproject",
     "isort",
     "black",
-    "mypy",
+    "mypy[reports]",
     "toml",
     "types-PyYAML",
     "types-requests",
@@ -136,13 +136,13 @@ extras = [ "full" ]
 setenv.PYTEST_ADDOPTS = "--numprocesses auto"
 setenv.PYTHONHASHSEED = "0"
 commands = [[
-    "pytest", "tests/", "--junitxml=junit/test-results.xml", "--dist=loadfile",
+    "pytest", "tests/", "--junitxml=reports/test-results.xml", "--dist=loadfile",
 ]]
 
 # Cover env will run all test available for all providers with coverage enabled.
 [tool.tox.env.cover]
 commands = [[
-    "pytest", "tests/", "--junitxml=junit/test-results.xml", "--dist=loadfile",
+    "pytest", "tests/", "--junitxml=reports/test-results.xml", "--dist=loadfile",
     "--cov=lexicon", "--cov-report=term-missing", "--cov-report=xml",
 ]]
 
@@ -150,7 +150,7 @@ commands = [[
 [tool.tox.env.light]
 extras = []
 commands = [[
-    "pytest", "tests/", "--junitxml=junit/test-results.xml", "--dist=loadfile",
+    "pytest", "tests/", "--junitxml=reports/test-results.xml", "--dist=loadfile",
     "--xfail-providers-with-missing-deps",
 ]]
 
@@ -163,5 +163,5 @@ commands = [[
 # Mypy env will check for types in the Lexicon codebase.
 [tool.tox.env.mypy]
 commands = [[
-    "mypy", "src", "tests",
+    "mypy", "src", "tests", "--xml-report=reports"
 ]]
