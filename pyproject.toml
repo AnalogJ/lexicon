@@ -91,12 +91,10 @@ doc = [
 lexicon = "lexicon._private.cli:main"
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/src",
-]
+include = [ "/src" ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/lexicon"]
+packages = [ "src/lexicon" ]
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
