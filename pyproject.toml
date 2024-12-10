@@ -90,6 +90,11 @@ doc = [
 [project.scripts]
 lexicon = "lexicon._private.cli:main"
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/lexicon"]
 
