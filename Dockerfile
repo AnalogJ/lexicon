@@ -1,5 +1,5 @@
-FROM python:3.8
-MAINTAINER Jason Kulatunga <jason@thesparktree.com>
+FROM python:3.13
+LABEL org.opencontainers.image.authors="adferrand@github"
 
 # Setup dependencies
 RUN apt-get update \
@@ -8,8 +8,10 @@ RUN apt-get update \
  && sed -i 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/' /etc/pam.d/cron
 
 # Install dehydrated (letsencrypt client) & dns-lexicon
+ARG LEXICON_VERSION=3.*
+ENV LEXICON_VERSION="${LEXICON_VERSION}"
 RUN git clone --depth 1 https://github.com/lukas2511/dehydrated.git /srv/dehydrated \
- && pip install dns-lexicon[full]
+ && pip install "dns-lexicon[full]==${LEXICON_VERSION}"
 
 # Copy over dehydrated and & cron files
 COPY ./examples/dehydrated.default.sh /srv/dehydrated/dehydrated.default.sh
