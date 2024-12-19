@@ -12,4 +12,4 @@ Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 > [!NOTE]  
 > Lexicon documentation (including development guide) is available here:
 >
-> https://dns-lexicon.readthedocs.io/en/latest/
+> https://dns-lexicon.github.io/dns-lexicon
